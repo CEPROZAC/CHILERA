@@ -99,7 +99,7 @@ class ProductosController extends Controller
         $producto->nombre=$request->get('nombre');
         $producto->descripcion=$request->get('descripcion');
         $producto->calidad=$request->get('calidad');
-        $producto->proveedor=$request->get('proveedores');
+        $producto->proveedor=$request->get('proveedor');
         $producto->estado='Activo';
         $producto->update();
         return Redirect::to('productos');
