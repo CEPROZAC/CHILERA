@@ -29,7 +29,7 @@ Route::get('pdf', 'PdfController@invoice');
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
 
 Route::get('descargar-clientes', 'ClienteController@excel')->name('clientes.excel');
-
+Route::get('descargar-productos', 'ProductosController@excel')->name('productos.excel');
 
 Route::get('descargar-empresas', 'EmpresaController@excel')->name('empresas.excel');
 

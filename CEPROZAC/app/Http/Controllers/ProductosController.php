@@ -9,7 +9,9 @@ use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\empresa;
 use CEPROZAC\Producto;
+use CEPROZAC\Provedor;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductosController extends Controller
 {
@@ -79,7 +81,9 @@ class ProductosController extends Controller
      */
     public function edit($id)
     {
-        return view("productos.edit",["productos"=>producto::findOrFail($id)]);
+        $productos=Producto::findOrFail($id);
+        $proveedores=DB::table('provedores')->where('estado','=','Activo')->get();
+        return view("productos.edit",["productos"=>$productos,"proveedores"=>$proveedores]);
     }
 
     /**
@@ -95,7 +99,7 @@ class ProductosController extends Controller
         $producto->nombre=$request->get('nombre');
         $producto->descripcion=$request->get('descripcion');
         $producto->calidad=$request->get('calidad');
-        $producto->proveedor=$request->get('proveedor');
+        $producto->proveedor=$request->get('proveedores');
         $producto->estado='Activo';
         $producto->update();
         return Redirect::to('productos');
@@ -103,6 +107,36 @@ class ProductosController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function excel()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+        Excel::create('productos', function($excel) {
+            $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+
+                $producto = Producto::join('provedores', 'provedores.id', '=', 'productos.proveedor')
+                ->select('productos.nombre', 'productos.descripcion', 'productos.calidad', 'provedores.nombre AS nombreProveedor')
+                ->where('productos.estado', 'Activo')
+                ->get();       
+                
+   
+                $sheet->fromArray($producto);
+                $sheet->row(1,['Nombre Producto','Descripcion Producto','Calidad Producto','Proveedor']);
+
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

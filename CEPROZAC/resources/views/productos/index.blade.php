@@ -28,6 +28,7 @@
 
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="productos/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Nuevo Producto"> <i class="fa fa-plus"></i> Agregar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('productos.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
                   </div>
                 </b>
               </div>

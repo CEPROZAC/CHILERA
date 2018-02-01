@@ -49,19 +49,64 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">Calidad: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Calidad<strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input type="text" required value="{{ $productos->calidad}}" placeholder="Ingrese calidad de producto" name="calidad" value="" class="form-control">
-              </div>
+                <select name="calidad" class="form-control" required>
+                @if($productos->calidad=="1era")
+                 <option value="1era" selected>
+                  1era
+                </option>
+                <option value="2da" >
+                  2da
+                </option>
+                <option value="3era">
+                  3era
+                </option>
+                @elseif($productos->calidad=="2da")
+                <option value="1era">
+                  1era
+                </option>
+                <option value="2da" selected>
+                  2da
+                </option>
+                <option value="3era">
+                  3era
+                </option>
+                @else
+                <option value="1era">
+                  1era
+                </option>
+                <option value="2da" >
+                  2da
+                </option>
+                <option value="3era" selected>
+                  3era
+                </option>
+                @endif
+              </select>
+              <div class="help-block with-errors"></div>
             </div>
+          </div><!--/form-group-->
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">Proveedor: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Proveedor<strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-
-                <input name="proveedor" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $productos->proveedor}}" placeholder="Ingrese Proveedor"/>
-              </div>
+                <select name="proveedor" class="form-control" required>
+                 @foreach($proveedores as $proveedor)
+                 @if($proveedor->id==$productos->proveedor)
+                 <option value="{{$proveedor->id}}" selected>
+                  {{$proveedor->nombre}}
+                </option>
+                @else
+                <option value="{{$proveedor->id}}">
+                  {{$proveedor->nombre}}
+                </option>
+                @endif
+                @endforeach
+              </select>
+              <div class="help-block with-errors"></div>
             </div>
+          </div><!--/form-group-->
             <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
               <button type="submit" class="btn btn-primary">Guardar</button>
