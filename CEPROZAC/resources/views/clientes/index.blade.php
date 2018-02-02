@@ -3,11 +3,11 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Clientes</h1>
-    <h2 class="">Listado Clientes CEPROZAC</h2>
+    <h2 class="">CLIENTES</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a href="?c=Inicio">Inicio</a></li>
+      <li ><a style="color: #808080"   href="{{url('/clientes')}}">Inicio</a></li>
       <li class="active">CLIENTES</a></li>
     </ol>
   </div>
@@ -49,7 +49,8 @@
                   <th>Dirección </th>
                    <th>Correo </th>
                   <th>Saldo Cliente </th>    
-                  <th>Opciónes </th>                              
+                  <td><center><b>Editar</b></center></td>
+                  <td><center><b>Borrar</b></center></td>                            
                 </tr>
               </thead>
               <tbody>
@@ -62,11 +63,14 @@
                   
  
                   <td>${{$clientes-> saldocliente}}</td>
-               <td>
-                         <a href="{{URL::action('ClienteController@edit', $clientes->id)}}"> <button class="btn btn-info">Editar </button> </a>
-                          <a href="" data-target="#modal-delete-{{$clientes->id}}" data-toggle="modal"> <button class="btn btn-danger">Eliminar </button> </a>
-                    </td>
+
+                     <td>  <a href="{{URL::action('ClienteController@edit',$clientes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                  </td>
+                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$clientes->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                  </td>
                 </td>
+                </td>
+
               </tr>
               @include('clientes.modal')
               @endforeach
@@ -78,7 +82,8 @@
                <th>Dirección </th>
                <th>Correo </th>
                <th>Saldo Cliente </th>
-                <th>Opciónes </th>  
+                               <td><center><b>Editar</b></center></td>
+               <td><center><b>Borrar</b></center></td> 
              </tr>
            </tfoot>
          </table>

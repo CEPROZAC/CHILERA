@@ -38,14 +38,15 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre de el Cliente"/>
+
+                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
               </div>
             </div>
 
               <div class="form-group">
               <label class="col-sm-3 control-label">Calle: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="calle" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Direccion de el Cliente"/>
+                <input name="calle" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de el Cliente"/>
               </div>
             </div>
 
@@ -59,35 +60,35 @@
                           <div class="form-group">
               <label class="col-sm-3 control-label">Colonia: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="colonia" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Direccion de la Calle"  />
+                <input name="colonia" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de la Calle"  />
               </div>
             </div>
 
                                      <div class="form-group">
               <label class="col-sm-3 control-label">Ciudad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="ciudad" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese La Ciudad" />
+                <input name="ciudad" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Ciudad" />
               </div>
             </div>
                                      <div class="form-group">
               <label class="col-sm-3 control-label">Entidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="entidad" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese La Entidad" />
+                <input name="entidad" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Entidad" />
               </div>
             </div>
 
                                                  <div class="form-group">
               <label class="col-sm-3 control-label">País: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="pais" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese El País" />
+                <input name="pais" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese El País" />
               </div>
             </div>
 
  
             <div class="form-group">
-              <label class="col-sm-3 control-label">Teléfono: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input  name="telefono" type="number"  placeholder="Ingrese el número de teléfono de el Cliente" class="form-control mask" data-inputmask="'mask':'(492) 999-9999'">
+                <input name="telefono" type="text" placeholder="Ingrese el número de teléfono del cliente"   class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
               </div>
             </div>
 
