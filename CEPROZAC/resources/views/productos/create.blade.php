@@ -36,7 +36,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto"/>
+                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
               </div>
             </div>
 
@@ -47,7 +47,7 @@
               </div>
             </div>
            <div class="form-group">
-              <label class="col-sm-3 control-label">Calidad 2<strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Calidad <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <select name="calidad" class="form-control" required>  
                  <option value="1era">

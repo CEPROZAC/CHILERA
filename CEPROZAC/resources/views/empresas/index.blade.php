@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-    <h1>Almacen</h1>
+    <h1>Proveedores</h1>
     <h2 class="">Empresas</h2>
   </div>
   <div class="pull-right">

@@ -38,7 +38,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-              <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->nombre}}" placeholder="Ingrese nombre de la empresa"/>
+              <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->nombre}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
               </div>
             </div>
 
@@ -54,7 +54,7 @@
               <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $provedores->direccion}}" splaceholder="Ingrese Direccion de la empresa"/>
+                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $provedores->direccion}}" splaceholder="Ingrese Direccion de la empresa" maxlength="150" parsley-rangelength="[1,150]" />
               </div>
             </div>
 
@@ -62,7 +62,7 @@
               <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="email" name="email" value="{{ $provedores->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa"/>
+                <input name="email" name="email" value="{{ $provedores->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="1" parsley-rangelength="[1,30]"/>
 
               </div>
             </div>

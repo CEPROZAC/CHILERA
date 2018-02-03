@@ -37,7 +37,7 @@
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de proveedor"/>
+                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de proveedor" maxlength="80" parsley-rangelength="[1,70]"/>
 
               </div>
             </div>
@@ -54,7 +54,7 @@
               <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Direccion de proveedor"/>
+                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Direccion de proveedor" maxlength="150" parsley-rangelength="[1,150]" />
               </div>
             </div>
 
@@ -62,7 +62,7 @@
               <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="email" name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de proveedor"/>
+                <input name="email" name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de proveedor" maxlength="1" parsley-rangelength="[1,30]"/>
 
               </div>
             </div>
