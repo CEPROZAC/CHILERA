@@ -3,12 +3,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Clientes</h1>
-    <h2 class="">CLIENTES</h2>
+    <h2 class="">Clientes</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a style="color: #808080"   href="{{url('/clientes')}}">Inicio</a></li>
-      <li class="active">CLIENTES</a></li>
+      <li ><a style="color: #808080" href="{{url('/clientes')}}">Inicio</a></li>
+      <li class="active">Clientes</a></li>
     </ol>
   </div>
 </div>
@@ -20,7 +20,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-7">
               <div class="actions"> </div>
-              <h2 class="content-header theme_color" style="margin-top: -5px;">&nbsp;&nbsp;Clientes CEPROZAC</h2>
+              <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Clientes </strong></h2>
             </div>
             <div class="col-md-5">
               <div class="btn-group pull-right">
@@ -45,8 +45,8 @@
               <thead>
                 <tr>
                   <th>Nombre </th>
-                  <th>Teléfono </th>
                   <th>Dirección </th>
+                  <th>Teléfono </th>
                    <th>Correo </th>
                   <th>Saldo Cliente </th>    
                   <td><center><b>Editar</b></center></td>
@@ -57,8 +57,9 @@
                 @foreach($cliente  as $clientes)
                 <tr class="gradeA">
                   <td>{{$clientes->nombre}} </td>
-                  <td>{{$clientes->telefono}} </td>
+                 
                   <td>{{$clientes->calle}} #{{$clientes->numero}} {{$clientes->colonia}} {{$clientes->entidad}} {{$clientes->pais}}</td>
+                   <td>{{$clientes->telefono}} </td>
                   <td>{{$clientes->email}}</td>
                   
  

@@ -143,6 +143,7 @@ class ClienteController extends Controller
                 ->where('estado', 'Activo')
                 ->get();       
                 $sheet->fromArray($clientes);
+                $sheet->row(1,['Nombre', 'Teléfono','Calle','Numero','Colonia','Municipio','Estado','Pais','Email','Saldo Cliente $',]);
                 $sheet->setOrientation('landscape');
               
 

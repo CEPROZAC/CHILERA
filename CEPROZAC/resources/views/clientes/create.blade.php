@@ -4,13 +4,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Clientes Ceprozac</h2>
+    <h2 class="">Clientes</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a href="?c=Inicio">Crear Cliente</a></li>
-      <li><a href="?c=Cliente">Nuevo Registro</a></li>
-      <li class="active">Ceprozac</li>
+      <li><a style="color: #808080" href="{{url('/clientes')}}">Inicio</a></li>
+      <li><a  style="color: #808080" href="{{url('/clientes')}}"> Clientes</a></li>
     </ol>
   </div>
 </div>
@@ -22,7 +21,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header theme_color" style="margin-top: -5px;"></h2> 
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Cliente</strong></h2>
             </div>
             <div class="col-md-4">
               <div class="btn-group pull-right">
@@ -39,48 +38,48 @@
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
+                <input name="nombre" type="text"  maxlength="30" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
               </div>
             </div>
 
               <div class="form-group">
               <label class="col-sm-3 control-label">Calle: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="calle" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de el Cliente"/>
+                <input name="calle" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de el Cliente"/>
               </div>
             </div>
 
                           <div class="form-group">
               <label class="col-sm-3 control-label">Numero: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="numero" maxlength="4" type="number"  class="form-control" required value="" placeholder="Ingrese el numero de su Domicilio"/>
+                <input type="number"  min="1" max="999" name="numero" maxlength="4"   class="form-control" onkeypress=" return soloNumeros(event);" required value="" placeholder="Ingrese el numero de su Domicilio" maxlength="4" size="4"/>
               </div>
             </div>
 
                           <div class="form-group">
               <label class="col-sm-3 control-label">Colonia: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="colonia" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de la Calle"  />
+                <input name="colonia" type="text"  maxlength="20" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de la Calle"  />
               </div>
             </div>
 
                                      <div class="form-group">
               <label class="col-sm-3 control-label">Ciudad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="ciudad" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Ciudad" />
+                <input name="ciudad" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Ciudad" />
               </div>
             </div>
                                      <div class="form-group">
               <label class="col-sm-3 control-label">Entidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="entidad" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Entidad" />
+                <input name="entidad" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Entidad" />
               </div>
             </div>
 
                                                  <div class="form-group">
               <label class="col-sm-3 control-label">País: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="pais" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese El País" />
+                <input name="pais" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese El País" />
               </div>
             </div>
 
@@ -102,12 +101,20 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Saldo Inical Del Cliente: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="saldocliente" type="number"   class="form-control" required value="" placeholder="Ingrese el Saldo Inicial"/>
-              </div>
-            </div>
+
+  <div class="form-row">    
+        <label class="col-sm-3 control-label">Saldo Inical Del Cliente: <strog class="theme_color">*</strog></label>
+    <div class="col-sm-2">
+    <div class="input-group">
+     <div class="input-group-addon">$</div>
+
+    
+         <input name="saldocliente" maxlength="9" type="number" value="1000.00" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+    </div>
+        </div>
+        </div>
+       
+
 
 
           <div class="form-group">
