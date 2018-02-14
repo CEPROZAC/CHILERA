@@ -9,7 +9,7 @@
   <div class="pull-right">
     <ol class="breadcrumb">
       <li><a style="color: #808080" href="{{url('/clientes')}}">Inicio</a></li>
-      <li><a  style="color: #808080" href="{{url('/clientes')}}"> Clientes</a></li>
+      <li><a style="color: #808080" href="{{url('/clientes')}}">Clientes</a></li>
     </ol>
   </div>
 </div>
@@ -34,18 +34,37 @@
         <div class="porlets-content">
           <form action="{{route('clientes.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
+              <input type="hidden" name="_method" value="PUT">
+
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-
                 <input name="nombre" type="text"  maxlength="30" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
+              </div>
+            </div>
+
+             <div class="form-group">
+              <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="rfc" value="" maxlength="20" id="RFC"  type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"  class="form-control"   class="form-control" required placeholder="Ingrese RFC del Cliente"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+              <select name="fiscal">
+  <option value="Fisica">Fisica</option>
+  <option value="Moral">Moral</option>
+</select>
+         
               </div>
             </div>
 
               <div class="form-group">
               <label class="col-sm-3 control-label">Calle: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="calle" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de el Cliente"/>
+                <input name="calle" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion del Cliente"/>
               </div>
             </div>
 

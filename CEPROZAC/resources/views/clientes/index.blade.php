@@ -45,6 +45,8 @@
               <thead>
                 <tr>
                   <th>Nombre </th>
+                   <th>RFC </th>
+                    <th>Regimen Fiscal </th>
                   <th>Dirección </th>
                   <th>Teléfono </th>
                    <th>Correo </th>
@@ -57,6 +59,8 @@
                 @foreach($cliente  as $clientes)
                 <tr class="gradeA">
                   <td>{{$clientes->nombre}} </td>
+                  <td>{{$clientes->rfc}} </td>
+                  <td>{{$clientes->fiscal}} </td>
                  
                   <td>{{$clientes->calle}} #{{$clientes->numero}} {{$clientes->colonia}} {{$clientes->entidad}} {{$clientes->pais}}</td>
                    <td>{{$clientes->telefono}} </td>
@@ -79,6 +83,8 @@
             <tfoot>
               <tr>
                <th>Nombre </th>
+               <th>RFC </th>
+                <th>Regimen Fiscal </th>
                <th>Teléfono </th>
                <th>Dirección </th>
                <th>Correo </th>
