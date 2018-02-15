@@ -12,9 +12,19 @@ use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
 
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+
+/**
+use Illuminate\Support\MessageBag;
+use Illuminate\Routing\Controller as BaseController;
+*/
+
 
 class ClienteController extends Controller
 {
+     use DispatchesJobs, ValidatesRequests;
     /**
      * Display a listing of the resource.
      *
@@ -42,11 +52,22 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+
     public function store(Request $request)
     {
 
        $cliente= new Cliente;
-       $cliente->nombre=$request->get('nombre');
+
+         $this->validate($request, [
+        'rfc' => 'required|unique:cliente|max:25',]);
+
+
+
+   
+
+        $cliente->nombre=$request->get('nombre');
        $cliente->rfc=$request->get('rfc');
        $cliente->fiscal=$request->get('fiscal');
        $cliente->telefono=$request->get('telefono');
@@ -59,6 +80,7 @@ class ClienteController extends Controller
        $cliente->email=$request->get('email');
        $cliente->saldocliente=$request->get('saldocliente');
        $cliente->estado='Activo';
+
        $cliente->save();
        return Redirect::to('clientes');
 
@@ -66,6 +88,14 @@ class ClienteController extends Controller
         //
    }
 
+
+protected function formatValidationErrors(Validator $validator)
+    {
+
+
+        return $validator->errors()->all();
+
+    }
     /**
      * Display the specified resource.
      *

@@ -58,11 +58,13 @@
               </div>
             </div>
 
-            <div class="form-group">
+
+
+                        <div class="form-group">
               <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="email" name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de proveedor" maxlength="1" parsley-rangelength="[1,30]"/>
+                <input name="email" name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de proveedor"/>
 
               </div>
             </div>
