@@ -47,6 +47,8 @@ class ClienteController extends Controller
 
        $cliente= new Cliente;
        $cliente->nombre=$request->get('nombre');
+       $cliente->rfc=$request->get('rfc');
+       $cliente->fiscal=$request->get('fiscal');
        $cliente->telefono=$request->get('telefono');
        $cliente->calle=$request->get('calle');
        $cliente->numero=$request->get('numero');
@@ -100,6 +102,8 @@ class ClienteController extends Controller
         $cliente=Cliente::findOrFail($id);
 
         $cliente->nombre=$request->get('nombre');
+         $cliente->rfc=$request->get('rfc');
+       $cliente->fiscal=$request->get('fiscal');
         $cliente->telefono=$request->get('telefono');
         $cliente->calle=$request->get('calle');
         $cliente->numero=$request->get('numero');
@@ -139,11 +143,11 @@ class ClienteController extends Controller
         Excel::create('clientes', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-                $clientes = Cliente::select('nombre', 'telefono', 'calle', 'numero', 'colonia', 'ciudad', 'entidad', 'pais', 'email', 'saldocliente')
+                $clientes = Cliente::select('nombre','rfc','fiscal', 'telefono', 'calle', 'numero', 'colonia', 'ciudad', 'entidad', 'pais', 'email', 'saldocliente')
                 ->where('estado', 'Activo')
                 ->get();       
                 $sheet->fromArray($clientes);
-                $sheet->row(1,['Nombre', 'Teléfono','Calle','Numero','Colonia','Municipio','Estado','Pais','Email','Saldo Cliente $',]);
+                $sheet->row(1,['Nombre','RFC','Regimen Fiscal' ,'Teléfono','Calle','Numero','Colonia','Municipio','Estado','Pais','Email','Saldo Cliente $',]);
                 $sheet->setOrientation('landscape');
               
 
