@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 
 Route::resource('empresas', 'EmpresaController');
+Route::resource('empleados', 'EmpleadoController');
 Route::resource('home','HomeController');
 
 	

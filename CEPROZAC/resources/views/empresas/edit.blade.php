@@ -60,7 +60,7 @@
               <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $empresas->direccion}}" placeholder="Ingrese Direccion de la empresa" maxlength="1" parsley-rangelength="[1,120]"/>
+                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $empresas->direccion}}" placeholder="Ingrese Direccion de la empresa" maxlength="120" parsley-rangelength="[1,120]"/>
               </div>
             </div>
 
@@ -68,7 +68,7 @@
               <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="email" name="email" value="{{ $empresas->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="1" parsley-rangelength="[1,30]"/>
+                <input name="email" name="email" value="{{ $empresas->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="30" parsley-rangelength="[1,30]"/>
 
               </div>
             </div>
