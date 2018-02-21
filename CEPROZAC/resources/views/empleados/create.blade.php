@@ -35,7 +35,7 @@
           <form action="{{route('empleados.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
 
-              <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
@@ -43,7 +43,7 @@
               </div>
             </div>
 
-              <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
@@ -51,40 +51,68 @@
               </div>
             </div>
 
-                   <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Fecha Ingreso: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                 <input type="text" class="form-control mask" data-inputmask="'alias': 'date'">
-              </div>
-            </div>
+               <input type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+             </div>
+           </div>
 
-                 <div class="form-group">
-              <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
+           <div class="form-group">
+            <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
 
-                 <input type="text" class="form-control mask" data-inputmask="'alias': 'date'">
-              </div>
-            </div>
+             <input type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+           </div>
+         </div>
+
+         <div class="form-group">
+          <label class="col-sm-3 control-label">SSN</label>
+          <div class="col-sm-6 ">
+            <input type="text" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+
+            <input name="email" name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
+
+          </div>
+        </div>
+
+        <div class="form-row">    
+          <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-2">
+            <div class="input-group">
+             <div class="input-group-addon">$</div>
+
+             
+             <input name="saldocliente" maxlength="9" type="number" value="1000.00" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+           </div>
+         </div>
+       </div>
 
 
 
 
-            
+       
        
 
 
 
-          <div class="form-group">
-            <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <a href="/clientes" class="btn btn-default"> Cancelar</a>
-            </div>
-          </div><!--/form-group-->
-        </form>
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
+       <div class="form-group">
+        <div class="col-sm-offset-7 col-sm-5">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <a href="/empleados" class="btn btn-default"> Cancelar</a>
+        </div>
+      </div><!--/form-group-->
+    </form>
+  </div><!--/porlets-content-->
+</div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 </html> 

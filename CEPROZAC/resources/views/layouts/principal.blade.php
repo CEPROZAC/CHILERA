@@ -119,13 +119,18 @@
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> Clientes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
-                <li> <a href="/clientes"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Clientes</b> </a> </li>
+                <li> <a href="{{url('clientes')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Clientes</b> </a> </li>
                
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Productos <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
-                <li> <a href="components.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Productos</b> </a> </li>
+                <li> <a href="{{url('productos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Productos</b> </a> </li>
+              </ul>
+            </li>
+             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Recursos Humanos <span class="plus"><i class="fa fa-plus"></i></span></a>
+              <ul>
+                <li> <a href="{{url('empleados')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empleados</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-truck icon"></i> Transporte <span class="plus"><i class="fa fa-plus"></i></span> </a>

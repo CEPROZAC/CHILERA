@@ -9,10 +9,10 @@ function fnFormatDetails ( oTable, nTr )
     sOut += '<tr><td>Fecha de Ingreso a la empresa:</td><td>'+aData[2]+' </td></tr>';
     sOut += '<tr><td>Fecha de alta en Seguro Social:</td><td>'+aData[3]+' </td></tr>';
     sOut += '<tr><td>Numero de Seguro Social:</td><td>'+aData[4]+' </td></tr>';
-   sOut += '<tr><td>Correo:</td><td>'+aData[7]+' </td></tr>';
-   sOut += '<tr><td>Telefono:</td><td>'+aData[8]+' </td></tr>';
-   sOut += '<tr><td>Rol:</td><td>'+aData[11]+' </td></tr>';
-   sOut += '<tr><td>Sueldo:</td><td>'+aData[10]+' </td></tr>';
+    sOut += '<tr><td>Correo:</td><td>'+aData[7]+' </td></tr>';
+    sOut += '<tr><td>Telefono:</td><td>'+aData[8]+' </td></tr>';
+    sOut += '<tr><td>Rol:</td><td>'+aData[11]+' </td></tr>';
+    sOut += '<tr><td>Sueldo:</td><td>'+aData[10]+' </td></tr>';
     sOut += '</table>';
 
     return sOut;
@@ -27,25 +27,25 @@ $(document).ready(function() {
     /*
      * Insert a 'details' column to the table
      */
-    var nCloneTh = document.createElement( 'th' );
-    var nCloneTd = document.createElement( 'td' );
-    nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">';
-    nCloneTd.className = "center";
+     var nCloneTh = document.createElement( 'th' );
+     var nCloneTd = document.createElement( 'td' );
+     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">';
+     nCloneTd.className = "center";
 
-    $('#hidden-table-info thead tr').each( function () {
+     $('#hidden-table-info thead tr').each( function () {
         this.insertBefore( nCloneTh, this.childNodes[0] );
     } );
 
-    $('#hidden-table-info tbody tr').each( function () {
+     $('#hidden-table-info tbody tr').each( function () {
         this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
     } );
 
     /*
      * Initialse DataTables, with no sorting on the 'details' column
      */
-    var oTable = $('#hidden-table-info').dataTable( {
+     var oTable = $('#hidden-table-info').dataTable( {
         "aoColumnDefs": [
-            { "bSortable": false, "aTargets": [ 0 ] }
+        { "bSortable": false, "aTargets": [ 0 ] }
         ],
         "aaSorting": [[1, 'asc']]
     });
@@ -54,7 +54,7 @@ $(document).ready(function() {
      * Note that the indicator for showing which row is open is not controlled by DataTables,
      * rather it is done here
      */
-    $('#hidden-table-info tbody td img').click(function () {
+     $('#hidden-table-info tbody td img').click(function () {
         var nTr = $(this).parents('tr')[0];
         if ( oTable.fnIsOpen(nTr) )
         {
@@ -69,4 +69,78 @@ $(document).ready(function() {
             oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
         }
     } );
-} );
+ } );
+
+
+
+function fnFormatDetails1 ( oTable, nTr )
+{
+    var aData = oTable.fnGetData( nTr );
+    var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+
+    sOut += '<tr><td>Codigo:</td><td>'+aData[1]+' </td></tr>';
+    sOut += '<tr><td>Nombre:</td><td>'+aData[2]+' </td></tr>';
+    sOut += '<tr><td>Descripcion:</td><td>'+aData[3]+' </td></tr>';
+    sOut += '<tr><td>Calidad:</td><td>'+aData[4]+' </td></tr>';
+    sOut += '<tr><td>Unidad de medida:</td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td>Formato de Empaque:</td><td>'+aData[6]+' </td></tr>';
+    sOut += '<tr><td>Porcentaje de Humedad:</td><td>'+aData[7]+' </td></tr>';
+    sOut += '<tr><td>Proveedor:</td><td>'+aData[8]+' </td></tr>';
+
+    sOut += '</table>';
+
+    return sOut;
+}
+
+$(document).ready(function() {
+
+    $('#dynamic-table1').dataTable( {
+        "aaSorting": [[ 4, "desc" ]]
+    } );
+
+    /*
+     * Insert a 'details' column to the table
+     */
+     var nCloneTh = document.createElement( 'th' );
+     var nCloneTd = document.createElement( 'td' );
+     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">';
+     nCloneTd.className = "center";
+
+     $('#hidden-table-info1 thead tr').each( function () {
+        this.insertBefore( nCloneTh, this.childNodes[0] );
+    } );
+
+     $('#hidden-table-info1 tbody tr').each( function () {
+        this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+    } );
+
+    /*
+     * Initialse DataTables, with no sorting on the 'details' column
+     */
+     var oTable = $('#hidden-table-info1').dataTable( {
+        "aoColumnDefs": [
+        { "bSortable": false, "aTargets": [ 0 ] }
+        ],
+        "aaSorting": [[1, 'asc']]
+    });
+
+    /* Add event listener for opening and closing details
+     * Note that the indicator for showing which row is open is not controlled by DataTables,
+     * rather it is done here
+     */
+     $('#hidden-table-info1 tbody td img').click(function () {
+        var nTr = $(this).parents('tr')[0];
+        if ( oTable.fnIsOpen(nTr) )
+        {
+            /* This row is already open - close it */
+            this.src = "plugins/advanced-datatable/images/details_open.png";
+            oTable.fnClose( nTr );
+        }
+        else
+        {
+            /* Open this row */
+            this.src = "plugins/advanced-datatable/images/details_close.png";
+            oTable.fnOpen( nTr, fnFormatDetails1(oTable, nTr), 'details' );
+        }
+    } );
+ } );

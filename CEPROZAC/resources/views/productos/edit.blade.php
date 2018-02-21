@@ -34,8 +34,8 @@
           <form action="{{url('productos', [$productos->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
-        
-           <div class="form-group">
+
+            <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $productos->nombre}}" placeholder="Ingrese nombre del producto"/>
@@ -52,41 +52,98 @@
               <label class="col-sm-3 control-label">Calidad<strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <select name="calidad" class="form-control" required>
-                @if($productos->calidad=="1era")
-                 <option value="1era" selected>
-                  1era
-                </option>
-                <option value="2da" >
-                  2da
-                </option>
-                <option value="3era">
-                  3era
-                </option>
-                @elseif($productos->calidad=="2da")
-                <option value="1era">
-                  1era
-                </option>
-                <option value="2da" selected>
-                  2da
-                </option>
-                <option value="3era">
-                  3era
-                </option>
-                @else
-                <option value="1era">
-                  1era
-                </option>
-                <option value="2da" >
-                  2da
-                </option>
-                <option value="3era" selected>
-                  3era
-                </option>
-                @endif
-              </select>
-              <div class="help-block with-errors"></div>
+                  @if($productos->calidad=="1era")
+                  <option value="1era" selected>
+                    1era
+                  </option>
+                  <option value="2da" >
+                    2da
+                  </option>
+                  <option value="3era">
+                    3era
+                  </option>
+                  @elseif($productos->calidad=="2da")
+                  <option value="1era">
+                    1era
+                  </option>
+                  <option value="2da" selected>
+                    2da
+                  </option>
+                  <option value="3era">
+                    3era
+                  </option>
+                  @else
+                  <option value="1era">
+                    1era
+                  </option>
+                  <option value="2da" >
+                    2da
+                  </option>
+                  <option value="3era" selected>
+                    3era
+                  </option>
+                  @endif
+                </select>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div><!--/form-group-->
+
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <select name="unidad_de_Medida" class="form-control" required>  
+                  @if($productos->unidad_de_Medida=="KILOGRAMOS")
+                  <option value="KILOGRAMOS" selected>
+                    KILOGRAMOS                
+                  </option>
+                  <option value="TONELADA">
+                    TONELADA                 
+                  </option>     
+                  @else 
+                  <option value="KILOGRAMO" >
+                    KILOGRAMOS                
+                  </option>
+                  <option value="TONELADA" selected>
+                    TONELADA                 
+                  </option>     
+                  @endif           
+                </select>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div><!--/form-group-->
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Formatos de empaque <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <select name="formato_de_Empaque" class="form-control" required>  
+                  @if($productos->formato_de_Empaque=="TOTE")
+                  <option value="TOTE" selected>
+                    TOTE              
+                  </option>
+                  <option value="COSTAL">
+                    COSTAL                 
+                  </option> 
+                  @else
+                  <option value="TOTE" >
+                    TOTE              
+                  </option>
+                  <option value="COSTAL" selected>
+                    COSTAL                 
+                  </option> 
+                  @endif               
+                </select>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div><!--/form-group-->
+
+            <div class="form-group ">
+              <label class="col-sm-3 control-label">Porcentaje de humedad</label>
+              <div class="col-sm-6">
+              <input type="text" name="porcentaje_Humedad" value="{{ $productos->porcentaje_Humedad}}"  class="form-control mask" data-inputmask="'mask':'99%'">
+              </div>
             </div>
-          </div><!--/form-group-->
+
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Proveedor<strog class="theme_color">*</strog></label>
@@ -107,16 +164,19 @@
               <div class="help-block with-errors"></div>
             </div>
           </div><!--/form-group-->
-            <div class="form-group">
+
+
+
+          <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
               <button type="submit" class="btn btn-primary">Guardar</button>
               <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
             </div>
           </div><!--/form-group-->
-          </form>
-        </div><!--/porlets-content-->
-      </div><!--/block-web-->
-    </div><!--/col-md-12-->
-  </div><!--/row-->
+        </form>
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
+</div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 @endsection

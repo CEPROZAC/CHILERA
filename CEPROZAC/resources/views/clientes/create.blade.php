@@ -35,16 +35,16 @@
             </div>    
           </div>
         </div>
-    @if (count($errors) > 0)
-    <div class="col-md-12 alert alert-danger">
-      <p>Corrige los siguientes errores:</p>
-        <ul>
+        @if (count($errors) > 0)
+        <div class="col-md-12 alert alert-danger">
+          <p>Corrige los siguientes errores:</p>
+          <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+            <li>{{ $error }}</li>
             @endforeach
-        </ul>
-    </div>
-@endif
+          </ul>
+        </div>
+        @endif
         <div class="porlets-content">
           <form action="{{route('clientes.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
@@ -55,7 +55,7 @@
               </div>
             </div>
 
-             <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="rfc" value="" maxlength="20" id="RFC"  type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"  class="form-control"   class="form-control" required placeholder="Ingrese RFC del Cliente"/>
@@ -65,56 +65,56 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-              <select name="fiscal">
-  <option value="Fisica">Fisica</option>
-  <option value="Moral">Moral</option>
-</select>
-         
+                <select name="fiscal">
+                  <option value="Fisica">Fisica</option>
+                  <option value="Moral">Moral</option>
+                </select>
+                
               </div>
             </div>
 
-              <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Calle: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="calle" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion del Cliente"/>
               </div>
             </div>
 
-                          <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Numero: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input type="number"  min="1" max="999" name="numero" maxlength="4"   class="form-control" onkeypress=" return soloNumeros(event);" required value="" placeholder="Ingrese el numero de su Domicilio" maxlength="4" size="4"/>
               </div>
             </div>
 
-                          <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Colonia: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="colonia" type="text"  maxlength="20" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de la Calle"  />
               </div>
             </div>
 
-                                     <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Ciudad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="ciudad" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Ciudad" />
               </div>
             </div>
-                                     <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Entidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="entidad" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Entidad" />
               </div>
             </div>
 
-                                                 <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">País: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="pais" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese El País" />
               </div>
             </div>
 
- 
+            
             <div class="form-group">
               <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
@@ -132,23 +132,30 @@
               </div>
             </div>
 
-
-  <div class="form-row">    
-        <label class="col-sm-3 control-label">Saldo Inical Del Cliente: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-2">
-    <div class="input-group">
-     <div class="input-group-addon">$</div>
-
-    
-         <input name="saldocliente" maxlength="9" type="number" value="1000.00" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
-    </div>
-        </div>
-        </div>
-       
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="telefono" type="text" placeholder="Ingrese el número de teléfono del cliente"   class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+              </div>
+            </div>
 
 
+            <div class="form-row">    
+              <label class="col-sm-3 control-label">Saldo Inical Del Cliente: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-2">
+                <div class="input-group">
+                 <div class="input-group-addon">$</div>
 
-          <div class="form-group">
+                 
+                 <input name="saldocliente" maxlength="9" type="number" value="1000.00" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+               </div>
+             </div>
+           </div>
+           
+
+
+
+           <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
               <button type="submit" class="btn btn-primary">Guardar</button>
               <a href="{{url('/clientes')}}" class="btn btn-default"> Cancelar</a>

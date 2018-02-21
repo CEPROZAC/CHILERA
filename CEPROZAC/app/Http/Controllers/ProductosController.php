@@ -22,9 +22,9 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        
+
        // $producto= DB::table('productos')->where('estado','Activo')->get();
-        
+
         //return view('productos.index', ['producto' => $producto]); 
         $producto= DB::table('productos')
         ->join('provedores as P', 'productos.proveedor', '=', 'P.id')
@@ -56,6 +56,9 @@ class ProductosController extends Controller
         $producto->nombre=$request->get('nombre');
         $producto->descripcion=$request->get('descripcion');
         $producto->calidad=$request->get('calidad');
+        $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
+        $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
+        $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
         $producto->proveedor=$request->get('proveedor');
         $producto->estado='Activo';
         $producto->save();
@@ -99,6 +102,9 @@ class ProductosController extends Controller
         $producto->nombre=$request->get('nombre');
         $producto->descripcion=$request->get('descripcion');
         $producto->calidad=$request->get('calidad');
+        $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
+        $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
+        $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
         $producto->proveedor=$request->get('proveedor');
         $producto->estado='Activo';
         $producto->update();
@@ -126,7 +132,7 @@ class ProductosController extends Controller
                 ->where('productos.estado', 'Activo')
                 ->get();       
                 
-   
+
                 $sheet->fromArray($producto);
                 $sheet->row(1,['Nombre Producto','Descripcion Producto','Calidad Producto','Proveedor']);
 

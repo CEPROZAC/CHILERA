@@ -43,10 +43,13 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Descripcion: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="descripcion" value="" maxlength="25" id="descripcion" onkeyup="mayus(this);"  class="form-control"   class="form-control" required placeholder="Ingrese la descripcion del producto"/>
+                <input name="descripcion"  maxlength="25" id="descripcion" onkeyup="mayus(this);"  class="form-control"    required placeholder="Ingrese la descripcion del producto"/>
               </div>
             </div>
-           <div class="form-group">
+
+
+
+            <div class="form-group">
               <label class="col-sm-3 control-label">Calidad <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <select name="calidad" class="form-control" required>  
@@ -55,37 +58,103 @@
                 </option>
                 <option value="2da">
                   2da                  
-                </option>               
+                </option>   
+                <option value="2da">
+                  3era                 
+                </option>              
               </select>
               <div class="help-block with-errors"></div>
             </div>
           </div><!--/form-group-->
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Proveedor<strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <select name="proveedor" class="form-control" required>
-                 @foreach($proveedor as $proveedor)
-                 <option value="{{$proveedor->id}}">
-                  {{$proveedor->nombre}}
-                </option>
-                @endforeach
-              </select>
-              <div class="help-block with-errors"></div>
-            </div>
-          </div><!--/form-group-->
-            <div class="form-group">
-              </form>
-              <div class="col-sm-offset-7 col-sm-5">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
-              </div>
-            </div><!--/form-group-->
-          </form>
-        </div><!--/porlets-content-->
-      </div><!--/block-web-->
-    </div><!--/col-md-12-->
-  </div><!--/row-->
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="unidad_de_Medida" class="form-control" required>  
+               <option value="KILOGRAMOS">
+                KILOGRAMOS                
+              </option>
+              <option value="TONELADA">
+                TONELADA                 
+              </option>                
+            </select>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div><!--/form-group-->
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Formatos de empaque <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="formato_de_Empaque" class="form-control" required>  
+             <option value="TOTE">
+              TOTE              
+            </option>
+            <option value="COSTAL">
+              COSTAL                 
+            </option>                
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div><!--/form-group-->
+
+      <div class="form-group ">
+        <label class="col-sm-3 control-label">Porcentaje de humedad</label>
+        <div class="col-sm-6">
+          <input type="text" name="porcentaje_Humedad" class="form-control mask" data-inputmask="'mask':'99%'">
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Proveedor<strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <select name="proveedor" class="form-control" required>
+           @foreach($proveedor as $proveedor)
+           <option value="{{$proveedor->id}}">
+            {{$proveedor->nombre}}
+          </option>
+          @endforeach
+        </select>
+        <div class="help-block with-errors"></div>
+      </div>
+    </div><!--/form-group-->
+
+
+    <div class="form-group ">
+      <label class="col-sm-3 control-label">Imagen</label>
+      <div class="col-sm-6">
+       <input  name="" type="file" >
+     </div>
+   </div>
+
+   
+
+   <div class="form-group">
+    <div class="col-sm-offset-7 col-sm-5">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
+    </div>
+  </div><!--/form-group-->
+
+
+</form>
+</div><!--/porlets-content-->
+</div><!--/block-web-->
+</div><!--/col-md-12-->
+</div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 
 @endsection
+<!--
+  Schema::create('productos', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('nombre');
+        $table->string('descripcion');
+        $table->string('calidad');
+        $table->string('unidad_de_Medida');
+        $table->string('formato_de_Empaque');
+        $table->string('porcentaje_Humedad');
+        $table->string('proveedor');
+        $table->string('estado');
+        $table->timestamps();-->
