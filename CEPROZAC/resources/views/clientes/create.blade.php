@@ -73,46 +73,6 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Calle: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="calle" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion del Cliente"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Numero: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input type="number"  min="1" max="999" name="numero" maxlength="4"   class="form-control" onkeypress=" return soloNumeros(event);" required value="" placeholder="Ingrese el numero de su Domicilio" maxlength="4" size="4"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Colonia: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="colonia" type="text"  maxlength="20" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese Direccion de la Calle"  />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Ciudad: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="ciudad" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Ciudad" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Entidad: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="entidad" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese La Entidad" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">País: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="pais" type="text"  maxlength="15" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese El País" />
-              </div>
-            </div>
 
             
             <div class="form-group">
@@ -133,11 +93,35 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Dirección de Facturación: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="telefono" type="text" placeholder="Ingrese el número de teléfono del cliente"   class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+                <input name="direccion_fact" type="text"  maxlength="50" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Facturación"/>
               </div>
             </div>
+
+                        <div class="form-group">
+              <label class="col-sm-3 control-label">Dirección de Entrega de Embarques: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="direccion_entr" type="text"  maxlength="50" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Entrega de Embarques"/>
+              </div>
+            </div>
+
+               <div class="form-group">
+              <label class="col-sm-3 control-label">Asignación de Volumen de Venta por Año: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-2">
+                <input name="cantidad_venta" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
+               </div>      
+           
+           <div class="form-group">
+                           <div class="col-sm-2">
+               <select name="volumen_venta">
+                  <option value="Kilogramos">Kilogramos</option>
+                  <option value="Toneladas">Toneladas</option>
+                </select>       
+                </div>   
+                </div>
+                </div>
+
 
 
             <div class="form-row">    
@@ -147,7 +131,7 @@
                  <div class="input-group-addon">$</div>
 
                  
-                 <input name="saldocliente" maxlength="9" type="number" value="1000.00" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+                 <input name="saldocliente" maxlength="9" type="number" value="1000.00" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
                </div>
              </div>
            </div>
@@ -168,5 +152,8 @@
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 
+
 </html>
+
+
 @endsection

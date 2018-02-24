@@ -11,21 +11,25 @@ use CEPROZAC\Cliente;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
+use Validator; 
 
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Bus\DispatchesJobs;
+
 
 /**
 use Illuminate\Support\MessageBag;
 use Illuminate\Routing\Controller as BaseController;
+
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 */
 
 
 class ClienteController extends Controller
 {
-     use DispatchesJobs, ValidatesRequests;
+     
     /**
+    use DispatchesJobs, ValidatesRequests;
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -60,24 +64,27 @@ class ClienteController extends Controller
 
        $cliente= new Cliente;
 
-         $this->validate($request, [
-        'rfc' => 'required|unique:cliente|max:25',]);
+        $validator = Validator::make($request->all(), [
+            'rfc' => 'required|unique:cliente|max:25',
+        ]);
 
+        if ($validator->fails()) {
+            $cliente ->nombre=$request->cookie('nombre');
+            return redirect('clientes/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
-
-   
 
         $cliente->nombre=$request->get('nombre');
        $cliente->rfc=$request->get('rfc');
        $cliente->fiscal=$request->get('fiscal');
        $cliente->telefono=$request->get('telefono');
-       $cliente->calle=$request->get('calle');
-       $cliente->numero=$request->get('numero');
-       $cliente->colonia=$request->get('colonia');
-       $cliente->ciudad=$request->get('ciudad');
-       $cliente->entidad=$request->get('entidad');
-       $cliente->pais=$request->get('pais');
        $cliente->email=$request->get('email');
+       $cliente->direccion_fact=$request->get('direccion_fact');
+       $cliente->direccion_entr=$request->get('direccion_entr');
+       $cliente->cantidad_venta=$request->get('cantidad_venta');
+       $cliente->volumen_venta=$request->get('volumen_venta');
        $cliente->saldocliente=$request->get('saldocliente');
        $cliente->estado='Activo';
 
@@ -89,14 +96,16 @@ class ClienteController extends Controller
    }
 
 
-protected function formatValidationErrors(Validator $validator)
+
+    /**
+    protected function formatValidationErrors(Validator $validator)
     {
 
 
         return $validator->errors()->all();
 
     }
-    /**
+
      * Display the specified resource.
      *
      * @param  int  $id
@@ -131,19 +140,17 @@ protected function formatValidationErrors(Validator $validator)
     {
         $cliente=Cliente::findOrFail($id);
 
-        $cliente->nombre=$request->get('nombre');
-         $cliente->rfc=$request->get('rfc');
+       $cliente->nombre=$request->get('nombre');
+       $cliente->rfc=$request->get('rfc');
        $cliente->fiscal=$request->get('fiscal');
-        $cliente->telefono=$request->get('telefono');
-        $cliente->calle=$request->get('calle');
-        $cliente->numero=$request->get('numero');
-        $cliente->colonia=$request->get('colonia');
-        $cliente->ciudad=$request->get('ciudad');
-        $cliente->entidad=$request->get('entidad');
-        $cliente->pais=$request->get('pais');
-        $cliente->email=$request->get('email');
-        $cliente->saldocliente=$request->get('saldocliente');
-        $cliente->estado='Activo';
+       $cliente->telefono=$request->get('telefono');
+       $cliente->email=$request->get('email');
+       $cliente->direccion_fact=$request->get('direccion_fact');
+       $cliente->direccion_entr=$request->get('direccion_entr');
+         $cliente->cantidad_venta=$request->get('cantidad_venta');
+       $cliente->volumen_venta=$request->get('volumen_venta');
+       $cliente->saldocliente=$request->get('saldocliente');
+       $cliente->estado='Activo';
         $cliente->save();
         return Redirect::to('clientes');
         //
@@ -173,14 +180,13 @@ protected function formatValidationErrors(Validator $validator)
         Excel::create('clientes', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-                $clientes = Cliente::select('nombre','rfc','fiscal', 'telefono', 'calle', 'numero', 'colonia', 'ciudad', 'entidad', 'pais', 'email', 'saldocliente')
+                $clientes = Cliente::select('nombre','rfc','fiscal', 'telefono', 'email', 'direccion_fact', 'direccion_entr', 'cantidad_venta'.' '.'volumen_venta', 'email', 'saldocliente')
                 ->where('estado', 'Activo')
                 ->get();       
                 $sheet->fromArray($clientes);
-                $sheet->row(1,['Nombre','RFC','Regimen Fiscal' ,'Teléfono','Calle','Numero','Colonia','Municipio','Estado','Pais','Email','Saldo Cliente $',]);
+                $sheet->row(1,['Nombre','RFC','Regimen Fiscal' ,'Teléfono','Dirección de Facturación','Dirección de Entrega de Embarque','Asignación de Volumen de Venta por Año','Saldo Cliente $',]);
                 $sheet->setOrientation('landscape');
               
-
             /*    
             $objDrawing = new PHPExcel_Worksheet_Drawing;
             $objDrawing->setPath(public_path('images\logoCeprozac.jpg')); //your image path

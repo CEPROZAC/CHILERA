@@ -47,9 +47,11 @@
                   <th>Nombre </th>
                    <th>RFC </th>
                     <th>Regimen Fiscal </th>
-                  <th>Dirección </th>
-                  <th>Teléfono </th>
+                    <th>Teléfono </th>
                    <th>Correo </th>
+                  <th>Dirección de Facturación </th>
+                  <th>Dirección de Entrega de Embarques </th>
+                   <th>Asignación de Volumen de Venta por Año </th>
                   <th>Saldo Cliente </th>    
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>                            
@@ -60,13 +62,12 @@
                 <tr class="gradeA">
                   <td>{{$clientes->nombre}} </td>
                   <td>{{$clientes->rfc}} </td>
-                  <td>{{$clientes->fiscal}} </td>
-                 
-                  <td>{{$clientes->calle}} #{{$clientes->numero}} {{$clientes->colonia}} {{$clientes->entidad}} {{$clientes->pais}}</td>
+                  <td>{{$clientes->fiscal}} </td>              
                    <td>{{$clientes->telefono}} </td>
                   <td>{{$clientes->email}}</td>
-                  
- 
+                  <td>{{$clientes->direccion_fact}}</td>
+                  <td>{{$clientes->direccion_entr}}</td>
+                  <td>{{$clientes->cantidad_venta}} {{$clientes->volumen_venta}} </td>
                   <td>${{$clientes-> saldocliente}}</td>
 
                      <td>  <a href="{{URL::action('ClienteController@edit',$clientes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
@@ -82,15 +83,17 @@
             </tbody>
             <tfoot>
               <tr>
-               <th>Nombre </th>
-               <th>RFC </th>
-                <th>Regimen Fiscal </th>
-               <th>Teléfono </th>
-               <th>Dirección </th>
-               <th>Correo </th>
-               <th>Saldo Cliente </th>
-                               <td><center><b>Editar</b></center></td>
-               <td><center><b>Borrar</b></center></td> 
+                  <th>Nombre </th>
+                  <th>RFC </th>
+                  <th>Regimen Fiscal </th>
+                  <th>Teléfono </th>
+                  <th>Correo </th>
+                  <th>Dirección de Facturación </th>
+                  <th>Dirección de Entrega de Embarques </th>
+                  <th>Asignación de Volumen de Venta por Año </th>
+                  <th>Saldo Cliente </th>    
+                  <td><center><b>Editar</b></center></td>
+                  <td><center><b>Borrar</b></center></td> 
              </tr>
            </tfoot>
          </table>
