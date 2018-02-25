@@ -75,7 +75,7 @@
           </tbody>
           <tfoot>
             <tr>
-             <th>Nombre </th>
+             <th>Rol </th>
              <th>Descripción </th>
              <th><center><b>Editar</b></center></th>
              <th><center><b>Borrar</b></center></th>
