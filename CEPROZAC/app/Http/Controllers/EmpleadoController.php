@@ -3,6 +3,8 @@
 namespace CEPROZAC\Http\Controllers;
 use Illuminate\Http\Request;
 use CEPROZAC\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\Empleado;
 use DB;
@@ -40,7 +42,12 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $empleado=new Empleado;
+        $empleado->nombre->$request->get('nombre');
+        $empleado->estado='Activo';
+        $empleado->save();
+        return Redirect::to('empleados');
+       
     }
 
     /**

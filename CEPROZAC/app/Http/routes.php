@@ -20,11 +20,9 @@ Route::get('/', function () {
 Route::resource('empresas', 'EmpresaController');
 Route::resource('empleados', 'EmpleadoController');
 Route::resource('home','HomeController');
-
-	
-
 Route::resource('provedores','ProvedorController');
 Route::resource('productos','ProductosController');
+Route::resource('rol','RolEmpleadoController');
 Route::resource('clientes','ClienteController');	
 Route::get('pdf', 'PdfController@invoice');
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
@@ -33,4 +31,6 @@ Route::get('descargar-clientes', 'ClienteController@excel')->name('clientes.exce
 Route::get('descargar-productos', 'ProductosController@excel')->name('productos.excel');
 
 Route::get('descargar-empresas', 'EmpresaController@excel')->name('empresas.excel');
+
+Route::get('descargar-rol', 'RolEmpleadoController@excel')->name('rol.excel');
 

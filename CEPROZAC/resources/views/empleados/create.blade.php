@@ -75,6 +75,21 @@
         </div>
 
         <div class="form-group">
+          <label class="col-sm-3 control-label">CURP: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+
+            <input name="nombre" type="text"  maxlength="30" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Empleado"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <input type="text" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" value="" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
 
@@ -82,6 +97,22 @@
 
           </div>
         </div>
+
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Rol empleado: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="rol" class="form-control" required>  
+             <option value="Supervisor de Bandas">
+              Supervisor de Bandas             
+            </option>
+            <option value="COSTAL">
+              COSTAL                 
+            </option>                
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
+      </div><!--/form-group-->
 
         <div class="form-row">    
           <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>

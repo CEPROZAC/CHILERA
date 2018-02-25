@@ -15,9 +15,8 @@ class CreateEmpleadosTable extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->increments('id');
 
-         $table->string('nombre');
-            $table->string('apellido_P');
-            $table->string('apellido_M');
+            $table->string('nombre');
+            $table->string('apellidos');
             $table->date('fecha_Ingreso');
             $table->date('fecha_Alta_Seguro');
             $table->string('numero_Seguro_Social');
@@ -27,8 +26,9 @@ class CreateEmpleadosTable extends Migration
             $table->string('telefono');
             $table->string('sexo');
             $table->double('sueldo_Fijo');
-            $table->string('rol');
-             $table->string('estado');
+            $table->integer('rol')->unsigned();
+            $table->foreign('rol')->references('id')->on('rol_empleados');
+            $table->string('estado');
 
             $table->timestamps();
         });

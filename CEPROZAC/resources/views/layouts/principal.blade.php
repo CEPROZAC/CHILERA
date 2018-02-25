@@ -128,9 +128,10 @@
                 <li> <a href="{{url('productos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Productos</b> </a> </li>
               </ul>
             </li>
-             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Recursos Humanos <span class="plus"><i class="fa fa-plus"></i></span></a>
+             <li> <a href="javascript:void(0);"> <i class="fa fa-users"></i> Recursos Humanos <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('empleados')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empleados</b> </a> </li>
+                <li> <a href="{{url('rol')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Roles Empleados</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-truck icon"></i> Transporte <span class="plus"><i class="fa fa-plus"></i></span> </a>
