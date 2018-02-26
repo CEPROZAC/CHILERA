@@ -13,7 +13,7 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 
@@ -24,6 +24,7 @@ Route::resource('provedores','ProvedorController');
 Route::resource('productos','ProductosController');
 Route::resource('rol','RolEmpleadoController');
 Route::resource('clientes','ClienteController');	
+Route::resource('transportes','TransporteController');
 Route::get('pdf', 'PdfController@invoice');
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
 
@@ -33,7 +34,7 @@ Route::get('descargar-productos', 'ProductosController@excel')->name('productos.
 Route::get('descargar-empresas', 'EmpresaController@excel')->name('empresas.excel');
 
 Route::get('descargar-rol', 'RolEmpleadoController@excel')->name('rol.excel');
-Route::get('descargar-rol', 'EmpleadoController@excel')->name('empleados.excel');
+Route::get('descargar-empleados', 'EmpleadoController@excel')->name('empleados.excel');
 
 Route::resource('almacen/materiales','AlmacenMaterialController');	
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');

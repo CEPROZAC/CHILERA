@@ -136,7 +136,7 @@
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-truck icon"></i> Transporte <span class="plus"><i class="fa fa-plus"></i></span> </a>
               <ul>
-                <li> <a href="todo.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Transporte</b> </a> </li>
+                <li> <a href="{{url('transportes')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Vehículos</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Empresas <span class="plus"><i class="fa fa-plus"></i></span> </a>

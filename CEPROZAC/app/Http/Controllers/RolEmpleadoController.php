@@ -116,8 +116,8 @@ class RolEmpleadoController extends Controller
   }
 
 
-    public function excel()
-    {        
+  public function excel()
+  {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
@@ -130,7 +130,7 @@ class RolEmpleadoController extends Controller
                 ->where('estado', 'Activo')
                 ->get();       
                 
-   
+                
                 $sheet->fromArray($roles);
                 $sheet->row(1,['Rol Empleado','Descripcion']);
 

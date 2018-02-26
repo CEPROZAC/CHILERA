@@ -17,6 +17,9 @@ class TransporteController extends Controller
     public function index()
     {
         //
+        return view('transportes.index');
+
+
     }
 
     /**
