@@ -2,12 +2,12 @@
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-    <h1>Empleados</h1>
-    <h2 class="">Clientes</h2>
+    <h1>Inicio</h1>
+    <h2 class="">Empleados</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a style="color: #808080" href="{{url('/clientes')}}">Inicio</a></li>
+      <li ><a style="color: #808080" href="{{url('/empleados')}}">Inicio</a></li>
       <li class="active">Empleados</a></li>
     </ol>
   </div>
@@ -29,7 +29,7 @@
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="empleados/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Empleado"> <i class="fa fa-plus"></i> Registrar </a>
 
-                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('clientes.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{route('empleados.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
                   </div>
 
@@ -50,9 +50,9 @@
                   <th style="display:none;">Fecha_Alta</th>
                   <th style="display:none;">NSS</th>
                   <th style="display:none;">Fecha_Nacimiento</th>
-                  <th >curp</th>
+                  <th >CURP</th>
                   <th style="display:none;">email</th>
-                  <th >telefono</th>
+                  <th >Telefono</th>
                   <th style="display:none;">sexo</th>
                   <th style="display:none;">sueldo</th>
                   
@@ -65,7 +65,7 @@
               <tbody>
                 @foreach($empleados  as $empleados)
                 <tr class="gradeX">
-                  <td >{{$empleados->nombre}} {{$empleados->apellido_P}} {{$empleados->apellido_M}} </td>
+                  <td >{{$empleados->nombre}} {{$empleados->apellidos}} </td>
                   
                   <td style="display:none;" >{{$empleados->fecha_Ingreso}}</td>
                   <td style="display:none;" >{{$empleados->fecha_Alta_Seguro}}</td>
@@ -76,15 +76,14 @@
                   <td >{{$empleados->telefono}}</td>
                   <td >{{$empleados->sexo}}</td>
                   <td style="display:none;" >{{$empleados->sueldo_Fijo}}</td>
-                  <td style="display:none;"   >{{$empleados->rol}}</td>
-                  <td>  <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                  <td style="display:none;"   >{{$empleados->rol_Empleado}}</td>
+                  <td>  <a href="{{URL::action('EmpleadoController@edit',$empleados->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
+                  </td> 
                   </td>
-                  <td> <a class="btn btn-danger btn-sm" data-target="#" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empleados->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
-                  
-                  
-                  
                 </tr>
+                @include('empleados.modal')
                 @endforeach
               </tbody>
               <tfoot>
@@ -95,12 +94,12 @@
                  <th style="display:none;">Fecha Alta</th>
                  <th style="display:none;">NSS</th>
                  <th style="display:none;">Fecha Nacimiento </th>
-                 <th >curp </th>
+                 <th >CURP </th>
                  <th style="display:none;"> email </th>
-                 <th >telefono </th>
+                 <th >Telefono </th>
                  <th style="display:none;">sexo </th>
                  <th style="display:none;">suedlo fijo </th>
-                 <th >rol </th>
+                 <th >Rol </th>
                  <td><center><b>Editar</b></center></td>
                  <td><center><b>Borrar</b></center></td> 
                  

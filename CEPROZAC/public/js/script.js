@@ -42,3 +42,31 @@ function soloNumeros(e){
 }
 
 
+function curp2date() {
+  var miCurp =document.getElementById('curp').value;
+  var m = miCurp.match( /^\w{4}(\w{2})(\w{2})(\w{2})/
+    );
+
+
+  var anyo = parseInt(m[1],10)+1900;
+  if( anyo < 1950 ) anyo += 100;
+  var mes = parseInt(m[2], 10)-1;
+  var dia = parseInt(m[3], 10);
+
+  var fech = new Date( anyo, mes, dia );
+  document.getElementById("fechaNacimiento").value = fech;
+}
+
+
+  Date.prototype.toString = function() { 
+    var anyo = this.getFullYear(); 
+    var mes = this.getMonth()+1; 
+    if( mes<=9 ) mes = "0"+mes; 
+    var dia = this.getDate(); 
+    if( dia<=9 ) dia = "0"+dia; 
+    return dia+"/"+mes+"/"+anyo;  
+}  
+
+
+
+

@@ -17,10 +17,10 @@ class CreateEmpleadosTable extends Migration
 
             $table->string('nombre');
             $table->string('apellidos');
-            $table->date('fecha_Ingreso');
-            $table->date('fecha_Alta_Seguro');
+            $table->string('fecha_Ingreso');
+            $table->string('fecha_Alta_Seguro');
             $table->string('numero_Seguro_Social');
-            $table->date('fecha_Nacimiento');
+            $table->string('fecha_Nacimiento');
             $table->string('curp');
             $table->string('email');
             $table->string('telefono');

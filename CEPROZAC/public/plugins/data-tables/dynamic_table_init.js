@@ -2,17 +2,17 @@ function fnFormatDetails ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-    sOut += '<tr><td>Nombre:</td><td>'+aData[1]+' </td></tr>';
-    sOut += '<tr><td>CURP:</td><td>'+aData[6]+' </td></tr>';
-    sOut += '<tr><td>Fecha Nacimiento:</td><td>'+aData[5]+' </td></tr>';
-    sOut += '<tr><td>Sexo:</td><td>'+aData[9]+' </td></tr>';
-    sOut += '<tr><td>Fecha de Ingreso a la empresa:</td><td>'+aData[2]+' </td></tr>';
-    sOut += '<tr><td>Fecha de alta en Seguro Social:</td><td>'+aData[3]+' </td></tr>';
-    sOut += '<tr><td>Numero de Seguro Social:</td><td>'+aData[4]+' </td></tr>';
-    sOut += '<tr><td>Correo:</td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td>Telefono:</td><td>'+aData[8]+' </td></tr>';
-    sOut += '<tr><td>Rol:</td><td>'+aData[11]+' </td></tr>';
-    sOut += '<tr><td>Sueldo:</td><td>'+aData[10]+' </td></tr>';
+    sOut += '<tr><td><strong>Nombre:</strong></td><td>'+aData[1]+' </td></tr>';
+    sOut += '<tr><td><strong>CURP:</strong></td><td>'+aData[6]+' </td></tr>';
+    sOut += '<tr><td><strong>Fecha Nacimiento:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>Sexo:</strong></td><td>'+aData[9]+' </td></tr>';
+    sOut += '<tr><td><strong>Fecha de Ingreso a la empresa:</strong></td><td>'+aData[2]+' </td></tr>';
+    sOut += '<tr><td><strong>Fecha de alta en Seguro Social:</strong></td><td>'+aData[3]+' </td></tr>';
+    sOut += '<tr><td><strong>Numero de Seguro Social:</strong></td><td>'+aData[4]+' </td></tr>';
+    sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[7]+' </td></tr>';
+    sOut += '<tr><td><strong>Telefono:</strong></td><td>'+aData[8]+' </td></tr>';
+    sOut += '<tr><td><strong>Rol:</strong></td><td>'+aData[11]+' </td></tr>';
+    sOut += '<tr><td><strong>Sueldo:</strong></td><td>'+aData[10]+' </td></tr>';
     sOut += '</table>';
 
     return sOut;

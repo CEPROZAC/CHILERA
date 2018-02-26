@@ -33,4 +33,5 @@ Route::get('descargar-productos', 'ProductosController@excel')->name('productos.
 Route::get('descargar-empresas', 'EmpresaController@excel')->name('empresas.excel');
 
 Route::get('descargar-rol', 'RolEmpleadoController@excel')->name('rol.excel');
+Route::get('descargar-rol', 'EmpleadoController@excel')->name('empleados.excel');
 

@@ -1,11 +1,11 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$empleado->id}}">
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$empleados->id}}">
   <div class="modal-dialog">
     <div class="modal-content panel default blue_border horizontal_border_1">
       <div class="modal-body"> 
         <div class="row">
           <div class="block-web">
             <div class="header">
-              <h3 class="content-header theme_color">&nbsp;Eliminar Rol</h3>
+              <h3 class="content-header theme_color">&nbsp;Eliminar Empleado</h3>
             </div>
             <div class="porlets-content" style="margin-bottom: -50px;">
               <h4>¿Esta segúro que desea eliminar Empleado?</h4>
@@ -16,7 +16,7 @@
     </div>
     <div class="modal-footer" style="margin-top: -10px;">
       <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
-        <form action="{{url('empleados', [$empleado->id])}}" method="POST"> 
+        <form action="{{url('empleados', [$empleados->id])}}" method="POST"> 
          <input type="hidden" name="_method" value="DELETE">
          <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
