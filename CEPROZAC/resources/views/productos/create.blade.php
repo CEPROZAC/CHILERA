@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{route('productos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          <form action="{{route('productos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
@@ -124,7 +124,7 @@
     <div class="form-group ">
       <label class="col-sm-3 control-label">Imagen</label>
       <div class="col-sm-6">
-       <input  name="" type="file" >
+       <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
      </div>
    </div>
 

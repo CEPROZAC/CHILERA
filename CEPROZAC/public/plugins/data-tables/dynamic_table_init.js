@@ -86,6 +86,7 @@ function fnFormatDetails1 ( oTable, nTr )
     sOut += '<tr><td>Formato de Empaque:</td><td>'+aData[6]+' </td></tr>';
     sOut += '<tr><td>Porcentaje de Humedad:</td><td>'+aData[7]+' </td></tr>';
     sOut += '<tr><td>Proveedor:</td><td>'+aData[8]+' </td></tr>';
+    sOut += '<tr><td>Imagen:</td><td>'+aData[9]+' </td></tr>';
 
     sOut += '</table>';
 

@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{url('productos', [$productos->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          <form action="{{url('productos', [$productos->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
 
@@ -140,7 +140,7 @@
             <div class="form-group ">
               <label class="col-sm-3 control-label">Porcentaje de humedad</label>
               <div class="col-sm-6">
-              <input type="text" name="porcentaje_Humedad" value="{{ $productos->porcentaje_Humedad}}"  class="form-control mask" data-inputmask="'mask':'99%'">
+                <input type="text" name="porcentaje_Humedad" value="{{ $productos->porcentaje_Humedad}}"  class="form-control mask" data-inputmask="'mask':'99%'">
               </div>
             </div>
 
@@ -165,18 +165,32 @@
             </div>
           </div><!--/form-group-->
 
+           <input type="text" hidden name="nombreimagen" value="{{$productos->imagen}}">
+
+          <div class="form-group ">
+            <label class="col-sm-3 control-label">Imagen</label>
+            <div class="col-sm-6">
+             <input  type="file" hidden name="imagen"  value="{{$productos->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
+             @if (($productos->imagen)!="")
+             <img src="{{asset('imagenes/productos/'.$productos->imagen)}}" height="100px" width="100px">
+             @endif
+           </div>
+         </div>
 
 
-          <div class="form-group">
-            <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
-            </div>
-          </div><!--/form-group-->
-        </form>
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
+         
+
+
+         <div class="form-group">
+          <div class="col-sm-offset-7 col-sm-5">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
+          </div>
+        </div><!--/form-group-->
+      </form>
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 @endsection

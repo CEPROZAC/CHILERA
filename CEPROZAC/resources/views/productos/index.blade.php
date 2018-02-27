@@ -48,6 +48,7 @@
                   <th style="display:none;">Formato de Empaque</th>
                   <th style="display:none;">Porcentaje de humedad</th>
                   <th>Proveedor </th>
+                  <th style="display:none;"></th>
                   <th><center><b>Editar</b></center></th>
                   <th><center><b>Borrar</b></center></th>
                 </tr>
@@ -63,6 +64,13 @@
                 <td style="display:none;">{{$producto->formato_de_Empaque}}</td>
                 <td style="display:none;">{{$producto->porcentaje_Humedad}}</td>
                 <td>{{$producto->nombreProveedor}}</td>
+                <td style="display:none;">
+                  @if (($producto->imagen)!="")
+                  <img src="{{asset('imagenes/productos/'.$producto->imagen)}}" alt="{{$producto->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                  @else
+                  No Hay Imagen Disponible
+                  @endif
+                </td>   
                 <td>  <a href="{{URL::action('ProductosController@edit',$producto->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                 </td>
                 <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$producto->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
@@ -82,7 +90,8 @@
               <th style="display:none;">Unidad de Medida</th>
               <th style="display:none;">Formato de Empaque</th>
               <th style="display:none;">Porcentaje de humedad</th>
-              <th>Proveedor </th>
+              <th style="display:none;">Proveedor </th>
+              <th></th>
               <th><center><b>Editar</b></center></th>
               <th><center><b>Borrar</b></center></th>
             </tr>

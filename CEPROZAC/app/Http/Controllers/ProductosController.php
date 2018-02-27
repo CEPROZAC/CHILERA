@@ -60,10 +60,20 @@ class ProductosController extends Controller
         $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
         $producto->proveedor=$request->get('proveedor');
+        
+        if(Input::hasFile('imagen'))
+        {
+            $file=$request->file('imagen');//si pasa la condicion almacena la imagen
+            $file->move(public_path().'/imagenes/productos',$file->getClientOriginalName());//lo movemos a esta ruta                        
+            $producto->imagen=$file->getClientOriginalName();
+        } 
         $producto->estado='Activo';
         $producto->save();
         return Redirect::to('productos');
     }
+
+
+
 
     /**
      * Display the specified resource.
@@ -106,6 +116,16 @@ class ProductosController extends Controller
         $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
         $producto->proveedor=$request->get('proveedor');
+
+        if(Input::hasFile('imagen'))
+        {
+            $file=$request->file('imagen');//si pasa la condicion almacena la imagen
+            $file->move(public_path().'/imagenes/productos',$file->getClientOriginalName());//lo movemos a esta ruta                        
+            $producto->imagen=$file->getClientOriginalName();
+        } else {
+            $producto->imagen=$request->get('nombreimagen');
+        }
+
         $producto->estado='Activo';
         $producto->update();
         return Redirect::to('productos');

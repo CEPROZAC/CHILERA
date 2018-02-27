@@ -21,6 +21,7 @@ class CreateProductosTable extends Migration
         $table->string('formato_de_Empaque');
         $table->string('porcentaje_Humedad');
         $table->string('proveedor');
+        $table->string('imagen');
         $table->string('estado');
         $table->timestamps();
     });
