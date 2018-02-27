@@ -24,6 +24,7 @@ class AlmacenMaterialRequest extends Request
     public function rules()
     {
         return [
+        'imagen'=>'mimes:jpeg,jpg,png,bmp'
             //
         ];
     }
