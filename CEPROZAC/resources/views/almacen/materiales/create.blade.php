@@ -6,7 +6,7 @@
   <div class="pull-left page_title theme_color">
 
     <h1>Inicio</h1>
-    <h2 class="">Clientes</h2>
+    <h2 class="">Materiales</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">

@@ -63,7 +63,10 @@ class AlmacenMaterialController extends Controller
        $material->cantidad=$request->get('cantidad');
        $material->estado='Activo';
        $material->save();
-     return Redirect::to('almacen/materiales');
+
+
+        $material= DB::table('AlmacenMateriales')->orderby('created_at','DESC')->take(1)->get();
+        return view('almacen.materiales.pdf', ['material' => $material]);
 
 
         //
@@ -150,7 +153,7 @@ class AlmacenMaterialController extends Controller
         Excel::create('almacenmateriales', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-                $material = Cliente::select('id','nombre', 'imagen', 'descripcion', 'cantidad', 'estado')
+                $material = AlmacenMaterial::select('id','nombre', 'imagen', 'descripcion', 'cantidad', 'estado')
                 ->where('estado', 'Activo')
                 ->get();       
                 $sheet->fromArray($material);
