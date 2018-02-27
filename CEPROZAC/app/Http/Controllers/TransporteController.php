@@ -3,9 +3,13 @@
 namespace CEPROZAC\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use CEPROZAC\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
 use CEPROZAC\Http\Controllers\Controller;
+use CEPROZAC\Empleado;
+use CEPROZAC\Transporte;
+use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransporteController extends Controller
 {
@@ -29,7 +33,9 @@ class TransporteController extends Controller
      */
     public function create()
     {
-        //
+
+         $empleados=DB::table('empleados')->where('estado','=','Activo')->get();
+        return view('transportes.create',['empleados'=>$empleados]);
     }
 
     /**
