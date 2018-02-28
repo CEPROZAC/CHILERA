@@ -39,3 +39,4 @@ Route::get('descargar-empleados', 'EmpleadoController@excel')->name('empleados.e
 Route::resource('almacen/materiales','AlmacenMaterialController');	
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');
 
+Route::resource('almacen/materiales/salidas','SalidaAlmacenMaterialController');	

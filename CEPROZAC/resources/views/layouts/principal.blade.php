@@ -164,6 +164,11 @@
                 <li> <a href="statictable.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Venta</b> </a> </li>
               </ul>
             </li>
+            <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
+              <ul>
+                <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
