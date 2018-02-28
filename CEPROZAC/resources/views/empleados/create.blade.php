@@ -1,5 +1,15 @@
 @extends('layouts.principal')
 @section('contenido')
+<style type="text/css">
+  #resultado {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+  }
+  #resultado.ok {
+    background-color: green;
+  }
+</style>
 <html>
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
@@ -72,9 +82,11 @@
          <div class="form-group">
           <label class="col-sm-3 control-label">SSN</label>
           <div class="col-sm-6 ">
-            <input type="text" name="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
+          <input type="text" name="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
           </div>
         </div>
+
+
 
         <div class="form-group">
           <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
