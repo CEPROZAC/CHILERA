@@ -9,13 +9,18 @@ use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\SalidasAlmacenMaterial;
 use CEPROZAC\Empleado;
-use CEPROZAC\AlmacenMaterial;
+
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
+
+/**
+use CEPROZAC\AlmacenMaterial;
+
+*/
 
 class SalidaAlmacenMaterialController extends Controller
 {
@@ -24,10 +29,14 @@ class SalidaAlmacenMaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $salida= DB::table('SalidasAlmacenMaterial')->get();
+       
+        $material= DB::table('almacenmateriales')->get();
+         $salida= DB::table('SalidasAlmacenMaterial')->get();
         return view('almacen.materiales.salidas.index', ['salida' => $salida]);
+
+
         //
     }
 
@@ -40,7 +49,7 @@ class SalidaAlmacenMaterialController extends Controller
     {
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
         $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->get();
-        return view("almacen.materiales.salidas.create",["material"=>$material]); 
+        return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
     }
 
@@ -52,6 +61,16 @@ class SalidaAlmacenMaterialController extends Controller
      */
     public function store(Request $request)
     {
+         $material= new SalidaAlmacenMaterial;
+        $material->id_material=$request->get('id_material');
+        $material->id_material=$request->get('cantidad');
+        $material->destino=$request->get('destino');
+        $material->entrego=$request->get('entrego');
+        $material->recibio=$request->get('recibio');
+        $material->tipo_movimiento=$request->get('tipo_movimiento');
+
+        return view('almacen.materiales.salidas');
+
         //
     }
 
@@ -74,6 +93,7 @@ class SalidaAlmacenMaterialController extends Controller
      */
     public function edit($id)
     {
+    
         //
     }
 
@@ -97,6 +117,7 @@ class SalidaAlmacenMaterialController extends Controller
      */
     public function destroy($id)
     {
+
         //
     }
 }
