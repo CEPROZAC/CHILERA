@@ -40,28 +40,16 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Descripcion: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="descripcion"  maxlength="25" id="descripcion" onkeyup="mayus(this);"  class="form-control"    required placeholder="Ingrese la descripcion del producto"/>
-              </div>
-            </div>
-
-
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">Calidad <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Calidad<strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="calidad" class="form-control" required>  
-                 <option value="1era">
-                  1era                  
+                <select name="calidad" class="form-control" required>
+                 @foreach($calidades as $calidades)
+                 <option value="{{$calidades->id}}">
+                  {{$calidades->nombre}}
                 </option>
-                <option value="2da">
-                  2da                  
-                </option>   
-                <option value="2da">
-                  3era                 
-                </option>              
+                @endforeach
               </select>
               <div class="help-block with-errors"></div>
             </div>
@@ -106,39 +94,28 @@
       </div>
 
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Proveedor<strog class="theme_color">*</strog></label>
+
+
+
+
+      <div class="form-group ">
+        <label class="col-sm-3 control-label">Imagen</label>
         <div class="col-sm-6">
-          <select name="proveedor" class="form-control" required>
-           @foreach($proveedor as $proveedor)
-           <option value="{{$proveedor->id}}">
-            {{$proveedor->nombre}}
-          </option>
-          @endforeach
-        </select>
-        <div class="help-block with-errors"></div>
+         <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
+       </div>
+     </div>
+
+
+
+     <div class="form-group">
+      <div class="col-sm-offset-7 col-sm-5">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
       </div>
     </div><!--/form-group-->
 
 
-    <div class="form-group ">
-      <label class="col-sm-3 control-label">Imagen</label>
-      <div class="col-sm-6">
-       <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
-     </div>
-   </div>
-
-   
-
-   <div class="form-group">
-    <div class="col-sm-offset-7 col-sm-5">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
-    </div>
-  </div><!--/form-group-->
-
-
-</form>
+  </form>
 </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->

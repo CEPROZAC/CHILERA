@@ -8,47 +8,28 @@ use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\Empresa;
+use CEPROZAC\Provedor;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 class EmpresaController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $empresa= DB::table('empresa')->where('estado','Activo')->get();
-        
-        return view('empresas.index', ['empresa' => $empresa]);
-        
-    }
+     public function index()
+     {
 
+      $empresas= DB::table('empresas')
+      ->join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
+      ->join('bancos','empresas.id_Banco','=','bancos.id')
+      ->select('empresas.*','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
+      ->where('empresas.estado','Activo')->get();
+      return view('Provedores.empresas.index', ['empresas' => $empresas]);
 
-
-    public function excel()
-    {        
-        /**
-         * toma en cuenta que para ver los mismos 
-         * datos debemos hacer la misma consulta
-        **/
-        Excel::create('empresas', function($excel) {
-            $excel->sheet('Excel sheet', function($sheet) {
-               
-
-                $empresa = Empresa::select('nombre','rfc','direccion','telefono','email','regimenFiscal')
-                ->where('estado', 'Activo')
-                ->get();       
-                $sheet->fromArray($empresa);
-
-                $sheet->row(1,['Nombre Empresa','RFC','Direccion',
-                    'Telefono','Email','Regimen Fiscal']);
-                $sheet->setOrientation('landscape');
-            });
-        })->export('xls');
-    }
-
+  }
+  /*
 
     /**
      * Show the form for creating a new resource.
@@ -57,7 +38,9 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        return view('empresas.create');
+        $bancos=DB::table('bancos')->where('estado','=','Activo')->get();
+        $provedores=DB::table('provedores')->where('estado','=','Activo')->get();
+        return view("Provedores.empresas.create",["provedores"=>$provedores,"bancos"=>$bancos]);
     }
 
     /**
@@ -70,13 +53,16 @@ class EmpresaController extends Controller
     {
         $empresa= new Empresa;
         $empresa->nombre=$request->get('nombre');
-        //echo $request->get('nombre');
         $empresa->rfc=$request->get('rfc');
-        $empresa->direccion=$request->get('direccion');
-        $empresa->telefono=$request->get('telefono');
-        $empresa->email=$request->get('email');
         $empresa->regimenFiscal=$request->get('regimenFiscal');
+        $empresa->telefono=$request->get('telefono');
+        $empresa->direccion=$request->get('direccion');
+        $empresa->email=$request->get('email');
+        $empresa->id_Banco=$request->get('id_Banco');
+        $empresa->cve_Interbancaria=$request->get('cve_Interbancaria');
+        $empresa->nom_cuenta=$request->get('nom_cuenta');
         $empresa->estado='Activo';
+        $empresa->provedor_id=$request->get('provedor_id');
         $empresa->save();
         return Redirect::to('empresas');
     }
@@ -89,8 +75,11 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        return view("empresas.show",["empresas"=>Empresa::findOrFail($id)]);
+
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -100,9 +89,11 @@ class EmpresaController extends Controller
      */
     public function edit($id)
     {
-
-       return view("empresas.edit",["empresas"=>Empresa::findOrFail($id)]);
-   }
+        $empresas=Empresa::findOrFail($id);
+        $provedores=DB::table('provedores')->where('estado','=','Activo')->get();
+        $bancos=DB::table('bancos')->where('estado','=','Activo')->get();
+        return view("Provedores.empresas.edit",["provedores"=>$provedores,"empresas"=>$empresas,"bancos"=>$bancos]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -113,18 +104,22 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$categoria=Categoria::findOrFail($id);
-        $empresa=Empresa::findOrFail($id);
-        $empresa->nombre=$request->get('nombre');
-        //echo $request->get('nombre');
-        $empresa->rfc=$request->get('rfc');
-        $empresa->direccion=$request->get('direccion');
-        $empresa->telefono=$request->get('telefono');
-        $empresa->email=$request->get('email');
-        $empresa->regimenFiscal=$request->get('regimenFiscal');
-        $empresa->estado='Activo';
-        $empresa->update();
+        $empresas=Empresa::findOrFail($id);
+        $empresas->nombre=$request->get('nombre');
+        $empresas->rfc=$request->get('rfc');
+        $empresas->regimenFiscal=$request->get('regimenFiscal');
+        $empresas->telefono=$request->get('telefono');
+        $empresas->direccion=$request->get('direccion');
+        $empresas->email=$request->get('email');
+        $empresas->id_Banco=$request->get('id_Banco');
+        $empresas->cve_Interbancaria=$request->get('cve_Interbancaria');
+        $empresas->nom_cuenta=$request->get('nom_cuenta');
+        $empresas->estado='Activo';
+        $empresas->provedor_id=$request->get('provedor_id');
+
+        $empresas->Update();
         return Redirect::to('empresas');
+
     }
 
     /**
@@ -140,4 +135,31 @@ class EmpresaController extends Controller
         $empresas->update();
         return Redirect::to('empresas');
     }
+
+
+    public function excel()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+        Excel::create('provedores', function($excel) {
+            $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+
+                $provedor = Provedor::join('empresas', 'empresa.id', '=', 'provedores.empresa_id')
+                ->select('provedores.nombre', 'provedores.telefono', 'provedores.direccion', 'provedores.email','empresa.nombre AS nom_empresa')
+                ->where('provedores.estado', 'Activo')
+                ->get();       
+                
+
+                $sheet->fromArray($provedor);
+                $sheet->row(1,['Nombre Proveedor','Telefono Proveedor','Direccion Proveedor',
+                    'Email Proveedor','Empresa Factura']);
+
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
+    }
+
 }

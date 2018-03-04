@@ -72,21 +72,21 @@ $(document).ready(function() {
  } );
 
 
-
 function fnFormatDetails1 ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
 
-    sOut += '<tr><td>Codigo:</td><td>'+aData[1]+' </td></tr>';
-    sOut += '<tr><td>Nombre:</td><td>'+aData[2]+' </td></tr>';
-    sOut += '<tr><td>Descripcion:</td><td>'+aData[3]+' </td></tr>';
-    sOut += '<tr><td>Calidad:</td><td>'+aData[4]+' </td></tr>';
-    sOut += '<tr><td>Unidad de medida:</td><td>'+aData[5]+' </td></tr>';
-    sOut += '<tr><td>Formato de Empaque:</td><td>'+aData[6]+' </td></tr>';
-    sOut += '<tr><td>Porcentaje de Humedad:</td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td>Proveedor:</td><td>'+aData[8]+' </td></tr>';
-    sOut += '<tr><td>Imagen:</td><td>'+aData[9]+' </td></tr>';
+    sOut += '<tr><td><strong>Nombre:</strong></td><td>'+aData[1]+' </td></tr>';
+    sOut += '<tr><td><strong>RFC:</strong></td><td>'+aData[2]+' </td></tr>';
+    sOut += '<tr><td><strong>Regimen Fiscal:</strong></td><td>'+aData[6]+' </td></tr>';
+    sOut += '<tr><td><strong>Telefono:</strong></td><td>'+aData[4]+' </td></tr>';
+    sOut += '<tr><td><strong>Direccion:</strong></td><td>'+aData[3]+' </td></tr>';
+    sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>Proveedor:</strong></td><td>'+aData[7]+' </td></tr>';
+    sOut += '<tr><td><strong>Banco:</strong></td><td>'+aData[8]+' </td></tr>';
+    sOut += '<tr><td><strong>Numero de cuenta:</strong></td><td>'+aData[9]+' </td></tr>';
+    sOut += '<tr><td><strong>Número de CLABE Interbancaria:</strong></td><td>'+aData[10]+' </td></tr>';
 
     sOut += '</table>';
 

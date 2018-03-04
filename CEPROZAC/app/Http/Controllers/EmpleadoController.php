@@ -25,7 +25,7 @@ class EmpleadoController extends Controller
         ->join( 'rol_empleados as r', 'empleados.rol','=','r.id')
         ->select('empleados.*','r.rol_Empleado')
         ->where('empleados.estado','Activo')->get();
-        return view('empleados.index', ['empleados' => $empleados]);
+        return view('Recursos_Humanos.empleados.index', ['empleados' => $empleados]);
 
     }
 
@@ -38,7 +38,7 @@ class EmpleadoController extends Controller
     public function create()
     {
         $roles=DB::table('rol_empleados')->where('estado','=' ,'Activo')->get();
-        return view("empleados.create",["roles"=>$roles]);
+        return view("Recursos_Humanos.empleados.create",["roles"=>$roles]);
 
 
     }
@@ -97,7 +97,7 @@ class EmpleadoController extends Controller
     {
         $empleado=Empleado::findOrFail($id);
         $roles=DB::table('rol_empleados')->where('estado',"=","Activo")->get();
-        return view("empleados.edit",["empleado"=>$empleado,"roles"=>$roles]);
+        return view("Recursos_Humanos.empleados.edit",["empleado"=>$empleado,"roles"=>$roles]);
 
 
     }

@@ -4,7 +4,8 @@ namespace CEPROZAC;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Empresa extends Model
+class Calidad extends Model
 {
-    protected $table = 'empresas';
+    //
+    protected $table='calidad';
 }

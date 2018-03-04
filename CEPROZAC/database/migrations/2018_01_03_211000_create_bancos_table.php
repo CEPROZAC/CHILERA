@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProvedoresTable extends Migration
+class CreateBancosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateProvedoresTable extends Migration
      */
     public function up()
     {
-          Schema::create('provedores', function (Blueprint $table) {
+        Schema::create('bancos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('telefono');
-            $table->string('direccion');
-            $table->string('email');
+            $table->string('telefono')->nullable();
             $table->string('estado');
-            $table->integer('empresa_id')->unsigned();
-            $table->foreign('empresa_id')->references('id')->on('empresa');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateProvedoresTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('bancos');
     }
 }

@@ -19,14 +19,36 @@ class ProvedorController extends Controller
      */
     public function index()
     {
-
-        $provedor= DB::table('provedores')
-        ->join('empresa as e', 'provedores.empresa_id', '=', 'e.id')
-        ->select('provedores.*','e.nombre as nombreEmpresa')
-        ->where('provedores.estado','Activo')->get();
-        return view('provedores.index', ['provedor' => $provedor]);
-
+        $provedores= DB::table('provedores')->where('estado','Activo')->get();
+        
+        return view('Provedores.provedores.index', ['provedores' => $provedores]);
+        
     }
+
+
+
+    public function excel()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+        Excel::create('empresas', function($excel) {
+            $excel->sheet('Excel sheet', function($sheet) {
+             
+
+                $empresa = Empresa::select('nombre','rfc','direccion','telefono','email','regimenFiscal')
+                ->where('estado', 'Activo')
+                ->get();       
+                $sheet->fromArray($empresa);
+
+                $sheet->row(1,['Nombre Empresa','RFC','Direccion',
+                    'Telefono','Email','Regimen Fiscal']);
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,9 +57,7 @@ class ProvedorController extends Controller
      */
     public function create()
     {
-
-        $empresas=DB::table('empresa')->where('estado','=','Activo')->get();
-        return view("provedores.create",["empresas"=>$empresas]);
+        return view('Provedores.provedores.create');
     }
 
     /**
@@ -50,11 +70,13 @@ class ProvedorController extends Controller
     {
         $provedor= new Provedor;
         $provedor->nombre=$request->get('nombre');
-        $provedor->telefono=$request->get('telefono');
+        //echo $request->get('nombre');
+ 
         $provedor->direccion=$request->get('direccion');
+        $provedor->telefono=$request->get('telefono');
         $provedor->email=$request->get('email');
+       
         $provedor->estado='Activo';
-        $provedor->empresa_id=$request->get('empresa_id');
         $provedor->save();
         return Redirect::to('provedores');
     }
@@ -67,33 +89,7 @@ class ProvedorController extends Controller
      */
     public function show($id)
     {
-
-    }
-
-
-    public function excel()
-    {        
-        /**
-         * toma en cuenta que para ver los mismos 
-         * datos debemos hacer la misma consulta
-        **/
-        Excel::create('provedores', function($excel) {
-            $excel->sheet('Excel sheet', function($sheet) {
-                //otra opción -> $products = Product::select('name')->get();
-
-                $provedor = Provedor::join('empresa', 'empresa.id', '=', 'provedores.empresa_id')
-                ->select('provedores.nombre', 'provedores.telefono', 'provedores.direccion', 'provedores.email','empresa.nombre AS nom_empresa')
-                ->where('provedores.estado', 'Activo')
-                ->get();       
-                
-   
-                $sheet->fromArray($provedor);
-                $sheet->row(1,['Nombre Proveedor','Telefono Proveedor','Direccion Proveedor',
-                    'Email Proveedor','Empresa Factura']);
-
-                $sheet->setOrientation('landscape');
-            });
-        })->export('xls');
+        return view("empresas.show",["empresas"=>Empresa::findOrFail($id)]);
     }
 
     /**
@@ -104,10 +100,9 @@ class ProvedorController extends Controller
      */
     public function edit($id)
     {
-        $provedor=Provedor::findOrFail($id);
-        $empresas=DB::table('empresa')->where('estado','=','Activo')->get();
-        return view("provedores.edit",["provedores"=>$provedor,"empresas"=>$empresas]);
-    }
+
+     return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
+ }
 
     /**
      * Update the specified resource in storage.
@@ -118,16 +113,18 @@ class ProvedorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //$categoria=Categoria::findOrFail($id);
         $provedor=Provedor::findOrFail($id);
         $provedor->nombre=$request->get('nombre');
-        $provedor->telefono=$request->get('telefono');
+        //echo $request->get('nombre');
+       
         $provedor->direccion=$request->get('direccion');
+        $provedor->telefono=$request->get('telefono');
         $provedor->email=$request->get('email');
-        $provedor->empresa_id=$request->get('empresa_id');
-
-        $provedor->Update();
+    
+        $provedor->estado='Activo';
+        $provedor->update();
         return Redirect::to('provedores');
-
     }
 
     /**

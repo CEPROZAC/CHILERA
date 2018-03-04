@@ -49,19 +49,19 @@
                   <th>Telefono </th>
                   <th>Direccion </th>
                   <th>Email </th>
-                  <th>Empresa Factura </th>
+           
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>
                 </tr>
               </thead>
               <tbody>
-                @foreach($provedor  as $provedores)
+                @foreach($provedores  as $provedores)
                 <tr class="gradeA">
                   <td>{{$provedores->nombre}} </td>
                   <td>{{$provedores->telefono}} </td>
                   <td>{{$provedores->direccion}}</td>
                   <td>{{$provedores->email}}</td>
-                  <td>{{$provedores->nombreEmpresa}}</td>
+          
                   <td> 
                     <a href="{{URL::action('ProvedorController@edit',$provedores->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                   </td>
@@ -69,7 +69,7 @@
                   </td>
                 </td>
               </tr>
-              @include('provedores.modal')
+              @include('Provedores.provedores.modal')
               @endforeach
             </tbody>
             <tfoot>
@@ -78,7 +78,6 @@
                <th>Telefono </th>
                <th>Direccion </th>
                <th>Email </th>
-               <th>Empresa Factura </th>
                <th><center><b>Editar</b></center></th>
                <th><center><b>Borrar</b></center></th>
              </tr>

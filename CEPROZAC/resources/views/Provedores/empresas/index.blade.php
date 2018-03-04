@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-    <h1>Proveedores</h1>
+  <h1>Inicio</h1>
     <h2 class="">Empresas</h2>
   </div>
   <div class="pull-right">
@@ -30,7 +30,7 @@
                     <a class="btn btn-sm btn-success tooltips" href="empresas/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Municipio"> <i class="fa fa-plus"></i> Registrar </a>
 
                     
-                     <a class="btn btn-sm btn-warning tooltips" href="{{ route('empresas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('empresas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
                   </div>
 
@@ -42,54 +42,67 @@
 
         <div class="porlets-content">
           <div class="table-responsive">
-            <table  class="display table table-bordered table-striped" id="dynamic-table">
+            <table  cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info1">
               <thead>
                 <tr>
                   <th>Nombre </th>
                   <th>RFC </th>
-                  <th>Direccion </th>
-                  <th>Telefono </th>
-                  <th>Correo </th>
-                  <th>Regimen Fiscal </th>
+                  <th >Direccion </th>
+                  <th style="display:none;">Telefono </th>
+                  <th style="display:none;">Correo </th>
+                  <th style="display:none;">Regimen Fiscal </th>
+                  <th >Proveedor </th>
+                  <th style="display:none;">Banco que Factura </th>
+                  <th style="display:none;">Clave Interbancaria </th>
+                  <th style="display:none;">Numero de Cuenta </th>
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>
                 </tr>
               </thead>
               <tbody>
-                @foreach($empresa  as $empresas)
+                @foreach($empresas  as $empresas)
                 <tr class="gradeA">
                   <td>{{$empresas->nombre}} </td>
-                  <td>{{$empresas->rfc}} </td>
+                  <td >{{$empresas->rfc}} </td>
                   <td>{{$empresas->direccion}}</td>
-                  <td>{{$empresas->telefono}}</td>
-                  <td>{{$empresas->email}}</td>
-                  <td>{{$empresas->regimenFiscal}}</td>
+                  <td style="display:none;">{{$empresas->telefono}}</td>
+                  <td style="display:none;">{{$empresas->email}}</td>
+                  <td style="display:none;">{{$empresas->regimenFiscal}}</td>
+                  <td>{{$empresas->nombreProvedor}} </td>
+                  <th style="display:none;">{{$empresas->nombreBanco}} </th>
+                  <th style="display:none;">{{$empresas->cve_Interbancaria}} </th>
+                  <th style="display:none;">{{$empresas->nom_cuenta}} </th>
                   <td>  <a href="{{URL::action('EmpresaController@edit',$empresas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empresas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
                 </td>
               </tr>
-              @include('empresas.modal')
+              @include('Provedores.empresas.modal')
               @endforeach
             </tbody>
             <tfoot>
               <tr>
-               <th>Nombre </th>
-               <th>RFC </th>
-               <th>Direccion </th>
-               <th>Telefono </th>
-               <th>Correo </th>
-               <th>Regimen Fiscal </th>
-               <td><center><b>Editar</b></center></td>
-               <td><center><b>Borrar</b></center></td>
-             </tr>
-           </tfoot>
-         </table>
-       </div><!--/table-responsive-->
-     </div><!--/porlets-content-->
-   </div><!--/block-web-->
- </div><!--/col-md-12-->
+                <th></th>
+                <th>Nombre </th>
+                <th>RFC </th>
+                <th>Direccion </th>
+                <th style="display:none;">Telefono </th>
+                <th style="display:none;">Correo </th>
+                <th style="display:none;">Regimen Fiscal </th>
+                <th >Proveedor </th>
+                <th style="display:none;">Banco que Factura </th>
+                <th style="display:none;">Clave Interbancaria </th>
+                <th style="display:none;">Numero de Cuenta </th>
+                <td><center><b>Editar</b></center></td>
+                <td><center><b>Borrar</b></center></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div><!--/table-responsive-->
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 
