@@ -143,19 +143,18 @@ class EmpresaController extends Controller
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('provedores', function($excel) {
+        Excel::create('Lista empresas', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-                $provedor = Provedor::join('empresas', 'empresa.id', '=', 'provedores.empresa_id')
-                ->select('provedores.nombre', 'provedores.telefono', 'provedores.direccion', 'provedores.email','empresa.nombre AS nom_empresa')
-                ->where('provedores.estado', 'Activo')
-                ->get();       
+                $empresas = Empresa::join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
+                ->join('bancos','empresas.id_Banco','=','bancos.id')
+                ->select('empresas.nombre as nomEmpresa','p.nombre as nombreProvedor','empresas.rfc','empresas.regimenFiscal','empresas.telefono as telEmpresa','empresas.direccion','empresas.email','bancos.nombre as nombreBanco','cve_Interbancaria','nom_cuenta')
+                ->where('empresas.estado','Activo')->get();     
                 
 
-                $sheet->fromArray($provedor);
-                $sheet->row(1,['Nombre Proveedor','Telefono Proveedor','Direccion Proveedor',
-                    'Email Proveedor','Empresa Factura']);
+                $sheet->fromArray($empresas);
+                $sheet->row(1,['Nombre Empresa','Nombre Proveedor','RFC','Regimen Fiscal','Telefono','Direccion','Correo','Banco','Clabe Interbancaria','Numero de cuenta', ]);
 
                 $sheet->setOrientation('landscape');
             });
