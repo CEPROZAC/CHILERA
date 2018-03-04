@@ -44,4 +44,9 @@ Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('alm
 Route::get('descargar-calidad', 'CalidadController@excel')->name('productos.calidad.excel');
 Route::resource('almacen/materiales/salidas','SalidaAlmacenMaterialController');
 
+
 Route::get('pruebas', 'ProductosController@pruebas')->name('productos.pruebas');	
+
+Route::resource('almacen/salidas/material','SalidaAlmacenMaterialController');	
+Route::get('descargar-salidas', 'SalidaAlmacenMaterial@excel')->name('almacen.materiales.salidas.excel');
+

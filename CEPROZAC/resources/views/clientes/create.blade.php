@@ -95,21 +95,21 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Dirección de Facturación: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="direccion_fact" type="text"  maxlength="50" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Facturación"/>
+                <input name="direccion_fact" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Facturación"/>
               </div>
             </div>
 
                         <div class="form-group">
               <label class="col-sm-3 control-label">Dirección de Entrega de Embarques: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="direccion_entr" type="text"  maxlength="50" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Entrega de Embarques"/>
+                <input name="direccion_entr" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Entrega de Embarques"/>
               </div>
             </div>
 
                <div class="form-group">
               <label class="col-sm-3 control-label">Asignación de Volumen de Venta por Año: <strog class="theme_color">*</strog></label>
               <div class="col-sm-2">
-                <input name="cantidad_venta" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
+                <input name="cantidad_venta" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="200" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
                </div>      
            
            <div class="form-group">
