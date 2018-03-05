@@ -27,7 +27,7 @@ Route::resource('bancos','BancoController');
 
 Route::resource('calidad','CalidadController');
 Route::resource('rol','RolEmpleadoController');
-Route::resource('clientes','ClienteController@create');
+Route::resource('clientes','ClienteController');
 Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormulario");
 
 Route::resource('transportes','TransporteController');

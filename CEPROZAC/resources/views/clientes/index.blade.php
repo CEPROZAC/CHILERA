@@ -4,6 +4,7 @@
   <div class="pull-left page_title theme_color">
     <h1>Clientes</h1>
     <h2 class="">Clientes</h2>
+
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
@@ -21,7 +22,12 @@
             <div class="col-sm-7">
               <div class="actions"> </div>
               <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Clientes </strong></h2>
+                               <div class="text-success" id='result'>
+    @if(Session::has('message'))
+        {{Session::get('message')}}
+    @endif
             </div>
+</div>  
             <div class="col-md-5">
               <div class="btn-group pull-right">
                 <b>

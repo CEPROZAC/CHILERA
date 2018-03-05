@@ -120,8 +120,7 @@ $cliente= new Cliente;
         $validator = Validator::make(
                 $formulario->all(), 
                 $formulario->rules(),
-                $formulario->messages(),[ 'nombre' => 'required|unique:posts|max:255']
-                );
+                $formulario->messages());
         if ($validator->valid()){
             
             if ($formulario->ajax()){
@@ -130,20 +129,20 @@ $cliente= new Cliente;
             else{
               $cliente= new Cliente;
                 $cliente->nombre=$formulario->get('nombre');
-    $cliente->rfc="hbydtfs7tf";
-    $cliente->fiscal="fiscal";
-    $cliente->telefono="343445445";
+    $cliente->rfc=$formulario->get('rfc');
+    $cliente->fiscal=$formulario->get('fiscal');
+    $cliente->telefono=$formulario->get('telefono');
     $cliente->email=$formulario->get('email');
-    $cliente->direccion_fact="ppe";
-    $cliente->direccion_entr="zacatecas";
-    $cliente->cantidad_venta="44";
-    $cliente->volumen_venta="kilos";
-    $cliente->saldocliente="565";
+    $cliente->direccion_fact=$formulario->get('direccion_fact');
+    $cliente->direccion_entr=$formulario->get('direccion_entr');
+    $cliente->cantidad_venta=$formulario->get('cantidad_venta');
+    $cliente->volumen_venta=$formulario->get('volumen_venta');
+    $cliente->saldocliente=$formulario->get('saldocliente');
     $cliente->estado='Activo';
 
     $cliente->save();
-            return redirect('clientes/index')
-                    ->with('message', 'Enhorabuena formulario enviado correctamente');
+            return redirect('clientes')
+                    ->with('message', 'Cliente Registrado Correctamente');
             }
         }
     }
