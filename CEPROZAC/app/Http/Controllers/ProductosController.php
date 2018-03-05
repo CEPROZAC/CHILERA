@@ -23,14 +23,11 @@ class ProductosController extends Controller
     public function index()
     {
 
-       // $producto= DB::table('productos')->where('estado','Activo')->get();
-
-        //return view('productos.index', ['producto' => $producto]); 
         $producto= DB::table('productos')
-        ->join('provedores as P', 'productos.proveedor', '=', 'P.id')
-        ->select('productos.*','P.nombre as nombreProveedor')
+        ->join('calidad as c', 'productos.calidad', '=', 'c.id')
+        ->select('productos.*','c.nombre as nomCalidad')
         ->where('productos.estado','Activo')->get();
-        return view('productos.index', ['producto' => $producto]);
+        return view('Productos.productos.index', ['producto' => $producto]);
     }
 
     /**
@@ -40,8 +37,9 @@ class ProductosController extends Controller
      */
     public function create()
     {
+        $calidades=DB::table('calidad')->where('estado','=','Activo')->get();
         $proveedor=DB::table('provedores')->where('estado','=','Activo')->get();
-        return view("productos.create",["proveedor"=>$proveedor]);
+        return view("Productos.productos.create",["proveedor"=>$proveedor,"calidades"=>$calidades]);
     }
 
     /**
@@ -54,12 +52,11 @@ class ProductosController extends Controller
     {
         $producto= new Producto;
         $producto->nombre=$request->get('nombre');
-        $producto->descripcion=$request->get('descripcion');
+     
         $producto->calidad=$request->get('calidad');
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
         $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
-        $producto->proveedor=$request->get('proveedor');
         
         if(Input::hasFile('imagen'))
         {
@@ -95,8 +92,8 @@ class ProductosController extends Controller
     public function edit($id)
     {
         $productos=Producto::findOrFail($id);
-        $proveedores=DB::table('provedores')->where('estado','=','Activo')->get();
-        return view("productos.edit",["productos"=>$productos,"proveedores"=>$proveedores]);
+        $calidades=DB::table('calidad')->where('estado','=','Activo')->get();
+        return view("Productos.productos.edit",["productos"=>$productos,"calidades"=>$calidades]);
     }
 
     /**
@@ -110,12 +107,11 @@ class ProductosController extends Controller
     {
         $producto=producto::findOrFail($id);
         $producto->nombre=$request->get('nombre');
-        $producto->descripcion=$request->get('descripcion');
         $producto->calidad=$request->get('calidad');
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
         $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
-        $producto->proveedor=$request->get('proveedor');
+    
 
         if(Input::hasFile('imagen'))
         {
@@ -147,14 +143,14 @@ class ProductosController extends Controller
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-                $producto = Producto::join('provedores', 'provedores.id', '=', 'productos.proveedor')
-                ->select('productos.nombre', 'productos.descripcion', 'productos.calidad', 'provedores.nombre AS nombreProveedor')
+                $producto = Producto::join('calidad', 'productos.calidad', '=', 'calidad.id')
+                ->select('productos.nombre', 'calidad.nombre AS nombreCalidad','unidad_de_Medida','formato_de_Empaque','porcentaje_Humedad')
                 ->where('productos.estado', 'Activo')
                 ->get();       
                 
 
                 $sheet->fromArray($producto);
-                $sheet->row(1,['Nombre Producto','Descripcion Producto','Calidad Producto','Proveedor']);
+                $sheet->row(1,['Nombre Producto','Calidad','Unidad de Medida','Formato de Empaque','Porcentaje de Humedad']);
 
                 $sheet->setOrientation('landscape');
             });
@@ -173,5 +169,10 @@ class ProductosController extends Controller
         $productos->estado="Inactivo";
         $productos->update();
         return Redirect::to('productos');
+    }
+
+    public function pruebas()
+    {
+        return view("productos.prueba");
     }
 }

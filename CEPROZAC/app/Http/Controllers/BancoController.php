@@ -2,17 +2,18 @@
 
 namespace CEPROZAC\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 
 use CEPROZAC\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\RolEmpleado;
+use CEPROZAC\Banco;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 
-class RolEmpleadoController extends Controller
+class BancoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +23,8 @@ class RolEmpleadoController extends Controller
     public function index()
     {
 
-        $roles= DB::table('rol_empleados')->where('estado','Activo')->get();
-        return view('Recursos_Humanos.rol.index',['roles' => $roles]);
-
+        $bancos= DB::table('bancos')->where('estado','Activo')->get();
+        return view('Provedores.bancos.index',['bancos' => $bancos]);
     }
 
     /**
@@ -34,8 +34,7 @@ class RolEmpleadoController extends Controller
      */
     public function create()
     {
-
-        return  view('Recursos_Humanos.rol.create');
+        return  view('Provedores.bancos.create');
     }
 
     /**
@@ -46,13 +45,12 @@ class RolEmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-
-        $rol = new RolEmpleado;
-        $rol->rol_Empleado=$request->get('rol');
-        $rol->descripcion=$request->get('descripcion');
-        $rol->estado='Activo';
-        $rol->save();
-        return Redirect::to('rol');
+        $bancos = new Banco;
+        $bancos->nombre=$request->get('nombre');
+        $bancos->telefono=$request->get('telefono');
+        $bancos->estado='Activo';
+        $bancos->save();
+        return Redirect::to('bancos');
         
     }
 
@@ -66,19 +64,18 @@ class RolEmpleadoController extends Controller
     {
         //
     }
-
-    /**
+/**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $roles=RolEmpleado::findOrFail($id);
-        return view("Recursos_Humanos.rol.edit",["roles"=>$roles]);
-        
-    }
+public function edit($id)
+{
+    $bancos=Banco::findOrFail($id);
+    return view("Provedores.bancos.edit",["bancos"=>$bancos]);
+
+}
 
 
 
@@ -91,11 +88,11 @@ class RolEmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $roles=RolEmpleado::findOrFail($id);
-        $roles->rol_Empleado=$request->get('rol');
-        $roles->descripcion=$request->get('descripcion');
-        $roles->update();
-        return Redirect::to('rol');
+        $bancos=Banco::findOrFail($id);
+        $bancos->nombre=$request->get('nombre');
+        $bancos->telefono=$request->get('telefono');
+        $bancos->update();
+        return Redirect::to('bancos');
     }
 
 
@@ -109,9 +106,10 @@ class RolEmpleadoController extends Controller
      */
     public function destroy($id)
     {
-      $rol=RolEmpleado::findOrFail($id);
-      $rol->delete();
-      return Redirect::to('rol');
+      $bancos=Banco::findOrFail($id);
+      $bancos->estado="Inactivo";
+      $bancos->update();
+      return Redirect::to('bancos');
   }
 
 
@@ -125,17 +123,16 @@ class RolEmpleadoController extends Controller
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-                $roles = RolEmpleado::select('rol_Empleado', 'descripcion')
+                $bancos = RolEmpleado::select('nombre', 'telefono')
                 ->where('estado', 'Activo')
                 ->get();       
                 
                 
                 $sheet->fromArray($roles);
-                $sheet->row(1,['Rol Empleado','Descripcion']);
+                $sheet->row(1,['Rol Empleado','telefono']);
 
                 $sheet->setOrientation('landscape');
             });
         })->export('xls');
     }
-
 }

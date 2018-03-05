@@ -83,7 +83,7 @@
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empleados->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
                 </tr>
-                @include('empleados.modal')
+                @include('Recursos_Humanos.empleados.modal')
                 @endforeach
               </tbody>
               <tfoot>

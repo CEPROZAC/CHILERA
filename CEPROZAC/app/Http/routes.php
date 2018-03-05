@@ -23,6 +23,9 @@ Route::resource('empleados', 'EmpleadoController');
 Route::resource('home','HomeController');
 Route::resource('provedores','ProvedorController');
 Route::resource('productos','ProductosController');
+Route::resource('bancos','BancoController');
+
+Route::resource('calidad','CalidadController');
 Route::resource('rol','RolEmpleadoController');
 Route::resource('clientes','ClienteController@create');
 Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormulario");
@@ -41,6 +44,12 @@ Route::get('descargar-empleados', 'EmpleadoController@excel')->name('empleados.e
 
 Route::resource('almacen/materiales','AlmacenMaterialController');	
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');
+Route::get('descargar-calidad', 'CalidadController@excel')->name('productos.calidad.excel');
+Route::resource('almacen/materiales/salidas','SalidaAlmacenMaterialController');
+
+
+Route::get('pruebas', 'ProductosController@pruebas')->name('productos.pruebas');	
 
 Route::resource('almacen/salidas/material','SalidaAlmacenMaterialController');	
 Route::get('descargar-salidas', 'SalidaAlmacenMaterial@excel')->name('almacen.materiales.salidas.excel');
+

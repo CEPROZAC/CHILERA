@@ -3,13 +3,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Provedores</h2>
+    <h2 class=""> Proveedores</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
       <li><a style="color: #808080" href="{{url('/provedores')}}">Inicio</a></li>
-      <li><a style="color: #808080" href="{{url('/provedores')}}">Empresas</a></li>
-    
+      <li><a  style="color: #808080" href="{{url('/provedores')}}"> Proveedores</a></li>
     </ol>
   </div>
 </div>
@@ -21,7 +20,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar proveedor: {{ $provedores->nombre}}</strong></h2> 
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar proveedor</strong></h2> 
             </div>
             <div class="col-md-4">
               <div class="btn-group pull-right">
@@ -32,13 +31,14 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{url('provedores', [$provedores->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          <form action="{{route('provedores.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
-            <input type="hidden" name="_method" value="PUT">
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-              <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->nombre}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
+
+                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de proveedor" maxlength="80" parsley-rangelength="[1,70]"/>
+
               </div>
             </div>
 
@@ -46,7 +46,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input type="text" placeholder="Ingrese el número de teléfono de la empresa" name="telefono" value="{{ $provedores->telefono}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+                <input type="text" parsley-type="phone" placeholder="Ingrese el número de teléfono de proveedor" name="telefono" value="" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
               </div>
             </div>
 
@@ -54,41 +54,18 @@
               <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $provedores->direccion}}" splaceholder="Ingrese Direccion de la empresa" maxlength="150" parsley-rangelength="[1,150]" />
+                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Direccion de proveedor" maxlength="150" parsley-rangelength="[1,150]" />
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-
-                <input name="email" name="email" value="{{ $provedores->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="1" parsley-rangelength="[1,30]"/>
-
+                <input name="email" name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de proveedor"/>
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Empresa Factura<strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <select name="empresa_id" class="form-control" required>
-                 @foreach($empresas as $empresas)
-                 @if($empresas->id==$provedores->empresa_id)
-                 <option value="{{$empresas->id}}" selected>
-                  {{$empresas->nombre}}
-                </option>
-                @else
-                <option value="{{$empresas->id}}">
-                  {{$empresas->nombre}}
-                </option>
-                @endif
-                @endforeach
-              </select>
-              <div class="help-block with-errors"></div>
-            </div>
-          </div><!--/form-group-->
-
-
-
+           
           <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
               <button type="submit" class="btn btn-primary">Guardar</button>
@@ -104,3 +81,14 @@
 
 @endsection
 
+<!--
+ id         | int(10) unsigned | NO   | PRI | NULL                | auto_increment |
+| nombre     | varchar(255)     | NO   |     | NULL                |                |
+| telefono   | varchar(255)     | NO   |     | NULL                |                |
+| direccion  | varchar(255)     | NO   |     | NULL                |                |
+| email      | varchar(255)     | NO   |     | NULL                |                |
+| estado     | varchar(255)     | NO   |     | NULL                |                |
+| empresa_id | int(10) unsigned | NO   | MUL | NULL                |                |
+| created_at | timestamp        | NO   |     | 0000-00-00 00:00:00 |                |
+| updated_at | timestamp        | NO   |  
+-->

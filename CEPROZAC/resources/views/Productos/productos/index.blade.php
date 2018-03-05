@@ -7,7 +7,7 @@
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li  ><a style="color: #808080" href="{{url('/Productos')}}">Inicio</a></li>
+      <li  ><a style="color: #808080" href="{{url('/productos')}}">Inicio</a></li>
       <li class="active">Productos</a></li>
     </ol>
   </div>
@@ -37,18 +37,17 @@
         </div>
         <div class="porlets-content">
           <div class="table-responsive">
-            <table  class="display table table-bordered table-striped" id="hidden-table-info1">
+            <table  class="display table table-bordered table-striped" id="dynamic-table">
               <thead>
                 <tr>
-                  <th>Codigo</th>
+
                   <th>Nombre </th>
-                  <th>Descripcion </th>
+
                   <th>Calidad </th>
-                  <th style="display:none;">Unidad de Medida</th>
-                  <th style="display:none;">Formato de Empaque</th>
-                  <th style="display:none;">Porcentaje de humedad</th>
-                  <th>Proveedor </th>
-                  <th style="display:none;"></th>
+                  <th >Unidad de Medida</th>
+                  <th >Formato de Empaque</th>
+                  <th >% de humedad</th>
+                  <th >Imagen</th>
                   <th><center><b>Editar</b></center></th>
                   <th><center><b>Borrar</b></center></th>
                 </tr>
@@ -56,15 +55,15 @@
               <tbody>
                @foreach($producto  as $producto)
                <tr class="gradeA">
-                <td>{{$producto->id}}</td>
+
                 <td>{{$producto->nombre}} </td>
-                <td>{{$producto->descripcion}} </td>
-                <td >{{$producto->calidad}}</td>
-                <td style="display:none;">{{$producto->unidad_de_Medida}}</td>
-                <td style="display:none;">{{$producto->formato_de_Empaque}}</td>
-                <td style="display:none;">{{$producto->porcentaje_Humedad}}</td>
-                <td>{{$producto->nombreProveedor}}</td>
-                <td style="display:none;">
+
+                <td >{{$producto->nomCalidad}}</td>
+                <td >{{$producto->unidad_de_Medida}}</td>
+                <td >{{$producto->formato_de_Empaque}}</td>
+                <td >{{$producto->porcentaje_Humedad}}</td>
+                
+                <td >
                   @if (($producto->imagen)!="")
                   <img src="{{asset('imagenes/productos/'.$producto->imagen)}}" alt="{{$producto->nombre}}" height="100px" width="100px" class="img-thumbnail">
                   @else
@@ -77,21 +76,18 @@
                 </td>
               </td>
             </tr>
-            @include('productos.modal')
+            @include('Productos.productos.modal')
             @endforeach
           </tbody>
           <tfoot>
             <tr>
-              <th></th>
-              <th>Codigo</th>
+
               <th>Nombre </th>
-              <th>Descripcion </th>
               <th>Calidad </th>
-              <th style="display:none;">Unidad de Medida</th>
-              <th style="display:none;">Formato de Empaque</th>
-              <th style="display:none;">Porcentaje de humedad</th>
-              <th style="display:none;">Proveedor </th>
-              <th></th>
+              <th >Unidad de Medida</th>
+              <th >Formato de Empaque</th>
+              <th >% de humedad</th>
+              <th>Imagen</th>
               <th><center><b>Editar</b></center></th>
               <th><center><b>Borrar</b></center></th>
             </tr>

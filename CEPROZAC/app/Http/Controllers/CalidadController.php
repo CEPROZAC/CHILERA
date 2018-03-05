@@ -3,16 +3,17 @@
 namespace CEPROZAC\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use CEPROZAC\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
+use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\RolEmpleado;
+use CEPROZAC\Calidad;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PHPExcel_Worksheet_Drawing;
+use Validator; 
 
-class RolEmpleadoController extends Controller
+class CalidadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,11 +22,10 @@ class RolEmpleadoController extends Controller
      */
     public function index()
     {
-
-        $roles= DB::table('rol_empleados')->where('estado','Activo')->get();
-        return view('Recursos_Humanos.rol.index',['roles' => $roles]);
-
-    }
+        //
+       $calidades= DB::table('calidad')->where('estado','Activo')->get();
+       return view('Productos.calidad.index',['calidades' => $calidades]);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +35,7 @@ class RolEmpleadoController extends Controller
     public function create()
     {
 
-        return  view('Recursos_Humanos.rol.create');
+        return  view('Productos.calidad.create');
     }
 
     /**
@@ -46,14 +46,12 @@ class RolEmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-
-        $rol = new RolEmpleado;
-        $rol->rol_Empleado=$request->get('rol');
-        $rol->descripcion=$request->get('descripcion');
-        $rol->estado='Activo';
-        $rol->save();
-        return Redirect::to('rol');
-        
+        $calidad = new Calidad;
+        $calidad->nombre=$request->get('nombre');
+        $calidad->descripcion=$request->get('descripcion');
+        $calidad->estado='Activo';
+        $calidad->save();
+        return Redirect::to('calidad');
     }
 
     /**
@@ -75,12 +73,11 @@ class RolEmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $roles=RolEmpleado::findOrFail($id);
-        return view("Recursos_Humanos.rol.edit",["roles"=>$roles]);
+        //
+        $calidad=Calidad::findOrFail($id);
+        return view("Productos.calidad.edit",["calidad"=>$calidad]);
         
     }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -91,15 +88,12 @@ class RolEmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $roles=RolEmpleado::findOrFail($id);
-        $roles->rol_Empleado=$request->get('rol');
-        $roles->descripcion=$request->get('descripcion');
-        $roles->update();
-        return Redirect::to('rol');
+        $calidad=Calidad::findOrFail($id);
+        $calidad->nombre=$request->get('nombre');
+        $calidad->descripcion=$request->get('descripcion');
+        $calidad->update();
+        return Redirect::to('calidad');
     }
-
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -109,29 +103,30 @@ class RolEmpleadoController extends Controller
      */
     public function destroy($id)
     {
-      $rol=RolEmpleado::findOrFail($id);
-      $rol->delete();
-      return Redirect::to('rol');
-  }
+     $calidad=Calidad::findOrFail($id);
+     $calidad->estado="Inactivo";
+     $calidad->update();
+     return Redirect::to('calidad');
+ }
 
 
-  public function excel()
-  {        
+ public function excel()
+ {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('Rol Empleados', function($excel) {
+        Excel::create('Calidad Productos', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-                $roles = RolEmpleado::select('rol_Empleado', 'descripcion')
+                $calidad = Calidad::select('nombre', 'descripcion')
                 ->where('estado', 'Activo')
                 ->get();       
                 
                 
-                $sheet->fromArray($roles);
-                $sheet->row(1,['Rol Empleado','Descripcion']);
+                $sheet->fromArray($calidad);
+                $sheet->row(1,['Calidad','Descripcion']);
 
                 $sheet->setOrientation('landscape');
             });
