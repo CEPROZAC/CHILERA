@@ -1,4 +1,4 @@
-@extends('layouts.principal')
+@extends('layouts.home')
 @section('contenido')
 
  <!--\\\\\\\ container  start \\\\\\-->

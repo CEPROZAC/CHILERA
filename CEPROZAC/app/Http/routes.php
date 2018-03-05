@@ -12,6 +12,7 @@
 */
 
 
+
 Route::get('/', function () {
 	return view('welcome');
 });
@@ -23,7 +24,9 @@ Route::resource('home','HomeController');
 Route::resource('provedores','ProvedorController');
 Route::resource('productos','ProductosController');
 Route::resource('rol','RolEmpleadoController');
-Route::resource('clientes','ClienteController');	
+Route::resource('clientes','ClienteController@create');
+Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormulario");
+
 Route::resource('transportes','TransporteController');
 Route::get('pdf', 'PdfController@invoice');
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
