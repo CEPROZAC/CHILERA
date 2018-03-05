@@ -12,6 +12,7 @@ use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
 use Validator; 
+use CEPROZAC\Http\Requests\ClienteFormRequest;
 
 
 
@@ -59,24 +60,12 @@ class ClienteController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(ClienteFormRequest $formulario)
     {
 
-     $cliente= new Cliente;
-
-     $validator = Validator::make($request->all(), [
-      'rfc' => 'required|unique:cliente|max:25',
-      ]);
-
-     if ($validator->fails()) {
-      $cliente ->nombre=$request->cookie('nombre');
-      return redirect('clientes/create')
-      ->withErrors($validator)
-      ->withInput();
-    }
-
-
-    $cliente->nombre=$request->get('nombre');
+/**
+                   $cliente= new Cliente;
+             $cliente->nombre=$request->get('nombre');
     $cliente->rfc=$request->get('rfc');
     $cliente->fiscal=$request->get('fiscal');
     $cliente->telefono=$request->get('telefono');
@@ -85,17 +74,78 @@ class ClienteController extends Controller
     $cliente->direccion_entr=$request->get('direccion_entr');
     $cliente->cantidad_venta=$request->get('cantidad_venta');
     $cliente->volumen_venta=$request->get('volumen_venta');
-    $cliente->saldocliente=$request->get('saldocliente');
+    $cliente->saldocliente=$request-
+
+     */
+
+$cliente= new Cliente;
+      $validator = Validator::make(
+                $formulario->all(), 
+                $formulario->rules(),
+                $formulario->messages()
+                );
+        if ($validator->valid()){
+            
+            if ($formulario->ajax()){
+                return response()->json(["valid" => true], 200);
+            }
+            else{
+            }
+        }
+
+
+             $cliente->nombre=$request->get('nombre');
+    $cliente->rfc="hbydtf7tfs7t";
+    $cliente->fiscal="fiscal";
+    $cliente->telefono="343445445";
+    $cliente->email=$request->get('email');
+    $cliente->direccion_fact="ppe";
+    $cliente->direccion_entr="zacatecas";
+    $cliente->cantidad_venta="44";
+    $cliente->volumen_venta="kilos";
+    $cliente->saldocliente="565";
     $cliente->estado='Activo';
 
     $cliente->save();
-    return Redirect::to('clientes');
+    return Redirect::to('clientesd')->with('message', 'Enhorabuena formulario enviado correctamente');
+
+
+   
 
 
         //
   }
 
+        public function validarMiFormulario(ClienteFormRequest $formulario ){
+        $validator = Validator::make(
+                $formulario->all(), 
+                $formulario->rules(),
+                $formulario->messages());
+        if ($validator->valid()){
+            
+            if ($formulario->ajax()){
+                return response()->json(["valid" => true], 200);
+            }
+            else{
+              $cliente= new Cliente;
+                $cliente->nombre=$formulario->get('nombre');
+    $cliente->rfc=$formulario->get('rfc');
+    $cliente->fiscal=$formulario->get('fiscal');
+    $cliente->telefono=$formulario->get('telefono');
+    $cliente->email=$formulario->get('email');
+    $cliente->direccion_fact=$formulario->get('direccion_fact');
+    $cliente->direccion_entr=$formulario->get('direccion_entr');
+    $cliente->cantidad_venta=$formulario->get('cantidad_venta');
+    $cliente->volumen_venta=$formulario->get('volumen_venta');
+    $cliente->saldocliente=$formulario->get('saldocliente');
+    $cliente->estado='Activo';
 
+    $cliente->save();
+            return redirect('clientes')
+                    ->with('message', 'Cliente Registrado Correctamente');
+            }
+        }
+    }
 
     /**
     protected function formatValidationErrors(Validator $validator)

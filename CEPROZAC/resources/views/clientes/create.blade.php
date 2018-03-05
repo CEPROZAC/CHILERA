@@ -7,6 +7,8 @@
 
     <h1>Inicio</h1>
     <h2 class="">Clientes</h2>
+
+   
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
@@ -35,50 +37,66 @@
             </div>    
           </div>
         </div>
-        @if (count($errors) > 0)
-        <div class="col-md-12 alert alert-danger">
-          <p>Corrige los siguientes errores:</p>
-          <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-          </ul>
-        </div>
-        @endif
+
         <div class="porlets-content">
-          <form action="{{route('clientes.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+
+ <div class="text-success" id='result'>
+    @if(Session::has('message'))
+        {{Session::get('message')}}
+    @endif
+</div>
+          <form method="post" action="{{url('clientes/validarmiformulario')}}" class="form-horizontal row-border" parsley-validate novalidate id='form'>
+
+
+
+
             {{csrf_field()}}
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"  maxlength="30" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
+                <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
+                <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
               </div>
             </div>
+
 
             <div class="form-group">
               <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="rfc" value="" maxlength="20" id="RFC"  type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"  class="form-control"   class="form-control" required placeholder="Ingrese RFC del Cliente"/>
+                <input name="rfc"  maxlength="20" id="RFC"  value="{{Input::old('rfc')}}" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"  class="form-control"   class="form-control" required placeholder="Ingrese RFC del Cliente"/>
+                 <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('rfc')}}</div>
               </div>
             </div>
+
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="fiscal">
+                <select name="fiscal" value="{{Input::old('fiscal')}}">
+                @if(Input::old('fiscal')=="Fisica")
+                <option value='Fisica' selected>Fisica
+                </option>
+                <option value="Moral">Moral</option>
+                @else
+                <option value='Moral' selected>Moral
+                </option>
                   <option value="Fisica">Fisica</option>
-                  <option value="Moral">Moral</option>
+                @endif
                 </select>
                 
               </div>
             </div>
 
 
+  
+
+
             
             <div class="form-group">
               <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="telefono" type="text" placeholder="Ingrese el número de teléfono del cliente"   class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+                <input name="telefono" type="text" value="{{Input::old('telefono')}}" placeholder="Ingrese el número de teléfono del cliente"   class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+                 <div class="text-danger" id='error_telefono'>{{$errors->formulario->first('telefono')}}</div>
               </div>
             </div>
 
@@ -87,40 +105,53 @@
               <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="email" name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
-
-              </div>
-            </div>
+                <input name="email" name="email" value="{{Input::old('email')}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
+<div class="text-danger" id='error_email'>{{$errors->formulario->first('email')}}</div>
+              </div>    
+    </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Dirección de Facturación: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="direccion_fact" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Facturación"/>
+                <input name="direccion_fact" type="text" value="{{Input::old('direccion_fact')}}" maxlength="200" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Facturación"/>
+                 <div class="text-danger" id='error_dreccion_fac'>{{$errors->formulario->first('direccion_fact')}}</div>
               </div>
             </div>
 
                         <div class="form-group">
               <label class="col-sm-3 control-label">Dirección de Entrega de Embarques: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="direccion_entr" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Entrega de Embarques"/>
+                <input name="direccion_entr" type="text"  value="{{Input::old('direccion_entr')}}" maxlength="200" onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese la Dirección de Entrega de Embarques"/>
+                <div class="text-danger" id='error_dreccion_fac'>{{$errors->formulario->first('direccion_entr')}}</div>
               </div>
             </div>
 
                <div class="form-group">
               <label class="col-sm-3 control-label">Asignación de Volumen de Venta por Año: <strog class="theme_color">*</strog></label>
               <div class="col-sm-2">
-                <input name="cantidad_venta" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="200" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
+                <input name="cantidad_venta" maxlength="9" type="number" value="{{Input::old('cantidad_venta')}}" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="200" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
+                  <div class="text-danger" id='error_cantidad'>{{$errors->formulario->first('cantidad_venta')}}</div>
                </div>      
            
            <div class="form-group">
                            <div class="col-sm-2">
-               <select name="volumen_venta">
+               <select name="volumen_venta" value="{{Input::old('volumen_venta')}}">
+               @if(Input::old('volumen_venta')=="Kilogramos")
+                <option value='Kilogramos' selected>Kilogramos
+                </option>
+                <option value="Toneladas">Toneladas</option>
+                @else
+                <option value='Toneladas' selected>Toneladas
+                </option>
                   <option value="Kilogramos">Kilogramos</option>
-                  <option value="Toneladas">Toneladas</option>
-                </select>       
+                @endif
+                </select>
+      
                 </div>   
                 </div>
                 </div>
+
+
 
 
 
@@ -131,7 +162,7 @@
                  <div class="input-group-addon">$</div>
 
                  
-                 <input name="saldocliente" maxlength="9" type="number" value="1000.00" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+                 <input name="saldocliente" maxlength="9" type="number" value="{{Input::old('saldocliente')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
                </div>
              </div>
            </div>
@@ -154,6 +185,37 @@
 
 
 </html>
+
+ <script>
+ $(function(){
+     $("#form").submit(function(e){
+         
+         var fields = $(this).serialize();
+         $.post("{{url('clientes/validarmiformulario')}}", fields, function(data){
+             
+             if(data.valid !== undefined){
+                 $("#result").html("Enhorabuena formulario enviado correctamente");
+                 $("#form")[0].reset();
+                 $("#error_nombre").html('');
+                 $("#error_email").html('');
+             }
+             else{
+                 $("#error_nombre").html('');
+                 $("#error_email").html('');
+                 if (data.nombre !== undefined){
+                    $("#error_nombre").html(data.nombre); 
+                 }
+                 if (data.email !== undefined){
+                     $("#error_email").html(data.email);
+                 }
+             }
+             
+         });
+         
+         return false;
+     });
+ });
+</script>
 
 
 @endsection
