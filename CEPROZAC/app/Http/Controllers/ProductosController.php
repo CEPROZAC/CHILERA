@@ -173,6 +173,6 @@ class ProductosController extends Controller
 
     public function pruebas()
     {
-        return view("productos.prueba");
+        return view("Productos.productos.prueba");
     }
 }

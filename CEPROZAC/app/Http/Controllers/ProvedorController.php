@@ -35,7 +35,7 @@ class ProvedorController extends Controller
         **/
         Excel::create('empresas', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
-             
+
 
                 $empresa = Empresa::select('nombre','rfc','direccion','telefono','email','regimenFiscal')
                 ->where('estado', 'Activo')
@@ -71,11 +71,11 @@ class ProvedorController extends Controller
         $provedor= new Provedor;
         $provedor->nombre=$request->get('nombre');
         //echo $request->get('nombre');
- 
+
         $provedor->direccion=$request->get('direccion');
         $provedor->telefono=$request->get('telefono');
         $provedor->email=$request->get('email');
-       
+
         $provedor->estado='Activo';
         $provedor->save();
         return Redirect::to('provedores');
@@ -117,11 +117,11 @@ class ProvedorController extends Controller
         $provedor=Provedor::findOrFail($id);
         $provedor->nombre=$request->get('nombre');
         //echo $request->get('nombre');
-       
+
         $provedor->direccion=$request->get('direccion');
         $provedor->telefono=$request->get('telefono');
         $provedor->email=$request->get('email');
-    
+
         $provedor->estado='Activo';
         $provedor->update();
         return Redirect::to('provedores');
@@ -140,4 +140,22 @@ class ProvedorController extends Controller
         $provedores->update();
         return Redirect::to('provedores');
     }
+
+
+    public function verEmpresas($id)
+    {
+        $provedor=Provedor::findOrFail($id);
+        $empresas= DB::table('empresas')
+        ->join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
+        ->join('bancos','empresas.id_Banco','=','bancos.id')
+        ->select('empresas.*','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
+        ->where('empresas.estado','Activo')
+        ->where('empresas.provedor_id','=',$id)
+        ->get();
+        return view("Provedores.provedores.listaEmpresas",['empresas' => $empresas,'provedor'=>$provedor]);
+
+ 
+        
+    }
+
 }
