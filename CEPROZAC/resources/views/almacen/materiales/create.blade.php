@@ -42,7 +42,21 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+<input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
+<input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
 
+              </div>
+            </div>
+
+ <div class="form-group">
+              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+ <input type="text" name="codigo" id="segundo" class="form-control" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
+</div>
+</div>
 
     <div class="form-group ">
       <label class="col-sm-3 control-label">Imagen</label>
@@ -83,3 +97,24 @@
 </div><!--/row-->
 </div>
 @endsection
+
+<script>
+function habilitar(value)
+{
+if(value=="1")
+{
+// habilitamos
+document.getElementById("segundo").disabled=false;
+  document.getElementById("segundo").value = "";
+   document.getElementById("segundo").focus(); 
+}else if(value=="2"){
+// deshabilitamos
+document.getElementById("segundo").disabled=true;
+var aleatorio = Math.floor(Math.random()*999999999999)
+document.getElementById("segundo").value=aleatorio;
+
+
+}
+}
+</script>
+</head>

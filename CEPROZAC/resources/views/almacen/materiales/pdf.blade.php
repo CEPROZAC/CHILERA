@@ -20,7 +20,7 @@
   @foreach($material  as $materiales)
   <tr class="gradeA">
   <td>{{$materiales->nombre}} </td>
-   <td> <?php echo DNS1D::getBarcodeHTML("$materiales->id", "EAN13",5,55);?></td>
+   <td> <?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13",5,55);?></td>
      @endforeach
 
       </tr>
