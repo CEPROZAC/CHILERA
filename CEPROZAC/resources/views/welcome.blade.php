@@ -52,11 +52,15 @@
   <style type="text/css">
     body {
       background-color: #464646;
-      background-image: url(images/jeppe.jpg);
+      background-image: url(images/spicey-1178419-1598x1062.jpg);
       background-position: center center;
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: cover;
+      position: absolute;
+      top: 0; left: 0; width: 100%; z-index: -1
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>

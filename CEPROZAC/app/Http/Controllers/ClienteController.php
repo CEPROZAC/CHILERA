@@ -28,7 +28,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class ClienteController extends Controller
 {
- 
+
     /**
     use DispatchesJobs, ValidatesRequests;
      * Display a listing of the resource.
@@ -39,7 +39,7 @@ class ClienteController extends Controller
     {
       $cliente= DB::table('cliente')->where('estado','Activo')->get();
       return view('clientes.index', ['cliente' => $cliente]);
-    }
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -49,7 +49,7 @@ class ClienteController extends Controller
     public function create()
     {
              return view('clientes.create');   //
-           }
+         }
 
     /**
      * Store a newly created resource in storage.
@@ -78,23 +78,23 @@ class ClienteController extends Controller
 
      */
 
-$cliente= new Cliente;
-      $validator = Validator::make(
-                $formulario->all(), 
-                $formulario->rules(),
-                $formulario->messages()
-                );
-        if ($validator->valid()){
-            
-            if ($formulario->ajax()){
-                return response()->json(["valid" => true], 200);
-            }
-            else{
-            }
+    $cliente= new Cliente;
+    $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages()
+        );
+    if ($validator->valid()){
+
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
         }
+        else{
+        }
+    }
 
 
-             $cliente->nombre=$request->get('nombre');
+    $cliente->nombre=$request->get('nombre');
     $cliente->rfc="hbydtf7tfs7t";
     $cliente->fiscal="fiscal";
     $cliente->telefono="343445445";
@@ -108,54 +108,40 @@ $cliente= new Cliente;
 
     $cliente->save();
     return Redirect::to('clientesd')->with('message', 'Enhorabuena formulario enviado correctamente');
+}
 
+public function validarMiFormulario(ClienteFormRequest $formulario ){
+    $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages());
+    if ($validator->valid()){
 
-   
-
-
-        //
-  }
-
-        public function validarMiFormulario(ClienteFormRequest $formulario ){
-        $validator = Validator::make(
-                $formulario->all(), 
-                $formulario->rules(),
-                $formulario->messages());
-        if ($validator->valid()){
-            
-            if ($formulario->ajax()){
-                return response()->json(["valid" => true], 200);
-            }
-            else{
-              $cliente= new Cliente;
-                $cliente->nombre=$formulario->get('nombre');
-    $cliente->rfc=$formulario->get('rfc');
-    $cliente->fiscal=$formulario->get('fiscal');
-    $cliente->telefono=$formulario->get('telefono');
-    $cliente->email=$formulario->get('email');
-    $cliente->direccion_fact=$formulario->get('direccion_fact');
-    $cliente->direccion_entr=$formulario->get('direccion_entr');
-    $cliente->cantidad_venta=$formulario->get('cantidad_venta');
-    $cliente->volumen_venta=$formulario->get('volumen_venta');
-    $cliente->saldocliente=$formulario->get('saldocliente');
-    $cliente->estado='Activo';
-
-    $cliente->save();
-            return redirect('clientes')
-                    ->with('message', 'Cliente Registrado Correctamente');
-            }
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
         }
-    }
+        else{
+          $cliente= new Cliente;
+          $cliente->nombre=$formulario->get('nombre');
+          $cliente->rfc=$formulario->get('rfc');
+          $cliente->fiscal=$formulario->get('fiscal');
+          $cliente->telefono=$formulario->get('telefono');
+          $cliente->email=$formulario->get('email');
+          $cliente->direccion_fact=$formulario->get('direccion_fact');
+          $cliente->direccion_entr=$formulario->get('direccion_entr');
+          $cliente->cantidad_venta=$formulario->get('cantidad_venta');
+          $cliente->volumen_venta=$formulario->get('volumen_venta');
+          $cliente->saldocliente=$formulario->get('saldocliente');
+          $cliente->estado='Activo';
+
+          $cliente->save();
+          return redirect('clientes')
+          ->with('message', 'Cliente Registrado Correctamente');
+      }
+  }
+}
 
     /**
-    protected function formatValidationErrors(Validator $validator)
-    {
-
-
-        return $validator->errors()->all();
-
-    }
-
      * Display the specified resource.
      *
      * @param  int  $id
@@ -163,7 +149,7 @@ $cliente= new Cliente;
      */
     public function show($id)
     {
-     return view("clientes.show",["clientes"=>Cliente::findOrFail($id)]);
+       return view("clientes.show",["clientes"=>Cliente::findOrFail($id)]);
         //
    }
 
@@ -177,7 +163,7 @@ $cliente= new Cliente;
     {
       return view("clientes.edit",["clientes"=>Cliente::findOrFail($id)]);
         //
-    }
+  }
 
     /**
      * Update the specified resource in storage.
@@ -204,7 +190,7 @@ $cliente= new Cliente;
       $cliente->save();
       return Redirect::to('clientes');
         //
-    }
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -219,10 +205,10 @@ $cliente= new Cliente;
       $cliente->save();
       return Redirect::to('clientes');
         //
-    }
+  }
 
-    public function excel()
-    {        
+  public function excel()
+  {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
@@ -246,10 +232,10 @@ $cliente= new Cliente;
             $objDrawing->setWidthAndHeight(260,220);
             $objDrawing->setOffsetX(200);
 */
-          });
-        })->export('xls');
-      }
-
-
-
+        });
+      })->export('xls');
     }
+
+
+
+}

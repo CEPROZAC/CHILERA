@@ -29,7 +29,7 @@
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="transportes/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Vehículo"> <i class="fa fa-plus"></i> Registrar </a>
 
-                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('provedores.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('transportes.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
                   </div>
                   
@@ -42,64 +42,70 @@
 
       <div class="porlets-content">
         <div class="table-responsive">
-          <table  class="display table table-bordered table-striped" id="dynamic-table">
+          <table  cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info4">
             <thead>
               <tr>
                 <th>Nombre Unidad </th>
                 <th>Numero Serie </th>
                 <th>Placas </th>
                 <th>Poliza Seguro </th>
-                <th>Vigencia Seguro </th>
-                <th>Aseguradora </th>
-                <th>Metros cubicos Unidad </th>
-                <th>Capacidad </th>
-                <th>Chofer </th>
-                <td><center><b>Editar</b></center></td>
-                <td><center><b>Borrar</b></center></td>
+                <th style="display: none;">Vigencia Seguro </th>
+                <th style="display: none;">Aseguradora </th>
+                <th style="display: none;">Metros cubicos Unidad </th>
+                <th style="display: none;">Capacidad </th>
+                <th style="display: none;">Chofer </th>
+                <th><center><b>Ver Mantenimientos</b></center></th>
+                <th><center><b>Editar</b></center></th>
+                <th><center><b>Borrar</b></center></th>
               </tr>
             </thead>
             <tbody>
-            @foreach(array(1, 2, 3, 4) as & $valor)
+              @foreach($vehiculos  as $vehiculo)
               <tr class="gradeA">
-                <td> </td>
-                <td> </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                  <td></td>
-                <td></td>
+                <td>{{$vehiculo->nombre_Unidad}} </td>
+                <td>{{$vehiculo->no_Serie}} </td>
+                <td>{{$vehiculo->placas}} </td>
+                <td >{{$vehiculo->poliza_Seguro}}</td>
+                <td style="display: none;">{{$vehiculo->vigencia_Seguro}}</td>
+                <td style="display: none;">{{$vehiculo->aseguradora}}</td>
+                <td style="display: none;">{{$vehiculo->m3_Unidad}}</td>
+                <td style="display: none;">{{$vehiculo->capacidad}}</td>
+                <td style="display: none;">{{$vehiculo->nombre}} {{$vehiculo->apellidos}}</td>
+                <td><center><a class="btn btn-info btn-sm" href="#" role="button"><i class="fa fa-sign-in"></i></a></center></td>
+
+                
                 <td> 
-                  <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                  <a href="{{URL::action('TransporteController@edit',$vehiculo->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                 </td>
-                <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$vehiculo->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                 </td>
-              </td>
-            </tr>
-           
-            @endforeach
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>Nombre Unidad </th>
-              <th>Numero Serie </th>
-              <th>Placas </th>
-              <th>Poliza Seguro </th>
-              <th>Vigencia Seguro </th>
-              <th>Aseguradora </th>
-              <th>Metros cubicos Unidad </th>
-              <th>Capacidad </th>
-              <th>Chofer </th>
-              <th><center><b>Editar</b></center></th>
-              <th><center><b>Borrar</b></center></th>
-            </tr>
-          </tfoot>
-        </table>
-      </div><!--/table-responsive-->
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
-</div><!--/col-md-12-->
+                
+              </tr>
+              @include('Transportes.transportes.modal')
+              @endforeach
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th>Nombre Unidad </th>
+                <th>Numero Serie </th>
+                <th>Placas </th>
+                <th>Poliza Seguro </th>
+                <th style="display: none;">Vigencia Seguro </th>
+                <th style="display: none;">Aseguradora </th>
+                <th style="display: none;">Metros cubicos Unidad </th>
+                <th style="display: none;">Capacidad </th>
+                <th style="display: none;">Chofer </th>
+                <th><center><b>Ver Mantenimientos</b></center></th>
+                <th><center><b>Editar</b></center></th>
+                <th><center><b>Borrar</b></center></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div><!--/table-responsive-->
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 @endsection

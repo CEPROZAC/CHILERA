@@ -162,7 +162,7 @@ class EmpleadoController extends Controller
                 ->where('empleados.estado', 'Activo')
                 ->get();       
                 $sheet->fromArray($empleado);
-                $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','Fecha Nacimiento','CURP','Correo','Telefono','Sexo','Sueldo','Rol']);
+                $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','Fecha Nacimiento','CURP','Correo','Telefono','Sexo','Sueldo','Rol','Nombre Chofer']);
 
                 $sheet->setOrientation('landscape');
             });

@@ -10,6 +10,7 @@
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/animate.css')!!}
     {!!Html::style('css/admin.css')!!}
+    {!!Html::style('css/MisEstilos.css')!!}
     {!!Html::style('plugins/advanced-datatable/css/demo_table.css')!!}
     {!!Html::style('plugins/advanced-datatable/css/demo_page.css')!!}
     {!!Html::style('plugins/toggle-switch/toggles.css')!!}
@@ -139,6 +140,9 @@
             <li> <a href="javascript:void(0);"> <i class="fa fa-truck icon"></i> Transporte <span class="plus"><i class="fa fa-plus"></i></span> </a>
               <ul>
                 <li> <a href="{{url('transportes')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Vehículos</b> </a> </li>
+                <li> <a href="{{url('mantenimiento')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Mantenimientos</b> </a> </li>
+                
+
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Empresas <span class="plus"><i class="fa fa-plus"></i></span> </a>
@@ -169,7 +173,7 @@
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
-                                <li> <a href="{{url('almacen/materiales/salidas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
+                <li> <a href="{{url('almacen/materiales/salidas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
               </ul>
             </li>
           </ul>
@@ -223,6 +227,9 @@
   {!!Html::script('plugins/wizard/js/jquery.smartWizard.js')!!}
   <!-- Include jQuery Validator plugin -->
   {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js')!!}
+   {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js')!!}
+
+
 
 
 
