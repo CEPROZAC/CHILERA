@@ -51,16 +51,23 @@
               </div>
             </div>
 
-            <div class="form-group">
+    <div class="form-group">
               <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-              <select name="fiscal"  class="form-control"  value="{{$clientes->fiscal}}" placeholder="Ingrese el Regimen Fiscal del Cliente">
-              <option value="Fisica">Fisica</option>
-              <option value="Moral">Moral</option>
-              </select>
-         
-              </div>
-            </div>
+               <div class="col-sm-6">
+                 <select name="fiscal" value="{{Input::old('fiscal')}}">
+                 @if(Input::old('fiscal')=="Fisica")
+                 <option value='Fisica' selected>Fisica
+                 </option>
+                 <option value="Moral">Moral</option>
+                 @else
+                 <option value='Moral' selected>Moral
+                 </option>
+                   <option value="Fisica">Fisica</option>
+                 @endif
+                 </select>
+                 
+               </div>
+             </div>
 
 
 
@@ -103,16 +110,23 @@
                 <input name="cantidad_venta" value="{{ $clientes->cantidad_venta}}" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
                </div>      
            
-           <div class="form-group">
+<div class="form-group">
                            <div class="col-sm-2">
-               <select name="volumen_venta" >
-
-                  <option value="Kilogramos">Kilogramos</option>
-                  <option value="Toneladas">Toneladas</option>
-                </select>       
-                </div>   
-                </div>
-                </div>      
+                <select name="volumen_venta" value="{{Input::old('volumen_venta')}}">
+                @if(Input::old('volumen_venta')=="Kilogramos")
+                 <option value='Kilogramos' selected>Kilogramos
+                 </option>
+                 <option value="Toneladas">Toneladas</option>
+                 @else
+                 <option value='Toneladas' selected>Toneladas
+                 </option>
+                   <option value="Kilogramos">Kilogramos</option>
+                 @endif
+                 </select>
+       
+                 </div>   
+                 </div>
+                 </div>  
 
 
 

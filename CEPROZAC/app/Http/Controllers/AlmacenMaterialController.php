@@ -58,11 +58,13 @@ class AlmacenMaterialController extends Controller
             $file->move(public_path().'/imagenes/almacenmaterial',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
         }
-
        $material->descripcion=$request->get('descripcion');
        $material->cantidad=$request->get('cantidad');
+        $material->codigo=$request->get('codigo');
        $material->estado='Activo';
+
        $material->save();
+
 
 
         $material= DB::table('AlmacenMateriales')->orderby('created_at','DESC')->take(1)->get();

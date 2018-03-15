@@ -4,7 +4,6 @@
   <div class="pull-left page_title theme_color">
     <h1>Clientes</h1>
     <h2 class="">Clientes</h2>
-
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
@@ -22,7 +21,8 @@
             <div class="col-sm-7">
               <div class="actions"> </div>
               <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Clientes </strong></h2>
-                               <div class="text-success" id='result'>
+    
+    <div class="text-success" id='result'>
     @if(Session::has('message'))
         {{Session::get('message')}}
     @endif
@@ -47,34 +47,40 @@
 
         <div class="porlets-content">
           <div class="table-responsive">
-            <table  class="display table table-bordered table-striped" id="dynamic-table">
+            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered " id="hidden-table-info2">
               <thead>
+
+
                 <tr>
-                  <th>Nombre </th>
-                   <th>RFC </th>
-                    <th>Regimen Fiscal </th>
-                    <th>Teléfono </th>
-                   <th>Correo </th>
-                  <th>Dirección de Facturación </th>
-                  <th>Dirección de Entrega de Embarques </th>
-                   <th>Asignación de Volumen de Venta por Año </th>
-                  <th>Saldo Cliente </th>    
+                  <th  >Nombre Completo</th>
+                  <th >RFC</th>
+                  <th style="display:none;" >Regimen Fiscal</th>
+                                    <th >Telefono</th>
+                  <th>Correo </th>
+                  
+                  <th style="display:none;">Direccion de Facturación</th>
+                  <th style="display:none;">Direccion de Entrega de Embarques</th>
+                  <th style="display:none;">Asignación de Volumen de Venta por Año</th>
+                  
+                  <th style="display:none;">saldocliente</th>
+                  
                   <td><center><b>Editar</b></center></td>
-                  <td><center><b>Borrar</b></center></td>                            
+                  <td><center><b>Borrar</b></center></td>
                 </tr>
               </thead>
               <tbody>
                 @foreach($cliente  as $clientes)
-                <tr class="gradeA">
+                 <tr class="gradeX">
+
                   <td>{{$clientes->nombre}} </td>
                   <td>{{$clientes->rfc}} </td>
-                  <td>{{$clientes->fiscal}} </td>              
+                  <td style="display:none;" >{{$clientes->fiscal}} </td>              
                    <td>{{$clientes->telefono}} </td>
                   <td>{{$clientes->email}}</td>
-                  <td>{{$clientes->direccion_fact}}</td>
-                  <td>{{$clientes->direccion_entr}}</td>
-                  <td>{{$clientes->cantidad_venta}} {{$clientes->volumen_venta}} </td>
-                  <td>${{$clientes-> saldocliente}}</td>
+                  <td style="display:none;" >{{$clientes->direccion_fact}}</td>
+                  <td style="display:none;" >{{$clientes->direccion_entr}}</td>
+                  <td style="display:none;" >{{$clientes->cantidad_venta}} {{$clientes->volumen_venta}} </td>
+                  <td style="display:none;" >${{$clientes-> saldocliente}}</td>
 
                      <td>  <a href="{{URL::action('ClienteController@edit',$clientes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
@@ -89,17 +95,21 @@
             </tbody>
             <tfoot>
               <tr>
-                  <th>Nombre </th>
-                  <th>RFC </th>
-                  <th>Regimen Fiscal </th>
-                  <th>Teléfono </th>
+              <th></th> 
+                  <th  >Nombre Completo</th>
+                  <th >RFC</th>
+                  <th style="display:none;" >Regimen Fiscal</th>
+                                    <th >Telefono</th>
                   <th>Correo </th>
-                  <th>Dirección de Facturación </th>
-                  <th>Dirección de Entrega de Embarques </th>
-                  <th>Asignación de Volumen de Venta por Año </th>
-                  <th>Saldo Cliente </th>    
+                  
+                  <th style="display:none;">Direccion de Facturación</th>
+                  <th style="display:none;">Direccion de Entrega de Embarques</th>
+                  <th style="display:none;">Asignación de Volumen de Venta por Año</th>
+                  
+                  <th style="display:none;">saldocliente</th>
+                  
                   <td><center><b>Editar</b></center></td>
-                  <td><center><b>Borrar</b></center></td> 
+                  <td><center><b>Borrar</b></center></td>
              </tr>
            </tfoot>
          </table>

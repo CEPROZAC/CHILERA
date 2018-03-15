@@ -133,3 +133,22 @@ function validarInput(input) {
 
 
 
+
+function habilita(form)
+
+{ 
+  codigo.disabled=false;
+  form.intereses[0].disabled = false;
+form.intereses[1].disabled = false;
+form.intereses[2].disabled = false;
+}
+
+function deshabilita(form)
+{ 
+  codigo.disabled=true;
+  form.intereses[0].disabled = true;
+form.intereses[1].disabled = true;
+form.intereses[2].disabled = true;
+}
+
+
