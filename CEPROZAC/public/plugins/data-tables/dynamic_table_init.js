@@ -146,27 +146,11 @@ $(document).ready(function() {
     } );
  } );
 
-<<<<<<< HEAD
-
-
-function fnFormatDetails4 ( oTable, nTr )
-=======
 function fnFormatDetails2 ( oTable, nTr )
->>>>>>> 282bba62c3fba54d7f167691af61e2a5088c6c9b
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
 
-<<<<<<< HEAD
-    sOut += '<tr><td><strong>Nombre Vehiculo:</strong></td><td>'+aData[1]+' </td></tr>';
-    sOut += '<tr><td><strong>Numero de serie:</strong></td><td>'+aData[2]+' </td></tr>';
-    sOut += '<tr><td><strong>Placas:</strong></td><td>'+aData[6]+' </td></tr>';
-    sOut += '<tr><td><strong>Poliza Seguro:</strong></td><td>'+aData[4]+' </td></tr>';
-    sOut += '<tr><td><strong>Vigencia Seguro:</strong></td><td>'+aData[3]+' </td></tr>';
-    sOut += '<tr><td><strong>Aseguradora:</strong></td><td>'+aData[5]+' </td></tr>';
-    sOut += '<tr><td><strong>Capacidad cubica:</strong></td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td><strong>Chofer:</strong></td><td>'+aData[8]+' </td></tr>';
-=======
     sOut += '<tr><td><strong>Nombre:</strong></td><td>'+aData[1]+' </td></tr>';
     sOut += '<tr><td><strong>RFC:</strong></td><td>'+aData[2]+' </td></tr>';
     sOut += '<tr><td><strong>Regimen Fiscal:</strong></td><td>'+aData[3]+' </td></tr>';
@@ -177,7 +161,6 @@ function fnFormatDetails2 ( oTable, nTr )
     sOut += '<tr><td><strong>Asignación de Volumen de Venta por Año:</strong></td><td>'+aData[8]+' </td></tr>';
     sOut += '<tr><td><strong>Saldo Cliente:</strong></td><td>'+aData[9]+' </td></tr>';
 
->>>>>>> 282bba62c3fba54d7f167691af61e2a5088c6c9b
     sOut += '</table>';
 
     return sOut;
@@ -185,11 +168,7 @@ function fnFormatDetails2 ( oTable, nTr )
 
 $(document).ready(function() {
 
-<<<<<<< HEAD
-    $('#dynamic-table4').dataTable( {
-=======
     $('#dynamic-table2').dataTable( {
->>>>>>> 282bba62c3fba54d7f167691af61e2a5088c6c9b
         "aaSorting": [[ 4, "desc" ]]
     } );
 
@@ -201,30 +180,18 @@ $(document).ready(function() {
      nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">';
      nCloneTd.className = "center";
 
-<<<<<<< HEAD
-     $('#hidden-table-info4 thead tr').each( function () {
-        this.insertBefore( nCloneTh, this.childNodes[0] );
-    } );
-
-     $('#hidden-table-info4 tbody tr').each( function () {
-=======
      $('#hidden-table-info2 thead tr').each( function () {
         this.insertBefore( nCloneTh, this.childNodes[0] );
     } );
 
      $('#hidden-table-info2 tbody tr').each( function () {
->>>>>>> 282bba62c3fba54d7f167691af61e2a5088c6c9b
         this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
     } );
 
     /*
      * Initialse DataTables, with no sorting on the 'details' column
      */
-<<<<<<< HEAD
-     var oTable = $('#hidden-table-info4').dataTable( {
-=======
      var oTable = $('#hidden-table-info2').dataTable( {
->>>>>>> 282bba62c3fba54d7f167691af61e2a5088c6c9b
         "aoColumnDefs": [
         { "bSortable": false, "aTargets": [ 0 ] }
         ],
@@ -235,11 +202,7 @@ $(document).ready(function() {
      * Note that the indicator for showing which row is open is not controlled by DataTables,
      * rather it is done here
      */
-<<<<<<< HEAD
-     $('#hidden-table-info4 tbody td img').click(function () {
-=======
      $('#hidden-table-info2 tbody td img').click(function () {
->>>>>>> 282bba62c3fba54d7f167691af61e2a5088c6c9b
         var nTr = $(this).parents('tr')[0];
         if ( oTable.fnIsOpen(nTr) )
         {
@@ -251,11 +214,79 @@ $(document).ready(function() {
         {
             /* Open this row */
             this.src = "plugins/advanced-datatable/images/details_close.png";
-<<<<<<< HEAD
-            oTable.fnOpen( nTr, fnFormatDetails4(oTable, nTr), 'details' );
-=======
             oTable.fnOpen( nTr, fnFormatDetails2(oTable, nTr), 'details' );
->>>>>>> 282bba62c3fba54d7f167691af61e2a5088c6c9b
+        }
+    } );
+ } );
+
+
+
+function fnFormatDetails3 ( oTable, nTr )
+{
+    var aData = oTable.fnGetData( nTr );
+    var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+    sOut += '<tr><td><strong>Nombre Vehiculo:</strong></td><td>'+aData[1]+' </td></tr>';
+    sOut += '<tr><td><strong>Numero de serie:</strong></td><td>'+aData[2]+' </td></tr>';
+    sOut += '<tr><td><strong>Placas:</strong></td><td>'+aData[6]+' </td></tr>';
+    sOut += '<tr><td><strong>Poliza Seguro:</strong></td><td>'+aData[4]+' </td></tr>';
+    sOut += '<tr><td><strong>Vigencia Seguro:</strong></td><td>'+aData[3]+' </td></tr>';
+    sOut += '<tr><td><strong>Aseguradora:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>Capacidad cubica:</strong></td><td>'+aData[7]+' </td></tr>';
+    sOut += '<tr><td><strong>Chofer:</strong></td><td>'+aData[8]+' </td></tr>';
+    sOut += '</table>';
+
+    return sOut;
+}
+
+$(document).ready(function() {
+
+    $('#dynamic-table3').dataTable( {
+        "aaSorting": [[ 4, "desc" ]]
+    } );
+
+    /*
+     * Insert a 'details' column to the table
+     */
+     var nCloneTh = document.createElement( 'th' );
+     var nCloneTd = document.createElement( 'td' );
+     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">';
+     nCloneTd.className = "center";
+
+     $('#hidden-table-info3 thead tr').each( function () {
+        this.insertBefore( nCloneTh, this.childNodes[0] );
+    } );
+
+     $('#hidden-table-info3 tbody tr').each( function () {
+        this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+    } );
+
+    /*
+     * Initialse DataTables, with no sorting on the 'details' column
+     */
+     var oTable = $('#hidden-table-info3').dataTable( {
+        "aoColumnDefs": [
+        { "bSortable": false, "aTargets": [ 0 ] }
+        ],
+        "aaSorting": [[1, 'asc']]
+    });
+
+    /* Add event listener for opening and closing details
+     * Note that the indicator for showing which row is open is not controlled by DataTables,
+     * rather it is done here
+     */
+     $('#hidden-table-info3 tbody td img').click(function () {
+        var nTr = $(this).parents('tr')[0];
+        if ( oTable.fnIsOpen(nTr) )
+        {
+            /* This row is already open - close it */
+            this.src = "plugins/advanced-datatable/images/details_open.png";
+            oTable.fnClose( nTr );
+        }
+        else
+        {
+            /* Open this row */
+            this.src = "plugins/advanced-datatable/images/details_close.png";
+            oTable.fnOpen( nTr, fnFormatDetails2(oTable, nTr), 'details' );
         }
     } );
  } );

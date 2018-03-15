@@ -42,7 +42,7 @@
 
       <div class="porlets-content">
         <div class="table-responsive">
-          <table  cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info4">
+          <table  cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info3">
             <thead>
               <tr>
                 <th>Nombre Unidad </th>
