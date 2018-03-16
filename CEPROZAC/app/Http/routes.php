@@ -35,7 +35,7 @@ Route::resource('transportes','TransporteController');
 Route::get('pdf', 'PdfController@invoice');
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
 Route::get('ver-empresas/{id}', 'ProvedorController@verEmpresas')->name('provedores.verEmpresas');
-Route::get('ver-mantenimientos/{id}', 'MantenimientoTrasnporteController@verMantenimientos')->name('mantenimiento.verMantenimientos');
+Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
 Route::get('descargar-clientes', 'ClienteController@excel')->name('clientes.excel');
 Route::get('descargar-productos', 'ProductosController@excel')->name('productos.excel');
 

@@ -57,7 +57,7 @@
               <label class="col-sm-3 control-label">Placas: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="placas" type="text" data-mask="AAA-000-A" id="placas"   onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese placas del Vehículo" maxlength="8" parsley-rangelength="[1,35]"/>
+                <input name="placas" type="text" data-mask="AAA-000-A"   onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese placas del Vehículo" maxlength="8" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>

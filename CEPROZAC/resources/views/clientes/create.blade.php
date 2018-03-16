@@ -2,11 +2,8 @@
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-
     <h1>Inicio</h1>
     <h2 class="">Clientes</h2>
-
-    
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
@@ -187,10 +184,10 @@
 <script>
  $(function(){
    $("#form").submit(function(e){
-     
+
      var fields = $(this).serialize();
      $.post("{{url('clientes/validarmiformulario')}}", fields, function(data){
-       
+
        if(data.valid !== undefined){
          $("#result").html("Enhorabuena formulario enviado correctamente");
          $("#form")[0].reset();
@@ -214,6 +211,4 @@
    });
  });
 </script>
-
-
 @endsection

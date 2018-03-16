@@ -7,6 +7,8 @@ use CEPROZAC\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Controllers\Controller;
+use CEPROZAC\Transporte;
+use CEPROZAC\MantenimientoTransporte;
 use DB;
 
 
@@ -19,7 +21,7 @@ class MantenimientoTransporteController extends Controller
      */
     public function index()
     {
-     
+
         $mantenimientos= DB::table('mantenimiento_transportes')
         ->join('transportes', 'mantenimiento_transportes.idTransporte','=','transportes.id')
         ->select('mantenimiento_transportes.*','transportes.nombre_Unidad')
@@ -37,7 +39,8 @@ class MantenimientoTransporteController extends Controller
      */
     public function create()
     {
-        //
+        $transportes= DB::table('transportes')->where('estado','Activo')->get();
+        return   view('Transportes.mantenimientoTransportes.create',['transportes'=>$transportes]);
     }
 
     /**
@@ -48,8 +51,15 @@ class MantenimientoTransporteController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+      $mantenimiento = new MantenimientoTransporte;
+      $mantenimiento->concepto=$request->get('concepto');
+      $mantenimiento->idTransporte=$request->get('idTransporte');
+      $mantenimiento->descripcion=$request->get('descripcion');
+      $mantenimiento->fecha=$request->get('fecha');
+      $mantenimiento->estado='Activo';
+      $mantenimiento->save();
+      return Redirect::to('mantenimiento');
+  }
 
     /**
      * Display the specified resource.
@@ -59,7 +69,8 @@ class MantenimientoTransporteController extends Controller
      */
     public function show($id)
     {
-        //
+
+
     }
 
     /**
@@ -70,7 +81,11 @@ class MantenimientoTransporteController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $mantenimiento=MantenimientoTransporte::findOrFail($id);
+        $transportes=DB::table('transportes')->where('estado','=','Activo')->get();
+        return view('Transportes.mantenimientoTransportes.edit',['mantenimiento'=>$mantenimiento,'transportes'=>$transportes]);
+
     }
 
     /**
@@ -96,8 +111,4 @@ class MantenimientoTransporteController extends Controller
         //
     }
 
-    public function verMantenimientos($id)
-    {
-
-    }
 }

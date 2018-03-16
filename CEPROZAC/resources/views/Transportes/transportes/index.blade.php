@@ -71,7 +71,7 @@
                 <td style="display: none;">{{$vehiculo->m3_Unidad}}</td>
                 <td style="display: none;">{{$vehiculo->capacidad}}</td>
                 <td style="display: none;">{{$vehiculo->nombre}} {{$vehiculo->apellidos}}</td>
-                <td><center><a class="btn btn-info btn-sm" href="#" role="button"><i class="fa fa-sign-in"></i></a></center></td>
+                <td><center><a class="btn btn-info btn-sm" href="{{URL::action('TransporteController@verTransportes',$vehiculo->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
 
                 
                 <td> 

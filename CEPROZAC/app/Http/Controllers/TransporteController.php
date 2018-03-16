@@ -150,4 +150,19 @@ class TransporteController extends Controller
             });
         })->export('xls');
     }
+
+
+
+    public function verTransportes($id)
+    {
+        $transporte=Transporte::findOrFail($id);
+        $mantenimientos= DB::table('mantenimiento_transportes')
+        ->join('transportes as t', 'mantenimiento_transportes.idTransporte', '=', 't.id')
+        ->select('t.nombre_Unidad','mantenimiento_transportes.concepto','mantenimiento_transportes.descripcion','mantenimiento_transportes.fecha')
+        ->where('mantenimiento_transportes.estado','Activo')
+        ->where('mantenimiento_transportes.idTransporte','=',$id)
+        ->get();
+        return view('Transportes.transportes.listaMantenimientos',['transporte' => $transporte, 'mantenimientos'=>$mantenimientos]);
+        
+    }
 }
