@@ -119,6 +119,7 @@ class AlmacenMaterialController extends Controller
             }   
        $material->descripcion=$request->get('descripcion');
        $material->cantidad=$request->get('cantidad');
+        $material->codigo=$request->get('codigo');
        $material->estado='Activo';
 
        $material->update();

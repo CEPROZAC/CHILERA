@@ -151,4 +151,13 @@ form.intereses[1].disabled = true;
 form.intereses[2].disabled = true;
 }
 
-
+document.onkeydown = functionespacio(){
+      if(window.event && window.event.keyCode == 8)
+    {
+       window.event.keyCode = 505;
+      }
+      if(window.event && window.event.keyCode == 505)
+    {
+       return false;
+      }
+}
