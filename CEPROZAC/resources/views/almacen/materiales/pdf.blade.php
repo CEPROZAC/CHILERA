@@ -19,8 +19,14 @@
 <body>	
   @foreach($material  as $materiales)
   <tr class="gradeA">
-  <td>{{$materiales->nombre}} </td>
-   <td> <?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13",5,55);?></td>
+  <td><font size=20> {{$materiales->nombre}}  </font> </td>
+   <td> <?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13",5,55);?>
+    <div style="text-align:center;">
+    <font size=18>
+     {{$materiales->codigo}} 
+     </font>
+   </td>
+
      @endforeach
 
       </tr>
