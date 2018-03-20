@@ -30,20 +30,49 @@
             </div>    
           </div>
         </div>
+        </div>
+        </div>
+        </div>
+        </div>
         <div class="porlets-content">
           <form action="{{route('almacen.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
 
 
             {{csrf_field()}}
+            
 
+<div class="container clear_both padding_fix">
+      <div class="block-web">
+<div class="row">
+ <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+           <div class="form-group">
+           <label for="entrego">Entrego:</label>
+            <select name="entrego" class="form-control selectpicker" data-live-search="true">  
+              @foreach($empleado as $emp)
+              <option value="{{$emp->id}}">
+               {{$emp->nombre}} {{$emp->apellidos}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
+       </div>
+       </div>
+       </div>
 
-                  <div class="form-group">
-          <label class="col-sm-3 control-label">Material : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="id_material" class="form-control" required>  
+<div class="container clear_both padding_fix">
+      <div class="block-web">
+       <div class="row">
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                <div class="form-group"> 
+          <label for="material">Material </label>
+            <select name="id_materialk" class="form-control selectpicker"  data-live-search="true"  required id="id_materialk" >  
               @foreach($material as $mat)
-              <option value="{{$mat->id}}">
-               {{$mat->nombre}}
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+               {{$mat->nombre}} {{$mat->id}} {{$mat->cantidad}}
              </option>
              @endforeach              
            </select>
@@ -51,17 +80,69 @@
          </div>
        </div><!--/form-group-->
 
-
-       <div class="form-group">
-       @foreach($material as $mat)
-               {{$mat->cantidad}}
-            
-              <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="cantidad" maxlength="9" type="number" value="1" min="1" max='{{$mat->cantidad}}' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="scantidad">Cantidad de Salida </label>
+                <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
                </div>    
                </div>  
-                @endforeach 
+
+         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="pcantidad">Cantidad en Almacén </label>
+                <input name="pcantidad" id="pcantidad" type="number" disabled class="form-control" />
+               </div>    
+               </div>  
+
+ <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="descripcion">Descripción </label>
+                <input name="descripcion" id="descripcion" disabled class="form-control" />
+               </div>    
+               </div>  
+
+
+             
+       </div>
+          <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                <div class="form-group"> 
+                  <button type="button" id="btn_add" agregar(); class="btn btn-primary">Agregar</button>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div class="form-group"> 
+                  <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                    <thead style="background-color:#A9D0F5">
+                      <th>Opciones</th>
+                      <th>Articulo</th>
+                      <th>Cantidad</th>
+                      <th>Entrego</th>
+                      <th>Recibio</th>
+                      <th>Fecha</th>
+                    </thead>
+                    <tfoot>
+                      <th>Total</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th><h4 id="total">$/.0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
+                    </tfoot>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
+                </div>
+
+       </div>
+       </div>
+
+       </div>
+       </div>
+
+
+     
 
 
             <div class="form-group">
@@ -72,19 +153,7 @@
               </div>
             </div>
 
-            <div class="form-group">
-          <label class="col-sm-3 control-label">Entrego : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="entrego" class="form-control" required>  
-              @foreach($empleado as $emp)
-              <option value="{{$emp->id}}">
-               {{$emp->nombre}} {{$emp->apellidos}} 
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
-         </div>
-       </div>
+           
 
         <div class="form-group">
           <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
@@ -130,4 +199,83 @@
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 </html> 
+
+<script>
+var select = document.getElementById('id_materialk');
+select.addEventListener('change',
+  function(){
+    var selectedOption = this.options[select.selectedIndex];
+    console.log(selectedOption.value + ': ' + selectedOption.text);
+    var cantidadtotal = selectedOption.value;
+    limite = "5",
+    separador = "_",
+    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+    stock=arregloDeSubCadenas[0];
+    descripcion=arregloDeSubCadenas[1];
+
+    console.log(arregloDeSubCadenas); 
+    document.getElementById("pcantidad").value=stock;
+    document.getElementById("descripcion").value=descripcion;
+       document.getElementById("scantidad").value = "1";
+    document.getElementById("scantidad").max=stock;
+
+  });
+
+
+function agregar(){
+        var select=document.getElementById('id_materialk');
+        select.addEventListener('change',
+           function(){
+    var selectedOption = this.options[select.selectedIndex];
+    console.log(selectedOption.value + ': ' + selectedOption.text);
+    var cantidadtotal = selectedOption.value;
+         limite = "5",
+    separador = "_",
+    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+
+      cantidad=arregloDeSubCadenas[0];
+      descripcion=arregloDeSubCadenas[1];
+      codigo=arregloDeSubCadenas[2];
+      id=arregloDeSubCadenas[3];
+      nombre=arregloDeSubCadenas[4];
+ });
+      if(id!="" && cantidad!="" && cantidad>0 && descripcion!="" && nombre!="")
+        {
+          if(cantidad>=1)
+          {
+            subtotal[cont]=(cantidad*precio_venta-descuento);
+             total=total+subtotal[cont];
+          var  fila='<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn  btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+ id+'">'+articulo+'</td><td><input name="cantidad[]" type="number" value="'+ cantidad+'"></td><td><input name="precio_venta[]" type="number" value="'+ precio_venta+'" enable></td><td><input name="descuento[]" type="number" value="'+ descripcion+'"></td><td>'+subtotal[cont]+'</td></tr>';
+                    cont++;
+                    limpiar();
+
+                    $("#total").html("$"+total);
+                    alert(total);
+                     $("#total_venta").val(total);
+
+                    evaluar();
+                    $("#detalles").append(fila);
+          }
+          else
+          {
+            alert("La  cantidad  a vender supera el stock")
+          }
+          
+                }
+                    else
+                    {
+                       alert("Error al ingresar el detalle  de la, revise los  datos del  articulo");
+                    }
+
+        
+    }
+
+
+    
+
+
+</script>
+ 
+
 @endsection
+
