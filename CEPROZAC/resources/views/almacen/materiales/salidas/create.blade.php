@@ -1,5 +1,6 @@
 @extends('layouts.principal')
 @section('contenido')
+
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
@@ -102,13 +103,50 @@
                </div>  
 
 
+<div>
+
+  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="destino" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Destino de el Material"/>
+              </div>
+            </div>
+
+           
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="recibio" class="form-control" required>  
+              @foreach($empleado as $emp)
+              <option value="{{$emp->id}}">
+               {{$emp->nombre}} {{$emp->apellidos}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
+
+        <div class="form-group">
+              <label class="col-sm-3 control-label">Tipo de Movimiento: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="tipo_movimiento" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
+              </div>
+            </div>
+
              
        </div>
           <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
                 <div class="form-group"> 
-                  <button type="button" id="btn_add" agregar(); class="btn btn-primary">Agregar</button>
+                  <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
                 </div>
               </div>
+
+              
 
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <div class="form-group"> 
@@ -142,48 +180,6 @@
        </div>
 
 
-     
-
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="destino" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Destino de el Material"/>
-              </div>
-            </div>
-
-           
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="recibio" class="form-control" required>  
-              @foreach($empleado as $emp)
-              <option value="{{$emp->id}}">
-               {{$emp->nombre}} {{$emp->apellidos}} 
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
-         </div>
-       </div>
-
-        <div class="form-group">
-              <label class="col-sm-3 control-label">Tipo de Movimiento: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="tipo_movimiento" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
-              </div>
-            </div>
-
-
-
-       
-
-
-
-
 
 
      <div class="form-group">
@@ -200,7 +196,11 @@
 </div><!--/container clear_both padding_fix-->
 </html> 
 
-<script>
+
+<script type="text/javascript">
+
+
+
 var select = document.getElementById('id_materialk');
 select.addEventListener('change',
   function(){
@@ -219,16 +219,14 @@ select.addEventListener('change',
        document.getElementById("scantidad").value = "1";
     document.getElementById("scantidad").max=stock;
 
+
   });
 
 
 function agregar(){
         var select=document.getElementById('id_materialk');
-        select.addEventListener('change',
-           function(){
-    var selectedOption = this.options[select.selectedIndex];
-    console.log(selectedOption.value + ': ' + selectedOption.text);
-    var cantidadtotal = selectedOption.value;
+    console.log(select.value + "HOLA");
+    var cantidadtotal = select.value;
          limite = "5",
     separador = "_",
     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
@@ -238,39 +236,13 @@ function agregar(){
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
- });
-      if(id!="" && cantidad!="" && cantidad>0 && descripcion!="" && nombre!="")
-        {
-          if(cantidad>=1)
-          {
-            subtotal[cont]=(cantidad*precio_venta-descuento);
-             total=total+subtotal[cont];
-          var  fila='<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn  btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+ id+'">'+articulo+'</td><td><input name="cantidad[]" type="number" value="'+ cantidad+'"></td><td><input name="precio_venta[]" type="number" value="'+ precio_venta+'" enable></td><td><input name="descuento[]" type="number" value="'+ descripcion+'"></td><td>'+subtotal[cont]+'</td></tr>';
-                    cont++;
-                    limpiar();
+      var fila="<tr><td>"+cantidad+"</td><td>"+descripcion+"</td><td>"+codigo+"</td><td>"+nombre+"</td></tr>";
+   //   document.getElementById("detalles").innerHTML = fila;
+      var btn = document.createElement("TR");
+    btn.innerHTML=fila;
+    document.getElementById("detalles").appendChild(btn);
 
-                    $("#total").html("$"+total);
-                    alert(total);
-                     $("#total_venta").val(total);
-
-                    evaluar();
-                    $("#detalles").append(fila);
-          }
-          else
-          {
-            alert("La  cantidad  a vender supera el stock")
-          }
-          
-                }
-                    else
-                    {
-                       alert("Error al ingresar el detalle  de la, revise los  datos del  articulo");
-                    }
-
-        
-    }
-
-
+}
     
 
 
