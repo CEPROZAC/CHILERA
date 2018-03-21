@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\Empleado;
 use CEPROZAC\Transporte;
+use CEPROZAC\MantenimientoTransporte;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -164,5 +165,26 @@ class TransporteController extends Controller
         ->get();
         return view('Transportes.transportes.listaMantenimientos',['transporte' => $transporte, 'mantenimientos'=>$mantenimientos]);
         
+    }
+
+    public function descargarMantenimientos($id,$nombre)
+    {
+        $nombreExcel ='Lista Mantenimiento de Vehiculo'.' '.$nombre;
+        Excel::create($nombreExcel,function($excel) use ($id) {
+
+            $excel->sheet('Excel sheet', function($sheet) use($id) {
+
+                $mantenimiento = MantenimientoTransporte::join('transportes as t', 'mantenimiento_transportes.idTransporte', '=', 't.id')
+                ->select('mantenimiento_transportes.concepto','mantenimiento_transportes.descripcion','mantenimiento_transportes.fecha')
+                ->where('mantenimiento_transportes.estado','Activo')
+                ->where('t.id','=',$id)
+                ->get(); 
+
+                $sheet->fromArray($mantenimiento);
+                $sheet->row(1,['Concepto','Desripcion','Fecha' ]);
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
+
     }
 }

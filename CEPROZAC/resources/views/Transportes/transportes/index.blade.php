@@ -54,7 +54,7 @@
                 <th style="display: none;">Metros cubicos Unidad </th>
                 <th style="display: none;">Capacidad </th>
                 <th style="display: none;">Chofer </th>
-                <th><center><b>Ver Mantenimientos</b></center></th>
+                <th><center><b>Mantenimientos</b></center></th>
                 <th><center><b>Editar</b></center></th>
                 <th><center><b>Borrar</b></center></th>
               </tr>
@@ -96,7 +96,7 @@
                 <th style="display: none;">Metros cubicos Unidad </th>
                 <th style="display: none;">Capacidad </th>
                 <th style="display: none;">Chofer </th>
-                <th><center><b>Ver Mantenimientos</b></center></th>
+                <th><center><b>Mantenimientos</b></center></th>
                 <th><center><b>Editar</b></center></th>
                 <th><center><b>Borrar</b></center></th>
               </tr>

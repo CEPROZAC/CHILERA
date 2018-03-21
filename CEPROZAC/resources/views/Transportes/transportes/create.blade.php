@@ -46,9 +46,12 @@
               <label class="col-sm-3 control-label">Numero de Serie: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="no_Serie" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de Vehículo" minlength="16" maxlength="17" parsley-rangelength="[1,35]"/>
+                <input name="no_Serie" id="vin" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de Vehículo" minlength="16" maxlength="17" parsley-rangelength="[1,35]"/>
+                <SPAN id='validation-message'></SPAN>
+                <div class="text-danger" id="validation-message"> </div>
 
               </div>
+                 <SPAN id="validation-message"></SPAN>
             </div>
 
 

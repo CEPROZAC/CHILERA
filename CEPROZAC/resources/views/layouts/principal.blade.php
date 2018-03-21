@@ -176,6 +176,12 @@
                 <li> <a href="{{url('almacen/materiales/salidas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
               </ul>
             </li>
+            <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Basculas <span class="plus"><i class="fa fa-plus"></i></span></a>
+              <ul>
+                <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
+           
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -227,7 +233,9 @@
   {!!Html::script('plugins/wizard/js/jquery.smartWizard.js')!!}
   <!-- Include jQuery Validator plugin -->
   {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js')!!}
-   {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js')!!}
+
+
+  {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js')!!}
 
 </body>
 

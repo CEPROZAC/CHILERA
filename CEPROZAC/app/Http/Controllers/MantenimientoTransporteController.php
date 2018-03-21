@@ -97,7 +97,16 @@ class MantenimientoTransporteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mantenimiento=MantenimientoTransporte::findOrFail($id);
+        $mantenimiento->concepto=$request->get('concepto');
+        //echo $request->get('nombre');
+        $mantenimiento->idTransporte=$request->get('idTransporte');
+        $mantenimiento->descripcion=$request->get('descripcion');
+        $mantenimiento->fecha=$request->get('fecha');
+
+        $mantenimiento->estado='Activo';
+        $mantenimiento->update();
+        return Redirect::to('mantenimiento');
     }
 
     /**
@@ -108,7 +117,34 @@ class MantenimientoTransporteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mantenimiento=MantenimientoTransporte::findOrFail($id);
+        $mantenimiento->estado="Inactivo";
+        $mantenimiento->update();
+        return Redirect::to('mantenimiento');
+    }
+
+
+    public function excel()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+        Excel::create('Lista Mantenimiento Vehiculo', function($excel) {
+            $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+
+                $mantenimiento = MantenimientoTransporte::join('transportes as t', 'mantenimiento_transportes.idTransporte', '=', 't.id')
+                ->select('t.nombre_Unidad','mantenimiento_transportes.concepto','mantenimiento_transportes.descripcion','mantenimiento_transportes.fecha')
+                ->where('mantenimiento_transportes.estado','Activo')->get();     
+                
+
+                $sheet->fromArray($mantenimiento);
+                $sheet->row(1,['Nombre Vehiculo','concepto','Desripcion','Fecha' ]);
+
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
     }
 
 }

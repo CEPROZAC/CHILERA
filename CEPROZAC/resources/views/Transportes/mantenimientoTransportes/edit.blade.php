@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{url('mantenimiento', [$provedores->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          <form action="{{url('mantenimiento', [$mantenimiento->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
 
@@ -40,20 +40,27 @@
              <div class="col-sm-6">
               <select name="idTransporte" class="form-control" required>  
                 @foreach($transportes as $transporte)
-                <option value="{{$transporte->id}}">
+                @if($transporte->id==$mantenimiento->idTransporte)
+                <option value="{{$transporte->id}}" selected>
                  {{$transporte->nombre_Unidad}}
                </option>
+               @else
+               <option value="{{$transporte->id}}">
+                 {{$transporte->nombre_Unidad}}
+               </option>
+               @endif
                @endforeach              
              </select>
              <div class="help-block with-errors"></div>
            </div>
          </div><!--/form-group-->
 
+
          <div class="form-group">
           <label class="col-sm-3 control-label">Concepto: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
 
-            <input name="concepto" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese concepto de el Mantenimiento" maxlength="35" parsley-rangelength="[1,35]"/>
+            <input name="concepto" value="{{$mantenimiento->concepto}}" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese concepto de el Mantenimiento" maxlength="35" parsley-rangelength="[1,35]"/>
 
           </div>
         </div>
@@ -61,7 +68,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Descripción</label>
           <div class="col-sm-6">
-            <textarea name= "descripcion"  onchange="mayus(this);"  class="form-control" maxlength="300" rows="3" resize="none" placeholder="Ejemplo: Cambio de puntas de inyección d‑ Revisión de candelas de precalentamiento.."></textarea>
+            <textarea name= "descripcion"  onchange="mayus(this);"  class="form-control" maxlength="300" rows="3" resize="none" placeholder="Ejemplo: Cambio de puntas de inyección d‑ Revisión de candelas de precalentamiento..">{{$mantenimiento->descripcion}}</textarea>
           </div>
         </div>
 
@@ -69,16 +76,13 @@
           <label class="col-sm-3 control-label">Fecha: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
 
-           <input name="fecha" type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+           <input name="fecha" type="text" placeholder="dd-mm-aaaa" value="{{$mantenimiento->fecha}}" data-mask="00-00-0000" class="form-control mask" >
          </div>
        </div>
-
-
-
        <div class="form-group">
         <div class="col-sm-offset-7 col-sm-5">
           <button type="submit" class="btn btn-primary">Guardar</button>
-          <a href="{{url('/matenimiento')}}" class="btn btn-default"> Cancelar</a>
+          <a href="{{url('/mantenimiento')}}" class="btn btn-default"> Cancelar</a>
         </div>
       </div><!--/form-group-->
     </form>

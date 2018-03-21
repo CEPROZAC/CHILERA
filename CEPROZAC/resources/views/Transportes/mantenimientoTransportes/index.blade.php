@@ -73,7 +73,7 @@
                  </td>
                </td>
              </tr>
-
+             @include('Transportes.mantenimientoTransportes.modal')
              @endforeach
            </tbody>
            <tfoot>
