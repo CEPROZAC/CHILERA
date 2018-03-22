@@ -222,7 +222,7 @@ select.addEventListener('change',
 
   });
 
-
+var uno = 1;
 function agregar(){
         var select=document.getElementById('id_materialk');
     console.log(select.value + "HOLA");
@@ -230,20 +230,41 @@ function agregar(){
          limite = "5",
     separador = "_",
     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-
+var id2= uno++;
       cantidad=arregloDeSubCadenas[0];
       descripcion=arregloDeSubCadenas[1];
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
-      var fila="<tr><td>"+cantidad+"</td><td>"+descripcion+"</td><td>"+codigo+"</td><td>"+nombre+"</td></tr>";
-   //   document.getElementById("detalles").innerHTML = fila;
-      var btn = document.createElement("TR");
-    btn.innerHTML=fila;
-    document.getElementById("detalles").appendChild(btn);
+ console.log(id2 + "simon");
+
+    var tabla = document.getElementById("detalles");
+   // tabla.setAttribute("id", "myIdNameforThisRow", id2);
+        var row = tabla.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+     var cell6 = row.insertCell(5);
+
+
+    cell1.innerHTML =  '<input type="button" value="id2.value" name="Borrar" value="Borrar" onClick="eliminarFila(this.value);">';
+    cell2.innerHTML = descripcion;
+    cell3.innerHTML = codigo;
+    cell4.innerHTML = id;
+    cell5.innerHTML = nombre;
+    cell6.innerHTML = id2;
+
 
 }
     
+  function eliminarFila(value) {
+    var index = 0;
+     console.log(value + "entro2");
+    document.getElementById("detalles").deleteRow(value);
+
+}
 
 
 </script>
