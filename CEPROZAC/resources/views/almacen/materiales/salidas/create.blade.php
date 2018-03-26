@@ -1,5 +1,6 @@
 @extends('layouts.principal')
 @section('contenido')
+
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
@@ -30,52 +31,24 @@
             </div>    
           </div>
         </div>
+        </div>
+        </div>
+        </div>
+        </div>
         <div class="porlets-content">
           <form action="{{route('almacen.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
 
 
             {{csrf_field()}}
-
-
-                  <div class="form-group">
-          <label class="col-sm-3 control-label">Material : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="id_material" class="form-control" required>  
-              @foreach($material as $mat)
-              <option value="{{$mat->id}}">
-               {{$mat->nombre}}
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
-         </div>
-       </div><!--/form-group-->
-
-
-       <div class="form-group">
-       @foreach($material as $mat)
-               {{$mat->cantidad}}
             
-              <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="cantidad" maxlength="9" type="number" value="1" min="1" max='{{$mat->cantidad}}' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
-               </div>    
-               </div>  
-                @endforeach 
 
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="destino" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Destino de el Material"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-          <label class="col-sm-3 control-label">Entrego : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="entrego" class="form-control" required>  
+<div class="container clear_both padding_fix">
+      <div class="block-web">
+<div class="row">
+ <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+           <div class="form-group">
+           <label for="entrego">Entrego:</label>
+            <select name="entrego" class="form-control selectpicker" data-live-search="true">  
               @foreach($empleado as $emp)
               <option value="{{$emp->id}}">
                {{$emp->nombre}} {{$emp->apellidos}} 
@@ -85,6 +58,63 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
+       </div>
+       </div>
+       </div>
+
+<div class="container clear_both padding_fix">
+      <div class="block-web">
+       <div class="row">
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                <div class="form-group"> 
+          <label for="material">Material </label>
+            <select name="id_materialk" class="form-control selectpicker"  data-live-search="true"  required id="id_materialk" >  
+              @foreach($material as $mat)
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+               {{$mat->nombre}} {{$mat->id}} {{$mat->cantidad}}
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div><!--/form-group-->
+
+        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="scantidad">Cantidad de Salida </label>
+                <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+               </div>    
+               </div>  
+
+         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="pcantidad">Cantidad en Almacén </label>
+                <input name="pcantidad" id="pcantidad" type="number" disabled class="form-control" />
+               </div>    
+               </div>  
+
+ <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="descripcion">Descripción </label>
+                <input name="descripcion" id="descripcion" disabled class="form-control" />
+               </div>    
+               </div>  
+
+
+<div>
+
+  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="destino" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Destino de el Material"/>
+              </div>
+            </div>
+
+           
 
         <div class="form-group">
           <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
@@ -108,11 +138,46 @@
               </div>
             </div>
 
+             
+       </div>
+          <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                <div class="form-group"> 
+                  <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
+                </div>
+              </div>
 
+              
 
-       
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div class="form-group"> 
+                  <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                    <thead style="background-color:#A9D0F5">
+                      <th>Opciones</th>
+                      <th>Articulo</th>
+                      <th>Cantidad</th>
+                      <th>Entrego</th>
+                      <th>Recibio</th>
+                      <th>Fecha</th>
+                    </thead>
+                    <tfoot>
+                      <th>Total</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th><h4 id="total">$/.0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
+                    </tfoot>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
+                </div>
 
+       </div>
+       </div>
 
+       </div>
+       </div>
 
 
 
@@ -130,4 +195,80 @@
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 </html> 
+
+
+<script type="text/javascript">
+
+
+
+var select = document.getElementById('id_materialk');
+select.addEventListener('change',
+  function(){
+    var selectedOption = this.options[select.selectedIndex];
+    console.log(selectedOption.value + ': ' + selectedOption.text);
+    var cantidadtotal = selectedOption.value;
+    limite = "5",
+    separador = "_",
+    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+    stock=arregloDeSubCadenas[0];
+    descripcion=arregloDeSubCadenas[1];
+
+    console.log(arregloDeSubCadenas); 
+    document.getElementById("pcantidad").value=stock;
+    document.getElementById("descripcion").value=descripcion;
+       document.getElementById("scantidad").value = "1";
+    document.getElementById("scantidad").max=stock;
+
+
+  });
+
+var uno = 1;
+function agregar(){
+        var select=document.getElementById('id_materialk');
+    console.log(select.value + "HOLA");
+    var cantidadtotal = select.value;
+         limite = "5",
+    separador = "_",
+    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+var id2= uno++;
+      cantidad=arregloDeSubCadenas[0];
+      descripcion=arregloDeSubCadenas[1];
+      codigo=arregloDeSubCadenas[2];
+      id=arregloDeSubCadenas[3];
+      nombre=arregloDeSubCadenas[4];
+ console.log(id2 + "simon");
+
+    var tabla = document.getElementById("detalles");
+   // tabla.setAttribute("id", "myIdNameforThisRow", id2);
+        var row = tabla.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+     var cell6 = row.insertCell(5);
+
+
+    cell1.innerHTML =  '<input type="button" value="id2.value" name="Borrar" value="Borrar" onClick="eliminarFila(this.value);">';
+    cell2.innerHTML = descripcion;
+    cell3.innerHTML = codigo;
+    cell4.innerHTML = id;
+    cell5.innerHTML = nombre;
+    cell6.innerHTML = id2;
+
+
+}
+    
+  function eliminarFila(value) {
+    var index = 0;
+     console.log(value + "entro2");
+    document.getElementById("detalles").deleteRow(value);
+
+}
+
+
+</script>
+ 
+
 @endsection
+
