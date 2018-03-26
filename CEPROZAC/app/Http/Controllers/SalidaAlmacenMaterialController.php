@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\SalidasAlmacenMaterial;
+use CEPROZAC\SalidaAlmacenMaterial;
 use CEPROZAC\Empleado;
 
 use DB;
@@ -16,6 +16,7 @@ use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
+use Illuminate\Support\Collection as Collection;
 
 /**
 use CEPROZAC\AlmacenMaterial;
@@ -32,8 +33,8 @@ class SalidaAlmacenMaterialController extends Controller
     public function index()
     {
        
-        $material= DB::table('almacenmateriales')->get();
-         $salida= DB::table('SalidasAlmacenMaterial')->get();
+    //    $material= DB::table('almacenmateriales')->get();
+         $salida= DB::table('salidasalmacenmaterial')->get();
         return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
 
@@ -61,18 +62,58 @@ class SalidaAlmacenMaterialController extends Controller
      */
     public function store(Request $request)
     {
-         $material= new SalidaAlmacenMaterial;
-        $material->id_material=$request->get('id_material');
-        $material->id_material=$request->get('cantidad');
-        $material->destino=$request->get('destino');
-        $material->entrego=$request->get('entrego');
-        $material->recibio=$request->get('recibio');
-        $material->tipo_movimiento=$request->get('tipo_movimiento');
+        $u= "VALOR:";
+           //$producto = $request->get('codigo');
+         // $first = head($producto);
+          //print_r($first);
+           
+$num = 1;
+$n = 28;
+$x = 1;
+$y = 0;
+          while ($num < $n) {
+            $producto = $request->get('codigo');
+          $first = head($producto);
+             print_r($num);
+            $name = explode(",",$first);
+            //$first = $name[0];
+             //$first = $name[1];
+            $first = $name[$y];
+            print_r($u);
+            print_r($first);
+            if (empty($first)){
+                 $num = 28;
+                 print_r($num);
+                
+           
+            }else {
+                 $producto = $request->get('codigo');
+          $first = head($producto);
+             //print_r($num);
+            $name = explode(",",$first);
 
-        return view('almacen.materiales.salidas');
+                print_r($first = $name[$y]);
+             $y = $y + 1;
+             print_r($first = $name[$y]);
+             $y = $y + 1;
+             print_r($first = $name[$y]);
+             $y = $y + 1;
+             print_r($first = $name[$y]);
+             $y = $y + 1;
+             print_r($first = $name[$y]);
+             $y = $y + 1;
+             print_r($first = $name[$y]);
+             $y = $y + 1;
+             $num = $num + 1;
+             
+             
+                            
+            }
+             
 
-        //
-    }
+          // code
+           }
+}
 
     /**
      * Display the specified resource.
