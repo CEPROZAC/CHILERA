@@ -16,6 +16,7 @@ class CreatePrecioBasculasTable extends Migration
             $table->increments('id');
             $table->string('tipoVehiculo');
             $table->double('precioBascula');
+            $table->string('estado');
             $table->timestamps();
         });
     }

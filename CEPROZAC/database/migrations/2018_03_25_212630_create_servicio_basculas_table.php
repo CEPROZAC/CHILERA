@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBasculasTable extends Migration
+class CreateServicioBasculasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,8 @@ class CreateBasculasTable extends Migration
      */
     public function up()
     {
-        Schema::create('basculas', function (Blueprint $table) {
+        Schema::create('servicio_basculas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombreBascula');
-            $table->string('observacionesBascula');
-            $table->string('estado');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ class CreateBasculasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('basculas');
+        Schema::drop('servicio_basculas');
     }
 }

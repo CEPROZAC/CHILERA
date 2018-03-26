@@ -20,10 +20,12 @@ Route::get('/', function () {
 
 Route::resource('empresas', 'EmpresaController');
 Route::resource('empleados', 'EmpleadoController');
+Route::resource('precioBasculas', 'PrecioBasculaController');
 Route::resource('home','HomeController');
 Route::resource('provedores','ProvedorController');
 Route::resource('productos','ProductosController');
 Route::resource('bancos','BancoController');
+Route::resource('serviciosBascula','ServicioBasculaController');
 
 Route::resource('calidad','CalidadController');
 Route::resource('basculas','BasculaController');

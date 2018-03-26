@@ -52,7 +52,7 @@
   <style type="text/css">
     body {
       background-color: #464646;
-      background-image: url(images/spicey-1178419-1598x1062.jpg);
+      background-image: url(images/CEPROZAC.jpeg);
       background-position: center center;
       background-repeat: no-repeat;
       background-attachment: fixed;

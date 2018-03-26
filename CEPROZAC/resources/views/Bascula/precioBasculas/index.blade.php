@@ -27,7 +27,7 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                    <a class="btn btn-sm btn-success tooltips" href="basculas/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
+                    <a class="btn btn-sm btn-success tooltips" href="precioBasculas/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
 
                     <a class="btn btn-sm btn-warning tooltips" href="{{ route('provedores.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
@@ -45,49 +45,45 @@
           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
               <tr>
-                <th>Nombre </th>
-                <th>Observaciones</th>
+                <th>Tipo Vehiculo </th>
+                <th>Precio de Pesaje</th>
                 <td><center><b>Editar</b></center></td>
                 <td><center><b>Borrar</b></center></td>
               </tr>
             </thead>
             <tbody>
-              @foreach($basculas  as $bascula)
+              @foreach($precioBascula  as $precio)
               <tr class="gradeA">
-                <td>{{$bascula->nombreBascula}} </td>
+                <td>{{$precio->tipoVehiculo}} </td>
                 <td>
-                  @if($bascula->observacionesBascula=="")
-                  Informacion no registrada
-                  @else
-                  {{$bascula->observacionesBascula}}
-                  @endif
+                  ${{$precio->precioBascula}}.00
                 </td>
                 <td> 
                   <center>
-                    <a href="{{URL::action('BasculaController@edit',$bascula->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                    <a href="{{URL::action('PrecioBasculaController@edit',$precio->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                   </center>
                 </td>
                 <td>
                   <center>
-                   <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$bascula->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a></center>
+                   <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$precio->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a></center>
                  </td>
                </td>
-              @include('Bascula.basculas.modal')
+               @include('Bascula.precioBasculas.modal')
                @endforeach
              </tbody>
              <tfoot>
               <tr>
-               <th>Nombre </th>
-               <th>Observaciones</th>
-               <th><center><b>Editar</b></center></th>
-               <th><center><b>Borrar</b></center></th>
-             </tr>
-           </tfoot>
-         </table>
-       </div><!--/table-responsive-->
-     </div><!--/porlets-content-->
-   </div><!--/block-web-->
- </div><!--/col-md-12-->
+                <th>Tipo Vehiculo </th>
+                <th>Precio de Pesaje</th>
+                <th><center><b>Editar</b></center></th>
+                <th><center><b>Borrar</b></center></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div><!--/table-responsive-->
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 @stop

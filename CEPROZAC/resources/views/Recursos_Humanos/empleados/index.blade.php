@@ -8,7 +8,7 @@
   <div class="pull-right">
     <ol class="breadcrumb">
       <li ><a style="color: #808080" href="{{url('/empleados')}}">Inicio</a></li>
-      <li class="active">Empleados</a></li>
+      <li class="active">Empleados</a></li> 
     </ol>
   </div>
 </div>

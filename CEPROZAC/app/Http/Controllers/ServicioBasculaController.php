@@ -3,15 +3,11 @@
 namespace CEPROZAC\Http\Controllers;
 
 use Illuminate\Http\Request;
-use CEPROZAC\Http\Requests;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Input;
-use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\PrecioBascula;
-use DB;
-use Maatwebsite\Excel\Facades\Excel;
 
-class PrecioBasculaController extends Controller
+use CEPROZAC\Http\Requests;
+use CEPROZAC\Http\Controllers\Controller;
+
+class ServicioBasculaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +16,8 @@ class PrecioBasculaController extends Controller
      */
     public function index()
     {
-        $precioBascula = DB::table('precio_basculas')->where('estado','Activo')->get();
-        return view('Bascula.precioBasculas.index',['precioBascula' => $precioBascula]);
+        return view('Bascula.servicioBascula.index');
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -32,7 +26,7 @@ class PrecioBasculaController extends Controller
      */
     public function create()
     {
-        return view('Bascula.precioBasculas.create');
+        //
     }
 
     /**
@@ -43,15 +37,8 @@ class PrecioBasculaController extends Controller
      */
     public function store(Request $request)
     {
-      $precioBascula = new PrecioBascula;
-      $precioBascula->tipoVehiculo=$request->get('tipoVehiculo');
-      $precioBascula->precioBascula=$request->get('precioBascula');
-      $precioBascula->estado='Activo';
-      $precioBascula->save();
-
-      return Redirect::to('precioBasculas');
-
-  }
+        //
+    }
 
     /**
      * Display the specified resource.
@@ -72,9 +59,8 @@ class PrecioBasculaController extends Controller
      */
     public function edit($id)
     {
-      $precioBascula=PrecioBascula::findOrFail($id);
-      return view('Bascula.precioBasculas.edit',['precioBascula'=>$precioBascula]);
-  }
+        //
+    }
 
     /**
      * Update the specified resource in storage.
@@ -96,9 +82,6 @@ class PrecioBasculaController extends Controller
      */
     public function destroy($id)
     {
-        $precioBascula=PrecioBascula::findOrFail($id);
-        $precioBascula->estado="Inactivo";
-        $precioBascula->update();
-        return Redirect::to('precioBasculas');
+        //
     }
 }
