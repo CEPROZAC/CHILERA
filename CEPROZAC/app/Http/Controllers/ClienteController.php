@@ -12,6 +12,7 @@ use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
 use Validator; 
+use CEPROZAC\Http\Requests\ClienteFormRequest;
 
 
 
@@ -27,7 +28,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class ClienteController extends Controller
 {
-     
+
     /**
     use DispatchesJobs, ValidatesRequests;
      * Display a listing of the resource.
@@ -36,9 +37,9 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $cliente= DB::table('cliente')->where('estado','Activo')->get();
-        return view('clientes.index', ['cliente' => $cliente]);
-    }
+      $cliente= DB::table('cliente')->where('estado','Activo')->get();
+      return view('clientes.index', ['cliente' => $cliente]);
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -59,53 +60,88 @@ class ClienteController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(ClienteFormRequest $formulario)
     {
 
-       $cliente= new Cliente;
+/**
+                   $cliente= new Cliente;
+             $cliente->nombre=$request->get('nombre');
+    $cliente->rfc=$request->get('rfc');
+    $cliente->fiscal=$request->get('fiscal');
+    $cliente->telefono=$request->get('telefono');
+    $cliente->email=$request->get('email');
+    $cliente->direccion_fact=$request->get('direccion_fact');
+    $cliente->direccion_entr=$request->get('direccion_entr');
+    $cliente->cantidad_venta=$request->get('cantidad_venta');
+    $cliente->volumen_venta=$request->get('volumen_venta');
+    $cliente->saldocliente=$request-
 
-        $validator = Validator::make($request->all(), [
-            'rfc' => 'required|unique:cliente|max:25',
-        ]);
+     */
 
-        if ($validator->fails()) {
-            $cliente ->nombre=$request->cookie('nombre');
-            return redirect('clientes/create')
-                        ->withErrors($validator)
-                        ->withInput();
+    $cliente= new Cliente;
+    $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages()
+        );
+    if ($validator->valid()){
+
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
         }
-
-
-        $cliente->nombre=$request->get('nombre');
-       $cliente->rfc=$request->get('rfc');
-       $cliente->fiscal=$request->get('fiscal');
-       $cliente->telefono=$request->get('telefono');
-       $cliente->email=$request->get('email');
-       $cliente->direccion_fact=$request->get('direccion_fact');
-       $cliente->direccion_entr=$request->get('direccion_entr');
-       $cliente->cantidad_venta=$request->get('cantidad_venta');
-       $cliente->volumen_venta=$request->get('volumen_venta');
-       $cliente->saldocliente=$request->get('saldocliente');
-       $cliente->estado='Activo';
-
-       $cliente->save();
-       return Redirect::to('clientes');
-
-
-        //
-   }
-
-
-
-    /**
-    protected function formatValidationErrors(Validator $validator)
-    {
-
-
-        return $validator->errors()->all();
-
+        else{
+        }
     }
 
+
+    $cliente->nombre=$request->get('nombre');
+    $cliente->rfc="hbydtf7tfs7t";
+    $cliente->fiscal="fiscal";
+    $cliente->telefono="343445445";
+    $cliente->email=$request->get('email');
+    $cliente->direccion_fact="ppe";
+    $cliente->direccion_entr="zacatecas";
+    $cliente->cantidad_venta="44";
+    $cliente->volumen_venta="kilos";
+    $cliente->saldocliente="565";
+    $cliente->estado='Activo';
+
+    $cliente->save();
+    return Redirect::to('clientesd')->with('message', 'Enhorabuena formulario enviado correctamente');
+}
+
+public function validarMiFormulario(ClienteFormRequest $formulario ){
+    $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages());
+    if ($validator->valid()){
+
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
+        }
+        else{
+          $cliente= new Cliente;
+          $cliente->nombre=$formulario->get('nombre');
+          $cliente->rfc=$formulario->get('rfc');
+          $cliente->fiscal=$formulario->get('fiscal');
+          $cliente->telefono=$formulario->get('telefono');
+          $cliente->email=$formulario->get('email');
+          $cliente->direccion_fact=$formulario->get('direccion_fact');
+          $cliente->direccion_entr=$formulario->get('direccion_entr');
+          $cliente->cantidad_venta=$formulario->get('cantidad_venta');
+          $cliente->volumen_venta=$formulario->get('volumen_venta');
+          $cliente->saldocliente=$formulario->get('saldocliente');
+          $cliente->estado='Activo';
+
+          $cliente->save();
+          return redirect('clientes')
+          ->with('message', 'Cliente Registrado Correctamente');
+      }
+  }
+}
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -113,9 +149,9 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-     return view("clientes.show",["clientes"=>Cliente::findOrFail($id)]);
+       return view("clientes.show",["clientes"=>Cliente::findOrFail($id)]);
         //
- }
+   }
 
     /**
      * Show the form for editing the specified resource.
@@ -138,23 +174,23 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cliente=Cliente::findOrFail($id);
+      $cliente=Cliente::findOrFail($id);
 
-       $cliente->nombre=$request->get('nombre');
-       $cliente->rfc=$request->get('rfc');
-       $cliente->fiscal=$request->get('fiscal');
-       $cliente->telefono=$request->get('telefono');
-       $cliente->email=$request->get('email');
-       $cliente->direccion_fact=$request->get('direccion_fact');
-       $cliente->direccion_entr=$request->get('direccion_entr');
-         $cliente->cantidad_venta=$request->get('cantidad_venta');
-       $cliente->volumen_venta=$request->get('volumen_venta');
-       $cliente->saldocliente=$request->get('saldocliente');
-       $cliente->estado='Activo';
-        $cliente->save();
-        return Redirect::to('clientes');
+      $cliente->nombre=$request->get('nombre');
+      $cliente->rfc=$request->get('rfc');
+      $cliente->fiscal=$request->get('fiscal');
+      $cliente->telefono=$request->get('telefono');
+      $cliente->email=$request->get('email');
+      $cliente->direccion_fact=$request->get('direccion_fact');
+      $cliente->direccion_entr=$request->get('direccion_entr');
+      $cliente->cantidad_venta=$request->get('cantidad_venta');
+      $cliente->volumen_venta=$request->get('volumen_venta');
+      $cliente->saldocliente=$request->get('saldocliente');
+      $cliente->estado='Activo';
+      $cliente->save();
+      return Redirect::to('clientes');
         //
-    }
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -172,21 +208,21 @@ class ClienteController extends Controller
   }
 
   public function excel()
-    {        
+  {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
         Excel::create('clientes', function($excel) {
-            $excel->sheet('Excel sheet', function($sheet) {
+          $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-                $clientes = Cliente::select('nombre','rfc','fiscal', 'telefono', 'email', 'direccion_fact', 'direccion_entr', 'cantidad_venta'.' '.'volumen_venta', 'email', 'saldocliente')
-                ->where('estado', 'Activo')
-                ->get();       
-                $sheet->fromArray($clientes);
-                $sheet->row(1,['Nombre','RFC','Regimen Fiscal' ,'Teléfono','Dirección de Facturación','Dirección de Entrega de Embarque','Asignación de Volumen de Venta por Año','Saldo Cliente $',]);
-                $sheet->setOrientation('landscape');
-              
+            $clientes = Cliente::select('nombre','rfc','fiscal', 'telefono', 'email', 'direccion_fact', 'direccion_entr', 'cantidad_venta','volumen_venta', 'email', 'saldocliente')
+            ->where('estado', 'Activo')
+            ->get();       
+            $sheet->fromArray($clientes);
+            $sheet->row(1,['Nombre','RFC','Regimen Fiscal' ,'Teléfono','Email','Dirección de Facturación','Dirección de Entrega de Embarque','Asignación de Cantidad de Venta por Año',' Asignación de Volumen de Venta por Año','Saldo Cliente $',]);
+            $sheet->setOrientation('landscape');
+            
             /*    
             $objDrawing = new PHPExcel_Worksheet_Drawing;
             $objDrawing->setPath(public_path('images\logoCeprozac.jpg')); //your image path
@@ -196,8 +232,8 @@ class ClienteController extends Controller
             $objDrawing->setWidthAndHeight(260,220);
             $objDrawing->setOffsetX(200);
 */
-            });
-        })->export('xls');
+        });
+      })->export('xls');
     }
 
 

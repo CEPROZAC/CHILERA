@@ -1,15 +1,15 @@
 @extends('layouts.principal')
 @section('contenido')
-<html>
+
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Empleados</h2>
+    <h2 class="">Materiales</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a style="color: #808080" href="{{url('/almacen/materiales/salidas')}}">Inicio</a></li>
-      <li><a  style="color: #808080" href="{{url('/almacen/materiales/salidas')}}">Salidas de Almacén</a></li>
+      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Inicio</a></li>
+      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Almacén de Materiales</a></li>
     </ol>
   </div>
 </div>
@@ -21,7 +21,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Salidas de Almacén</strong></h2>
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Salida de Material</strong></h2>
             </div>
             <div class="col-md-4">
               <div class="btn-group pull-right">
@@ -31,82 +31,49 @@
             </div>    
           </div>
         </div>
+        </div>
+        </div>
+        </div>
+        </div>
         <div class="porlets-content">
-          <form action="{{route('almacen.materiales.salidas.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          <form action="{{route('almacen.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+
+
             {{csrf_field()}}
+            
 
-
-            <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  />
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="nombre" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Empleado"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Fecha Ingreso: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-               <input name="fecha_Ingreso" type="text" class="form-control mask" data-inputmask="'alias': 'date'">
-             </div>
-           </div>
-
+<div class="container clear_both padding_fix">
+      <div class="block-web">
+<div class="row">
+ <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
            <div class="form-group">
-            <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-
-             <input type="text" name="fecha_Alta_Seguro" class="form-control mask" data-inputmask="'alias': 'date'">
-           </div>
+           <label for="entrego">Entrego:</label>
+            <select name="entrego" class="form-control selectpicker" data-live-search="true">  
+              @foreach($empleado as $emp)
+              <option value="{{$emp->id}}">
+               {{$emp->nombre}} {{$emp->apellidos}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
          </div>
+       </div>
+       </div>
+       </div>
+       </div>
 
-         <div class="form-group">
-          <label class="col-sm-3 control-label">SSN</label>
-          <div class="col-sm-6 ">
-            <input type="text" name="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();"  class="form-control"   placeholder="Ingrese CURP de el empleado"/>
-          </div>
-        </div><!--/form-group-->
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" value="" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-
-            <input name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
-
-          </div>
-        </div>
-
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Material : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="rol" class="form-control" required>  
+<div class="container clear_both padding_fix">
+      <div class="block-web">
+       <div class="row">
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                <div class="form-group"> 
+          <label for="material">Material </label>
+            <select name="id_materialk" class="form-control selectpicker"  data-live-search="true"  required id="id_materialk" >  
               @foreach($material as $mat)
-              <option value="{{$mat->id}}">
-               {{$mat->nombre}}
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+               {{$mat->nombre}} {{$mat->id}} {{$mat->cantidad}}
              </option>
              @endforeach              
            </select>
@@ -114,17 +81,106 @@
          </div>
        </div><!--/form-group-->
 
-       <div class="form-row">    
-        <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-2">
-          <div class="input-group">
-           <div class="input-group-addon">$</div>
+        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="scantidad">Cantidad de Salida </label>
+                <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+               </div>    
+               </div>  
+
+         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="pcantidad">Cantidad en Almacén </label>
+                <input name="pcantidad" id="pcantidad" type="number" disabled class="form-control" />
+               </div>    
+               </div>  
+
+ <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="form-group"> 
+                <label for="descripcion">Descripción </label>
+                <input name="descripcion" id="descripcion" disabled class="form-control" />
+               </div>    
+               </div>  
 
 
-           <input name="sueldo_Fijo" maxlength="9" type="number" value="1000.00" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+<div>
+
+  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="destino" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Destino de el Material"/>
+              </div>
+            </div>
+
+           
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="recibio" class="form-control" required>  
+              @foreach($empleado as $emp)
+              <option value="{{$emp->id}}">
+               {{$emp->nombre}} {{$emp->apellidos}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
          </div>
        </div>
-     </div>
+
+        <div class="form-group">
+              <label class="col-sm-3 control-label">Tipo de Movimiento: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="tipo_movimiento" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
+              </div>
+            </div>
+
+             
+       </div>
+          <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                <div class="form-group"> 
+                  <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
+                </div>
+              </div>
+
+              
+
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div class="form-group"> 
+                  <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                    <thead style="background-color:#A9D0F5">
+                      <th>Opciones</th>
+                      <th>Articulo</th>
+                      <th>Cantidad</th>
+                      <th>Entrego</th>
+                      <th>Recibio</th>
+                      <th>Fecha</th>
+                    </thead>
+                    <tfoot>
+                      <th>Total</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th><h4 id="total">$/.0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
+                    </tfoot>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
+                </div>
+
+       </div>
+       </div>
+
+       </div>
+       </div>
+
+
+
 
      <div class="form-group">
       <div class="col-sm-offset-7 col-sm-5">
@@ -139,4 +195,80 @@
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 </html> 
+
+
+<script type="text/javascript">
+
+
+
+var select = document.getElementById('id_materialk');
+select.addEventListener('change',
+  function(){
+    var selectedOption = this.options[select.selectedIndex];
+    console.log(selectedOption.value + ': ' + selectedOption.text);
+    var cantidadtotal = selectedOption.value;
+    limite = "5",
+    separador = "_",
+    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+    stock=arregloDeSubCadenas[0];
+    descripcion=arregloDeSubCadenas[1];
+
+    console.log(arregloDeSubCadenas); 
+    document.getElementById("pcantidad").value=stock;
+    document.getElementById("descripcion").value=descripcion;
+       document.getElementById("scantidad").value = "1";
+    document.getElementById("scantidad").max=stock;
+
+
+  });
+
+var uno = 1;
+function agregar(){
+        var select=document.getElementById('id_materialk');
+    console.log(select.value + "HOLA");
+    var cantidadtotal = select.value;
+         limite = "5",
+    separador = "_",
+    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+var id2= uno++;
+      cantidad=arregloDeSubCadenas[0];
+      descripcion=arregloDeSubCadenas[1];
+      codigo=arregloDeSubCadenas[2];
+      id=arregloDeSubCadenas[3];
+      nombre=arregloDeSubCadenas[4];
+ console.log(id2 + "simon");
+
+    var tabla = document.getElementById("detalles");
+   // tabla.setAttribute("id", "myIdNameforThisRow", id2);
+        var row = tabla.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+     var cell6 = row.insertCell(5);
+
+
+    cell1.innerHTML =  '<input type="button" value="id2.value" name="Borrar" value="Borrar" onClick="eliminarFila(this.value);">';
+    cell2.innerHTML = descripcion;
+    cell3.innerHTML = codigo;
+    cell4.innerHTML = id;
+    cell5.innerHTML = nombre;
+    cell6.innerHTML = id2;
+
+
+}
+    
+  function eliminarFila(value) {
+    var index = 0;
+     console.log(value + "entro2");
+    document.getElementById("detalles").deleteRow(value);
+
+}
+
+
+</script>
+ 
+
 @endsection
+

@@ -23,7 +23,7 @@ class RolEmpleadoController extends Controller
     {
 
         $roles= DB::table('rol_empleados')->where('estado','Activo')->get();
-        return view('rol.index',['roles' => $roles]);
+        return view('Recursos_Humanos.rol.index',['roles' => $roles]);
 
     }
 
@@ -35,7 +35,7 @@ class RolEmpleadoController extends Controller
     public function create()
     {
 
-        return  view('rol.create');
+        return  view('Recursos_Humanos.rol.create');
     }
 
     /**
@@ -46,7 +46,6 @@ class RolEmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
 
         $rol = new RolEmpleado;
         $rol->rol_Empleado=$request->get('rol');
@@ -77,7 +76,7 @@ class RolEmpleadoController extends Controller
     public function edit($id)
     {
         $roles=RolEmpleado::findOrFail($id);
-        return view("rol.edit",["roles"=>$roles]);
+        return view("Recursos_Humanos.rol.edit",["roles"=>$roles]);
         
     }
 

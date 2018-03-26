@@ -60,7 +60,11 @@
                 <tr class="gradeA">
                   <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
-                  <td><?php echo DNS1D::getBarcodeHTML("$materiales->id", "EAN13");?></td>
+                  <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
+                    <div style="text-align:center;">
+                    {{$materiales->codigo}}
+                  </div>
+                  </td>
                   <td>
                       <img src="{{asset('imagenes/almacenmaterial/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
                     </td>              

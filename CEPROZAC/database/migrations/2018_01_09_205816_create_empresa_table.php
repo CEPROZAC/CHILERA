@@ -12,17 +12,23 @@ class CreateEmpresaTable extends Migration
      */
     public function up()
     {
-        Schema::create('empresa', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre');
-            $table->string('rfc');
-            $table->string('direccion');
-            $table->string('telefono');
-            $table->string('email');
-            $table->string('regimenFiscal');
-            $table->string('estado');
-            $table->timestamps();
-        });
+      Schema::create('empresas', function (Blueprint $table) {
+       $table->increments('id');
+       $table->string('nombre');
+       $table->string('rfc');
+        $table->string('regimenFiscal');
+       $table->string('telefono');
+       $table->string('direccion');
+       $table->string('email');
+       $table->integer('id_Banco')->unsigned();
+       $table->foreign('id_Banco')->references('id')->on('bancos');
+       $table->string('cve_Interbancaria');
+       $table->string('nom_cuenta');
+       $table->string('estado');
+       $table->integer('provedor_id')->unsigned();
+       $table->foreign('provedor_id')->references('id')->on('provedores');
+       $table->timestamps();
+     });
     }
 
     /**
@@ -32,6 +38,6 @@ class CreateEmpresaTable extends Migration
      */
     public function down()
     {
-         Schema::drop('empresa');
-    }
-}
+     Schema::drop('empresa');
+   }
+ }
