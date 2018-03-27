@@ -42,7 +42,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Nombre Bascula: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6"> 
-              <input name="nombre" type="text"  value ="{{$basculas->nombreBascula}}" onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="" placeholder="Ingrese nombre de el Banco"/>
+              <input name="nombre" type="text"  value ="{{$basculas->nombreBascula}}" onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="" placeholder="Ingrese nombre o identificador de Bascula"/>
             </div>
           </div>
 

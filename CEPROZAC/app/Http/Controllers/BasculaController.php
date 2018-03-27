@@ -10,6 +10,7 @@ use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\Bascula;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 
 class BasculaController extends Controller
@@ -21,9 +22,9 @@ class BasculaController extends Controller
      */
     public function index()
     {
-       $basculas= DB::table('basculas')->where('estado','Activo')->get();
-       return view('Bascula.basculas.index',['basculas' => $basculas]);
-   }
+     $basculas= DB::table('basculas')->where('estado','Activo')->get();
+     return view('Bascula.basculas.index',['basculas' => $basculas]);
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -103,4 +104,10 @@ class BasculaController extends Controller
         $basculas->update();
         return Redirect::to('basculas');
     }
+
+    public function pdf()
+    {
+        $pdf = PDF::loadView('Bascula.basculas.pdf');
+      return $pdf->download('pruebapdf1.pdf');
+  }
 }

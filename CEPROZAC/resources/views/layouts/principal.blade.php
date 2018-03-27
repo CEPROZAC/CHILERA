@@ -113,7 +113,7 @@
           <ul>
             <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> Provedores<span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
 
-              <ul class="opened" style="display:block">
+              <ul  >
                 <li> <a href="{{url('provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Proveedores</b> </a> </li>
                 <li> <a href="{{url('empresas')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Empresas</b> </a> </li>
                 <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Bancos</b> </a> </li>
@@ -150,26 +150,6 @@
                 <li> <a href="inbox.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Compras</b> </a> </li>
               </ul>
             </li>
-            <li> <a href="javascript:void(0);"> <i class="fa fa-folder-open-o"></i> Control de calidad <span class="plus"><i class="fa fa-plus"></i></span> </a>
-              <ul>
-                <li> <a href="login.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Login</b> </a> </li>
-              </ul>
-            </li>
-            <li> <a href="javascript:void(0);"> <i class="fa fa-th"></i> Producion <span class="plus"><i class="fa fa-plus"></i></span> </a>
-              <ul>
-                <li> <a href="statictable.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Static Table</b> </a> </li>
-              </ul>
-            </li>
-            <li> <a href="javascript:void(0);"> <i class="fa fa-th"></i> Producion <span class="plus"><i class="fa fa-plus"></i></span> </a>
-              <ul>
-                <li> <a href="statictable.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Venta</b> </a> </li>
-              </ul>
-            </li>
-            <li> <a href="javascript:void(0);"> <i class="fa fa-th"></i> Regimen Fiscal <span class="plus"><i class="fa fa-plus"></i></span> </a>
-              <ul>
-                <li> <a href="statictable.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Venta</b> </a> </li>
-              </ul>
-            </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
@@ -179,6 +159,8 @@
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Basculas <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
+                <li> <a href="{{url('precioBasculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Precio Pesaje</b> </a> </li>
+                <li> <a href="{{url('serviciosBascula')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Servicio de Bascula</b> </a> </li>
            
               </ul>
             </li>

@@ -46,32 +46,32 @@
             </div>
 
 
-       
 
 
-           <div class="form-row">    
-            <label class="col-sm-3 control-label">Precio: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-4">
-              <div class="input-group">
-               <div class="input-group-addon">$</div>
 
-               <input name="precioBascula" maxlength="9" type="text"   step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese costo de Pesaje" onkeypress=" return soloNumeros(event);"/>
+            <div class="form-row">    
+              <label class="col-sm-3 control-label">Precio: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-4">
+                <div class="input-group">
+                 <div class="input-group-addon">$</div>
+
+                 <input name="precioBascula" maxlength="9" type="text"   step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese costo de Pesaje" onkeypress=" return soloNumeros(event);"/>
+               </div>
              </div>
            </div>
-         </div>
 
 
 
-         <div class="form-group">
-          <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{url('/rol')}}" class="btn btn-default"> Cancelar</a>
-          </div>
-        </div><!--/form-group-->
-      </form>
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
-</div><!--/col-md-12-->
+           <div class="form-group">
+            <div class="col-sm-offset-7 col-sm-5">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <a href="{{url('/precioBasculas')}}" class="btn btn-default"> Cancelar</a>
+            </div>
+          </div><!--/form-group-->
+        </form>
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 

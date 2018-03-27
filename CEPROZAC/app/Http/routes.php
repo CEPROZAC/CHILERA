@@ -36,6 +36,7 @@ Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormular
 
 Route::resource('transportes','TransporteController');
 Route::get('pdf', 'PdfController@invoice');
+Route::get('descargarPDF', 'BasculaController@pdf');
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
 Route::get('ver-empresas/{id}', 'ProvedorController@verEmpresas')->name('provedores.verEmpresas');
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
