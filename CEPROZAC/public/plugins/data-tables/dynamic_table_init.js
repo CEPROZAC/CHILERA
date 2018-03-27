@@ -227,12 +227,13 @@ function fnFormatDetails3 ( oTable, nTr )
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
     sOut += '<tr><td><strong>Nombre Vehiculo:</strong></td><td>'+aData[1]+' </td></tr>';
     sOut += '<tr><td><strong>Numero de serie:</strong></td><td>'+aData[2]+' </td></tr>';
-    sOut += '<tr><td><strong>Placas:</strong></td><td>'+aData[6]+' </td></tr>';
+    sOut += '<tr><td><strong>Placas:</strong></td><td>'+aData[3]+' </td></tr>';
     sOut += '<tr><td><strong>Poliza Seguro:</strong></td><td>'+aData[4]+' </td></tr>';
-    sOut += '<tr><td><strong>Vigencia Seguro:</strong></td><td>'+aData[3]+' </td></tr>';
-    sOut += '<tr><td><strong>Aseguradora:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>Vigencia Seguro:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>Aseguradora:</strong></td><td>'+aData[6]+' </td></tr>';
     sOut += '<tr><td><strong>Capacidad cubica:</strong></td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td><strong>Chofer:</strong></td><td>'+aData[8]+' </td></tr>';
+       sOut += '<tr><td><strong>Capacidad cubica:</strong></td><td>'+aData[8]+' </td></tr>';
+    sOut += '<tr><td><strong>Chofer:</strong></td><td>'+aData[9]+' </td></tr>';
     sOut += '</table>';
 
     return sOut;
@@ -286,7 +287,7 @@ $(document).ready(function() {
         {
             /* Open this row */
             this.src = "plugins/advanced-datatable/images/details_close.png";
-            oTable.fnOpen( nTr, fnFormatDetails2(oTable, nTr), 'details' );
+            oTable.fnOpen( nTr, fnFormatDetails3(oTable, nTr), 'details' );
         }
     } );
  } );

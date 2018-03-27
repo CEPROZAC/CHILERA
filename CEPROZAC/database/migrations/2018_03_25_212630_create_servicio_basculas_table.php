@@ -14,6 +14,16 @@ class CreateServicioBasculasTable extends Migration
     {
         Schema::create('servicio_basculas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('idVehiculo')->unsigned();
+            $table->foreign('idVehiculo')->references('id')->on('transportes');
+            $table->integer('numeroTicket');   
+            $table->integer('idEmpleado')->unsigned();
+            $table->foreign('idEmpleado')->references('id')->on('empleados');
+            $table->integer('idBascula')->unsigned();
+            $table->foreign('idBascula')->references('id')->on('basculas');
+            $table->integer('idPrecioBascula')->unsigned();
+            $table->foreign('idPrecioBascula')->references('id')->on('precio_basculas');
+            $table->string('estado');
             $table->timestamps();
         });
     }

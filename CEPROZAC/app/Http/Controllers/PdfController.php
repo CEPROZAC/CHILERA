@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
 
+
 class PdfController extends Controller
 {
     /**

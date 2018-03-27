@@ -46,18 +46,23 @@
             </div>
 
 
-            <div class="form-group">
+              <div class="form-row">    
               <label class="col-sm-3 control-label">Precio: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input type="text" parsley-type="phone" placeholder="Ingrese el número de teléfono de el banco" name="precioBascula" value="{{$precioBascula->precioBascula}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
-              </div>
-            </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                 <div class="input-group-addon">$</div>
+
+                 <input name="precioBascula" maxlength="9" type="text"   step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="{{$precioBascula->precioBascula}}" placeholder="Ingrese costo de Pesaje" onkeypress=" return soloNumeros(event);"/>
+               </div>
+             </div>
+           </div>
+
 
 
             <div class="form-group">
               <div class="col-sm-offset-7 col-sm-5">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="{{url('/rol')}}" class="btn btn-default"> Cancelar</a>
+                <a href="{{url('/precioBasculas')}}" class="btn btn-default"> Cancelar</a>
               </div>
             </div><!--/form-group-->
           </form>
