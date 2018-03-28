@@ -25,7 +25,8 @@ class ProductosController extends Controller
 
         $producto= DB::table('productos')
         ->join('calidad as c', 'productos.calidad', '=', 'c.id')
-        ->select('productos.*','c.nombre as nomCalidad')
+        ->join('forma_empaques as e', 'productos.idFormatoEmpaque', '=', 'e.id')
+        ->select('productos.*','c.nombre as nomCalidad','e.formaEmpaque')
         ->where('productos.estado','Activo')->get();
         return view('Productos.productos.index', ['producto' => $producto]);
     }
@@ -38,8 +39,9 @@ class ProductosController extends Controller
     public function create()
     {
         $calidades=DB::table('calidad')->where('estado','=','Activo')->get();
+        $empaques=DB::table('forma_empaques')->where('estado','=','Activo')->get();
         $proveedor=DB::table('provedores')->where('estado','=','Activo')->get();
-        return view("Productos.productos.create",["proveedor"=>$proveedor,"calidades"=>$calidades]);
+        return view("Productos.productos.create",["proveedor"=>$proveedor,"calidades"=>$calidades,"empaques"=>$empaques]);
     }
 
     /**
@@ -52,10 +54,10 @@ class ProductosController extends Controller
     {
         $producto= new Producto;
         $producto->nombre=$request->get('nombre');
-     
+
         $producto->calidad=$request->get('calidad');
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
-        $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
+        $producto->idFormatoEmpaque=$request->get('idFormatoEmpaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
         
         if(Input::hasFile('imagen'))
@@ -93,7 +95,8 @@ class ProductosController extends Controller
     {
         $productos=Producto::findOrFail($id);
         $calidades=DB::table('calidad')->where('estado','=','Activo')->get();
-        return view("Productos.productos.edit",["productos"=>$productos,"calidades"=>$calidades]);
+        $empaques=DB::table('forma_empaques')->where('estado','=','Activo')->get();
+        return view("Productos.productos.edit",["productos"=>$productos,"calidades"=>$calidades,"empaques"=>$empaques]);
     }
 
     /**
@@ -109,9 +112,9 @@ class ProductosController extends Controller
         $producto->nombre=$request->get('nombre');
         $producto->calidad=$request->get('calidad');
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
-        $producto->formato_de_Empaque=$request->get('formato_de_Empaque');
+        $producto->idFormatoEmpaque=$request->get('idFormatoEmpaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
-    
+
 
         if(Input::hasFile('imagen'))
         {
@@ -144,7 +147,8 @@ class ProductosController extends Controller
                 //otra opción -> $products = Product::select('name')->get();
 
                 $producto = Producto::join('calidad', 'productos.calidad', '=', 'calidad.id')
-                ->select('productos.nombre', 'calidad.nombre AS nombreCalidad','unidad_de_Medida','formato_de_Empaque','porcentaje_Humedad')
+                ->join('forma_empaques as f', 'productos.idFormatoEmpaque', '=', 'f.id')
+                ->select('productos.nombre', 'calidad.nombre AS nombreCalidad','unidad_de_Medida','f.formaEmpaque','porcentaje_Humedad')
                 ->where('productos.estado', 'Activo')
                 ->get();       
                 

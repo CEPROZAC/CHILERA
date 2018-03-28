@@ -71,30 +71,27 @@
           </div>
         </div><!--/form-group-->
 
+
         <div class="form-group">
-          <label class="col-sm-3 control-label">Formatos de empaque <strog class="theme_color">*</strog></label>
+          <label class="col-sm-3 control-label">Formato de empaque: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="formato_de_Empaque" class="form-control" required>  
-             <option value="TOTE">
-              TOTE              
+            <select name="idFormatoEmpaque" class="form-control" required>
+             @foreach($empaques as $empaque)
+             <option value="{{$empaque->id}}">
+             {{$empaque->formaEmpaque}}
             </option>
-            <option value="COSTAL">
-              COSTAL                 
-            </option>                
+            @endforeach
           </select>
           <div class="help-block with-errors"></div>
         </div>
       </div><!--/form-group-->
 
-      <div class="form-group ">
-        <label class="col-sm-3 control-label">Porcentaje de humedad</label>
-        <div class="col-sm-6">
-          <input type="text" name="porcentaje_Humedad" class="form-control mask" data-inputmask="'mask':'99%'">
+            <div class="form-group ">
+          <label class="col-sm-3 control-label">Porcentaje de humedad</label>
+          <div class="col-sm-6">
+            <input parsley-type="number" type="text" maxlength="3" required parsley-range="[0, 100]" name="porcentaje_Humedad"   class="form-control mask"  onkeypress=" return soloNumeros(event);">
+          </div>
         </div>
-      </div>
-
-
-
 
 
 
