@@ -32,6 +32,7 @@ Route::resource('basculas','BasculaController');
 Route::resource('rol','RolEmpleadoController');
 Route::resource('clientes','ClienteController');
 Route::resource('mantenimiento','MantenimientoTransporteController');
+Route::resource('empaques','FormaEmpaqueController');
 Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormulario");
 
 Route::resource('transportes','TransporteController');
@@ -56,6 +57,7 @@ Route::resource('almacen/materiales','AlmacenMaterialController');
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');
 Route::get('descargar-calidad', 'CalidadController@excel')->name('productos.calidad.excel');
 Route::get('descargar-mantenimiento', 'MantenimientoTransporteController@excel')->name('mantenimiento.excel');
+Route::get('descargar-empaques', 'FormaEmpaqueController@excel')->name('empaques.excel');
 
 Route::resource('almacen/materiales/salidas','SalidaAlmacenMaterialController');
 
