@@ -60,8 +60,8 @@
 
                 <td >{{$producto->nomCalidad}}</td>
                 <td >{{$producto->unidad_de_Medida}}</td>
-                <td >{{$producto->formato_de_Empaque}}</td>
-                <td >{{$producto->porcentaje_Humedad}}</td>
+                <td >{{$producto->formaEmpaque}}</td>
+                <td >{{$producto->porcentaje_Humedad}}%</td> 
                 
                 <td >
                   @if (($producto->imagen)!="")
