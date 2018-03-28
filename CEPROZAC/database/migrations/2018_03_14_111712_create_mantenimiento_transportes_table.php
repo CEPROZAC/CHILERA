@@ -18,6 +18,10 @@ class CreateMantenimientoTransportesTable extends Migration
             $table->foreign('idTransporte')->references('id')->on('transportes');
             $table->string('concepto');
             $table->string('descripcion');
+            $table->integer('idChofer')->unsigned();
+            $table->foreign('idChofer')->references('id')->on('empleados');
+            $table->integer('idMecanico')->unsigned();
+            $table->foreign('idMecanico')->references('id')->on('empleados');
             $table->string('fecha');
             $table->string('estado');
             $table->timestamps();

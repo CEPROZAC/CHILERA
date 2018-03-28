@@ -55,6 +55,19 @@
               <input type="text" parsley-type="phone" placeholder="Ingrese el número de teléfono de el banco" name="telefono" value="{{$bancos->telefono}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
             </div>
           </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Sucursal: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6"> 
+            <input name="sucursal" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$bancos->sucursal}}" placeholder="Ingrese nombre de sucursal  Bancaria"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Ejecutivo: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6"> 
+              <input name="ejecutivo" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,150]"  required value="{{$bancos->ejecutivo}}" placeholder="Ingrese nombre de  ejecutivo correspondiente a la sucursal Bancaria"/>
+            </div>
+          </div>
           <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
               <button type="submit" class="btn btn-primary">Guardar</button>

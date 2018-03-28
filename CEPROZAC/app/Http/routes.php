@@ -51,7 +51,7 @@ Route::get('descargar-empresas', 'EmpresaController@excel')->name('empresas.exce
 
 Route::get('descargar-rol', 'RolEmpleadoController@excel')->name('rol.excel');
 Route::get('descargar-empleados', 'EmpleadoController@excel')->name('empleados.excel');
-
+Route::get('descargar-bancos', 'BancoController@excel')->name('bancos.excel');
 Route::resource('almacen/materiales','AlmacenMaterialController');	
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');
 Route::get('descargar-calidad', 'CalidadController@excel')->name('productos.calidad.excel');

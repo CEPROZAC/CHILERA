@@ -74,9 +74,9 @@
                   <td >{{$empleados->curp}}</td>
                   <td style="display:none;" >{{$empleados->email}}</td>
                   <td >{{$empleados->telefono}}</td>
-                  <td >{{$empleados->sexo}}</td>
+                  <td >{{$empleados->rol_Empleado}}</td>
                   <td style="display:none;" >{{$empleados->sueldo_Fijo}}</td>
-                  <td style="display:none;"   >{{$empleados->rol_Empleado}}</td>
+                  <td style="display:none;"   >{{$empleados->sexo}}</td>
                   <td>  <a href="{{URL::action('EmpleadoController@edit',$empleados->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
                   </td> 
                   </td>

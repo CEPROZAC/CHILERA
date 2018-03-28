@@ -79,14 +79,57 @@
            <input name="fecha" type="text" placeholder="dd-mm-aaaa" value="{{$mantenimiento->fecha}}" data-mask="00-00-0000" class="form-control mask" >
          </div>
        </div>
+
+
        <div class="form-group">
-        <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <a href="{{url('/mantenimiento')}}" class="btn btn-default"> Cancelar</a>
-        </div>
-      </div><!--/form-group-->
-    </form>
-  </div><!--/porlets-content-->
+         <label class="col-sm-3 control-label"> Responsable de Vehiculo: <strog class="theme_color">*</strog></label>
+         <div class="col-sm-6">
+          <select name="idChofer" class="form-control" required>  
+            @foreach($empleados as $empleado)
+            @if($empleado->id==$mantenimiento->idChofer)
+            <option value="{{$empleado->id}}" selected>
+              {{$empleado->nombre}}  {{$empleado->apellidos}} 
+            </option>
+            @else
+            <option value="{{$empleado->id}}">
+             {{$empleado->nombre}}  {{$empleado->apellidos}}  
+           </option>
+           @endif
+           @endforeach              
+         </select>
+         <div class="help-block with-errors"></div>
+       </div>
+     </div><!--/form-group-->
+
+
+     <div class="form-group">
+       <label class="col-sm-3 control-label"> Responsable de Mantenimiento: <strog class="theme_color">*</strog></label>
+       <div class="col-sm-6">
+        <select name="idMecanico" class="form-control" required>  
+          @foreach($empleados as $empleado)
+          @if($empleado->id==$mantenimiento->idMecanico)
+          <option value="{{$empleado->id}}" selected>
+           {{$empleado->nombre}}  {{$empleado->apellidos}}  
+         </option>
+         @else
+         <option value="{{$empleado->id}}">
+           {{$empleado->nombre}}  {{$empleado->apellidos}}  
+         </option>
+         @endif
+         @endforeach              
+       </select>
+       <div class="help-block with-errors"></div>
+     </div>
+   </div><!--/form-group-->
+
+   <div class="form-group">
+    <div class="col-sm-offset-7 col-sm-5">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{url('/mantenimiento')}}" class="btn btn-default"> Cancelar</a>
+    </div>
+  </div><!--/form-group-->
+</form>
+</div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->

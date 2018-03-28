@@ -16,6 +16,8 @@ class CreateBancosTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('telefono')->nullable();
+            $table->string('sucursal');
+            $table->string('ejecutivo');
             $table->string('estado');
             $table->timestamps();
         });
