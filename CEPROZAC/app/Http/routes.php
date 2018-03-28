@@ -63,6 +63,6 @@ Route::resource('almacen/materiales/salidas','SalidaAlmacenMaterialController');
 Route::get('pruebas', 'ProductosController@pruebas')->name('productos.pruebas');	
 
 Route::resource('almacen/salidas/material','SalidaAlmacenMaterialController');	
-Route::get('descargar-salidas', 'SalidaAlmacenMaterial@excel')->name('almacen.materiales.salidas.excel');
+Route::get('descargar-salidas', 'SalidaAlmacenMaterialController@excel')->name('almacen.materiales.salidas.excel');
 
 Route::get('descargar-transportes', 'TransporteController@excel')->name('transportes.excel');
