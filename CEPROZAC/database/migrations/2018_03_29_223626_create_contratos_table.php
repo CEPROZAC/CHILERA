@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServicioBasculasTable extends Migration
+class CreateContratosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,13 @@ class CreateServicioBasculasTable extends Migration
      */
     public function up()
     {
-        Schema::create('servicio_basculas', function (Blueprint $table) {
+        Schema::create('contratos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('numeroTicket');   
             $table->integer('idEmpleado')->unsigned();
             $table->foreign('idEmpleado')->references('id')->on('empleados');
-            $table->integer('idBascula')->unsigned();
-            $table->foreign('idBascula')->references('id')->on('basculas');
-            $table->integer('idPrecioBascula')->unsigned();
-            $table->foreign('idPrecioBascula')->references('id')->on('precio_basculas');
+            $table->string('fechaInicio');
+            $table->string('fechaFin');
+            $table->integer('duracionContrato');
             $table->string('estado');
             $table->timestamps();
         });
@@ -33,6 +31,6 @@ class CreateServicioBasculasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('servicio_basculas');
+        Schema::drop('contratos');
     }
 }

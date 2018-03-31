@@ -74,7 +74,7 @@
                 </td>
                 <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$producto->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                 </td>
-              </td>
+              
             </tr>
             @include('Productos.productos.modal')
             @endforeach

@@ -37,7 +37,7 @@
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="nombre_Unidad" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese numero de serie de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="nombre_Unidad" type="text"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese numero de serie de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>
@@ -46,12 +46,9 @@
               <label class="col-sm-3 control-label">Numero de Serie: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="no_Serie" id="vin" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de Vehículo" minlength="16" maxlength="17" parsley-rangelength="[1,35]"/>
-                <SPAN id='validation-message'></SPAN>
+                <input name="no_Serie" id="vin" type="text"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese nombre de Vehículo" minlength="17" maxlength="17" parsley-rangelength="[1,35]"/>
                 <div class="text-danger" id="validation-message"> </div>
-
               </div>
-                 <SPAN id="validation-message"></SPAN>
             </div>
 
 
@@ -71,7 +68,7 @@
               <label class="col-sm-3 control-label">Poliza de Seguro: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="poliza_Seguro" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese poliza de seguro de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="poliza_Seguro" type="text"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese poliza de seguro de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>
@@ -98,7 +95,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Capacidad Cubica:</label>
             <div class="col-sm-6">
-              <input parsley-type="number" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en metros cubicos" name="m3_Unidad" />
+              <input parsley-type="number" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en metros cubicos" name="m3_Unidad" onkeypress=" return soloNumeros(event);" />
             </div>
           </div><!--/form-group-->
 
@@ -106,7 +103,7 @@
           <div class="form-group">
            <label class="col-sm-3 control-label">Capacidad de la unidad:</label>
            <div class="col-sm-6">
-            <input parsley-type="number" name="capacidad" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en toneladas" />
+            <input parsley-type="number" name="capacidad" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en toneladas" onkeypress=" return soloNumeros(event);" />
           </div>
         </div><!--/form-group-->
 
