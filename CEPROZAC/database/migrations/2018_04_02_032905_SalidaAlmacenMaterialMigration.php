@@ -21,9 +21,21 @@ class SalidaAlmacenMaterialMigration extends Migration
             $table->string('entrego');
             $table->string('recibio');
             $table->string('tipo_movimiento');
+            $table->date('fecha');
 
             $table->timestamps();
         });
+
+         DB::unprepared('
+        
+        CREATE TRIGGER tr_updStrockVenta AFTER INSERT ON SalidasAlmacenMaterial
+        FOR EACH ROW BEGIN
+                UPDATE almacenmateriales SET cantidad=cantidad-NEW.cantidad
+                WHERE almacenmateriales.id=NEW.id_material;
+
+        END
+
+        ');
     }
 
     /**

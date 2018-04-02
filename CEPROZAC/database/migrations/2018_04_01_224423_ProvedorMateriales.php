@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlmacenMaterialMigration extends Migration
+class ProvedorMateriales extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,13 @@ class AlmacenMaterialMigration extends Migration
      */
     public function up()
     {
-        Schema::create('AlmacenMateriales', function (Blueprint $table) {
+        Schema::create('provedor_materiales', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('provedor')->nullable();
-            $table->string('codigo')->nullable();
-            $table->string('imagen')->nullable();
-            $table->string('descripcion')->nullable();
-            $table->integer('cantidad');
+             $table->string('rfc')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('email')->nullable();
             $table->string('estado');
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class AlmacenMaterialMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('AlmacenMateriales');
+        Schema::drop('provedor_materiales');
     }
 }
