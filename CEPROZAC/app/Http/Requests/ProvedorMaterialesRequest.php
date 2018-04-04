@@ -1,11 +1,15 @@
 <?php
+
 namespace CEPROZAC\Http\Requests;
+
 use CEPROZAC\Http\Requests\Request;
-class AlmacenMaterialRequest extends Request
+
+class ProvedorMaterialesRequest extends Request
 {
-     protected $redirect = "almacen/materiales/create";
+    protected $redirect = "materiales/provedores/create";
     /**
      * Determine if the user is authorized to make this request.
+     
      *
      * @return bool
      */
@@ -13,20 +17,24 @@ class AlmacenMaterialRequest extends Request
     {
         return true;
     }
+
+
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules()
+public function rules()
     {
         return [
-        'imagen'=>'mimes:jpeg,jpg,png,bmp',
-        'codigo' => 'unique:almacenmateriales,codigo'
+
+        //'rfc' => 'required|min:3|max:20|regex:/^[a-z]+$/i',
+            'rfc' => 'unique:provedor_materiales,rfc'
             //
-        ];
+        ];        
     }
-     public function messages(){
+
+        public function messages(){
         return [
         /**
             'nombre.required' => 'El campo nombre es requerido',
@@ -38,9 +46,10 @@ class AlmacenMaterialRequest extends Request
             'email.email' => 'El formato de email es incorrecto',
              'email.unique'=> 'El Campo Email ya ha sido insertado antes',
              */
-             'codigo.unique' => 'El CODIGO DE BARRAS ya ha sido registrado anteriormente, Verifique el campo',
+             'rfc.unique' => 'El campo RFC ya ha sido registrado anteriormente, Verifique el campo',
         ];
     }
+
     public function response(array $errors){
         if ($this->ajax()){
             return response()->json($errors, 200);

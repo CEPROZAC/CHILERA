@@ -30,7 +30,12 @@
             </div>    
           </div>
         </div>
-        <div class="porlets-content">
+         <div class="porlets-content">
+         <div class="text-success" id='result'>
+          @if(Session::has('message'))
+          {{Session::get('message')}}
+          @endif
+        </div>
           <form action="{{route('almacen.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
 
@@ -38,10 +43,25 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"   maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
+                <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
 
               </div>
             </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <select name="provedor_id" class="form-control"  value="{{Input::old('provedor_id')}}" required>  
+                  @foreach($provedor as $provedores)
+                  <option value="{{$provedores->id}}">
+                   {{$provedores->nombre}}
+                 </option>
+                 @endforeach              
+               </select>
+               <div class="help-block with-errors"></div>
+             </div>
+           </div><!--/form-group-->
+
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
@@ -57,28 +77,32 @@
  <div class="form-group">
               <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
- <input type="text" name="codigo" id="segundo"  maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
+ <input type="text" name="codigo" id="segundo"  maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="{{Input::old('codigo')}}"/><br>
+ <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
 </div>
 </div>
 
     <div class="form-group ">
       <label class="col-sm-3 control-label">Imagen</label>
       <div class="col-sm-6">
-       <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
+       <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
      </div>
    </div>
+   
+
+
 
     <div class="form-group">
               <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="descripcion" type="text"   maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+                <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
               </div>
             </div>
 
                <div class="form-group">
               <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="cantidad" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+                <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div>  
 
@@ -122,8 +146,5 @@ document.getElementById("segundo").value=aleatorio;
     document.getElementById("segundo").value = "";
 }
 }
-
-
 </script>
 </head>
-

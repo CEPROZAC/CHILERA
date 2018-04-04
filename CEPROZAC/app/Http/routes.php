@@ -23,6 +23,8 @@ Route::resource('empleados', 'EmpleadoController');
 Route::resource('precioBasculas', 'PrecioBasculaController');
 Route::resource('home','HomeController');
 Route::resource('provedores','ProvedorController');
+Route::resource('materiales/provedores','ProvedorMaterialesController');
+Route::post("materiales/provedores/validar", "ProvedorMaterialesController@validar");
 Route::resource('productos','ProductosController');
 Route::resource('bancos','BancoController');
 Route::resource('serviciosBascula','ServicioBasculaController');
@@ -57,10 +59,12 @@ Route::get('descargar-empleados', 'EmpleadoController@excel')->name('empleados.e
 Route::get('descargar-bancos', 'BancoController@excel')->name('bancos.excel');
 Route::get('descargar-servicioBasculas', 'ServicioBasculaController@excel')->name('serviciosBascula.excel');
 Route::resource('almacen/materiales','AlmacenMaterialController');	
+Route::resource('almacen/materiales/stock', 'AlmacenMaterialController@stock');
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');
 Route::get('descargar-calidad', 'CalidadController@excel')->name('productos.calidad.excel');
 Route::get('descargar-mantenimiento', 'MantenimientoTransporteController@excel')->name('mantenimiento.excel');
 Route::get('descargar-empaques', 'FormaEmpaqueController@excel')->name('empaques.excel');
+Route::get('descargar-provedores-mat', 'ProvedorMaterialesController@excel')->name('provedores-mat.excel');
 
 Route::get('descargar-PrecioBasculas', 'PrecioBasculaController@excel')->name('precioBasculas.excel');
 Route::get('descargar-Basculas', 'BasculaController@excel')->name('basculas.excel');

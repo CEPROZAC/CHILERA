@@ -58,7 +58,9 @@ class SalidaAlmacenMaterialController extends Controller
     {
 
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-        $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->get();
+
+        $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+
          $cuenta = count($material);
          
 

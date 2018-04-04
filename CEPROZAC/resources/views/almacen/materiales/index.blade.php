@@ -33,6 +33,11 @@
 
                     <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén </a>
 
+<<<<<<< HEAD
+=======
+                     <a class="btn btn-sm btn-success tooltips" href="/materiales/provedores" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor de Materiales"> <i class="fa fa-plus"></i> Proveedores</a>
+
+>>>>>>> e128787aebf52057e5ad27c419ff003c0e3b06d8
                   </div>
 
                 </b>
@@ -48,6 +53,7 @@
                 <tr>
                   <th>Id </th>
                    <th>Nombre </th>
+                   <th>Proveedor </th>
                     <th>Codigo de Barras </th>
                     <th>Imagen </th>
                    <th>Descripción </th>
@@ -62,6 +68,7 @@
                 <tr class="gradeA">
                   <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
+                  <td>{{$materiales->nombre2}} </td>
                   <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
                     <div style="text-align:center;">
                     {{$materiales->codigo}}
@@ -71,24 +78,26 @@
                       <img src="{{asset('imagenes/almacenmaterial/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
                     </td>              
                    <td>{{$materiales->descripcion}} </td>
-                  <td>{{$materiales->cantidad}}</td>
+                  <td>{{$materiales->cantidad}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
                   <td>{{$materiales->estado}}</td>
 
                      <td>  <a href="{{URL::action('AlmacenMaterialController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
-                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->id}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
                 </td>
                 </td>
 
               </tr>
               @include('almacen.materiales.modal')
+                @include('almacen.materiales.modale')
               @endforeach
             </tbody>
             <tfoot>
               <tr>
                    <th>Id </th>
                    <th>Nombre </th>
+                   <th>Proveedor </th>
                     <th>Codigo de Barras </th>
                     <th>Imagen </th>
                    <th>Descripción </th>
