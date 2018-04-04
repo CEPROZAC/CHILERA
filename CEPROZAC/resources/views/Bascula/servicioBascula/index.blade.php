@@ -7,7 +7,7 @@
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a style="color: #808080" href="{{url('/rol')}}">Inicio</a></li>
+      <li ><a style="color: #808080" href="{{url('/serviciosBascula')}}">Inicio</a></li>
       <li class="active">Servicio de Bascula</a></li>
     </ol>
   </div>
@@ -27,9 +27,9 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                    <a class="btn btn-sm btn-success tooltips" href="Servicio de Bascula/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Banco"> <i class="fa fa-plus"></i> Registrar </a>
+                    <a class="btn btn-sm btn-success tooltips" href="serviciosBascula/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Servicio de Bascula"> <i class="fa fa-plus"></i> Registrar </a>
 
-                    <a class="btn btn-sm btn-warning tooltips" href="{{route('rol.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{route('serviciosBascula.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
                     
 
                   </div>
@@ -63,9 +63,12 @@
               <td>{{$servicio->precioBascula}}</td>
               <td>{{$servicio->nombre}} {{$servicio->apellidos}}</td>
               <td>{{$servicio->nombreBascula}}</td>
-              <td><center><b>Editar</b></center></td>
-              <td><center><b>Borrar</b></center></td>
+              <td>  <a href="{{URL::action('ServicioBasculaController@edit',$servicio->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+              </td>
+              <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$servicio->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+              </td>
             </tr>
+            @include('Bascula.servicioBascula.modal')
             @endforeach
           </tbody>
           <tfoot>

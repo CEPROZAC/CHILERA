@@ -85,7 +85,11 @@ class PrecioBasculaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $precioBascula=PrecioBascula::findOrFail($id);
+        $precioBascula->tipoVehiculo=$request->get('tipoVehiculo');
+        $precioBascula->precioBascula=$request->get('precioBascula');
+        $precioBascula->update();
+        return Redirect::to('precioBasculas');
     }
 
     /**
@@ -101,4 +105,30 @@ class PrecioBasculaController extends Controller
         $precioBascula->update();
         return Redirect::to('precioBasculas');
     }
+
+
+    public function excel()
+    {        
+      Excel::create('Precio Basculas', function($excel) {
+        $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+
+            $precioBascula = PrecioBascula::select('tipoVehiculo', 'precioBascula')
+            ->where('estado', 'Activo')
+            ->get();       
+
+
+            $sheet->fromArray($precioBascula);
+            $sheet->row(1,['Tipo Vehiculo','Precio de Pesaje']);
+
+            $sheet->setOrientation('landscape');
+        });
+    })->export('xls');
+
+      
+  }
+
+
 }
+
+

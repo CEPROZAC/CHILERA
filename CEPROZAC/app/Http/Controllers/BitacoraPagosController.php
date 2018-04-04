@@ -3,14 +3,11 @@
 namespace CEPROZAC\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Input;
+
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\Cliente;
-use DB;
 
-class ClienteController extends Controller
+class BitacoraPagosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +16,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $cliente= DB::table('cliente')->where('estado','Activo')->get();
-        return view('clientes.index', ['cliente' => $cliente]);
+        //
     }
 
     /**
@@ -30,8 +26,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-             return view('clientes.create');   //
-         }
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -41,18 +37,8 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-
-       $cliente= new Cliente;
-       $cliente->nombre=$request->get('nombre');
-       $cliente->telefono=$request->get('telefono');
-       $cliente->direccion=$request->get('direccion');
-       $cliente->email=$request->get('email');
-       $cliente->saldocliente=$request->get('saldocliente');
-       $cliente->estado='Activo';
-       $cliente->save();
-       return Redirect::to('clientes');
         //
-   }
+    }
 
     /**
      * Display the specified resource.
@@ -62,9 +48,8 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-       return view("clientes.show",["clientes"=>Cliente::findOrFail($id)]);
         //
-   }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -74,9 +59,8 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-      return view("clientes.edit",["clientes"=>Cliente::findOrFail($id)]);
         //
-  }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -87,18 +71,6 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cliente=Cliente::findOrFail($id);
-
-        $cliente->nombre=$request->get('nombre');
-        $cliente->telefono=$request->get('telefono');
-        $cliente->direccion=$request->get('direccion');
-        $cliente->email=$request->get('email');
-        $cliente->saldocliente=$request->get('saldocliente');
-
-        
-        $cliente->estado='Activo';
-        $cliente->save();
-        return Redirect::to('clientes');
         //
     }
 
@@ -110,12 +82,6 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-      $cliente=Cliente::findOrFail($id);
-      $cliente->estado='Inactivo';
-      $cliente->save();
-      return Redirect::to('clientes');
         //
-  }
-
-
+    }
 }
