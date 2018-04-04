@@ -86,12 +86,12 @@ class SalidaAlmacenMaterialController extends Controller
 $num = 1;
 $y = 0;
  $limite = $request->get('total');
-   print_r($limite);
+   //print_r($limite);
 
           while ($num <= $limite) {
             $material= new SalidaAlmacenMaterial;
             //print_r($num);
-            $producto = $request->get('codigo');
+            $producto = $request->get('codigo2');
           $first = head($producto);
             $name = explode(",",$first);
             //$first = $name[0];
