@@ -33,11 +33,8 @@
 
                     <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén </a>
 
-<<<<<<< HEAD
-=======
                      <a class="btn btn-sm btn-success tooltips" href="/materiales/provedores" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor de Materiales"> <i class="fa fa-plus"></i> Proveedores</a>
 
->>>>>>> e128787aebf52057e5ad27c419ff003c0e3b06d8
                   </div>
 
                 </b>

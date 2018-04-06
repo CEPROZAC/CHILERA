@@ -42,6 +42,20 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <select name="provedor_id" class="form-control"  value="{{Input::old('provedor_id')}}" required>  
+                  @foreach($provedor as $provedores)
+                  <option value="{{$provedores->id}}">
+                   {{$provedores->nombre}}
+                 </option>
+                 @endforeach              
+               </select>
+               <div class="help-block with-errors"></div>
+             </div>
+           </div><!--/form-group-->
+
 
 
            <input type="text" hidden name="imagen " value="{{$material->imagen}}">
