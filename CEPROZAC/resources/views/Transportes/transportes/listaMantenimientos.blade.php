@@ -26,9 +26,11 @@
               <b>
 
                 <div class="btn-group" style="margin-right: 10px;">
-                  <a class="btn btn-sm btn-success tooltips" href="mantenimiento/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
+                  <a class="btn btn-sm btn-success tooltips" href="{{URL::action('MantenimientoTransporteController@create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
 
                   <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('TransporteController@descargarMantenimientos',[$transporte->id,$transporte->nombre_Unidad])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+
+                  <a class="btn btn-sm btn-danger tooltips" href="/transportes" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
                 </div>
                 
@@ -41,13 +43,7 @@
       <div class="porlets-content container clear_both padding_fix">
         @if($mantenimientos==null)
         <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{ route('mantenimiento.create')}}">se encuentran mantenimientos registrados </a> a este Vehiculo. Click Para registrar</div>
-        <div class="btn-group pull-right">
-          <b>
-            <a class="btn btn-sm btn-danger tooltips" href="/transportes" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Cancelar </a>
-
-          </div>
-
-        </a>
+        
       </b>
     </div>
     @else

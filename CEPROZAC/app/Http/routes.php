@@ -28,6 +28,7 @@ Route::post("materiales/provedores/validar", "ProvedorMaterialesController@valid
 Route::resource('productos','ProductosController');
 Route::resource('bancos','BancoController');
 Route::resource('serviciosBascula','ServicioBasculaController');
+Route::resource('empresasCEPROZAC','EmpresasCeprozacController');
 
 Route::resource('calidad','CalidadController');
 Route::resource('basculas','BasculaController');
@@ -43,10 +44,14 @@ Route::get('pdf', 'PdfController@invoice');
 Route::get('descargarPDF', 'BasculaController@pdf');
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
 Route::get('descargar-contratos', 'ContratosController@excel')->name('contratos.excel');
+Route::get('descargar-EmpresasCEPROZAC', 'EmpresasCeprozacController@excel')->name('empresasCEPROZAC.excel');
 Route::get('ver-empresas/{id}', 'ProvedorController@verEmpresas')->name('provedores.verEmpresas');
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
 
 Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
+
+Route::get('descargarEmpresas/{id}/{nombre}', 'ProvedorController@descargarEmpresas')->name('empresas.descargarEmpresas');
+
 
 
 Route::get('descargar-clientes', 'ClienteController@excel')->name('clientes.excel');

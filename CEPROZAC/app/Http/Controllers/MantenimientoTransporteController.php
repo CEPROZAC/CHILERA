@@ -10,7 +10,7 @@ use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\Transporte;
 use CEPROZAC\MantenimientoTransporte;
 use DB;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class MantenimientoTransporteController extends Controller
 {
@@ -134,10 +134,7 @@ class MantenimientoTransporteController extends Controller
 
     public function excel()
     {        
-        /**
-         * toma en cuenta que para ver los mismos 
-         * datos debemos hacer la misma consulta
-        **/
+      
         Excel::create('Lista Mantenimiento Vehiculo', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
