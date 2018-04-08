@@ -99,7 +99,8 @@ class AlmacenMaterialController extends Controller
      */
     public function edit($id)
     {
-         return view("almacen.materiales.edit",["material"=>AlmacenMaterial::findOrFail($id)]);
+          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+         return view("almacen.materiales.edit",["material"=>AlmacenMaterial::findOrFail($id)],["provedor"=> $provedor]);
         //
     }
     /**
