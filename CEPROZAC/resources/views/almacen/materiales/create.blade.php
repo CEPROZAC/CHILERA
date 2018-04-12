@@ -31,69 +31,93 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{route('almacen.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
-            {{csrf_field()}}
+         <div class="text-success" id='result'>
+          @if(Session::has('message'))
+          {{Session::get('message')}}
+          @endif
+        </div>
+        <form action="{{route('almacen.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+          {{csrf_field()}}
 
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="nombre" type="text"   maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
 
-              </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-<input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
-<input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="provedor_id" class="form-control"  value="{{Input::old('provedor_id')}}" required>  
+                @foreach($provedor as $provedores)
+                <option value="{{$provedores->id}}">
+                 {{$provedores->nombre}}
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
 
-<input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
 
-              </div>
-            </div>
+         <div class="form-group">
+          <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
+            <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
 
- <div class="form-group">
-              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
- <input type="text" name="codigo" id="segundo"  maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
-</div>
-</div>
+            <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
 
-    <div class="form-group ">
-      <label class="col-sm-3 control-label">Imagen</label>
-      <div class="col-sm-6">
-       <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+           <input type="text" name="codigo" id="segundo"  maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="{{Input::old('codigo')}}"/><br>
+           <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+         </div>
+       </div>
+
+       <div class="form-group ">
+        <label class="col-sm-3 control-label">Imagen</label>
+        <div class="col-sm-6">
+         <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
+       </div>
      </div>
-   </div>
+     
+
+
+
+     <div class="form-group">
+      <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+      </div>
+    </div>
 
     <div class="form-group">
-              <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="descripcion" type="text"   maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
-              </div>
-            </div>
-
-               <div class="form-group">
-              <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="cantidad" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
-               </div>    
-               </div>  
+      <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+      </div>    
+    </div>  
 
 
-   
+    
 
-   <div class="form-group">
-    <div class="col-sm-offset-7 col-sm-5">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <a href="{{url('/almacen/materiales')}}" class="btn btn-default"> Cancelar</a>
-    </div>
-  </div><!--/form-group-->
+    <div class="form-group">
+      <div class="col-sm-offset-7 col-sm-5">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{url('/almacen/materiales')}}" class="btn btn-default"> Cancelar</a>
+      </div>
+    </div><!--/form-group-->
 
 
-</form>
+  </form>
 </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
@@ -102,14 +126,14 @@
 @endsection
 
 <script>
-function habilitar(value)
-{
-if(value=="1")
-{
+  function habilitar(value)
+  {
+    if(value=="1")
+    {
 // habilitamos
 document.getElementById("segundo").disabled=false;
-  document.getElementById("segundo").value = "";
-   document.getElementById("segundo").focus(); 
+document.getElementById("segundo").value = "";
+document.getElementById("segundo").focus(); 
 }else if(value=="2"){
 // deshabilitamos
 document.getElementById("segundo").disabled=false;
@@ -119,11 +143,8 @@ var aleatorio = Math.floor(Math.random()*999999999999);
 document.getElementById("segundo").value=aleatorio;
 }else if (value=="3"){
   document.getElementById("segundo").disabled=true;
-    document.getElementById("segundo").value = "";
+  document.getElementById("segundo").value = "";
 }
 }
-
-
 </script>
 </head>
-

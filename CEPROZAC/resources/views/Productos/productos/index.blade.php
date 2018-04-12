@@ -60,8 +60,8 @@
 
                 <td >{{$producto->nomCalidad}}</td>
                 <td >{{$producto->unidad_de_Medida}}</td>
-                <td >{{$producto->formato_de_Empaque}}</td>
-                <td >{{$producto->porcentaje_Humedad}}</td>
+                <td >{{$producto->formaEmpaque}}</td>
+                <td >{{$producto->porcentaje_Humedad}}%</td> 
                 
                 <td >
                   @if (($producto->imagen)!="")
@@ -74,7 +74,7 @@
                 </td>
                 <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$producto->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                 </td>
-              </td>
+              
             </tr>
             @include('Productos.productos.modal')
             @endforeach

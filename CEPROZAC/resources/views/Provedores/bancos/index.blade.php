@@ -29,7 +29,7 @@
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="bancos/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Banco"> <i class="fa fa-plus"></i> Registrar </a>
 
-                    <a class="btn btn-sm btn-warning tooltips" href="{{route('rol.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{route('bancos.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
                     
 
                   </div>
@@ -48,6 +48,8 @@
               <tr>
                 <th>Banco</th>
                 <th>Telefono</th>
+                <th>Sucursal</th>
+                <th>Ejecutivo</th>
                 <td><center><b>Editar</b></center></td>
                 <td><center><b>Borrar</b></center></td>
               </tr>
@@ -60,37 +62,44 @@
                   @if($banco->telefono=="")
                   Informacion no registrada
                   @else
-                  {{$banco->telefono}} </td>
+                  {{$banco->telefono}} 
                   @endif
-                  <td> 
-                    <center>
-                      <a href="{{URL::action('BancoController@edit',$banco->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
-                    </center>
-                  </td>
-
-                  <td> 
-                    <center>
-                      <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$banco->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-                    </center>
-                  </td>
                 </td>
-              </tr>
-              @include('Provedores.bancos.modal')
-              @endforeach
-            </tbody>
-            <tfoot>
-              <tr>
-               <th>Bancos </th>
-               <th>Telefono</th>
-               <th><center><b>Editar</b></center></th>
-               <th><center><b>Borrar</b></center></th>
-             </tr>
-           </tfoot>
-         </table>
-       </div><!--/table-responsive-->
-     </div><!--/porlets-content-->
-   </div><!--/block-web-->
- </div><!--/col-md-12-->
+                <td>{{$banco->sucursal}}</td>
+                <td>{{$banco->ejecutivo}}</td>
+
+
+                <td> 
+                  <center>
+                    <a href="{{URL::action('BancoController@edit',$banco->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                  </center>
+                </td>
+
+                <td> 
+                  <center>
+                    <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$banco->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                  </center>
+                </td>
+              </td>
+            </tr>
+            @include('Provedores.bancos.modal')
+            @endforeach
+          </tbody>
+          <tfoot>
+            <tr>
+             <th>Bancos </th>
+             <th>Telefono</th>
+             <th>Sucursal</th>
+             <th>Ejecutivo</th>
+             <th><center><b>Editar</b></center></th>
+             <th><center><b>Borrar</b></center></th>
+           </tr>
+         </tfoot>
+       </table>
+     </div><!--/table-responsive-->
+   </div><!--/porlets-content-->
+ </div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 @stop

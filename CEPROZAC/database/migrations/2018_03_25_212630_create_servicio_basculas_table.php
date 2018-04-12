@@ -14,8 +14,6 @@ class CreateServicioBasculasTable extends Migration
     {
         Schema::create('servicio_basculas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idVehiculo')->unsigned();
-            $table->foreign('idVehiculo')->references('id')->on('transportes');
             $table->integer('numeroTicket');   
             $table->integer('idEmpleado')->unsigned();
             $table->foreign('idEmpleado')->references('id')->on('empleados');

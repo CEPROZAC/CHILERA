@@ -36,17 +36,18 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{route('precioBasculas.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+        <form action="{{url('precioBasculas',[$precioBascula->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
+            <input type="hidden" name="_method" value="PUT">
             <div class="form-group">
               <label class="col-sm-3 control-label">Tipo Vehiculo: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6"> 
-              <input name="tipoVehiculo" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$precioBascula->tipoVehiculo}}" placeholder="Ingrese nombre de el Banco"/>
+                <input name="tipoVehiculo" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$precioBascula->tipoVehiculo}}" placeholder="Ingrese nombre de el Banco"/>
               </div>
             </div>
 
 
-              <div class="form-row">    
+            <div class="form-row">    
               <label class="col-sm-3 control-label">Precio: <strog class="theme_color">*</strog></label>
               <div class="col-sm-4">
                 <div class="input-group">
@@ -59,17 +60,17 @@
 
 
 
-            <div class="form-group">
-              <div class="col-sm-offset-7 col-sm-5">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="{{url('/precioBasculas')}}" class="btn btn-default"> Cancelar</a>
-              </div>
-            </div><!--/form-group-->
-          </form>
-        </div><!--/porlets-content-->
-      </div><!--/block-web-->
-    </div><!--/col-md-12-->
-  </div><!--/row-->
+           <div class="form-group">
+            <div class="col-sm-offset-7 col-sm-5">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <a href="{{url('/precioBasculas')}}" class="btn btn-default"> Cancelar</a>
+            </div>
+          </div><!--/form-group-->
+        </form>
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
+</div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 
 @endsection

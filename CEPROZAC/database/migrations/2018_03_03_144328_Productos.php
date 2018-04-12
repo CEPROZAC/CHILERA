@@ -18,7 +18,8 @@ class Productos extends Migration
             $table->integer('calidad')->unsigned();
             $table->foreign('calidad')->references('id')->on('calidad');
             $table->string('unidad_de_Medida');
-            $table->string('formato_de_Empaque');
+            $table->integer('idFormatoEmpaque')->unsigned();
+            $table->foreign('idFormatoEmpaque')->references('id')->on('forma_empaques');
             $table->string('porcentaje_Humedad');
             $table->string('imagen');
             $table->string('estado');

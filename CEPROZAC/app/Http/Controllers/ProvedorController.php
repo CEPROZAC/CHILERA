@@ -101,8 +101,8 @@ class ProvedorController extends Controller
     public function edit($id)
     {
 
-     return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
- }
+       return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -152,10 +152,30 @@ class ProvedorController extends Controller
         ->where('empresas.estado','Activo')
         ->where('empresas.provedor_id','=',$id)
         ->get();
-        return view("Provedores.provedores.listaEmpresas",['empresas' => $empresas,'provedor'=>$provedor]);
+        return view("Provedores.provedores.listaEmpresas",['empresas' => $empresas,'provedor'=>$provedor]);       
+    }
 
- 
-        
+
+    public function descargarEmpresas($id,$nombre)
+    {
+        $nombreExcel ='Lista de Empresas de'.' '.$nombre;
+        Excel::create($nombreExcel,function($excel) use ($id) {
+
+            $excel->sheet('Excel sheet', function($sheet) use($id) {
+
+                $mantenimiento = Empresa::join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
+                ->join('bancos','empresas.id_Banco','=','bancos.id')
+                ->select('empresas.nombre','empresas.rfc','empresas.regimenFiscal','empresas.telefono','empresas.direccion','empresas.cve_Interbancaria','empresas.nom_cuenta','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
+                ->where('empresas.estado','Activo')
+                ->where('empresas.provedor_id','=',$id)
+                ->get();
+
+                $sheet->fromArray($mantenimiento);
+                $sheet->row(1,['Nombre Empresa','RFC','Regimen Fiscal','Telefono','Direccion','Correo','Clave Interbancaria','Banco','Numero de cuenta' ]);
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
+
     }
 
 }

@@ -71,10 +71,40 @@
            </div>
          </div><!--/form-group-->
 
+           <div class="form-group">
+           <label class="col-sm-3 control-label"> Responsable de Vehiculo: <strog class="theme_color">*</strog></label>
+             <div class="col-sm-6">
+              <select name="idChofer" class="form-control" required>  
+                @foreach($empleados as $empleado)
+                <option value="{{$empleado->id}}">
+                 {{$empleado->nombre}}  {{$empleado->apellidos}}  
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
+
+           <div class="form-group">
+           <label class="col-sm-3 control-label"> Responsable de Mantenimiento: <strog class="theme_color">*</strog></label>
+             <div class="col-sm-6">
+              <select name="idMecanico" class="form-control" required>  
+                @foreach($empleados as $empleado)
+                <option value="{{$empleado->id}}">
+                 {{$empleado->nombre}}  {{$empleado->apellidos}}  
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
+
          <div class="form-group">
           <div class="col-sm-offset-7 col-sm-5">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{url('/matenimiento')}}" class="btn btn-default"> Cancelar</a>
+            <a href="{{url('/mantenimiento')}}" class="btn btn-default"> Cancelar</a>
           </div>
         </div><!--/form-group-->
       </form>

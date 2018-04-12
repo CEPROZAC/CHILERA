@@ -10,7 +10,7 @@ use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\Transporte;
 use CEPROZAC\MantenimientoTransporte;
 use DB;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class MantenimientoTransporteController extends Controller
 {
@@ -24,7 +24,9 @@ class MantenimientoTransporteController extends Controller
 
         $mantenimientos= DB::table('mantenimiento_transportes')
         ->join('transportes', 'mantenimiento_transportes.idTransporte','=','transportes.id')
-        ->select('mantenimiento_transportes.*','transportes.nombre_Unidad')
+        ->join('empleados as m', 'mantenimiento_transportes.idMecanico','=','m.id')
+        ->join('empleados as c', 'mantenimiento_transportes.idChofer','=','c.id')
+        ->select('mantenimiento_transportes.*','transportes.nombre_Unidad', 'm.nombre as nm', 'm.apellidos as am','c.nombre as nc', 'c.apellidos as ac')
         ->where('mantenimiento_transportes.estado','Activo')
         ->get();
         return view('Transportes.mantenimientoTransportes.index', ['mantenimientos' => $mantenimientos]);
@@ -39,8 +41,9 @@ class MantenimientoTransporteController extends Controller
      */
     public function create()
     {
+        $empleados= DB::table('empleados')->where('estado','Activo')->get();
         $transportes= DB::table('transportes')->where('estado','Activo')->get();
-        return   view('Transportes.mantenimientoTransportes.create',['transportes'=>$transportes]);
+        return   view('Transportes.mantenimientoTransportes.create',['transportes'=>$transportes,'empleados'=>$empleados]);
     }
 
     /**
@@ -56,6 +59,8 @@ class MantenimientoTransporteController extends Controller
       $mantenimiento->idTransporte=$request->get('idTransporte');
       $mantenimiento->descripcion=$request->get('descripcion');
       $mantenimiento->fecha=$request->get('fecha');
+      $mantenimiento->idChofer=$request->get('idChofer');
+      $mantenimiento->idMecanico=$request->get('idMecanico');
       $mantenimiento->estado='Activo';
       $mantenimiento->save();
       return Redirect::to('mantenimiento');
@@ -83,8 +88,9 @@ class MantenimientoTransporteController extends Controller
     {
 
         $mantenimiento=MantenimientoTransporte::findOrFail($id);
+        $empleados= DB::table('empleados')->where('estado','Activo')->get();
         $transportes=DB::table('transportes')->where('estado','=','Activo')->get();
-        return view('Transportes.mantenimientoTransportes.edit',['mantenimiento'=>$mantenimiento,'transportes'=>$transportes]);
+        return view('Transportes.mantenimientoTransportes.edit',['mantenimiento'=>$mantenimiento,'transportes'=>$transportes,'empleados'=>$empleados]);
 
     }
 
@@ -103,6 +109,8 @@ class MantenimientoTransporteController extends Controller
         $mantenimiento->idTransporte=$request->get('idTransporte');
         $mantenimiento->descripcion=$request->get('descripcion');
         $mantenimiento->fecha=$request->get('fecha');
+        $mantenimiento->idChofer=$request->get('idChofer');
+        $mantenimiento->idMecanico=$request->get('idMecanico');
 
         $mantenimiento->estado='Activo';
         $mantenimiento->update();
@@ -126,10 +134,7 @@ class MantenimientoTransporteController extends Controller
 
     public function excel()
     {        
-        /**
-         * toma en cuenta que para ver los mismos 
-         * datos debemos hacer la misma consulta
-        **/
+      
         Excel::create('Lista Mantenimiento Vehiculo', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();

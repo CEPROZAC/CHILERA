@@ -15,9 +15,10 @@ class AlmacenMaterialMigration extends Migration
         Schema::create('AlmacenMateriales', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->string('provedor')->nullable();
             $table->string('codigo')->nullable();
             $table->string('imagen')->nullable();
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->integer('cantidad');
             $table->string('estado');
             $table->timestamps();

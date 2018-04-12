@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\ServicioBascula;
 use DB;
-use Maatwebsite\ExceL\Facades\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class ServicioBasculaController extends Controller
@@ -23,15 +23,14 @@ class ServicioBasculaController extends Controller
     {
 
         $servicioBascula= DB::table('servicio_basculas')
-      ->join('transportes as v', 'servicio_basculas.idVehiculo', '=', 'v.id')
-      ->join('empleados as e','servicio_basculas.idEmpleado','=','e.id')
-      ->join('basculas as b','servicio_basculas.idBascula','=','b.id')
-      ->join('precio_basculas as pb','servicio_basculas.idBascula','=','pb.id')
-      ->select('servicio_basculas.*','v.nombre_Unidad', 'pb.tipoVehiculo','pb.precioBascula','e.nombre','e.apellidos','b.nombreBascula')
-      ->where('servicio_basculas.estado','Activo')->get();
-      return view('Bascula.servicioBascula.index', ['servicioBascula' => $servicioBascula]);
- 
-  }
+        ->join('empleados as e','servicio_basculas.idEmpleado','=','e.id')
+        ->join('basculas as b','servicio_basculas.idBascula','=','b.id')
+        ->join('precio_basculas as pb','servicio_basculas.idBascula','=','pb.id')
+        ->select('servicio_basculas.*', 'pb.tipoVehiculo','pb.precioBascula','e.nombre','e.apellidos','b.nombreBascula')
+        ->where('servicio_basculas.estado','Activo')->get();
+        return view('Bascula.servicioBascula.index', ['servicioBascula' => $servicioBascula]);
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -40,7 +39,10 @@ class ServicioBasculaController extends Controller
      */
     public function create()
     {
-        //
+        $precio_basculas=DB::table('precio_basculas')->where('estado','=','Activo')->get();
+        $empleados=DB::table('empleados')->where('estado','=','Activo')->get();
+        $basculas=DB::table('basculas')->where('estado','=','Activo')->get();
+        return view('Bascula.servicioBascula.create',['precio_basculas'=>$precio_basculas,'empleados'=>$empleados,'basculas'=>$basculas]);
     }
 
     /**
@@ -51,8 +53,15 @@ class ServicioBasculaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+       $servicioBascula = new ServicioBascula;
+       $servicioBascula->numeroTicket=$request->get('numeroTicket');
+       $servicioBascula->idEmpleado=$request->get('idEmpleado');
+       $servicioBascula->idBascula=$request->get('idBascula');
+       $servicioBascula->idPrecioBascula=$request->get('idPrecioBascula');
+       $servicioBascula->estado='Activo';
+       $servicioBascula->save();
+       return Redirect::to('serviciosBascula');
+   }
 
     /**
      * Display the specified resource.
@@ -73,8 +82,12 @@ class ServicioBasculaController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+      $servicioBascula=ServicioBascula::findOrFail($id);
+      $precio_basculas=DB::table('precio_basculas')->where('estado','=','Activo')->get();
+      $empleados=DB::table('empleados')->where('estado','=','Activo')->get();
+      $basculas=DB::table('basculas')->where('estado','=','Activo')->get();
+      return view('Bascula.servicioBascula.edit',['servicioBascula'=>$servicioBascula,'precio_basculas'=>$precio_basculas,'empleados'=>$empleados,'basculas'=>$basculas]);
+  }
 
     /**
      * Update the specified resource in storage.
@@ -85,7 +98,13 @@ class ServicioBasculaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $servicioBascula=ServicioBascula::findOrFail($id);
+        $servicioBascula->numeroTicket=$request->get('numeroTicket');
+        $servicioBascula->idEmpleado=$request->get('idEmpleado');
+        $servicioBascula->idBascula=$request->get('idBascula');
+        $servicioBascula->idPrecioBascula=$request->get('idPrecioBascula');
+        $servicioBascula->update();
+        return Redirect::to('serviciosBascula');
     }
 
     /**
@@ -96,6 +115,33 @@ class ServicioBasculaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $servicio=ServicioBascula::findOrFail($id);
+        $servicio->estado="Inactivo";
+        $servicio->update();
+        return Redirect::to('serviciosBascula');
     }
+
+
+    public function excel()
+    {        
+        Excel::create('Servicio Basculas', function($excel) {
+            $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+
+                $servicioBascula = ServicioBascula::join('empleados as e', 'servicio_basculas.idEmpleado', '=', 'e.id')
+                ->join('basculas as b','servicio_basculas.idBascula','=','b.id')
+                ->join('precio_basculas as pb','servicio_basculas.idBascula','=','pb.id')
+                ->select('servicio_basculas.numeroTicket', 'pb.tipoVehiculo',DB::raw('CONCAT(e.nombre," ",e.apellidos) AS nomEm'),'b.nombreBascula','pb.precioBascula')
+                ->where('servicio_basculas.estado','Activo')->get();
+
+
+                $sheet->fromArray($servicioBascula);
+                $sheet->row(1,['Numero Ticket','Tipo de Vehiculo','Nombre de Cajero','Bascula','Precio de Pesaje']);
+
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
+    }
+
+
 }

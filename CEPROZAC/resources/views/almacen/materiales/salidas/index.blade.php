@@ -20,16 +20,18 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-7">
               <div class="actions"> </div>
-              <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Materiales </strong></h2>
+              <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Salidas de Almacén de Materiales </strong></h2>
             </div>
             <div class="col-md-5">
               <div class="btn-group pull-right">
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar </a>
+                   <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén </a>
 
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.materiales.salidas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+
+
 
                   </div>
 
@@ -51,7 +53,7 @@
                    <th>Entrego </th>
                   <th>Recibio</th>
                   <th>Tipo de Movimiento</th>  
-                  <td><center><b>Editar</b></center></td>
+                  <th>Fecha de Salida</th>  
                   <td><center><b>Borrar</b></center></td>                            
                 </tr>
               </thead>
@@ -59,17 +61,13 @@
                 @foreach($salida  as $salidas)
                 <tr class="gradeA">
                   <td>{{$salidas->id}} </td>
-                  @foreach($material as $materiales)                  
-                  <td>{{$materiales->nombre}} </td>
-                
+                  <td>{{$salidas->nombre}} </td>
                    <td>{{$salidas->cantidad}} </td>
                    <td>{{$salidas->destino}} </td>
                    <td>{{$salidas->entrego}} </td>
                    <td>{{$salidas->recibio}} </td>
                    <td>{{$salidas->tipo_movimiento}} </td>
-
-                     <td>  <a href="{{URL::action('SalidaAlmacenMaterialController@edit',$salidas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-                  </td>
+                    <td>{{$salidas->fecha}} </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$salidas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
                 </td>
@@ -78,7 +76,7 @@
               </tr>
               @include('almacen.materiales.salidas.modal')
               
-              @endforeach
+            
                  @endforeach
             </tbody>
             <tfoot>
@@ -90,8 +88,8 @@
                    <th>Entrego </th>
                   <th>Recibio</th>
                   <th>Tipo de Movimiento</th>  
-                  <td><center><b>Editar</b></center></td>
-                  <td><center><b>Borrar</b></center></td>      
+                    <th>Fecha de Salida</th>
+                  <td><center><b>Editar</b></center></td>   
              </tr>
            </tfoot>
          </table>

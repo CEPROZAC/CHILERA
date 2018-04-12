@@ -40,7 +40,7 @@
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="nombre_Unidad" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$vehiculo->nombre_Unidad}}" placeholder="Ingrese numero de serie de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="nombre_Unidad" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$vehiculo->nombre_Unidad}}" placeholder="Ingrese numero de serie de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>
@@ -49,7 +49,7 @@
               <label class="col-sm-3 control-label">Numero de Serie: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="no_Serie" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$vehiculo->no_Serie}}" placeholder="Ingrese nombre de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="no_Serie" type="text"  onchange="mayus(this);"  class="form-control"  required value="{{$vehiculo->no_Serie}}" placeholder="Ingrese nombre de Vehículo" maxlength="17" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>
@@ -69,7 +69,7 @@
               <label class="col-sm-3 control-label">Poliza de Seguro: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="poliza_Seguro" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$vehiculo->poliza_Seguro}}" placeholder="Ingrese poliza de seguro de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="poliza_Seguro" type="text"  onchange="mayus(this);"  class="form-control"  required value="{{$vehiculo->poliza_Seguro}}" placeholder="Ingrese poliza de seguro de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>
@@ -96,7 +96,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Capacidad Cubica:</label>
               <div class="col-sm-6">
-                <input parsley-type="number" type="text" value="{{$vehiculo->m3_Unidad}}" class="form-control" required placeholder="Ingrese capacidad de la unidad en metros cubicos" name="m3_Unidad" />
+                <input parsley-type="number" type="text" value="{{$vehiculo->m3_Unidad}}" class="form-control" required placeholder="Ingrese capacidad de la unidad en metros cubicos" name="m3_Unidad" onkeypress=" return soloNumeros(event);" />
               </div>
             </div><!--/form-group-->
 
@@ -104,7 +104,7 @@
             <div class="form-group">
              <label class="col-sm-3 control-label">Capacidad de la unidad:</label>
              <div class="col-sm-6">
-              <input parsley-type="number" name="capacidad" value="{{$vehiculo->capacidad}}" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en toneladas" />
+              <input parsley-type="number" name="capacidad" value="{{$vehiculo->capacidad}}" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en toneladas" onkeypress=" return soloNumeros(event);" />
             </div>
           </div><!--/form-group-->
 
@@ -114,7 +114,7 @@
               <select name="chofer_id" class="form-control" required>
                @foreach($empleados as $empleado)
                <option value="{{$empleado->id}}">
-                {{$empleado->nombre}}
+                {{$empleado->nombre}} {{$empleado->apellidos}}
               </option>
               @endforeach
             </select>

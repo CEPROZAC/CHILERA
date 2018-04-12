@@ -22,13 +22,26 @@
               <div class="actions"> </div>
               <h4 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>LISTA DE EMPRESAS DE: {{$provedor->nombre}}</strong></h4>
             </div>
-        
+            <div class="btn-group pull-right">
+              <b>
+
+                <div class="btn-group" style="margin-right: 10px;">
+                  <a class="btn btn-sm btn-success tooltips" href="{{URL::action('EmpresaController@create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
+
+                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ProvedorController@descargarEmpresas',[$provedor->id,$provedor->nombre])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+
+                  <a class="btn btn-sm btn-danger tooltips" href="/empresas" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
+
+                </div> 
+              </b>
+            </div>
+
           </div>
         </div>
         <div class="porlets-content container clear_both padding_fix">
-        @if($empresas==null)
+          @if($empresas==null)
           <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{ route('empresas.create')}}">se encuentran empresas registradas </a> a este proveedor. Click Para registrar</div>
-        @else
+          @else
           @foreach($empresas as $empresa)
           <div class="col-lg-6"> 
             <section class="panel default blue_title h4">
@@ -81,7 +94,7 @@
             </section>
           </div>
           @endforeach
-        @endif
+          @endif
         </div><!--/porlets-content-->
       </div><!--/block-web-->
     </div><!--/col-md-12-->

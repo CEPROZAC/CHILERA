@@ -1,8 +1,5 @@
 <?php
-
 namespace CEPROZAC\Http\Controllers;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
@@ -10,6 +7,7 @@ use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Requests\AlmacenMaterialRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\AlmacenMaterial;
+use CEPROZAC\ProvedorMateriales;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
@@ -25,11 +23,13 @@ class AlmacenMaterialController extends Controller
      */
     public function index(Request $request)
     {
-        $material= DB::table('AlmacenMateriales')->where('estado','Activo')->get();
+        $material = DB::table('almacenmateriales')
+        ->join('provedor_materiales as p', 'almacenmateriales.provedor', '=', 'p.id')
+        ->select('almacenmateriales.*','p.nombre as nombre2')
+        ->where('almacenmateriales.estado','Activo')->get();
         return view('almacen.materiales.index', ['material' => $material]);
-        //
-    }
 
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -37,43 +37,49 @@ class AlmacenMaterialController extends Controller
      */
     public function create()
     {
-         return view('almacen.materiales.create'); 
+         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+         return view('almacen.materiales.create', ['provedor' => $provedor]); 
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AlmacenMaterialRequest $request)
-    {
+    public function store(AlmacenMaterialRequest $formulario)
+   {
+          $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages());
+    if ($validator->valid()){
 
-       $material= new AlmacenMaterial;
-        $material->nombre=$request->get('nombre');
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
+        }
+        else{
+                $material= new AlmacenMaterial;
+        $material->nombre=$formulario->get('nombre');
+        $material->provedor=$formulario->get('provedor_id');
        
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenmaterial',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
         }
-       $material->descripcion=$request->get('descripcion');
-       $material->cantidad=$request->get('cantidad');
-        $material->codigo=$request->get('codigo');
+       $material->descripcion=$formulario->get('descripcion');
+       $material->cantidad=$formulario->get('cantidad');
+        $material->codigo=$formulario->get('codigo');
        $material->estado='Activo';
 
        $material->save();
-
-
-
         $material= DB::table('AlmacenMateriales')->orderby('created_at','DESC')->take(1)->get();
         return view('almacen.materiales.pdf', ['material' => $material]);
 
-
-        //
+      }
+  }        //
    }
-
     /**
      * Display the specified resource.
      *
@@ -85,7 +91,6 @@ class AlmacenMaterialController extends Controller
          return view("almacen.materiales.show",["material"=>AlmacenMaterial::findOrFail($id)]);
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -94,10 +99,10 @@ class AlmacenMaterialController extends Controller
      */
     public function edit($id)
     {
-         return view("almacen.materiales.edit",["material"=>AlmacenMaterial::findOrFail($id)]);
+          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+         return view("almacen.materiales.edit",["material"=>AlmacenMaterial::findOrFail($id)],["provedor"=> $provedor]);
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -109,7 +114,6 @@ class AlmacenMaterialController extends Controller
     {
       
        $material=AlmacenMaterial::findOrFail($id);
-
         $material->nombre=$request->get('nombre');
        
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
@@ -121,16 +125,11 @@ class AlmacenMaterialController extends Controller
        $material->cantidad=$request->get('cantidad');
         $material->codigo=$request->get('codigo');
        $material->estado='Activo';
-
        $material->update();
        return Redirect::to('almacen/materiales');
-
-
         //
    }
         //
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -145,8 +144,6 @@ class AlmacenMaterialController extends Controller
       return Redirect::to('almacen/materiales');
         //
     }
-
-
      public function excel()
     {        
         /**
@@ -156,13 +153,14 @@ class AlmacenMaterialController extends Controller
         Excel::create('almacenmateriales', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-                $material = AlmacenMaterial::select('id','nombre', 'imagen', 'descripcion', 'cantidad', 'estado')
-                ->where('estado', 'Activo')
+                 $material = AlmacenMaterial::join('provedor_materiales','provedor_materiales.id', '=', 'almacenmateriales.provedor')
+                 ->select('almacenmateriales.id','almacenmateriales.nombre','provedor_materiales.nombre as nom','almacenmateriales.descripcion','almacenmateriales.cantidad')
+                ->where('almacenmateriales.estado', 'Activo')
                 ->get();       
                 $sheet->fromArray($material);
-                $sheet->row(1,['ID','Nombre','Imagen','Descripción','Cantidad','Estado']);
+                $sheet->row(1,['ID','Material','Proveedor','Descripción','Stock En Almacén']);
                 $sheet->setOrientation('landscape');
-              
+
             /*    
             $objDrawing = new PHPExcel_Worksheet_Drawing;
             $objDrawing->setPath(public_path('images\logoCeprozac.jpg')); //your image path
@@ -176,6 +174,17 @@ class AlmacenMaterialController extends Controller
         })->export('xls');
     }
 
-
-
+    public function stock(Request $request, $id)
+    {
+      
+       $material=AlmacenMaterial::findOrFail($id);
+       $agrega=$request->get('cantidades');
+       $actual=$material->cantidad;
+       $material->cantidad=$actual + $agrega;
+       $material->update();
+       return Redirect::to('almacen/materiales');
+        //
+   }
 }
+
+   

@@ -129,12 +129,14 @@
               <ul>
                 <li> <a href="{{url('productos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Productos</b> </a> </li>
                 <li> <a href="{{url('calidad')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Calidad</b> </a> </li>
+                <li> <a href="{{url('empaques')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empaques</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-users"></i> Recursos Humanos <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('empleados')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empleados</b> </a> </li>
                 <li> <a href="{{url('rol')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Roles Empleados</b> </a> </li>
+                <li> <a href="{{url('contratos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Contratos</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-truck icon"></i> Transporte <span class="plus"><i class="fa fa-plus"></i></span> </a>
@@ -147,13 +149,13 @@
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Empresas <span class="plus"><i class="fa fa-plus"></i></span> </a>
               <ul>
-                <li> <a href="inbox.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Compras</b> </a> </li>
+                <li> <a href="{{url('empresasCEPROZAC')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empresas</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
-                <li> <a href="{{url('almacen/materiales/salidas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
+                <li> <a href="{{url('almacen/salidas/material')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Basculas <span class="plus"><i class="fa fa-plus"></i></span></a>
@@ -161,7 +163,7 @@
                 <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
                 <li> <a href="{{url('precioBasculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Precio Pesaje</b> </a> </li>
                 <li> <a href="{{url('serviciosBascula')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Servicio de Bascula</b> </a> </li>
-           
+
               </ul>
             </li>
           </ul>

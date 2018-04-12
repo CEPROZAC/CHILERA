@@ -48,6 +48,8 @@ class BancoController extends Controller
         $bancos = new Banco;
         $bancos->nombre=$request->get('nombre');
         $bancos->telefono=$request->get('telefono');
+        $bancos->sucursal=$request->get('sucursal');
+        $bancos->ejecutivo=$request->get('ejecutivo');
         $bancos->estado='Activo';
         $bancos->save();
         return Redirect::to('bancos');
@@ -91,6 +93,8 @@ public function edit($id)
         $bancos=Banco::findOrFail($id);
         $bancos->nombre=$request->get('nombre');
         $bancos->telefono=$request->get('telefono');
+        $bancos->sucursal=$request->get('sucursal');
+        $bancos->ejecutivo=$request->get('ejecutivo');
         $bancos->update();
         return Redirect::to('bancos');
     }
@@ -119,17 +123,17 @@ public function edit($id)
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('Rol Empleados', function($excel) {
+        Excel::create('Bancos', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-                $bancos = RolEmpleado::select('nombre', 'telefono')
+                $bancos = Banco::select('nombre', 'telefono','sucursal','ejecutivo')
                 ->where('estado', 'Activo')
                 ->get();       
                 
                 
-                $sheet->fromArray($roles);
-                $sheet->row(1,['Rol Empleado','telefono']);
+                $sheet->fromArray($bancos);
+                $sheet->row(1,['Nombre Banco','Telefono','Sucursal','Ejecutivo']);
 
                 $sheet->setOrientation('landscape');
             });

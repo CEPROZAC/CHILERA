@@ -45,7 +45,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Calidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-              <select name="calidad" class="form-control" required>
+                <select name="calidad" class="form-control" required>
                  @foreach($calidades as $calidad)
                  @if($calidad->id==$productos->calidad)
                  <option value="{{$calidad->id}}" selected>
@@ -87,63 +87,60 @@
           </div><!--/form-group-->
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">Formatos de empaque <strog class="theme_color">*</strog></label>
+            <label class="col-sm-3 control-label">Formato de empaque: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="formato_de_Empaque" class="form-control" required>  
-                @if($productos->formato_de_Empaque=="TOTE")
-                <option value="TOTE" selected>
-                  TOTE              
-                </option>
-                <option value="COSTAL">
-                  COSTAL                 
-                </option> 
-                @else
-                <option value="TOTE" >
-                  TOTE              
-                </option>
-                <option value="COSTAL" selected>
-                  COSTAL                 
-                </option> 
-                @endif               
-              </select>
-              <div class="help-block with-errors"></div>
-            </div>
-          </div><!--/form-group-->
-
-          <div class="form-group ">
-            <label class="col-sm-3 control-label">Porcentaje de humedad</label>
-            <div class="col-sm-6">
-              <input type="text" name="porcentaje_Humedad" value="{{ $productos->porcentaje_Humedad}}"  class="form-control mask" data-inputmask="'mask':'99%'">
-            </div>
-          </div>
-
-
-
-          <input type="text" hidden name="nombreimagen" value="{{$productos->imagen}}">
-
-          <div class="form-group ">
-            <label class="col-sm-3 control-label">Imagen</label>
-            <div class="col-sm-6">
-             <input  type="file" hidden name="imagen"  value="{{$productos->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
-             @if (($productos->imagen)!="")
-             <img src="{{asset('imagenes/productos/'.$productos->imagen)}}" height="100px" width="100px">
+              <select name="idFormatoEmpaque" class="form-control" required>
+               @foreach($empaques as $empaque)
+               @if($empaque->id==$productos->idFormatoEmpaque)
+               <option value="{{$empaque->id}}" selected>
+                {{$empaque->formaEmpaque}}
+              </option>
+              @else
+              <option value="{{$empaque->id}}">
+               {{$empaque->formaEmpaque}}
+             </option>
              @endif
-           </div>
+             @endforeach
+           </select>
+           <div class="help-block with-errors"></div>
          </div>
+       </div><!--/form-group-->
+
+
+
+       <div class="form-group ">
+        <label class="col-sm-3 control-label">Porcentaje de humedad</label>
+        <div class="col-sm-6">
+        <input parsley-type="number" type="text" maxlength="3" required parsley-range="[0, 100]" name="porcentaje_Humedad"   class="form-control mask" value="{{$productos->porcentaje_Humedad}}" onkeypress="return soloNumeros(event);">
+        </div>
+      </div>
+
+
+      <input type="text" hidden name="nombreimagen" value="{{$productos->imagen}}">
+
+      <div class="form-group ">
+        <label class="col-sm-3 control-label">Imagen</label>
+        <div class="col-sm-6">
+         <input  type="file" hidden name="imagen"  value="{{$productos->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
+         @if (($productos->imagen)!="")
+         <img src="{{asset('imagenes/productos/'.$productos->imagen)}}" height="100px" width="100px">
+         @endif
+       </div>
+     </div>
 
 
 
 
 
-         <div class="form-group">
-          <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
-          </div>
-        </div><!--/form-group-->
-      </form>
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
+     <div class="form-group">
+      <div class="col-sm-offset-7 col-sm-5">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
+      </div>
+    </div><!--/form-group-->
+  </form>
+</div><!--/porlets-content-->
+</div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->

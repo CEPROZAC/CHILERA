@@ -38,9 +38,9 @@ class TransporteController extends Controller
     public function create()
     {
 
-     $empleados=DB::table('empleados')->where('estado','=','Activo')->get();
-     return view('Transportes.transportes.create',['empleados'=>$empleados]);
- }
+       $empleados=DB::table('empleados')->where('estado','=','Activo')->get();
+       return view('Transportes.transportes.create',['empleados'=>$empleados]);
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -159,7 +159,9 @@ class TransporteController extends Controller
         $transporte=Transporte::findOrFail($id);
         $mantenimientos= DB::table('mantenimiento_transportes')
         ->join('transportes as t', 'mantenimiento_transportes.idTransporte', '=', 't.id')
-        ->select('t.nombre_Unidad','mantenimiento_transportes.concepto','mantenimiento_transportes.descripcion','mantenimiento_transportes.fecha')
+        ->join('empleados as m', 'mantenimiento_transportes.idMecanico','=','m.id')
+        ->join('empleados as c', 'mantenimiento_transportes.idChofer','=','c.id')
+        ->select('t.nombre_Unidad','mantenimiento_transportes.concepto','mantenimiento_transportes.descripcion','mantenimiento_transportes.fecha' ,'m.nombre as nm', 'm.apellidos as am','c.nombre as nc', 'c.apellidos as ac')
         ->where('mantenimiento_transportes.estado','Activo')
         ->where('mantenimiento_transportes.idTransporte','=',$id)
         ->get();

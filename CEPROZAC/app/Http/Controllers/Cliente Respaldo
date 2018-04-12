@@ -41,7 +41,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
+
        $cliente= new Cliente;
        $cliente->nombre=$request->get('nombre');
        $cliente->telefono=$request->get('telefono');
@@ -51,24 +51,6 @@ class ClienteController extends Controller
        $cliente->estado='Activo';
        $cliente->save();
        return Redirect::to('clientes');
-=======
-         $cliente= new Cliente;
-        $cliente->nombre=$request->get('nombre');
-         $cliente->telefono=$request->get('telefono');
-        $cliente->calle=$request->get('calle');
-        $cliente->numero=$request->get('numero');
-        $cliente->colonia=$request->get('colonia');
-        $cliente->ciudad=$request->get('ciudad');
-        $cliente->entidad=$request->get('entidad');
-        $cliente->pais=$request->get('pais');
-         $cliente->email=$request->get('email');
-        $cliente->saldocliente=$request->get('saldocliente');
-        $cliente->estado='Activo';
-        $cliente->save();
-        return Redirect::to('clientes');
-
-
->>>>>>> b6a7fad44088d7967e56873eef135f04117f3d4b
         //
    }
 
@@ -106,24 +88,14 @@ class ClienteController extends Controller
     public function update(Request $request, $id)
     {
         $cliente=Cliente::findOrFail($id);
-<<<<<<< HEAD
+
         $cliente->nombre=$request->get('nombre');
         $cliente->telefono=$request->get('telefono');
         $cliente->direccion=$request->get('direccion');
         $cliente->email=$request->get('email');
         $cliente->saldocliente=$request->get('saldocliente');
-=======
-         $cliente->nombre=$request->get('nombre');
-         $cliente->telefono=$request->get('telefono');
-        $cliente->calle=$request->get('calle');
-        $cliente->numero=$request->get('numero');
-        $cliente->colonia=$request->get('colonia');
-        $cliente->ciudad=$request->get('ciudad');
-        $cliente->entidad=$request->get('entidad');
-        $cliente->pais=$request->get('pais');
-         $cliente->email=$request->get('email');
-                $cliente->saldocliente=$request->get('saldocliente');
->>>>>>> b6a7fad44088d7967e56873eef135f04117f3d4b
+
+        
         $cliente->estado='Activo';
         $cliente->save();
         return Redirect::to('clientes');
