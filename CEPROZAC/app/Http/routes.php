@@ -47,6 +47,7 @@ Route::get('descargar-contratos', 'ContratosController@excel')->name('contratos.
 Route::get('descargar-EmpresasCEPROZAC', 'EmpresasCeprozacController@excel')->name('empresasCEPROZAC.excel');
 Route::get('ver-empresas/{id}', 'ProvedorController@verEmpresas')->name('provedores.verEmpresas');
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
+Route::get('ver-InformacionEmpleado/{id}', 'EmpleadoController@verInformacion')->name('empleados.verInformacion');
 
 Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
 

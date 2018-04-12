@@ -33,12 +33,12 @@ class SalidaAlmacenMaterialController extends Controller
      */
     public function index(Request $request)
     {
-       
-         $salida= DB::table('salidasalmacenmaterial')
-         ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
-         ->select('salidasalmacenmaterial.*','s.nombre')->get();
+     
+       $salida= DB::table('salidasalmacenmaterial')
+       ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+       ->select('salidasalmacenmaterial.*','s.nombre')->get();
         // print_r($salida);
-        return view('almacen.materiales.salidas.index', ['salida' => $salida]);
+       return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
 
 
@@ -47,7 +47,7 @@ class SalidaAlmacenMaterialController extends Controller
 
 
         //
-    }
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -61,20 +61,20 @@ class SalidaAlmacenMaterialController extends Controller
 
         $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
 
-         $cuenta = count($material);
-         
+        $cuenta = count($material);
+        
 
-         if (empty($material)){
-              return view('almacen.materiales.create')->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
+        if (empty($material)){
+          return view('almacen.materiales.create')->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
-         }else if (empty($empleado)) {
+      }else if (empty($empleado)) {
 
-         }else{
-         return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]);
-         }
+      }else{
+       return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]);
+   }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
-    }
+}
 
     /**
      * Store a newly created resource in storage.
@@ -85,45 +85,45 @@ class SalidaAlmacenMaterialController extends Controller
     public function store(Request $request)
     {
 
-$num = 1;
-$y = 0;
- $limite = $request->get('total');
+        $num = 1;
+        $y = 0;
+        $limite = $request->get('total');
    //print_r($limite);
 
-          while ($num <= $limite) {
+        while ($num <= $limite) {
             $material= new SalidaAlmacenMaterial;
             //print_r($num);
             $producto = $request->get('codigo2');
-          $first = head($producto);
+            $first = head($producto);
             $name = explode(",",$first);
             //$first = $name[0];
              //$first = $name[1];
-             
-              $material->id_material=$first = $name[$y];
-             $y = $y + 2;
-             $material->cantidad=$first = $name[$y];
-             $y = $y + 1;
-            // print_r($first = $name[$y]);
-             $material->destino=$first = $name[$y];
-             $y = $y + 1;
-            // print_r($first = $name[$y]);
-             $material->entrego=$first = $name[$y];
-             $y = $y + 1;
-             //print_r($first = $name[$y]);
-             $material->recibio=$first = $name[$y];
-             $y = $y + 1;
-             //print_r($first = $name[$y]);
-             $material->tipo_movimiento=$first = $name[$y];
-             $y = $y + 1;
-            // print_r($first = $name[$y]);
-             $material->fecha=$first = $name[$y];
-             $y = $y + 1;
-              $material->save();
-             $num = $num + 1;
             
-           }
-  return redirect('almacen/salidas/material');
-}
+            $material->id_material=$first = $name[$y];
+            $y = $y + 2;
+            $material->cantidad=$first = $name[$y];
+            $y = $y + 1;
+            // print_r($first = $name[$y]);
+            $material->destino=$first = $name[$y];
+            $y = $y + 1;
+            // print_r($first = $name[$y]);
+            $material->entrego=$first = $name[$y];
+            $y = $y + 1;
+             //print_r($first = $name[$y]);
+            $material->recibio=$first = $name[$y];
+            $y = $y + 1;
+             //print_r($first = $name[$y]);
+            $material->tipo_movimiento=$first = $name[$y];
+            $y = $y + 1;
+            // print_r($first = $name[$y]);
+            $material->fecha=$first = $name[$y];
+            $y = $y + 1;
+            $material->save();
+            $num = $num + 1;
+            
+        }
+        return redirect('almacen/salidas/material');
+    }
 
     /**
      * Display the specified resource.
@@ -144,7 +144,7 @@ $y = 0;
      */
     public function edit($id)
     {
-    
+        
         //
     }
 
@@ -172,8 +172,8 @@ $y = 0;
         //
     }
 
-     public function excel()
-  {        
+    public function excel()
+    {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta

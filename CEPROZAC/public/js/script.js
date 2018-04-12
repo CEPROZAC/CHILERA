@@ -25,7 +25,7 @@ function soloLetras(e){
 function soloNumeros(e){
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key);
-  letras = " 1,2,3,4,5,6,7,8,9,0";
+  letras = " 1,2,3,4,5,6,7,8,9,0,.";
   especiales = "8-37-39-46";
 
   tecla_especial = false
@@ -67,3 +67,27 @@ Date.prototype.toString = function() {
   return dia+"/"+mes+"/"+anyo;  
 }  
 
+
+function myCreateFunction() {
+
+  var select = document.getElementById("rol");
+  var options=document.getElementsByTagName("option");
+  var idRol= select.value;
+  var nombreRol= options[select.value-1].innerHTML;
+
+
+  var fila="<tr><td style=\"display:none;\"><input name=\"idRol[]\" value=\""+idRol+"\"></td><td colspan=\"2\">"+nombreRol+"</td>"+""+"<td>"+
+  " <button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\"> Quitar<i class=\"fa fa-times\"></i> </button>"
+  +"</td>";
+  var btn = document.createElement("TR");
+  btn.innerHTML=fila;
+  document.getElementById("myTable").appendChild(btn);
+
+}
+
+function myDeleteFunction(t) {
+  var td = t.parentNode;
+  var tr = td.parentNode;
+  var table = tr.parentNode;
+  table.removeChild(tr);
+}

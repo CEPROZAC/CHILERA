@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\Empleado;
 use CEPROZAC\RolEmpleado;
+use CEPROZAC\EmpleadoRoles;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -21,11 +22,10 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados= DB::table('empleados')
-        ->join( 'rol_empleados as r', 'empleados.rol','=','r.id')
-        ->select('empleados.*','r.rol_Empleado')
-        ->where('empleados.estado','Activo')->get();
-        return view('Recursos_Humanos.empleados.index', ['empleados' => $empleados]);
+      $empleados= DB::table('empleados')
+      ->select('empleados.*')
+      ->where('empleados.estado','Activo')->get();
+      return view('Recursos_Humanos.empleados.index', ['empleados' => $empleados]);
 
     }
 
@@ -37,10 +37,22 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        $roles=DB::table('rol_empleados')->where('estado','=' ,'Activo')->get();
-        return view("Recursos_Humanos.empleados.create",["roles"=>$roles]);
+      $roles=DB::table('rol_empleados')->where('estado','=' ,'Activo')->get();
+      return view("Recursos_Humanos.empleados.create",["roles"=>$roles]);
 
 
+    }
+
+    
+    public function verInformacion($id)
+    {
+      $empleado=Empleado::findOrFail($id);
+      $roles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
+      ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
+      ->select('rol_empleados.rol_Empleado')
+      ->where('idEmpleado','=',$id)
+      ->get();
+      return view("Recursos_Humanos.empleados.informacionEmpleado",["empleado"=>$empleado,'roles'=>$roles]);
     }
 
 
@@ -53,28 +65,39 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $empleado= new Empleado;
-        $empleado->nombre=$request->get('nombre');
-        $empleado->apellidos=$request->get('apellidos');
-        $empleado->fecha_Ingreso=$request->get('fecha_Ingreso');
-        $empleado->fecha_Alta_Seguro=$request->get('fecha_Alta_Seguro');
-        $empleado->numero_Seguro_Social=$request->get('numero_Seguro_Social');
-        $empleado->fecha_Nacimiento=$request->get('fecha_Nacimiento');
-        $empleado->curp=$request->get('curp');
-        $empleado->email=$request->get('email');
-        $empleado->telefono=$request->get('telefono');
-        $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
-        $empleado->rol=$request->get('rol');
-        $empleado->estado='Activo';
-        substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
-        $empleado->save();
-        return Redirect::to('empleados');
+     DB::beginTransaction();
+     $empleado= new Empleado;
+     $empleado->nombre=$request->get('nombre');
+     $empleado->apellidos=$request->get('apellidos');
+     $empleado->fecha_Ingreso=$request->get('fecha_Ingreso');
+     $empleado->fecha_Alta_Seguro=$request->get('fecha_Alta_Seguro');
+     $empleado->numero_Seguro_Social=$request->get('numero_Seguro_Social');
+     $empleado->fecha_Nacimiento=$request->get('fecha_Nacimiento');
+     $empleado->curp=$request->get('curp');
+     $empleado->email=$request->get('email');
+     $empleado->telefono=$request->get('telefono');
+     $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
+     $empleado->estado='Activo';
+     substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
+     $empleado->save();
+     $idEmpleado=$empleado->id;
 
 
+     $idRol= $request->get('idRol');
 
-
-
+     $cont = 0;
+     while($cont < count($idRol))
+     {
+      $roles= new EmpleadoRoles;
+      $roles->idEmpleado=$idEmpleado;
+      $roles->idRol=$idRol[$cont];
+      $cont = $cont+1;
+      $roles->save();
     }
+
+    DB::commit();
+    return Redirect::to('empleados');
+  }
 
     /**
      * Display the specified resource.
@@ -95,9 +118,14 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        $empleado=Empleado::findOrFail($id);
-        $roles=DB::table('rol_empleados')->where('estado',"=","Activo")->get();
-        return view("Recursos_Humanos.empleados.edit",["empleado"=>$empleado,"roles"=>$roles]);
+      $empleado=Empleado::findOrFail($id);
+      $roles=DB::table('rol_empleados')->where('estado',"=","Activo")->get();
+      $listadoRoles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
+      ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
+      ->select('empleados.*','rol_empleados.rol_Empleado')
+      ->where('idEmpleado','=',$id)
+      ->get();
+      return view("Recursos_Humanos.empleados.edit",["empleado"=>$empleado,"roles"=>$roles,"listadoRoles"=>$listadoRoles]);
 
 
     }
@@ -112,23 +140,22 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $empleado=Empleado::findOrFail($id);
-        $empleado->nombre=$request->get('nombre');
-        $empleado->apellidos=$request->get('apellidos');
-        $empleado->fecha_Ingreso=$request->get('fecha_Ingreso');
-        $empleado->fecha_Alta_Seguro=$request->get('fecha_Alta_Seguro');
-        $empleado->numero_Seguro_Social=$request->get('numero_Seguro_Social');
-        $empleado->fecha_Nacimiento=$request->get('fecha_Nacimiento');
-        $empleado->curp=$request->get('curp');
-        $empleado->email=$request->get('email');
-        $empleado->telefono=$request->get('telefono');
-        $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
-        $empleado->rol=$request->get('rol');
-        $empleado->estado='Activo';
-        substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
-        $empleado->estado='Activo';
-        $empleado->update();
-        return Redirect::to('empleados');
+      $empleado=Empleado::findOrFail($id);
+      $empleado->nombre=$request->get('nombre');
+      $empleado->apellidos=$request->get('apellidos');
+      $empleado->fecha_Ingreso=$request->get('fecha_Ingreso');
+      $empleado->fecha_Alta_Seguro=$request->get('fecha_Alta_Seguro');
+      $empleado->numero_Seguro_Social=$request->get('numero_Seguro_Social');
+      $empleado->fecha_Nacimiento=$request->get('fecha_Nacimiento');
+      $empleado->curp=$request->get('curp');
+      $empleado->email=$request->get('email');
+      $empleado->telefono=$request->get('telefono');
+      $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
+      $empleado->estado='Activo';
+      substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
+      $empleado->estado='Activo';
+      $empleado->update();
+      return Redirect::to('empleados');
     }
     
 
@@ -140,10 +167,10 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        $empleado=Empleado::findOrFail($id);
-        $empleado->estado="Inactivo";
-        $empleado->update();
-        return Redirect::to('empleados');
+      $empleado=Empleado::findOrFail($id);
+      $empleado->estado="Inactivo";
+      $empleado->update();
+      return Redirect::to('empleados');
     }
 
 
@@ -154,19 +181,18 @@ class EmpleadoController extends Controller
          * datos debemos hacer la misma consulta
         **/
         Excel::create('Lista empleados', function($excel) {
-            $excel->sheet('Excel sheet', function($sheet) {
+          $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-                $empleado = Empleado::join('rol_empleados', 'rol_empleados.id', '=', 'empleados.rol')
-                ->select('empleados.nombre', 'empleados.apellidos', 'empleados.fecha_Ingreso', 'empleados.fecha_Alta_Seguro','empleados.numero_Seguro_Social','empleados.fecha_Nacimiento','empleados.curp','empleados.email','empleados.telefono','empleados.sexo','empleados.sueldo_Fijo','rol_empleados.rol_Empleado')
-                ->where('empleados.estado', 'Activo')
-                ->get();       
-                $sheet->fromArray($empleado);
-                $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','Fecha Nacimiento','CURP','Correo','Telefono','Sexo','Sueldo','Rol','Nombre Chofer']);
+            $empleado = Empleado::select('empleados.nombre', 'empleados.apellidos', 'empleados.fecha_Ingreso', 'empleados.fecha_Alta_Seguro','empleados.numero_Seguro_Social','empleados.fecha_Nacimiento','empleados.curp','empleados.email','empleados.telefono','empleados.sexo','empleados.sueldo_Fijo')
+            ->where('empleados.estado', 'Activo')
+            ->get();       
+            $sheet->fromArray($empleado);
+            $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','Fecha Nacimiento','CURP','Correo','Telefono','Sexo','Sueldo','Rol']);
 
-                $sheet->setOrientation('landscape');
-            });
+            $sheet->setOrientation('landscape');
+          });
         })->export('xls');
-    }
+      }
 
-}
+    }
