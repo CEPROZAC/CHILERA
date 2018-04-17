@@ -80,6 +80,40 @@ class AlmacenMaterialController extends Controller
       }
   }        //
    }
+
+   public function modale(AlmacenMaterialRequest $formulario)
+   {
+          $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages());
+    if ($validator->valid()){
+
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
+        }
+        else{
+                $material= new AlmacenMaterial;
+        $material->nombre=$formulario->get('nombre');
+        $material->provedor=$formulario->get('provedor_id');
+       
+        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
+            $file=Input::file('imagen');//si pasa la condicion almacena la imagen
+            $file->move(public_path().'/imagenes/almacenmaterial',$file->getClientOriginalName());//lo movemos a esta ruta                        
+            $material->imagen=$file->getClientOriginalName();
+        }
+       $material->descripcion=$formulario->get('descripcion');
+       $material->cantidad=$formulario->get('cantidad');
+        $material->codigo=$formulario->get('codigo');
+       $material->estado='Activo';
+
+       $material->save();
+        //$material= DB::table('AlmacenMateriales')->orderby('created_at','DESC')->take(1)->get();
+        //return view('almacen.materiales.pdf', ['material' => $material]);
+
+      }
+  }        //
+   }
     /**
      * Display the specified resource.
      *

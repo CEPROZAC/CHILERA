@@ -66,6 +66,7 @@ Route::get('descargar-bancos', 'BancoController@excel')->name('bancos.excel');
 Route::get('descargar-servicioBasculas', 'ServicioBasculaController@excel')->name('serviciosBascula.excel');
 Route::resource('almacen/materiales','AlmacenMaterialController');	
 Route::resource('almacen/materiales/stock', 'AlmacenMaterialController@stock');
+Route::resource('almacen/materiales/modale', 'AlmacenMaterialController@modale');
 Route::resource('almacenes/agroquimicos','AlmacenAgroquimicosController');	
 Route::resource('almacenes/agroquimicos/stock', 'AlmacenAgroquimicosController@stock');
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');
@@ -87,3 +88,6 @@ Route::resource('almacen/salidas/material','SalidaAlmacenMaterialController');
 Route::get('descargar-salidas', 'SalidaAlmacenMaterialController@excel')->name('almacen.materiales.salidas.excel');
 
 Route::get('descargar-transportes', 'TransporteController@excel')->name('transportes.excel');
+
+Route::resource('almacen/entradas/materiales','EntradaAlmacenController');	
+Route::get('descargar-entradas', 'EntradaAlmacenController@excel')->name('almacen.materiales.entradas.excel');
