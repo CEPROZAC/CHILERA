@@ -26,6 +26,7 @@ class EntradaAlmacenController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+
      */
     public function index()
     {
@@ -47,7 +48,7 @@ class EntradaAlmacenController extends Controller
     {
           $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
          $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->get();
-        $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+        $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
 
         $cuenta = count($material);
         
@@ -80,9 +81,48 @@ class EntradaAlmacenController extends Controller
     
     public function store(Request $request)
     {
-        $cantidad = $request->get('cantidad');
+        $cantidad = $request->get('cantidad2');
+
         if ($cantidad > 0){
-            print_r($cantidad);
+              $material= new AlmacenMaterial;
+
+            $material->nombre=$request->get('nombre2');
+        $material->provedor=$request->get('provedor_id2');
+       
+
+        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
+            $file=Input::file('imagen');//si pasa la condicion almacena la imagen
+            $file->move(public_path().'/imagenes/almacenmaterial',$file->getClientOriginalName());//lo movemos a esta ruta                        
+            $material->imagen=$file->getClientOriginalName();
+        }
+       $material->descripcion=$request->get('descripcion2');
+       $material->cantidad="0";
+        $material->codigo=$request->get('codigo');
+       $material->estado='Activo';
+     $material->save();
+
+$ultimo = AlmacenMaterial::orderBy('id', 'desc')->first()->id;
+$ex = $request->get('provedor_id2');
+ $materiales = DB::table('provedor_materiales')
+        ->select('provedor_materiales.nombre')
+        ->where('provedor_materiales.id',$ex)->get();
+
+$provedornombre = $materiales[0]->nombre;
+       $material2= new EntradaAlmacen;
+       $material2->id_material=$ultimo;
+       $material2->cantidad=$request->get('cantidad2');
+        $material2->provedor=$provedornombre;
+         $material2->comprador=$request->get('recibio2');
+         $material2->nota_venta=$request->get('nota2');
+         $material2->fecha=$request->get('fecha2');
+         $material2->p_unitario=$request->get('preciou2');
+         $material2->total= $material2->p_unitario *  $material2->cantidad;
+          $material2->importe= $material2->p_unitario *  $material2->cantidad;
+          $material2->save();
+           return Redirect::to('almacen/entradas/materiales');
+
+
+           // print_r($cantidad);
         }else{
         $num = 1;
         $y = 0;
@@ -103,13 +143,13 @@ class EntradaAlmacenController extends Controller
             $y = $y + 2;
             $material->cantidad=$first = $name[$y];
             $y = $y + 1;
-             print_r($first = $name[$y]);
+            // print_r($first = $name[$y]);
             $material->provedor=$first = $name[$y];
             $y = $y + 1;
-             print_r($first = $name[$y]);
+            // print_r($first = $name[$y]);
             $material->comprador=$first = $name[$y];
             $y = $y + 1;
-             print_r($first = $name[$y]);
+             //print_r($first = $name[$y]);
             $material->nota_venta=$first = $name[$y];
             $y = $y + 1;
              //print_r($first = $name[$y]);
@@ -125,7 +165,7 @@ class EntradaAlmacenController extends Controller
             $num = $num + 1;
 
     }
-    return redirect('/almacen/entradas/materiales');
+   return redirect('/almacen/entradas/materiales');
 
          
         
@@ -177,5 +217,24 @@ class EntradaAlmacenController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+     public function excel()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+        Excel::create('EntradaAlmacenMaterial', function($excel) {
+          $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+            $salidas = EntradaAlmacen::join('almacenmateriales','almacenmateriales.id', '=', 'EntradaAlmacenMateriales.id_material')
+            ->select('EntradaAlmacenMateriales.id', 'almacenmateriales.nombre', 'EntradaAlmacenMateriales.cantidad', 'EntradaAlmacenMateriales.provedor', 'EntradaAlmacenMateriales.nota_venta','EntradaAlmacenMateriales.p_unitario','EntradaAlmacenMateriales.total','EntradaAlmacenMateriales.comprador','EntradaAlmacenMateriales.fecha')
+            ->get();       
+            $sheet->fromArray($salidas);
+            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Nota de Venta','Precio Unitario','Subtotal','Comprador','Fecha de Compra']);
+            $sheet->setOrientation('landscape');
+        });
+      })->export('xls');
     }
 }

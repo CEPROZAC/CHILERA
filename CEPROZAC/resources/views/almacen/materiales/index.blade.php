@@ -22,7 +22,7 @@
               <div class="actions"> </div>
               <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Materiales </strong></h2>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-12">
               <div class="btn-group pull-right">
                 <b>
 
@@ -33,6 +33,10 @@
 
                     <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén </a>
 
+                    <a class="btn btn-sm btn-success tooltips" href="/almacen/entradas/materiales/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
+
+                    <a class="btn btn-sm btn-success tooltips" href="/materiales/provedores" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor de Materiales"> <i class="fa fa-plus"></i> Proveedores de Materiales</a>
+
 </div>
 
                 </b>
@@ -40,10 +44,6 @@
             </div>
           </div>
         </div>
-        <div class="btn-group" style="margin-right: 10px;">
-                     <a class="btn btn-sm btn-success tooltips" href="/materiales/provedores" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor de Materiales"> <i class="fa fa-plus"></i> Proveedores de Materiales</a>
-                   
-                  </div>
 
         <div class="porlets-content">
           <div class="table-responsive">
@@ -69,9 +69,10 @@
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->nombre2}} </td>
                   <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
-                    <div style="text-align:center;">
+                    <div style="text-align:center;" >
                     {{$materiales->codigo}}
                   </div>
+                     <a href="{{URL::action('AlmacenMaterialController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a> 
                   </td>
                   <td>
                       <img src="{{asset('imagenes/almacenmaterial/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">

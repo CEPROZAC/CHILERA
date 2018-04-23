@@ -43,7 +43,8 @@
           {{Session::get('message')}}
           @endif
         </div>
-                <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+        <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+                <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
 
           {{csrf_field()}}
 
@@ -156,6 +157,8 @@
         </div>    
     </div>
 
+
+
     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
       <div class="form-group"> 
         <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
@@ -202,7 +205,7 @@
 
       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
       <div class="form-group"> 
-        <label  for="subtotal">Subtotal </label>
+        <label  for="subtotal">Total </label>
         <input name="subtotal" id="subtotal" type="number"  class="form-control"  readonly/>
       </div>    
       </div>
@@ -261,7 +264,6 @@
     document.getElementById("pcantidad").value=stock;
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
-    document.getElementById("scantidad").max=stock;
   }
 
   var select = document.getElementById('id_materialk');
@@ -283,7 +285,6 @@
   document.getElementById("pcantidad").value=stock;
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
-  document.getElementById("scantidad").max=stock;
 
 
 
@@ -304,13 +305,12 @@
             document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
             document.getElementById("scantidad").value = "1";
-            document.getElementById("scantidad").max=stock;
           }
 
         }
 
         var uno = 1;
-
+        var subtota=0;
 
         function agregar(){
           var valor = document.getElementById('id_materialk');
@@ -319,6 +319,7 @@
     if (x == "") {
      // alert("No hay Datos que Cargar");
      var uno = 1;
+
      // llenado();
    }
    else{
@@ -388,6 +389,10 @@ function llenado(){
     x.remove(x.selectedIndex);
     cargar();
     document.getElementById("total").value=id2;
+    var sub = precio * cantidaden;
+    subtota = subtota + sub;
+    var d = subtota;
+     document.getElementById("subtotal").value=d;
     
 
   
@@ -435,7 +440,6 @@ function codigos(){
    document.getElementById("pcantidad").value=stock;
    document.getElementById("descripcion").value=descripcion;
    document.getElementById("scantidad").value = "1";
-   document.getElementById("scantidad").max=stock;
 break;
 }
 i++;

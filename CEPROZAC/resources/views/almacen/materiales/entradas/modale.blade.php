@@ -10,13 +10,13 @@
 
 
             <div class="porlets-content" style="margin-bottom: -50px;">
-       <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+       <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8" >
             {{csrf_field()}}
 
               <div class="form-group">
             <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese nombre del producto" />
+              <input name="nombre2" type="text"  value="{{Input::old('nombre2')}}" maxlength="30"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese nombre del producto" />
 
             </div>
           </div>
@@ -24,7 +24,7 @@
                     <div class="form-group">
             <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="provedor_id" class="form-control" required>  
+              <select name="provedor_id2" class="form-control" value="{{Input::old('provedor_id2')}}" required>  
                 @foreach($provedor as $provedores)
                 <option value="{{$provedores->id}}">
                  {{$provedores->nombre}}
@@ -35,13 +35,25 @@
            </div>
          </div><!--/form-group-->
 
+           <div class="form-group">
+          <label class="col-sm-3 control-label">Comprador : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="recibio2" id="recibio2" value="{{Input::old('recibio2')}}" class="form-control" required>  
+              @foreach($empleado as $emp)
+              <option value="{{$emp->nombre}} {{$emp->apellidos}}">
+               {{$emp->nombre}} {{$emp->apellidos}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
 
 
-         <div class="form-group">
+<div class="form-group">
           <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras
-            </br> 
+            <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
             <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
 
             <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
@@ -63,6 +75,7 @@
          <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
        </div>
      </div>
+
      
 
 
@@ -70,16 +83,46 @@
      <div class="form-group">
       <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese Descripción del Material" />
+        <input name="descripcion2" type="text"  value="{{Input::old('descripcion2')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese Descripción del Material" />
       </div>
     </div>
 
     <div class="form-group">
       <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"  value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+        <input name="cantidad2" maxlength="9" type="number" value="{{Input::old('cantidad2')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"  value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
       </div>    
     </div>
+
+     <div class="form-group">
+        <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-3">
+          <input name="nota2" id="nota2" value="{{Input::old('nota2 ')}}" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+
+         <input type="date" name="fecha2" id="fecha2" value="{{Input::old('fecha2 ')}}" class="form-control mask" >
+       </div>
+     </div>
+
+ <div class="form-group">
+        <label class="col-sm-3 control-label">Precio Unitario: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+            <input name="preciou2" id="preciou2" value="{{Input::old('preciou2  ')}}" type="number" class="form-control" />
+          </div>    
+        </div>    
+    </div>
+
+ <div class="form-group">
+      <div class="col-sm-6">
+        <input  id="varz" value="" name="varz" type="hidden"  maxlength="50"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+      </div>
+    </div>
+
  
             </div><!--/porlets-content--> 
           </div><!--/block-web--> 
@@ -90,7 +133,7 @@
       <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
          <input type="hidden" name="_token2" value="{{ csrf_token() }}"> 
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-         <button type="submit" id="registrar" onclick="registro();" class="btn btn-success">Guardar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
          </form>
      </div>
    </div>
@@ -118,11 +161,6 @@ document.getElementById("segundo").value=aleatorio;
   document.getElementById("segundo").disabled=true;
   document.getElementById("segundo").value = "";
 }
- function registro()
- {
-  document.getElementById("cantidad").value = 1;
-
- }
 }
 </script>
 </head>

@@ -1,45 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Example 2</title>
-    <link rel="stylesheet" type="fonts" href="css/pdf.css">
+    <meta charset="utf-8">
+    <title>Example 1</title>
+    <link rel="stylesheet" href="css/stylepdf.css" media="all" />
   </head>
   <body>
-
-    <main>
-      <div id="details" class="clearfix">
-        <div id="invoice">
-          <h1>INVOICE {{ $invoice }}</h1>
-          <div class="date">Date of Invoice: {{ $date }}</div>
-        </div>
+    <header class="clearfix">
+      <div id="logo">
+        <img src="images/logoCeprozac.png"  width="100" height="100"/>
       </div>
-      <table border="0" cellspacing="0" cellpadding="0">
+      <h1>Listado de Clientes CEPROZAC</h1>
+      <div id="company" class="clearfix">
+        <div>Company Name</div>
+        <div>455 Foggy Heights,<br /> AZ 85004, US</div>
+        <div>(602) 519-0450</div>
+        <div><a href="mailto:company@example.com">company@example.com</a></div>
+      </div>
+      <div id="project">
+        <div><span>EMPRESA</span> CEPROZAC</div>
+        <div><span>DOMICILIO</span> KM 18 Carretera Santa Monica Pozo Gamboa</div>
+        <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
+        <div><span>DATE</span> August 17, 2015</div>
+        <div><span>DUE DATE</span> September 17, 2015</div>
+      </div>
+    </header>
+    <main>
+      <table>
         <thead>
           <tr>
-            <th class="no">#</th>
-            <th class="desc">DESCRIPTION</th>
-            <th class="unit">UNIT PRICE</th>
-            <th class="total">TOTAL</th>
+            <th class="nombre">Nombre</th>
+            <th class="rfc">RFC</th>
+            <th class="fiscal">Fiscal</th>
+            <th class="telefono">Teléfono</th>
+            <th class="email">Email</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="no">{{ $data['quantity'] }}</td>
-            <td class="desc">{{ $data['description'] }}</td>
-            <td class="unit">{{ $data['price'] }}</td>
-            <td class="total">{{ $data['total'] }} </td>
-          </tr>
+            @foreach ($datas as $item)
+    <td class="nombre">{{ $item->nombre }}<br /></td>
+    <td class="rfc">{{ $item->rfc }}<br /></td>
+    <td class="fiscal">{{ $item->fiscal }}<br /></td>
+    <td class="telefono">{{ $item->telefono }}<br /></td>
+    <td class="email">{{ $item->email }}<br /></td>
+        @endforeach
 
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td >TOTAL</td>
-            <td>$6,500.00</td>
           </tr>
-        </tfoot>
+        </tbody>
       </table>
+      <div id="notices">
+        <div>Nota::</div>
+        <div class="notice">Listado de Clientes  CEPROZAC.</div>
+      </div>
+    </main>
+    <footer>
+    </footer>
   </body>
 </html>

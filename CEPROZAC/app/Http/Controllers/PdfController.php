@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
+use CEPROZAC\Cliente;
+use DB;
+use Maatwebsite\Excel\Facades\Excel;
+use PHPExcel_Worksheet_Drawing;
+use Validator; 
+use CEPROZAC\Http\Requests\ClienteFormRequest;
 
 
 class PdfController extends Controller
@@ -18,9 +24,11 @@ class PdfController extends Controller
        public function invoice() 
     {
         $data = $this->getData();
-        $date = date('Y-m-d');  
+        $datas= DB::table('cliente')->where('estado','Activo')->get();
+        $date = date('Y-m-d');
+        $x = "HOLA" ;
         $invoice = "2222";
-        $view =  \View::make('clientes.invoice', compact('data', 'date', 'invoice'))->render();
+        $view =  \View::make('clientes.invoice', compact('data', 'date', 'invoice','x','datas'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('invoice');
@@ -34,6 +42,7 @@ class PdfController extends Controller
             'price'   => '500',
             'total'     => '500'
         ];
+            //$datas= [DB::table('cliente')->where('estado','Activo')->get()];
         return $data;
     }
     public function index()

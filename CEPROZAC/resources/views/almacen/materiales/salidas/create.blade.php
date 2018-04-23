@@ -108,7 +108,7 @@
         </div>
       </div>
     </div>
-    <img src="/images/correcto.png" width="50" height="32" id="imagen" name="imagen" /> 
+
 
     <div class="container clear_both padding_fix">
       <div class="block-web">
