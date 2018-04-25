@@ -105,3 +105,12 @@ Route::get('descargar-entradas', 'EntradaAlmacenController@excel')->name('almace
 //Route::get('pdfmaterial', 'AlmacenMaterialController@invoice')->name('almacen.materiales.salidas.invoice');
 //Route::get('pdfmaterial/{$id}/invoice','AlmacenMaterialController@invoice');
 Route::get('pdfmaterial/{id}', array('as'=> '/pdfmaterial','uses'=>'AlmacenMaterialController@invoice'));
+Route::get('pdfagroquimicos/{id}', array('as'=> '/pdfagroquimicos','uses'=>'AlmacenAgroquimicosController@invoice'));
+
+Route::resource('almacen/salidas/agroquimicos','SalidasAgroquimicosController');	
+Route::get('descargar-salidas-agro', 'SalidasAgroquimicosController@excel')->name('almacen.agroquimicos.salidas.excel');
+
+Route::resource('almacen/entradas/agroquimicos','EntradasAgroquimicosController');	
+Route::get('descargar-entradas-agro', 'EntradasAgroquimicosController@excel')->name('almacen.agroquimicos.entradas.excel');
+
+

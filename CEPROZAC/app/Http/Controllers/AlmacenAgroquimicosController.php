@@ -10,6 +10,9 @@ use CEPROZAC\Http\Requests;
 use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\Http\Requests\AlmacenAgroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
+use CEPROZAC\EntradasAgroquimicos;
+use CEPROZAC\ProvedorMateriales;
+
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
@@ -27,8 +30,18 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
+           $material = DB::table('AlmacenAgroquimicos')
+        ->join('provedor_materiales as p', 'AlmacenAgroquimicos.provedor', '=', 'p.id')
+        ->select('AlmacenAgroquimicos.*','p.nombre as provedor')
+        ->where('AlmacenAgroquimicos.estado','Activo')->get();
+            $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+         $empleado = DB::table('empleados')->where('estado','Activo')->get();
+      return view('almacen.agroquimicos.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado]);
+=======
       $material= DB::table('AlmacenAgroquimicos')->where('estado','Activo')->get();
       return view('almacen.agroquimicos.index', ['material' => $material]);
+>>>>>>> e088535cea710806b9f032b9e639080eedd057a9
 
         //
   }
@@ -40,7 +53,12 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD
+            $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+         return view('almacen.agroquimicos.create',['provedor' => $provedor]);
+=======
        return view('almacen.agroquimicos.create');
+>>>>>>> e088535cea710806b9f032b9e639080eedd057a9
         //
    }
 
@@ -74,16 +92,44 @@ class AlmacenAgroquimicosController extends Controller
         $material->cantidad=$formulario->get('cantidad');
         $material->medida=$formulario->get('medida');
         $material->codigo=$formulario->get('codigo');
+<<<<<<< HEAD
+        $material->provedor=$formulario->get('provedor_name');
+       $material->estado='Activo';
+
+
+       $material->save();
+        $material= DB::table('almacenagroquimicos')->orderby('created_at','DESC')->take(1)->get();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('almacen.agroquimicos.invoice', compact('date', 'invoice','material'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice');
+
+=======
         $material->estado='Activo';
 
         $material->save();
         $material= DB::table('AlmacenAgroquimicos')->orderby('created_at','DESC')->take(1)->get();
         return view('almacen.materiales.pdf', ['material' => $material]);
+>>>>>>> e088535cea710806b9f032b9e639080eedd057a9
 
     }
   }        //
         //
 }
+
+       public function invoice($id){ 
+        $material= DB::table('almacenagroquimicos')->where('id',$id)->get();
+         //$material   = AlmacenMaterial:: findOrFail($id);
+        $date = date('Y-m-d');
+        $invoice = "2222";
+       // print_r($materiales);    
+        $view =  \View::make('almacen.agroquimicos.invoice', compact('date', 'invoice','material'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+       return $pdf->stream('invoice');
+    }
 
     /**
      * Display the specified resource.
@@ -104,7 +150,8 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function edit($id)
     {
-        return view("almacen.agroquimicos.edit",["material"=>AlmacenAgroquimicos::findOrFail($id)]);
+         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+        return view("almacen.agroquimicos.edit",["material"=>AlmacenAgroquimicos::findOrFail($id)],['provedor' => $provedor]);
         //
     }
 
@@ -129,9 +176,16 @@ class AlmacenAgroquimicosController extends Controller
         $material->cantidad=$request->get('cantidad');
         $material->medida=$request->get('medida');
         $material->codigo=$request->get('codigo');
+<<<<<<< HEAD
+        $material->provedor=$request->get('provedor_name');
+       $material->estado='Activo';
+       $material->update();
+       return Redirect::to('almacenes/agroquimicos');
+=======
         $material->estado='Activo';
         $material->update();
         return Redirect::to('almacenes/agroquimicos');
+>>>>>>> e088535cea710806b9f032b9e639080eedd057a9
         //
     }
 
@@ -159,11 +213,12 @@ class AlmacenAgroquimicosController extends Controller
         Excel::create('AlmacenAgroquimicos', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $material = AlmacenAgroquimicos::select('id','nombre','descripcion', 'cantidad', 'medida')
-            ->where('estado', 'Activo')
-            ->get();       
+            $material = AlmacenAgroquimicos::join('provedor_materiales','provedor_materiales.id', '=', 'almacenagroquimicos.provedor')
+                 ->select('almacenagroquimicos.id','almacenagroquimicos.nombre','provedor_materiales.nombre as nom','almacenagroquimicos.descripcion','almacenagroquimicos.cantidad','almacenagroquimicos.medida')
+                ->where('almacenagroquimicos.estado', 'Activo')
+                ->get();          
             $sheet->fromArray($material);
-            $sheet->row(1,['ID','Nombre','Descripción' ,'Cantidad','Medida']);
+            $sheet->row(1,['ID','Nombre','Proveedor','Descripción' ,'Cantidad','Medida']);
             $sheet->setOrientation('landscape');
             
             /*    
@@ -182,6 +237,27 @@ class AlmacenAgroquimicosController extends Controller
     public function stock(Request $request, $id)
     {
       
+<<<<<<< HEAD
+          $ex = $request->get('provedor_id2');
+ $materiales = DB::table('provedor_materiales')
+        ->select('provedor_materiales.nombre')
+        ->where('provedor_materiales.id',$ex)->get();
+        $provedornombre = $materiales[0]->nombre;
+   
+        $material2= new EntradasAgroquimicos;
+       $material2->id_material=$id;
+       $material2->cantidad=$request->get('cantidades');
+        $material2->provedor=$provedornombre;
+         $material2->comprador=$request->get('recibio');
+         $material2->factura=$request->get('factura');
+         $material2->fecha=$request->get('fecha2');
+         $material2->p_unitario=$request->get('preciou');
+         $material2->total= $material2->p_unitario *  $material2->cantidad;
+          $material2->importe= $material2->p_unitario *  $material2->cantidad;
+          $material2->save();
+           return Redirect::to('almacenes/agroquimicos');
+   }
+=======
      $material=AlmacenAgroquimicos::findOrFail($id);
      $agrega=$request->get('cantidades');
      $actual=$material->cantidad;
@@ -190,4 +266,5 @@ class AlmacenAgroquimicosController extends Controller
      return Redirect::to('almacenes/agroquimicos');
         //
  }
+>>>>>>> e088535cea710806b9f032b9e639080eedd057a9
 }

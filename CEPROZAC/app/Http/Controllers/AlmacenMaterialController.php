@@ -16,6 +16,7 @@ use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
+
 class AlmacenMaterialController extends Controller
 {
     /**

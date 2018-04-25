@@ -4,14 +4,14 @@
   <div class="pull-left page_title theme_color">
 
     <h1>Inicio</h1>
-    <h2 class="">Almacén</h2>
+    <h2 class="">Almacén de Agroquímicos</h2>
 
     
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Inicio</a></li>
-      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Entradas de Almacén</a></li>
+      <li><a style="color: #808080" href="{{url('/almacenes/agroquimicos')}}">Inicio</a></li>
+      <li><a style="color: #808080" href="{{url('/almacenes/agroquimicos')}}">Salidas de Almacén de Agroquímicos</a></li>
     </ol>
   </div>
 </div>
@@ -23,7 +23,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Entrada de Material</strong></h2>
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Salida de Agroquímicos</strong></h2>
             </div>
 
             <div class="col-md-4">
@@ -43,38 +43,29 @@
           {{Session::get('message')}}
           @endif
         </div>
-
-        <div class="text-danger" id='error_rfc'>DATOS NO GUARDADOS !!! {{$errors->formulario->first('codigo')}}</div>
-                <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+        <form action="{{route('almacen.salidas.agroquimicos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
 
           {{csrf_field()}}
 
 
 
-              <div class="form-group">
-        <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-
-         <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
-       </div>
-     </div>
-
-              <div class="form-group">
-          <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="prov" id="prov" value="prov" class="form-control" required>  
-              @foreach($provedor as $emp)
-              <option value="{{$emp->nombre}}">
-               {{$emp->nombre}} 
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Entrego : <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="entrego" id="entrego" class="form-control selectpicker" value="entrego" data-live-search="true" required >  
+                @foreach($empleado as $emp)
+                <option value="{{$emp->nombre}} {{$emp->apellidos}} ">
+                 {{$emp->nombre}} {{$emp->apellidos}} 
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
          </div>
-       </div>
+
 
          <div class="form-group">
-          <label class="col-sm-3 control-label">Comprador : <strog class="theme_color">*</strog></label>
+          <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
             <select name="recibio" id="recibio" value="recibio" class="form-control" required>  
               @foreach($empleado as $emp)
@@ -88,15 +79,26 @@
        </div>
 
        <div class="form-group">
-        <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-3">
-          <input name="nota" id="nota" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+        <label class="col-sm-3 control-label">Tipo de Movimiento: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="movimiento" id="movimiento" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
         </div>
       </div>
 
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Destino del Material"/>
+        </div>
+      </div>
 
-  <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i>Registrar Nuevo Material</a>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
 
+         <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
+       </div>
+     </div>
 
      <div class="col-lg-4 col-lg-offset-4">
        <div class="form-group">
@@ -106,6 +108,7 @@
         </div>
       </div>
     </div>
+
 
     <div class="container clear_both padding_fix">
       <div class="block-web">
@@ -129,8 +132,8 @@
 
            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
              <div class="form-group"> 
-              <label for="scantidad">Cantidad de Entrada </label>
-              <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+              <label for="scantidad">Cantidad de Salida </label>
+              <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
             </div>    
           </div>  
 
@@ -148,18 +151,8 @@
         </div>    
       </div>  
 
-
-    
-           <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-           <div class="form-group"> 
-            <label for="preciou">$ Precio Unitario </label>
-            <input name="preciou" id="preciou" value="0" type="number" class="form-control" />
-          </div>    
-        </div>    
+      
     </div>
-
-
-
     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
       <div class="form-group"> 
         <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
@@ -168,7 +161,7 @@
 
   </div>
 
-@include('almacen.materiales.entradas.modale')
+
 
   <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
     <div class="form-group"> 
@@ -177,17 +170,15 @@
           <th>Opciones</th>
           <th>Id</th>
           <th>Articulo</th>
-          <th>Cantidad de Entrada</th>
-          <th>Proveedor</th>
-          <th>Comprador</th>
-          <th>N° Nota</th>
-          <th>Fecha de Compra</th>
-          <th>Precio Unitario</th>
-          <th>Subtotal</th>
+          <th>Cantidad</th>
+          <th>Destino</th>
+          <th>Entrego</th>
+          <th>Recibio</th>
+          <th>Tipo de Movimiento</th>
+          <th>Fecha</th>
 
         </thead>
         <tfoot>
-          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -201,15 +192,7 @@
         <tbody>
 
         </tbody>
-
       </table>
-
-      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-      <div class="form-group"> 
-        <label  for="subtotal">Total </label>
-        <input name="subtotal" id="subtotal" type="number"  class="form-control"  readonly/>
-      </div>    
-      </div>
 
       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
        <div class="form-group"> 
@@ -217,8 +200,6 @@
         <input name="total" id="total" type="number"  class="form-control"  readonly/>
       </div>    
     </div>  
-
-
 
     <div class="form-group">
       <div class="col-sm-6">
@@ -239,7 +220,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="save();" class="btn btn-primary">Guardar</button>
-    <a href="/almacen/entradas/material" class="btn btn-default"> Cancelar</a>
+    <a href="/almacen/salidas/agroquimicos" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -249,6 +230,7 @@
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 </html> 
+
 
 <script type="text/javascript">
 
@@ -265,6 +247,7 @@
     document.getElementById("pcantidad").value=stock;
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
+    document.getElementById("scantidad").max=stock;
   }
 
   var select = document.getElementById('id_materialk');
@@ -286,6 +269,7 @@
   document.getElementById("pcantidad").value=stock;
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
+  document.getElementById("scantidad").max=stock;
 
 
 
@@ -306,13 +290,12 @@
             document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
             document.getElementById("scantidad").value = "1";
+            document.getElementById("scantidad").max=stock;
           }
 
         }
 
         var uno = 1;
-        var subtota=0;
-
         function agregar(){
           var valor = document.getElementById('id_materialk');
           var x = valor.value;
@@ -320,7 +303,6 @@
     if (x == "") {
      // alert("No hay Datos que Cargar");
      var uno = 1;
-
      // llenado();
    }
    else{
@@ -331,9 +313,13 @@
 }
 
 function llenado(){
+  var valida = document.getElementById("scantidad").value;
+  var valida2 = document.getElementById("pcantidad").value;
 
+  if (valida > valida2) {
+    alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
 
-
+  }else{
     var select=document.getElementById('id_materialk');
   var cantidadtotal = select.value;
   limite = "5",
@@ -357,46 +343,43 @@ function llenado(){
     var cell7 = row.insertCell(6);
     var cell8 = row.insertCell(7);
     var cell9 = row.insertCell(8);
-    var cell10 = row.insertCell(9);
+
+    var entrega =  document.getElementById("entrego");
+    var nom1 = entrega.value;
+
+    var recibe = document.getElementById("recibio");
+    var nom2 = recibe.value;
 
     var fechas = document.getElementById("fecha");
     var var3 = fechas.value;
-    //alert(var3);
-    var prove = document.getElementById("prov");
-    var proved = prove.value;
-    var recibiox = document.getElementById("recibio");
-    var recibe = recibiox.value;
-    //alert(recibe);
-    var notax = document.getElementById("nota");
-    var notas = notax.value;
 
-    var scantidadx = document.getElementById("scantidad");
-    var cantidaden = scantidadx.value;
+    var cantidades = document.getElementById("scantidad");
+    var cantidadt = cantidades.value;
 
-    var preciox = document.getElementById("preciou");
-    var precio = preciox.value;
+    var dest = document.getElementById("destino");
+    var dest = dest.value;
+
+    var mov = document.getElementById("movimiento");
+    var movt = mov.value;
+
     cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
     cell2.innerHTML = id;
     cell3.innerHTML = nombre;
-    cell4.innerHTML = cantidaden;
-    cell5.innerHTML = proved;
-    cell6.innerHTML = recibe;
-    cell7.innerHTML = notas;
-    cell8.innerHTML = var3;
-    cell9.innerHTML = precio;
-    cell10.innerHTML = precio * cantidaden;
+    cell4.innerHTML = cantidadt;
+    cell5.innerHTML = dest;
+    cell6.innerHTML = nom1;
+    cell7.innerHTML = nom2;
+    cell8.innerHTML = movt;
+    cell9.innerHTML = var3;
 
     var x = document.getElementById("id_materialk");
     x.remove(x.selectedIndex);
+        limpiar();
     cargar();
     document.getElementById("total").value=id2;
-    var sub = precio * cantidaden;
-    subtota = subtota + sub;
-    var d = subtota;
-     document.getElementById("subtotal").value=d;
     
 
-  
+  }
 
   
 }   
@@ -441,6 +424,7 @@ function codigos(){
    document.getElementById("pcantidad").value=stock;
    document.getElementById("descripcion").value=descripcion;
    document.getElementById("scantidad").value = "1";
+   document.getElementById("scantidad").max=stock;
 break;
 }
 i++;
@@ -451,9 +435,15 @@ i++;
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
-  document.getElementById("nota").value=" ";
-  document.getElementById("preciou").value=" ";
+  document.getElementById("movimiento").value=" ";
+  document.getElementById("destino").value=" ";
+   document.getElementById("descripcion").value=" ";
+    document.getElementById("pcantidad").value=" ";
+
+
 }
+
+
 function save() {
  var z = 1
  var arreglo = [];
@@ -465,7 +455,7 @@ function save() {
        // document.getElementById("id_materialk").id=z;
       // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
       arreglo.push(table.rows[r].cells[c].innerHTML);
-     //  alert(table.rows[r].cells[c].innerHTML);
+       // alert(table.rows[r].cells[c].innerHTML);
        z ++;
      }
 
@@ -473,8 +463,10 @@ function save() {
          //alert(z)
        //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
        arreglo.push(table.rows[r].cells[c].innerHTML);
-       //alert(table.rows[r].cells[c].innerHTML);
+       // alert(table.rows[r].cells[c].innerHTML);
        z ++;
+       
+
      }else if(z == 3){
          //alert(z)
        //  document.getElementById("scantidad").value=table.rows[r].cells[c].innerHTML;
@@ -485,39 +477,29 @@ function save() {
          //alert(z)
         // document.getElementById("destino").value=table.rows[r].cells[c].innerHTML;
          arreglo.push(table.rows[r].cells[c].innerHTML);
-      // alert(table.rows[r].cells[c].innerHTML);
+       // alert(table.rows[r].cells[c].innerHTML);
        z ++;
      } else if (z == 5){
        //  alert(z)
      //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-    //    alert(table.rows[r].cells[c].innerHTML);
+       //  alert(table.rows[r].cells[c].innerHTML);
        arreglo.push(table.rows[r].cells[c].innerHTML);
 //alert(arreglo);
 z ++;
 }else if (z == 6){
  //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
  arreglo.push(table.rows[r].cells[c].innerHTML);
-  //alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
          arreglo.push(table.rows[r].cells[c].innerHTML);
-          //alert(table.rows[r].cells[c].innerHTML);
-         z ++;
-
-       }else if(z == 8){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-         arreglo.push(table.rows[r].cells[c].innerHTML);
-          //alert(table.rows[r].cells[c].innerHTML);
          z ++;
 
        }else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
         arreglo.push(table.rows[r].cells[c].innerHTML);
-         //alert(table.rows[r].cells[c].innerHTML);
         document.getElementById("codigo2").value=arreglo;
         z = 1;
 
@@ -525,10 +507,15 @@ z ++;
 
     }
   }
-  var tam = arreglo.length / 9;
+  var tam = arreglo.length / 8;
   document.getElementById("total").value=tam;
 }
 
+
+
+
+
 </script>
+
 
 @endsection
