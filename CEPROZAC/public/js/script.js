@@ -83,6 +83,7 @@ function myCreateFunction() {
   btn.innerHTML=fila;
   document.getElementById("myTable").appendChild(btn);
 
+
 }
 
 function myDeleteFunction(t) {
@@ -90,4 +91,61 @@ function myDeleteFunction(t) {
   var tr = td.parentNode;
   var table = tr.parentNode;
   table.removeChild(tr);
+
 }
+
+function myDeleteFunction1(btn) {
+
+
+  var route = "http://localhost:8000/empleadoRoles/"+btn.value+"";
+  var token = $("#token").val();
+
+  $.ajax({
+    url: route,
+    headers: {'X-CSRF-TOKEN': token},
+    type: 'DELETE',
+    dataType: 'json',
+    success: function(){
+      $("#msj-success").fadeIn();
+    }
+  });
+
+
+
+}
+
+
+function myCreateFunction1() {
+
+  var select = document.getElementById("rol");
+  var options=document.getElementsByTagName("option");
+  var idRol= select.value;
+  var nombreRol= options[select.value-1].innerHTML;
+
+
+  var fila="<tr><td style=\"display:none;\"><input id=\"idRol\"  name=\"idRol\" value=\""+idRol+"\"></td><td colspan=\"2\">"+nombreRol+"</td>"+""+"<td>"+
+  " <button type=\"button\" id=\"btn\"  value=\"{{$rol->id}}\"  onclick=\"myDeleteFunction1(this)\" class=\"btn btn-danger btn-icon\"> Quitar<i class=\"fa fa-times\"></i> </button>"
+  +"</td>";
+  var btn = document.createElement("TR");
+  btn.innerHTML=fila;
+  document.getElementById("myTable").appendChild(btn);
+
+  var dato1 = $("#idRol").val();
+  var dato2 = $("#idEmpleado").val();
+  var route = "/empleadoRoles";
+  var token = $("#token").val();
+
+  $.ajax({
+    url: route,
+    headers: {'X-CSRF-TOKEN': token},
+    type: 'POST',
+    dataType: 'json',
+    data:{idRol: dato1,idEmpleado: dato2},
+
+    success:function(){
+      $("#msj-success").fadeIn();
+    }
+  });
+}
+
+

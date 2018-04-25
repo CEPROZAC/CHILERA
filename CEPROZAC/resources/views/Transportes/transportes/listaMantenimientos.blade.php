@@ -24,72 +24,78 @@
             </div>
             <div class="btn-group pull-right">
               <b>
+               9
+               <div class="btn-group" style="margin-right: 10px;">
+                <a class="btn btn-sm btn-success tooltips" href="{{URL::action('MantenimientoTransporteController@create',[])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
 
-                <div class="btn-group" style="margin-right: 10px;">
-                  <a class="btn btn-sm btn-success tooltips" href="{{URL::action('MantenimientoTransporteController@create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
+                <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('TransporteController@descargarMantenimientos',[$transporte->id,$transporte->nombre_Unidad])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
-                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('TransporteController@descargarMantenimientos',[$transporte->id,$transporte->nombre_Unidad])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                <a class="btn btn-sm btn-danger tooltips" href="/transportes" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
-                  <a class="btn btn-sm btn-danger tooltips" href="/transportes" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
-
-                </div>
-                
-              </a>
-            </b>
-          </div>
-
+              </div>
+              
+            </a>
+          </b>
         </div>
+
       </div>
-      <div class="porlets-content container clear_both padding_fix">
-        @if($mantenimientos==null)
-        <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{ route('mantenimiento.create')}}">se encuentran mantenimientos registrados </a> a este Vehiculo. Click Para registrar</div>
-        
-      </b>
     </div>
-    @else
-    @foreach($mantenimientos as $mantenimiento)
-    <div class="col-lg-6"> 
-      <section class="panel default blue_title h4">
-        <div class="panel-heading"><span class="semi-bold">{{$mantenimiento->concepto}}</span> 
-        </div>
-        <div class="panel-body">
+    <div class="porlets-content container clear_both padding_fix">
+      @if($mantenimientos==null)
+      <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{ route('mantenimiento.create')}}">se encuentran mantenimientos registrados </a> a este Vehiculo. Click Para registrar</div>
+      
+    </b>
+  </div>
+  @else
+  @foreach($mantenimientos as $mantenimiento)
+  <div class="col-lg-6"> 
+    <section class="panel default blue_title h4">
+      <div class="panel-heading"><span class="semi-bold">{{$mantenimiento->concepto}}</span> 
+      </div>
+      <div class="panel-body">
 
-          <table class="table table-striped">
+        <table class="table table-striped">
 
-            <tbody>
-              <tr>
-                <th>Concepto: </th>
-                <td>{{$mantenimiento->concepto}}</td>
-              </tr>
-              <tr>
-                <th>Descripcion:</th>
-                <td>{{$mantenimiento->descripcion}}</td>
-              </tr>
-              <tr>
-                <th>Fecha: </th>
-                <td>{{$mantenimiento->fecha}}</td>
-              </tr>
-              <tr>
-                <th>Fecha: </th>
-                <td>{{$mantenimiento->fecha}}</td>
-              </tr>
-              <tr>
-                <th>Encargado de Mantenimiento: </th>
-                <td> {{$mantenimiento->nm}} {{$mantenimiento->am}}</td>
-              </tr>
-              <tr>
-                <th>Responsable de Vehiculo: </th>
-                <td> {{$mantenimiento->nc}} {{$mantenimiento->ac}}</td>
-              </tr>
+          <tbody>
+            <tr>
+              <th>Concepto: </th>
+              <td>{{$mantenimiento->concepto}}</td>
+            </tr>
+            <tr>
+              <th>Descripcion:</th>
+              <td>{{$mantenimiento->descripcion}}</td>
+            </tr>
+            <tr>
+              <th>Fecha: </th>
+              <td>{{$mantenimiento->fecha}}</td>
+            </tr>
+            <tr>
+              <th>Fecha: </th>
+              <td>{{$mantenimiento->fecha}}</td>
+            </tr>
+            <tr>
+              <th>Encargado de Mantenimiento: </th>
+              <td> {{$mantenimiento->nm}} {{$mantenimiento->am}}</td>
+            </tr>
+            <tr>
+              <th>Responsable de Vehiculo: </th>
+              <td> {{$mantenimiento->nc}} {{$mantenimiento->ac}}</td>
+            </tr>
+            <tr>
+              <th>Editar: </th>
+              <td>            <center>
+                <a href="{{URL::action('MantenimientoTransporteController@edit',$mantenimiento->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+              </center></td>
+            </tr>
 
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-    @endforeach
-    @endif
-  </div><!--/porlets-content-->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  @endforeach
+  @endif
+</div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->

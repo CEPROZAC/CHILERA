@@ -12,7 +12,7 @@ function fnFormatDetails ( oTable, nTr )
     sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[7]+' </td></tr>';
     sOut += '<tr><td><strong>Telefono:</strong></td><td>'+aData[8]+' </td></tr>';
     sOut += '<tr><td><strong>Sueldo:</strong></td><td>'+aData[9]+' </td></tr>';
- 
+    
     sOut += '</table>';
 
     return sOut;
@@ -385,9 +385,7 @@ function fnFormatDetails5 ( oTable, nTr )
     sOut += '<tr><td><strong>Direccion Fisica:</strong></td><td>'+aData[5]+' </td></tr>';
     sOut += '<tr><td><strong>Direccion de Facturación:</strong></td><td>'+aData[4]+' </td></tr>';
     sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td><strong>Banco:</strong></td><td>'+aData[9]+' </td></tr>';
-    sOut += '<tr><td><strong>Numero de cuenta:</strong></td><td>'+aData[11]+' </td></tr>';
-    sOut += '<tr><td><strong>Número de CLABE Interbancaria:</strong></td><td>'+aData[10]+' </td></tr>';
+    
 
     sOut += '</table>';
 

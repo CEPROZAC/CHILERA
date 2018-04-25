@@ -138,65 +138,64 @@
 
 
 
-                   </div><!--validator-->
-                 </div><!--user-profile-content-->
-               </div><!--step-1-->
+                    </div><!--validator-->
+                  </div><!--user-profile-content-->
+                </div><!--step-1-->
 
-               <div id="step-2" class="">
-                <div class="user-profile-content">
-                  <div id="form-step-1" role="form" >
-                    <h3 class="h3titulo">Roles de empleados</h3>
-                    <br>
-                    <div class="table-responsive">
-                      <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th> 
-                              Rol
-                            </th> 
-                            <th>Agregar Rol</th>
-                            <th>Quitar Rol</th>
-                          </tr>
-                        </thead>
-                        <tbody id="myTable">
-                          <tr>
-                            <td>
-                              <div class="col-sm-8">
-                                <select   id="rol" class="form-control" required>  
-                                  @foreach($roles as $rol)
-                                  <option value="{{$rol->id}}">
-                                   {{$rol->rol_Empleado}} 
-                                 </option>
-                                 @endforeach              
-                               </select>
-                             </div>
-                           </td>
-                           <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
-                         </tr>
-                       </tbody>
-                     </table>
-                   </div>
-                   <div class="form-group">
-                    <div class="col-sm-offset-7 col-sm-5">
-                      <button type="submit" class="btn btn-primary">Guardar</button>
-                      <a href="/empleados" class="btn btn-default"> Cancelar</a>
-                    </div>
-                  </div><!--/form-group--> 
+                <div id="step-2" class="">
+                  <div class="user-profile-content">
+                    <div id="form-step-1" role="form" >
+                      <h3 class="h3titulo">Roles de empleados</h3>
+                      <br>
+                      <div class="table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th> 
+                                Rol
+                              </th> 
+                              <th>Agregar Rol</th>
+                              <th>Quitar Rol</th>
+                            </tr>
+                          </thead>
+                          <tbody id="myTable">
+                            <tr>
+                              <td>
+                                <div class="col-sm-8">
+                                  <select   id="rol" class="form-control" required>  
+                                    @foreach($roles as $rol)
+                                    <option value="{{$rol->id}}">
+                                     {{$rol->rol_Empleado}} 
+                                   </option>
+                                   @endforeach              
+                                 </select>
+                               </div>
+                             </td>
+                             <input type="hidden" name="_token" id="idEmpleado">
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                             <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                           </tr>
+                         </tbody>
+                       </table>
+                     </div>
+                     <div class="form-group">
+                      <div class="col-sm-offset-7 col-sm-5">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="/empleados" class="btn btn-default"> Cancelar</a>
+                      </div>
+                    </div><!--/form-group--> 
+
+                  </div><!--validator-->
+                </div><!--user-profile-content-->
+              </div><!--step-2-->
 
 
-
-
-                </div><!--validator-->
-              </div><!--user-profile-content-->
-            </div><!--step-2-->
-
-
-          </div>
-        </div>  <!--smartwizard-->            
-      </form>
-    </div><!--/form-horizontal-->
-  </div><!--/porlets-content-->
-</div><!--/block-web-->
+            </div>
+          </div>  <!--smartwizard-->            
+        </form>
+      </div><!--/form-horizontal-->
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->

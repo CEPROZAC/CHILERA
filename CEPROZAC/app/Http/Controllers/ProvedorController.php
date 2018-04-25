@@ -101,8 +101,8 @@ class ProvedorController extends Controller
     public function edit($id)
     {
 
-       return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
-   }
+     return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
+ }
 
     /**
      * Update the specified resource in storage.

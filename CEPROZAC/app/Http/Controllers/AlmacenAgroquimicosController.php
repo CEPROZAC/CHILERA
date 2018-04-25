@@ -27,11 +27,11 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function index()
     {
-              $material= DB::table('AlmacenAgroquimicos')->where('estado','Activo')->get();
+      $material= DB::table('AlmacenAgroquimicos')->where('estado','Activo')->get();
       return view('almacen.agroquimicos.index', ['material' => $material]);
 
         //
-    }
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -40,9 +40,9 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function create()
     {
-         return view('almacen.agroquimicos.create');
+       return view('almacen.agroquimicos.create');
         //
-    }
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -52,38 +52,38 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function store(AlmacenAgroquimicosRequest $formulario)
     {
-          $validator = Validator::make(
+      $validator = Validator::make(
         $formulario->all(), 
         $formulario->rules(),
         $formulario->messages());
-    if ($validator->valid()){
+      if ($validator->valid()){
 
         if ($formulario->ajax()){
             return response()->json(["valid" => true], 200);
         }
         else{
-        $material= new AlmacenAgroquimicos;
-        $material->nombre=$formulario->get('nombre');
-       
+            $material= new AlmacenAgroquimicos;
+            $material->nombre=$formulario->get('nombre');
+            
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenagroquimicos',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
         }
-       $material->descripcion=$formulario->get('descripcion');
-       $material->cantidad=$formulario->get('cantidad');
+        $material->descripcion=$formulario->get('descripcion');
+        $material->cantidad=$formulario->get('cantidad');
         $material->medida=$formulario->get('medida');
         $material->codigo=$formulario->get('codigo');
-       $material->estado='Activo';
+        $material->estado='Activo';
 
-       $material->save();
+        $material->save();
         $material= DB::table('AlmacenAgroquimicos')->orderby('created_at','DESC')->take(1)->get();
         return view('almacen.materiales.pdf', ['material' => $material]);
 
-      }
+    }
   }        //
         //
-    }
+}
 
     /**
      * Display the specified resource.
@@ -117,21 +117,21 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $material=AlmacenAgroquimicos::findOrFail($id);
-        $material->nombre=$request->get('nombre');
+       $material=AlmacenAgroquimicos::findOrFail($id);
+       $material->nombre=$request->get('nombre');
        
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenagroquimicos',$file->getClientOriginalName());//lo movemos a esta ruta
             $material->imagen=$file->getClientOriginalName();           
-            }   
-       $material->descripcion=$request->get('descripcion');
-       $material->cantidad=$request->get('cantidad');
-       $material->medida=$request->get('medida');
+        }   
+        $material->descripcion=$request->get('descripcion');
+        $material->cantidad=$request->get('cantidad');
+        $material->medida=$request->get('medida');
         $material->codigo=$request->get('codigo');
-       $material->estado='Activo';
-       $material->update();
-       return Redirect::to('almacenes/agroquimicos');
+        $material->estado='Activo';
+        $material->update();
+        return Redirect::to('almacenes/agroquimicos');
         //
     }
 
@@ -148,9 +148,9 @@ class AlmacenAgroquimicosController extends Controller
       $material->save();
       return Redirect::to('almacenes/agroquimicos');
         //
-    }
+  }
 
-     public function excel()
+  public function excel()
   {        
         /**
          * toma en cuenta que para ver los mismos 
@@ -182,12 +182,12 @@ class AlmacenAgroquimicosController extends Controller
     public function stock(Request $request, $id)
     {
       
-       $material=AlmacenAgroquimicos::findOrFail($id);
-       $agrega=$request->get('cantidades');
-       $actual=$material->cantidad;
-       $material->cantidad=$actual + $agrega;
-       $material->update();
-       return Redirect::to('almacenes/agroquimicos');
+     $material=AlmacenAgroquimicos::findOrFail($id);
+     $agrega=$request->get('cantidades');
+     $actual=$material->cantidad;
+     $material->cantidad=$actual + $agrega;
+     $material->update();
+     return Redirect::to('almacenes/agroquimicos');
         //
-   }
+ }
 }

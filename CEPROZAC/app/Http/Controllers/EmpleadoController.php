@@ -37,8 +37,10 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
+      $empleado= Empleado::all();
+
       $roles=DB::table('rol_empleados')->where('estado','=' ,'Activo')->get();
-      return view("Recursos_Humanos.empleados.create",["roles"=>$roles]);
+      return view("Recursos_Humanos.empleados.create",["roles"=>$roles,'empleado'=>$empleado]);
 
 
     }
@@ -122,7 +124,7 @@ class EmpleadoController extends Controller
       $roles=DB::table('rol_empleados')->where('estado',"=","Activo")->get();
       $listadoRoles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
       ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
-      ->select('empleados.*','rol_empleados.rol_Empleado')
+      ->select('empleado_roles.id','rol_empleados.rol_Empleado')
       ->where('idEmpleado','=',$id)
       ->get();
       return view("Recursos_Humanos.empleados.edit",["empleado"=>$empleado,"roles"=>$roles,"listadoRoles"=>$listadoRoles]);
@@ -139,7 +141,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      DB::beginTransaction();
       $empleado=Empleado::findOrFail($id);
       $empleado->nombre=$request->get('nombre');
       $empleado->apellidos=$request->get('apellidos');
@@ -153,8 +155,9 @@ class EmpleadoController extends Controller
       $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
       $empleado->estado='Activo';
       substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
-      $empleado->estado='Activo';
-      $empleado->update();
+      $empleado->update();      
+
+      DB::commit();
       return Redirect::to('empleados');
     }
     

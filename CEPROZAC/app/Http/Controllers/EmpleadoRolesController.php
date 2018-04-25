@@ -3,9 +3,13 @@
 namespace CEPROZAC\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use CEPROZAC\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Controllers\Controller;
+use CEPROZAC\EmpleadoRoles;
+use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmpleadoRolesController extends Controller
 {
@@ -37,7 +41,11 @@ class EmpleadoRolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $empleado= new EmpleadoRoles;
+        $empleado->idEmpleado=$request->get('idEmpleado');
+        $empleado->idRol=$request->get('idRol');
+        $empleado->save();
+
     }
 
     /**
@@ -82,6 +90,11 @@ class EmpleadoRolesController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+      $empleado = EmpleadoRoles::find($id);
+      $empleado->delete();
+
+      return response()->json([
+        'message' => 'ROl Eliminado'
+        ]);  
+  }
 }

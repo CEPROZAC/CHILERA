@@ -22,10 +22,6 @@ class CreateEmpresasCeprozacTable extends Migration
             $table->string('direcionFacturacion');
             $table->string('email');
             $table->string('regimenFiscal');
-            $table->integer('id_Banco')->unsigned();
-            $table->foreign('id_Banco')->references('id')->on('bancos');
-            $table->string('cve_Interbancaria');
-            $table->string('nom_cuenta');
             $table->string('estado');
             $table->timestamps();
         });
