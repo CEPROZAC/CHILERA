@@ -48,6 +48,20 @@
               </div>
             </div>
 
+              <div class="form-group">
+            <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="provedor_name" class="form-control" value="{{Input::old('provedor_name')}}" required>  
+                @foreach($provedor as $provedores)
+                <option value="{{$provedores->id}}">
+                 {{$provedores->nombre}}
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
 
 
             <div class="form-group">
@@ -103,31 +117,31 @@
                 <option value="Toneladas">Toneladas</option>
                 <option value="Litros">Litros</option>
                 <option value="Metros">Metros</option>
-                <option value="Unidad">Unidad</option>
+                <option value="Unidades">Unidades</option>
                 @elseif(Input::old('medida')=="Toneladas")
                 <option value='Toneladas' selected>Toneladas
                 </option>
                 <option value="Litros">Litros</option>
                 <option value="Metros">Metros</option>
-                <option value="Unidad">Unidad</option>
+                <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
                  @elseif(Input::old('medida')=="Litros")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros" selected>Litros</option>
                 <option value="Metros">Metros</option>
-                <option value="Unidad">Unidad</option>
+                <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
                 @elseif(Input::old('medida')=="Metros")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros">Litros</option>
                 <option value="Metros" selected>Metros</option>
-                <option value="Unidad">Unidad</option>
+                <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
                 @else
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros">Litros</option>
                 <option value="Metros" >Metros</option>
-                <option value="Unidad" selected>Unidad</option>
+                <option value="Unidades" selected>Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
                 @endif
               </select>

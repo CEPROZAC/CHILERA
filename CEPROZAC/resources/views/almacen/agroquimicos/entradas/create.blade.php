@@ -11,7 +11,7 @@
   <div class="pull-right">
     <ol class="breadcrumb">
       <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Inicio</a></li>
-      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Entradas de Almacén</a></li>
+      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Entradas de Almacén Agroquímicos</a></li>
     </ol>
   </div>
 </div>
@@ -23,7 +23,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Entrada de Material</strong></h2>
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Entrada de Agroquímico</strong></h2>
             </div>
 
             <div class="col-md-4">
@@ -43,9 +43,8 @@
           {{Session::get('message')}}
           @endif
         </div>
-
-        <div class="text-danger" id='error_rfc'>DATOS NO GUARDADOS !!! {{$errors->formulario->first('codigo')}}</div>
-                <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+            <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+                <form action="{{route('almacen.entradas.agroquimicos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
 
           {{csrf_field()}}
 
@@ -88,9 +87,9 @@
        </div>
 
        <div class="form-group">
-        <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
         <div class="col-sm-3">
-          <input name="nota" id="nota" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+          <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
         </div>
       </div>
 
@@ -168,7 +167,7 @@
 
   </div>
 
-@include('almacen.materiales.entradas.modale')
+@include('almacen.agroquimicos.entradas.modale')
 
   <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
     <div class="form-group"> 
@@ -180,7 +179,7 @@
           <th>Cantidad de Entrada</th>
           <th>Proveedor</th>
           <th>Comprador</th>
-          <th>N° Nota</th>
+          <th>N° Factura</th>
           <th>Fecha de Compra</th>
           <th>Precio Unitario</th>
           <th>Subtotal</th>
@@ -239,7 +238,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="save();" class="btn btn-primary">Guardar</button>
-    <a href="/almacen/entradas/material" class="btn btn-default"> Cancelar</a>
+    <a href="/almacen/entradas/agroquimicos" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -367,7 +366,7 @@ function llenado(){
     var recibiox = document.getElementById("recibio");
     var recibe = recibiox.value;
     //alert(recibe);
-    var notax = document.getElementById("nota");
+    var notax = document.getElementById("factura");
     var notas = notax.value;
 
     var scantidadx = document.getElementById("scantidad");
@@ -451,7 +450,7 @@ i++;
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
-  document.getElementById("nota").value=" ";
+  document.getElementById("factura").value=" ";
   document.getElementById("preciou").value=" ";
 }
 function save() {
@@ -473,51 +472,30 @@ function save() {
          //alert(z)
        //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
        arreglo.push(table.rows[r].cells[c].innerHTML);
-       //alert(table.rows[r].cells[c].innerHTML);
        z ++;
      }else if(z == 3){
-         //alert(z)
-       //  document.getElementById("scantidad").value=table.rows[r].cells[c].innerHTML;
          arreglo.push(table.rows[r].cells[c].innerHTML);
-        //alert(table.rows[r].cells[c].innerHTML);
         z ++;
       }else if(z == 4){
-         //alert(z)
-        // document.getElementById("destino").value=table.rows[r].cells[c].innerHTML;
          arreglo.push(table.rows[r].cells[c].innerHTML);
-      // alert(table.rows[r].cells[c].innerHTML);
        z ++;
      } else if (z == 5){
-       //  alert(z)
-     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-    //    alert(table.rows[r].cells[c].innerHTML);
        arreglo.push(table.rows[r].cells[c].innerHTML);
-//alert(arreglo);
 z ++;
 }else if (z == 6){
- //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
  arreglo.push(table.rows[r].cells[c].innerHTML);
-  //alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
          arreglo.push(table.rows[r].cells[c].innerHTML);
-          //alert(table.rows[r].cells[c].innerHTML);
          z ++;
 
        }else if(z == 8){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
          arreglo.push(table.rows[r].cells[c].innerHTML);
-          //alert(table.rows[r].cells[c].innerHTML);
          z ++;
 
        }else{
-       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
         arreglo.push(table.rows[r].cells[c].innerHTML);
-         //alert(table.rows[r].cells[c].innerHTML);
         document.getElementById("codigo2").value=arreglo;
         z = 1;
 
