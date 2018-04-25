@@ -48,8 +48,9 @@
 
         <div class="porlets-content">
           <div  class="form-horizontal row-border" > <!--acomodo-->
-            <form class="" id="myForm" action="{{route('empleados.store')}}" method="post" role="form" enctype="multipart/form-data" parsley-validate novalidate data-toggle="validator">
+            <form action="{{url('empleados', [$empleado->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
               {{csrf_field()}}
+              <input type="hidden" name="_method" value="PUT">
               <div id="smartwizard">
                 <ul>
                   <li><a href="#step-1">Informacion Personal</a></li>
@@ -171,16 +172,22 @@
                                  </select>
                                </div>   
                              </td>
-                             <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                             <input type="hidden" value="{{ $empleado->id}}" id="idEmpleado">
+                             <td colspan="2"><button type="button"  onclick="myCreateFunction1()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
                            </tr>
                            @foreach($listadoRoles as $rol)
                            <tr>
                              <td colspan="2">{{$rol->rol_Empleado}}</td>
                              <td>
-                              <button type="button"  onclick="myDeleteFunction(this)" class="btn btn-danger btn-icon"> Quitar<i class="fa fa-times"></i> </button>
+                              {{$rol->id}}
+                              
+
+
+                              <button type="button" id="btn" onclick="myDeleteFunction1(this)" value="{{$rol->id}}" class="btn btn-danger btn-icon"> Quitar<i class="fa fa-times"></i> </button>
                             </td>
                           </tr>
-                          @foreach
+                          @endforeach
                         </tbody>
                       </table>
                     </div>
@@ -190,15 +197,9 @@
                         <a href="/empleados" class="btn btn-default"> Cancelar</a>
                       </div>
                     </div><!--/form-group--> 
-
-
-
-
                   </div><!--validator-->
                 </div><!--user-profile-content-->
               </div><!--step-2-->
-
-
             </div>
           </div>  <!--smartwizard-->            
         </form>
@@ -283,4 +284,18 @@
 
     </script>
 
-    @endsection
+    <script type="text/javascript">
+      function eliminarArticulo(id) {
+       $.ajax({
+        url: 'url' + id,
+        type: 'DELETE',
+        success: function(result) {
+        // bla bla
+      }
+    });
+     }
+
+
+   </script>
+
+   @endsection

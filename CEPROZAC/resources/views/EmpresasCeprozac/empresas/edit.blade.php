@@ -103,40 +103,7 @@
               </div>
             </div>
 
-            <div class="form-group">
-             <label class="col-sm-3 control-label"> Banco: <strog class="theme_color">*</strog></label>
-             <div class="col-sm-6">
-              <select name="id_Banco" class="form-control" required>  
-                @foreach($bancos as $banco)
-                @if($banco->id==$empresasCEPROZAC->id_Banco)
-                <option value="{{$banco->id}}" selected>
-                 {{$banco->nombre}}
-               </option>
-               @else
-               <option value="{{$banco->id}}" >
-                 {{$banco->nombre}}
-               </option>
-               @endif
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
-         <div class="form-group">
-           <label class="col-sm-3 control-label">Numero de cuenta:</label>
-           <div class="col-sm-6">
-            <input type="text" name="nom_cuenta" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10" value="{{$empresasCEPROZAC->nom_cuenta}}" />
-          </div>
-        </div><!--/form-group--> 
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Número de CLABE Interbancaria: </label>
-          <div class="col-sm-6">
-            <input type="text"  name= "cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" value="{{$empresasCEPROZAC->cve_Interbancaria}}" minlength="18" />
-          </div>
-        </div><!--/form-group--> 
-
+         
 
 
 

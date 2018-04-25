@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::resource('empresas', 'EmpresaController');
 Route::resource('empleados', 'EmpleadoController');
+Route::resource('empleadoRoles', 'EmpleadoRolesController');
 Route::resource('precioBasculas', 'PrecioBasculaController');
 Route::resource('home','HomeController');
 Route::resource('provedores','ProvedorController');
@@ -39,6 +40,8 @@ Route::resource('empaques','FormaEmpaqueController');
 Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormulario");
 
 Route::resource('transportes','TransporteController');
+Route::resource('cuentasEmpresasCEPROZAC','CuentasEmpresasCEPROZACController');
+
 Route::resource('contratos','ContratosController');
 Route::get('pdf', 'PdfController@invoice');
 Route::get('descargarPDF', 'BasculaController@pdf');
@@ -47,9 +50,17 @@ Route::get('descargar-contratos', 'ContratosController@excel')->name('contratos.
 Route::get('descargar-EmpresasCEPROZAC', 'EmpresasCeprozacController@excel')->name('empresasCEPROZAC.excel');
 Route::get('ver-empresas/{id}', 'ProvedorController@verEmpresas')->name('provedores.verEmpresas');
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
+Route::get('ver-cuentas/{id}', 'EmpresasCeprozacController@verCuentas')->name('empresasCEPROZAC.verCuentas');
+
+Route::get('cuentasEmpresasCEPROZAC1/{id}','CuentasEmpresasCEPROZACController@create1')->name('empresasCEPROZAC1.create1');
+
+
 Route::get('ver-InformacionEmpleado/{id}', 'EmpleadoController@verInformacion')->name('empleados.verInformacion');
 
 Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
+
+
+Route::get('descargarCuentas/{id}/{nombre}', 'CuentasEmpresasCEPROZACController@descargarCuentas')->name('empresasCEPROZAC.descargarCuentas');
 
 Route::get('descargarEmpresas/{id}/{nombre}', 'ProvedorController@descargarEmpresas')->name('empresas.descargarEmpresas');
 

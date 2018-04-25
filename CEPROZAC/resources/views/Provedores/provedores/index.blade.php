@@ -29,71 +29,79 @@
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="provedores/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
 
-                     <a class="btn btn-sm btn-warning tooltips" href="{{ route('provedores.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('provedores.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
                   </div>
                   
-                  </a>
-                </b>
-              </div>
+                </a>
+              </b>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="porlets-content">
-          <div class="table-responsive">
-            <table  class="display table table-bordered table-striped" id="dynamic-table">
-              <thead>
-                <tr>
-                  <th>Nombre </th>
-                  <th>Telefono </th>
-                  <th>Direccion </th>
-                  <th>Email </th>
-                  <th>Ver Empresas</th>
-           
-                  <td><center><b>Editar</b></center></td>
-                  <td><center><b>Borrar</b></center></td>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($provedores  as $provedores)
-                <tr class="gradeA">
-                  <td>{{$provedores->nombre}} </td>
-                  <td>{{$provedores->telefono}} </td>
-                  <td>{{$provedores->direccion}}</td>
-                  <td>{{$provedores->email}}</td>
-                  <td><center><a class="btn btn-info btn-sm" href="{{URL::action('ProvedorController@verEmpresas',$provedores->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
-          
-                  <td> 
+      <div class="porlets-content">
+        <div class="table-responsive">
+          <table  class="display table table-bordered table-striped" id="dynamic-table">
+            <thead>
+              <tr>
+                <th>Nombre </th>
+                <th>Telefono </th>
+                <th>Direccion </th>
+                <th>Email </th>
+                <th>Cuentas</th>
+                <th>Empresas</th>
+
+                <td><center><b>Editar</b></center></td>
+                <td><center><b>Borrar</b></center></td>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($provedores  as $provedores)
+              <tr class="gradeA">
+                <td>{{$provedores->nombre}} </td>
+                <td>{{$provedores->telefono}} </td>
+                <td>{{$provedores->direccion}}</td>
+                <td>{{$provedores->email}}</td>
+                <td>
+                  <center>
+                    <a href="" class="btn btn-white btn-sm" role="button"><i class="fa fa-money"></i></a> 
+                  </center>
+                </td>
+
+                <td><center><a class="btn btn-info btn-sm" href="{{URL::action('ProvedorController@verEmpresas',$provedores->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
+
+                <td> 
                   <center>
                     <a href="{{URL::action('ProvedorController@edit',$provedores->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
-                    </center>
-                  </td>
-                  <td>
+                  </center>
+                </td>
+                <td>
                   <center>
                    <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$provedores->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a></center>
-                  </td>
-                </td>
-              </tr>
-              @include('Provedores.provedores.modal')
-              @endforeach
-            </tbody>
-            <tfoot>
-              <tr>
-               <th>Nombre </th>
-               <th>Telefono </th>
-               <th>Direccion </th>
-               <th>Email </th>
-               <th>Ver Empresas</th>
-               <th><center><b>Editar</b></center></th>
-               <th><center><b>Borrar</b></center></th>
+                 </td>
+               </td>
              </tr>
-           </tfoot>
-         </table>
-       </div><!--/table-responsive-->
-     </div><!--/porlets-content-->
-   </div><!--/block-web-->
- </div><!--/col-md-12-->
+             @include('Provedores.provedores.modal')
+             @endforeach
+           </tbody>
+           <tfoot>
+            <tr>
+             <th>Nombre </th>
+             <th>Telefono </th>
+             <th>Direccion </th>
+             <th>Email </th>
+             <th>Cuentas</th>
+             <th>Empresas</th>
+             <th><center><b>Editar</b></center></th>
+             <th><center><b>Borrar</b></center></th>
+           </tr>
+         </tfoot>
+       </table>
+     </div><!--/table-responsive-->
+   </div><!--/porlets-content-->
+ </div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 @stop

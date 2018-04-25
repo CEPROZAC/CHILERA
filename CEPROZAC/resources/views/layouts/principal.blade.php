@@ -22,7 +22,6 @@
     {!!Html::style('plugins/advanced-datatable/css/demo_table.css')!!}
     {!!Html::style('plugins/advanced-datatable/css/demo_page.css')!!}
     {!!Html::style('plugins/bootstrap-fileupload/bootstrap-fileupload.min.css')!!}
-    {!!Html::style('plugins/file-uploader/css/blueimp-gallery.min.css')!!}
     {!!Html::style('plugins/file-uploader/css/jquery.fileupload.css')!!}
     {!!Html::style('plugins/file-uploader/css/jquery.fileupload-ui.css')!!}
     {!!Html::style('plugins/bootstrap-datepicker/css/datepicker.css')!!}

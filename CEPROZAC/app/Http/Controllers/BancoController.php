@@ -22,9 +22,9 @@ class BancoController extends Controller
      */
     public function index()
     {
-
         $bancos= DB::table('bancos')->where('estado','Activo')->get();
         return view('Provedores.bancos.index',['bancos' => $bancos]);
+        
     }
 
     /**
