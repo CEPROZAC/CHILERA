@@ -180,11 +180,8 @@
                            <tr>
                              <td colspan="2">{{$rol->rol_Empleado}}</td>
                              <td>
-                              {{$rol->id}}
                               
-
-
-                              <button type="button" id="btn" onclick="myDeleteFunction1(this)" value="{{$rol->id}}" class="btn btn-danger btn-icon"> Quitar<i class="fa fa-times"></i> </button>
+                              <button type="button" id="btn" onclick="myDeleteFunction1(this);myDeleteFunction(this);" value="{{$rol->id}}" class="btn btn-danger btn-icon"> Quitar<i class="fa fa-times"></i> </button>
                             </td>
                           </tr>
                           @endforeach

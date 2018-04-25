@@ -48,7 +48,7 @@
 
         <div class="porlets-content">
           <div  class="form-horizontal row-border" > <!--acomodo-->
-          <form class="" id="myForm" action="{{route('contratos.store')}}" method="post" role="form" enctype="multipart/form-data" parsley-validate novalidate data-toggle="validator">
+            <form class="" id="myForm" action="{{route('contratos.store')}}" method="post" role="form" enctype="multipart/form-data" parsley-validate novalidate data-toggle="validator">
               {{csrf_field()}}
               <div id="smartwizard">
                 <ul>
@@ -95,6 +95,13 @@
                         </div>
 
                         <div class="form-group">
+                          <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
+                          <div class="col-sm-6">
+                            <input type="text" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" >
+                          </div>
+                        </div>
+
+                        <div class="form-group">
                           <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
@@ -137,12 +144,12 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Rol empleado: <strog class="theme_color">*</strog></label>
+                      <label class="col-sm-3 control-label">Empresa contrata: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
                         <select name="rol" class="form-control" required>  
-                          @foreach($roles as $rol)
-                          <option value="{{$rol->id}}">
-                           {{$rol->rol_Empleado}}
+                          @foreach($empresas as $empresa)
+                          <option value="{{$empresa->id}}">
+                           {{$empresa->nombre}}
                          </option>
                          @endforeach              
                        </select>
@@ -150,66 +157,108 @@
                      </div>
                    </div><!--/form-group-->
 
-                   <div class="form-row">    
-                    <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
-                    <div class="col-sm-2">
-                      <div class="input-group">
-                       <div class="input-group-addon">$</div>
-
-
-                       <input name="sueldo_Fijo" maxlength="9" type="number" value="1000.00" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+                   <div class="form-group">
+                     <label class="col-sm-3 control-label">Tiempo contrato: <strog class="theme_color">*</strog></label>
+                     <div class="col-sm-3">
+                       <input parsley-type="number" type="text" maxlength="12" required parsley-range="[1,100]" name="tiempoNumero"   class="form-control mask"  placeholder="28" onkeypress=" return soloNumeros(event);">
                      </div>
+                     <div class="col-sm-3">
+                       <select name="tiempoUnidad" class="form-control" required>  
+                        <option value="DIAS">
+                          DIAS 
+                        </option>
+                        <option value="MESES">
+                         MESES
+                       </option>
+                       <option value="AÑOS">
+                         AÑOS
+                       </option>
+
+                     </select>
+                     <div class="help-block with-errors"></div>
+                   </div>
+                 </div><!--/form-group-->
+
+                 <div class="form-group">
+                   <label class="col-sm-3 control-label">HORAS DE DESCANSO: </label>
+                   <div class="col-sm-2">
+                     <input type="text" class="form-control mask" placeholder="34" onkeypress=" return soloNumeros(event);">
+                   </div>
+                   <div class="col-sm-3 left-align">
+                     <p class="help-block">HORAS</p>
                    </div>
                  </div>
 
-
-               </div><!--validator-->
-             </div><!--user-profile-content-->
-           </div><!--step-2-->
-
-           <div id="step-3" class="">
-            <div class="user-profile-content">
-              <div id="form-step-2" role="form" data-toggle="validator">
-                <h3 class="h3titulo">Datos de Contrato</h3>
-
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
-                  <div class="col-sm-6">
-
-                   <input name="fechaInicio" type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
+                 <div class="form-group">
+                  <label class="col-sm-3 control-label">HORAS DE ALIMENTACION: </label>
+                  <div class="col-sm-2">
+                   <input type="text" class="form-control mask" placeholder="34" onkeypress=" return soloNumeros(event);">
                  </div>
-               </div>
+                 <div class="col-sm-3 left-align">
+                  <p class="help-block">HORAS</p>
+                </div>
+              </div>
 
-               <div class="form-group">
-                <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
-                <div class="col-sm-6">
+              <div class="form-row">    
+                <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
+                <div class="col-sm-3">
+                  <div class="input-group">
+                   <div class="input-group-addon">$</div>
 
-                 <input name="fechaFin" type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
+
+                   <input name="sueldo_Fijo" required parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
+                 </div>
                </div>
              </div>
 
-             <div class="form-group">
-              <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
 
-                <input name="duracionContrato" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre de el Empleado"/>
-              </div>
-            </div>
+           </div><!--validator-->
+         </div><!--user-profile-content-->
+       </div><!--step-2-->
+
+       <div id="step-3" class="">
+        <div class="user-profile-content">
+          <div id="form-step-2" role="form" data-toggle="validator">
+            <h3 class="h3titulo">Datos de Contrato</h3>
+
 
             <div class="form-group">
-              <div class="col-sm-offset-7 col-sm-5">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="/contratos" class="btn btn-default"> Cancelar</a>
-              </div>
-            </div><!--/form-group-->                        
+              <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
 
-          </div><!--validator-->
-        </div><!--user-profile-content-->
-      </div><!--step-3-->
+               <input name="fechaInicio" type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
+             </div>
+           </div>
 
-    </div>
-  </div>  <!--smartwizard-->            
+           <div class="form-group">
+            <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+             <input name="fechaFin" type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
+           </div>
+         </div>
+
+         <div class="form-group">
+          <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+
+            <input name="duracionContrato" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre de el Empleado"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-7 col-sm-5">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/contratos" class="btn btn-default"> Cancelar</a>
+          </div>
+        </div><!--/form-group-->                        
+
+      </div><!--validator-->
+    </div><!--user-profile-content-->
+  </div><!--step-3-->
+
+</div>
+</div>  <!--smartwizard-->            
 </form>
 </div><!--/form-horizontal-->
 </div><!--/porlets-content-->
