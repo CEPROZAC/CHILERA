@@ -154,7 +154,11 @@
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
-                <li> <a href="{{url('almacen/salidas/material')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
+                <li> <a href="{{url('almacen/salidas/material')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
+                 <li> <a href="{{url('almacen/entradas/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Entradas de Almacén de Materiales</b> </a> </li>
+
+                  <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Agroquímicos</b> </a> </li>
+
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Basculas <span class="plus"><i class="fa fa-plus"></i></span></a>

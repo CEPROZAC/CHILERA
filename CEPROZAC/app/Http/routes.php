@@ -98,3 +98,10 @@ Route::resource('almacen/salidas/material','SalidaAlmacenMaterialController');
 Route::get('descargar-salidas', 'SalidaAlmacenMaterialController@excel')->name('almacen.materiales.salidas.excel');
 
 Route::get('descargar-transportes', 'TransporteController@excel')->name('transportes.excel');
+
+Route::resource('almacen/entradas/materiales','EntradaAlmacenController');	
+Route::get('descargar-entradas', 'EntradaAlmacenController@excel')->name('almacen.materiales.entradas.excel');
+
+//Route::get('pdfmaterial', 'AlmacenMaterialController@invoice')->name('almacen.materiales.salidas.invoice');
+//Route::get('pdfmaterial/{$id}/invoice','AlmacenMaterialController@invoice');
+Route::get('pdfmaterial/{id}', array('as'=> '/pdfmaterial','uses'=>'AlmacenMaterialController@invoice'));
