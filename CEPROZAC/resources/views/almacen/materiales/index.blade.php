@@ -27,13 +27,13 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/materiales/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar </a>
+                    <a class="btn btn-sm btn-success tooltips" href="/almacen/materiales/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Material </a>
 
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.materiales.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén </a>
+                    <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i>Salidas de Almacén </a>
 
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/entradas/materiales/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
+                    <a class="btn btn-sm btn-success tooltips" href="/almacen/entradas/materiales" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i>Entradas de Almacén </a>
 
                     <a class="btn btn-sm btn-success tooltips" href="/materiales/provedores" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor de Materiales"> <i class="fa fa-plus"></i> Proveedores de Materiales</a>
 

@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
-use CEPROZAC\AlmacenAgroquimicos;
-use CEPROZAC\Http\Requests\AlmacenAgroquimicosRequest;
+use CEPROZAC\AlmacenLimpieza;
+use CEPROZAC\Http\Requests\AlmacenLimpiezaRequest;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\EntradasAgroquimicos;
+use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
 
 use DB;
@@ -20,8 +20,7 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
-
-class AlmacenAgroquimicosController extends Controller
+class AlmacenLimpiezaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,15 +29,16 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function index()
     {
-           $material = DB::table('AlmacenAgroquimicos')
-        ->join('provedor_materiales as p', 'AlmacenAgroquimicos.provedor', '=', 'p.id')
-        ->select('AlmacenAgroquimicos.*','p.nombre as provedor')
-        ->where('AlmacenAgroquimicos.estado','Activo')->get();
+          $material = DB::table('AlmacenLimpieza')
+        ->join('provedor_materiales as p', 'AlmacenLimpieza.provedor', '=', 'p.id')
+        ->select('AlmacenLimpieza.*','p.nombre as provedor')
+        ->where('AlmacenLimpieza.estado','Activo')->get();
             $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
          $empleado = DB::table('empleados')->where('estado','Activo')->get();
-      return view('almacen.agroquimicos.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado]);
+      return view('almacen.limpieza.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado]);
 
-  }
+        
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -47,11 +47,10 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function create()
     {
-            $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
-         return view('almacen.agroquimicos.create',['provedor' => $provedor]);
-
+          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+    return view('almacen.limpieza.create',['provedor' => $provedor]);
         //
-   }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -59,9 +58,9 @@ class AlmacenAgroquimicosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AlmacenAgroquimicosRequest $formulario)
+    public function store(AlmacenLimpiezaRequest $formulario)
     {
-      $validator = Validator::make(
+        $validator = Validator::make(
         $formulario->all(), 
         $formulario->rules(),
         $formulario->messages());
@@ -71,12 +70,12 @@ class AlmacenAgroquimicosController extends Controller
             return response()->json(["valid" => true], 200);
         }
         else{
-            $material= new AlmacenAgroquimicos;
+            $material= new AlmacenLimpieza;
             $material->nombre=$formulario->get('nombre');
             
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
-            $file->move(public_path().'/imagenes/almacenagroquimicos',$file->getClientOriginalName());//lo movemos a esta ruta                        
+            $file->move(public_path().'/imagenes/AlmacenLimpieza',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
         }
         $material->descripcion=$formulario->get('descripcion');
@@ -88,10 +87,10 @@ class AlmacenAgroquimicosController extends Controller
 
 
        $material->save();
-        $material= DB::table('almacenagroquimicos')->orderby('created_at','DESC')->take(1)->get();
+        $material= DB::table('AlmacenLimpieza')->orderby('created_at','DESC')->take(1)->get();
         $date = date('Y-m-d');
         $invoice = "2222";
-        $view =  \View::make('almacen.agroquimicos.invoice', compact('date', 'invoice','material'))->render();
+        $view =  \View::make('almacen.limpieza.invoice', compact('date', 'invoice','material'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('invoice');
@@ -100,16 +99,15 @@ class AlmacenAgroquimicosController extends Controller
 
     }
   }        //
-        //
-}
+    }
 
-       public function invoice($id){ 
-        $material= DB::table('almacenagroquimicos')->where('id',$id)->get();
+  public function invoice($id){ 
+        $material= DB::table('AlmacenLimpieza')->where('id',$id)->get();
          //$material   = AlmacenMaterial:: findOrFail($id);
         $date = date('Y-m-d');
         $invoice = "2222";
        // print_r($materiales);    
-        $view =  \View::make('almacen.agroquimicos.invoice', compact('date', 'invoice','material'))->render();
+        $view =  \View::make('almacen.limpieza.invoice', compact('date', 'invoice','material'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
        return $pdf->stream('invoice');
@@ -135,7 +133,7 @@ class AlmacenAgroquimicosController extends Controller
     public function edit($id)
     {
          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
-        return view("almacen.agroquimicos.edit",["material"=>AlmacenAgroquimicos::findOrFail($id)],['provedor' => $provedor]);
+        return view("almacen.limpieza.edit",["material"=>AlmacenLimpieza::findOrFail($id)],['provedor' => $provedor]);
         //
     }
 
@@ -148,12 +146,12 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $material=AlmacenAgroquimicos::findOrFail($id);
+               $material=AlmacenLimpieza::findOrFail($id);
        $material->nombre=$request->get('nombre');
        
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
-            $file->move(public_path().'/imagenes/almacenagroquimicos',$file->getClientOriginalName());//lo movemos a esta ruta
+            $file->move(public_path().'/imagenes/AlmacenLimpieza',$file->getClientOriginalName());//lo movemos a esta ruta
             $material->imagen=$file->getClientOriginalName();           
         }   
         $material->descripcion=$request->get('descripcion');
@@ -163,24 +161,10 @@ class AlmacenAgroquimicosController extends Controller
         $material->provedor=$request->get('provedor_name');
        $material->estado='Activo';
        $material->update();
-       return Redirect::to('almacenes/agroquimicos');
+       return Redirect::to('almacenes/limpieza');
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-      $material=AlmacenAgroquimicos::findOrFail($id);
-      $material->estado='Inactivo';
-      $material->save();
-      return Redirect::to('almacenes/agroquimicos');
-        //
-  }
 
   public function excel()
   {        
@@ -188,12 +172,12 @@ class AlmacenAgroquimicosController extends Controller
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('AlmacenAgroquimicos', function($excel) {
+        Excel::create('AlmacenLimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $material = AlmacenAgroquimicos::join('provedor_materiales','provedor_materiales.id', '=', 'almacenagroquimicos.provedor')
-                 ->select('almacenagroquimicos.id','almacenagroquimicos.nombre','provedor_materiales.nombre as nom','almacenagroquimicos.descripcion','almacenagroquimicos.cantidad','almacenagroquimicos.medida')
-                ->where('almacenagroquimicos.estado', 'Activo')
+            $material = AlmacenLimpieza::join('provedor_materiales','provedor_materiales.id', '=', 'AlmacenLimpieza.provedor')
+                 ->select('AlmacenLimpieza.id','AlmacenLimpieza.nombre','provedor_materiales.nombre as nom','AlmacenLimpieza.descripcion','AlmacenLimpieza.cantidad','AlmacenLimpieza.medida')
+                ->where('AlmacenLimpieza.estado', 'Activo')
                 ->get();          
             $sheet->fromArray($material);
             $sheet->row(1,['ID','Nombre','Proveedor','Descripción' ,'Cantidad','Medida']);
@@ -212,15 +196,32 @@ class AlmacenAgroquimicosController extends Controller
       })->export('xls');
     }
 
-    public function stock(Request $request, $id)
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
+              $material=AlmacenLimpieza::findOrFail($id);
+      $material->estado='Inactivo';
+      $material->save();
+      return Redirect::to('almacenes/limpieza');
+        //
+    }
+
+        public function stock(Request $request, $id)
+    {
+        
           $ex = $request->get('provedor_id2');
  $materiales = DB::table('provedor_materiales')
         ->select('provedor_materiales.nombre')
         ->where('provedor_materiales.id',$ex)->get();
         $provedornombre = $materiales[0]->nombre;
    
-        $material2= new EntradasAgroquimicos;
+        $material2= new EntradasAlmacenLimpieza;
        $material2->id_material=$id;
        $material2->cantidad=$request->get('cantidades');
         $material2->provedor=$provedornombre;
@@ -231,8 +232,9 @@ class AlmacenAgroquimicosController extends Controller
          $material2->total= $material2->p_unitario *  $material2->cantidad;
           $material2->importe= $material2->p_unitario *  $material2->cantidad;
           $material2->save();
-           return Redirect::to('almacenes/agroquimicos');
-   }
-        //
- }
+           return Redirect::to('almacenes/limpieza');
+   
+   
 
+}
+}
