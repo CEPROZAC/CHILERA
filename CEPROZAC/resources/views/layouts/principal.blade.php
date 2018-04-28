@@ -155,12 +155,12 @@
               <ul>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
                 <li> <a href="{{url('almacen/salidas/material')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
-                 <li> <a href="{{url('almacen/entradas/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Entradas de Almacén de Materiales</b> </a> </li>
+                <li> <a href="{{url('almacen/entradas/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Entradas de Almacén de Materiales</b> </a> </li>
 
-                  <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Agroquímicos</b> </a> </li>
+                <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Agroquímicos</b> </a> </li>
 
                 <li> <a href="{{url('almacen/salidas/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Salidas de Almacén de Agroquímicos</b> </a> </li>
-                 <li> <a href="{{url('almacen/entradas/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Entradas de Almacén de Agroquímicos</b> </a> </li>
+                <li> <a href="{{url('almacen/entradas/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Entradas de Almacén de Agroquímicos</b> </a> </li>
 
               </ul>
             </li>
@@ -190,6 +190,7 @@
 
   {!!Html::script('js/jquery-2.1.0.js')!!}
   {!!Html::script('js/script.js')!!}
+  {!!Html::script('js/moment.min.js')!!}
   {!!Html::script('js/jquery-2.1.0.js')!!}
   {!!Html::script('js/bootstrap.min.js')!!}
   {!!Html::script('js/common-script.js')!!}
