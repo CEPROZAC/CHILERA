@@ -16,9 +16,13 @@ class CreateContratosTable extends Migration
             $table->increments('id');
             $table->integer('idEmpleado')->unsigned();
             $table->foreign('idEmpleado')->references('id')->on('empleados');
+            $table->integer('idEmpresa')->unsigned();
+            $table->foreign('idEmpresa')->references('id')->on('empresas_ceprozac');
             $table->string('fechaInicio');
             $table->string('fechaFin');
             $table->integer('duracionContrato');
+            $table->integer('horas_Descanso');
+            $table->integer('horas_Alimentacion');
             $table->string('estado');
             $table->timestamps();
         });

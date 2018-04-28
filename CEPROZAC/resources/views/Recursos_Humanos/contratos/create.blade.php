@@ -55,6 +55,7 @@
                   <li><a href="#step-1">Informacion Personal</a></li>
                   <li><a href="#step-2">Informacion Laboral</a></li>
                   <li><a href="#step-3">Datos de Contrato</a></li>
+                  <li><a href="#step-4">Roles de trabajador</a></li>
                 </ul>
                 <div>
                   <div id="step-1" class="">
@@ -97,7 +98,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
-                            <input type="text" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" >
+                            <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" >
                           </div>
                         </div>
 
@@ -105,7 +106,7 @@
                           <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                            <input name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
+                            <input name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente" />
 
                           </div>
                         </div>
@@ -146,7 +147,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Empresa contrata: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="rol" class="form-control" required>  
+                        <select name="idEmpresa" class="form-control" required>  
                           @foreach($empresas as $empresa)
                           <option value="{{$empresa->id}}">
                            {{$empresa->nombre}}
@@ -182,7 +183,7 @@
                  <div class="form-group">
                    <label class="col-sm-3 control-label">HORAS DE DESCANSO: </label>
                    <div class="col-sm-2">
-                     <input type="text" class="form-control mask" placeholder="34" onkeypress=" return soloNumeros(event);">
+                     <input type="text" class="form-control mask" required placeholder="34" onkeypress=" return soloNumeros(event);">
                    </div>
                    <div class="col-sm-3 left-align">
                      <p class="help-block">HORAS</p>
@@ -192,68 +193,105 @@
                  <div class="form-group">
                   <label class="col-sm-3 control-label">HORAS DE ALIMENTACION: </label>
                   <div class="col-sm-2">
-                   <input type="text" class="form-control mask" placeholder="34" onkeypress=" return soloNumeros(event);">
+                    <input type="text" class="form-control mask" required placeholder="34" onkeypress=" return soloNumeros(event);">
+                  </div>
+                  <div class="col-sm-3 left-align">
+                    <p class="help-block">HORAS</p>
+                  </div>
+                </div>
+
+                <div class="form-row">    
+                  <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
+                  <div class="col-sm-3">
+                    <div class="input-group">
+                     <div class="input-group-addon">$</div>
+
+
+                     <input name="sueldo_Fijo" required parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
+                   </div>
                  </div>
-                 <div class="col-sm-3 left-align">
-                  <p class="help-block">HORAS</p>
+               </div>
+
+
+             </div><!--validator-->
+           </div><!--user-profile-content-->
+         </div><!--step-2-->
+
+         <div id="step-3" class="">
+          <div class="user-profile-content">
+            <div id="form-step-2" role="form" data-toggle="validator">
+              <h3 class="h3titulo">Datos de Contrato</h3>
+
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
+                <div class="col-sm-6">
+
+                  <input name="fechaInicio"  id="fechaInicio"   type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
                 </div>
               </div>
 
-              <div class="form-row">    
-                <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
-                <div class="col-sm-3">
-                  <div class="input-group">
-                   <div class="input-group-addon">$</div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
+                <div class="col-sm-6">
 
+                  <input name="fechaFin" id="fechaFin"    type="text" onblur="calcularTiempo();" required class="form-control mask" data-inputmask="'alias': 'date'">
+                </div>
+              </div>
+              <input type="hidden" name="duracionContrato" id="duracionContrato" />    
 
-                   <input name="sueldo_Fijo" required parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
-                 </div>
-               </div>
+            </div><!--validator-->
+          </div><!--user-profile-content-->
+        </div><!--step-3-->
+
+        <div id="step-4" class="">
+          <div class="user-profile-content">
+            <div id="form-step-3" role="form" >
+              <h3 class="h3titulo">Roles de empleados</h3>
+              <br>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th> 
+                        Rol
+                      </th> 
+                      <th>Agregar Rol</th>
+                      <th>Quitar Rol</th>
+                    </tr>
+                  </thead>
+                  <tbody id="myTable">
+                    <tr>
+                      <td>
+                        <div class="col-sm-8">
+                          <select   id="rol" class="form-control" required>  
+                            @foreach($roles as $rol)
+                            <option  label="{{$rol->rol_Empleado}}" value="{{$rol->id}}">
+
+                             {{$rol->rol_Empleado}} 
+                           </option>
+
+                           @endforeach              
+                         </select>
+                       </div>
+                     </td>
+                     <input type="hidden" name="_token" id="idEmpleado">
+                     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                     <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                   </tr>
+                 </tbody>
+               </table>
              </div>
-
-
-           </div><!--validator-->
-         </div><!--user-profile-content-->
-       </div><!--step-2-->
-
-       <div id="step-3" class="">
-        <div class="user-profile-content">
-          <div id="form-step-2" role="form" data-toggle="validator">
-            <h3 class="h3titulo">Datos de Contrato</h3>
-
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="fechaInicio"  id="fechaInicio"   type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="fechaFin" id="fechaFin"    type="text" onblur="calcularTiempo();" required class="form-control mask" data-inputmask="'alias': 'date'">
-              </div>
-            </div>
-
-
-
-
-            <input type="hidden" name="duracionContrato" id="duracionContrato" />
-
-
-            <div class="form-group">
+             <div class="form-group">
               <div class="col-sm-offset-7 col-sm-5">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="/contratos" class="btn btn-default"> Cancelar</a>
+                <a href="/empleados" class="btn btn-default"> Cancelar</a>
               </div>
-            </div><!--/form-group-->                        
+            </div><!--/form-group--> 
 
           </div><!--validator-->
         </div><!--user-profile-content-->
-      </div><!--step-3-->
+      </div><!--step-2-->
 
     </div>
   </div>  <!--smartwizard-->            
@@ -268,38 +306,23 @@
 <!-- Include jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-
-
-</script>
 
 <script type="text/javascript">
 
-  function habilitados(){
-   document.getElementById("fechaFin").disabled = true;
- }
 
- function habilitar(){
-   var fecha1 =document.getElementById('fechaFin').value;
-   if(fecha1==""){
-    $("#fechaFin").prop("disabled", false);
-  } else {
-    $("#fechaFin").prop("disabled", true);
-  }
-}
-function calcularTiempo(){
-  var fecha1 =document.getElementById('fechaInicio').value;
-  var fecha2= document.getElementById('fechaFin').value;
-  var ano1 = fecha1.substring(0, 2);
-  var mes1 = fecha1.substring(3, 5);
-  var dia1 = fecha1.substring(6, 10);
-  fech1 =ano1+"-"+mes1+"-"+dia1;
-  var ano2 = fecha2.substring(0, 2);
-  var mes2 = fecha2.substring(3, 5);
-  var dia2 = fecha2.substring(6, 10);
-  fech2 =ano2+"-"+mes2+"-"+dia2;
-  fecha1m=moment(fech1);
-  fecha2m=moment(fech2);
+  function calcularTiempo(){
+    var fecha1 =document.getElementById('fechaInicio').value;
+    var fecha2= document.getElementById('fechaFin').value;
+    var ano1 = fecha1.substring(0, 2);
+    var mes1 = fecha1.substring(3, 5);
+    var dia1 = fecha1.substring(6, 10);
+    fech1 =ano1+"-"+mes1+"-"+dia1;
+    var ano2 = fecha2.substring(0, 2);
+    var mes2 = fecha2.substring(3, 5);
+    var dia2 = fecha2.substring(6, 10);
+    fech2 =ano2+"-"+mes2+"-"+dia2;
+    fecha1m=moment(fech1);
+    fecha2m=moment(fech2);
       var diff = fecha2m.diff(fecha1m, 'd'); // Diff in days
       document.getElementById("duracionContrato").value = diff;
 

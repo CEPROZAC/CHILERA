@@ -73,10 +73,11 @@ function myCreateFunction() {
   var select = document.getElementById("rol");
   var options=document.getElementsByTagName("option");
   var idRol= select.value;
-  var nombreRol= options[select.value-1].innerHTML;
+  var x = select.options[select.selectedIndex].text;
 
 
-  var fila="<tr><td style=\"display:none;\"><input name=\"idRol[]\" value=\""+idRol+"\"></td><td colspan=\"2\">"+nombreRol+"</td>"+""+"<td>"+
+
+  var fila="<tr><td style=\"display:none;\"><input name=\"idRol[]\" value=\""+idRol+"\"></td><td colspan=\"2\">"+x+"</td>"+""+"<td>"+
   " <button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\"> Quitar<i class=\"fa fa-times\"></i> </button>"
   +"</td>";
   var btn = document.createElement("TR");

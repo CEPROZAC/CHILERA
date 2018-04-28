@@ -80,6 +80,7 @@ class EmpleadoController extends Controller
      $empleado->telefono=$request->get('telefono');
      $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
      $empleado->estado='Activo';
+     $empleado->tipo='NORMAL';
      substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
      $empleado->save();
      $idEmpleado=$empleado->id;
