@@ -58,9 +58,6 @@
                   <th style="display:none;">sueldo</th>
                   <th>Ver &nbsp; &nbsp;</th>
                   
-
-                  
-                  <td><center><b>Roles</b></center></td>
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>
                 </tr>
@@ -83,9 +80,7 @@
                   <td >
                     <a href="{{URL::action('EmpleadoController@verInformacion',$empleados->id)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
                   </td>
-                  <td>
-                    <a data-target="#modal-roles-{{$empleados->id}}" data-toggle="modal" class="btn btn-warning btn-sm" role="button"><i class="fa fa-group "></i></a>
-                  </td>
+                  
                   <td>   <a href="{{URL::action('EmpleadoController@edit',$empleados->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
                   </td> 
                 </td>
@@ -112,7 +107,7 @@
 
 
                <th >Ver &nbsp; &nbsp;</th>
-               <th><center><b>Roles</b></center></th>
+               
 
                <td><center><b>Editar</b></center></td>
                <td><center><b>Borrar</b></center></td> 

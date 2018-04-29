@@ -57,6 +57,8 @@ Route::get('cuentasEmpresasCEPROZAC1/{id}','CuentasEmpresasCEPROZACController@cr
 
 Route::get('ver-InformacionEmpleado/{id}', 'EmpleadoController@verInformacion')->name('empleados.verInformacion');
 
+Route::get('ver-InformacionContrato/{id}', 'ContratosController@verInformacion')->name('contratos.verInformacion');
+
 Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
 
 

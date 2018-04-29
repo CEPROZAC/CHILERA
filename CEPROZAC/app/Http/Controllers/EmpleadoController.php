@@ -24,6 +24,7 @@ class EmpleadoController extends Controller
     {
       $empleados= DB::table('empleados')
       ->select('empleados.*')
+      ->where('empleados.tipo','=','NORMAL')
       ->where('empleados.estado','Activo')->get();
       return view('Recursos_Humanos.empleados.index', ['empleados' => $empleados]);
 

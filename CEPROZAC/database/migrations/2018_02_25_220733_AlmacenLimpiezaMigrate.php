@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
-class AlmacenAgroquimicos extends Migration
+class AlmacenLimpiezaMigrate extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +10,7 @@ class AlmacenAgroquimicos extends Migration
      */
     public function up()
     {
-        Schema::create('almacenagroquimicos', function (Blueprint $table) {
+        Schema::create('almacenlimpieza', function (Blueprint $table) {
          $table->increments('id');
          $table->string('nombre');
          $table->string('provedor')->nullable();
@@ -25,7 +23,6 @@ class AlmacenAgroquimicos extends Migration
          $table->timestamps();
      });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -33,6 +30,6 @@ class AlmacenAgroquimicos extends Migration
      */
     public function down()
     {
-        Schema::drop('AlmacenAgroquimicos');
+        Schema::drop('AlmacenLimpieza');
     }
 }

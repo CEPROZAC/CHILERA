@@ -41,7 +41,7 @@
 
         <div class="porlets-content">
          <div class="table-responsive">
-           <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info4">
+           <table class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
               <tr>
                 <th  >Nombre Completo</th>
@@ -51,12 +51,13 @@
                 <th style="display:none;">NSS</th>
                 <th style="display:none;">Fecha_Nacimiento</th>
                 <th >CURP</th>
-                <th style="display:none;">email</th>
+                <th >Correo</th>
                 <th >Telefono</th>
                 <th style="display:none;">sexo</th>
                 <th style="display:none;">sueldo</th>
+                <th style="display:none;">Duracion</th>
+                <th >Ver</th>
 
-                <th >Rol</th>
 
                 <td><center><b>Editar</b></center></td>
                 <td><center><b>Borrar</b></center></td>
@@ -64,42 +65,54 @@
             </thead>
             <tbody>
              @foreach($contratos  as $contrato)
+             
              <tr class="gradeX">
-             <td >{{$contrato->nombre}} {{$contrato->apellidos}} </td>
 
-             <td style="display:none;" >{{$contrato->fecha_Ingreso}}</td>
-             <td style="display:none;" >{{$contrato->fecha_Alta_Seguro}}</td>
-             <td style="display:none;">{{$contrato->numero_Seguro_Social}}</td>
-             <td style="display:none;">{{$contrato->fecha_Nacimiento}}</td>
-             <td >{{$contrato->curp}}</td>
-             <td style="display:none;" >{{$contrato->email}}</td>
-             <td >{{$contrato->telefono}}</td>
-             <td >{{$contrato->rol}}</td>
-             <td style="display:none;" >{{$contrato->sueldo_Fijo}}</td>
-             <td style="display:none;"   >{{$contrato->sexo}}</td>
-             <td>  <a href="{{URL::action('ContratosController@edit',$contrato->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
-              </td> 
-            </td>
-            <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-            </td>
-          </tr>
-          @include('Recursos_Humanos.contratos.modal')
-          @endforeach
-        </tbody>
-        <tfoot>
+
+               <td >{{$contrato->nombre}} {{$contrato->apellidos}} </td>
+
+               <td style="display:none;" >{{$contrato->fecha_Ingreso}}</td>
+               <td style="display:none;" >{{$contrato->fecha_Alta_Seguro}}</td>
+               <td style="display:none;">{{$contrato->numero_Seguro_Social}}</td>
+               <td style="display:none;">{{$contrato->fecha_Nacimiento}}</td>
+               <td >{{$contrato->curp}}</td>
+               <td  >{{$contrato->email}}</td>
+               <td >{{$contrato->telefono}}</td>
+
+               <td style="display:none;" >{{$contrato->sueldo_Fijo}}</td>
+               <td style="display:none;"   >{{$contrato->sexo}}</td>
+               <td style="display:none;">{{floor($contrato->duracionContrato/30)}} {{$contrato->duracionContrato%30}}</td>
+               <td >
+
+                 <center>
+                   <a href="{{URL::action('ContratosController@verInformacion',$contrato->idContrato)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
+                 </center>
+               </td>
+
+               <td>  <a href="{{URL::action('ContratosController@edit',$contrato->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
+               </td> 
+             </td>
+             <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+             </td>
+           </tr>
+           @include('Recursos_Humanos.contratos.modal')
+           @endforeach
+         </tbody>
+         <tfoot>
           <tr>
-            <th></th> 
+
             <th >Nombre Completo</th>
             <th style="display:none;">fecha_Ingreso</th>
             <th style="display:none;">Fecha Alta</th>
             <th style="display:none;">NSS</th>
             <th style="display:none;">Fecha Nacimiento </th>
             <th >CURP </th>
-            <th style="display:none;"> email </th>
+            <th > email </th>
             <th >Telefono </th>
             <th style="display:none;">sexo </th>
             <th style="display:none;">suedlo fijo </th>
-            <th >Rol </th>
+            <th style="display:none;" >Duracion</th>
+            <th >Ver</th>
             <td><center><b>Editar</b></center></td>
             <td><center><b>Borrar</b></center></td> 
 

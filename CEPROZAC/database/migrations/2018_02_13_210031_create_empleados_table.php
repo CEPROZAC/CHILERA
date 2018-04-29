@@ -25,6 +25,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('telefono');
             $table->string('sexo');
             $table->double('sueldo_Fijo');
+            $table->string('tipo');
             $table->string('estado');
 
             $table->timestamps();
