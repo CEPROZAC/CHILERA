@@ -33,12 +33,12 @@ class SalidaAlmacenMaterialController extends Controller
      */
     public function index(Request $request)
     {
-     
-       $salida= DB::table('salidasalmacenmaterial')
-       ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
-       ->select('salidasalmacenmaterial.*','s.nombre')->get();
+       
+     $salida= DB::table('salidasalmacenmaterial')
+     ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+     ->select('salidasalmacenmaterial.*','s.nombre')->get();
         // print_r($salida);
-       return view('almacen.materiales.salidas.index', ['salida' => $salida]);
+     return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
 
 
@@ -47,7 +47,7 @@ class SalidaAlmacenMaterialController extends Controller
 
 
         //
-   }
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -70,11 +70,11 @@ class SalidaAlmacenMaterialController extends Controller
       }else if (empty($empleado)) {
 
       }else{
-       return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]);
-   }
+         return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]);
+     }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
-}
+ }
 
     /**
      * Store a newly created resource in storage.

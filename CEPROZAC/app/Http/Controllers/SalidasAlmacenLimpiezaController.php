@@ -27,11 +27,11 @@ class SalidasAlmacenLimpiezaController extends Controller
      */
     public function index()
     {
-                $salida= DB::table('SalidasAlmacenLimpieza')
-       ->join('almacenlimpieza as s', 'SalidasAlmacenLimpieza.id_material', '=', 's.id')
-       ->select('SalidasAlmacenLimpieza.*','s.nombre','SalidasAlmacenLimpieza.*','s.medida')->get();
+        $salida= DB::table('SalidasAlmacenLimpieza')
+        ->join('almacenlimpieza as s', 'SalidasAlmacenLimpieza.id_material', '=', 's.id')
+        ->select('SalidasAlmacenLimpieza.*','s.nombre','SalidasAlmacenLimpieza.*','s.medida')->get();
         // print_r($salida);
-       return view('almacen.limpieza.salidas.index', ['salida' => $salida]);
+        return view('almacen.limpieza.salidas.index', ['salida' => $salida]);
 
         //
     }
@@ -57,11 +57,11 @@ class SalidasAlmacenLimpiezaController extends Controller
       }else if (empty($empleado)) {
 
       }else{
-       return view("almacen.limpieza.salidas.create",["material"=>$material],["empleado"=>$empleado]);
-   }
+         return view("almacen.limpieza.salidas.create",["material"=>$material],["empleado"=>$empleado]);
+     }
 
         //
-    }
+ }
 
     /**
      * Store a newly created resource in storage.
@@ -71,46 +71,46 @@ class SalidasAlmacenLimpiezaController extends Controller
      */
     public function store(Request $request)
     {
-               $num = 1;
-        $y = 0;
-        $limite = $request->get('total');
+     $num = 1;
+     $y = 0;
+     $limite = $request->get('total');
    //print_r($limite);
 
-        while ($num <= $limite) {
-            $material= new SalidasAlmacenLimpieza;
+     while ($num <= $limite) {
+        $material= new SalidasAlmacenLimpieza;
             //print_r($num);
-            $producto = $request->get('codigo2');
-            $first = head($producto);
-            $name = explode(",",$first);
+        $producto = $request->get('codigo2');
+        $first = head($producto);
+        $name = explode(",",$first);
             //$first = $name[0];
              //$first = $name[1];
-            
-            $material->id_material=$first = $name[$y];
-            $y = $y + 2;
-            $material->cantidad=$first = $name[$y];
-            $y = $y + 1;
+        
+        $material->id_material=$first = $name[$y];
+        $y = $y + 2;
+        $material->cantidad=$first = $name[$y];
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->destino=$first = $name[$y];
-            $y = $y + 1;
+        $material->destino=$first = $name[$y];
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->entrego=$first = $name[$y];
-            $y = $y + 1;
+        $material->entrego=$first = $name[$y];
+        $y = $y + 1;
              //print_r($first = $name[$y]);
-            $material->recibio=$first = $name[$y];
-            $y = $y + 1;
+        $material->recibio=$first = $name[$y];
+        $y = $y + 1;
              //print_r($first = $name[$y]);
-            $material->tipo_movimiento=$first = $name[$y];
-            $y = $y + 1;
+        $material->tipo_movimiento=$first = $name[$y];
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->fecha=$first = $name[$y];
-            $y = $y + 1;
-            $material->save();
-            $num = $num + 1;
-            
-        }
-        return redirect('almacen/salidas/limpieza');
-        //
+        $material->fecha=$first = $name[$y];
+        $y = $y + 1;
+        $material->save();
+        $num = $num + 1;
+        
     }
+    return redirect('almacen/salidas/limpieza');
+        //
+}
 
     /**
      * Display the specified resource.
@@ -157,7 +157,7 @@ class SalidasAlmacenLimpiezaController extends Controller
         //
     }
 
-      public function excel()
+    public function excel()
     {        
         /**
          * toma en cuenta que para ver los mismos 
