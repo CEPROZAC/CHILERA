@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlmacenAgroquimicosMigration extends Migration
+class CreateEmpresasCeprozacTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,21 @@ class AlmacenAgroquimicosMigration extends Migration
      */
     public function up()
     {
-        Schema::create('AlmacenAgroquimicos', function (Blueprint $table) {
+        Schema::create('empresas_ceprozac', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('codigo')->nullable();
-            $table->string('imagen')->nullable();
-            $table->string('descripcion')->nullable();
-            $table->integer('cantidad');
-             $table->string('medida');
+            $table->string('representanteLegal');
+            $table->string('telefono');
+            $table->string('rfc');
+            $table->string('direcionFisica');
+            $table->string('direcionFacturacion');
+            $table->string('email');
+            $table->string('regimenFiscal');
             $table->string('estado');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -32,6 +35,6 @@ class AlmacenAgroquimicosMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('AlmacenAgroquimicos');
+        Schema::drop('empresas_ceprozac');
     }
 }

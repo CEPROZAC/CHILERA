@@ -41,6 +41,20 @@
                 <input name="nombre" type="text" value="{{$material->nombre}}" onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
               </div>
             </div>
+
+                          <div class="form-group">
+            <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="provedor_name" class="form-control" value="{{Input::old('provedor_name')}}" required>  
+                @foreach($provedor as $provedores)
+                <option value="{{$provedores->id}}">
+                 {{$provedores->nombre}}
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
           
 
 

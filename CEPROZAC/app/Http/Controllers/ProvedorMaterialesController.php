@@ -30,7 +30,7 @@ class ProvedorMaterialesController extends Controller
       return view('Provedores.materiales.index', ['provedores' => $provedores]);
 
         //
-  }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -41,7 +41,7 @@ class ProvedorMaterialesController extends Controller
     {
       return view('Provedores.materiales.create');
         //
-  }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,30 +52,30 @@ class ProvedorMaterialesController extends Controller
 
 
     public function validar(ProvedorMaterialesRequest $formulario ){
-        $validator = Validator::make(
-            $formulario->all(), 
-            $formulario->rules(),
-            $formulario->messages());
-        if ($validator->valid()){
+      $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages());
+      if ($validator->valid()){
 
-            if ($formulario->ajax()){
-                return response()->json(["valid" => true], 200);
-            }
-            else{
-              $provedor= new ProvedorMateriales;
-              $provedor->nombre=$formulario->get('nombre');
-              $provedor->rfc=$formulario->get('rfc');
-              $provedor->direccion=$formulario->get('direccion');
-              $provedor->telefono=$formulario->get('telefono');
-              $provedor->email=$formulario->get('email');
+        if ($formulario->ajax()){
+          return response()->json(["valid" => true], 200);
+        }
+        else{
+          $provedor= new ProvedorMateriales;
+          $provedor->nombre=$formulario->get('nombre');
+          $provedor->rfc=$formulario->get('rfc');
+          $provedor->direccion=$formulario->get('direccion');
+          $provedor->telefono=$formulario->get('telefono');
+          $provedor->email=$formulario->get('email');
 
-              $provedor->estado='Activo';
-              $provedor->save();
-              return Redirect::to('materiales/provedores')
-              ->with('message', 'Proveedor Registrado Correctamente');
-          }
+          $provedor->estado='Activo';
+          $provedor->save();
+          return Redirect::to('materiales/provedores')
+          ->with('message', 'Proveedor Registrado Correctamente');
+        }
       }
-  }
+    }
 
     /**
      * Display the specified resource.
@@ -85,7 +85,7 @@ class ProvedorMaterialesController extends Controller
      */
     public function show($id)
     {
-       return view("Provedores.materiales.show",["provedores"=>ProvedorMateriales::findOrFail($id)]);
+     return view("Provedores.materiales.show",["provedores"=>ProvedorMateriales::findOrFail($id)]);
         //
    }
 
@@ -97,7 +97,7 @@ class ProvedorMaterialesController extends Controller
      */
     public function edit($id)
     {
-       return view("Provedores.materiales.edit",["provedores"=>ProvedorMateriales::findOrFail($id)]);
+     return view("Provedores.materiales.edit",["provedores"=>ProvedorMateriales::findOrFail($id)]);
         //
    }
 
@@ -111,18 +111,18 @@ class ProvedorMaterialesController extends Controller
     public function update(Request $request, $id)
     {
         //$categoria=Categoria::findOrFail($id);
-        $provedor=ProvedorMateriales::findOrFail($id);
-        $provedor->nombre=$request->get('nombre');
-        $provedor->rfc=$request->get('rfc');
+      $provedor=ProvedorMateriales::findOrFail($id);
+      $provedor->nombre=$request->get('nombre');
+      $provedor->rfc=$request->get('rfc');
         //echo $request->get('nombre');
 
-        $provedor->direccion=$request->get('direccion');
-        $provedor->telefono=$request->get('telefono');
-        $provedor->email=$request->get('email');
+      $provedor->direccion=$request->get('direccion');
+      $provedor->telefono=$request->get('telefono');
+      $provedor->email=$request->get('email');
 
-        $provedor->estado='Activo';
-        $provedor->update();
-        return Redirect::to('materiales/provedores');
+      $provedor->estado='Activo';
+      $provedor->update();
+      return Redirect::to('materiales/provedores');
         //
     }
 
@@ -139,49 +139,49 @@ class ProvedorMaterialesController extends Controller
       $provedores->update();
       return Redirect::to('materiales/provedores');
         //
-  }
+    }
 
-  public function excel()
-  {        
+    public function excel()
+    {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
         Excel::create('Provedor_Materiales', function($excel) {
-            $excel->sheet('Excel sheet', function($sheet) {
+          $excel->sheet('Excel sheet', function($sheet) {
 
 
-                $empresa = ProvedorMateriales::select('nombre','rfc','direccion','telefono','email')
-                ->where('estado', 'Activo')
-                ->get();       
-                $sheet->fromArray($empresa);
-                $sheet->row(1,['Nombre Proveedor ','RFC','Direccion',
-                    'Telefono','Email']);
-                $sheet->setOrientation('landscape');
-            });
+            $empresa = ProvedorMateriales::select('nombre','rfc','direccion','telefono','email')
+            ->where('estado', 'Activo')
+            ->get();       
+            $sheet->fromArray($empresa);
+            $sheet->row(1,['Nombre Proveedor ','RFC','Direccion',
+              'Telefono','Email']);
+            $sheet->setOrientation('landscape');
+          });
         })->export('xls');
-    }
+      }
 
 
 
-    public function descargarProvedores($id,$nombre)
-    {
+      public function descargarProvedores($id,$nombre)
+      {
         $nombreExcel ='Lista Mantenimiento de Vehiculo'.' '.$nombre;
         Excel::create($nombreExcel,function($excel) use ($id) {
 
-            $excel->sheet('Excel sheet', function($sheet) use($id) {
+          $excel->sheet('Excel sheet', function($sheet) use($id) {
 
-                $mantenimiento = MantenimientoTransporte::join('transportes as t', 'mantenimiento_transportes.idTransporte', '=', 't.id')
-                ->select('mantenimiento_transportes.concepto','mantenimiento_transportes.descripcion','mantenimiento_transportes.fecha')
-                ->where('mantenimiento_transportes.estado','Activo')
-                ->where('t.id','=',$id)
-                ->get(); 
+            $mantenimiento = MantenimientoTransporte::join('transportes as t', 'mantenimiento_transportes.idTransporte', '=', 't.id')
+            ->select('mantenimiento_transportes.concepto','mantenimiento_transportes.descripcion','mantenimiento_transportes.fecha')
+            ->where('mantenimiento_transportes.estado','Activo')
+            ->where('t.id','=',$id)
+            ->get(); 
 
-                $sheet->fromArray($mantenimiento);
-                $sheet->row(1,['Concepto','Desripcion','Fecha' ]);
-                $sheet->setOrientation('landscape');
-            });
+            $sheet->fromArray($mantenimiento);
+            $sheet->row(1,['Concepto','Desripcion','Fecha' ]);
+            $sheet->setOrientation('landscape');
+          });
         })->export('xls');
 
+      }
     }
-}

@@ -22,7 +22,6 @@
     {!!Html::style('plugins/advanced-datatable/css/demo_table.css')!!}
     {!!Html::style('plugins/advanced-datatable/css/demo_page.css')!!}
     {!!Html::style('plugins/bootstrap-fileupload/bootstrap-fileupload.min.css')!!}
-    {!!Html::style('plugins/file-uploader/css/blueimp-gallery.min.css')!!}
     {!!Html::style('plugins/file-uploader/css/jquery.fileupload.css')!!}
     {!!Html::style('plugins/file-uploader/css/jquery.fileupload-ui.css')!!}
     {!!Html::style('plugins/bootstrap-datepicker/css/datepicker.css')!!}
@@ -155,7 +154,18 @@
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
-                <li> <a href="{{url('almacen/salidas/material')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
+                
+                
+
+
+                <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Agroquímicos</b> </a> </li>
+
+                
+            
+                
+                <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Limpieza</b> </a> </li>
+
+
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Basculas <span class="plus"><i class="fa fa-plus"></i></span></a>
@@ -184,6 +194,7 @@
 
   {!!Html::script('js/jquery-2.1.0.js')!!}
   {!!Html::script('js/script.js')!!}
+  {!!Html::script('js/moment.min.js')!!}
   {!!Html::script('js/jquery-2.1.0.js')!!}
   {!!Html::script('js/bootstrap.min.js')!!}
   {!!Html::script('js/common-script.js')!!}

@@ -12,7 +12,7 @@ function fnFormatDetails ( oTable, nTr )
     sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[7]+' </td></tr>';
     sOut += '<tr><td><strong>Telefono:</strong></td><td>'+aData[8]+' </td></tr>';
     sOut += '<tr><td><strong>Sueldo:</strong></td><td>'+aData[9]+' </td></tr>';
- 
+    
     sOut += '</table>';
 
     return sOut;
@@ -300,15 +300,14 @@ function fnFormatDetails4 ( oTable, nTr )
     sOut += '<tr><td><strong>Nombre:</strong></td><td>'+aData[1]+' </td></tr>';
     sOut += '<tr><td><strong>CURP:</strong></td><td>'+aData[6]+' </td></tr>';
     sOut += '<tr><td><strong>Fecha Nacimiento:</strong></td><td>'+aData[5]+' </td></tr>';
-    sOut += '<tr><td><strong>Sexo:</strong></td><td>'+aData[11]+' </td></tr>';
+    sOut += '<tr><td><strong>Sexo:</strong></td><td>'+aData[10]+' </td></tr>';
     sOut += '<tr><td><strong>Telefono:</strong></td><td>'+aData[8]+' </td></tr>';
     sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[7]+' </td></tr>';
     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion Laboral</strong></td><td> </td></tr>';
     sOut += '<tr><td><strong>Fecha de Ingreso a la empresa:</strong></td><td>'+aData[2]+' </td></tr>';
     sOut += '<tr><td><strong>Fecha de alta en Seguro Social:</strong></td><td>'+aData[3]+' </td></tr>';
     sOut += '<tr><td><strong>Numero de Seguro Social:</strong></td><td>'+aData[4]+' </td></tr>';
-    sOut += '<tr><td><strong>Rol:</strong></td><td>'+aData[9]+' </td></tr>';
-    sOut += '<tr><td><strong>Sueldo:</strong></td><td>'+aData[10]+' </td></tr>';
+    sOut += '<tr><td><strong>Sueldo:</strong></td><td>'+aData[9]+' </td></tr>';
     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Datos de Contrato</strong></td><td> </td></tr>';
     sOut += '<tr><td><strong>Fecha Inicio Contrato:</strong></td><td>'+aData[2]+' </td></tr>';
     sOut += '<tr><td><strong>Fecha Fin Contrato:</strong></td><td>'+aData[3]+' </td></tr>';
@@ -385,9 +384,7 @@ function fnFormatDetails5 ( oTable, nTr )
     sOut += '<tr><td><strong>Direccion Fisica:</strong></td><td>'+aData[5]+' </td></tr>';
     sOut += '<tr><td><strong>Direccion de Facturación:</strong></td><td>'+aData[4]+' </td></tr>';
     sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td><strong>Banco:</strong></td><td>'+aData[9]+' </td></tr>';
-    sOut += '<tr><td><strong>Numero de cuenta:</strong></td><td>'+aData[11]+' </td></tr>';
-    sOut += '<tr><td><strong>Número de CLABE Interbancaria:</strong></td><td>'+aData[10]+' </td></tr>';
+    
 
     sOut += '</table>';
 

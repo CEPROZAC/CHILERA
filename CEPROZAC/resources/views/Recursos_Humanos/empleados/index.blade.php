@@ -58,7 +58,6 @@
                   <th style="display:none;">sueldo</th>
                   <th>Ver &nbsp; &nbsp;</th>
                   
-                  
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>
                 </tr>
@@ -79,42 +78,47 @@
                   <td style="display:none;" >{{$empleados->sueldo_Fijo}}</td>
                   <td style="display:none;"   >{{$empleados->sexo}}</td>
                   <td >
-                   <a href="{{URL::action('EmpleadoController@verInformacion',$empleados->id)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye "></i></a>
-                 </td>
-                 <td>   <a href="{{URL::action('EmpleadoController@edit',$empleados->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
-                 </td> 
-               </td>
-               <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empleados->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-               </td>
+                    <a href="{{URL::action('EmpleadoController@verInformacion',$empleados->id)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
+                  </td>
+                  
+                  <td>   <a href="{{URL::action('EmpleadoController@edit',$empleados->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
+                  </td> 
+                </td>
+                <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empleados->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                </td>
+              </tr>
+              @include('Recursos_Humanos.empleados.modal')
+              @include('Recursos_Humanos.empleados.rolesmodal')
+              @endforeach
+            </tbody>
+            <tfoot>
+              <tr>
+               <th></th> 
+               <th >Nombre Completo</th>
+               <th style="display:none;">fecha_Ingreso</th>
+               <th style="display:none;">Fecha Alta</th>
+               <th style="display:none;">NSS</th>
+               <th style="display:none;">Fecha Nacimiento </th>
+               <th >CURP </th>
+               <th style="display:none;"> email </th>
+               <th >Telefono </th>
+               <th style="display:none;">sexo </th>
+               <th style="display:none;">suedlo fijo </th>
+
+
+               <th >Ver &nbsp; &nbsp;</th>
+               
+
+               <td><center><b>Editar</b></center></td>
+               <td><center><b>Borrar</b></center></td> 
+
              </tr>
-             @include('Recursos_Humanos.empleados.modal')
-             @endforeach
-           </tbody>
-           <tfoot>
-            <tr>
-             <th></th> 
-             <th >Nombre Completo</th>
-             <th style="display:none;">fecha_Ingreso</th>
-             <th style="display:none;">Fecha Alta</th>
-             <th style="display:none;">NSS</th>
-             <th style="display:none;">Fecha Nacimiento </th>
-             <th >CURP </th>
-             <th style="display:none;"> email </th>
-             <th >Telefono </th>
-             <th style="display:none;">sexo </th>
-             <th style="display:none;">suedlo fijo </th>
-             <th >Ver &nbsp; &nbsp;</th>
-
-             <td><center><b>Editar</b></center></td>
-             <td><center><b>Borrar</b></center></td> 
-
-           </tr>
-         </tfoot>
-       </table>
-     </div><!--/table-responsive-->
-   </div><!--/porlets-content-->
- </div><!--/block-web-->
-</div><!--/col-md-12-->
+           </tfoot>
+         </table>
+       </div><!--/table-responsive-->
+     </div><!--/porlets-content-->
+   </div><!--/block-web-->
+ </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

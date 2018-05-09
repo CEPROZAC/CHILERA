@@ -33,6 +33,8 @@
         <div class="porlets-content">
           <form action="{{route('empresasCEPROZAC.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
+
+       
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
@@ -102,34 +104,7 @@
               </div>
             </div>
 
-            <div class="form-group">
-             <label class="col-sm-3 control-label"> Banco: <strog class="theme_color">*</strog></label>
-             <div class="col-sm-6">
-              <select name="id_Banco" class="form-control" required>  
-                @foreach($bancos as $banco)
-                <option value="{{$banco->id}}">
-                 {{$banco->nombre}}
-               </option>
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
-         <div class="form-group">
-           <label class="col-sm-3 control-label">Numero de cuenta:</label>
-           <div class="col-sm-6">
-            <input type="text" name="nom_cuenta" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10" />
-          </div>
-        </div><!--/form-group--> 
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Número de CLABE Interbancaria: </label>
-          <div class="col-sm-6">
-            <input type="text"  name= "cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" />
-          </div>
-        </div><!--/form-group--> 
-
+         
 
 
 

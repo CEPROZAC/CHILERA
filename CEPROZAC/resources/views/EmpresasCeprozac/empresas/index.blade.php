@@ -54,11 +54,9 @@
                   <th style="display:none;">Correo </th>
                   <th style="display:none;">Regimen Fiscal </th>
                   
-                  <th style="display:none;">Banco que Factura </th>
-                  <th style="display:none;">Clave Interbancaria </th>
-                  <th style="display:none;">Numero de Cuenta </th>
-                  <td><center><b>Editar</b></center></td>
-                  <td><center><b>Borrar</b></center></td>
+                  <th><center>Cuentas <br> Bancarias</center></th>
+                  <th><center><b>Editar</b></center></th>
+                  <th><center><b>Borrar</b></center></th>
                 </tr>
               </thead>
               <tbody>
@@ -72,43 +70,50 @@
                   <td style="display:none;">{{$empresas->telefono}}</td>
                   <td style="display:none;">{{$empresas->email}}</td>
                   <td style="display:none;">{{$empresas->regimenFiscal}}</td>
-                  <th style="display:none;">{{$empresas->nombreBanco}} </th>
-                  <th style="display:none;">{{$empresas->cve_Interbancaria}} </th>
-                  <th style="display:none;">{{$empresas->nom_cuenta}} </th>
-                  <td>  <a href="{{URL::action('EmpresasCeprozacController@edit',$empresas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-                  </td>
-                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empresas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-                  </td>
-                </td>
-              </tr>
-              @include('EmpresasCeprozac.empresas.modal')
-              @endforeach
-            </tbody>
-            <tfoot>
-              <tr>
-                <th></th>
-                <th>Nombre </th>
-                <th>Representante Legal </th>
-                <th>RFC </th>
-                <th>Direccion de <br>Facturacion</th>
-                <th style="display:none;">Direccion <br>Fisica</th>
-                <th style="display:none;">Telefono </th>
-                <th style="display:none;">Correo </th>
-                <th style="display:none;">Regimen Fiscal </th>
-                <th style="display:none;">Banco que Factura </th>
-                <th style="display:none;">Clave Interbancaria </th>
-                <th style="display:none;">Numero de Cuenta </th>
-                <td><center><b>Editar</b></center></td>
-                <td><center><b>Borrar</b></center></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div><!--/table-responsive-->
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
-</div><!--/row-->
-</div>
+                  <td>
+                    <center>
+                      <a href="{{URL::action('EmpresasCeprozacController@verCuentas',$empresas->id)}}" class="btn btn-white btn-sm" role="button"><i class="fa fa-money"></i></a> 
+                      <center>
+                      </td>
+                      <td>  
+                        <center>
+                          <a href="{{URL::action('EmpresasCeprozacController@edit',$empresas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                        </center>
+                      </td>
+                      <td> 
+                        <center>
+                          <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empresas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                        </center>
+                      </td>
+                    </td>
+                  </tr>
+                  @include('EmpresasCeprozac.empresas.modal')
+                  @endforeach
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th></th>
+                    <th>Nombre </th>
+                    <th>Representante Legal </th>
+                    <th>RFC </th>
+                    <th>Direccion de <br>Facturacion</th>
+
+                    <th style="display:none;">Direccion <br>Fisica</th>
+                    <th style="display:none;">Telefono </th>
+                    <th style="display:none;">Correo </th>
+                    <th style="display:none;">Regimen Fiscal </th>
+                    <th><center>Cuentas <br> Bancarias</center></th>
+                    <td><center><b>Editar</b></center></td>
+                    <td><center><b>Borrar</b></center></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div><!--/table-responsive-->
+          </div><!--/porlets-content-->
+        </div><!--/block-web-->
+      </div><!--/col-md-12-->
+    </div><!--/row-->
+  </div>
 
 
-@endsection
+  @endsection
