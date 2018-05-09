@@ -27,11 +27,7 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-<<<<<<< HEAD
-                    <a class="btn btn-sm btn-success tooltips" href="/CHILERA/CEPROZAC/public/materiales/provedores/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
-=======
                     <a class="btn btn-sm btn-success tooltips" href="{{ route('materiales.provedores.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
->>>>>>> 7e6766590e6451f36af0587b13ce0cbba844fd8d
 
                      <a class="btn btn-sm btn-warning tooltips" href="{{ route('provedores-mat.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
