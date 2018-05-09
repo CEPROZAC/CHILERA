@@ -28,13 +28,7 @@
 
 
                   <div class="btn-group" style="margin-right: 10px;">
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/general/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Almacén"> <i class="fa fa-plus"></i> Registrar Almacén </a>
-
-                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.limpieza.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
-
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/limpieza" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i>Salidas de Almacén </a>
-
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/entradas/limpieza" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i>Entradas de Almacén </a>
+                    <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.general.create')}}"style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Almacén"> <i class="fa fa-plus"></i> Registrar Almacén </a>
 
 
                   </div>
