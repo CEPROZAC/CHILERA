@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{url('/almacenes/agroquimicos', [$material->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+          <form action="{{url('almacenes/agroquimicos', [$material->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
 

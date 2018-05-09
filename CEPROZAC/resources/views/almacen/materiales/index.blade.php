@@ -28,6 +28,7 @@
 
                   <div class="btn-group" style="margin-right: 10px;">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.materiales.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar </a>
 
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.materiales.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
@@ -35,15 +36,22 @@
                     <a class="btn btn-sm btn-success tooltips" href="/CHILERA/CEPROZAC/public/almacen/salidas/material/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén </a>
 =======
                     <a class="btn btn-sm btn-success tooltips" href="/almacen/materiales/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Material </a>
+=======
+                    <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.materiales.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Material </a>
+>>>>>>> 7e6766590e6451f36af0587b13ce0cbba844fd8d
 
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.materiales.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/salidas/material" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i>Salidas de Almacén </a>
+                    <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.salidas.material.index')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i>Salidas de Almacén </a>
 
-                    <a class="btn btn-sm btn-success tooltips" href="/almacen/entradas/materiales" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i>Entradas de Almacén </a>
+                    <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.entradas.materiales.index')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i>Entradas de Almacén </a>
 
+<<<<<<< HEAD
                     <a class="btn btn-sm btn-success tooltips" href="/materiales/provedores" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor de Materiales"> <i class="fa fa-plus"></i> Proveedores de Materiales</a>
 >>>>>>> b126d2bc87f089e9dac41d6b5338cc9c452d86ea
+=======
+                    <a class="btn btn-sm btn-success tooltips" href="{{ route('materiales.provedores.index')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor de Materiales"> <i class="fa fa-plus"></i> Proveedores de Materiales</a>
+>>>>>>> 7e6766590e6451f36af0587b13ce0cbba844fd8d
 
 </div>
 

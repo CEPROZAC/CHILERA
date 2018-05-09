@@ -165,6 +165,8 @@
                 
                 <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Limpieza</b> </a> </li>
 
+                <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacenes Generales</b> </a> </li>
+
 
               </ul>
             </li>
