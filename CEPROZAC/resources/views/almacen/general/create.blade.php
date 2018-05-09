@@ -43,7 +43,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
+                <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del Almacén" />
 
               </div>
             </div>
@@ -51,7 +51,7 @@
                 <div class="form-group">
               <label class="col-sm-3 control-label">Capacidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="capacidad" type="text"  value="{{Input::old('capacidad')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+                <input name="capacidad" id="capacidad" type="text"  value="{{Input::old('capacidad')}}"  maxlength="70"  onchange="soloNumeros(this);"   class="form-control" required value="" placeholder="Ingrese la Capacidad del Almacén" />
               </div>
             </div>
 
@@ -73,9 +73,25 @@
               <div class="form-group">
               <label class="col-sm-3 control-label">Espacio Ocupado Actualmente: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="ocupado" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control" required value="" placeholder="Ingrese el Espacio Ocupado Actualmente" />
+                <input name="ocupado" id="ocupado" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control" required value="" placeholder="Ingrese el Espacio Ocupado Actualmente" />
               </div>
             </div>
+
+            <style>
+table, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+
+<p></p>
+
+<table id="myTable">
+  <tr>
+  </tr>
+</table>
+<br>
 
                
 
@@ -96,6 +112,39 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+function generar(){
+  var cantidad = document.getElementById('capacidad').value;
+  var suma = cantidad / 4;
+  var cuenta;
+  var valor = 1;
+  for (cuenta = 1; cuenta <= suma; cuenta++) {
+       var table = document.getElementById("myTable");
+    var row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    cell1.innerHTML = '<input type="button" value="valor"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
+    valor++;
+    cell2.innerHTML =  '<button id="15" type="button" onclick="eliminarFila(1)">valor</button>';
+    valor++;
+    cell3.innerHTML =  '<input type="button" value="valor"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';   
+     valor++;
+    cell4.innerHTML =  '<input type="button" value="valor"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
+    valor++;
+}
+}
+
+function eliminarFila(value) {
+
+}
+
+
+  </script>
 @endsection
 
 

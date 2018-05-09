@@ -12,6 +12,9 @@ use CEPROZAC\Producto;
 use CEPROZAC\Transporte;
 use CEPROZAC\ServicioBascula;
 use CEPROZAC\RecepcionCompra;
+use CEPROZAC\Empleado;
+use CEPROZAC\Bascula;
+
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,6 +27,7 @@ class RecepcionCompraController extends Controller
      */
     public function index()
     {
+
               $compra= DB::table('RecepcionCompra')
       ->join( 'provedores as prov', 'RecepcionCompra.id_provedor','=','prov.id')
       ->join('productos as prod' ,'RecepcionCompra.id_producto','=','prod.id')
@@ -50,7 +54,14 @@ class RecepcionCompraController extends Controller
      */
     public function create()
     {
-        //
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $provedores=DB::table('provedores')->where('estado','=' ,'Activo')->get();
+      $productos=DB::table('productos')->where('estado','=' ,'Activo')->get();
+      $transportes=DB::table('transportes')->where('estado','=' ,'Activo')->get();
+      $servicio=DB::table('basculas')->where('estado','=' ,'Activo')->get();
+      $empaque=DB::table('forma_empaques')->where('estado','=' ,'Activo')->get();
+      $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
+      return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad]);
     }
 
     /**

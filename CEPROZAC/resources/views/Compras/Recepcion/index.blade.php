@@ -27,7 +27,7 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                    <a class="btn btn-sm btn-success tooltips" href="contratos/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Empleado"> <i class="fa fa-plus"></i> Registrar </a>
+                    <a class="btn btn-sm btn-success tooltips" href="/compras/recepcion/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Compra"> <i class="fa fa-plus"></i> Registrar </a>
 
                     <a class="btn btn-sm btn-warning tooltips" href="{{route('contratos.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
