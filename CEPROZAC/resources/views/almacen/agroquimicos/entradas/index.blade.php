@@ -27,7 +27,7 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                   <a class="btn btn-sm btn-success tooltips" href="/almacen/entradas/agroquimicos/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
+                   <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.entradas.agroquimicos.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
 
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.agroquimicos.entradas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 

@@ -30,10 +30,10 @@ class SalidasAgroquimicosController extends Controller
     public function index()
     {
         $salida= DB::table('salidasagroquimicos')
-       ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
-       ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
+        ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
+        ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
         // print_r($salida);
-       return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
+        return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
 
         //
     }
@@ -59,11 +59,11 @@ class SalidasAgroquimicosController extends Controller
       }else if (empty($empleado)) {
 
       }else{
-       return view("almacen.agroquimicos.salidas.create",["material"=>$material],["empleado"=>$empleado]);
-   }
+         return view("almacen.agroquimicos.salidas.create",["material"=>$material],["empleado"=>$empleado]);
+     }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
-}
+ }
         //
 
     /**
@@ -161,7 +161,7 @@ class SalidasAgroquimicosController extends Controller
         //
     }
 
-     public function excel()
+    public function excel()
     {        
         /**
          * toma en cuenta que para ver los mismos 

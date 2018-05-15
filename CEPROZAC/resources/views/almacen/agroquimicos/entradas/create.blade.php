@@ -10,8 +10,8 @@
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Inicio</a></li>
-      <li><a style="color: #808080" href="{{url('/almacen/materiales')}}">Entradas de Almacén Agroquímicos</a></li>
+      <li><a style="color: #808080" href="{{url('almacen/materiales')}}">Inicio</a></li>
+      <li><a style="color: #808080" href="{{url('almacen/materiales')}}">Entradas de Almacén Agroquímicos</a></li>
     </ol>
   </div>
 </div>
