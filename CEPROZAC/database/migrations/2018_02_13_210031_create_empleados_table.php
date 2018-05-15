@@ -21,6 +21,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('numero_Seguro_Social');
             $table->string('fecha_Nacimiento');
             $table->string('curp');
+            $table->string('domicilio');
             $table->string('email');
             $table->string('telefono');
             $table->string('sexo');

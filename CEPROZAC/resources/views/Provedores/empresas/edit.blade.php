@@ -48,78 +48,20 @@
               </div>
             </div>
 
+
             <div class="form-group">
               <label class="col-sm-3 control-label"> Regimen Fiscal: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="regimenFiscal" class="form-control" required>  
-                  <option value="BASICO">
-                    BASICO
-                  </option>
-                  <option value="FISICO">
-                    FISICO
-                  </option>         
-                </select>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div><!--/form-group-->
-
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input type="text" placeholder="Ingrese el número de teléfono de la empresa" name="telefono"  class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" parsley-type="phone" maxlength="200" value="{{$empresas->telefono}}">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$empresas->direccion}}" placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input  name="email" value="{{$empresas->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="30" parsley-rangelength="[1,30]"/>
-
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <select name="provedor_id" class="form-control" required>  
-                  @foreach($provedores as $provedor)
-                  @if($provedor->id==$empresas->provedor_id)
-                  <option value="{{$provedor->id}}" selected>
-                   {{$provedor->nombre}}
+               <select name="idRegimenFiscal" class="form-control select2" required> 
+                 <
+                 @foreach($regimenFiscal as $regimen)
+                 @if($empresas->idRegimenFiscal== $regimen->id)
+                 <option value="{{$regimen->id}}" selected>
+                   {{$regimen->nombre}}
                  </option>
                  @else
-                 <option value="{{$provedor->id}}">
-                   {{$provedor->nombre}}
-                   @endif
-                   @endforeach              
-                 </select>
-                 <div class="help-block with-errors"></div>
-               </div>
-             </div><!--/form-group-->
-
-
-             <div class="form-group">
-               <label class="col-sm-3 control-label"> Banco: <strog class="theme_color">*</strog></label>
-               <div class="col-sm-6">
-                <select name="id_Banco" class="form-control" required>  
-                  @foreach($bancos as $banco)
-                  @if($banco->id==$empresas->id_Banco)
-                  <option value="{{$banco->id}}" selected>
-                   {{$banco->nombre}}
-                 </option>
-                 @else
-                 <option value="{{$banco->id}}" >
-                   {{$banco->nombre}}
+                 <option value="{{$regimen->id}}" >
+                   {{$regimen->nombre}}
                  </option>
                  @endif
                  @endforeach              
@@ -128,30 +70,95 @@
              </div>
            </div><!--/form-group-->
 
+
            <div class="form-group">
-             <label class="col-sm-3 control-label">Numero de cuenta:</label>
-             <div class="col-sm-6">
-              <input type="text" name="nom_cuenta" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10"  value="{{$empresas->nom_cuenta}}"/>
-            </div>
-          </div><!--/form-group--> 
-
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Número de CLABE Interbancaria: </label>
+            <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <input type="text"  name= "cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" value="{{$empresas->cve_Interbancaria}}"/>
+              <input type="text" placeholder="Ingrese el número de teléfono de la empresa" name="telefono"  class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" parsley-type="phone" maxlength="200" value="{{$empresas->telefono}}">
             </div>
-          </div><!--/form-group--> 
+          </div>
 
           <div class="form-group">
-            <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <a href="{{url('/empresas')}}" class="btn btn-default"> Cancelar</a>
+            <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+              <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$empresas->direccion}}" placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
             </div>
-          </div><!--/form-group-->
-        </form>
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+              <input  name="email" value="{{$empresas->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="30" parsley-rangelength="[1,30]"/>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="provedor_id" class="form-control" required>  
+                @foreach($provedores as $provedor)
+                @if($provedor->id==$empresas->provedor_id)
+                <option value="{{$provedor->id}}" selected>
+                 {{$provedor->nombre}}
+               </option>
+               @else
+               <option value="{{$provedor->id}}">
+                 {{$provedor->nombre}}
+                 @endif
+                 @endforeach              
+               </select>
+               <div class="help-block with-errors"></div>
+             </div>
+           </div><!--/form-group-->
+
+
+           <div class="form-group">
+             <label class="col-sm-3 control-label"> Banco: <strog class="theme_color">*</strog></label>
+             <div class="col-sm-6">
+              <select name="id_Banco" class="form-control" required>  
+                @foreach($bancos as $banco)
+                @if($banco->id==$empresas->id_Banco)
+                <option value="{{$banco->id}}" selected>
+                 {{$banco->nombre}}
+               </option>
+               @else
+               <option value="{{$banco->id}}" >
+                 {{$banco->nombre}}
+               </option>
+               @endif
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
+         <div class="form-group">
+           <label class="col-sm-3 control-label">Numero de cuenta:</label>
+           <div class="col-sm-6">
+            <input type="text" name="nom_cuenta" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10"  value="{{$empresas->nom_cuenta}}"/>
+          </div>
+        </div><!--/form-group--> 
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Número de CLABE Interbancaria: </label>
+          <div class="col-sm-6">
+            <input type="text"  name= "cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" value="{{$empresas->cve_Interbancaria}}"/>
+          </div>
+        </div><!--/form-group--> 
+
+        <div class="form-group">
+          <div class="col-sm-offset-7 col-sm-5">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{url('/empresas')}}" class="btn btn-default"> Cancelar</a>
+          </div>
+        </div><!--/form-group-->
+      </form>
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 @endsection

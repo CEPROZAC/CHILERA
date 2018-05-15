@@ -38,9 +38,15 @@ class TransporteController extends Controller
     public function create()
     {
 
-       $empleados=DB::table('empleados')->where('estado','=','Activo')->get();
-       return view('Transportes.transportes.create',['empleados'=>$empleados]);
-   }
+        $operadores= DB::table('empleados')
+        ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+        ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+        ->select('empleados.id','empleados.nombre','empleados.apellidos')
+        ->where('rol_empleados.rol_Empleado','OPERADOR DE TRÁILER')
+        ->where('empleados.estado','Activo')->get();
+
+        return view('Transportes.transportes.create',['operadores'=>$operadores]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -60,7 +66,7 @@ class TransporteController extends Controller
         $transporte->aseguradora=$request->get('aseguradora');
         $transporte->m3_Unidad=$request->get('m3_Unidad');
         $transporte->capacidad=$request->get('capacidad');
-        $transporte->chofer_id=$request->get('chofer_id');
+        $transporte->chofer_id   =$request->get('chofer_id');
         $transporte->estado='Activo';
         $transporte->save();
         return Redirect::to('transportes');
@@ -86,8 +92,13 @@ class TransporteController extends Controller
     public function edit($id)
     {
         $vehiculo=Transporte::findOrFail($id);
-        $empleados=DB::table('empleados')->where('estado','=','Activo')->get();
-        return view('Transportes.transportes.edit',['vehiculo'=>$vehiculo,"empleados"=>$empleados]);
+        $operadores= DB::table('empleados')
+        ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+        ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+        ->select('empleados.id','empleados.nombre','empleados.apellidos')
+        ->where('rol_empleados.rol_Empleado','OPERADOR DE TRÁILER')
+        ->where('empleados.estado','Activo')->get();
+        return view('Transportes.transportes.edit',['vehiculo'=>$vehiculo,"operadores"=>$operadores]);
 
     }
 

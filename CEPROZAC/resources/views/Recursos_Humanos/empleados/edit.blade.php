@@ -57,12 +57,12 @@
                   <li><a href="#step-2">Roles de  empleados</a></li>
                 </ul>
                 <div>
-                  <div id="step-1" class="">
+                  <div id="step-1" id="div">
                     <div class="user-profile-content">
 
                       <div id="form-step-0" role="form" data-toggle="validator">
                         <h3 class="h3titulo">Informacion Personal</h3>
-                        <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  />
+                        <input  name="fecha_Nacimiento" value="{{$empleado->fecha_Nacimiento}}" type="hidden" id="fechaNacimiento"  />
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
@@ -112,6 +112,13 @@
                     </div><!--/form-group-->
 
                     <div class="form-group">
+                      <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-6">
+                        <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" value="{{$empleado->domicilio}}" >
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
                         <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" class="form-control mask" required data-inputmask="'mask':'(999) 999-9999'" value="{{$empleado->telefono}}">
@@ -145,7 +152,7 @@
 
                 <div id="step-2" class="">
                   <div class="user-profile-content">
-                    <div id="form-step-1" role="form" >
+                    <div id="form-step-3" role="form" >
                       <h3 class="h3titulo">Roles de empleados</h3>
                       <br>
                       <div class="table-responsive">
@@ -165,35 +172,29 @@
                                 <div class="col-sm-8">
                                   <select   id="rol" class="form-control" required>  
                                     @foreach($roles as $rol)
-                                    <option value="{{$rol->id}}">
+                                    <option label="{{$rol->rol_Empleado}}" value="{{$rol->id}}">
                                      {{$rol->rol_Empleado}} 
                                    </option>
                                    @endforeach              
                                  </select>
                                </div>   
                              </td>
+
                              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                              <input type="hidden" value="{{ $empleado->id}}" id="idEmpleado">
-                             <td colspan="2"><button type="button"  onclick="myCreateFunction1()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                             <td colspan="2"><button type="button"  onclick="myCreateFunction1();" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
                            </tr>
-                           @foreach($listadoRoles as $rol)
-                           <tr>
-                             <td colspan="2">{{$rol->rol_Empleado}}</td>
-                             <td>
-                              
-                              <button type="button" id="btn" onclick="myDeleteFunction1(this);myDeleteFunction(this);" value="{{$rol->id}}" class="btn btn-danger btn-icon"> Quitar<i class="fa fa-times"></i> </button>
-                            </td>
-                          </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="form-group">
+
+                         </tbody>
+                       </table>
+                     </div>
+                     <div class="form-group">
                       <div class="col-sm-offset-7 col-sm-5">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="/empleados" class="btn btn-default"> Cancelar</a>
+                        <a href="/contratos" class="btn btn-default"> Cancelar</a>
                       </div>
                     </div><!--/form-group--> 
+
                   </div><!--validator-->
                 </div><!--user-profile-content-->
               </div><!--step-2-->

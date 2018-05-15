@@ -111,6 +111,14 @@
                     </div><!--/form-group-->
 
                     <div class="form-group">
+                      <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-6">
+                        <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" >
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
                       <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
                         <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" value="" class="form-control mask" required data-inputmask="'mask':'(999) 999-9999'">

@@ -11,8 +11,10 @@ use CEPROZAC\Empleado;
 use CEPROZAC\Contratos;
 use CEPROZAC\EmpresasCeprozac;
 use CEPROZAC\EmpleadoRoles;
+
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 
 
@@ -71,7 +73,7 @@ class ContratosController extends Controller
       $empleado->email=$request->get('email');
       $empleado->telefono=$request->get('telefono');
       $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
-
+      $empleado->domicilio=$request->get('domicilio');
       $empleado->estado='Activo';
       $empleado->tipo='CONTRATADO';
       substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
@@ -123,10 +125,28 @@ class ContratosController extends Controller
      */
     public function edit($id)
     {
-      $contrato=Contratos::findOrFail($id);
-      $empleado=Empleado::findOrFail($contrato->idEmpleado);
-      $roles=DB::table('rol_empleados')->where('estado','=','Activo')->get();
-      return view("Recursos_Humanos.contratos.edit",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles]);
+
+
+      $contrato = Contratos::findOrFail($id);   
+      $idEmpleado= $contrato->id;
+      $idEmpresa=$contrato->idEmpresa;
+
+
+      $empleado=Empleado::findOrFail($idEmpleado);
+      $roles=DB::table('rol_empleados')->where('estado','=' ,'Activo')->get();
+
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+
+      $listadoRoles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
+      ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
+      ->select('empleado_roles.id','rol_empleados.rol_Empleado')
+      ->where('idEmpleado','=',$idEmpleado)
+      ->get();
+
+      return view("Recursos_Humanos.contratos.edit",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
+        ,"empresas"=>$empresas,"listadoRoles"=>$listadoRoles]);
+
+
     }
 
     /**
@@ -160,7 +180,7 @@ class ContratosController extends Controller
      $empleado->email=$request->get('email');
      $empleado->telefono=$request->get('telefono');
      $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
-     $empleado->rol=$request->get('rol');
+     $empleado->domicilio=$request->get('domicilio');
      $empleado->estado='Activo';
      substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
      $empleado->update();
@@ -182,11 +202,6 @@ class ContratosController extends Controller
       return Redirect::to('contratos');
     }
 
-    public function excel()
-    {
-
-    }
-
 
 
     
@@ -194,7 +209,7 @@ class ContratosController extends Controller
     {
 
       $contrato = Contratos::findOrFail($id);
-      $idEmpleado= $contrato->id;
+      $idEmpleado= $contrato->idEmpleado;
       $idEmpresa=$contrato->idEmpresa;
 
       $empleado=Empleado::findOrFail($idEmpleado);
@@ -210,4 +225,128 @@ class ContratosController extends Controller
       return view("Recursos_Humanos.contratos.lista",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
         ,"empresa"=>$empresa]);
     }
+
+
+    public function rolesEspecificos($id)
+    {
+
+      $roles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
+      ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
+      ->select('rol_empleados.rol_Empleado', 'rol_empleados.descripcion','empleados.id as idET',
+        'rol_empleados.id as idRET' ,'empleado_roles.id as idERT')
+      ->where('idEmpleado','=',$id)
+      ->get();
+
+      return response()->json(
+        $roles->toArray());
+
+    }
+
+
+    public function ultimo()
+    {
+
+      $roles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
+      ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
+      ->select('rol_empleados.rol_Empleado', 'rol_empleados.descripcion','empleados.id as idET',
+        'rol_empleados.id as idRET' ,'empleado_roles.id as idERT')
+      ->orderBy('empleado_roles.created_at', 'desc')->first();
+
+      return response()->json(
+        $roles->toArray());
+
+    }
+
+
+    public function pdf($id)
+    {
+      $contrato = Contratos::findOrFail($id);
+      $idEmpleado= $contrato->id;
+      $idEmpresa=$contrato->idEmpresa;
+      $empleado=Empleado::findOrFail($idEmpleado);
+      $empresa= EmpresasCeprozac::findOrFail($idEmpresa);
+      $roles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
+      ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
+      ->select('rol_empleados.rol_Empleado')
+      ->where('idEmpleado','=',$id)
+      ->get();
+
+      $pdf=PDF::loadView("Recursos_Humanos.contratos.invoice",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
+        ,"empresa"=>$empresa]);
+      return $pdf->download("archivo.pdf");
+    }
+
+
+    static function calcularMes($mes)
+    {
+
+      switch ($mes) {
+        case 01:
+        $mesLetra="ENERO";
+        break;
+        case 02:
+        $mesLetra="FEBRERO";
+        break;
+        case 03:
+        $mesLetra="MARZO";
+        break;
+        case 04:
+        $mesLetra="ABRIL";
+        break;
+        case 05:
+        $mesLetra="MAYO";
+        break;
+        case 06:
+        $mesLetra="JUNIO";
+        break;
+        case 07:
+        $mesLetra="JULIO";
+        break;
+        case '08':
+        $mesLetra="AGOSTO";
+        break;
+        case '09':
+        $mesLetra="SEPTIEMBRE";
+        break;
+        case '10':
+        $mesLetra="OCTUBRE";
+        break;
+        case '11':
+        $mesLetra="NOVIEMBRE";
+        break;
+        case '12':
+        $mesLetra="DICIEMBRE";
+        break;
+
+      }
+      return $mesLetra;
+
+    }
+
+
+    static function calcularPesos($sueldo)
+    {
+      return  $letras = \NumeroALetras::convertir($sueldo, 'PESOS', 'CENTAVOS');
+
+    }
+
+    public function excel()
+    {        
+
+      Excel::create('Lista contratos', function($excel) {
+        $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+
+          $empleado = Empleado::join('contratos as c', 'empleados.id','=','c.idEmpleado')
+          ->select('empleados.nombre', 'empleados.apellidos', 'empleados.fecha_Ingreso', 'empleados.fecha_Alta_Seguro','empleados.numero_Seguro_Social','empleados.curp','empleados.email','empleados.telefono','empleados.sexo','empleados.sueldo_Fijo','c.fechaInicio','c.fechaFin')
+          ->where('empleados.estado', 'Activo')
+          ->get();       
+          $sheet->fromArray($empleado);
+          $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','CURP','Correo','Telefono','Sexo','Sueldo','Fecha Inicio','Fecha Fin']);
+
+          $sheet->setOrientation('landscape');
+        });
+      })->export('xls');
+    }
+
   }

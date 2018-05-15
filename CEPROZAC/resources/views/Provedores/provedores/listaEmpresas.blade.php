@@ -62,7 +62,7 @@
                     </tr>
                     <tr>
                       <th>Rgimen Fiscal: </th>
-                      <td>{{$empresa->regimenFiscal}}</td>
+                      <td>{{$empresa->nomRegimen}}</td>
                     </tr>
                     <tr>
                       <th>Telefono:</th>

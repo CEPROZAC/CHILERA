@@ -111,9 +111,9 @@
           <label class="col-sm-3 control-label">Chofer: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
             <select name="chofer_id" class="form-control" required>
-             @foreach($empleados as $empleado)
-             <option value="{{$empleado->id}}">
-              {{$empleado->nombre}}
+             @foreach($operadores as $operador)
+             <option value="{{$operador->id}}">
+              {{$operador->nombre}} {{$operador->apellidos}}
             </option>
             @endforeach
           </select>

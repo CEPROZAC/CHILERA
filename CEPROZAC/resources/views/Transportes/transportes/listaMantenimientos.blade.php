@@ -24,7 +24,6 @@
             </div>
             <div class="btn-group pull-right">
               <b>
-               9
                <div class="btn-group" style="margin-right: 10px;">
                 <a class="btn btn-sm btn-success tooltips" href="{{URL::action('MantenimientoTransporteController@create',[])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
 

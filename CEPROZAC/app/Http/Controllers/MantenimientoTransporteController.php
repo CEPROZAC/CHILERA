@@ -41,9 +41,26 @@ class MantenimientoTransporteController extends Controller
      */
     public function create()
     {
-        $empleados= DB::table('empleados')->where('estado','Activo')->get();
+        $operadores= DB::table('empleados')
+        ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+        ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+        ->select('empleados.id','empleados.nombre','empleados.apellidos')
+        ->where('rol_empleados.rol_Empleado','OPERADOR DE TRÁILER')
+        ->where('empleados.estado','Activo')->get();
+
+
+        $encargados_mantenimiento= DB::table('empleados')
+        ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+        ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+        ->select('empleados.id','empleados.nombre','empleados.apellidos')
+        ->where('rol_empleados.rol_Empleado','MANTENIMIENTO')
+        ->where('empleados.estado','Activo')->get();
+
+
         $transportes= DB::table('transportes')->where('estado','Activo')->get();
-        return   view('Transportes.mantenimientoTransportes.create',['transportes'=>$transportes,'empleados'=>$empleados]);
+
+        return   view('Transportes.mantenimientoTransportes.create',['transportes'=>$transportes,
+            'operadores'=>$operadores,'encargados_mantenimiento'=>$encargados_mantenimiento]);
     }
 
     /**
@@ -88,9 +105,24 @@ class MantenimientoTransporteController extends Controller
     {
 
         $mantenimiento=MantenimientoTransporte::findOrFail($id);
-        $empleados= DB::table('empleados')->where('estado','Activo')->get();
+        $operadores= DB::table('empleados')
+        ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+        ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+        ->select('empleados.id','empleados.nombre','empleados.apellidos')
+        ->where('rol_empleados.rol_Empleado','OPERADOR DE TRÁILER')
+        ->where('empleados.estado','Activo')->get();
+
+
+        $encargados_mantenimiento= DB::table('empleados')
+        ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+        ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+        ->select('empleados.id','empleados.nombre','empleados.apellidos')
+        ->where('rol_empleados.rol_Empleado','MANTENIMIENTO')
+        ->where('empleados.estado','Activo')->get();
+
+
         $transportes=DB::table('transportes')->where('estado','=','Activo')->get();
-        return view('Transportes.mantenimientoTransportes.edit',['mantenimiento'=>$mantenimiento,'transportes'=>$transportes,'empleados'=>$empleados]);
+        return view('Transportes.mantenimientoTransportes.edit',['mantenimiento'=>$mantenimiento,'transportes'=>$transportes,'operadores'=>$operadores,'encargados_mantenimiento'=>$encargados_mantenimiento]);
 
     }
 
@@ -134,7 +166,7 @@ class MantenimientoTransporteController extends Controller
 
     public function excel()
     {        
-      
+
         Excel::create('Lista Mantenimiento Vehiculo', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();

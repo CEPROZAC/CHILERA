@@ -69,7 +69,7 @@
                   <td style="display:none;">{{$empresas->direcionFisica}}</td>
                   <td style="display:none;">{{$empresas->telefono}}</td>
                   <td style="display:none;">{{$empresas->email}}</td>
-                  <td style="display:none;">{{$empresas->regimenFiscal}}</td>
+                  <td style="display:none;">{{$empresas->nomRegimen}}</td>
                   <td>
                     <center>
                       <a href="{{URL::action('EmpresasCeprozacController@verCuentas',$empresas->id)}}" class="btn btn-white btn-sm" role="button"><i class="fa fa-money"></i></a> 

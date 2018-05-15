@@ -29,21 +29,18 @@ class ProvedorController extends Controller
 
     public function excel()
     {        
-        /**
-         * toma en cuenta que para ver los mismos 
-         * datos debemos hacer la misma consulta
-        **/
-        Excel::create('empresas', function($excel) {
+
+        Excel::create('provedores', function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
 
 
-                $empresa = Empresa::select('nombre','rfc','direccion','telefono','email','regimenFiscal')
+                $empresa = Empresa::select('nombre','rfc','direccion','telefono','email')
                 ->where('estado', 'Activo')
                 ->get();       
                 $sheet->fromArray($empresa);
 
                 $sheet->row(1,['Nombre Empresa','RFC','Direccion',
-                    'Telefono','Email','Regimen Fiscal']);
+                    'Telefono','Email']);
                 $sheet->setOrientation('landscape');
             });
         })->export('xls');
@@ -147,8 +144,9 @@ class ProvedorController extends Controller
         $provedor=Provedor::findOrFail($id);
         $empresas= DB::table('empresas')
         ->join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
+        ->join('regimen_fiscal as r', 'empresas.idRegimenFiscal', '=', 'r.id')
         ->join('bancos','empresas.id_Banco','=','bancos.id')
-        ->select('empresas.*','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
+        ->select('empresas.*','bancos.nombre as nombreBanco','p.nombre as nombreProvedor', 'r.nombre as nomRegimen')
         ->where('empresas.estado','Activo')
         ->where('empresas.provedor_id','=',$id)
         ->get();
@@ -165,7 +163,8 @@ class ProvedorController extends Controller
 
                 $mantenimiento = Empresa::join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
                 ->join('bancos','empresas.id_Banco','=','bancos.id')
-                ->select('empresas.nombre','empresas.rfc','empresas.regimenFiscal','empresas.telefono','empresas.direccion','empresas.cve_Interbancaria','empresas.nom_cuenta','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
+                ->join('regimen_fiscal','empresas.idRegimenFiscal','=','regimen_fiscal.id')
+                ->select('empresas.nombre','empresas.rfc','regimen_fiscal.nombre as nomRegimen','empresas.telefono','empresas.direccion','empresas.cve_Interbancaria','empresas.nom_cuenta','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
                 ->where('empresas.estado','Activo')
                 ->where('empresas.provedor_id','=',$id)
                 ->get();

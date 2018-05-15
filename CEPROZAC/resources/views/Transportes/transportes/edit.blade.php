@@ -60,7 +60,7 @@
               <label class="col-sm-3 control-label">Placas: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-              <input name="placas" type="text"   onchange="mayus(this);"  class="form-control" required value="{{$vehiculo->placas}}" placeholder="Ingrese placas del Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="placas" type="text"   onchange="mayus(this);"  class="form-control" required value="{{$vehiculo->placas}}" placeholder="Ingrese placas del Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>
@@ -112,15 +112,22 @@
             <label class="col-sm-3 control-label">Chofer: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
               <select name="chofer_id" class="form-control" required>
-               @foreach($empleados as $empleado)
-               <option value="{{$empleado->id}}">
-                {{$empleado->nombre}} {{$empleado->apellidos}}
+               @foreach($operadores as $operador)
+               @if($vehiculo->chofer_id == $operador->id)
+               <option value="{{$operador->id}}" selected>
+                {{$operador->nombre}} {{$operador->apellidos}}
               </option>
+              @else
+              <option value="{{$operador->id}}">
+                {{$operador->nombre}} {{$operador->apellidos}}
+              </option>
+              @endif
               @endforeach
             </select>
             <div class="help-block with-errors"></div>
           </div>
         </div><!--/form-group-->
+
 
         <div class="form-group">
           <div class="col-sm-offset-7 col-sm-5">

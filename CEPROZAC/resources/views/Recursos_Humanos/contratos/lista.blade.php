@@ -3,12 +3,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Lista de Empleados</h2>
+    <h2 class="">Informacion de Contrato</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
       <li ><a style="color: #808080" href="{{url('/empleados')}}">Inicio</a></li>
-      <li class="active">Lista de Empleados</a></li>
+      <li class="active">Informacion de Contrato</a></li>
     </ol>
   </div>
 </div>
@@ -28,7 +28,7 @@
                 <div class="btn-group" style="margin-right: 10px;">
                   <a class="btn btn-sm btn-success tooltips" href="{{URL::action('EmpleadoController@create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
 
-                  <a class="btn btn-sm btn-danger tooltips" href="/empleados" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
+                  <a class="btn btn-sm btn-danger tooltips" href="/contratos" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
                 </div> 
               </b>
@@ -62,6 +62,10 @@
                       <td>{{$empleado->curp}}</td>
                     </tr>
                     <tr>
+                      <th>Sexo: </th>
+                      <td>{{$empleado->sexo}}</td>
+                    </tr>
+                    <tr>
                       <th>Telefono: </th>
                       <td>{{$empleado->telefono}}</td>
                     </tr>
@@ -69,9 +73,10 @@
                       <th>Correo: </th>
                       <td>{{$empleado->email}}</td>
                     </tr>
+
                     <tr>
-                      <th>Sexo: </th>
-                      <td>{{$empleado->sexo}}</td>
+                      <th>Domicilio: </th>
+                      <td>{{$empleado->domicilio}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -101,6 +106,10 @@
                     <tr>
                       <th>Sueldo Fijo: </th>
                       <td>{{$empleado->sueldo_Fijo}}</td>
+                    </tr>
+                    <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
                     </tr>
                     <tr>
                       <th> <div style="visibility: hidden"> Dato Nulo</div></th>

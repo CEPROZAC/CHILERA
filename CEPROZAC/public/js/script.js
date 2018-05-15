@@ -73,6 +73,7 @@ function myCreateFunction() {
   var select = document.getElementById("rol");
   var options=document.getElementsByTagName("option");
   var idRol= select.value;
+
   var x = select.options[select.selectedIndex].text;
 
 
@@ -116,108 +117,77 @@ function myDeleteFunction1(btn) {
 }
 
 
-function myCreateFunction1() {
+document.getElementById("div").onload = oQuickReplyswap();
+function oQuickReplyswap() {
 
-  var select = document.getElementById("rol");
-  var options=document.getElementsByTagName("option");
-  var idRol= select.value;
-  var nombreRol= options[select.value-1].innerHTML;
+  var id=document.getElementById("idEmpleado").value;
+  Carga(id);
+}
 
 
-  var fila="<tr><td style=\"display:none;\"><input id=\"idRol\"  name=\"idRol\" value=\""+idRol+"\"></td><td colspan=\"2\">"+nombreRol+"</td>"+""+"<td>"+
-  " <button type=\"button\" id=\"btn\"  value=\"{{$rol->id}}\"  onclick=\"myDeleteFunction1(this)\" class=\"btn btn-danger btn-icon\"> Quitar<i class=\"fa fa-times\"></i> </button>"
-  +"</td>";
-  var btn = document.createElement("TR");
-  btn.innerHTML=fila;
-  document.getElementById("myTable").appendChild(btn);
 
-  var dato1 = $("#idRol").val();
-  var dato2 = $("#idEmpleado").val();
-  var route = "/empleadoRoles";
-  var token = $("#token").val();
 
-  $.ajax({
-    url: route,
-    headers: {'X-CSRF-TOKEN': token},
-    type: 'POST',
-    dataType: 'json',
-    data:{idRol: dato1,idEmpleado: dato2},
+function Carga($id){
 
-    success:function(){
-      $("#msj-success").fadeIn();
-    }
+  var tablaDatos = $('#myTable');
+  var route = "http://localhost:8000/rolesEspecificos/"+$id;
+
+  $.get(route,function(res){
+    $(res).each(function(key,value){
+      tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
+        "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
+        +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
+    });
   });
 }
 
 
-$(document).ready(function(){
-        // Toolbar extra buttons
-        var btnFinish = $('<button></button>').text('Finish')
-        .addClass('btn btn-info')
-        .on('click', function(){
-          if( !$(this).hasClass('disabled')){
-            var elmForm = $("#myForm");
-            if(elmForm){
-              elmForm.validator('validate');
-              var elmErr = elmForm.find('.has-error');
-              if(elmErr && elmErr.length > 0){
-                alert('Oops we still have error in the form');
-                return false;
-              }else{
-                alert('Great! we are ready to submit form');
-                elmForm.submit();
-                return false;
-              }
-            }
-          }
-        });
-        var btnCancel = $('<button style="margin-left:-200px;"></button>').text('Cancel')
-        .addClass('btn btn-danger')
-        .on('click', function(){
-          $('#smartwizard').smartWizard("reset");
-          $('#myForm').find("input, textarea").val("");
-        });
+
+function Carga1(){
+  var tablaDatos = $('#myTable');
+  var route = "http://localhost:8000/ultimo";
+
+  $.get(route,function(res){
+    $(res).each(function(key,value){
+      tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
+        "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
+        +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
+    });
+  });
+}
 
 
-        // Smart Wizard
-        $('#smartwizard').smartWizard({
-          selected: 0,
-          theme: 'arrows',
-          transitionEffect:'fade',
-          toolbarSettings: {toolbarPosition: 'bottom'},
-          anchorSettings: {
-            markDoneStep: true, // add done css
-            markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-            removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
-            enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-          }
-        });
 
-        $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
-          var elmForm = $("#form-step-" + stepNumber);
-          // stepDirection === 'forward' :- this condition allows to do the form validation
-          // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
-          if(stepDirection === 'forward' && elmForm){
-            elmForm.validator('validate');
-            var elmErr = elmForm.children('.has-error');
-            if(elmErr && elmErr.length > 0){
-              // Form validation failed
-              return false;
-            }
-          }
-          return true;
-        });
+function myCreateFunction1() {
 
-        $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
-          // Enable finish button only on last step
-          if(stepNumber == 3){
-            $('.btn-finish').removeClass('disabled');
-          }else{
-            $('.btn-finish').addClass('disabled');
-          }
-        });
+ var select = document.getElementById("rol");
+ var options=document.getElementsByTagName("option");
+ var idRol= select.value;
 
-      });
+ var x = select.options[select.selectedIndex].text;
+
+
+
+ var dato1 = select.value;
+ var dato2 = $("#idEmpleado").val();
+ var route = "/empleadoRoles";
+ var token = $("#token").val();
+
+ $.ajax({
+  url: route,
+  headers: {'X-CSRF-TOKEN': token},
+  type: 'POST',
+  dataType: 'json',
+  data:{idRol: dato1,idEmpleado: dato2},
+
+  success:function(){
+    $("#msj-success").fadeIn();
+  }
+});
+ Carga1();
+}
+
+
 
 
 function calcularTiempo(){

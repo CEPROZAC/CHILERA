@@ -23,8 +23,10 @@ class EmpresaController extends Controller
 
       $empresas= DB::table('empresas')
       ->join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
+      ->join('regimen_fiscal as r', 'empresas.idRegimenFiscal', '=', 'r.id')
       ->join('bancos','empresas.id_Banco','=','bancos.id')
-      ->select('empresas.*','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
+      ->select('empresas.*','bancos.nombre as nombreBanco','p.nombre as nombreProvedor',
+        'r.nombre as nombreRegimen')
       ->where('empresas.estado','Activo')->get();
       return view('Provedores.empresas.index', ['empresas' => $empresas]);
 
@@ -40,7 +42,8 @@ class EmpresaController extends Controller
     {
         $bancos=DB::table('bancos')->where('estado','=','Activo')->get();
         $provedores=DB::table('provedores')->where('estado','=','Activo')->get();
-        return view("Provedores.empresas.create",["provedores"=>$provedores,"bancos"=>$bancos]);
+        $regimenFiscal=DB::table('regimen_fiscal')->where('estado','=','Activo')->get();
+        return view("Provedores.empresas.create",["provedores"=>$provedores,"bancos"=>$bancos,'regimenFiscal'=>$regimenFiscal]);
     }
 
     /**
@@ -54,7 +57,7 @@ class EmpresaController extends Controller
         $empresa= new Empresa;
         $empresa->nombre=$request->get('nombre');
         $empresa->rfc=$request->get('rfc');
-        $empresa->regimenFiscal=$request->get('regimenFiscal');
+
         $empresa->telefono=$request->get('telefono');
         $empresa->direccion=$request->get('direccion');
         $empresa->email=$request->get('email');
@@ -63,6 +66,7 @@ class EmpresaController extends Controller
         $empresa->nom_cuenta=$request->get('nom_cuenta');
         $empresa->estado='Activo';
         $empresa->provedor_id=$request->get('provedor_id');
+        $empresa->idRegimenFiscal=$request->get('idRegimenFiscal');
         $empresa->save();
         return Redirect::to('empresas');
     }
@@ -92,7 +96,8 @@ class EmpresaController extends Controller
         $empresas=Empresa::findOrFail($id);
         $provedores=DB::table('provedores')->where('estado','=','Activo')->get();
         $bancos=DB::table('bancos')->where('estado','=','Activo')->get();
-        return view("Provedores.empresas.edit",["provedores"=>$provedores,"empresas"=>$empresas,"bancos"=>$bancos]);
+        $regimenFiscal=DB::table('regimen_fiscal')->where('estado','=','Activo')->get();
+        return view("Provedores.empresas.edit",["provedores"=>$provedores,"empresas"=>$empresas,"bancos"=>$bancos,'regimenFiscal'=>$regimenFiscal]);
     }
 
     /**
@@ -107,7 +112,7 @@ class EmpresaController extends Controller
         $empresas=Empresa::findOrFail($id);
         $empresas->nombre=$request->get('nombre');
         $empresas->rfc=$request->get('rfc');
-        $empresas->regimenFiscal=$request->get('regimenFiscal');
+
         $empresas->telefono=$request->get('telefono');
         $empresas->direccion=$request->get('direccion');
         $empresas->email=$request->get('email');
@@ -116,7 +121,7 @@ class EmpresaController extends Controller
         $empresas->nom_cuenta=$request->get('nom_cuenta');
         $empresas->estado='Activo';
         $empresas->provedor_id=$request->get('provedor_id');
-
+        $empresas->idRegimenFiscal=$request->get('idRegimenFiscal');
         $empresas->Update();
         return Redirect::to('empresas');
 
@@ -149,7 +154,8 @@ class EmpresaController extends Controller
 
                 $empresas = Empresa::join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
                 ->join('bancos','empresas.id_Banco','=','bancos.id')
-                ->select('empresas.nombre as nomEmpresa','p.nombre as nombreProvedor','empresas.rfc','empresas.regimenFiscal','empresas.telefono as telEmpresa','empresas.direccion','empresas.email','bancos.nombre as nombreBanco','cve_Interbancaria','nom_cuenta')
+                ->join('regimen_fiscal','empresas.idRegimenFiscal','=','regimen_fiscal.id')
+                ->select('empresas.nombre as nomEmpresa','p.nombre as nombreProvedor','empresas.rfc','regimen_fiscal.nombre as nomRegimen','empresas.telefono as telEmpresa','empresas.direccion','empresas.email','bancos.nombre as nombreBanco','cve_Interbancaria','nom_cuenta')
                 ->where('empresas.estado','Activo')->get();     
                 
 

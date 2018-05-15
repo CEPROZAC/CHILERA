@@ -25,7 +25,8 @@ class EmpresasCeprozacController extends Controller
     {
 
         $empresas= DB::table('empresas_ceprozac')
-        ->select('empresas_ceprozac.*')
+        ->join('regimen_fiscal','empresas_ceprozac.idRegimenFiscal','=','regimen_fiscal.id')
+        ->select('empresas_ceprozac.*','regimen_fiscal.nombre as nomRegimen')
         ->where('empresas_ceprozac.estado','Activo')->get();
         return view('EmpresasCeprozac.empresas.index', ['empresas' => $empresas]);
     }
@@ -38,7 +39,8 @@ class EmpresasCeprozacController extends Controller
     public function create()
     {
       $bancos=DB::table('bancos')->where('estado','=','Activo')->get();
-      return view('EmpresasCeprozac.empresas.create',['bancos'=>$bancos]);
+      $regimenFiscal=DB::table('regimen_fiscal')->where('estado','=','Activo')->get();
+      return view('EmpresasCeprozac.empresas.create',['bancos'=>$bancos,'regimenFiscal'=>$regimenFiscal]);
   }
 
     /**
@@ -56,10 +58,11 @@ class EmpresasCeprozacController extends Controller
         $empresaCeprozac->direcionFisica=$request->get('direcionFisica');
         $empresaCeprozac->direcionFacturacion=$request->get('direcionFacturacion');
         $empresaCeprozac->rfc=$request->get('rfc');
-        $empresaCeprozac->regimenFiscal=$request->get('regimenFiscal');
+
         $empresaCeprozac->telefono=$request->get('telefono');
         $empresaCeprozac->email=$request->get('email');   
         $empresaCeprozac->estado='Activo';
+        $empresaCeprozac->idRegimenFiscal=$request->get('idRegimenFiscal');
         $empresaCeprozac->save();
         return Redirect::to('empresasCEPROZAC');
     }
@@ -85,8 +88,9 @@ class EmpresasCeprozacController extends Controller
     {
 
         $empresasCEPROZAC=EmpresasCeprozac::findOrFail($id);
-        $bancos=DB::table('bancos')->where('estado','=','Activo')->get();
-        return view("EmpresasCeprozac.empresas.edit",["empresasCEPROZAC"=>$empresasCEPROZAC,"bancos"=>$bancos]);
+
+        $regimenFiscal=DB::table('regimen_fiscal')->where('estado','=','Activo')->get();
+        return view("EmpresasCeprozac.empresas.edit",["empresasCEPROZAC"=>$empresasCEPROZAC,"regimenFiscal"=>$regimenFiscal]);
     }
 
     /**
@@ -105,10 +109,11 @@ class EmpresasCeprozacController extends Controller
         $empresaCeprozac->direcionFisica=$request->get('direcionFisica');
         $empresaCeprozac->direcionFacturacion=$request->get('direcionFacturacion');
         $empresaCeprozac->rfc=$request->get('rfc');
-        $empresaCeprozac->regimenFiscal=$request->get('regimenFiscal');
+
         $empresaCeprozac->telefono=$request->get('telefono');
         $empresaCeprozac->email=$request->get('email');
         $empresaCeprozac->estado='Activo';
+        $empresaCeprozac->idRegimenFiscal=$request->get('idRegimenFiscal');
         $empresaCeprozac->Update();
 
         return Redirect::to('empresasCEPROZAC');
@@ -135,13 +140,13 @@ class EmpresasCeprozacController extends Controller
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-                $empresas = EmpresasCeprozac::join('bancos','empresas_ceprozac.id_Banco','=','bancos.id')
-                ->select('empresas_ceprozac.nombre as nomEmpresa','empresas_ceprozac.representanteLegal','empresas_ceprozac.rfc','empresas_ceprozac.regimenFiscal','empresas_ceprozac.telefono as telEmpresa','empresas_ceprozac.direcionFisica','empresas_ceprozac.direcionFacturacion','empresas_ceprozac.email','bancos.nombre as nombreBanco','cve_Interbancaria','nom_cuenta')
+                $empresas = EmpresasCeprozac::join('regimen_fiscal','empresas_ceprozac.idRegimenFiscal','=','regimen_fiscal.id')
+                ->select('empresas_ceprozac.nombre as nomEmpresa','empresas_ceprozac.representanteLegal','empresas_ceprozac.rfc','regimen_fiscal.nombre as nomRegimen','empresas_ceprozac.telefono as telEmpresa','empresas_ceprozac.direcionFisica','empresas_ceprozac.direcionFacturacion','empresas_ceprozac.email')
                 ->where('empresas_ceprozac.estado','Activo')->get();     
                 
 
                 $sheet->fromArray($empresas);
-                $sheet->row(1,['Nombre Empresa','Representante Legal','RFC','Regimen Fiscal','Telefono','Direccion Fisica','Direccion de Facturacion','Correo','Banco','Clabe Interbancaria','Numero de cuenta', ]);
+                $sheet->row(1,['Nombre Empresa','Representante Legal','RFC','Regimen Fiscal','Telefono','Direccion Fisica','Direccion de Facturacion','Correo']);
 
                 $sheet->setOrientation('landscape');
             });
@@ -169,16 +174,16 @@ class EmpresasCeprozacController extends Controller
 
         $excel->sheet('Excel sheet', function($sheet) use($id) {
 
-           $cuentas= DB::table('cuentas_empresas_ceprozac')
-           ->join('bancos','bancos.id','=','cuentas_empresas_ceprozac.idBanco')
-           ->select('cuentas_empresas_ceprozac.*','bancos.nombre as nomBanco')
-           ->where('idEmpresa','=',$id)
-           ->where('cuentas_empresas_ceprozac.estado','Activo')
-           ->get();
-           $sheet->fromArray($cuentas);
-           $sheet->row(1,['Banco','Clave Interbancaria','Numero de cuenta','Saldo' ]);
-           $sheet->setOrientation('landscape');
-       });
+         $cuentas= DB::table('cuentas_empresas_ceprozac')
+         ->join('bancos','bancos.id','=','cuentas_empresas_ceprozac.idBanco')
+         ->select('cuentas_empresas_ceprozac.*','bancos.nombre as nomBanco')
+         ->where('idEmpresa','=',$id)
+         ->where('cuentas_empresas_ceprozac.estado','Activo')
+         ->get();
+         $sheet->fromArray($cuentas);
+         $sheet->row(1,['Banco','Clave Interbancaria','Numero de cuenta','Saldo' ]);
+         $sheet->setOrientation('landscape');
+     });
     })->export('xls');
 
 }

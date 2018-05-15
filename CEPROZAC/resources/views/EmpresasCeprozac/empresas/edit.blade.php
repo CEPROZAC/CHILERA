@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="porlets-content">
-        <form action="{{url('empresasCEPROZAC', [$empresasCEPROZAC->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          <form action="{{url('empresasCEPROZAC', [$empresasCEPROZAC->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group">
@@ -55,68 +55,75 @@
               </div>
             </div>
 
+            
             <div class="form-group">
               <label class="col-sm-3 control-label"> Regimen Fiscal: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="regimenFiscal" class="form-control" required>  
-                  <option value="BASICO">
-                    BASICO
-                  </option>
-                  <option value="FISICO">
-                    FISICO
-                  </option>         
-                </select>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div><!--/form-group-->
+               <select name="idRegimenFiscal" class="form-control select2" required> 
+                 <
+                 @foreach($regimenFiscal as $regimen)
+                 @if($empresasCEPROZAC->idRegimenFiscal== $regimen->id)
+                 <option value="{{$regimen->id}}" selected>
+                   {{$regimen->nombre}}
+                 </option>
+                 @else
+                 <option value="{{$regimen->id}}" >
+                   {{$regimen->nombre}}
+                 </option>
+                 @endif
+                 @endforeach              
+               </select>
+               <div class="help-block with-errors"></div>
+             </div>
+           </div><!--/form-group-->
 
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input type="text" placeholder="Ingrese el número de teléfono de la empresa" name="telefono" value="{{$empresasCEPROZAC->telefono}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" parsley-type="phone" maxlength="200">
-              </div>
+           <div class="form-group">
+            <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <input type="text" placeholder="Ingrese el número de teléfono de la empresa" name="telefono" value="{{$empresasCEPROZAC->telefono}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" parsley-type="phone" maxlength="200">
             </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Direccion de Facturacion: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="direcionFacturacion" type="text"  onchange="mayus(this);"  class="form-control" required placeholder="Ingrese Direccion de la empresa" value="{{$empresasCEPROZAC->direcionFacturacion}}" maxlength="200" parsley-rangelength="[1,200]"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Direccion Fisica: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="direcionFisica" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$empresasCEPROZAC->direcionFisica}}" placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="email" name="email" value="{{$empresasCEPROZAC->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="30" parsley-rangelength="[1,30]"/>
-
-              </div>
-            </div>
-
-         
-
-
-
-        <div class="form-group">
-          <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{url('/empresasCEPROZAC')}}" class="btn btn-default"> Cancelar</a>
           </div>
-        </div><!--/form-group-->
-      </form>
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
-</div><!--/col-md-12-->
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Direccion de Facturacion: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+              <input name="direcionFacturacion" type="text"  onchange="mayus(this);"  class="form-control" required placeholder="Ingrese Direccion de la empresa" value="{{$empresasCEPROZAC->direcionFacturacion}}" maxlength="200" parsley-rangelength="[1,200]"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Direccion Fisica: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+              <input name="direcionFisica" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$empresasCEPROZAC->direcionFisica}}" placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+              <input name="email" name="email" value="{{$empresasCEPROZAC->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de la empresa" maxlength="30" parsley-rangelength="[1,30]"/>
+
+            </div>
+          </div>
+
+          
+
+
+
+          <div class="form-group">
+            <div class="col-sm-offset-7 col-sm-5">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <a href="{{url('/empresasCEPROZAC')}}" class="btn btn-default"> Cancelar</a>
+            </div>
+          </div><!--/form-group-->
+        </form>
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 

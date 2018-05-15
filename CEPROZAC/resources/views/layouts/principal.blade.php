@@ -155,17 +155,17 @@
               <ul>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
                 
-                <li> <a href="{{url('almacen/salidas/material')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Salidas de Almacén de Materiales</b> </a> </li>
-                <li> <a href="{{url('almacen/entradas/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Entradas de Almacén de Materiales</b> </a> </li>
+                
 
 
                 <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Agroquímicos</b> </a> </li>
 
                 
-                <li> <a href="{{url('almacen/salidas/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Salidas de Almacén de Agroquímicos</b> </a> </li>
-                <li> <a href="{{url('almacen/entradas/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle-o"></i> <b>Entradas de Almacén de Agroquímicos</b> </a> </li>
+                
                 
                 <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Limpieza</b> </a> </li>
+
+                <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacenes Generales</b> </a> </li>
 
 
               </ul>
@@ -233,7 +233,15 @@
 
 
   {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js')!!}
+  <script type="text/javascript">
+   $(document).on('ready', function()  {
 
-</body>
+          //Initialize Select2 Elements
+          $('.select2').select2()
 
-</html>
+        })
+      </script>
+
+    </body>
+
+    </html>

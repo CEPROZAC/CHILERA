@@ -43,7 +43,7 @@
          <div class="table-responsive">
            <table class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
-              <tr>
+              <tr >
                 <th  >Nombre Completo</th>
                 <th style="display:none;" >Fecha_Ingreso</th>
 
@@ -57,6 +57,7 @@
                 <th style="display:none;">sueldo</th>
                 <th style="display:none;">Duracion</th>
                 <th >Ver</th>
+                <th >Descargar</th>
 
 
                 <td><center><b>Editar</b></center></td>
@@ -85,14 +86,21 @@
                <td >
 
                  <center>
-                   <a href="{{URL::action('ContratosController@verInformacion',$contrato->idContrato)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
+                   <a href="{{URL::action('ContratosController@verInformacion',$contrato->idContrato)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" onclick="calcular();"></i></a>
                  </center>
                </td>
 
-               <td>  <a href="{{URL::action('ContratosController@edit',$contrato->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
+               <td >
+
+                 <center>
+                   <a href="{{URL::action('ContratosController@pdf',$contrato->idContrato)}}" class="btn btn-warning btn-sm" role="button"><i class="fa fa-download"></i></a>
+                 </center>
+               </td>
+
+               <td>  <a href="{{URL::action('ContratosController@edit',$contrato->idContrato)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
                </td> 
              </td>
-             <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+             <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->idContrato}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
              </td>
            </tr>
            @include('Recursos_Humanos.contratos.modal')
@@ -113,6 +121,7 @@
             <th style="display:none;">suedlo fijo </th>
             <th style="display:none;" >Duracion</th>
             <th >Ver</th>
+            <th >Descargar</th>
             <td><center><b>Editar</b></center></td>
             <td><center><b>Borrar</b></center></td> 
 
@@ -125,6 +134,14 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
+
+<script type="text/javascript">
+ function calcular(){
+
+}
+
+
+</script>
 
 
 @endsection

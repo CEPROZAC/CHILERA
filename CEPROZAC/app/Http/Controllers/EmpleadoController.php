@@ -80,6 +80,7 @@ class EmpleadoController extends Controller
      $empleado->email=$request->get('email');
      $empleado->telefono=$request->get('telefono');
      $empleado->sueldo_Fijo=$request->get('sueldo_Fijo');
+     $empleado->domicilio=$request->get('domicilio');
      $empleado->estado='Activo';
      $empleado->tipo='NORMAL';
      substr($_REQUEST['curp'], 10,1) == "H"?$empleado->sexo="Hombre":$empleado->sexo="Mujer";
@@ -193,7 +194,7 @@ class EmpleadoController extends Controller
             ->where('empleados.estado', 'Activo')
             ->get();       
             $sheet->fromArray($empleado);
-            $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','Fecha Nacimiento','CURP','Correo','Telefono','Sexo','Sueldo','Rol']);
+            $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','Fecha Nacimiento','CURP','Correo','Telefono','Sexo','Sueldo']);
 
             $sheet->setOrientation('landscape');
           });

@@ -67,7 +67,7 @@
                   <td>{{$empresas->direccion}}</td>
                   <td style="display:none;">{{$empresas->telefono}}</td>
                   <td style="display:none;">{{$empresas->email}}</td>
-                  <td style="display:none;">{{$empresas->regimenFiscal}}</td>
+                  <td style="display:none;">{{$empresas->nombreRegimen}}</td>
                   <td>{{$empresas->nombreProvedor}} </td>
                   <th style="display:none;">{{$empresas->nombreBanco}} </th>
                   <th style="display:none;">{{$empresas->cve_Interbancaria}} </th>

@@ -21,7 +21,8 @@ class CreateEmpresasCeprozacTable extends Migration
             $table->string('direcionFisica');
             $table->string('direcionFacturacion');
             $table->string('email');
-            $table->string('regimenFiscal');
+            $table->integer('idRegimenFiscal')->unsigned();
+            $table->foreign('idRegimenFiscal')->references('id')->on('regimen_fiscal');
             $table->string('estado');
             $table->timestamps();
         });

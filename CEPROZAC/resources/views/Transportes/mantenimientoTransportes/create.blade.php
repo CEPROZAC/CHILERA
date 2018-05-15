@@ -58,7 +58,7 @@
            </div>
 
            <div class="form-group">
-           <label class="col-sm-3 control-label"> Vehiculo: <strog class="theme_color">*</strog></label>
+             <label class="col-sm-3 control-label"> Vehiculo: <strog class="theme_color">*</strog></label>
              <div class="col-sm-6">
               <select name="idTransporte" class="form-control" required>  
                 @foreach($transportes as $transporte)
@@ -71,45 +71,45 @@
            </div>
          </div><!--/form-group-->
 
-           <div class="form-group">
-           <label class="col-sm-3 control-label"> Responsable de Vehiculo: <strog class="theme_color">*</strog></label>
-             <div class="col-sm-6">
-              <select name="idChofer" class="form-control" required>  
-                @foreach($empleados as $empleado)
-                <option value="{{$empleado->id}}">
-                 {{$empleado->nombre}}  {{$empleado->apellidos}}  
-               </option>
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
-
-           <div class="form-group">
-           <label class="col-sm-3 control-label"> Responsable de Mantenimiento: <strog class="theme_color">*</strog></label>
-             <div class="col-sm-6">
-              <select name="idMecanico" class="form-control" required>  
-                @foreach($empleados as $empleado)
-                <option value="{{$empleado->id}}">
-                 {{$empleado->nombre}}  {{$empleado->apellidos}}  
-               </option>
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
-
          <div class="form-group">
-          <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{url('/mantenimiento')}}" class="btn btn-default"> Cancelar</a>
-          </div>
-        </div><!--/form-group-->
-      </form>
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
+           <label class="col-sm-3 control-label">Responsable Vehiculo: <strog class="theme_color">*</strog></label>
+           <div class="col-sm-6">
+           <select name="idChofer" class="form-control" required>
+             @foreach($operadores as $operador)
+             <option value="{{$operador->id}}">
+       ¿
+               {{$operador->nombre}} {{$operador->apellidos}}
+             </option>
+             @endforeach
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div><!--/form-group-->
+
+       <div class="form-group">
+        <label class="col-sm-3 control-label">Encargado de Mantenimiento: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <select name="idMecanico" class="form-control" required>
+           @foreach($encargados_mantenimiento as $mantenimiento)
+           <option value="{{$mantenimiento->id}}">
+             {{$mantenimiento->nombre}} {{$mantenimiento->apellidos}}
+           </option>
+           @endforeach
+         </select>
+         <div class="help-block with-errors"></div>
+       </div>
+     </div><!--/form-group-->
+
+
+     <div class="form-group">
+      <div class="col-sm-offset-7 col-sm-5">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{url('/mantenimiento')}}" class="btn btn-default"> Cancelar</a>
+      </div>
+    </div><!--/form-group-->
+  </form>
+</div><!--/porlets-content-->
+</div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->

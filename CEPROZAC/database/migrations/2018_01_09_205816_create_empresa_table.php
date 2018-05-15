@@ -16,7 +16,8 @@ class CreateEmpresaTable extends Migration
        $table->increments('id');
        $table->string('nombre');
        $table->string('rfc');
-        $table->string('regimenFiscal');
+       $table->integer('idRegimenFiscal')->unsigned();
+       $table->foreign('idRegimenFiscal')->references('id')->on('regimen_fiscal');
        $table->string('telefono');
        $table->string('direccion');
        $table->string('email');

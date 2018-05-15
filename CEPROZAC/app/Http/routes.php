@@ -44,7 +44,10 @@ Route::resource('cuentasEmpresasCEPROZAC','CuentasEmpresasCEPROZACController');
 
 Route::resource('contratos','ContratosController');
 Route::get('pdf', 'PdfController@invoice');
-Route::get('descargarPDF', 'BasculaController@pdf');
+Route::get('descargarPDF/{id}', 'ContratosController@pdf');
+
+
+
 Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores.excel');
 Route::get('descargar-contratos', 'ContratosController@excel')->name('contratos.excel');
 Route::get('descargar-EmpresasCEPROZAC', 'EmpresasCeprozacController@excel')->name('empresasCEPROZAC.excel');
@@ -56,6 +59,11 @@ Route::get('cuentasEmpresasCEPROZAC1/{id}','CuentasEmpresasCEPROZACController@cr
 
 
 Route::get('ver-InformacionEmpleado/{id}', 'EmpleadoController@verInformacion')->name('empleados.verInformacion');
+
+Route::get('rolesEspecificos/{id}', 'ContratosController@rolesEspecificos');
+
+Route::get('ultimo', 'ContratosController@ultimo');
+
 
 Route::get('ver-InformacionContrato/{id}', 'ContratosController@verInformacion')->name('contratos.verInformacion');
 

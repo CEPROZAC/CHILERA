@@ -12,13 +12,13 @@
 </style>
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-    <h1>Beneficiario con RFC</h1>
-    <h2 class="active"></h2>
+    <h1>Inicicio</h1>
+    <h2 class="active">Contratos</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a href="?c=Inicio">Inicio</a></li>
-      <li><a href="?c=Beneficiario">Beneficiario con RFC</a></li>
+      <li><a style="color: #808080">Inicio</a></li>
+      <li><a style="color: #808080">Contratos</a></li>
       <li class="active"></li>
     </ol>
   </div>
@@ -48,19 +48,20 @@
 
         <div class="porlets-content">
           <div  class="form-horizontal row-border" > <!--acomodo-->
-            <form action="{{url('contratos',[$contrato->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+            <form action="{{url('contratos', [$contrato->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
               {{csrf_field()}}
-
               <input type="hidden" name="_method" value="PUT">
+
 
               <div id="smartwizard">
                 <ul>
                   <li><a href="#step-1">Informacion Personal</a></li>
                   <li><a href="#step-2">Informacion Laboral</a></li>
                   <li><a href="#step-3">Datos de Contrato</a></li>
+                  <li><a href="#step-4">Roles de trabajador</a></li>
                 </ul>
                 <div>
-                  <div id="step-1" class="">
+                  <div id="step-1" id="div">
                     <div class="user-profile-content">
 
                       <div id="form-step-0" role="form" data-toggle="validator">
@@ -82,11 +83,11 @@
                             <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->apellidos}}" placeholder="Ingrese nombre de el Cliente"/>
                           </div>
                         </div>
-
+                        <input  name="fecha_Nacimiento"  type="hidden" id="fechaNacimiento"  />
                         <div class="form-group">
                           <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
-                            <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();"  class="form-control"   placeholder="Ingrese CURP de el empleado" value="{{$empleado->curp}}" />
+                            <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();"  class="form-control"   placeholder="Ingrese CURP de el empleado"  value="{{$empleado->curp}}" />
                           </div>
                         </div><!--/form-group-->
 
@@ -98,10 +99,17 @@
                         </div>
 
                         <div class="form-group">
+                          <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
+                          <div class="col-sm-6">
+                            <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask"  value="{{$empleado->domicilio}}" >
+                          </div>
+                        </div>
+
+                        <div class="form-group">
                           <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                            <input name="email"  required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el empleado" value="{{$empleado->email}}" />
+                            <input name="email" value="{{$empleado->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente" />
 
                           </div>
                         </div>
@@ -120,108 +128,160 @@
                           <label class="col-sm-3 control-label">Fecha Ingreso: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                           <input name="fecha_Ingreso" required type="text" class="form-control mask" data-inputmask="'alias': 'date'" value="{{$empleado->fecha_Ingreso}}">
+                            <input name="fecha_Ingreso" value="{{$empleado->fecha_Ingreso}}" required type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
+                          <div class="col-sm-6">
+
+                            <input type="text" name="fecha_Alta_Seguro"   value="{{$empleado->fecha_Alta_Seguro}}" required class="form-control mask" data-inputmask="'alias': 'date'">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label">SSN</label>
+                          <div class="col-sm-6 ">
+                            <input type="text" name="numero_Seguro_Social" value="{{$empleado->numero_Seguro_Social}}" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label">Empresa contrata: <strog class="theme_color">*</strog></label>
+                          <div class="col-sm-6">
+                            <select name="idEmpresa" class="form-control" required>  
+                              @foreach($empresas as $empresa)
+                              <option value="{{$empresa->id}}">
+                               {{$empresa->nombre}}
+                             </option>
+                             @endforeach              
+                           </select>
+                           <div class="help-block with-errors"></div>
+                         </div>
+                       </div><!--/form-group-->
+
+
+
+                       <div class="form-group">
+                         <label class="col-sm-3 control-label">HORAS DE DESCANSO: </label>
+                         <div class="col-sm-2">
+                           <input type="text" class="form-control mask"  value="{{$contrato->horas_Descanso}}" name="horas_Descanso" required placeholder="34" onkeypress=" return soloNumeros(event);">
+                         </div>
+                         <div class="col-sm-3 left-align">
+                           <p class="help-block">HORAS</p>
                          </div>
                        </div>
 
                        <div class="form-group">
-                        <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
-                        <div class="col-sm-6">
+                        <label class="col-sm-3 control-label">HORAS DE ALIMENTACION: </label>
+                        <div class="col-sm-2">
+                          <input type="text" name="horas_Alimentacion"  value="{{$contrato->horas_Alimentacion}}" class="form-control mask" required placeholder="34" onkeypress=" return soloNumeros(event);">
+                        </div>
+                        <div class="col-sm-3 left-align">
+                          <p class="help-block">HORAS</p>
+                        </div>
+                      </div>
 
-                         <input type="text" name="fecha_Alta_Seguro" required class="form-control mask" data-inputmask="'alias': 'date'" value="{{$empleado->fecha_Alta_Seguro}}">
+                      <div class="form-row">    
+                        <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
+                        <div class="col-sm-3">
+                          <div class="input-group">
+                           <div class="input-group-addon">$</div>
+
+
+                           <input name="sueldo_Fijo" required parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="{{$empleado->sueldo_Fijo}}" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
+                         </div>
                        </div>
                      </div>
 
-                     <div class="form-group">
-                      <label class="col-sm-3 control-label">SSN</label>
-                      <div class="col-sm-6 ">
-                        <input type="text" name="numero_Seguro_Social" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'" value="{{$empleado->numero_Seguro_Social}}">
+
+                   </div><!--validator-->
+                 </div><!--user-profile-content-->
+               </div><!--step-2-->
+
+               <div id="step-3" class="">
+                <div class="user-profile-content">
+                  <div id="form-step-2" role="form" data-toggle="validator">
+                    <h3 class="h3titulo">Datos de Contrato</h3>
+
+
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-6">
+
+                        <input name="fechaInicio" value="{{$contrato->fechaInicio}}"  id="fechaInicio"   type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Rol empleado: <strog class="theme_color">*</strog></label>
+                      <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="rol" class="form-control" required>  
-                          @foreach($roles as $rol)
-                          @if($rol->id==$empleado->rol)
-                          <option value="{{$rol->id}}" selected="">
-                           {{$rol->rol_Empleado}}
-                         </option>
-                         @else
-                         <option value="{{$rol->id}}" selected>
-                           {{$rol->rol_Empleado}}
-                         </option>
-                         @endif
-                         @endforeach              
-                       </select>
-                       <div class="help-block with-errors"></div>
-                     </div>
-                   </div><!--/form-group-->
 
-                   <div class="form-row">    
-                    <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
-                    <div class="col-sm-2">
-                      <div class="input-group">
-                       <div class="input-group-addon">$</div>
+                        <input name="fechaFin" id="fechaFin"  value="{{$contrato->fechaFin}}"  type="text" onblur="calcularTiempo();" required class="form-control mask" data-inputmask="'alias': 'date'">
+                      </div>
+                    </div>
+                    <input type="hidden" name="duracionContrato" id="duracionContrato" value="{{$contrato->duracionContrato}}" />    
+
+                  </div><!--validator-->
+                </div><!--user-profile-content-->
+              </div><!--step-3-->
 
 
-                       <input name="sueldo_Fijo" maxlength="9" type="number"  min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="{{$empleado->sueldo_Fijo}}" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
-                     </div>
+              <div id="step-4" class="">
+                <div class="user-profile-content">
+                  <div id="form-step-3" role="form" >
+                    <h3 class="h3titulo">Roles de empleados</h3>
+                    <br>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th> 
+                              Rol
+                            </th> 
+                            <th>Agregar Rol</th>
+                            <th>Quitar Rol</th>
+                          </tr>
+                        </thead>
+                        <tbody id="myTable">
+                          <tr>
+                            <td>
+                              <div class="col-sm-8">
+                                <select   id="rol" class="form-control" required>  
+                                  @foreach($roles as $rol)
+                                  <option label="{{$rol->rol_Empleado}}" value="{{$rol->id}}">
+                                   {{$rol->rol_Empleado}} 
+                                 </option>
+                                 @endforeach              
+                               </select>
+                             </div>   
+                           </td>
+
+                           <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                           <input type="hidden" value="{{ $empleado->id}}" id="idEmpleado">
+                           <td colspan="2"><button type="button"  onclick="myCreateFunction1();" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                         </tr>
+
+                       </tbody>
+                     </table>
                    </div>
-                 </div>
+                   <div class="form-group">
+                    <div class="col-sm-offset-7 col-sm-5">
+                      <button type="submit" class="btn btn-primary">Guardar</button>
+                      <a href="/contratos" class="btn btn-default"> Cancelar</a>
+                    </div>
+                  </div><!--/form-group--> 
 
+                </div><!--validator-->
+              </div><!--user-profile-content-->
+            </div><!--step-2-->
 
-               </div><!--validator-->
-             </div><!--user-profile-content-->
-           </div><!--step-2-->
-
-           <div id="step-3" class="">
-            <div class="user-profile-content">
-              <div id="form-step-2" role="form" data-toggle="validator">
-                <h3 class="h3titulo">Datos de Contrato</h3>
-
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
-                  <div class="col-sm-6">
-
-                   <input name="fechaInicio" type="text" value="{{$contrato->fechaInicio}}" required class="form-control mask" data-inputmask="'alias': 'date'">
-                 </div>
-               </div>
-
-               <div class="form-group">
-                <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
-                <div class="col-sm-6">
-
-                 <input name="fechaFin" type="text" value="{{$contrato->fechaFin}}" required class="form-control mask" data-inputmask="'alias': 'date'">
-               </div>
-             </div>
-
-             <div class="form-group">
-              <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="duracionContrato" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" required placeholder="Ingrese nombre de el Empleado" value="{{$contrato->duracionContrato}}" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-7 col-sm-5">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="/contratos" class="btn btn-default"> Cancelar</a>
-              </div>
-            </div><!--/form-group-->                        
-
-          </div><!--validator-->
-        </div><!--user-profile-content-->
-      </div><!--step-3-->
-
-    </div>
-  </div>  <!--smartwizard-->            
-</form>
-</div><!--/form-horizontal-->
-</div><!--/porlets-content-->
+          </div>
+        </div>  <!--smartwizard-->            
+      </form>
+    </div><!--/form-horizontal-->
+  </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
@@ -300,7 +360,7 @@
       });
 
     </script>
-    
+
 
 
 
