@@ -246,7 +246,7 @@
                                                   <div class="form-group ">
         <label class="col-sm-3 control-label">Diferencia</label>
         <div class="col-sm-6">
-          <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="diferencia"   id="diferencia" class="form-control mask";>
+          <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="diferencia"  readonly  id="diferencia" class="form-control mask";>
         </div>
       </div>
 
@@ -260,34 +260,53 @@
           <div id="step-4" class="">
             <div class="user-profile-content">
               <div id="form-step-3" role="form" >
-                <h3 class="h3titulo">Roles de empleados</h3>
+                <h3 class="h3titulo">Enviar Materia Prima a Área de Recepción</h3>
                 <br>
-                <div class="table-responsive">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th> 
-                          Rol
-                        </th> 
-                        <th>Agregar Rol</th>
-                        <th>Quitar Rol</th>
-                      </tr>
-                    </thead>
-                    <tbody id="myTable">
-                      <tr>
-                        <td>
-   
+
+                  <div class="form-group">
+           <label class="col-sm-3 control-label">Ubicación a Enviar: <strog class="theme_color">*</strog></label>
+           <div class="col-sm-6">
+            <select name="almacen" id="almacen" class="form-control" required>
+              @foreach($almacengeneral as $almacen)
+              <option value="{{$almacen->id}}_{{$almacen->capacidad}} {{$almacen->medida}}_{{$almacen->ocupado}}_{{$almacen->libre}}_{{$almacen->descripcion}}">
+               {{$almacen->nombre}} 
+             </option>
+             @endforeach
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div><!--/form-group-->
+
+                   <div class="form-group">
+              <label class="col-sm-3 control-label">Capacidad de Almacenamiento: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="capacidad" id="capacidad" type="text"  disabled onchange="mayus(this);"  class="form-control" required value="" />
+              </div>
+            </div>
+
+                             <div class="form-group">
+              <label class="col-sm-3 control-label">Espacio Ocupado: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="ocupado" id="ocupado" type="text"  disabled onchange="mayus(this);"  class="form-control" required value="" />
+              </div>
+            </div>
+
+                                         <div class="form-group">
+              <label class="col-sm-3 control-label">Espacio Libre: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="libre" id="libre" type="text"  disabled onchange="mayus(this);"  class="form-control" required value="" />
+              </div>
+            </div>
+
+                                         <div class="form-group">
+              <label class="col-sm-3 control-label">Descripción : <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="descripcion" id="descripcion" type="text" disabled onchange="mayus(this);"  class="form-control" required value="" />
+              </div>
+            </div>
 
 
-
-                       </td>
-                       <input type="hidden" name="_token" id="idEmpleado">
-                       <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                       <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
-                     </tr>
-                   </tbody>
-                 </table>
-               </div>
+             
                <div class="form-group">
                 <div class="col-sm-offset-7 col-sm-5">
                   <button type="submit" class="btn btn-primary">Guardar</button>
@@ -314,6 +333,47 @@
 
 
 <script type="text/javascript">
+window.onload=function() {
+     var select2 = document.getElementById('almacen');
+          // alert(select2.value);
+          var z = select2.value;
+          if (z != ""){
+            var selectedOption2 = select2.selectedIndex;
+            var cantidadtotal = select2.value;
+            limite = "5",
+            separador = "_",
+            arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+            capacidad=arregloDeSubCadenas[1];
+              ocupado=arregloDeSubCadenas[2];
+               libre=arregloDeSubCadenas[3];
+                descripcion=arregloDeSubCadenas[4];
+            document.getElementById("capacidad").value=capacidad;
+            document.getElementById("ocupado").value=ocupado;
+            document.getElementById("libre").value =libre;
+            document.getElementById("descripcion").value =descripcion;
+          
+          }
+        }
+
+          var select = document.getElementById('almacen');
+  //alert(select);
+  select.addEventListener('change',
+    function(){
+      var selectedOption = this.options[select.selectedIndex];
+     // alert(selectedOption.value);
+   //   console.log(selectedOption.value + ': ' + selectedOption.text);
+   var cantidadtotal = selectedOption.value;
+   limite = "5",
+            separador = "_",
+            arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+            capacidad=arregloDeSubCadenas[1];
+              ocupado=arregloDeSubCadenas[2];
+               libre=arregloDeSubCadenas[3];
+                descripcion=arregloDeSubCadenas[4];
+            document.getElementById("capacidad").value=capacidad;
+            document.getElementById("ocupado").value=ocupado;
+            document.getElementById("libre").value =libre;
+            document.getElementById("descripcion").value =descripcion;});
 
     function calcula(){
       var var1 =document.getElementById('enviados').value;
@@ -325,6 +385,27 @@
 
       
     }
+
+      function cargar(){
+   var select2 = document.getElementById('almacen');
+          // alert(select2.value);
+          var z = select2.value;
+          if (z != ""){
+            var selectedOption2 = select2.selectedIndex;
+            var cantidadtotal = select2.value;
+            limite = "5",
+            separador = "_",
+            arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+            capacidad=arregloDeSubCadenas[1];
+              ocupado=arregloDeSubCadenas[2];
+               libre=arregloDeSubCadenas[3];
+                descripcion=arregloDeSubCadenas[4];
+            document.getElementById("capacidad").value=capacidad;
+            document.getElementById("ocupado").value=ocupado;
+            document.getElementById("libre").value =libre;
+            document.getElementById("descripcion").value =descripcion;
+          
+          }}
 
 
   function calcularTiempo(){
@@ -346,6 +427,78 @@
 
     }
   </script>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+        // Toolbar extra buttons
+        var btnFinish = $('<button></button>').text('Finish')
+        .addClass('btn btn-info')
+        .on('click', function(){
+          if( !$(this).hasClass('disabled')){
+            var elmForm = $("#myForm");
+            if(elmForm){
+              elmForm.validator('validate');
+              var elmErr = elmForm.find('.has-error');
+              if(elmErr && elmErr.length > 0){
+                alert('Oops we still have error in the form');
+                return false;
+              }else{
+                alert('Great! we are ready to submit form');
+                elmForm.submit();
+                return false;
+              }
+            }
+          }
+        });
+        var btnCancel = $('<button style="margin-left:-200px;"></button>').text('Cancel')
+        .addClass('btn btn-danger')
+        .on('click', function(){
+          $('#smartwizard').smartWizard("reset");
+          $('#myForm').find("input, textarea").val("");
+        });
+
+
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+          selected: 0,
+          theme: 'arrows',
+          transitionEffect:'fade',
+          toolbarSettings: {toolbarPosition: 'bottom'},
+          anchorSettings: {
+            markDoneStep: true, // add done css
+            markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
+            removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
+            enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+          }
+        });
+
+        $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+          var elmForm = $("#form-step-" + stepNumber);
+          // stepDirection === 'forward' :- this condition allows to do the form validation
+          // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
+          if(stepDirection === 'forward' && elmForm){
+            elmForm.validator('validate');
+            var elmErr = elmForm.children('.has-error');
+            if(elmErr && elmErr.length > 0){
+              // Form validation failed
+              return false;
+            }
+          }
+          return true;
+        });
+
+        $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
+          // Enable finish button only on last step
+          if(stepNumber == 3){
+            $('.btn-finish').removeClass('disabled');
+          }else{
+            $('.btn-finish').addClass('disabled');
+          }
+        });
+
+      });
+
+    </script>
 
 
 

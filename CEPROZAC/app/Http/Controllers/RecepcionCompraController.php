@@ -14,6 +14,7 @@ use CEPROZAC\ServicioBascula;
 use CEPROZAC\RecepcionCompra;
 use CEPROZAC\Empleado;
 use CEPROZAC\Bascula;
+use CEPROZAC\AlmacenGeneral;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -61,7 +62,8 @@ class RecepcionCompraController extends Controller
       $servicio=DB::table('basculas')->where('estado','=' ,'Activo')->get();
       $empaque=DB::table('forma_empaques')->where('estado','=' ,'Activo')->get();
       $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
-      return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad]);
+      $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('libre','>','0')->get();
+      return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral]);
     }
 
     /**
