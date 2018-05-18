@@ -15,6 +15,7 @@ use CEPROZAC\RecepcionCompra;
 use CEPROZAC\Empleado;
 use CEPROZAC\Bascula;
 use CEPROZAC\AlmacenGeneral;
+use CEPROZAC\AlmacenAgroquimicos;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -63,7 +64,8 @@ class RecepcionCompraController extends Controller
       $empaque=DB::table('forma_empaques')->where('estado','=' ,'Activo')->get();
       $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
       $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('libre','>','0')->get();
-      return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral]);
+      $almacenagroquimicos=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->orwhere('cantidad','>','0')->get();
+      return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral,"almacenagroquimicos"=>$almacenagroquimicos]);
     }
 
     /**

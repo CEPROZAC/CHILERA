@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RecepcionCompraMigration extends Migration
+class Recepcioncompramigration extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,9 @@ class RecepcionCompraMigration extends Migration
      */
     public function up()
     {
-        Schema::create('RecepcionCompra', function (Blueprint $table) {
+        Schema::create('recepcioncompra', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre');
              $table->date('fecha');
              $table->integer('id_provedor')->unsigned();
             $table->foreign('id_provedor')->references('id')->on('provedores');
@@ -27,12 +28,16 @@ class RecepcionCompraMigration extends Migration
             $table->integer('id_ticket')->unsigned();
             $table->foreign('id_ticket')->references('id')->on('servicio_basculas');
             $table->double('precio');
-            $table->string('observaciones');
-            $table->string('recibio');
+            $table->string('observaciones')->nullable();
+            $table->integer('recibe')->unsigned();
+            $table->foreign('recibe')->references('id')->on('empleados');
+            $table->integer('ubicacion_act')->unsigned();
+            $table->foreign('ubicacion_act')->references('id')->on('almacengeneral');
+            $table->integer('id_fumigacion')->unsigned()->nullable();
+            $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
             $table->string('estado');
 
             $table->timestamps();
-
         });
     }
 
@@ -43,6 +48,6 @@ class RecepcionCompraMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('RecepcionCompra');
+        Schema::drop('recepcioncompra');
     }
 }
