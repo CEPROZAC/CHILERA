@@ -25,8 +25,12 @@ class ContratosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+     if($request)
+     {
+      $query=trim($request->get('searchText'));
       $contratos= DB::table('contratos')
       ->join( 'empleados as e', 'contratos.idEmpleado','=','e.id')
       ->join('empresas_ceprozac' ,'contratos.idEmpresa','=','empresas_ceprozac.id')
@@ -35,11 +39,18 @@ class ContratosController extends Controller
         'empresas_ceprozac.representanteLegal')
       ->where('e.tipo','=','CONTRATADO')
       ->where('contratos.estado','Activo')
-      ->where('e.estado','Activo')->get();
+      ->where('e.estado','Activo')
+      ->where('e.nombre','LIKE','%'.$query.'%')
+      ->orwhere('e.apellidos','LIKE','%'.$query.'%')
+      ->orwhere('e.curp','LIKE','%'.$query.'%')
+      ->orwhere('e.telefono','LIKE','%'.$query.'%')
+      ->paginate(3);
 
 
-      return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos]);
+      return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos,"searchText"=>$query]);
+
     }
+  }
 
     /**
      * Show the form for creating a new resource.

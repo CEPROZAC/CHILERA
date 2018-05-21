@@ -15,10 +15,10 @@ class Recepcioncompramigration extends Migration
         Schema::create('recepcioncompra', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-             $table->date('fecha');
-             $table->integer('id_provedor')->unsigned();
+            $table->date('fecha');
+            $table->integer('id_provedor')->unsigned();
             $table->foreign('id_provedor')->references('id')->on('provedores');
-             $table->integer('id_producto')->unsigned();
+            $table->integer('id_producto')->unsigned();
             $table->foreign('id_producto')->references('id')->on('productos');
             $table->double('kg_recibidos');
             $table->double('kg_enviados');
@@ -33,8 +33,8 @@ class Recepcioncompramigration extends Migration
             $table->foreign('recibe')->references('id')->on('empleados');
             $table->integer('ubicacion_act')->unsigned();
             $table->foreign('ubicacion_act')->references('id')->on('almacengeneral');
-            $table->integer('id_fumigacion')->unsigned()->nullable();
-            $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
+          // $table->integer('id_fumigacion')->unsigned()->nullable();
+           // $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
             $table->string('estado');
 
             $table->timestamps();

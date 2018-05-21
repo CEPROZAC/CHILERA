@@ -161,11 +161,7 @@
                 <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Agroquímicos</b> </a> </li>
 
                 
-<<<<<<< HEAD
-                
-=======
-            
->>>>>>> 5a6d23755bffe047e00ab5e0ba56f6d348b9ccff
+
                 
                 <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Limpieza</b> </a> </li>
 
@@ -190,9 +186,15 @@
 
         @yield('contenido')
 
+        <div class="row col-md-6 col-md-offset-3"  style="height: 1000px;" >
+
+        </div>
 
         <!--\\\\\\\ container  end \\\\\\-->
       </div>
+
+
+
       <!--\\\\\\\ content panel end \\\\\\-->
     </div>
     <!--\\\\\\\ inner end\\\\\\-->

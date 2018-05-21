@@ -77,7 +77,7 @@
            <select name="idChofer" class="form-control" required>
              @foreach($operadores as $operador)
              <option value="{{$operador->id}}">
-       ¿
+       
                {{$operador->nombre}} {{$operador->apellidos}}
              </option>
              @endforeach
