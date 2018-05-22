@@ -98,7 +98,7 @@
                                             <div class="form-group" id="transportediv" style='display:none;'>
                       <label class="col-sm-3 control-label">Transporte: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="transporte" id="transporte" class="form-control" required>  
+                        <select name="transporte" id="transporte" class="form-control">  
                           @foreach($transportes as $trans)
                           <option value="{{$trans->id}}">
                            {{$trans->nombre_Unidad}}
@@ -112,7 +112,7 @@
                                                                <div class="form-group" id="transportediv2" style='display:none;'>
                       <label class="col-sm-3 control-label">Transporte: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                      <input name="transporte" id="transporte" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese el Transporte"/>
+                      <input name="transporte" id="transporte" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" value="" placeholder="Ingrese el Transporte"/>
 
 
                        <div class="help-block with-errors"></div>

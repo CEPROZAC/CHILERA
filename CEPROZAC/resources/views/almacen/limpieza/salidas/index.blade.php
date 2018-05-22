@@ -12,6 +12,13 @@
     </ol>
   </div>
 </div>
+
+                           <div class="text-success" id='result'>
+          @if(Session::has('message'))
+          {{Session::get('message')}}
+          @endif
+        </div>
+        
 <div class="container clear_both padding_fix">
   <div class="row">
     <div class="col-md-12">
@@ -34,6 +41,7 @@
 
 
                   </div>
+
 
                 </b>
               </div>

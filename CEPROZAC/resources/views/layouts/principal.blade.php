@@ -116,6 +116,7 @@
                 <li> <a href="{{url('provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Proveedores</b> </a> </li>
                 <li> <a href="{{url('empresas')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Empresas</b> </a> </li>
                 <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Bancos</b> </a> </li>
+                 <li> <a href="{{url('materiales/provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Materiales</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> Clientes <span class="plus"><i class="fa fa-plus"></i></span></a>
@@ -153,19 +154,19 @@
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
-                <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Materiales</b> </a> </li>
+                <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materiales</b> </a> </li>
                 
                 
 
 
-                <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Agroquímicos</b> </a> </li>
+                <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Agroquímicos</b> </a> </li>
 
                 
 
                 
-                <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacén de Limpieza</b> </a> </li>
+                <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Limpieza</b> </a> </li>
 
-                <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacenes Generales</b> </a> </li>
+                <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Generales</b> </a> </li>
 
 
               </ul>

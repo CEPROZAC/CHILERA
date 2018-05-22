@@ -57,13 +57,24 @@ class EntradaAlmacenController extends Controller
       
 
       if (empty($material)){
-          return view('almacen.materiales.create')->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
+              $entrada= DB::table('entradaalmacenmateriales')
+      ->join('almacenmateriales as a', 'EntradaAlmacenMateriales.id_material', '=', 'a.id')
+      ->select('EntradaAlmacenMateriales.*','a.nombre as nombremat')->get();
+        // print_r($salida);
+      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
-          return view('Recursos_Humanos.empleados.create')->with('message', 'No Hay Empleados Registrados, Favor de Dar de Alta Empleados Para Poder Acceder a Este Modulo'); 
+                $entrada= DB::table('entradaalmacenmateriales')
+      ->join('almacenmateriales as a', 'EntradaAlmacenMateriales.id_material', '=', 'a.id')
+      ->select('EntradaAlmacenMateriales.*','a.nombre as nombremat')->get();
+      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]); 
 
       }else if (empty($provedor)){
-          return view('Provedores.materiales.create')->with('message', 'No Hay Proveedores de Materiales Registrados, Favor de Dar de Alta Algun Provedor Para Poder Acceder a Este Modulo'); 
+              $entrada= DB::table('entradaalmacenmateriales')
+      ->join('almacenmateriales as a', 'EntradaAlmacenMateriales.id_material', '=', 'a.id')
+      ->select('EntradaAlmacenMateriales.*','a.nombre as nombremat')->get();
+        // print_r($salida);
+      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
 
       }
       else{

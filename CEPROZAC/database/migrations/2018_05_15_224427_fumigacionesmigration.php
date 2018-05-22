@@ -21,8 +21,6 @@ class Fumigacionesmigration extends Migration
             $table->foreign('id_quimicos')->references('id')->on('almacenagroquimicos');
             $table->integer('id_fumigador')->unsigned();
             $table->foreign('id_fumigador')->references('id')->on('empleados');
-            // $table->integer('id_recepcion')->unsigned();
-           // $table->foreign('id_recepcion')->references('id')->on('recepcioncompra');
             $table->string('cantidad_aplicada');
             $table->string('status');
             $table->string('estado');

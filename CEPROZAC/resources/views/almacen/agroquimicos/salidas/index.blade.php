@@ -34,6 +34,11 @@
 
 
                   </div>
+                           <div class="text-success" id='result'>
+          @if(Session::has('message'))
+          {{Session::get('message')}}
+          @endif
+        </div>
 
                 </b>
               </div>

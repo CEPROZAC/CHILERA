@@ -33,8 +33,8 @@ class Recepcioncompramigration extends Migration
             $table->foreign('recibe')->references('id')->on('empleados');
             $table->integer('ubicacion_act')->unsigned();
             $table->foreign('ubicacion_act')->references('id')->on('almacengeneral');
-          // $table->integer('id_fumigacion')->unsigned()->nullable();
-           // $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
+           $table->integer('id_fumigacion')->unsigned()->nullable();
+            $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
             $table->string('estado');
 
             $table->timestamps();

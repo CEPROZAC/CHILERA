@@ -65,9 +65,18 @@ class SalidaAlmacenMaterialController extends Controller
         
 
         if (empty($material)){
-          return view('almacen.materiales.create')->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
+               $salida= DB::table('salidasalmacenmaterial')
+     ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+     ->select('salidasalmacenmaterial.*','s.nombre')->get();
+        // print_r($salida);
+     return view('almacen.materiales.salidas.index', ['salida' => $salida]);
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
+             $salida= DB::table('salidasalmacenmaterial')
+     ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+     ->select('salidasalmacenmaterial.*','s.nombre')->get();
+        // print_r($salida);
+     return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
       }else{
          return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]);

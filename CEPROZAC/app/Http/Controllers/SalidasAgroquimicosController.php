@@ -54,9 +54,18 @@ class SalidasAgroquimicosController extends Controller
         
 
         if (empty($material)){
-          return view('almacen.materiales.create')->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
+           $salida= DB::table('salidasagroquimicos')
+        ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
+        ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
+        // print_r($salida);
+        return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]); 
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
+         $salida= DB::table('salidasagroquimicos')
+        ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
+        ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
+        // print_r($salida);
+        return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
 
       }else{
          return view("almacen.agroquimicos.salidas.create",["material"=>$material],["empleado"=>$empleado]);
