@@ -387,7 +387,7 @@ function llenado(){
     cell10.innerHTML = precio * cantidaden;
 
     var x = document.getElementById("id_materialk");
-    x.remove(x.selectedIndex);
+    //x.remove(x.selectedIndex);
     cargar();
     document.getElementById("total").value=id2;
     var sub = precio * cantidaden;

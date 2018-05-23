@@ -373,7 +373,7 @@ function llenado(){
     cell9.innerHTML = var3;
 
     var x = document.getElementById("id_materialk");
-    x.remove(x.selectedIndex);
+    //x.remove(x.selectedIndex);
         limpiar();
     cargar();
     document.getElementById("total").value=id2;
