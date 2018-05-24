@@ -51,7 +51,7 @@
                 <div class="form-group">
               <label class="col-sm-3 control-label">Capacidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="capacidad" id="capacidad" type="text"  value="{{Input::old('capacidad')}}"  maxlength="70"  onchange="soloNumeros(this);"   class="form-control" required value="" placeholder="Ingrese la Capacidad del Almacén" />
+                <input name="capacidad" id="capacidad" type="text"  value="{{Input::old('capacidad')}}"  maxlength="70"  onKeyUp="generar()" onchange="soloNumeros(this);"   class="form-control" required value="" placeholder="Ingrese la Capacidad del Almacén" />
               </div>
             </div>
 
@@ -59,7 +59,7 @@
     <div class="form-group">
               <label class="col-sm-3 control-label">Tipo de Capacidad (Cajon,m2,etc..) : <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Tipo de Capacidad (Cajon,m2,etc..):" />
+                <input name="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Capacidad (Cajon,m2,etc..):" />
               </div>
             </div>
 
@@ -73,7 +73,14 @@
               <div class="form-group">
               <label class="col-sm-3 control-label">Espacio Ocupado Actualmente: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="ocupado" id="ocupado" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control" required value="" placeholder="Ingrese el Espacio Ocupado Actualmente" />
+                <input name="ocupado" id="ocupado" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control"   value="" placeholder="Ingrese el Espacio Ocupado Actualmente" readonly/>
+              </div>
+            </div>
+
+                          <div class="form-group">
+              <label class="col-sm-3 control-label">Espacio Libre Actualmente: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="libre" id="libre" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control"    value="" placeholder="Espacio Libre" readonly/>
               </div>
             </div>
 
@@ -118,30 +125,60 @@ table, td {
 
 function generar(){
   var cantidad = document.getElementById('capacidad').value;
-  var suma = cantidad / 4;
+  var suma = cantidad / 4; //8
   var cuenta;
   var valor = 1;
-  for (cuenta = 1; cuenta <= suma; cuenta++) {
+  var arreglolibre = [];
+  var arregloocupado = [];
+arregloocupado.push()
+
+  for (cuenta = 1; cuenta <= cantidad ; cuenta++) {
        var table = document.getElementById("myTable");
     var row = table.insertRow(0);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
-    cell1.innerHTML = '<input type="button" value="valor"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
+    cell1.innerHTML = "Casillero N° " + valor;
+    var agregaHTML = "<input type=button value=Libre class=agrega id="+(valor)+">";
+    cell2.innerHTML = agregaHTML;
     valor++;
-    cell2.innerHTML =  '<button id="15" type="button" onclick="eliminarFila(1)">valor</button>';
-    valor++;
-    cell3.innerHTML =  '<input type="button" value="valor"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';   
-     valor++;
-    cell4.innerHTML =  '<input type="button" value="valor"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
-    valor++;
+
+    cell2.addEventListener("click", function(event) {
+    var currentId = event.target.id;
+    var z =  document.getElementById('capacidad').value;
+    // Change the id (last character, some tweak)
+  //  alert(event.target.id); // Before
+    event.target.id = event.target.id[event.target.id.length - 1];
+    //alert(event.target.id); // After
+    var aux = event.target.id;
+    var calcula = document.getElementById(""+aux).value;
+    var arr = document.getElementById(""+aux).id;
+    if (calcula == "Ocupado") {
+            var index2 = arregloocupado.indexOf(arr);
+      if (index2 > -1) {
+   arregloocupado.splice(index2, 1);
+}
+      document.getElementById(""+aux).value = "Libre";
+    document.getElementById(""+aux).style.color = "#00ff00";
+    arreglolibre.push(arr);
+    document.getElementById('libre').value=arreglolibre;
+    document.getElementById('ocupado').value=arregloocupado;
+    }else{
+      var index = arreglolibre.indexOf(arr);
+      if (index > -1) {
+   arreglolibre.splice(index, 1);
+}
+          document.getElementById(""+aux).value = "Ocupado";
+    document.getElementById(""+aux).style.color = "#ff0000";
+    arregloocupado.push(arr);
+    document.getElementById('ocupado').value=arregloocupado;
+    document.getElementById('libre').value=arreglolibre;
+    }
+  }); 
 }
 }
 
-function eliminarFila(value) {
-
-}
 
 
   </script>
