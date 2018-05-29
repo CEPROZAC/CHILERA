@@ -177,6 +177,9 @@ class SalidaAlmacenMaterialController extends Controller
      */
     public function destroy($id)
     {
+      $material=salidaalmacenmaterial::findOrFail($id);
+       $material->delete();
+       return Redirect::to('/almacen/salidas/material');   
 
         //
     }

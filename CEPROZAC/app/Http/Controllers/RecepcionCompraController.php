@@ -63,7 +63,7 @@ class RecepcionCompraController extends Controller
       $servicio=DB::table('basculas')->where('estado','=' ,'Activo')->get();
       $empaque=DB::table('forma_empaques')->where('estado','=' ,'Activo')->get();
       $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
-      $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('libre','>','0')->get();
+      $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
       $almacenagroquimicos=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->orwhere('cantidad','>','0')->get();
       return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral,"almacenagroquimicos"=>$almacenagroquimicos]);
     }

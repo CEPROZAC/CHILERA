@@ -49,7 +49,7 @@
             </div>
 
                 <div class="form-group">
-              <label class="col-sm-3 control-label">Tipo de Capacidad (casillero,Cajon,Espacio,m2,etc..) : <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Tipo de Capacidad (Casillero,Cajon,Espacio,m2,etc..) : <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="medida" id="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Capacidad (Casillero,Cajon,m2,etc..):" />
               </div>
@@ -86,6 +86,18 @@
               </div>
             </div>
 
+                <div class="form-group">
+      <div class="col-sm-6">
+        <input  id="totallibre" value="" name="totallibre" type="hidden"  maxlength="50"  class="form-control"  />
+      </div>
+    </div>
+
+                    <div class="form-group">
+      <div class="col-sm-6">
+        <input  id="totalocupado" value="" name="totalocupado" type="hidden"  maxlength="50"  class="form-control" />
+      </div>
+    </div>
+
             <style>
 table, td {
     border: 1px solid black;
@@ -95,9 +107,11 @@ table, td {
 <body>
 
 <p></p>
-  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+    <div class="form-group">
+                  <label class="col-sm-3 control-label">Espacio Actualmente: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
     <div class="form-group"> 
-<table id="myTable" name="myTable" value="" class="table table-striped table-bordered table-condensed table-hover">
+<table id="myTable" name="myTable" value=""   class="table table-striped table-bordered table-condensed table-hover">
         <thead style="background-color:#A9D0F5">
 
         </thead>
@@ -105,6 +119,7 @@ table, td {
   </tr>
 </table>
 <br>
+</div>
 </div>
 </div>
 
@@ -142,6 +157,8 @@ table, td {
 function generar(){
     var arreglolibre = [];
   var arregloocupado = [];
+  var tamaño_libre;
+  var tamaño_ocupado;
   var cantidad = document.getElementById('capacidad').value;
   if (cantidad > 0){
   for (var i = 1; cantidad >= i ; i++) {
@@ -176,6 +193,10 @@ suma++;
     valor++;
     arreglolibre.push(cuenta);
      document.getElementById('libre').value=arreglolibre;
+     tamaño_libre = arreglolibre.length;
+     document.getElementById('totallibre').value=tamaño_libre;
+     tamaño_ocupado = arregloocupado.length;
+     document.getElementById('totalocupado').value=tamaño_ocupado;
 
 
 
@@ -209,6 +230,10 @@ suma++;
 arreglolibre.sortNumbers();
     document.getElementById('libre').value=arreglolibre;
     document.getElementById('ocupado').value=arregloocupado;
+         tamaño_libre = arreglolibre.length;
+     document.getElementById('totallibre').value=tamaño_libre;
+     tamaño_ocupado = arregloocupado.length;
+     document.getElementById('totalocupado').value=tamaño_ocupado;
     }else{
 
       for (var i = 0; i < arreglolibre.length; i++) {
@@ -226,6 +251,10 @@ arreglolibre.sortNumbers();
 arreglolibre.sortNumbers();
     document.getElementById('ocupado').value=arregloocupado;
     document.getElementById('libre').value=arreglolibre;
+         tamaño_libre = arreglolibre.length;
+     document.getElementById('totallibre').value=tamaño_libre;
+     tamaño_ocupado = arregloocupado.length;
+     document.getElementById('totalocupado').value=tamaño_ocupado;
     }
   }); 
 

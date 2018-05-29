@@ -161,6 +161,9 @@ class SalidasAlmacenLimpiezaController extends Controller
      */
     public function destroy($id)
     {
+               $material=salidasalmacenlimpieza::findOrFail($id);
+       $material->delete();
+       return Redirect::to('/almacen/salidas/limpieza');
         //
     }
 

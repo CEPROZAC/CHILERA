@@ -17,8 +17,10 @@ class AlmacenGeneralMigration extends Migration
          $table->string('nombre');
          $table->integer('capacidad');
          $table->string('medida')->nullable();
-         $table->integer('ocupado');
-         $table->integer('libre');
+         $table->string('total_ocupado');
+         $table->string('total_libre');
+          $table->string('esp_ocupado');
+         $table->string('esp_libre');
          $table->string('descripcion')->nullable();
          $table->string('estado');
          $table->timestamps();

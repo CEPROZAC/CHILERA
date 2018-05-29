@@ -58,11 +58,12 @@ class AlmacenGeneralController extends Controller
         $almacen->medida=$request->get('medida');
         $almacen->descripcion=$request->get('descripcion');
         $almacen->estado="Activo";
-        $almacen->ocupado=$request->get('ocupado');
-        $almacen->libre=$almacen->capacidad - $almacen->ocupado; 
-
+        $almacen->esp_ocupado=$request->get('ocupado');
+        $almacen->esp_libre=$request->get('libre'); 
+         $almacen->total_ocupado=$request->get('totalocupado');
+          $almacen->total_libre=$request->get('totallibre');
         $almacen->save();
-        return Redirect::to('almacen/general');
+       return Redirect::to('almacen/general');
         //
     }
 
@@ -105,8 +106,10 @@ class AlmacenGeneralController extends Controller
       $almacen->medida=$request->get('medida');
       $almacen->descripcion=$request->get('descripcion');
       $almacen->estado="Activo";
-      $almacen->ocupado=$request->get('ocupado');
-      $almacen->libre=$almacen->capacidad - $almacen->ocupado; 
+        $almacen->esp_ocupado=$request->get('ocupado');
+        $almacen->esp_libre=$request->get('libre'); 
+         $almacen->total_ocupado=$request->get('totalocupado');
+          $almacen->total_libre=$request->get('totallibre');
       $almacen->update();
       return Redirect::to('almacen/general');
         //

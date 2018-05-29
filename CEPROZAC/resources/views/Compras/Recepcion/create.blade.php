@@ -77,7 +77,7 @@
                          <div class="form-group">
                       <label class="col-sm-3 control-label">Proveedor: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="provedor" class="form-control" required>  
+                        <select name="provedor"  class="form-control select2" required>  
                           @foreach($provedores as $empresa)
                           <option value="{{$empresa->id}}">
                            {{$empresa->nombre}}
@@ -98,7 +98,7 @@
                                             <div class="form-group" id="transportediv" style='display:none;'>
                       <label class="col-sm-3 control-label">Transporte: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="transporte" id="transporte" class="form-control">  
+                        <select name="transporte" id="transporte"  class="form-control select2">  
                           @foreach($transportes as $trans)
                           <option value="{{$trans->id}}">
                            {{$trans->nombre_Unidad}}
@@ -122,7 +122,7 @@
                                                                <div class="form-group">
                       <label class="col-sm-3 control-label">Recibe: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="empleado" class="form-control" required>  
+                        <select name="empleado"  class="form-control select2" required>  
                           @foreach($empleado as $em)
                           <option value="{{$em->id}}">
                            {{$em->nombre}}
@@ -143,12 +143,12 @@
 
                                  <div class="form-row">    
           <label class="col-sm-3 control-label">Precio Total de La Compra: <strog class="theme_color">*</strog></label>
-          <div class="col-sm-2">
+          <div class="col-sm-6">
             <div class="input-group">
              <div class="input-group-addon">$</div>
 
              
-             <input name="precio" maxlength="9" type="number" value="{{Input::old('precio')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
+             <input name="precio" maxlength="9" type="text" value="{{Input::old('precio')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
            </div>
          </div>
        </div>
@@ -167,7 +167,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Nombre de la Materia Prima: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="producto" class="form-control" required>  
+                        <select name="producto"  class="form-control select2" required>  
                           @foreach($productos as $pro)
                           <option value="{{$pro->id}}">
                            {{$pro->nombre}}
@@ -181,7 +181,7 @@
                                            <div class="form-group">
                       <label class="col-sm-3 control-label">Calidad: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="calidad" class="form-control" required>  
+                        <select name="calidad"  class="form-control select2" required>  
                           @foreach($calidad as $cal)
                           <option value="{{$cal->id}}">
                            {{$cal->nombre}}
@@ -195,7 +195,7 @@
                         <div class="form-group">
                       <label class="col-sm-3 control-label">Formato de Empaque: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="empaque" class="form-control" required>  
+                        <select name="empaque"  class="form-control select2" required>  
                           @foreach($empaque as $em)
                           <option value="{{$em->id}}">
                            {{$em->formaEmpaque}}
@@ -243,7 +243,7 @@
                          <div class="form-group">
            <label class="col-sm-3 control-label">Bascula: <strog class="theme_color">*</strog></label>
            <div class="col-sm-6">
-            <select name="bascula" class="form-control" required>
+            <select name="bascula"  class="form-control select2" required>
               @foreach($servicio as $bascula)
               <option value="{{$bascula->id}}">
                {{$bascula->nombreBascula}} 
@@ -298,9 +298,9 @@
                   <div class="form-group">
            <label class="col-sm-3 control-label">Ubicación a Enviar: <strog class="theme_color">*</strog></label>
            <div class="col-sm-6">
-            <select name="almacen" id="almacen" class="form-control" required>
+            <select name="almacen" id="almacen"  class="form-control select2" required>
               @foreach($almacengeneral as $almacen)
-              <option value="{{$almacen->id}}_{{$almacen->capacidad}} {{$almacen->medida}}_{{$almacen->ocupado}}_{{$almacen->libre}}_{{$almacen->descripcion}}">
+              <option value="{{$almacen->id}}_{{$almacen->capacidad}} {{$almacen->medida}}_}_{{$almacen->descripcion}}">
                {{$almacen->nombre}} 
              </option>
              @endforeach
@@ -375,7 +375,7 @@
                        <div class="form-group">
            <label class="col-sm-3 control-label">Agroquímicos a Aplicar: <strog class="theme_color">*</strog></label>
            <div class="col-sm-6">
-            <select name="quimicos" id="quimicos" class="form-control" required>
+            <select name="quimicos" id="quimicos"  class="form-control select2" required>
               @foreach($almacenagroquimicos as $quimico)
               <option value="{{$quimico->id}}}">
                {{$quimico->nombre}} 
@@ -389,7 +389,7 @@
                               <div class="form-group">
            <label class="col-sm-3 control-label">Fumigador: <strog class="theme_color">*</strog></label>
            <div class="col-sm-6">
-            <select name="fumigador" id="fumigador" class="form-control" required>
+            <select name="fumigador" id="fumigador"  class="form-control select2" required>
               @foreach($empleado as $empleados)
               <option value="{{$empleados->id}}}">
                {{$empleados->nombre}} {{$empleados->apellidos}} 

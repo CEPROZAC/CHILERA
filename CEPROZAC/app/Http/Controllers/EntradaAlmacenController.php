@@ -242,6 +242,9 @@ return Redirect::to('almacen/entradas/materiales');
      */
     public function destroy($id)
     {
+       $material=entradaalmacen::findOrFail($id);
+       $material->delete();
+       return Redirect::to('/almacen/entradas/materiales');
         //
     }
 

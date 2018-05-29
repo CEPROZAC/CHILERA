@@ -167,6 +167,10 @@ class SalidasAgroquimicosController extends Controller
      */
     public function destroy($id)
     {
+       $material=salidasagroquimicos::findOrFail($id);
+       $material->delete();
+       return Redirect::to('/almacen/salidas/agroquimicos');   
+
         //
     }
 
