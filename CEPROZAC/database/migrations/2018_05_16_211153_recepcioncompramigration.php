@@ -15,26 +15,41 @@ class Recepcioncompramigration extends Migration
         Schema::create('recepcioncompra', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->date('fecha');
+            $table->date('fecha_compra');
             $table->integer('id_provedor')->unsigned();
             $table->foreign('id_provedor')->references('id')->on('provedores');
+            $table->string('transporte');
+            $table->integer('recibe')->unsigned();
+            $table->foreign('recibe')->references('id')->on('empleados');
+            $table->string('observacionesc')->nullable();
+            $table->double('total_compra');
+
             $table->integer('id_producto')->unsigned();
             $table->foreign('id_producto')->references('id')->on('productos');
+            $table->integer('id_calidad')->unsigned();
+            $table->foreign('id_calidad')->references('id')->on('calidad');
+            $table->integer('id_empaque')->unsigned();
+            $table->foreign('id_empaque')->references('id')->on('forma_empaques');
+            $table->string('humedad');
+            $table->double('pacas');
+            $table->double('pacas_rev');
+            $table->string('observacionesm')->nullable();
+
+            $table->integer('id_bascula')->unsigned();
+            $table->foreign('id_bascula')->references('id')->on('basculas');
+            $table->string('ticket');
             $table->double('kg_recibidos');
             $table->double('kg_enviados');
             $table->double('diferencia');
-            $table->integer('id_transporte')->unsigned();
-            $table->foreign('id_transporte')->references('id')->on('transportes');
-            $table->integer('id_ticket')->unsigned();
-            $table->foreign('id_ticket')->references('id')->on('servicio_basculas');
-            $table->double('precio');
-            $table->string('observaciones')->nullable();
-            $table->integer('recibe')->unsigned();
-            $table->foreign('recibe')->references('id')->on('empleados');
+            $table->string('observacionesb')->nullable();
+
             $table->integer('ubicacion_act')->unsigned();
             $table->foreign('ubicacion_act')->references('id')->on('almacengeneral');
-          // $table->integer('id_fumigacion')->unsigned()->nullable();
-           // $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
+             $table->string('espacio_asignado');
+             $table->string('observacionesu')->nullable();
+
+            $table->integer('id_fumigacion')->unsigned()->nullable();
+            $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
             $table->string('estado');
 
             $table->timestamps();

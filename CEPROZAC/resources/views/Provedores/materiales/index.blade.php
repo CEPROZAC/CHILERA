@@ -7,7 +7,7 @@
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a style="color: #808080" href="{{url('/provedores')}}">Inicio</a></li>
+      <li ><a style="color: #808080" href="{{url('/materiales/provedores')}}">Inicio</a></li>
       <li class="active"> Proveedores de Materiales</a></li>
     </ol>
   </div>

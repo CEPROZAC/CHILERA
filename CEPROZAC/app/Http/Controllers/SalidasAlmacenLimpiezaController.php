@@ -52,9 +52,16 @@ class SalidasAlmacenLimpiezaController extends Controller
         
 
         if (empty($material)){
-          return view('almacen.limpieza.create')->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
+            $salida= DB::table('SalidasAlmacenLimpieza')
+        ->join('almacenlimpieza as s', 'SalidasAlmacenLimpieza.id_material', '=', 's.id')
+        ->select('SalidasAlmacenLimpieza.*','s.nombre','SalidasAlmacenLimpieza.*','s.medida')->get();
+          return view('almacen.limpieza.salidas.index', ['salida' => $salida])->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
+        $salida= DB::table('SalidasAlmacenLimpieza')
+        ->join('almacenlimpieza as s', 'SalidasAlmacenLimpieza.id_material', '=', 's.id')
+        ->select('SalidasAlmacenLimpieza.*','s.nombre','SalidasAlmacenLimpieza.*','s.medida')->get();
+          return view('almacen.limpieza.salidas.index', ['salida' => $salida])->with('message', 'No Hay Empleados Registrados, Favor de Dar de Alta Empleados Para Poder Acceder a Este Modulo'); 
 
       }else{
          return view("almacen.limpieza.salidas.create",["material"=>$material],["empleado"=>$empleado]);
@@ -154,6 +161,9 @@ class SalidasAlmacenLimpiezaController extends Controller
      */
     public function destroy($id)
     {
+               $material=salidasalmacenlimpieza::findOrFail($id);
+       $material->delete();
+       return Redirect::to('/almacen/salidas/limpieza');
         //
     }
 

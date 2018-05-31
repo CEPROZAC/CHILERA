@@ -40,30 +40,37 @@
 
         <div class="porlets-content">
           <div class="table-responsive">
-            <table  class="display table table-bordered table-striped" id="dynamic-table">
+           <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered " id="hidden-table-info6">
               <thead>
                 <tr>
-                  <th>N° Almacén </th>
+
+                  
                   <th>Nombre </th>
                   <th>Capacidad </th>
                   <th>Descripción </th>
                   <th>Espacio Ocupado </th>
                   <th>Espacio Libre </th>
-                  <th>Estado</th>  
+                  <th style="display:none;" >Espacios Ocupados Asignados</th>
+                  <th style="display:none;" >Espacios Libres Asignados</th>
+                  <th style="display:none;" >Estado</th>  
+                  <th style="display:none;" >N° Almacén </th>
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>                            
                 </tr>
               </thead>
               <tbody>
                 @foreach($almacen  as $almacenes)
-                <tr class="gradeA">
-                  <td>{{$almacenes->id}} </td>
+                <tr class="gradeX">
+                  
                   <td>{{$almacenes->nombre}} </td>
                   <td>{{$almacenes->capacidad}} {{$almacenes->medida}} </td>            
                   <td>{{$almacenes->descripcion}} </td>
-                  <td>{{$almacenes->ocupado}} {{$almacenes->medida}}</td>
-                  <td>{{$almacenes->libre}} {{$almacenes->medida}}</td>
-                  <td>{{$almacenes->estado}}</td>
+                  <td>{{$almacenes->total_ocupado}} {{$almacenes->medida}}</td>
+                  <td>{{$almacenes->total_libre}} {{$almacenes->medida}}</td>
+                  <td style="display:none;" >{{$almacenes->esp_ocupado}} </td>
+                  <td style="display:none;" >{{$almacenes->esp_libre}}</td>
+                  <td style="display:none;" >{{$almacenes->estado}}</td>
+                  <td style="display:none;" >{{$almacenes->id}} </td>
                   <td>  <a href="{{URL::action('AlmacenGeneralController@edit',$almacenes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$almacenes->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
@@ -77,15 +84,18 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>N° Almacén </th>
-              <th>Nombre </th>
-              <th>Capacidad </th>
-              <th>Descripción </th>
-              <th>Espacio Ocupado </th>
-              <th>Espacio Libre </th>
-              <th>Estado</th>  
-              <td><center><b>Editar</b></center></td>
-              <td><center><b>Borrar</b></center></td>      
+            <th></th>                                 
+                  <th>Nombre </th>
+                  <th>Capacidad </th>
+                  <th>Descripción </th>
+                  <th>Espacio Ocupado </th>
+                  <th>Espacio Libre </th>
+                  <th style="display:none;" >Espacios Ocupados Asignados</th>
+                  <th style="display:none;" >Espacios Libres Asignados</th>
+                  <th style="display:none;" >Estado</th> 
+                  <th style="display:none;" >N° Almacén </th> 
+                  <td><center><b>Editar</b></center></td>
+                  <td><center><b>Borrar</b></center></td>         
             </tr>
           </tfoot>
         </table>

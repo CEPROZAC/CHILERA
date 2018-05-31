@@ -61,7 +61,7 @@
               <div class="form-group">
           <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="prov" id="prov" value="prov" class="form-control" required>  
+            <select name="prov" id="prov" value="prov"  class="form-control select" required>  
               @foreach($provedor as $emp)
               <option value="{{$emp->nombre}}">
                {{$emp->nombre}} 
@@ -75,7 +75,7 @@
          <div class="form-group">
           <label class="col-sm-3 control-label">Comprador : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="recibio" id="recibio" value="recibio" class="form-control" required>  
+            <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
               @foreach($empleado as $emp)
               <option value="{{$emp->nombre}} {{$emp->apellidos}}">
                {{$emp->nombre}} {{$emp->apellidos}} 
@@ -115,7 +115,7 @@
             <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
               <div class="form-group"> 
                 <label for="material">Material </label>
-                <select name="id_materialk"  class="form-control selectpicker"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
+                <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
                   @foreach($material as $mat)
                   <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
                    {{$mat->nombre}}
@@ -386,7 +386,7 @@ function llenado(){
     cell10.innerHTML = precio * cantidaden;
 
     var x = document.getElementById("id_materialk");
-    x.remove(x.selectedIndex);
+   // x.remove(x.selectedIndex);
     cargar();
     document.getElementById("total").value=id2;
     var sub = precio * cantidaden;
