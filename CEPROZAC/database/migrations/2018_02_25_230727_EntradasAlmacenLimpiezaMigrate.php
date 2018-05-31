@@ -12,7 +12,7 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
      */
     public function up()
     {
-        Schema::create('EntradasAlmacenLimpieza', function (Blueprint $table) {
+        Schema::create('entradasalmacenlimpieza', function (Blueprint $table) {
             $table->increments('id');
             $table->string('provedor');
             $table->date('fecha');
@@ -27,16 +27,16 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
             $table->timestamps();
 
         });
-         DB::unprepared('
-        
-        CREATE TRIGGER inserta_entrada3 AFTER INSERT ON EntradasAlmacenLimpieza
-        FOR EACH ROW BEGIN
-                UPDATE almacenlimpieza SET cantidad=cantidad+NEW.cantidad
-                WHERE almacenlimpieza.id=NEW.id_material;
+        DB::unprepared('
 
-        END
+            CREATE TRIGGER inserta_entrada3 AFTER INSERT ON entradasalmacenlimpieza
+            FOR EACH ROW BEGIN
+            UPDATE almacenlimpieza SET cantidad=cantidad+NEW.cantidad
+            WHERE almacenlimpieza.id=NEW.id_material;
 
-        ');
+            END
+
+            ');
     }
 
     /**
@@ -46,6 +46,6 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
      */
     public function down()
     {
-        Schema::drop('EntradasAlmacenLimpieza');
+        Schema::drop('entradasalmacenlimpieza');
     }
 }

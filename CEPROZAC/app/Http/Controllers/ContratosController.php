@@ -25,12 +25,9 @@ class ContratosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
 
-     if($request)
-     {
-      $query=trim($request->get('searchText'));
       $contratos= DB::table('contratos')
       ->join( 'empleados as e', 'contratos.idEmpleado','=','e.id')
       ->join('empresas_ceprozac' ,'contratos.idEmpresa','=','empresas_ceprozac.id')
@@ -40,17 +37,13 @@ class ContratosController extends Controller
       ->where('e.tipo','=','CONTRATADO')
       ->where('contratos.estado','Activo')
       ->where('e.estado','Activo')
-      ->where('e.nombre','LIKE','%'.$query.'%')
-      ->orwhere('e.apellidos','LIKE','%'.$query.'%')
-      ->orwhere('e.curp','LIKE','%'.$query.'%')
-      ->orwhere('e.telefono','LIKE','%'.$query.'%')
-      ->paginate(3);
+      ->get();
 
 
-      return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos,"searchText"=>$query]);
+      return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos]);
 
+      
     }
-  }
 
     /**
      * Show the form for creating a new resource.
@@ -80,6 +73,7 @@ class ContratosController extends Controller
       $empleado->fecha_Alta_Seguro=$request->get('fecha_Alta_Seguro');
       $empleado->numero_Seguro_Social=$request->get('numero_Seguro_Social');
       $empleado->fecha_Nacimiento=$request->get('fecha_Nacimiento');
+      echo $empleado->fecha_Nacimiento;
       $empleado->curp=$request->get('curp');
       $empleado->email=$request->get('email');
       $empleado->telefono=$request->get('telefono');
@@ -272,7 +266,7 @@ class ContratosController extends Controller
     public function pdf($id)
     {
       $contrato = Contratos::findOrFail($id);
-      $idEmpleado= $contrato->id;
+      $idEmpleado= $contrato->idEmpleado;
       $idEmpresa=$contrato->idEmpresa;
       $empleado=Empleado::findOrFail($idEmpleado);
       $empresa= EmpresasCeprozac::findOrFail($idEmpresa);
@@ -285,6 +279,25 @@ class ContratosController extends Controller
       $pdf=PDF::loadView("Recursos_Humanos.contratos.invoice",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
         ,"empresa"=>$empresa]);
       return $pdf->download("archivo.pdf");
+    }
+
+
+    public function liquidacion($id)
+    {
+      $contrato = Contratos::findOrFail($id);
+      $idEmpleado= $contrato->idEmpleado;
+      $idEmpresa=$contrato->idEmpresa;
+      $empleado=Empleado::findOrFail($idEmpleado);
+      $empresa= EmpresasCeprozac::findOrFail($idEmpresa);
+      $roles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
+      ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
+      ->select('rol_empleados.rol_Empleado')
+      ->where('idEmpleado','=',$id)
+      ->get();
+
+      $pdf=PDF::loadView("Recursos_Humanos.contratos.liquidacion",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
+        ,"empresa"=>$empresa]);
+      return $pdf->download("liquidacion.pdf");
     }
 
 
@@ -328,10 +341,10 @@ class ContratosController extends Controller
         case '12':
         $mesLetra="DICIEMBRE";
         break;
-
+        
       }
       return $mesLetra;
-
+      
     }
 
 

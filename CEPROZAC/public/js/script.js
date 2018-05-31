@@ -54,7 +54,9 @@ function curp2date() {
   var dia = parseInt(m[3], 10);
 
   var fech = new Date( anyo, mes, dia );
+
   document.getElementById("fechaNacimiento").value = fech;
+
 }
 
 
@@ -99,13 +101,13 @@ function myDeleteFunction(t) {
 function myDeleteFunction1(btn) {
 
 
-  var route = "http://localhost:8000/empleadoRoles/"+btn.value+"";
+  var route = "http://localhost:8000/eliminarRolEmpleado/"+btn.value+"";
   var token = $("#token").val();
 
   $.ajax({
     url: route,
     headers: {'X-CSRF-TOKEN': token},
-    type: 'DELETE',
+    type: 'POST',
     dataType: 'json',
     success: function(){
       $("#msj-success").fadeIn();

@@ -12,7 +12,7 @@ class AlmacenMaterialMigration extends Migration
      */
     public function up()
     {
-        Schema::create('AlmacenMateriales', function (Blueprint $table) {
+        Schema::create('almacenmateriales', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->string('provedor')->nullable();
@@ -32,6 +32,6 @@ class AlmacenMaterialMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('AlmacenMateriales');
+        Schema::drop('almacenmateriales');
     }
 }

@@ -12,10 +12,10 @@ class SalidaAlmacenMaterialMigration extends Migration
      */
     public function up()
     {
-        Schema::create('SalidasAlmacenMaterial', function (Blueprint $table) {
+        Schema::create('salidasalmacenmaterial', function (Blueprint $table) {
             $table->increments('id');
-             $table->integer('id_material')->unsigned();
-            $table->foreign('id_material')->references('id')->on('AlmacenMateriales');
+            $table->integer('id_material')->unsigned();
+            $table->foreign('id_material')->references('id')->on('almacenmateriales');
             $table->integer('cantidad');
             $table->string('destino');
             $table->string('entrego');
@@ -26,16 +26,16 @@ class SalidaAlmacenMaterialMigration extends Migration
             $table->timestamps();
         });
 
-         DB::unprepared('
-        
-        CREATE TRIGGER tr_updStrockVenta AFTER INSERT ON SalidasAlmacenMaterial
-        FOR EACH ROW BEGIN
-                UPDATE almacenmateriales SET cantidad=cantidad-NEW.cantidad
-                WHERE almacenmateriales.id=NEW.id_material;
+        DB::unprepared('
 
-        END
+            CREATE TRIGGER tr_updStrockVenta AFTER INSERT ON salidasalmacenmaterial
+            FOR EACH ROW BEGIN
+            UPDATE almacenmateriales SET cantidad=cantidad-NEW.cantidad
+            WHERE almacenmateriales.id=NEW.id_material;
 
-        ');
+            END
+
+            ');
     }
 
     /**

@@ -27,7 +27,7 @@ class ProvedorMaterialesController extends Controller
     {
       $provedores= DB::table('provedor_materiales')->where('estado','Activo')->get();
 
-      return view('provedores.materiales.index', ['provedores' => $provedores]);
+      return view('Provedores.materiales.index', ['provedores' => $provedores]);
 
         //
     }
@@ -39,7 +39,7 @@ class ProvedorMaterialesController extends Controller
      */
     public function create()
     {
-      return view('provedores.materiales.create');
+      return view('Provedores.materiales.create');
         //
     }
 
@@ -85,7 +85,7 @@ class ProvedorMaterialesController extends Controller
      */
     public function show($id)
     {
-     return view("provedores.materiales.show",["provedores"=>ProvedorMateriales::findOrFail($id)]);
+     return view("Provedores.materiales.show",["provedores"=>ProvedorMateriales::findOrFail($id)]);
         //
    }
 
@@ -97,7 +97,7 @@ class ProvedorMaterialesController extends Controller
      */
     public function edit($id)
     {
-     return view("provedores.materiales.edit",["provedores"=>ProvedorMateriales::findOrFail($id)]);
+     return view("Provedores.materiales.edit",["provedores"=>ProvedorMateriales::findOrFail($id)]);
         //
    }
 

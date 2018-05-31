@@ -67,7 +67,7 @@
                       <div id="form-step-0" role="form" data-toggle="validator">
                         <h3 class="h3titulo">Informacion Personal</h3>
 
-                        <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  />
+                     
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
@@ -83,7 +83,7 @@
                             <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->apellidos}}" placeholder="Ingrese nombre de el Cliente"/>
                           </div>
                         </div>
-                        <input  name="fecha_Nacimiento"  type="hidden" id="fechaNacimiento"  />
+                          <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  value="{{$empleado->fecha_Nacimiento}}" />
                         <div class="form-group">
                           <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">

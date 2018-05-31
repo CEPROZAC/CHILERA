@@ -16,15 +16,16 @@
     </div>
     <div class="modal-footer" style="margin-top: -10px;">
       <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
-        <form action="{{url('contratos', [$contrato->idEmpleado])}}" method="POST"> 
-         <input type="hidden" name="_method" value="DELETE">
-         <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
-         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-         <button type="submit" class="btn btn-primary">Eliminar</button>
-       </form>
-     </div>
-   </div>
- </div><!--/modal-content--> 
+        <form action="{{url('contratos', [$contrato->idEmpleado])}}" method="POST" > 
+
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div><!--/modal-content--> 
 </div><!--/modal-dialog--> 
 </div><!--/modal-fade--> 
 

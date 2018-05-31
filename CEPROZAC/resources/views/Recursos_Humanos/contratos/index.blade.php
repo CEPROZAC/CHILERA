@@ -32,10 +32,6 @@
                     <a class="btn btn-sm btn-warning tooltips" href="{{route('contratos.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
                   </div>
-                  <p></p>
-                  {!! Form::open(array('url'=>'contratos','method'=>'GET','autocomplete'=>'off','role'=>'search'))!!}
-                  <input id="searchTerm" type="text"  name="searchText" value="{{$searchText}}" role="search" />
-                  {{Form::close()}}
 
                 </b>
               </div>
@@ -47,7 +43,7 @@
 
         <div class="porlets-content">
          <div class="table-responsive">
-           <table class="table  table-bordered table-condensed table-hover" id="datos" >
+           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
               <tr >
                 <th  >Nombre Completo</th>
@@ -96,7 +92,7 @@
                <td >
 
                  <center>
-                   <a href="{{URL::action('ContratosController@verInformacion',$contrato->idContrato)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" onclick="calcular();"></i></a>
+                 <a href="{{URL::action('ContratosController@verInformacion',$contrato->idEmpleado)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" onclick="calcular();"></i></a>
                  </center>
                </td>
 
@@ -178,9 +174,7 @@
     </table>
     
   </div><!--/table-responsive-->
-  <center>
-    {!!$contratos->render()!!}
-  </center>
+
 
 </div><!--/porlets-content-->
 </div><!--/block-web-->

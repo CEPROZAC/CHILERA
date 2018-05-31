@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RegimenFiscalTableSeeder::class);
         $this->call(RolesTableSeeder::class);
-
+        $this->call(BancosTableSeeder::class);
+        $this->call(FormaEmpaquesTableSeeder::class);
+        $this->call(EmpresasCEPROZACTableSeeder::class);
         Model::reguard();
     }
 }

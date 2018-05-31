@@ -12,9 +12,9 @@ class SalidasAlmacenLimpiezaMigrate extends Migration
      */
     public function up()
     {
-        Schema::create('SalidasAlmacenLimpieza', function (Blueprint $table) {
+        Schema::create('salidasalmacenlimpieza', function (Blueprint $table) {
             $table->increments('id');
-             $table->integer('id_material')->unsigned();
+            $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenlimpieza');
             $table->integer('cantidad');
             $table->string('destino');
@@ -26,16 +26,16 @@ class SalidasAlmacenLimpiezaMigrate extends Migration
             $table->timestamps();
 
         });
-          DB::unprepared('
-        
-        CREATE TRIGGER tr_updStrockVenta3 AFTER INSERT ON SalidasAlmacenLimpieza
-        FOR EACH ROW BEGIN
-                UPDATE almacenlimpieza SET cantidad=cantidad-NEW.cantidad
-                WHERE almacenlimpieza.id=NEW.id_material;
+        DB::unprepared('
 
-        END
+            CREATE TRIGGER tr_updStrockVenta3 AFTER INSERT ON salidasalmacenlimpieza
+            FOR EACH ROW BEGIN
+            UPDATE almacenlimpieza SET cantidad=cantidad-NEW.cantidad
+            WHERE almacenlimpieza.id=NEW.id_material;
 
-        ');
+            END
+
+            ');
     }
 
     /**
@@ -45,6 +45,6 @@ class SalidasAlmacenLimpiezaMigrate extends Migration
      */
     public function down()
     {
-        Schema::drop('SalidasAlmacenLimpieza');
+        Schema::drop('salidasalmacenlimpieza');
     }
 }

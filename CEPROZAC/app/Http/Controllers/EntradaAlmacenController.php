@@ -34,8 +34,8 @@ class EntradaAlmacenController extends Controller
     public function index()
     {
       $entrada= DB::table('entradaalmacenmateriales')
-      ->join('almacenmateriales as a', 'EntradaAlmacenMateriales.id_material', '=', 'a.id')
-      ->select('EntradaAlmacenMateriales.*','a.nombre as nombremat')->get();
+      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+      ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
         // print_r($salida);
       return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
 
@@ -67,12 +67,12 @@ class EntradaAlmacenController extends Controller
 
       }
       else{
-         return view("almacen.materiales.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado]);
-     }
+       return view("almacen.materiales.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado]);
+   }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
         //
- }
+}
 
     /**
      * Store a newly created resource in storage.

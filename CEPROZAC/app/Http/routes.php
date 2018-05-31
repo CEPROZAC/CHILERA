@@ -76,6 +76,7 @@ Route::get('descargarEmpresas/{id}/{nombre}', 'ProvedorController@descargarEmpre
 
 
 
+
 Route::get('descargar-clientes', 'ClienteController@excel')->name('clientes.excel');
 Route::get('descargar-productos', 'ProductosController@excel')->name('productos.excel');
 
@@ -135,4 +136,9 @@ Route::get('descargar-entradas-limpieza', 'EntradasAlmacenLimpiezaController@exc
 Route::resource('compras/recepcion','RecepcionCompraController');
 
 
+Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');
+
+
+
+Route::post('eliminarRolEmpleado/{id}', 'EmpleadoRolesController@destroy');
 
