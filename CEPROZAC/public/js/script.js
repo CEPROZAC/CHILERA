@@ -22,7 +22,6 @@ function soloLetras(e){
 }
 
 
-
 function soloNumeros(e){
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key);
@@ -102,10 +101,7 @@ function myDeleteFunction(t) {
 function myDeleteFunction1(btn) {
 
 
-  //var route = "http://localhost:8000/eliminarRolEmpleado/"+btn.value+"";
-  var route = " http://localhost/CHILERA/CEPROZAC/public/eliminarRolEmpleado/"+btn.value+"";
-
-  //http://localhost/CHILERA/CEPROZAC/public/
+  var route = "http://localhost:8000/eliminarRolEmpleado/"+btn.value+"";
   var token = $("#token").val();
 
   $.ajax({
@@ -136,36 +132,30 @@ function oQuickReplyswap() {
 function Carga($id){
 
   var tablaDatos = $('#myTable');
- // var route = "http://localhost:8000/rolesEspecificos/"+$id;
+  var route = "http://localhost:8000/rolesEspecificos/"+$id;
 
- var route = " http://localhost/CHILERA/CEPROZAC/public/rolesEspecificos/"+$id;
-
- $.get(route,function(res){
-  $(res).each(function(key,value){
-    tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
-      "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
-      +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
+  $.get(route,function(res){
+    $(res).each(function(key,value){
+      tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
+        "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
+        +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
+    });
   });
-});
 }
+
 
 
 function Carga1(){
   var tablaDatos = $('#myTable');
-  //var route = "http://localhost:8000/ultimo";
+  var route = "http://localhost:8000/ultimo";
 
-  var route = "http://localhost/CHILERA/CEPROZAC/public/ultimo";
-
-
- //  http://localhost/CHILERA/CEPROZAC/public/
-
- $.get(route,function(res){
-  $(res).each(function(key,value){
-    tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
-      "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
-      +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
+  $.get(route,function(res){
+    $(res).each(function(key,value){
+      tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
+        "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
+        +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
+    });
   });
-});
 }
 
 
