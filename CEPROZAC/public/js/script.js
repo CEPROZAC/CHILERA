@@ -101,11 +101,11 @@ function myDeleteFunction(t) {
 
 function myDeleteFunction1(btn) {
 
-  alert("entre");
+
   //var route = "http://localhost:8000/eliminarRolEmpleado/"+btn.value+"";
   var route = " http://localhost/CHILERA/CEPROZAC/public/eliminarRolEmpleado/"+btn.value+"";
 
-  http://localhost/CHILERA/CEPROZAC/public/
+  //http://localhost/CHILERA/CEPROZAC/public/
   var token = $("#token").val();
 
   $.ajax({
