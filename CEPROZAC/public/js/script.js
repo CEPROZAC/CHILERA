@@ -101,7 +101,7 @@ function myDeleteFunction(t) {
 
 function myDeleteFunction1(btn) {
 
-
+  alert("entre");
   //var route = "http://localhost:8000/eliminarRolEmpleado/"+btn.value+"";
   var route = " http://localhost/CHILERA/CEPROZAC/public/eliminarRolEmpleado/"+btn.value+"";
 
@@ -159,50 +159,50 @@ function Carga1(){
 
  //  http://localhost/CHILERA/CEPROZAC/public/
 
-   $.get(route,function(res){
-    $(res).each(function(key,value){
-      tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
-        "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
-        +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
-    });
+ $.get(route,function(res){
+  $(res).each(function(key,value){
+    tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
+      "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
+      +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
   });
- }
+});
+}
 
 
 
- function myCreateFunction1() {
+function myCreateFunction1() {
 
-   var select = document.getElementById("rol");
-   var options=document.getElementsByTagName("option");
-   var idRol= select.value;
+ var select = document.getElementById("rol");
+ var options=document.getElementsByTagName("option");
+ var idRol= select.value;
 
-   var x = select.options[select.selectedIndex].text;
-
-
-
-   var dato1 = select.value;
-   var dato2 = $("#idEmpleado").val();
-   var route = "/empleadoRoles";
-   var token = $("#token").val();
-
-   $.ajax({
-    url: route,
-    headers: {'X-CSRF-TOKEN': token},
-    type: 'POST',
-    dataType: 'json',
-    data:{idRol: dato1,idEmpleado: dato2},
-
-    success:function(){
-      $("#msj-success").fadeIn();
-    }
-  });
-   Carga1();
- }
+ var x = select.options[select.selectedIndex].text;
 
 
 
+ var dato1 = select.value;
+ var dato2 = $("#idEmpleado").val();
+ var route = "/empleadoRoles";
+ var token = $("#token").val();
 
- function calcularTiempo(){
+ $.ajax({
+  url: route,
+  headers: {'X-CSRF-TOKEN': token},
+  type: 'POST',
+  dataType: 'json',
+  data:{idRol: dato1,idEmpleado: dato2},
+
+  success:function(){
+    $("#msj-success").fadeIn();
+  }
+});
+ Carga1();
+}
+
+
+
+
+function calcularTiempo(){
   var fecha1 =document.getElementById('fechaInicio').value;
   var fecha2= document.getElementById('fechaFin').value;
   var ano1 = fecha1.substring(0, 2);
