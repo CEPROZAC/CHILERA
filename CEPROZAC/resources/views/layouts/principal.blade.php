@@ -3,9 +3,11 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>CEPROZAC</title>
+
+  
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-
+    <link rel="icon" type="image/png" href="images/LOGOCEPROZAC.png" />
     {!!Html::style('css/font-awesome.css')!!}
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/animate.css')!!}
@@ -116,7 +118,7 @@
                 <li> <a href="{{url('provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Proveedores</b> </a> </li>
                 <li> <a href="{{url('empresas')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Empresas</b> </a> </li>
                 <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Bancos</b> </a> </li>
-                 <li> <a href="{{url('materiales/provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Materiales</b> </a> </li>
+                <li> <a href="{{url('materiales/provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Materiales</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> Clientes <span class="plus"><i class="fa fa-plus"></i></span></a>

@@ -30,7 +30,10 @@
 
                   <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Liquidacion</a>
 
-                  <a class="btn btn-sm btn-danger tooltips" href="{{URL::action('ContratosController@index')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
+
+                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Renovar Contrato</a>
+
+                  <a class="btn btn-sm btn-danger tooltips" href="/contratos" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
                 </div> 
               </b>
@@ -80,6 +83,8 @@
                       <th>Domicilio: </th>
                       <td>{{$empleado->domicilio}}</td>
                     </tr>
+
+
                   </tbody>
                 </table>
               </div>
@@ -125,45 +130,16 @@
                       <th> <div style="visibility: hidden"> Dato Nulo</div></th>
                       <td></td>
                     </tr>
+                    <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                  </tr>
+                  <tr>
+                    <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                    <td></td>
+                  </tr>
 
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          </div>
-
-          <div class="col-lg-6"> 
-            <section class="panel default blue_title h4">
-              <div class="panel-heading"><span class="semi-bold">Informacion de Contrato </span> 
-              </div>
-              <div class="panel-body">
-                <table class="table table-striped">
-                  <tbody>
-                   <tr>
-                     <th>Empresa que Contrata: </th>
-                     <td>{{$empresa->nombre}}</td>
-                   </tr>
-
-                   <tr>
-                    <th>Contratista: </th>
-                    <td>{{$empresa->representanteLegal}}</td>
-                  </tr>
-                  <tr>
-                    <th>Fecha Inicio: </th>
-                    <td>{{$contrato->fechaInicio}}</td>
-                  </tr>
-                  <tr>
-                    <th>Fecha Fin</th>
-                    <td>{{$contrato->fechaFin}}</td>
-                  </tr>
-                  <tr>
-                    <th>Horas Descanso:</th>
-                    <td>{{$contrato->horas_Descanso}}</td>
-                  </tr>
-                  <tr>
-                    <th>Duracion Contrato:</th>
-                    <td>{{floor($contrato->duracionContrato/30)}} Meses {{$contrato->duracionContrato%30}} Dias</td>
-                  </tr>
 
                 </tbody>
               </table>
@@ -173,28 +149,67 @@
 
         <div class="col-lg-6"> 
           <section class="panel default blue_title h4">
-            <div class="panel-heading"><span class="semi-bold">Roles de Empleado</span> 
+            <div class="panel-heading"><span class="semi-bold">Informacion de Contrato </span> 
             </div>
             <div class="panel-body">
               <table class="table table-striped">
                 <tbody>
-                  @foreach($roles as $rol)
-                  <tr>
-                    <th>Rol: </th>
-                    <td>{{$rol->rol_Empleado}}</td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
+                 <tr>
+                   <th>Empresa que Contrata: </th>
+                   <td>{{$empresa->nombre}}</td>
+                 </tr>
+
+                 <tr>
+                  <th>Contratista: </th>
+                  <td>{{$empresa->representanteLegal}}</td>
+                </tr>
+                <tr>
+                  <th>Fecha Inicio: </th>
+                  <td>{{$contrato->fechaInicio}}</td>
+                </tr>
+                <tr>
+                  <th>Fecha Fin</th>
+                  <td>{{$contrato->fechaFin}}</td>
+                </tr>
+                <tr>
+                  <th>Horas Descanso:</th>
+                  <td>{{$contrato->horas_Descanso}}</td>
+                </tr>
+                <tr>
+                  <th>Duracion Contrato:</th>
+                  <td>{{floor($contrato->duracionContrato/30)}} Meses {{$contrato->duracionContrato%30}} Dias</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-6"> 
+        <section class="panel default blue_title h4">
+          <div class="panel-heading"><span class="semi-bold">Roles de Empleado</span> 
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
+              <tbody>
+                @foreach($roles as $rol)
+                <tr>
+                  <th>Rol: </th>
+                  <td>{{$rol->rol_Empleado}}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
 
 
 
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

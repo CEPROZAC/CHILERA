@@ -140,5 +140,18 @@ Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');
 
 
 
-Route::post('eliminarRolEmpleado/{id}', 'EmpleadoRolesController@destroy');
+Route::get('eliminarRolEmpleado/{id}', 'EmpleadoRolesController@destroy');
+
+
+Route::get('listaCuentasProvedores/{id}','EmpresaController@verCuentas');
+
+Route::get('cuentas_Banco_Provedores/{id}','Cuentas_Banco_ProvedoresController@create1')->name('cuentas_Provedores.create1');
+
+
+
+Route::resource('cuentasBancoProvedores','Cuentas_Banco_ProvedoresController');
+
+
+Route::get('descargarCuentasProvedores/{id}/{nombre}', 'Cuentas_Banco_ProvedoresController@descargarCuentas')->name('provedoresCuentas.descargarCuentas');
+
 

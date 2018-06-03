@@ -3,14 +3,16 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Lista de Mantenimientos</h2>
+    <h2 class="">Cuentas de Banco Proveedores</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a style="color: #808080" href="{{url('/empleados')}}">Inicio</a></li>
-      <li class="active">Lista de Mantenimientos</a></li>
+      <li ><a style="color: #808080" href="{{url('/empresas')}}">Inicio</a></li>
+      <li class="active">Cuentas de Banco Proveedores</a></li>
     </ol>
   </div>
+
+
 </div>
 <div class="container clear_both padding_fix">
   <div class="row">
@@ -26,11 +28,11 @@
               <b>
 
                 <div class="btn-group" style="margin-right: 10px;">
-                  <a class="btn btn-sm btn-success tooltips" href="{{URL::action('CuentasEmpresasCEPROZACController@create1',$empresas->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva cuenta Bancaria"> <i class="fa fa-plus"></i> Registrar </a>
+                <a class="btn btn-sm btn-success tooltips" href="{{URL::action('Cuentas_Banco_ProvedoresController@create1',$empresas->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Cuenta"> <i class="fa fa-plus"></i> Registrar </a>
 
-                  <a class="btn btn-sm btn-warning tooltips"  style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" href="{{URL::action('CuentasEmpresasCEPROZACController@descargarCuentas',[$empresas->id,$empresas->nombre])}}" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                  <a class="btn btn-sm btn-warning tooltips"  style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" href="{{URL::action('Cuentas_Banco_ProvedoresController@descargarCuentas',[$empresas->id,$empresas->nombre])}}" data-original-title="Descargar cuentas bancarias"> <i class="fa fa-download"></i> Descargar </a>
 
-                  <a class="btn btn-sm btn-danger tooltips" href="{{url('/empresasCEPROZAC')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Salir"> <i class="fa fa-times"></i> Salir</a>
+                  <a class="btn btn-sm btn-danger tooltips" href="{{URL::action('EmpresaController@index')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Salir"> <i class="fa fa-times"></i> Salir</a>
                 </div>
               </a>
             </b>
@@ -40,7 +42,7 @@
       </div>
       <div class="porlets-content container clear_both padding_fix">
        @if($cuentas==null)
-       <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{URL::action('CuentasEmpresasCEPROZACController@create1',$empresas->id)}}">se encuentran cuentas registradas </a> a este Empresa. Click Para registrar</div>
+       <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{URL::action('Cuentas_Banco_ProvedoresController@create1',$empresas->id)}}">se encuentran cuentas registradas </a> a este Empresa. Click Para registrar</div>
 
      </b>
    </div>
@@ -68,16 +70,13 @@
               <th>Numero de Cuenta: </th>
               <td>{{$cuenta->num_cuenta}}</td>
             </tr>
-            <tr>
-              <th>Saldo: </th>
-              <td>{{$cuenta->saldo}}</td>
-            </tr>
+
             <tr>
               <th> Editar</th>
               <td>
                 <center>
 
-                  <a href="{{URL::action('CuentasEmpresasCEPROZACController@edit',$cuenta->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                  <a href="{{URL::action('Cuentas_Banco_ProvedoresController@edit',$cuenta->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                 </center>
               </td>
             </tr>
@@ -95,7 +94,7 @@
      </div>
    </section>
  </div>
- @include('EmpresasCeprozac.cuentasBancarias.modal')
+ @include('Provedores.cuentas_bancos.modal')
  @endforeach
  @endif
 

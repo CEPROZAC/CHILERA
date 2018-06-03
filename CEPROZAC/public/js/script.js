@@ -107,7 +107,7 @@ function myDeleteFunction1(btn) {
   $.ajax({
     url: route,
     headers: {'X-CSRF-TOKEN': token},
-    type: 'POST',
+    type: 'get',
     dataType: 'json',
     success: function(){
       $("#msj-success").fadeIn();

@@ -103,47 +103,15 @@
            </div>
          </div><!--/form-group-->
 
-
          <div class="form-group">
-           <label class="col-sm-3 control-label"> Banco: <strog class="theme_color">*</strog></label>
-           <div class="col-sm-6">
-            <select name="id_Banco" class="form-control" required>  
-              @foreach($bancos as $banco)
-              <option value="{{$banco->id}}">
-               {{$banco->nombre}}
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
-         </div>
-       </div><!--/form-group-->
-
-       <div class="form-group">
-         <label class="col-sm-3 control-label">Numero de cuenta:</label>
-         <div class="col-sm-6">
-          <input type="text" name="nom_cuenta" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10" />
-        </div>
-      </div><!--/form-group--> 
-
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Número de CLABE Interbancaria: </label>
-        <div class="col-sm-6">
-          <input type="text"  name= "cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" />
-        </div>
-      </div><!--/form-group--> 
-
-
-
-
-      <div class="form-group">
-        <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <a href="{{url('/empresas')}}" class="btn btn-default"> Cancelar</a>
-        </div>
-      </div><!--/form-group-->
-    </form>
-  </div><!--/porlets-content-->
-</div><!--/block-web-->
+          <div class="col-sm-offset-7 col-sm-5">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{url('/empresas')}}" class="btn btn-default"> Cancelar</a>
+          </div>
+        </div><!--/form-group-->
+      </form>
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->

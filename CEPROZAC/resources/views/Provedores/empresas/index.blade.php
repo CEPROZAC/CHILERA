@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-  <h1>Inicio</h1>
+    <h1>Inicio</h1>
     <h2 class="">Empresas</h2>
   </div>
   <div class="pull-right">
@@ -27,7 +27,7 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                    <a class="btn btn-sm btn-success tooltips" href="empresas/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Municipio"> <i class="fa fa-plus"></i> Registrar </a>
+                    <a class="btn btn-sm btn-success tooltips" href="empresas/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Empresa"> <i class="fa fa-plus"></i> Registrar </a>
 
                     
                     <a class="btn btn-sm btn-warning tooltips" href="{{ route('empresas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
@@ -51,10 +51,8 @@
                   <th style="display:none;">Telefono </th>
                   <th style="display:none;">Correo </th>
                   <th style="display:none;">Regimen Fiscal </th>
-                  <th >Proveedor </th>
-                  <th style="display:none;">Banco que Factura </th>
-                  <th style="display:none;">Clave Interbancaria </th>
-                  <th style="display:none;">Numero de Cuenta </th>
+                  <th >Proveedor </th>      
+                  <th>Cuentas Bancarias</th>         
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>
                 </tr>
@@ -69,9 +67,14 @@
                   <td style="display:none;">{{$empresas->email}}</td>
                   <td style="display:none;">{{$empresas->nombreRegimen}}</td>
                   <td>{{$empresas->nombreProvedor}} </td>
-                  <th style="display:none;">{{$empresas->nombreBanco}} </th>
-                  <th style="display:none;">{{$empresas->cve_Interbancaria}} </th>
-                  <th style="display:none;">{{$empresas->nom_cuenta}} </th>
+
+                  <td> 
+                    <center>
+                      <a href="{{URL::action('EmpresaController@verCuentas',$empresas->id)}}" class="btn btn-white btn-sm" role="button"><i class="fa fa-money"></i></a> 
+                    </center>
+                  </td>
+
+
                   <td>  <a href="{{URL::action('EmpresaController@edit',$empresas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$empresas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
@@ -90,10 +93,8 @@
                 <th style="display:none;">Telefono </th>
                 <th style="display:none;">Correo </th>
                 <th style="display:none;">Regimen Fiscal </th>
-                <th >Proveedor </th>
-                <th style="display:none;">Banco que Factura </th>
-                <th style="display:none;">Clave Interbancaria </th>
-                <th style="display:none;">Numero de Cuenta </th>
+                <th >Proveedor </th> 
+                <th>Cuentas Bancarias</th>
                 <td><center><b>Editar</b></center></td>
                 <td><center><b>Borrar</b></center></td>
               </tr>

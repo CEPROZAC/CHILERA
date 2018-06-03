@@ -21,10 +21,6 @@ class CreateEmpresaTable extends Migration
        $table->string('telefono');
        $table->string('direccion');
        $table->string('email');
-       $table->integer('id_Banco')->unsigned();
-       $table->foreign('id_Banco')->references('id')->on('bancos');
-       $table->string('cve_Interbancaria');
-       $table->string('nom_cuenta');
        $table->string('estado');
        $table->integer('provedor_id')->unsigned();
        $table->foreign('provedor_id')->references('id')->on('provedores');

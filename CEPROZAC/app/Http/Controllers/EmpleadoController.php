@@ -201,4 +201,12 @@ class EmpleadoController extends Controller
         })->export('xls');
       }
 
+
+      public function listaCuentasEmpresa(){
+
+
+        return view('Provedores.empresas.listacuentas');
+
+      }
+
     }

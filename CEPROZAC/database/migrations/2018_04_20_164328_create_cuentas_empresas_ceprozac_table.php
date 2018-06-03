@@ -26,6 +26,8 @@ class CreateCuentasEmpresasCEPROZACTable extends Migration
         });
     }
 
+
+
     /**
      * Reverse the migrations.
      *

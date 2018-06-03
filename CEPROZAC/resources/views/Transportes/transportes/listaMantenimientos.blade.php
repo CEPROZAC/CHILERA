@@ -29,7 +29,7 @@
 
                 <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('TransporteController@descargarMantenimientos',[$transporte->id,$transporte->nombre_Unidad])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
-                <a class="btn btn-sm btn-danger tooltips" href="/transportes" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
+                <a class="btn btn-sm btn-danger tooltips" href="{{URL::action('TransporteController@index')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
               </div>
               
@@ -82,9 +82,11 @@
             </tr>
             <tr>
               <th>Editar: </th>
-              <td>            <center>
-                <a href="{{URL::action('MantenimientoTransporteController@edit',$mantenimiento->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
-              </center></td>
+              <td>      
+                <center>
+                  <a href="{{URL::action('MantenimientoTransporteController@edit',$mantenimiento->idMantenimiento)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                </center>
+              </td>
             </tr>
 
           </tbody>

@@ -49,9 +49,7 @@
                 <th>Telefono </th>
                 <th>Direccion </th>
                 <th>Email </th>
-                <th>Cuentas</th>
                 <th>Empresas</th>
-
                 <td><center><b>Editar</b></center></td>
                 <td><center><b>Borrar</b></center></td>
               </tr>
@@ -63,12 +61,6 @@
                 <td>{{$provedores->telefono}} </td>
                 <td>{{$provedores->direccion}}</td>
                 <td>{{$provedores->email}}</td>
-                <td>
-                  <center>
-                    <a href="" class="btn btn-white btn-sm" role="button"><i class="fa fa-money"></i></a> 
-                  </center>
-                </td>
-
                 <td><center><a class="btn btn-info btn-sm" href="{{URL::action('ProvedorController@verEmpresas',$provedores->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
 
                 <td> 
@@ -91,7 +83,7 @@
              <th>Telefono </th>
              <th>Direccion </th>
              <th>Email </th>
-             <th>Cuentas</th>
+             
              <th>Empresas</th>
              <th><center><b>Editar</b></center></th>
              <th><center><b>Borrar</b></center></th>

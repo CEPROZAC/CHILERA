@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContratosTable extends Migration
+class CreateCuentasBancoProvedoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,24 @@ class CreateContratosTable extends Migration
      */
     public function up()
     {
-        Schema::create('contratos', function (Blueprint $table) {
+        Schema::create('cuentas_banco_provedores', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idEmpleado')->unsigned();
-            $table->foreign('idEmpleado')->references('id')->on('empleados');
+
+            $table->integer('idBanco')->unsigned();
+            $table->foreign('idBanco')->references('id')->on('bancos');
+
+            $table->string('num_cuenta');
+            $table->string('cve_interbancaria');
+
             $table->integer('idEmpresa')->unsigned();
             $table->foreign('idEmpresa')->references('id')->on('empresas_ceprozac');
-            $table->string('fechaInicio');
-            $table->string('fechaFin');
-            $table->integer('duracionContrato');
-            $table->integer('horas_Descanso');
-            $table->integer('horas_Alimentacion');
-            $table->string('estado_Contrato');
+
+
             $table->string('estado');
             $table->timestamps();
+
+
+
         });
     }
 
@@ -36,6 +40,6 @@ class CreateContratosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contratos');
+        Schema::drop('cuentas__banco__provedores');
     }
 }

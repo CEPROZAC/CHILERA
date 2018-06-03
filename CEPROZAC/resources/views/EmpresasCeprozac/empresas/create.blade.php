@@ -106,9 +106,6 @@
             </div>
           </div>
 
-          
-
-
 
           <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">

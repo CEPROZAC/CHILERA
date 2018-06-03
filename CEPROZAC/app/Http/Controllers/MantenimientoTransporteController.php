@@ -105,6 +105,7 @@ class MantenimientoTransporteController extends Controller
     {
 
         $mantenimiento=MantenimientoTransporte::findOrFail($id);
+
         $operadores= DB::table('empleados')
         ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
         ->join('rol_empleados','er.idRol','=','rol_empleados.id')
@@ -122,6 +123,7 @@ class MantenimientoTransporteController extends Controller
 
 
         $transportes=DB::table('transportes')->where('estado','=','Activo')->get();
+        
         return view('Transportes.mantenimientoTransportes.edit',['mantenimiento'=>$mantenimiento,'transportes'=>$transportes,'operadores'=>$operadores,'encargados_mantenimiento'=>$encargados_mantenimiento]);
 
     }
