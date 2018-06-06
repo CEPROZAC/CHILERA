@@ -79,7 +79,7 @@
        </div>
 
        <div class="form-group">
-        <label class="col-sm-3 control-label">Tipo de Movimiento: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
           <input name="movimiento" id="movimiento" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
         </div>
@@ -313,10 +313,25 @@
 }
 
 function llenado(){
+      var select2=document.getElementById('id_materialk');
+  var cantidadtotal2 = select2.value;
+  limite2 = "5",
+  separador2 = "_",
+  arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
+  x=arregloDeSubCadenas2[3];
+
+
   var valida = document.getElementById("scantidad").value;
   var valida2 = document.getElementById("pcantidad").value;
+  var y = parseInt(valida);
+  var z = parseInt(valida2);
+  var comprueba = recorre(x)
 
-  if (valida > valida2) {
+  if (comprueba == 1){
+      alert("Este Material Ya se ha Insertado en la Tabla");
+
+  }else{
+    if (y > z) {
     alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
 
   }else{
@@ -380,6 +395,7 @@ function llenado(){
     
 
   }
+}
 
   
 }   
@@ -391,7 +407,7 @@ function eliminarFila(value) {
   var menos =document.getElementById("detalles").rows
   var r = menos.length;
   document.getElementById("total").value= r - 2;
-  limpiar();
+  //limpiar();
 }
 
 function codigos(){
@@ -438,7 +454,6 @@ function limpiar(){
   document.getElementById("movimiento").value=" ";
   document.getElementById("destino").value=" ";
    document.getElementById("descripcion").value=" ";
-    document.getElementById("pcantidad").value=" ";
 
 
 }
@@ -510,6 +525,68 @@ z ++;
   var tam = arreglo.length / 8;
   document.getElementById("total").value=tam;
 }
+
+function recorre(valor) {
+ var z = 1
+ var arreglo = [];
+ var table = document.getElementById('detalles');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+        //alert(z)
+       // document.getElementById("id_materialk").id=z;
+      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
+      var j = table.rows[r].cells[c].innerHTML
+      if (valor == j ){
+        var r = 1;
+        return(r);
+       z ++;
+      }
+     }
+
+     else if(z == 2){
+         //alert(z)
+       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
+       alert(table.rows[r].cells[c].innerHTML);
+       z ++;
+       
+
+     }else if(z == 3){
+        alert(table.rows[r].cells[c].innerHTML);
+        z ++;
+      }else if(z == 4){
+
+       alert(table.rows[r].cells[c].innerHTML);
+       z ++;
+     } else if (z == 5){
+       //  alert(z)
+     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
+         alert(table.rows[r].cells[c].innerHTML);
+
+//alert(arreglo);
+z ++;
+}else if (z == 6){
+ //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
+  alert(table.rows[r].cells[c].innerHTML);
+ z ++;
+
+}else if(z == 7){
+         //alert(z)
+        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
+           alert(table.rows[r].cells[c].innerHTML);
+         z ++;
+
+       }else{
+       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
+          alert(table.rows[r].cells[c].innerHTML);
+        z = 1;
+
+      }
+
+    }
+  }
+}
+
 
 
 

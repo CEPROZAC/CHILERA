@@ -83,7 +83,7 @@ class AlmacenMaterialController extends Controller
         $material= DB::table('almacenmateriales')->orderby('created_at','DESC')->take(1)->get();
         $datas= DB::table('cliente')->where('estado','Activo')->get();
         $date = date('Y-m-d');
-        $x = "HOLA" ;
+        $x = "HOLA mundo" ;
         $invoice = "2222";
         $view =  \View::make('almacen.materiales.invoice', compact('date', 'invoice','x','material'))->render();
         $pdf = \App::make('dompdf.wrapper');
@@ -147,6 +147,7 @@ public function invoice($id){
       
        $material=AlmacenMaterial::findOrFail($id);
        $material->nombre=$request->get('nombre');
+        $material->provedor=$request->get('provedor_id');
        
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen

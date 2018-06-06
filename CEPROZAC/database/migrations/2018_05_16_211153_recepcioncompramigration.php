@@ -52,6 +52,7 @@ class Recepcioncompramigration extends Migration
             $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
             $table->string('estado');
 
+
             $table->timestamps();
         });
     }
