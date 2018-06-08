@@ -89,41 +89,72 @@
                      </div><!--/form-group-->
                      <div class="form-group">
                       <label class="col-sm-3 control-label">Transporte Registrado en la Empresa: <strog class="theme_color">*</strog></label>
-                      <div class="col-sm-6">
+                      <div class="col-sm-3">
                         <input type="radio" name="registrado" id="registrado" onchange="buscar1()" value="si"> Si<br>
                         <input type="radio" name="registrado" id="registrado" onchange="buscar2()" value="no"> No<br>
                       </div>
                     </div><!--/form-group-->
 
-                    <div class="form-group" id="transportediv" style='display:none;'>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Número de Transportes: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-1">
+                        <input name="transporte_num" id ="transporte_num" type="number"  value="1" maxlength="5" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);" value="" /><br></div>
+                      </div>
+
+                      <div class="form-group" id="transportediv" style='display:none;'>
+                      <label class="col-sm-3 control-label">Seleccióne Transporte: <strog class="theme_color">*</strog></label>
+                        <div class="col-sm-6">
+                          <select name="transportei" id="transportei"  class="form-control select">  
+                            @foreach($transportes as $trans)
+                            <option value="{{$trans->nombre_Unidad}}_{{$trans->placas}}">
+                             {{$trans->nombre_Unidad}} Placas: {{$trans->placas}}
+                           </option>
+                           @endforeach              
+                         </select>
+                         <div class="help-block with-errors"></div>
+                       </div>
+                       <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="transporte();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
+                     </div><!--/form-group-->
+
+                     <div class="form-group" id="transportediv2" style='display:none;'>
                       <label class="col-sm-3 control-label">Transporte: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <select name="transporte" id="transporte"  class="form-control select2">  
-                          @foreach($transportes as $trans)
-                          <option value="{{$trans->id}}">
-                           {{$trans->nombre_Unidad}}
-                         </option>
-                         @endforeach              
-                       </select>
-                       <div class="help-block with-errors"></div>
-                     </div>
-                   </div><!--/form-group-->
-
-                   <div class="form-group" id="transportediv2" style='display:none;'>
-                    <label class="col-sm-3 control-label">Transporte: <strog class="theme_color">*</strog></label>
-                    <div class="col-sm-6">
-                      <input name="transporte" id="transporte" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" value="" placeholder="Ingrese el Transporte"/>
+                        <input name="transporte" id="transporte" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" value="" placeholder="Ingrese el Transporte"/>
 
 
-                      <div class="help-block with-errors"></div>
+                        <div class="help-block with-errors"></div>
+                      </div>
+                      <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="transporte();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
+                    </div><!--/form-group-->
+
+                    <div class="form-group">
+                     <label class="col-sm-3 control-label">Transportes: <strog class="theme_color">*</strog></label>
+                     <div class="col-sm-6">
+                      <table id="transportes" name="transportes[]" value="" class="table table-striped table-bordered table-condensed table-hover">
+                        <thead style="background-color:#A9D0F5">
+                          <th>Opciones</th>
+                          <th>Nombre del Transporte</th>
+                          <th>Placas</th>
+
+                        </thead>
+                        <tfoot>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tfoot>
+                        <tbody>
+
+                        </tbody>
+
+                      </table>
                     </div>
-                  </div><!--/form-group-->
+                  </div>
 
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">Recibe: <strog class="theme_color">*</strog></label>
+                    <label class="col-sm-3 control-label">Recibe Empresa: <strog class="theme_color">*</strog></label>
                     <div class="col-sm-6">
-                      <select name="empleado"  class="form-control select2" required>  
-                        @foreach($empleado as $em)
+                      <select name="empresa"  class="form-control select2" required>  
+                        @foreach($empresas as $em)
                         <option value="{{$em->id}}">
                          {{$em->nombre}}
                        </option>
@@ -134,71 +165,64 @@
                  </div><!--/form-group-->
 
                  <div class="form-group">
-                  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+                  <label class="col-sm-3 control-label">Recibe Empleado: <strog class="theme_color">*</strog></label>
                   <div class="col-sm-6">
-
-                    <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
-                  </div>
-                </div>
-
-                <div class="form-row">    
-                  <label class="col-sm-3 control-label">Precio Total de La Compra: <strog class="theme_color">*</strog></label>
-                  <div class="col-sm-6">
-                    <div class="input-group">
-                     <div class="input-group-addon">$</div>
-
-
-                     <input name="precio" maxlength="9" type="text" value="{{Input::old('precio')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
-                   </div>
+                    <select name="recibe_em"  class="form-control select2" required>  
+                      @foreach($empleado as $em)
+                      <option value="{{$em->id}}">
+                       {{$em->nombre}}
+                     </option>
+                     @endforeach              
+                   </select>
+                   <div class="help-block with-errors"></div>
                  </div>
-               </div>
+               </div><!--/form-group-->
 
-
-
-             </div><!--validator-->
-           </div><!--user-profile-content-->
-         </div><!--step-1-->
-
-         <div id="step-2" class="">
-          <div class="user-profile-content">
-            <div id="form-step-1" role="form" data-toggle="validator">
-              <h3 class="h3titulo">Materia Prima</h3>
-
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Nombre de la Materia Prima: <strog class="theme_color">*</strog></label>
-                <div class="col-sm-6">
-                  <select name="producto"  class="form-control select2" required>  
-                    @foreach($productos as $pro)
-                    <option value="{{$pro->id}}">
-                     {{$pro->nombre}}
-                   </option>
-                   @endforeach              
-                 </select>
-                 <div class="help-block with-errors"></div>
-               </div>
-             </div><!--/form-group-->
 
              <div class="form-group">
-              <label class="col-sm-3 control-label">Calidad: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="calidad"  class="form-control select2" required>  
-                  @foreach($calidad as $cal)
-                  <option value="{{$cal->id}}">
-                   {{$cal->nombre}}
-                 </option>
-                 @endforeach              
-               </select>
-               <div class="help-block with-errors"></div>
+
+                <input name="observacionesc" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+              </div>
+            </div>
+
+            <div class="form-row">    
+              <label class="col-sm-3 control-label">Precio Total de La Compra: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <div class="input-group">
+                 <div class="input-group-addon">$</div>
+
+
+                 <input name="precio" maxlength="9" type="text" value="{{Input::old('precio')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
+               </div>
              </div>
-           </div><!--/form-group-->
+           </div>
 
            <div class="form-group">
-            <label class="col-sm-3 control-label">Formato de Empaque: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
+    <input  id="transportes2" value="" name="transportes2[]" type="hidden"  class="form-control" />
+  </div>
+</div>
+
+
+
+         </div><!--validator-->
+       </div><!--user-profile-content-->
+     </div><!--step-1-->
+
+     <div id="step-2" class="">
+      <div class="user-profile-content">
+        <div id="form-step-1" role="form" data-toggle="validator">
+          <h3 class="h3titulo">Materia Prima</h3>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Nombre de la Materia Prima: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="empaque"  class="form-control select2" required>  
-                @foreach($empaque as $em)
-                <option value="{{$em->id}}">
-                 {{$em->formaEmpaque}}
+              <select name="producto"  class="form-control select2" required>  
+                @foreach($productos as $pro)
+                <option value="{{$pro->id}}">
+                 {{$pro->nombre}}
                </option>
                @endforeach              
              </select>
@@ -206,85 +230,141 @@
            </div>
          </div><!--/form-group-->
 
-         <div class="form-group ">
-          <label class="col-sm-3 control-label">Porcentaje de humedad</label>
+         <div class="form-group">
+          <label class="col-sm-3 control-label">Calidad: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <input parsley-type="number" type="text" maxlength="3" required parsley-range="[0, 100]" name="porcentaje_Humedad"   class="form-control mask"  onkeypress=" return soloNumeros(event);">
-          </div>
-        </div>
+            <select name="calidad"  class="form-control select2" required>  
+              @foreach($calidad as $cal)
+              <option value="{{$cal->id}}">
+               {{$cal->nombre}}
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div><!--/form-group-->
 
-        <div class="form-group ">
-          <label class="col-sm-3 control-label">Número de Pacas</label>
-          <div class="col-sm-6">
-            <input parsley-type="number" type="text" maxlength="6" required  name="num_pacas" id="num_pacas"   class="form-control" onKeyUp="raiz()"  onkeypress=" return soloNumeros(event);">
-          </div>
-        </div>
-
-        <div class="form-group ">
-          <label class="col-sm-3 control-label">Número de Pacas a Revisar</label>
-          <div class="col-sm-6">
-            <input parsley-type="number" type="number" maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
-          </div>
-        </div>
-
-
-
-
-      </div><!--validator-->
-    </div><!--user-profile-content-->
-  </div><!--step-2-->
-
-  <div id="step-3" class="">
-    <div class="user-profile-content">
-      <div id="form-step-2" role="form" data-toggle="validator">
-        <h3 class="h3titulo">Datos de Pesaje</h3>
-
-
-        <div class="form-group">
-         <label class="col-sm-3 control-label">Bascula: <strog class="theme_color">*</strog></label>
-         <div class="col-sm-6">
-          <select name="bascula"  class="form-control select2" required>
-            @foreach($servicio as $bascula)
-            <option value="{{$bascula->id}}">
-             {{$bascula->nombreBascula}} 
+       <div class="form-group">
+        <label class="col-sm-3 control-label">Formato de Empaque: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <select name="empaque"  class="form-control select2" required>  
+            @foreach($empaque as $em)
+            <option value="{{$em->id}}">
+             {{$em->formaEmpaque}}
            </option>
-           @endforeach
+           @endforeach              
          </select>
          <div class="help-block with-errors"></div>
        </div>
      </div><!--/form-group-->
 
-     <div class="form-group">
-      <label class="col-sm-3 control-label">Ticket: <strog class="theme_color">*</strog></label>
+     <div class="form-group ">
+      <label class="col-sm-3 control-label">Porcentaje de humedad</label>
       <div class="col-sm-6">
-        <input name="numeroTicket" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese numero de Ticket" />
+        <input parsley-type="number" type="text" maxlength="3" required parsley-range="[0, 100]" name="porcentaje_Humedad"   class="form-control mask"  onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
     <div class="form-group ">
-      <label class="col-sm-3 control-label">KG Enviados</label>
+      <label class="col-sm-3 control-label">Número de Pacas</label>
       <div class="col-sm-6">
-        <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="enviados" id="enviados"  class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Enviados"  onKeyUp="calcula()" onkeypress="return soloNumeros(event);">
+        <input parsley-type="number" type="text" maxlength="6" required  name="num_pacas" id="num_pacas"   class="form-control" onKeyUp="raiz()"  onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
     <div class="form-group ">
-      <label class="col-sm-3 control-label">KG Recibidos</label>
+      <label class="col-sm-3 control-label">Número de Pacas a Revisar</label>
       <div class="col-sm-6">
-        <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="recibidos"  onKeyUp="calcula()"  id ="recibidos" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Recibidos" onkeypress=" return soloNumeros(event);">
+        <input parsley-type="number" type="number" maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
-    <div class="form-group ">
-      <label class="col-sm-3 control-label">Diferencia</label>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia"  readonly  id="diferencia" class="form-control mask";>
+
+        <input name="observacionesm" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Muestreo"/>
       </div>
     </div>
 
-    <input type="hidden" name="duracionContrato" id="duracionContrato" />    
+
+
 
   </div><!--validator-->
+</div><!--user-profile-content-->
+</div><!--step-2-->
+
+<div id="step-3" class="">
+  <div class="user-profile-content">
+    <div id="form-step-2" role="form" data-toggle="validator">
+      <h3 class="h3titulo">Datos de Pesaje</h3>
+
+
+      <div class="form-group">
+       <label class="col-sm-3 control-label">Bascula: <strog class="theme_color">*</strog></label>
+       <div class="col-sm-6">
+        <select name="bascula"  class="form-control select" required>
+          @foreach($servicio as $bascula)
+          <option value="{{$bascula->id}}">
+           {{$bascula->nombreBascula}} 
+         </option>
+         @endforeach
+       </select>
+       <div class="help-block with-errors"></div>
+     </div>
+   </div><!--/form-group-->
+
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Ticket: <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+      <input name="numeroTicket" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese numero de Ticket" />
+    </div>
+  </div>
+
+  <div class="form-group ">
+    <label class="col-sm-3 control-label">KG Enviados</label>
+    <div class="col-sm-6">
+      <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="enviados" id="enviados"  class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Enviados"  onKeyUp="calcula()" onkeypress="return soloNumeros(event);">
+    </div>
+  </div>
+
+  <div class="form-group ">
+    <label class="col-sm-3 control-label">KG Recibidos</label>
+    <div class="col-sm-6">
+      <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="recibidos"  onKeyUp="calcula()"  id ="recibidos" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Recibidos" onkeypress=" return soloNumeros(event);">
+    </div>
+  </div>
+
+  <div class="form-group ">
+    <label class="col-sm-3 control-label">Diferencia</label>
+    <div class="col-sm-6">
+      <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia"  readonly  id="diferencia" class="form-control mask";>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+
+      <input name="observacionesb" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Pesaje"/>
+    </div>
+  </div>   
+
+                   <div class="form-group">
+                  <label class="col-sm-3 control-label">Realizo Pesaje: <strog class="theme_color">*</strog></label>
+                  <div class="col-sm-6">
+                    <select name="pesaje"  class="form-control select" required>  
+                      @foreach($empleado as $em)
+                      <option value="{{$em->id}}">
+                       {{$em->nombre}}
+                     </option>
+                     @endforeach              
+                   </select>
+                   <div class="help-block with-errors"></div>
+                 </div>
+               </div><!--/form-group-->
+
+</div><!--validator-->
 </div><!--user-profile-content-->
 </div><!--step-3-->
 
@@ -402,7 +482,7 @@
       <div class="form-group">
        <label class="col-sm-3 control-label">Hora de Inicio de La Fumigación: <strog class="theme_color">*</strog></label>
        <div class="col-sm-6">
-        <input id="inicio" name="inicio" type="time">
+        <input id="inicio" name="inicio" type="time" >
         <div class="help-block with-errors"></div>
       </div>
     </div><!--/form-group-->
@@ -426,7 +506,7 @@
  <div class="form-group">
    <label class="col-sm-3 control-label">Hora de Termino de La Fumigación: <strog class="theme_color">*</strog></label>
    <div class="col-sm-6">
-    <input id="final" name="final" type="time" readonly>
+    <input id="final" name="final" type="time" >
     <div class="help-block with-errors"></div>
   </div>
 </div><!--/form-group-->
@@ -434,7 +514,7 @@
 <div class="form-group">
  <label class="col-sm-3 control-label">Fumigador: <strog class="theme_color">*</strog></label>
  <div class="col-sm-6">
-  <select name="fumigador" id="fumigador"  class="form-control select2" required>
+  <select name="fumigador" id="fumigador"  class="form-control select" required>
     @foreach($empleado as $empleados)
     <option value="{{$empleados->id}}}">
      {{$empleados->nombre}} {{$empleados->apellidos}} 
@@ -444,6 +524,14 @@
  <div class="help-block with-errors"></div>
 </div>
 </div><!--/form-group-->
+
+<div class="form-group">
+  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
+
+    <input name="observacionesf" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Fumigación"/>
+  </div>
+</div>
 
 
 
@@ -539,14 +627,14 @@
   <label class="col-sm-3 control-label">Estado de la Fumigacion: <strog class="theme_color">*</strog></label>
   <div class="col-sm-6">
     <select name="status" value="{{Input::old('status')}}">
-      @if(Input::old('status')=="Pendiente")
-      <option value='Pendiente' selected>Pendiente
+      @if(Input::old('status')=="Proceso")
+      <option value='Proceso' selected>En Proceso
       </option>
       <option value="Realizada">Realizada</option>
       @else
       <option value='Realizada' selected>Realizada
       </option>
-      <option value="Pendiente">Pendiente</option>
+      <option value="Proceso">En Proceso</option>
       @endif
     </select>
 
@@ -782,10 +870,10 @@
  });
   var uno = 1;
   function agroquimico(){
-     var valida = document.getElementById("scantidad");
-  var valida2 = document.getElementById("pcantidad");
+   var valida = document.getElementById("scantidad");
+   var valida2 = document.getElementById("pcantidad");
 
-  if (valida.value > valida2.value) {
+   if (valida.value > valida2.value) {
     alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
 
   }else{
@@ -824,33 +912,91 @@
     //x.remove(x.selectedIndex);
     document.getElementById("total").value=id2;
     limpiar();
+  }
+}
+
+var q = 1;
+ function transporte(){
+   var valida = document.getElementById("transporte_num");
+   if (valida.value < q) {
+    alert("Solo se han Seleccionado"+valida.value+" Transportes");
+
+  }else{
+
+var reg = document.getElementById("registrado").value;
+if (reg == "si"){
+   var select=document.getElementById('transportei');
+    var cantidadtotal = select.value;
+    limite = "3",
+    separador = "_",
+    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+    var id2= uno++;
+    var nombre =arregloDeSubCadenas[0];
+    var placas =arregloDeSubCadenas[1];
+    var tabla = document.getElementById("transportes");
+    //tabla.setAttribute("id", id2);
+    var row = tabla.insertRow(id2);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+
+    cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminartrans(this.parentNode.parentNode.rowIndex);">';
+    cell2.innerHTML = nombre;
+    cell3.innerHTML = placas;
+    q=q+1;
+}else{
+  var id2= uno++;
+    var tabla = document.getElementById("transportes");
+    //tabla.setAttribute("id", id2);
+    var row = tabla.insertRow(id2);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+
+    cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminartrans(this.parentNode.parentNode.rowIndex);">';
+    cell2.innerHTML = document.getElementById('transporte').value;
+    cell3.innerHTML = document.getElementById('transporte').value;
+    q=q+1;
+
 }
   }
+}
 
-  function eliminarFila(value) {
+function eliminartrans(value) {
 
-    document.getElementById("detalles").deleteRow(value);
-    var id2= uno--;
-    var menos =document.getElementById("detalles").rows
-    var r = menos.length;
-    document.getElementById("total").value= r - 2;
-    limpiar();
-  }   
+  document.getElementById("transportes").deleteRow(value);
+  q=q-1;
+}   
 
-  function calcula(){
-    var var1 =document.getElementById('enviados').value;
-    var var2 =document.getElementById('recibidos').value;
-    document.getElementById('diferencia').value=var1-var2;
-    var var3 = va1-var2;
+function eliminarFila(value) {
+
+  document.getElementById("detalles").deleteRow(value);
+  var id2= uno--;
+  var menos =document.getElementById("detalles").rows
+  var r = menos.length;
+  document.getElementById("total").value= r - 2;
+  limpiar();
+}   
+
+function calcula(){
+  var var1 =document.getElementById('enviados').value;
+  var var2 =document.getElementById('recibidos').value;
+  document.getElementById('diferencia').value=var1-var2;
+  var var3 = document.getElementById('diferencia').value;
+  if (var3 > 0){
+    document.getElementById("diferencia").style.border="1px solid #f00";
+  }else{
+    document.getElementById("diferencia").style.border="1px solid #00ff00";
   }
+}
 
-  function codigos(){
+function codigos(){
 
-    var cuenta = document.getElementById('codigo');
-    var x = cuenta.value;
-    var z = x.length
-    if (z == 12  ) {
-      var busca = z;
+  var cuenta = document.getElementById('codigo');
+  var x = cuenta.value;
+  var z = x.length
+  if (z == 12  ) {
+    var busca = z;
     //  alert ("12 entro");
     var y = document.getElementById("quimicos").length;
     //  alert(y);
@@ -885,6 +1031,7 @@
 function limpiar(){
   document.getElementById("scantidad").value="1";
 }
+
 
 function save() {
  var z = 1
@@ -943,11 +1090,13 @@ document.getElementById("total").value=tam;
 
 
 function buscar1(){
+  document.getElementById('registrado').value="si";
   document.getElementById('transportediv').style.display = 'block';
   document.getElementById('transportediv2').style.display = 'none';
 
 }
 function buscar2(){
+  document.getElementById('registrado').value="no";
   document.getElementById('transportediv2').style.display = 'block';
   document.getElementById('transportediv').style.display = 'none';
 

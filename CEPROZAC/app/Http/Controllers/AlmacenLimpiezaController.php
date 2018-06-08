@@ -83,6 +83,7 @@ class AlmacenLimpiezaController extends Controller
         $material->medida=$formulario->get('medida');
         $material->codigo=$formulario->get('codigo');
         $material->provedor=$formulario->get('provedor_name');
+          $material->stock_minimo=$formulario->get('stock_min');
         $material->estado='Activo';
 
 
@@ -159,6 +160,7 @@ public function invoice($id){
         $material->medida=$request->get('medida');
         $material->codigo=$request->get('codigo');
         $material->provedor=$request->get('provedor_name');
+          $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
         $material->update();
         return Redirect::to('almacenes/limpieza');

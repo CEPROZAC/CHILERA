@@ -24,6 +24,11 @@ class EntradaAlmacenMateriales extends Migration
         $table->double('importe');
         $table->double('total');
         $table->string('comprador');
+            $table->integer('entregado')->unsigned();
+            $table->foreign('entregado')->references('id')->on('empleados');
+              $table->integer('recibe_alm')->unsigned();
+            $table->foreign('recibe_alm')->references('id')->on('empleados');
+            $table->string('observacionesc')->nullable();
         $table->timestamps();
     });
        DB::unprepared('

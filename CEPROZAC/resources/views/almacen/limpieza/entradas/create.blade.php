@@ -72,12 +72,26 @@
          </div>
        </div>
 
-         <div class="form-group">
-          <label class="col-sm-3 control-label">Comprador : <strog class="theme_color">*</strog></label>
+          <div class="form-group">
+          <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
             <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+              @foreach($empresas as $emp)
+              <option value="{{$emp->nombre}}">
+               {{$emp->nombre}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
+
+                <div class="form-group">
+          <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="entregado_a" id="entregado_a" value=""  class="form-control select2" required>  
               @foreach($empleado as $emp)
-              <option value="{{$emp->nombre}} {{$emp->apellidos}}">
+              <option value="{{$emp->id}}">
                {{$emp->nombre}} {{$emp->apellidos}} 
              </option>
              @endforeach              
@@ -85,6 +99,29 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
+
+
+                       <div class="form-group">
+          <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select2" required>  
+              @foreach($empleado as $emp)
+              <option value="{{$emp->id}}">
+               {{$emp->nombre}} {{$emp->apellidos}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
+
+              <div class="form-group">
+  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
+
+    <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+  </div>
+</div>
 
        <div class="form-group">
         <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
@@ -101,7 +138,7 @@
        <div class="form-group">
         <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input  id="codigo" value="" name="codigo" type="text" onKeyUp="codigos()"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+          <input  id="codigo" value="" name="codigo" type="text" onKeyUp="codigos()" onkeypress=" return soloNumeros(event);"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
         </div>
       </div>
     </div>
@@ -152,7 +189,7 @@
            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
            <div class="form-group"> 
             <label for="preciou">$ Precio Unitario </label>
-            <input name="preciou" id="preciou" value="0" type="number" class="form-control" />
+            <input name="preciou" id="preciou" value="0" type="text" onkeypress=" return soloNumeros(event);" class="form-control" />
           </div>    
         </div>    
     </div>

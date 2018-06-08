@@ -127,6 +127,13 @@
             </div>
           </div>
 
+                                             <div class="form-group">
+              <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_min }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+               </div>    
+               </div> 
+
        
                    <div class="form-group">
               <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>

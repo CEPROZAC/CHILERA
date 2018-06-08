@@ -111,11 +111,12 @@
             <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
               <select name="medida" value="{{Input::old('medida')}}">
-                @if(Input::old('medida')=="Kilogramos")
+                    @if(Input::old('medida')=="Kilogramos")
                 <option value='Kilogramos' selected>Kilogramos
                 </option>
                 <option value="Toneladas">Toneladas</option>
                 <option value="Litros">Litros</option>
+                <option value="1/2Litros">1/2 Litros</option>
                 <option value="Metros">Metros</option>
                 <option value="Unidades">Unidades</option>
                 @elseif(Input::old('medida')=="Toneladas")
@@ -123,31 +124,51 @@
                 </option>
                 <option value="Litros">Litros</option>
                 <option value="Metros">Metros</option>
+                 <option value="1/2Litros">1/2 Litros</option>
                 <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
                  @elseif(Input::old('medida')=="Litros")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros" selected>Litros</option>
+                 <option value="1/2Litros">1/2 Litros</option>
                 <option value="Metros">Metros</option>
                 <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
                 @elseif(Input::old('medida')=="Metros")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros">Litros</option>
+                 <option value="1/2Litros">1/2 Litros</option>
                 <option value="Metros" selected>Metros</option>
                 <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
-                @else
+                @elseif(Input::old('medida')=="1/2Litros")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros">Litros</option>
+                <option value="1/2Litros" selected>1/2 Litros</option>
                 <option value="Metros" >Metros</option>
+                <option value="Unidades" >Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                @else
+                 <option value='Toneladas'>Toneladas</option>
+                <option value="Litros">Litros</option>
+                <option value="1/2Litros">1/2 Litros</option>
+                <option value="Metros" >Metros</option>
+                
                 <option value="Unidades" selected>Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
+
                 @endif
               </select>
               
             </div>
           </div>
+
+                                   <div class="form-group">
+              <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+               </div>    
+               </div> 
 
 
    

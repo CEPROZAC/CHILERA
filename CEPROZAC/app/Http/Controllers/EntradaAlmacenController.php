@@ -51,6 +51,7 @@ class EntradaAlmacenController extends Controller
     {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
       $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->get();
+      $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
 
       $cuenta = count($material);
@@ -78,7 +79,7 @@ class EntradaAlmacenController extends Controller
 
       }
       else{
-       return view("almacen.materiales.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado]);
+       return view("almacen.materiales.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas]);
    }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
@@ -187,6 +188,10 @@ return Redirect::to('almacen/entradas/materiales');
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
+        $material->entregado=$formulario->get('entregado_a');
+        $material->recibe_alm=$formulario->get('recibe_alm');
+        $material->recibe_alm=$formulario->get('recibe_alm');
+        $material->observacionesc=$formulario->get('observaciones');
         $material->save();
         $num = $num + 1;
 

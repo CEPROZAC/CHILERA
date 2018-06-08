@@ -21,6 +21,7 @@ class AlmacenMaterialMigration extends Migration
             $table->string('descripcion')->nullable();
             $table->integer('cantidad');
             $table->string('estado');
+             $table->integer('stock_minimo')->nullable();
             $table->timestamps();
         });
     }

@@ -19,8 +19,11 @@ class Recepcioncompramigration extends Migration
             $table->integer('id_provedor')->unsigned();
             $table->foreign('id_provedor')->references('id')->on('provedores');
             $table->string('transporte');
+            $table->int('num_transportes');
             $table->integer('recibe')->unsigned();
-            $table->foreign('recibe')->references('id')->on('empleados');
+            $table->foreign('recibe')->references('id')->on('empresas');
+            $table->integer('entregado')->unsigned();
+            $table->foreign('entregado')->references('id')->on('empleados');
             $table->string('observacionesc')->nullable();
             $table->double('total_compra');
 
@@ -37,20 +40,22 @@ class Recepcioncompramigration extends Migration
 
             $table->integer('id_bascula')->unsigned();
             $table->foreign('id_bascula')->references('id')->on('basculas');
-            $table->string('ticket');
+                        $table->string('ticket');
+            $table->integer('peso')->unsigned();
+            $table->foreign('peso')->references('id')->on('empleados');
             $table->double('kg_recibidos');
             $table->double('kg_enviados');
             $table->double('diferencia');
             $table->string('observacionesb')->nullable();
 
+
             $table->integer('ubicacion_act')->unsigned();
             $table->foreign('ubicacion_act')->references('id')->on('almacengeneral');
-             $table->string('espacio_asignado');
-             $table->string('observacionesu')->nullable();
+            $table->string('espacio_asignado');
+            $table->string('observacionesu')->nullable();
 
             $table->integer('id_fumigacion')->unsigned()->nullable();
             $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
-            $table->string('estado');
 
 
             $table->timestamps();

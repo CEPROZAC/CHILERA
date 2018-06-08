@@ -77,6 +77,7 @@ class AlmacenMaterialController extends Controller
         $material->descripcion=$formulario->get('descripcion');
         $material->cantidad=$formulario->get('cantidad');
         $material->codigo=$formulario->get('codigo');
+          $material->stock_minimo=$formulario->get('stock_min');
         $material->estado='Activo';
 
         $material->save();
@@ -157,6 +158,7 @@ public function invoice($id){
         $material->descripcion=$request->get('descripcion');
         $material->cantidad=$request->get('cantidad');
         $material->codigo=$request->get('codigo');
+          $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
         $material->update();
         return Redirect::to('almacen/materiales');
