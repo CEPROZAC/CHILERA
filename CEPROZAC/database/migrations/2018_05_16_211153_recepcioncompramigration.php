@@ -19,7 +19,7 @@ class Recepcioncompramigration extends Migration
             $table->integer('id_provedor')->unsigned();
             $table->foreign('id_provedor')->references('id')->on('provedores');
             $table->string('transporte');
-            $table->int('num_transportes');
+            $table->integer('num_transportes');
             $table->integer('recibe')->unsigned();
             $table->foreign('recibe')->references('id')->on('empresas');
             $table->integer('entregado')->unsigned();
@@ -54,7 +54,7 @@ class Recepcioncompramigration extends Migration
             $table->string('espacio_asignado');
             $table->string('observacionesu')->nullable();
 
-            $table->integer('id_fumigacion')->unsigned()->nullable();
+            $table->integer('id_fumigacion')->unsigned();
             $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
 
 

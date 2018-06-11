@@ -35,7 +35,8 @@ class AlmacenLimpiezaController extends Controller
       ->where('AlmacenLimpieza.estado','Activo')->get();
       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
       $empleado = DB::table('empleados')->where('estado','Activo')->get();
-      return view('almacen.limpieza.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado]);
+      $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+      return view('almacen.limpieza.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=> $empresas]);
 
       
   }
@@ -227,6 +228,9 @@ public function invoice($id){
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
       $material2->provedor=$provedornombre;
+                            $material2->entregado=$formulario->get('entregado_a');
+        $material2->recibe_alm=$formulario->get('recibe_alm');
+         $material2->observacionesc=$formulario->get('observaciones');
       $material2->comprador=$request->get('recibio');
       $material2->factura=$request->get('factura');
       $material2->fecha=$request->get('fecha2');

@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
+  <style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
   <body>
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
@@ -89,7 +95,19 @@
                     </td>              
                    <td>{{$materiales->descripcion}} </td>
                   <td>{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
-                  <th>{{$materiales->stock_minimo}}</th>
+                  <?php
+                  $x= $materiales->cantidad;
+                  $y= $materiales->stock_minimo;
+                  $estilo='style="background:green"';
+                  if ($x < $y){
+                       $z=1;
+                       echo "<td style='color:#FF0000'>{$materiales->stock_minimo}</td>";
+
+                  } else {
+                         echo "<td>{$materiales->stock_minimo} </td>"; 
+                  }
+                  ?>
+    
                   <td>{{$materiales->estado}}</td>
 
                      <td>  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 

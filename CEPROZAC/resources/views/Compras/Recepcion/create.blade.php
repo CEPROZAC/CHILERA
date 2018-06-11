@@ -48,7 +48,7 @@
 
         <div class="porlets-content">
           <div  class="form-horizontal row-border" > <!--acomodo-->
-            <form class="" id="myForm" action="{{route('contratos.store')}}" method="post" role="form" enctype="multipart/form-data" parsley-validate novalidate data-toggle="validator">
+            <form class="" id="myForm" action="{{route('compras.recepcion.store')}}" method="post" role="form" enctype="multipart/form-data" parsley-validate novalidate data-toggle="validator">
               {{csrf_field()}}
               <div id="smartwizard">
                 <ul>
@@ -77,7 +77,7 @@
                        <div class="form-group">
                         <label class="col-sm-3 control-label">Proveedor: <strog class="theme_color">*</strog></label>
                         <div class="col-sm-6">
-                          <select name="provedor"  class="form-control select2" required>  
+                          <select name="provedor"  id="provedor" class="form-control select2" required>  
                             @foreach($provedores as $empresa)
                             <option value="{{$empresa->id}}">
                              {{$empresa->nombre}}
@@ -113,7 +113,7 @@
                          </select>
                          <div class="help-block with-errors"></div>
                        </div>
-                       <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="transporte();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
+                       <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="transporte();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar transporte"> <i class="fa fa-plus"></i>Agregar</a>
                      </div><!--/form-group-->
 
                      <div class="form-group" id="transportediv2" style='display:none;'>
@@ -199,6 +199,7 @@
              </div>
            </div>
 
+
            <div class="form-group">
   <div class="col-sm-6">
     <input  id="transportes2" value="" name="transportes2[]" type="hidden"  class="form-control" />
@@ -219,7 +220,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Nombre de la Materia Prima: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="producto"  class="form-control select2" required>  
+              <select name="producto" id="producto" class="form-control select" required>  
                 @foreach($productos as $pro)
                 <option value="{{$pro->id}}">
                  {{$pro->nombre}}
@@ -233,7 +234,7 @@
          <div class="form-group">
           <label class="col-sm-3 control-label">Calidad: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="calidad"  class="form-control select2" required>  
+            <select name="calidad"  id ="calidad" class="form-control select" required onclick="codifica()">  
               @foreach($calidad as $cal)
               <option value="{{$cal->id}}">
                {{$cal->nombre}}
@@ -247,7 +248,7 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">Formato de Empaque: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <select name="empaque"  class="form-control select2" required>  
+          <select name="empaque"  class="form-control select" required>  
             @foreach($empaque as $em)
             <option value="{{$em->id}}">
              {{$em->formaEmpaque}}
@@ -261,7 +262,7 @@
      <div class="form-group ">
       <label class="col-sm-3 control-label">Porcentaje de humedad</label>
       <div class="col-sm-6">
-        <input parsley-type="number" type="text" maxlength="3" required parsley-range="[0, 100]" name="porcentaje_Humedad"   class="form-control mask"  onkeypress=" return soloNumeros(event);">
+        <input parsley-type="number"  type="text" maxlength="3" required name="humedad" id="humedad"  class="form-control"  onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
@@ -278,6 +279,15 @@
         <input parsley-type="number" type="number" maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
       </div>
     </div>
+
+                            <div class="form-group">
+              <label class="col-sm-3 control-label">Codificación de Lote: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="codificacion" id="codificacion" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+              </div>
+            </div>
+
 
     <div class="form-group">
       <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
@@ -317,7 +327,7 @@
    <div class="form-group">
     <label class="col-sm-3 control-label">Ticket: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="numeroTicket" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese numero de Ticket" />
+      <input name="numeroticket" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese numero de Ticket" />
     </div>
   </div>
 
@@ -526,6 +536,20 @@
 </div><!--/form-group-->
 
 <div class="form-group">
+ <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
+ <div class="col-sm-6">
+  <select name="entrego_qui" id="entrego_qui"  class="form-control select" required>
+    @foreach($empleado as $empleados)
+    <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
+     {{$empleados->nombre}} {{$empleados->apellidos}} 
+   </option>
+   @endforeach
+ </select>
+ <div class="help-block with-errors"></div>
+</div>
+</div><!--/form-group-->
+
+<div class="form-group">
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
   <div class="col-sm-6">
 
@@ -562,9 +586,13 @@
 <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
 </div><!--/form-group-->
 
+
+
+
+
 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
  <div class="form-group"> 
-  <label for="scantidad">Cantidad de Salida </label>
+  <label for="scantidad">Cantidad Aplicada </label>
   <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
 </div>    
 </div>  
@@ -597,7 +625,7 @@
         <th>Id</th>
         <th>Nombre de Agroquimico</th>
         <th>Descripcion</th>
-        <th>Cantidad de Salida</th>
+        <th>Cantidad Aplicada</th>
 
       </thead>
       <tfoot>
@@ -644,6 +672,12 @@
 <div class="form-group">
   <div class="col-sm-6">
     <input  id="codigo2" value="" name="codigo2[]" type="hidden"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-6">
+    <input  id="nombre_fum" value="" name="nombre_fum" type="hidden"  class="form-control""/>
   </div>
 </div>
 
@@ -870,10 +904,25 @@
  });
   var uno = 1;
   function agroquimico(){
-   var valida = document.getElementById("scantidad");
-   var valida2 = document.getElementById("pcantidad");
+    var select2=document.getElementById('quimicos');
+  var cantidadtotal2 = select2.value;
+  limite2 = "5",
+  separador2 = "_",
+  arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
+  x=arregloDeSubCadenas2[3];
 
-   if (valida.value > valida2.value) {
+
+  var valida = document.getElementById("scantidad").value;
+  var valida2 = document.getElementById("pcantidad").value;
+  var y = parseInt(valida);
+  var z = parseInt(valida2);
+  var comprueba = recorre(x)
+
+  if (comprueba == 1){
+      alert("Este Material Ya se ha Insertado en la Tabla");
+
+  }else{
+    if (y > z) {
     alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
 
   }else{
@@ -892,7 +941,7 @@
     var medidaa = arregloDeSubCadenas[5];
     var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
-    var row = tabla.insertRow(id2);
+    var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
@@ -913,7 +962,7 @@
     document.getElementById("total").value=id2;
     limpiar();
   }
-}
+}}
 
 var q = 1;
  function transporte(){
@@ -966,6 +1015,68 @@ function eliminartrans(value) {
 
   document.getElementById("transportes").deleteRow(value);
   q=q-1;
+}
+
+
+function recorre(valor) {
+ var z = 1
+ var arreglo = [];
+ var table = document.getElementById('detalles');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+        //alert(z)
+       // document.getElementById("id_materialk").id=z;
+      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
+      var j = table.rows[r].cells[c].innerHTML
+      if (valor == j ){
+        var r = 1;
+        return(r);
+       z ++;
+      }
+     }
+
+     else if(z == 2){
+         //alert(z)
+       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
+       alert(table.rows[r].cells[c].innerHTML);
+       z ++;
+       
+
+     }else if(z == 3){
+        alert(table.rows[r].cells[c].innerHTML);
+        z ++;
+      }else if(z == 4){
+
+       alert(table.rows[r].cells[c].innerHTML);
+       z ++;
+     } else if (z == 5){
+       //  alert(z)
+     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
+         alert(table.rows[r].cells[c].innerHTML);
+
+//alert(arreglo);
+z ++;
+}else if (z == 6){
+ //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
+  alert(table.rows[r].cells[c].innerHTML);
+ z ++;
+
+}else if(z == 7){
+         //alert(z)
+        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
+           alert(table.rows[r].cells[c].innerHTML);
+         z ++;
+
+       }else{
+       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
+          alert(table.rows[r].cells[c].innerHTML);
+        z = 1;
+
+      }
+
+    }
+  }
 }   
 
 function eliminarFila(value) {
@@ -1036,7 +1147,7 @@ function limpiar(){
 function save() {
  var z = 1
  var arreglo = [];
- var table = document.getElementById('detalles');
+ var table = document.getElementById('transportes');
  for (var r = 1, n = table.rows.length-1; r < n; r++) {
   for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
    if (z == 1){
@@ -1044,47 +1155,51 @@ function save() {
        // document.getElementById("id_materialk").id=z;
       // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
       arreglo.push(table.rows[r].cells[c].innerHTML);
-     //  alert(table.rows[r].cells[c].innerHTML);
      z ++;
-   }
-
-   else if(z == 2){
-         //alert(z)
-       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     }else if(z == 3){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     }else if(z == 4){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     } else if (z == 5){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     }else if (z == 6){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 7){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 8){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else{
+   }else{
       arreglo.push(table.rows[r].cells[c].innerHTML);
-      document.getElementById("codigo2").value=arreglo;
+      document.getElementById("transportes2").value=arreglo;
       z = 1;
 
     }
 
   }
 }
-var tam = arreglo.length / 9;
-document.getElementById("total").value=tam;
+
+
+ var x = 1
+ var arreglo2 = [];
+ var table2 = document.getElementById('detalles');
+ for (var r = 1, n = table2.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table2.rows[r].cells.length; c < m; c++) {
+   if (x == 1){
+        //alert(z)
+       // document.getElementById("id_materialk").id=z;
+      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
+      arreglo2.push(table2.rows[r].cells[c].innerHTML);
+     x ++;
+   }else if (x== 2){
+      arreglo2.push(table2.rows[r].cells[c].innerHTML);
+     x ++;
+
+    }else if (x == 3){
+            arreglo2.push(table2.rows[r].cells[c].innerHTML);
+     x ++;
+
+    }else {
+            arreglo2.push(table2.rows[r].cells[c].innerHTML);
+      document.getElementById("codigo2").value=arreglo2;
+      x = 1;
+
+    }
+
+  }
+}
+  var tam = arreglo2.length / 4;
+  document.getElementById("total").value=tam;
+  var auxy = document.getElementById('fumigador');
+var nombx = auxy.options[auxy.selectedIndex].text;
+document.getElementById('nombre_fum').value=nombx;
 }
 
 
@@ -1108,6 +1223,62 @@ function raiz(){
   document.getElementById('pacas_rev').value=z;
 
 }
+
+function codifica(){
+var prov = document.getElementById('provedor');
+var proved = prov.options[prov.selectedIndex].text;
+      limite = "2",
+      separador = " ",
+      separador2 = "",
+      arregloDeSubCadenas = proved.split(separador, limite);
+      var nombre =arregloDeSubCadenas[0];
+      var apellido =arregloDeSubCadenas[1];
+
+      arregloDeSubCadenas2 = nombre.split(separador2, limite);
+      var nom1 =arregloDeSubCadenas2[0];
+      var nom2 =arregloDeSubCadenas2[1];
+
+            arregloDeSubCadenas3 = apellido.split(separador2, limite);
+      var ape1 =arregloDeSubCadenas3[0];
+      var ape2 =arregloDeSubCadenas3[1];
+
+
+
+
+var prod = document.getElementById('producto');
+var produ = prod.options[prod.selectedIndex].text;
+      arregloDeSubCadenas3 = produ.split(separador, limite);
+      var tipo =arregloDeSubCadenas3[0];
+      var nombrep =arregloDeSubCadenas3[1];
+
+      arregloDeSubCadenas4 = tipo.split(separador2, limite);
+      var t1 =arregloDeSubCadenas4[0];
+      var t2 =arregloDeSubCadenas4[1];
+
+            arregloDeSubCadenas5 = nombrep.split(separador2, limite);
+      var x1 =arregloDeSubCadenas5[0];
+      var x2 =arregloDeSubCadenas5[1];
+
+
+var cal = document.getElementById('calidad');
+var cali = cal.options[cal.selectedIndex].text;
+      arregloDeSubCadenas6 = cali.split(separador, limite);
+      var calid1 =arregloDeSubCadenas6[0];
+      var calid2 =arregloDeSubCadenas6[1];
+
+
+
+var nombrecod=nom1+nom2+ape1+ape2+" "+t1+t2+x1+x2+" "+calid1;
+document.getElementById('codificacion').value=nombrecod;
+
+
+
+}
+
+
+
+
+
 
 function generar(){
  document.getElementById('espacio').value = "";
