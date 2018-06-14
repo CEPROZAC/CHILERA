@@ -181,6 +181,13 @@
 
               </ul>
             </li>
+
+                        <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Compras <span class="plus"><i class="fa fa-plus"></i></span> </a>
+              <ul>
+                <li> <a href="{{url('compras/recepcion/')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materia Prima</b> </a> </li>
+              </ul>
+            </li>
+
           </ul>
         </div>
       </div>

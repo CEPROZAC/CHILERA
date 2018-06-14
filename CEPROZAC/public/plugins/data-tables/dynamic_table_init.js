@@ -454,7 +454,7 @@ function fnFormatDetails6 ( oTable, nTr )
     sOut += '<tr><td><strong>Espacios Libres Asignados:</strong></td><td>'+aData[7]+' </td></tr>';
     sOut += '<tr><td><strong>Estado:</strong></td><td>'+aData[8]+' </td></tr>';
     sOut += '<tr><td><strong>Almacén N°:</strong></td><td>'+aData[9]+' </td></tr>';
- 
+
 
     sOut += '</table>';
 
@@ -510,6 +510,105 @@ $(document).ready(function() {
             /* Open this row */
             this.src = "/plugins/advanced-datatable/images/details_close.png";
             oTable.fnOpen( nTr, fnFormatDetails6(oTable, nTr), 'details' );
+        }
+    } );
+ } );
+
+
+function fnFormatDetails7 ( oTable, nTr )
+{
+    var aData = oTable.fnGetData( nTr );
+    var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Compra</strong></td><td> </td></tr>';
+    sOut += '<tr><td><strong>N° Recepción:</strong></td><td>'+aData[1]+' </td></tr>';
+    sOut += '<tr><td><strong>Nombre de Recepción:</strong></td><td>'+aData[2]+' </td></tr>';
+    sOut += '<tr><td><strong>Fecha de Compra:</strong></td><td>'+aData[3]+' </td></tr>';
+    sOut += '<tr><td><strong>Provedor:</strong></td><td>'+aData[4]+' </td></tr>';
+    sOut += '<tr><td><strong>Transporte:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>N°Transportes:</strong></td><td>'+aData[6]+' </td></tr>';
+    sOut += '<tr><td><strong>Empresa:</strong></td><td>'+aData[7]+' </td></tr>';
+    sOut += '<tr><td><strong>Recibio Compra:</strong></td><td>'+aData[8]+' </td></tr>';
+    sOut += '<tr><td><strong>Observaciones de Compra:</strong></td><td>'+aData[9]+' </td></tr>';
+    sOut += '<tr><td><strong>Total de Compra:</strong></td><td>'+aData[10]+' </td></tr>';
+     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Muestreo de Materia Prima</strong></td><td> </td></tr>';
+    sOut += '<tr><td><strong>Producto:</strong></td><td>'+aData[11]+' </td></tr>';
+    sOut += '<tr><td><strong>Calidad:</strong></td><td>'+aData[12]+' </td></tr>';
+    sOut += '<tr><td><strong>Empaque:</strong></td><td>'+aData[13]+' </td></tr>';
+    sOut += '<tr><td><strong>Humedad:</strong></td><td>'+aData[14]+' </td></tr>';
+    sOut += '<tr><td><strong>Pacas:</strong></td><td>'+aData[15]+' </td></tr>';
+    sOut += '<tr><td><strong>Pacas a Revisar:</strong></td><td>'+aData[16]+' </td></tr>';
+    sOut += '<tr><td><strong>Observaciones de Muestreo:</strong></td><td>'+aData[17]+' </td></tr>';
+     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Pesaje</strong></td><td> </td></tr>';
+    sOut += '<tr><td><strong>Bascula:</strong></td><td>'+aData[18]+' </td></tr>';
+    sOut += '<tr><td><strong>Ticket:</strong></td><td>'+aData[19]+' </td></tr>';
+    sOut += '<tr><td><strong>Realizo Pesaje:</strong></td><td>'+aData[20]+' </td></tr>';
+
+    sOut += '<tr><td><strong>KG Recibidos:</strong></td><td>'+aData[21]+' </td></tr>';
+    sOut += '<tr><td><strong>KG Enviados:</strong></td><td>'+aData[22]+' </td></tr>';
+        sOut += '<tr><td><strong>Diferencia:</strong></td><td>'+aData[23]+' </td></tr>';
+            sOut += '<tr><td><strong>Observaciones Pesaje:</strong></td><td>'+aData[24]+' </td></tr>';
+             sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Ubicación</strong></td><td> </td></tr>';
+    sOut += '<tr><td><strong>Enviado a Ubicación:</strong></td><td>'+aData[25]+' </td></tr>';
+        sOut += '<tr><td><strong>Espacio Asignado:</strong></td><td>'+aData[26]+' </td></tr>';
+                sOut += '<tr><td><strong>Observaciónes de Ubicación:</strong></td><td>'+aData[27]+' </td></tr>';
+                 sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Fumigación</strong></td><td> </td></tr>';
+    sOut += '<tr><td><strong>Fumigación N°:</strong></td><td>'+aData[28]+' </td></tr>';
+    
+
+    sOut += '</table>';
+
+    return sOut;
+}
+
+$(document).ready(function() {
+
+    $('#dynamic-table7').dataTable( {
+        "aaSorting": [[ 4, "desc" ]]
+    } );
+
+    /*
+     * Insert a 'details' column to the table
+     */
+     var nCloneTh = document.createElement( 'th' );
+     var nCloneTd = document.createElement( 'td' );
+     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">';
+     nCloneTd.className = "center";
+
+     $('#hidden-table-info7 thead tr').each( function () {
+        this.insertBefore( nCloneTh, this.childNodes[0] );
+    } );
+
+     $('#hidden-table-info7 tbody tr').each( function () {
+        this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
+    } );
+
+    /*
+     * Initialse DataTables, with no sorting on the 'details' column
+     */
+     var oTable = $('#hidden-table-info7').dataTable( {
+        "aoColumnDefs": [
+        { "bSortable": false, "aTargets": [ 0 ] }
+        ],
+        "aaSorting": [[1, 'asc']]
+    });
+
+    /* Add event listener for opening and closing details
+     * Note that the indicator for showing which row is open is not controlled by DataTables,
+     * rather it is done here
+     */
+     $('#hidden-table-info7 tbody td img').click(function () {
+        var nTr = $(this).parents('tr')[0];
+        if ( oTable.fnIsOpen(nTr) )
+        {
+            /* This row is already open - close it */
+            this.src = "plugins/advanced-datatable/images/details_open.png";
+            oTable.fnClose( nTr );
+        }
+        else
+        {
+            /* Open this row */
+            this.src = "plugins/advanced-datatable/images/details_close.png";
+            oTable.fnOpen( nTr, fnFormatDetails7(oTable, nTr), 'details' );
         }
     } );
  } );
