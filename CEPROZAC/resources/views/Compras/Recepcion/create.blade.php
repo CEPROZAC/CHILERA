@@ -903,6 +903,7 @@
 
  });
   var uno = 1;
+   var uno2 = 1;
   function agroquimico(){
     var select2=document.getElementById('quimicos');
   var cantidadtotal2 = select2.value;
@@ -932,7 +933,7 @@
     limite = "6",
     separador = "_",
     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-    var id2= uno++;
+    var id2= uno2++;
     var ida =arregloDeSubCadenas[0];
     var nombrea =arregloDeSubCadenas[1];
     var codigoa = arregloDeSubCadenas[2];
@@ -1039,38 +1040,35 @@ function recorre(valor) {
      else if(z == 2){
          //alert(z)
        //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-       alert(table.rows[r].cells[c].innerHTML);
        z ++;
        
 
      }else if(z == 3){
-        alert(table.rows[r].cells[c].innerHTML);
         z ++;
       }else if(z == 4){
 
-       alert(table.rows[r].cells[c].innerHTML);
        z ++;
      } else if (z == 5){
        //  alert(z)
      //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-         alert(table.rows[r].cells[c].innerHTML);
+         //alert(table.rows[r].cells[c].innerHTML);
 
 //alert(arreglo);
 z ++;
 }else if (z == 6){
  //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
-  alert(table.rows[r].cells[c].innerHTML);
+ // alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-           alert(table.rows[r].cells[c].innerHTML);
+           //alert(table.rows[r].cells[c].innerHTML);
          z ++;
 
        }else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-          alert(table.rows[r].cells[c].innerHTML);
+          //alert(table.rows[r].cells[c].innerHTML);
         z = 1;
 
       }
@@ -1082,7 +1080,7 @@ z ++;
 function eliminarFila(value) {
 
   document.getElementById("detalles").deleteRow(value);
-  var id2= uno--;
+  var id2= uno2--;
   var menos =document.getElementById("detalles").rows
   var r = menos.length;
   document.getElementById("total").value= r - 2;

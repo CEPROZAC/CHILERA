@@ -104,7 +104,7 @@
          <div class="form-group">
               <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
- <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
+ <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
 </div>
 </div>
 

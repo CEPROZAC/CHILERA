@@ -21,9 +21,13 @@ use CEPROZAC\fumigaciones;
 use CEPROZAC\salidasagroquimicos;
 use CEPROZAC\recepcioncompra;
 use CEPROZAC\formaempaque;
+use \Milon\Barcode\DNS1D;
+use \Milon\Barcode\DNS2D;
 
 
 use DB;
+use Validator; 
+use PHPExcel_Worksheet_Drawing;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RecepcionCompraController extends Controller
@@ -163,6 +167,13 @@ $salida->save();
      $material->observacionesu=$request->get('observacionesu');
      $material->id_fumigacion=$ultimo;
      $material->save();
+      $material= DB::table('recepcioncompra')->orderby('created_at','DESC')->take(1)->get();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('Compras.Recepcion.invoice', compact('date', 'invoice','material'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice');
 
 
 
@@ -171,6 +182,16 @@ $salida->save();
 
         //
    }
+
+   public function invoice($id){ 
+    $material= DB::table('recepcioncompra')->where('id',$id)->get();
+    $date = date('Y-m-d');
+    $invoice = "2222";   
+    $view =  \View::make('Compras.Recepcion.invoice', compact('date', 'invoice','material'))->render();
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($view);
+  return $pdf->stream('invoice');
+}
 
     /**
      * Display the specified resource.
