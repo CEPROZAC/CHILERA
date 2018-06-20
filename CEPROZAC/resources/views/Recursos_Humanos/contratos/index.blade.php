@@ -50,6 +50,7 @@
                 <th >Telefono</th>
                 <th >Estado</th>
                 <th >Historial</th>
+                
                 <th >Ver</th>
                 <th >Descargar</th>
                 <td><center><b>Editar</b></center></td>
@@ -141,8 +142,9 @@
     <th >CURP </th>
     <th > Correo </th>
     <th >Telefono </th>
-    <th >Historial</th>
+
     <th >Estado</th>
+    <th >Historial</th>
     <th >Ver</th>
     <th >Descargar</th>
     <td><center><b>Editar</b></center></td>

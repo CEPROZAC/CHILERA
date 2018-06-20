@@ -111,7 +111,7 @@
           <input name="" type="text" class="search" placeholder="Search Dashboard..." />
         </div>
         <div class="left_nav_slidebar">
-        <ul >
+          <ul >
             <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> Provedores<span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
 
 
@@ -121,7 +121,7 @@
                 <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Bancos</b> </a> </li>
                 <li> <a href="{{url('materiales/provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Materiales</b> </a> </li>
 
-                 <li> <a href="animations.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Animations</b> </a> </li>
+                <li> <a href="animations.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Animations</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> Clientes <span class="plus"><i class="fa fa-plus"></i></span></a>
@@ -185,12 +185,21 @@
               </ul>
             </li>
 
+
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Bitacoras <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
                 <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
 
               </ul>
             </li>
+            
+            <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Compras <span class="plus"><i class="fa fa-plus"></i></span> </a>
+              <ul>
+                <li> <a href="{{url('compras/recepcion/')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materia Prima</b> </a> </li>
+              </ul>
+            </li>
+
+            
           </ul>
         </div>
       </div>

@@ -20,6 +20,7 @@ class AlmacenLimpiezaMigrate extends Migration
          $table->integer('cantidad');
          $table->string('medida');
          $table->string('estado');
+          $table->integer('stock_minimo')->nullable();
          $table->timestamps();
      });
     }

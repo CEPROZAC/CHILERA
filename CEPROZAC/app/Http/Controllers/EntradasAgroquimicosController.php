@@ -49,6 +49,7 @@ class EntradasAgroquimicosController extends Controller
     {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
       $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->get();
+       $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
 
       $cuenta = count($material);
@@ -80,7 +81,7 @@ class EntradasAgroquimicosController extends Controller
 
       }
       else{
-return view("almacen.agroquimicos.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado]);
+return view("almacen.agroquimicos.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas]);
 
      }
         //
@@ -140,6 +141,9 @@ $material2->id_material=$ultimo;
 $material2->cantidad=$formulario->get('cantidad2');
 $material2->provedor=$provedornombre;
 $material2->comprador=$formulario->get('recibio2');
+                $material2->entregado=$formulario->get('entregado_a');
+        $material2->recibe_alm=$formulario->get('recibe_alm');
+         $material2->observacionesc=$formulario->get('observaciones');
 $material2->factura=$formulario->get('factura2');
 $material2->fecha=$formulario->get('fecha2');
 $material2->p_unitario=$formulario->get('preciou2');
@@ -196,6 +200,9 @@ return $pdf->stream('invoice');
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
+                $material->entregado=$formulario->get('entregado_a');
+        $material->recibe_alm=$formulario->get('recibe_alm');
+         $material->observacionesc=$formulario->get('observaciones');
         $material->save();
         $num = $num + 1;
         //

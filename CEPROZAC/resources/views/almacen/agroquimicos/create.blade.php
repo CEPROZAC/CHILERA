@@ -78,7 +78,7 @@
  <div class="form-group">
               <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
- <input type="text" name="codigo" id="segundo"  maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="{{Input::old('codigo')}}"/><br>
+ <input type="text" name="codigo" id="segundo"  maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" onkeypress=" return soloNumeros(event);" required value="{{Input::old('codigo')}}"/><br>
  <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
 </div>
 </div>
@@ -148,6 +148,13 @@
               
             </div>
           </div>
+
+                         <div class="form-group">
+              <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+               </div>    
+               </div> 
 
 
    

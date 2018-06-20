@@ -134,6 +134,8 @@ Route::resource('almacen/entradas/limpieza','EntradasAlmacenLimpiezaController')
 Route::get('descargar-entradas-limpieza', 'EntradasAlmacenLimpiezaController@excel')->name('almacen.limpieza.entradas.excel');
 
 Route::resource('compras/recepcion','RecepcionCompraController');
+Route::get('vercompra/{id}', array('as'=> '/vercompra','uses'=>'RecepcionCompraController@verInformacion'));
+Route::get('pdfrecepcion/{id}', array('as'=> '/pdfrecepcion','uses'=>'RecepcionCompraController@invoice'));
 
 
 Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');
@@ -161,6 +163,9 @@ Route::get('renovarContrato', 'ContratosController@renovarContrato');
 
 
 Route::get('historialContratos/{id}', 'ContratosController@historial');
+
+
+Route::post("renovarContrato", "ContratosController@renovarContrato");
 
 
 

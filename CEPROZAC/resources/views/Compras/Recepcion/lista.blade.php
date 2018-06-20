@@ -3,12 +3,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Lista de Empleados</h2>
+    <h2 class="">Compras</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a style="color: #808080" href="{{url('/empleados')}}">Inicio</a></li>
-      <li class="active">Lista de Empleados</a></li>
+      <li ><a style="color: #808080" href="{{url('/compras/recepcion')}}">Inicio</a></li>
+      <li class="active">Lista Detallada de la Compra</a></li>
     </ol>
   </div>
 </div>
@@ -20,7 +20,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-7">
               <div class="actions"> </div>
-              <h4 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>INFORMACION DE COMPRA N°: {{$compra->id}}</strong></h4>
+              <h4 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>INFORMACION DE COMPRA N°: {{$compra->id}} {{$compra->nombre}}</strong></h4>
             </div>
             <div class="btn-group pull-right">
               <b>
@@ -49,61 +49,86 @@
                       <th>Número de Compra: </th>
                       <td>{{$compra->id}}</td>
                     </tr>
-                    <tr>
-                      <th>Fecha:</th>
-                      <td>{{$compra->fecha}}</td>
+                     <tr>
+                      <th>Nombre de Lote:</th>
+                      <td>{{$compra->nombre}}</td>
                     </tr>
                     <tr>
-                      <th>KG Enviados: </th>
-                      <td>{{$compra->kg_enviados}}</td>
+                      <th>Fecha de Compra:</th>
+                      <td>{{$compra->fecha_compra}}</td>
                     </tr>
-                    <tr>
-                      <th>KG Recibidos: </th>
-                      <td>{{$compra->kg_recibidos}}</td>
+                                         <tr>
+                      <th>Empresa:</th>
+                      <td>{{$emp_recibe->nombre}}</td>
                     </tr>
-                    <tr>
-                      <th>Diferencia: </th>
-                      <td>{{$compra->diferencia}}</td>
-                    </tr>
-                    <tr>
-                      <th>N° De Ticket de Bascula: </th>
-                      <td>{{$tickets->numeroTicket}}</td>
-                    </tr>
-                    <tr>
-                      <th>Precio $: </th>
-                      <td>${{$compra->precio}}</td>
-                    </tr>
-                    <th>Observaciónes: </th>
-                      <td>${{$compra->observaciones}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          </div>
 
-          <div class="col-lg-6"> 
-            <section class="panel default blue_title h4">
-              <div class="panel-heading"><span class="semi-bold">Informacion Del Proveedor</span> 
-              </div>
-              <div class="panel-body">
-                <table class="table table-striped">
-                  <tbody>
-                    <tr>
-                      <th>Nombre del Proveedor: </th>
+                        <tr>
+                      <th>Provedor:</th>
                       <td>{{$provedor->nombre}}</td>
                     </tr>
                     <tr>
-                      <th>Dirección:</th>
-                      <td>{{$provedor->direccion}}</td>
+                      <th>Empleado que Recibio la Compra: </th>
+                      <td>{{$entrega->nombre}}</td>
                     </tr>
                     <tr>
-                      <th>Email:</th>
-                      <td>{{$provedor->email}}</td>
+                      <th>N° de Transportes en que Llego la Compra: </th>
+                      <td>{{$compra->num_transportes}} Unidad(es)</td>
                     </tr>
                     <tr>
-                      <th>Teléfono: </th>
-                      <td>{{$provedor->telefono}}</td>
+                      <th>Nombre y Placas de Transportes: </th>
+                      <td>{{$compra->transporte}}</td>
+                    </tr>
+                    <tr>
+                      <th>N° De Ticket de Bascula: </th>
+                      <td>{{$compra->ticket}}</td>
+                    </tr>
+                    <tr>
+                      <th>Precio Total de Compra$: </th>
+                      <td>${{$compra->total_compra}}.00 /MN</td>
+                    </tr>
+                    <th>Observaciónes de la Compra: </th>
+                      <td>{{$compra->observacionesc}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <div class="col-lg-6"> 
+            <section class="panel default blue_title h4">
+              <div class="panel-heading"><span class="semi-bold">Informacion Del Muestreo de Materia Prima</span> 
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <th>Nombre de la Materia Prima: </th>
+                      <td>{{$produ->nombre}}</td>
+                    </tr>
+                    <tr>
+                      <th>Calidad:</th>
+                      <td>{{$cali->nombre}}</td>
+                    </tr>
+                    <tr>
+                      <th>Empaque:</th>
+                      <td>{{$empaque->formaEmpaque}}</td>
+                    </tr>
+                    <tr>
+                      <th>Humedad: </th>
+                      <td>{{$compra->humedad}}% de Humedad</td>
+                    </tr>
+                      <tr>
+                      <th>N° de Pacas: </th>
+                      <td>{{$compra->pacas}} Unidad(es)</td>
+                    </tr>
+                       <tr>
+                      <th>N° de Pacas a Revisar: </th>
+                      <td>{{$compra->pacas_rev}} Unidad(es)</td>
+                    </tr>
+                    <tr>
+                      <th>Observaciónes del Muestreo: </th>
+                      <td>{{$compra->observacionesm}}</td>
                     </tr>
                     <tr>
                       <th> <div style="visibility: hidden"> Dato Nulo</div></th>
@@ -114,6 +139,10 @@
                       <td></td>
                     </tr>
                     <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
                       <th> <div style="visibility: hidden"> Dato Nulo</div></th>
                       <td></td>
                     </tr>
@@ -126,24 +155,47 @@
 
           <div class="col-lg-6"> 
             <section class="panel default blue_title h4">
-              <div class="panel-heading"><span class="semi-bold">Información del Producto </span> 
+              <div class="panel-heading"><span class="semi-bold">Información del Pesaje </span> 
               </div>
               <div class="panel-body">
                 <table class="table table-striped">
                   <tbody>
                    <tr>
-                     <th>Nombre: </th>
-                     <td>{{$producto->nombre}}</td>
+                     <th>Nombre de la Bascula Utilizada: </th>
+                     <td>{{$bascula->nombreBascula}}</td>
                    </tr>
+                     <tr>
+                      <th>N° De Ticket: </th>
+                      <td>{{$compra->ticket}}</td>
+                    </tr>
+                      <tr>
+                      <th>Empleado que Realizo Pesaje: </th>
+                      <td>{{$pesaje->nombre}}</td>
+                    </tr>
+                    <tr>
+                      <th>KG Recibidos: </th>
+                      <td>{{$compra->kg_recibidos}} KG.</td>
+                    </tr>
+                    <tr>
+                      <th>KG Enviados </th>
+                      <td>{{$compra->kg_enviados}} KG</td>
+                    </tr>
+                     <tr>
+                      <th>Diferencia </th>
+                      <td>{{$compra->diferencia}} KG</td>
+                    </tr>
 
                    <tr>
-                    <th>Calidad: </th>
-                    <td>{{$producto->calidad}}</td>
+                    <th>Observaciónes de Pesaje: </th>
+                    <td>{{$compra->observacionesb}}</td>
                   </tr>
-                  <tr>
-                    <th>Unidad de Medida: </th>
-                    <td>{{$producto->unidad_de_Medida}}</td>
-                  </tr>
+
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                    
+
                   <tr>
 
                 </tbody>
@@ -152,35 +204,73 @@
           </section>
         </div>
 
-        <div class="col-lg-6"> 
-          <section class="panel default blue_title h4">
-            <div class="panel-heading"><span class="semi-bold">Transporte en que LLego</span> 
-            </div>
-            <div class="panel-body">
-              <table class="table table-striped">
-                <tbody>
-                   <tr>
-                     <th>Nombre del Transporte: </th>
-                     <td>{{$transporte->nombre_Unidad}}</td>
+          
+
+                       <div class="col-lg-6"> 
+            <section class="panel default blue_title h4">
+              <div class="panel-heading"><span class="semi-bold">Información de Fumigación Aplicada</span> 
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped">
+                  <tbody>
+                                     <tr>
+                     <th>Fumigaciòn Nº: </th>
+                     <td>{{$fumigacion->id}}</td>
                    </tr>
                    <tr>
-                    <th>N° Serie: </th>
-                    <td>{{$transporte->no_Serie}}</td>
-                  </tr>
+                     <th>Agroquimicos Aplicados: </th>
+                     <td>{{$fumigacion->agroquimicos}}</td>
+                   </tr>
+                     <tr>
+                      <th>Cantidad: </th>
+                      <td>{{$fumigacion->cantidad_aplicada}}</td>
+                    </tr>
+                      <tr>
+                      <th>Empleado que Realizo Fumigaciòn: </th>
+                      <td>{{$fumigador->nombre}}</td>
+                    </tr>
+                    <tr>
+                      <th>Fecha y Hora Inicial: </th>
+                      <td>{{$fumigacion->fechai}} {{$fumigacion->horai}} </td>
+                    </tr>
+                     <tr>
+                      <th>Fecha y Hora Final: </th>
+                      <td>{{$fumigacion->fechaf}} {{$fumigacion->horaf}} </td>
+                    </tr>
+                    <tr>
+                      <th>Estado de la Fumigaciòn </th>
+                      <td>{{$fumigacion->status}}</td>
+                    </tr>
+                     <tr>
+                      <th>Observaciònes </th>
+                      <td>{{$fumigacion->observaciones}}</td>
+                    </tr>
+
                   <tr>
-                    <th>Placas: </th>
-                    <td>{{$transporte->placas}}</td>
-                  </tr>
-                  <tr>
-                  <tr>
-                    <th>M3 de Unidad: </th>
-                    <td>{{$transporte->m3_Unidad}}</td>
-                  </tr>
-                  <tr>
-                  <tr>
-                    <th>Capacidad: </th>
-                    <td>{{$transporte->capacidad}}</td>
-                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+         <div class="col-lg-6"> 
+            <section class="panel default blue_title h4">
+              <div class="panel-heading"><span class="semi-bold">Ubicación Actual</span> 
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped">
+                  <tbody>
+                                     <tr>
+                     <th>Ubicaciòn Actual </th>
+                     <td>{{$ubicacion->nombre}}</td>
+                   </tr>
+                   <tr>
+                     <th>Espacio Asignado: </th>
+                     <td>{{$compra->espacio_asignado}}</td>
+                   </tr>
+
+
                   <tr>
 
                 </tbody>

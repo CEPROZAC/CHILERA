@@ -35,13 +35,9 @@ class ContratosController extends Controller
       ->select('contratos.id as idContrato' ,'contratos.idEmpleado','contratos.id as idContrato' ,'contratos.idEmpleado','contratos.idEmpresa',
         'contratos.fechaInicio','contratos.fechaFin','contratos.duracionContrato','contratos.horas_Descanso','contratos.horas_Alimentacion','e.id as idEm','e.*','e.curp', 'empresas_ceprozac.nombre as nombreEmpresa', 'contratos.estado_Contrato',
         'empresas_ceprozac.representanteLegal')
-
       ->where('e.tipo','=','CONTRATADO')
-     
       ->where('contratos.estado','Activo')
       ->where('e.estado','Activo')
-
-
       ->get();
 
 
@@ -93,8 +89,8 @@ class ContratosController extends Controller
       $contratos->idEmpleado=$idEmpleado;
       $contratos->idEmpresa=$request->get('idEmpresa');
       $contratos->duracionContrato=$request->get('duracionContrato');
-      $contratos->horas_Descanso=$request->get('horas_Descanso');
-      $contratos->horas_Alimentacion=$request->get('horas_Alimentacion');
+      $contratos->horas_Descanso=8;
+      $contratos->horas_Alimentacion=1;
       $contratos->fechaInicio=$request->get('fechaInicio');
       $contratos->fechaFin=$request->get('fechaFin');
       $contratos->duracionContrato=$request->get('duracionContrato');
@@ -139,10 +135,8 @@ class ContratosController extends Controller
 
 
       $contrato = Contratos::findOrFail($id);   
-      $idEmpleado= $contrato->id;
+      $idEmpleado= $contrato->idEmpleado;
       $idEmpresa=$contrato->idEmpresa;
-
-
       $empleado=Empleado::findOrFail($idEmpleado);
       $roles=DB::table('rol_empleados')->where('estado','=' ,'Activo')->get();
 
@@ -226,16 +220,19 @@ class ContratosController extends Controller
 
       $empleado=Empleado::findOrFail($idEmpleado);
 
+
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+
       $empresa= EmpresasCeprozac::findOrFail($idEmpresa);
 
 
       $roles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
       ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
       ->select('rol_empleados.rol_Empleado')
-      ->where('idEmpleado','=',$id)
+      ->where('idEmpleado','=',$idEmpleado)
       ->get();
       return view("Recursos_Humanos.contratos.lista",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
-        ,"empresa"=>$empresa]);
+        ,"empresa"=>$empresa,'empresas'=>$empresas]);
     }
 
 
@@ -405,9 +402,36 @@ class ContratosController extends Controller
   }
 
 
-  public function renovarContrato(){
+  public function renovarContrato(Request $request){
 
-    return view('Recursos_Humanos.contratos.renovarContrato');
+
+    $contratos= new Contratos;
+    $contratos->idEmpleado=$request->get('idEmpleado');
+    $contratos->idEmpresa=$request->get('idEmpresa');
+    $contratos->duracionContrato=$request->get('duracionContrato');
+    $contratos->horas_Descanso=8;
+    $contratos->horas_Alimentacion=1;
+    $contratos->fechaInicio=$request->get('fechaInicio');
+    $contratos->fechaFin=$request->get('fechaFin');
+    $contratos->duracionContrato=$request->get('duracionContrato');
+    $contratos->estado_Contrato='En curso';
+    $contratos->estado='Activo';
+    $contratos->save();
+
+    $contratos= DB::table('contratos')
+    ->join( 'empleados as e', 'contratos.idEmpleado','=','e.id')
+    ->join('empleados', 'empleados.numero_Contrato','=','contratos.id')
+    ->join('empresas_ceprozac' ,'contratos.idEmpresa','=','empresas_ceprozac.id')
+    ->select('contratos.id as idContrato' ,'contratos.idEmpleado','contratos.id as idContrato' ,'contratos.idEmpleado','contratos.idEmpresa',
+      'contratos.fechaInicio','contratos.fechaFin','contratos.duracionContrato','contratos.horas_Descanso','contratos.horas_Alimentacion','e.id as idEm','e.*','e.curp', 'empresas_ceprozac.nombre as nombreEmpresa', 'contratos.estado_Contrato',
+      'empresas_ceprozac.representanteLegal')
+    ->where('e.tipo','=','CONTRATADO')
+    ->where('contratos.estado','Activo')
+    ->where('e.estado','Activo')
+    ->get();
+
+
+    return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos]);
   }
 
 
@@ -433,9 +457,11 @@ class ContratosController extends Controller
 
 
 
-  public function actualizarEstado(){
+  public function actualizarEstado($id){
 
-
+    $contratos= Contratos::findOrFail($id);
+    $contratos->estado_Contrato='Vencido';
+    $contratos->update();
   }
 
 }

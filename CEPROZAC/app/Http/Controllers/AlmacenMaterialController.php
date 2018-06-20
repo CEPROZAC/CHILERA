@@ -32,7 +32,8 @@ class AlmacenMaterialController extends Controller
         ->where('almacenmateriales.estado','Activo')->get();
         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
         $empleado = DB::table('empleados')->where('estado','Activo')->get();
-        return view('almacen.materiales.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado]);
+        $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+        return view('almacen.materiales.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=>$empresas]);
 
     }
     /**
@@ -77,13 +78,14 @@ class AlmacenMaterialController extends Controller
         $material->descripcion=$formulario->get('descripcion');
         $material->cantidad=$formulario->get('cantidad');
         $material->codigo=$formulario->get('codigo');
+          $material->stock_minimo=$formulario->get('stock_min');
         $material->estado='Activo';
 
         $material->save();
         $material= DB::table('almacenmateriales')->orderby('created_at','DESC')->take(1)->get();
         $datas= DB::table('cliente')->where('estado','Activo')->get();
         $date = date('Y-m-d');
-        $x = "HOLA" ;
+        $x = "HOLA mundo" ;
         $invoice = "2222";
         $view =  \View::make('almacen.materiales.invoice', compact('date', 'invoice','x','material'))->render();
         $pdf = \App::make('dompdf.wrapper');
@@ -147,6 +149,7 @@ public function invoice($id){
       
        $material=AlmacenMaterial::findOrFail($id);
        $material->nombre=$request->get('nombre');
+        $material->provedor=$request->get('provedor_id');
        
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
@@ -156,6 +159,7 @@ public function invoice($id){
         $material->descripcion=$request->get('descripcion');
         $material->cantidad=$request->get('cantidad');
         $material->codigo=$request->get('codigo');
+          $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
         $material->update();
         return Redirect::to('almacen/materiales');
@@ -221,6 +225,9 @@ public function invoice($id){
        $material2->id_material=$id;
        $material2->cantidad=$request->get('cantidades');
        $material2->provedor=$provedornombre;
+                             $material2->entregado=$formulario->get('entregado_a');
+        $material2->recibe_alm=$formulario->get('recibe_alm');
+         $material2->observacionesc=$formulario->get('observaciones');
        $material2->comprador=$request->get('recibio');
        $material2->nota_venta=$request->get('nota');
        $material2->fecha=$request->get('fecha2');

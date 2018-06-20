@@ -67,7 +67,7 @@
                       <div id="form-step-0" role="form" data-toggle="validator">
                         <h3 class="h3titulo">Informacion Personal</h3>
 
-                     
+
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
@@ -83,7 +83,7 @@
                             <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->apellidos}}" placeholder="Ingrese nombre de el Cliente"/>
                           </div>
                         </div>
-                          <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  value="{{$empleado->fecha_Nacimiento}}" />
+                        <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  value="{{$empleado->fecha_Nacimiento}}" />
                         <div class="form-group">
                           <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
@@ -94,7 +94,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
-                            <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" required class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" value="{{$empleado->telefono}}">
+                          <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" required class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" value="{{$empleado->telefono}}"  parsley-type="phone">
                           </div>
                         </div>
 
@@ -163,27 +163,9 @@
 
 
 
-                       <div class="form-group">
-                         <label class="col-sm-3 control-label">HORAS DE DESCANSO: </label>
-                         <div class="col-sm-2">
-                           <input type="text" class="form-control mask"  value="{{$contrato->horas_Descanso}}" name="horas_Descanso" required placeholder="34" onkeypress=" return soloNumeros(event);">
-                         </div>
-                         <div class="col-sm-3 left-align">
-                           <p class="help-block">HORAS</p>
-                         </div>
-                       </div>
 
-                       <div class="form-group">
-                        <label class="col-sm-3 control-label">HORAS DE ALIMENTACION: </label>
-                        <div class="col-sm-2">
-                          <input type="text" name="horas_Alimentacion"  value="{{$contrato->horas_Alimentacion}}" class="form-control mask" required placeholder="34" onkeypress=" return soloNumeros(event);">
-                        </div>
-                        <div class="col-sm-3 left-align">
-                          <p class="help-block">HORAS</p>
-                        </div>
-                      </div>
 
-                      <div class="form-row">    
+                       <div class="form-row">    
                         <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
                         <div class="col-sm-3">
                           <div class="input-group">
