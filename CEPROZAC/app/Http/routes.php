@@ -155,3 +155,14 @@ Route::resource('cuentasBancoProvedores','Cuentas_Banco_ProvedoresController');
 Route::get('descargarCuentasProvedores/{id}/{nombre}', 'Cuentas_Banco_ProvedoresController@descargarCuentas')->name('provedoresCuentas.descargarCuentas');
 
 
+
+Route::get('renovarContrato', 'ContratosController@renovarContrato');
+
+
+
+Route::get('historialContratos/{id}', 'ContratosController@historial');
+
+
+
+
+

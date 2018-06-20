@@ -111,14 +111,17 @@
           <input name="" type="text" class="search" placeholder="Search Dashboard..." />
         </div>
         <div class="left_nav_slidebar">
-          <ul>
+        <ul >
             <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> Provedores<span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
 
-              <ul  >
-                <li> <a href="{{url('provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Proveedores</b> </a> </li>
-                <li> <a href="{{url('empresas')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Empresas</b> </a> </li>
-                <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Bancos</b> </a> </li>
-                <li> <a href="{{url('materiales/provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b class="theme_color">Materiales</b> </a> </li>
+
+              <ul class="opened" style="display:block" >
+                <li> <a href="{{url('provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Proveedores</b> </a> </li>
+                <li> <a href="{{url('empresas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Empresas</b> </a> </li>
+                <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Bancos</b> </a> </li>
+                <li> <a href="{{url('materiales/provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Materiales</b> </a> </li>
+
+                 <li> <a href="animations.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Animations</b> </a> </li>
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> Clientes <span class="plus"><i class="fa fa-plus"></i></span></a>
@@ -178,6 +181,13 @@
                 <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
                 <li> <a href="{{url('precioBasculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Precio Pesaje</b> </a> </li>
                 <li> <a href="{{url('serviciosBascula')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Servicio de Bascula</b> </a> </li>
+
+              </ul>
+            </li>
+
+            <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Bitacoras <span class="plus"><i class="fa fa-plus"></i></span></a>
+              <ul>
+                <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
 
               </ul>
             </li>

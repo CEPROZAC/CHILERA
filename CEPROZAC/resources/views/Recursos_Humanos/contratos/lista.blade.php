@@ -30,8 +30,10 @@
 
                   <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Liquidacion</a>
 
+                  
 
-                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Renovar Contrato</a>
+
+                   <a class="btn btn-primary btn-sm tooltips" data-target="#modal-renovar-{{$empleado->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-edit"></i>Renovar Contrato</a>
 
                   <a class="btn btn-sm btn-danger tooltips" href="/contratos" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
@@ -204,6 +206,9 @@
           </div>
         </section>
       </div>
+
+
+      @include('Recursos_Humanos.contratos.renovarContrato')
 
 
 
