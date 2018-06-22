@@ -116,6 +116,7 @@ class EntradasAlmacenLimpiezaController extends Controller
         $material->codigo=$formulario->get('codigo');
         $material->estado='Activo';
         $material->save();
+        
     }
 }
 

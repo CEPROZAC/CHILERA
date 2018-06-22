@@ -35,7 +35,7 @@
                                       <a class="btn btn-sm btn-success tooltips" href="{{ route('compras.recepcion.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Compra"> <i class="fa fa-plus"></i> Registrar  </a>
 
 
-                    <a class="btn btn-sm btn-warning tooltips" href="{{route('contratos.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{route('compras.recepcion.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
                   </div>
 
@@ -116,7 +116,7 @@
                  <td >{{$compras->idfumi}} </td>
 
                   <td >
-       <a href="{{URL::action('RecepcionCompraController@verInformacion',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a>    </td>
+       <a href="{{URL::action('RecepcionCompraController@verInformacion',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
 
                  <td>  <a href="{{URL::action('RecepcionCompraController@edit',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
                  </td> 

@@ -88,7 +88,7 @@ table, th, td {
                     <div style="text-align:center;">
                     {{$materiales->codigo}}                
                   </div>
-                   <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a> 
+                   <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" target="_blank" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a> 
                   </td>
                   <td>
                       <img src="{{asset('imagenes/almacenagroquimicos/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
@@ -144,6 +144,58 @@ table, th, td {
  </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
+<script>
+  window.onload=function() {
+   var z = 1
+   var table = document.getElementById('dynamic-table');
+   for (var r = 1, n = table.rows.length-1; r < n; r++) {
+    for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+     if (z == 1){
+            var nom = table.rows[r].cells[c].innerHTML;
+      z ++;
+    }
+    else if(z == 2){
+     z ++;
+   }else if(z == 3){
+     z ++;
+   }else if(z == 4){
+     z ++;
+   } else if (z == 5){
+     z ++;
+   }else if (z == 6){
+     var d =table.rows[r].cells[c].innerHTML;
+                limite = "1",
+            separador = " ",
+            arregloDeSubCadenas = d.split(separador, limite);
+            var g=arregloDeSubCadenas[0];
+          var x = parseInt(g);
 
+     z ++;
+   }else if(z == 7){
+        var o =table.rows[r].cells[c].innerHTML;
+        var y = parseInt(o);
+             if (x < y){
+      alert("El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock" );
+    }
+
+     z ++;
+
+   }else if(z == 8){
+  
+     z ++;
+
+   }else if(z == 9){
+    z  ++;
+
+  }else{
+      z = 1;
+
+  }
+
+}
+}
+}
+
+</script>
 
 @endsection

@@ -29,6 +29,7 @@ use DB;
 use Validator; 
 use PHPExcel_Worksheet_Drawing;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Collection as Collection;
 
 class RecepcionCompraController extends Controller
 {
@@ -268,5 +269,23 @@ $salida->save();
       $fumigador=empleado::findOrFail($id_fumigador);
 
       return view("Compras.Recepcion.lista",["provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador]);
+    }
+
+        public function excel()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+        Excel::create('RecepcionCompra', function($excel) {
+          $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+            $compras = RecepcionCompra::join('provedores','recepcioncompra.id_provedor','=','provedores.id','empresas', 'recepcioncompra.recibe','=','empresas.id','empleados', 'recepcioncompra.entregado','=','empleados.id','productos' ,'recepcioncompra.id_producto','=','productos.id','calidad' ,'recepcioncompra.id_calidad','=','calidad.id','forma_empaques' ,'recepcioncompra.id_empaque','=','forma_empaques.id','basculas' ,'recepcioncompra.id_bascula','=','basculas.id','empleados', 'recepcioncompra.peso','=','empleados.id','almacengeneral', 'recepcioncompra.ubicacion_act','=','almacengeneral.id','fumigaciones', 'recepcioncompra.id_fumigacion','=','fumigaciones.id')
+            ->select('recepcioncompra.id','recepcioncompra.nombre','provedores.nombre','recepcioncompra.transporte','recepcioncompra.num_transportes','empresas.nombre','empleados.nombre','recepcioncompra.observacionesc','recepcioncompra.total_compra','productos.nombre','calidad.nombre','forma_empaques.formaEmpaque','recepcioncompra.humedad','recepcioncompra.pacas','recepcioncompra.pacas_rev','recepcioncompra.observacionesm','basculas.nombreBascula','recepcioncompra.ticket','empleados.nombre','recepcioncompra.kg_recibidos','recepcioncompra.kg_enviados','recepcioncompra.diferencia','recepcioncompra.observacionesb','almacengeneral.nombre','recepcioncompra.espacio_asignado','recepcioncompra.observacionesu','fumigaciones.id')->get();
+            $sheet->fromArray($compras);
+            $sheet->row(1,['N° de Compra','Nombre de Lote','Fecha de Compra' ,'Provedor','Transporte','N°Transportes','Empresa','Recibe Empleado','Observaciónes de Compra','Precio Total de Compra','Producto' ,'Calidad','Empaque','%Humedad','Total de Pacas','Pacas a Revisar','Observaciónes de Muestreo','Bascula','Ticket' ,'Realizo Pesaje','KG recibidos','KG Enviados','Diferencia','Observaciones Pesaje','Ubicación Actual','Espacio Asignado','Observaciones' ,'N° Fumigación']);
+            $sheet->setOrientation('landscape');
+        });
+      })->export('xls');
     }
   }

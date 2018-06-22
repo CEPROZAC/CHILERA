@@ -228,9 +228,9 @@ public function invoice($id){
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
       $material2->provedor=$provedornombre;
-                            $material2->entregado=$formulario->get('entregado_a');
-        $material2->recibe_alm=$formulario->get('recibe_alm');
-         $material2->observacionesc=$formulario->get('observaciones');
+                            $material2->entregado=$request->get('entregado_a');
+        $material2->recibe_alm=$request->get('recibe_alm');
+         $material2->observacionesc=$request->get('observaciones');
       $material2->comprador=$request->get('recibio');
       $material2->factura=$request->get('factura');
       $material2->fecha=$request->get('fecha2');
