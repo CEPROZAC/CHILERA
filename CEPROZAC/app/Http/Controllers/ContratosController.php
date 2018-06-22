@@ -11,10 +11,10 @@ use CEPROZAC\Empleado;
 use CEPROZAC\Contratos;
 use CEPROZAC\EmpresasCeprozac;
 use CEPROZAC\EmpleadoRoles;
-
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use Carbon\Carbon;
 
 
 
@@ -30,9 +30,10 @@ class ContratosController extends Controller
 
       $contratos= DB::table('contratos')
       ->join( 'empleados as e', 'contratos.idEmpleado','=','e.id')
+      ->join('empleados', 'empleados.numero_Contrato','=','contratos.id')
       ->join('empresas_ceprozac' ,'contratos.idEmpresa','=','empresas_ceprozac.id')
-      ->select('contratos.id as idContrato' ,'contratos.idEmpleado','contratos.idEmpresa',
-        'contratos.fechaInicio','contratos.fechaFin','contratos.duracionContrato','contratos.horas_Descanso','contratos.horas_Alimentacion','e.id as idEm','e.*', 'empresas_ceprozac.nombre as nombreEmpresa',
+      ->select('contratos.id as idContrato' ,'contratos.idEmpleado','contratos.id as idContrato' ,'contratos.idEmpleado','contratos.idEmpresa',
+        'contratos.fechaInicio','contratos.fechaFin','contratos.duracionContrato','contratos.horas_Descanso','contratos.horas_Alimentacion','e.id as idEm','e.*','e.curp', 'empresas_ceprozac.nombre as nombreEmpresa', 'contratos.estado_Contrato',
         'empresas_ceprozac.representanteLegal')
       ->where('e.tipo','=','CONTRATADO')
       ->where('contratos.estado','Activo')
@@ -42,7 +43,7 @@ class ContratosController extends Controller
 
       return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos]);
 
-      
+
     }
 
     /**
@@ -73,7 +74,7 @@ class ContratosController extends Controller
       $empleado->fecha_Alta_Seguro=$request->get('fecha_Alta_Seguro');
       $empleado->numero_Seguro_Social=$request->get('numero_Seguro_Social');
       $empleado->fecha_Nacimiento=$request->get('fecha_Nacimiento');
-      echo $empleado->fecha_Nacimiento;
+
       $empleado->curp=$request->get('curp');
       $empleado->email=$request->get('email');
       $empleado->telefono=$request->get('telefono');
@@ -88,11 +89,12 @@ class ContratosController extends Controller
       $contratos->idEmpleado=$idEmpleado;
       $contratos->idEmpresa=$request->get('idEmpresa');
       $contratos->duracionContrato=$request->get('duracionContrato');
-      $contratos->horas_Descanso=$request->get('horas_Descanso');
-      $contratos->horas_Alimentacion=$request->get('horas_Alimentacion');
+      $contratos->horas_Descanso=8;
+      $contratos->horas_Alimentacion=1;
       $contratos->fechaInicio=$request->get('fechaInicio');
       $contratos->fechaFin=$request->get('fechaFin');
       $contratos->duracionContrato=$request->get('duracionContrato');
+      $contratos->estado_Contrato='En curso';
       $contratos->estado='Activo';
       $contratos->save();
 
@@ -133,10 +135,8 @@ class ContratosController extends Controller
 
 
       $contrato = Contratos::findOrFail($id);   
-      $idEmpleado= $contrato->id;
+      $idEmpleado= $contrato->idEmpleado;
       $idEmpresa=$contrato->idEmpresa;
-
-
       $empleado=Empleado::findOrFail($idEmpleado);
       $roles=DB::table('rol_empleados')->where('estado','=' ,'Activo')->get();
 
@@ -169,6 +169,7 @@ class ContratosController extends Controller
      $contratos->fechaInicio=$request->get('fechaInicio');
      $contratos->fechaFin=$request->get('fechaFin');
      $contratos->duracionContrato=$request->get('duracionContrato');
+     $contratos->estado_Contrato='En curso';
      $contratos->estado='Activo';
      $contratos->update();
 
@@ -219,16 +220,19 @@ class ContratosController extends Controller
 
       $empleado=Empleado::findOrFail($idEmpleado);
 
+
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+
       $empresa= EmpresasCeprozac::findOrFail($idEmpresa);
 
 
       $roles= EmpleadoRoles::join('empleados','empleados.id','=','empleado_roles.idEmpleado')
       ->join('rol_empleados','rol_empleados.id','=','empleado_roles.idRol')
       ->select('rol_empleados.rol_Empleado')
-      ->where('idEmpleado','=',$id)
+      ->where('idEmpleado','=',$idEmpleado)
       ->get();
       return view("Recursos_Humanos.contratos.lista",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
-        ,"empresa"=>$empresa]);
+        ,"empresa"=>$empresa,'empresas'=>$empresas]);
     }
 
 
@@ -276,8 +280,12 @@ class ContratosController extends Controller
       ->where('idEmpleado','=',$id)
       ->get();
 
+      $date = Carbon::now();
+
+      $fecha = $date->format('d-m-Y');
+
       $pdf=PDF::loadView("Recursos_Humanos.contratos.invoice",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
-        ,"empresa"=>$empresa]);
+        ,"empresa"=>$empresa,'fecha'=>$fecha]);
       return $pdf->download("archivo.pdf");
     }
 
@@ -295,8 +303,12 @@ class ContratosController extends Controller
       ->where('idEmpleado','=',$id)
       ->get();
 
+      $date = Carbon::now();
+
+      $fecha = $date->format('d-m-Y');
+
       $pdf=PDF::loadView("Recursos_Humanos.contratos.liquidacion",["empleado"=>$empleado,"contrato"=>$contrato,"roles"=>$roles
-        ,"empresa"=>$empresa]);
+        ,"empresa"=>$empresa,'fecha'=>$fecha]);
       return $pdf->download("liquidacion.pdf");
     }
 
@@ -348,29 +360,108 @@ class ContratosController extends Controller
     }
 
 
-    static function calcularPesos($sueldo)
-    {
-      return  $letras = \NumeroALetras::convertir($sueldo, 'PESOS', 'CENTAVOS');
+    public function calcularFecha($fechaFin){
 
-    }
+     $date = Carbon::now();
+     $date->format('Y-m-d');
 
-    public function excel()
-    {        
+     $dia=substr($fechaFin,0,2);
+     $mes=substr($fechaFin, 3,2);
+     $ano=substr($fechaFin, 6,7);
+     // $fecha =$ano."-".$mes."-".$;
+     $dt = Carbon::createMidnightDate($ano, $mes, $dia);
+     return $date->diffInDays($dt,false);                        
 
-      Excel::create('Lista contratos', function($excel) {
-        $excel->sheet('Excel sheet', function($sheet) {
-                //otra opción -> $products = Product::select('name')->get();
 
-          $empleado = Empleado::join('contratos as c', 'empleados.id','=','c.idEmpleado')
-          ->select('empleados.nombre', 'empleados.apellidos', 'empleados.fecha_Ingreso', 'empleados.fecha_Alta_Seguro','empleados.numero_Seguro_Social','empleados.curp','empleados.email','empleados.telefono','empleados.sexo','empleados.sueldo_Fijo','c.fechaInicio','c.fechaFin')
-          ->where('empleados.estado', 'Activo')
-          ->get();       
-          $sheet->fromArray($empleado);
-          $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','CURP','Correo','Telefono','Sexo','Sueldo','Fecha Inicio','Fecha Fin']);
+   }
 
-          $sheet->setOrientation('landscape');
-        });
-      })->export('xls');
-    }
+
+   static function calcularPesos($sueldo)
+   {
+    return  $letras = \NumeroALetras::convertir($sueldo, 'PESOS', 'CENTAVOS');
 
   }
+
+  public function excel()
+  {        
+
+    Excel::create('Lista contratos', function($excel) {
+      $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+
+        $empleado = Empleado::join('contratos as c', 'empleados.id','=','c.idEmpleado')
+        ->select('empleados.nombre', 'empleados.apellidos', 'empleados.fecha_Ingreso', 'empleados.fecha_Alta_Seguro','empleados.numero_Seguro_Social','empleados.curp','empleados.email','empleados.telefono','empleados.sexo','empleados.sueldo_Fijo','c.fechaInicio','c.fechaFin')
+        ->where('empleados.estado', 'Activo')
+        ->get();       
+        $sheet->fromArray($empleado);
+        $sheet->row(1,['Nombre ','Apellido','Fecha Ingreso','Fecha Alta Seguro','Numero seguro Social','CURP','Correo','Telefono','Sexo','Sueldo','Fecha Inicio','Fecha Fin']);
+
+        $sheet->setOrientation('landscape');
+      });
+    })->export('xls');
+  }
+
+
+  public function renovarContrato(Request $request){
+
+
+    $contratos= new Contratos;
+    $contratos->idEmpleado=$request->get('idEmpleado');
+    $contratos->idEmpresa=$request->get('idEmpresa');
+    $contratos->duracionContrato=$request->get('duracionContrato');
+    $contratos->horas_Descanso=8;
+    $contratos->horas_Alimentacion=1;
+    $contratos->fechaInicio=$request->get('fechaInicio');
+    $contratos->fechaFin=$request->get('fechaFin');
+    $contratos->duracionContrato=$request->get('duracionContrato');
+    $contratos->estado_Contrato='En curso';
+    $contratos->estado='Activo';
+    $contratos->save();
+
+    $contratos= DB::table('contratos')
+    ->join( 'empleados as e', 'contratos.idEmpleado','=','e.id')
+    ->join('empleados', 'empleados.numero_Contrato','=','contratos.id')
+    ->join('empresas_ceprozac' ,'contratos.idEmpresa','=','empresas_ceprozac.id')
+    ->select('contratos.id as idContrato' ,'contratos.idEmpleado','contratos.id as idContrato' ,'contratos.idEmpleado','contratos.idEmpresa',
+      'contratos.fechaInicio','contratos.fechaFin','contratos.duracionContrato','contratos.horas_Descanso','contratos.horas_Alimentacion','e.id as idEm','e.*','e.curp', 'empresas_ceprozac.nombre as nombreEmpresa', 'contratos.estado_Contrato',
+      'empresas_ceprozac.representanteLegal')
+    ->where('e.tipo','=','CONTRATADO')
+    ->where('contratos.estado','Activo')
+    ->where('e.estado','Activo')
+    ->get();
+
+
+    return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos]);
+  }
+
+
+
+  public function historial($id){
+
+    $empleado = Empleado::findOrFail($id);
+    $historial=DB::table('contratos')
+    ->join('empleados','contratos.idEmpleado','=','empleados.id')
+    ->join('empresas_ceprozac','empresas_ceprozac.id','=','contratos.idEmpresa')
+    ->select('empleados.id as idEmpleado','empleados.nombre', 'empleados.apellidos',
+      'empresas_ceprozac.id as idEmpresa','empresas_ceprozac.nombre as nombreEmpresa','contratos.fechaInicio', 'contratos.fechaFin',
+      'contratos.duracionContrato', 'contratos.estado_Contrato')
+    ->where('empleados.tipo','=','CONTRATADO')
+    ->where('contratos.estado','=','Activo')
+    ->where('empleados.id','=',$id)
+    ->orderBy('contratos.created_at')
+    ->get();
+
+    return view('Recursos_Humanos.contratos.historial',['historial'=>$historial,'empleado'=>$empleado]);
+
+  }
+
+
+
+  public function actualizarEstado($id){
+
+    $contratos= Contratos::findOrFail($id);
+    $contratos->estado_Contrato='Vencido';
+    $contratos->update();
+  }
+
+}

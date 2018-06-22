@@ -12,14 +12,13 @@
 </style>
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-    <h1>Beneficiario con RFC</h1>
-    <h2 class="active"></h2>
+    <h1>Inicio</h1>
+    <h2 class="active">Contratos</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
       <li><a href="?c=Inicio">Inicio</a></li>
-      <li><a href="?c=Beneficiario">Beneficiario con RFC</a></li>
-      <li class="active"></li>
+      <li><a href="">Contratos</a></li>
     </ol>
   </div>
 </div>

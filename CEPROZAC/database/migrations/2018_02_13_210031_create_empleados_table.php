@@ -24,11 +24,11 @@ class CreateEmpleadosTable extends Migration
             $table->string('domicilio');
             $table->string('email');
             $table->string('telefono');
+            $table->integer('numero_Contrato');
             $table->string('sexo');
             $table->double('sueldo_Fijo');
             $table->string('tipo');
             $table->string('estado');
-
             $table->timestamps();
         });
     }

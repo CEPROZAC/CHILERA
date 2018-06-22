@@ -25,13 +25,15 @@
             <div class="btn-group pull-right">
               <b>
 
-                <div class="btn-group" style="margin-right: 10px;">
-                  <a class="btn btn-sm btn-success tooltips" href="{{URL::action('EmpleadoController@create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
+                <div class="btn-group" style="margin-right: 10px;">  
 
                   <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Liquidacion</a>
 
+                  
+                  @if($contrato->estado_Contrato=='Vencido')
 
-                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Renovar Contrato</a>
+                  <a class="btn btn-primary btn-sm tooltips" data-target="#modal-renovar-{{$empleado->id}}-{{$empresa->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-edit"></i>Renovar Contrato</a>
+                  @endif
 
                   <a class="btn btn-sm btn-danger tooltips" href="/contratos" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
@@ -180,6 +182,11 @@
                   <td>{{floor($contrato->duracionContrato/30)}} Meses {{$contrato->duracionContrato%30}} Dias</td>
                 </tr>
 
+                <tr>
+                  <th>Estado de Contrato:</th>
+                  <td>{{$contrato->estado_Contrato}}</td>
+                </tr>
+
               </tbody>
             </table>
           </div>
@@ -206,6 +213,9 @@
       </div>
 
 
+      @include('Recursos_Humanos.contratos.renovarContrato')
+
+
 
     </div><!--/porlets-content-->
   </div><!--/block-web-->
@@ -214,4 +224,29 @@
 </div>
 
 
-@endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+  function calcularTiempo(){
+    var fecha1 =document.getElementById('fechaInicio').value;
+    var fecha2= document.getElementById('fechaFin').value;
+    var ano1 = fecha1.substring(0, 2);
+    var mes1 = fecha1.substring(3, 5);
+    var dia1 = fecha1.substring(6, 10);
+    fech1 =ano1+"-"+mes1+"-"+dia1;
+    var ano2 = fecha2.substring(0, 2);
+    var mes2 = fecha2.substring(3, 5);
+    var dia2 = fecha2.substring(6, 10);
+    fech2 =ano2+"-"+mes2+"-"+dia2;
+    fecha1m=moment(fech1);
+    fecha2m=moment(fech2);
+      var diff = fecha2m.diff(fecha1m, 'd'); // Diff in days
+      document.getElementById("duracionContrato").value = diff;
+
+
+    }
+  </script>
+
+
+  @endsection

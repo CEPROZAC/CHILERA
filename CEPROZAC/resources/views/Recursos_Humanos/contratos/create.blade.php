@@ -79,7 +79,7 @@
                             <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
                           </div>
                         </div>
-                        <input  name="fecha_Nacimiento"   id="fechaNacimiento"   />
+                        <input type="hidden"  name="fecha_Nacimiento"   id="fechaNacimiento"   />
                         <div class="form-group">
                           <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
@@ -90,7 +90,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
-                            <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" required class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+                            <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" required class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" parsley-type="phone">
                           </div>
                         </div>
 
@@ -137,7 +137,7 @@
                      </div>
 
                      <div class="form-group">
-                      <label class="col-sm-3 control-label">SSN</label>
+                      <label class="col-sm-3 control-label">SSN<strog class="theme_color">*</strog></label>
                       <div class="col-sm-6 ">
                         <input type="text" name="numero_Seguro_Social" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
                       </div>
@@ -157,36 +157,14 @@
                      </div>
                    </div><!--/form-group-->
 
-
-
-                   <div class="form-group">
-                     <label class="col-sm-3 control-label">HORAS DE DESCANSO: </label>
-                     <div class="col-sm-2">
-                       <input type="text" class="form-control mask" name="horas_Descanso" required placeholder="34" onkeypress=" return soloNumeros(event);">
-                     </div>
-                     <div class="col-sm-3 left-align">
-                       <p class="help-block">HORAS</p>
-                     </div>
-                   </div>
-                   
-                   <div class="form-group">
-                    <label class="col-sm-3 control-label">HORAS DE ALIMENTACION: </label>
-                    <div class="col-sm-2">
-                      <input type="text" name="horas_Alimentacion" class="form-control mask" required placeholder="34" onkeypress=" return soloNumeros(event);">
-                    </div>
-                    <div class="col-sm-3 left-align">
-                      <p class="help-block">HORAS</p>
-                    </div>
-                  </div>
-
-                  <div class="form-row">    
+                   <div class="form-row">    
                     <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
                     <div class="col-sm-3">
                       <div class="input-group">
                        <div class="input-group-addon">$</div>
 
 
-                       <input name="sueldo_Fijo" required parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
+                       <input name="sueldo_Fijo"  parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
                      </div>
                    </div>
                  </div>
@@ -311,7 +289,7 @@
   </script>
 
   <script type="text/javascript">
-  $(document).ready(function(){
+    $(document).ready(function(){
         // Toolbar extra buttons
         var btnFinish = $('<button></button>').text('Finish')
         .addClass('btn btn-info')
@@ -384,4 +362,4 @@
 
 
 
-  @endsection
+    @endsection

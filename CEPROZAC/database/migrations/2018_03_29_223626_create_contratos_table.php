@@ -27,6 +27,9 @@ class CreateContratosTable extends Migration
             $table->string('estado');
             $table->timestamps();
         });
+
+       
+
     }
 
     /**

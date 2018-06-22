@@ -1,3 +1,4 @@
+@inject('metodo','CEPROZAC\Http\Controllers\ContratosController')
 @extends('layouts.principal')
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
@@ -48,6 +49,8 @@
                 <th >Correo</th>
                 <th >Telefono</th>
                 <th >Estado</th>
+                <th >Historial</th>
+                
                 <th >Ver</th>
                 <th >Descargar</th>
                 <td><center><b>Editar</b></center></td>
@@ -56,93 +59,100 @@
             </thead>
             <tbody>
              @foreach($contratos  as $contrato)
-             @if($contrato->sueldo_Fijo < 100 )
-
+             @if( $metodo->calcularFecha($contrato->fechaFin) <= 0 )
+             @if($contrato->estado_Contrato=="En curso")
+             {{ $metodo->actualizarEstado($contrato->idContrato) }}
+             @endif
              <tr class="gradeX" >
-               <td >
+               <td style="background-color: #FFE4E1;" >
                  {{$contrato->nombre}} {{$contrato->apellidos}}
                </td>
-               <td >{{$contrato->curp}}</td>
-               <td  >{{$contrato->email}}</td>
-               <td >{{$contrato->telefono}}</td>
-               <td >Vencido</td>
+               <td style="background-color: #FFE4E1;" >{{$contrato->curp}}</td>
+               <td style="background-color: #FFE4E1;" >{{$contrato->email}}</td>
+               <td style="background-color: #FFE4E1;" >{{$contrato->telefono}}</td>
+               <td style="background-color: #FFE4E1;" >Contrato vencido hace {{ abs($metodo->calcularFecha($contrato->fechaFin))}} dias</td>
+               <td style="background-color: #FFE4E1;"> 
+                <center>
+                  <a href="{{URL::action('ContratosController@historial',$contrato->idEmpleado)}}" class="btn btn-link btn-sm" role="button"><i class="fa fa-calendar-o" ></i></a>
+                </center>
+              </td>
 
-               <td >
-
-                 <center>
-                   <a href="{{URL::action('ContratosController@verInformacion',$contrato->idEmpleado)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" onclick="calcular();"></i></a>
-                 </center>
-               </td>
-
-               <td >
-                <div >
-                 <center>
-                   <a href="{{URL::action('ContratosController@pdf',$contrato->idContrato)}}" class="btn btn-warning btn-sm" role="button"><i class="fa fa-download"></i></a>
-                 </center>
-
-               </div>
+              <td style="background-color: #FFE4E1;" >
+               <center>
+                 <a href="{{URL::action('ContratosController@verInformacion',$contrato->idContrato)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" ></i></a>
+               </center>
              </td>
 
-             <td>  <a href="{{URL::action('ContratosController@edit',$contrato->idContrato)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
-             </td> 
-           </td>
-           <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->idContrato}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-           </td>
-         </tr>
-         @else
-         <tr class="gradeX example" >
+             <td style="background-color: #FFE4E1;" >
+               <center>
+                 <a href="{{URL::action('ContratosController@pdf',$contrato->idContrato)}}" class="btn btn-warning btn-sm" role="button"><i class="fa fa-download"></i></a>
+               </center>
+             </td>
 
+             <td style="background-color: #FFE4E1;"> 
+              <a href="{{URL::action('ContratosController@edit',$contrato->idContrato)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
+            </td> 
+          </td>
+          <td style="background-color: #FFE4E1;">
+            <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->idContrato}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+          </td>
+        </tr>
+        @else
+        <tr class="gradeX example" >
+         <td >{{$contrato->nombre}} {{$contrato->apellidos}} </td>
 
-           <td style="background-color: #FFE4E1;">{{$contrato->nombre}} {{$contrato->apellidos}} </td>
+         <td >{{$contrato->curp}}</td>
+         <td  >{{$contrato->email}}</td>
+         <td >{{$contrato->telefono}}</td>
+         <td >Contrato por vencer en {{ $metodo->calcularFecha($contrato->fechaFin)}} dias</td>
+         <td>
+           <center>
 
-           <td style="background-color: #FFE4E1;">{{$contrato->curp}}</td>
-           <td style="background-color: #FFE4E1;" >{{$contrato->email}}</td>
-           <td style="background-color: #FFE4E1;">{{$contrato->telefono}}</td>
-           <td style="background-color: #FFE4E1;">Transcurso</td>
+            <a href="{{URL::action('ContratosController@historial',$contrato->idEmpleado)}}" class="btn btn-link btn-sm" role="button"><i class="fa fa-calendar-o" ></i></a>
+          </center>
 
+        </td>
 
-           <td style="background-color: #FFE4E1;">
+        <td >
+         <center>
+           <a href="{{URL::action('ContratosController@verInformacion',$contrato->idContrato)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" ></i></a>
+         </center>
+       </td>
+       <td >
+         <center>
+           <a href="{{URL::action('ContratosController@pdf',$contrato->idContrato)}}" class="btn btn-warning btn-sm" role="button"><i class="fa fa-download"></i></a>
+         </center>
+       </td>
+       <td >  <a href="{{URL::action('ContratosController@edit',$contrato->idContrato)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
+       </td> 
+     </td>
+     <td > <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->idContrato}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+     </td>
+   </tr>
+   @endif
+   @include('Recursos_Humanos.contratos.modal')
 
-             <center>
-               <a href="{{URL::action('ContratosController@verInformacion',$contrato->idContrato)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" onclick="calcular();"></i></a>
-             </center>
-           </td>
+   @endforeach
+ </tbody>
+ <tfoot>
+  <tr>
 
-           <td style="background-color: #FFE4E1;">
+    <th >Nombre Completo</th>
 
-             <center>
-               <a href="{{URL::action('ContratosController@pdf',$contrato->idContrato)}}" class="btn btn-warning btn-sm" role="button"><i class="fa fa-download"></i></a>
-             </center>
-           </td>
+    <th >CURP </th>
+    <th > Correo </th>
+    <th >Telefono </th>
 
-           <td style="background-color: #FFE4E1;">  <a href="{{URL::action('ContratosController@edit',$contrato->idContrato)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
-           </td> 
-         </td>
-         <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$contrato->idContrato}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-         </td>
-       </tr>
-       @endif
-       @include('Recursos_Humanos.contratos.modal')
-       @endforeach
-     </tbody>
-     <tfoot>
-      <tr>
+    <th >Estado</th>
+    <th >Historial</th>
+    <th >Ver</th>
+    <th >Descargar</th>
+    <td><center><b>Editar</b></center></td>
+    <td><center><b>Borrar</b></center></td> 
 
-        <th >Nombre Completo</th>
-
-        <th >CURP </th>
-        <th > email </th>
-        <th >Telefono </th>
-        <th >Estado</th>
-
-        <th >Ver</th>
-        <th >Descargar</th>
-        <td><center><b>Editar</b></center></td>
-        <td><center><b>Borrar</b></center></td> 
-
-      </tr>
-    </tfoot>
-  </table>
+  </tr>
+</tfoot>
+</table>
 
 </div><!--/table-responsive-->
 
@@ -152,6 +162,39 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
+
+
+<script>
+
+  $('.minimize').click(function(e){
+    var h = $(this).parents(".header");
+    var c = h.next('.porlets-content');
+    var p = h.parent();
+
+    c.slideToggle();
+
+    p.toggleClass('closed');
+
+    e.preventDefault();
+  });
+
+  $('.refresh').click(function(e){
+    var h = $(this).parents(".header");
+    var p = h.parent();
+    var loading = $('<div class="loading"><i class="fa fa-refresh fa-spin"></i></div>');
+
+    loading.appendTo(p);
+    loading.fadeIn();
+    setTimeout(function() {
+      loading.fadeOut();
+    }, 1000);
+
+    e.preventDefault();
+  });
+
+
+
+</script>
 
 
 
