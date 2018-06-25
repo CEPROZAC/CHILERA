@@ -17,6 +17,7 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
+
 class AlmacenMaterialController extends Controller
 {
     /**
@@ -153,7 +154,7 @@ public function invoice($id){
        
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
-            $file->move(public_path().'/imagenes/almacenmateriales',$file->getClientOriginalName());//lo movemos a esta ruta
+            $file->move(public_path().'/imagenes/almacenmaterial',$file->getClientOriginalName());//lo movemos a esta ruta
             $material->imagen=$file->getClientOriginalName();           
         }   
         $material->descripcion=$request->get('descripcion');

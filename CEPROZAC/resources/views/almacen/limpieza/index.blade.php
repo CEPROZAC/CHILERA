@@ -61,9 +61,8 @@
                   <th>Codigo de Barras </th>
                   <th>Imagen </th>
                   <th>Descripción </th>
-                  <th>Cantidad</th>
+                  <th>Cantidad en Almacén</th>
                   <th>Stock Minimo</th>
-                  <th>Estado</th>  
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>                            
                 </tr>
@@ -78,7 +77,7 @@
                     <div style="text-align:center;">
                       {{$materiales->codigo}}                
                     </div>
-                    <a href="{{URL::action('AlmacenLimpiezaController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a> 
+                    <a href="{{URL::action('AlmacenLimpiezaController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
                   </td>
                   <td>
                     <img src="{{asset('imagenes/AlmacenLimpieza/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
@@ -98,7 +97,6 @@
                   }
                   ?>
 
-                  <td>{{$materiales->estado}}</td>
 
                   modal          <td>  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                 </td>
@@ -120,9 +118,8 @@
            <th>Codigo de Barras </th>
            <th>Imagen </th>
            <th>Descripción </th>
-           <th>Cantidad</th>
+           <th>Cantidad en Almacén</th>
             <th>Stock Minimo</th>
-           <th>Estado</th>  
            <td><center><b>Editar</b></center></td>
            <td><center><b>Borrar</b></center></td>      
          </tr>
@@ -174,10 +171,7 @@
 
      z ++;
 
-   }else if(z == 9){
-    z ++;
-
-  }else {
+   }else {
     z = 1;}
   
 

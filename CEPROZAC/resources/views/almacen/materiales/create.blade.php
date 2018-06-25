@@ -48,6 +48,7 @@
             </div>
           </div>
 
+
           <div class="form-group">
             <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">

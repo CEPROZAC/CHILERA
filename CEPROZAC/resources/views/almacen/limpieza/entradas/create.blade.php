@@ -478,6 +478,9 @@ function codigos(){
    document.getElementById("descripcion").value=descripcion;
    document.getElementById("scantidad").value = "1";
 break;
+}else{
+  alert('Codigo de Barras No Encontado');
+  break;
 }
 i++;
 }

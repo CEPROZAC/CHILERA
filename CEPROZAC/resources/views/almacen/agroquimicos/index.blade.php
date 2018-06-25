@@ -71,9 +71,8 @@ table, th, td {
                     <th>Codigo de Barras </th>
                     <th>Imagen </th>
                    <th>Descripción </th>
-                  <th>Cantidad</th>
-                  <th>Stock Minimo</th>
-                  <th>Estado</th>  
+                  <th>Cantidad en Almacén</th>
+                  <th>Stock Minimo</th> 
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>                            
                 </tr>
@@ -108,7 +107,6 @@ table, th, td {
                   }
                   ?>
     
-                  <td>{{$materiales->estado}}</td>
 
                      <td>  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
@@ -130,9 +128,8 @@ table, th, td {
                     <th>Codigo de Barras </th>
                     <th>Imagen </th>
                    <th>Descripción </th>
-                  <th>Cantidad</th>
+                  <th>Cantidad en Almacén</th>
                   <th>Stock Minimo</th>
-                  <th>Estado</th>  
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>      
              </tr>
@@ -184,10 +181,7 @@ table, th, td {
   
      z ++;
 
-   }else if(z == 9){
-    z  ++;
-
-  }else{
+   }else{
       z = 1;
 
   }
