@@ -55,6 +55,33 @@
              <div class="help-block with-errors"></div>
            </div>
          </div><!--/form-group-->
+
+                            <div class="form-group">
+              <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+<input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
+<input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
+
+<input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
+
+              </div>
+            </div>
+  
+         <div class="form-group">
+              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+ <input type="text" name="codigo" onkeypress=" return soloNumeros(event);" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
+</div>
+</div>
+
+               <div class="form-group">
+              <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+   <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "EAN13",3,33);?></td>
+        </div>    
+               </div>  
+
           
 
 
@@ -130,37 +157,11 @@
                                              <div class="form-group">
               <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_min }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+                <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_minimo }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div> 
 
        
-                   <div class="form-group">
-              <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-<input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
-<input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
-
-<input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
-
-              </div>
-            </div>
-  
-         <div class="form-group">
-              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
- <input type="text" name="codigo" onkeypress=" return soloNumeros(event);" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
-</div>
-</div>
-
-               <div class="form-group">
-              <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-   <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "EAN13",3,33);?></td>
-        </div>    
-               </div>  
-
 
    
 

@@ -54,14 +54,12 @@
     <div class="form-group">
               <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
                <div class="col-sm-6">
-                 <select name="fiscal" value="{{Input::old('fiscal')}}">
-                 @if(Input::old('fiscal')=="Fisica")
-                 <option value='Fisica' selected>Fisica
-                 </option>
+                 <select name="fiscal" value="">
+                 @if($clientes->fiscal=="Fisica")
+                 <option value='Fisica' selected>Fisica</option>
                  <option value="Moral">Moral</option>
                  @else
-                 <option value='Moral' selected>Moral
-                 </option>
+                 <option value='Moral' selected>Moral</option>
                    <option value="Fisica">Fisica</option>
                  @endif
                  </select>
@@ -112,8 +110,8 @@
            
 <div class="form-group">
                            <div class="col-sm-2">
-                <select name="volumen_venta" value="{{Input::old('volumen_venta')}}">
-                @if(Input::old('volumen_venta')=="Kilogramos")
+                <select name="volumen_venta" value="">
+                @if($clientes->volumen_venta=="Kilogramos")
                  <option value='Kilogramos' selected>Kilogramos
                  </option>
                  <option value="Toneladas">Toneladas</option>

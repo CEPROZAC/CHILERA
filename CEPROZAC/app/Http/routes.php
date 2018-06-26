@@ -136,6 +136,7 @@ Route::get('descargar-entradas-limpieza', 'EntradasAlmacenLimpiezaController@exc
 Route::resource('compras/recepcion','RecepcionCompraController');
 Route::get('vercompra/{id}', array('as'=> '/vercompra','uses'=>'RecepcionCompraController@verInformacion'));
 Route::get('pdfrecepcion/{id}', array('as'=> '/pdfrecepcion','uses'=>'RecepcionCompraController@invoice'));
+Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compras.recepcion.excel');
 
 
 Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');

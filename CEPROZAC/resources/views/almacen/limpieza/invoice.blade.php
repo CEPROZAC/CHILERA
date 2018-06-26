@@ -46,6 +46,7 @@
       </table>
       </div>
     </main>
+        <div><span>Regresar: </span> <a href="/almacenes/limpieza">Almacén Limpieza</a></div>
     <footer>
     </footer>
     </div>

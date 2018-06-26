@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
-use CEPROZAC\AlmacenGeneral;
+use CEPROZAC\almacengeneral;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
@@ -18,7 +18,7 @@ use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
-class AlmacenGeneralController extends Controller
+class almacengeneralController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class AlmacenGeneralController extends Controller
      */
     public function index()
     {
-     $almacen = DB::table('AlmacenGeneral')->where('estado','Activo')->get();
+     $almacen = DB::table('almacengeneral')->where('estado','Activo')->get();
      return view('almacen.general.index', ['almacen' => $almacen]);
 
         //
@@ -52,7 +52,7 @@ class AlmacenGeneralController extends Controller
      */
     public function store(Request $request)
     {
-        $almacen= new AlmacenGeneral;
+        $almacen= new almacengeneral;
         $almacen->nombre=$request->get('nombre');
         $almacen->capacidad=$request->get('capacidad');
         $almacen->medida=$request->get('medida');
@@ -86,8 +86,8 @@ class AlmacenGeneralController extends Controller
      */
     public function edit($id)
     {
-     $almacen= DB::table('AlmacenGeneral')->where('estado','Activo')->get();
-     return view("almacen.general.edit",["almacen"=>AlmacenGeneral::findOrFail($id)],['almacen' => $almacen]);
+     $almacen= DB::table('almacengeneral')->where('estado','Activo')->get();
+     return view("almacen.general.edit",["almacen"=>almacengeneral::findOrFail($id)],['almacen' => $almacen]);
         //
  }
 
@@ -100,7 +100,7 @@ class AlmacenGeneralController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $almacen=AlmacenGeneral::findOrFail($id);
+      $almacen=almacengeneral::findOrFail($id);
       $almacen->nombre=$request->get('nombre');
       $almacen->capacidad=$request->get('capacidad');
       $almacen->medida=$request->get('medida');
@@ -123,7 +123,7 @@ class AlmacenGeneralController extends Controller
      */
     public function destroy($id)
     {
-        $almacen=AlmacenGeneral::findOrFail($id);
+        $almacen=almacengeneral::findOrFail($id);
         $almacen->estado="Inactivo";
         $almacen->update();
         return Redirect::to('almacen/general');

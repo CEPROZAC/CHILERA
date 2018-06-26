@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\SalidaAlmacenMaterial;
+use CEPROZAC\salidaalmacenmaterial;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenMaterial;
 
@@ -24,7 +24,7 @@ use CEPROZAC\AlmacenMaterial;
 
 */
 
-class SalidaAlmacenMaterialController extends Controller
+class salidaalmacenmaterialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -100,7 +100,7 @@ class SalidaAlmacenMaterialController extends Controller
    //print_r($limite);
 
         while ($num <= $limite) {
-            $material= new SalidaAlmacenMaterial;
+            $material= new salidaalmacenmaterial;
             //print_r($num);
             $producto = $request->get('codigo2');
             $first = head($producto);
@@ -190,10 +190,10 @@ class SalidaAlmacenMaterialController extends Controller
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('SalidaAlmacenMaterial', function($excel) {
+        Excel::create('salidaalmacenmaterial', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = SalidaAlmacenMaterial::join('almacenmateriales','almacenmateriales.id', '=', 'salidasalmacenmaterial.id_material')
+            $salidas = salidaalmacenmaterial::join('almacenmateriales','almacenmateriales.id', '=', 'salidasalmacenmaterial.id_material')
             ->select('salidasalmacenmaterial.id', 'almacenmateriales.nombre', 'salidasalmacenmaterial.cantidad', 'salidasalmacenmaterial.destino', 'salidasalmacenmaterial.entrego','salidasalmacenmaterial.recibio','salidasalmacenmaterial.tipo_movimiento','salidasalmacenmaterial.fecha')
             ->get();       
             $sheet->fromArray($salidas);

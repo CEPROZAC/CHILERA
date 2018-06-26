@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
-use CEPROZAC\AlmacenAgroquimicos;
-use CEPROZAC\Http\Requests\AlmacenAgroquimicosRequest;
+use CEPROZAC\almacenagroquimicos;
+use CEPROZAC\Http\Requests\almacenagroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAgroquimicos;
 use CEPROZAC\ProvedorMateriales;
@@ -21,7 +21,7 @@ use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
 
-class AlmacenAgroquimicosController extends Controller
+class almacenagroquimicosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,10 +30,10 @@ class AlmacenAgroquimicosController extends Controller
      */
     public function index()
     {
-     $material = DB::table('AlmacenAgroquimicos')
-     ->join('provedor_materiales as p', 'AlmacenAgroquimicos.provedor', '=', 'p.id')
-     ->select('AlmacenAgroquimicos.*','p.nombre as provedor')
-     ->where('AlmacenAgroquimicos.estado','Activo')->get();
+     $material = DB::table('almacenagroquimicos')
+     ->join('provedor_materiales as p', 'almacenagroquimicos.provedor', '=', 'p.id')
+     ->select('almacenagroquimicos.*','p.nombre as provedor')
+     ->where('almacenagroquimicos.estado','Activo')->get();
      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
      $empleado = DB::table('empleados')->where('estado','Activo')->get();
      $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
@@ -60,7 +60,7 @@ class AlmacenAgroquimicosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AlmacenAgroquimicosRequest $formulario)
+    public function store(almacenagroquimicosRequest $formulario)
     {
       $validator = Validator::make(
         $formulario->all(), 
@@ -72,7 +72,7 @@ class AlmacenAgroquimicosController extends Controller
             return response()->json(["valid" => true], 200);
         }
         else{
-            $material= new AlmacenAgroquimicos;
+            $material= new almacenagroquimicos;
             $material->nombre=$formulario->get('nombre');
             
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
@@ -137,7 +137,7 @@ public function invoice($id){
     public function edit($id)
     {
        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
-       return view("almacen.agroquimicos.edit",["material"=>AlmacenAgroquimicos::findOrFail($id)],['provedor' => $provedor]);
+       return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
         //
    }
 
@@ -150,7 +150,7 @@ public function invoice($id){
      */
     public function update(Request $request, $id)
     {
-     $material=AlmacenAgroquimicos::findOrFail($id);
+     $material=almacenagroquimicos::findOrFail($id);
      $material->nombre=$request->get('nombre');
      
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
@@ -178,7 +178,7 @@ public function invoice($id){
      */
     public function destroy($id)
     {
-      $material=AlmacenAgroquimicos::findOrFail($id);
+      $material=almacenagroquimicos::findOrFail($id);
       $material->estado='Inactivo';
       $material->save();
       return Redirect::to('almacenes/agroquimicos');
@@ -191,10 +191,10 @@ public function invoice($id){
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('AlmacenAgroquimicos', function($excel) {
+        Excel::create('almacenagroquimicos', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $material = AlmacenAgroquimicos::join('provedor_materiales','provedor_materiales.id', '=', 'almacenagroquimicos.provedor')
+            $material = almacenagroquimicos::join('provedor_materiales','provedor_materiales.id', '=', 'almacenagroquimicos.provedor')
             ->select('almacenagroquimicos.id','almacenagroquimicos.nombre','provedor_materiales.nombre as nom','almacenagroquimicos.descripcion','almacenagroquimicos.cantidad','almacenagroquimicos.medida')
             ->where('almacenagroquimicos.estado', 'Activo')
             ->get();          
@@ -223,13 +223,13 @@ public function invoice($id){
       ->where('provedor_materiales.id',$ex)->get();
       $provedornombre = $materiales[0]->nombre;
       
-      $material2= new EntradasAgroquimicos;
+      $material2= new entradasagroquimicos;
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
       $material2->provedor=$provedornombre;
-                      $material2->entregado=$formulario->get('entregado_a');
-        $material2->recibe_alm=$formulario->get('recibe_alm');
-         $material2->observacionesc=$formulario->get('observaciones');
+                      $material2->entregado=$request->get('entregado_a');
+        $material2->recibe_alm=$request->get('recibe_alm');
+         $material2->observacionesc=$request->get('observaciones');
 
       $material2->comprador=$request->get('recibio');
       $material2->factura=$request->get('factura');

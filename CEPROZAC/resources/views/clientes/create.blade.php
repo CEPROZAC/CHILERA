@@ -88,12 +88,13 @@
 
           
           <div class="form-group">
-            <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
+            <label class="col-sm-3 control-label">Telefono:</label>
             <div class="col-sm-6">
               <input name="telefono" type="text" value="{{Input::old('telefono')}}" placeholder="Ingrese el número de teléfono del cliente"   class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
               <div class="text-danger" id='error_telefono'>{{$errors->formulario->first('telefono')}}</div>
             </div>
           </div>
+
 
 
           <div class="form-group">
@@ -124,7 +125,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Asignación de Volumen de Venta por Año: <strog class="theme_color">*</strog></label>
             <div class="col-sm-2">
-              <input name="cantidad_venta" maxlength="9" type="number" value="{{Input::old('cantidad_venta')}}" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="200" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
+              <input name="cantidad_venta" maxlength="9" type="text" value="{{Input::old('cantidad_venta')}}" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="200" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
               <div class="text-danger" id='error_cantidad'>{{$errors->formulario->first('cantidad_venta')}}</div>
             </div>      
             

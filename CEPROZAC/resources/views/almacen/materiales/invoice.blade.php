@@ -46,6 +46,7 @@
       </table>
       </div>
     </main>
+            <div><span>Regresar: </span> <a href="/almacen/Materiales">Almacén Materiales</a></div>
     <footer>
     </footer>
     </div>

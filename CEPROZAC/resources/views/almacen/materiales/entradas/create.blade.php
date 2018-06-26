@@ -44,13 +44,19 @@
           @endif
         </div>
 
+<<<<<<< HEAD
         <div class="text-danger" id='error_rfc'>DATOS NO GUARDADOS !!! {{$errors->formulario->first('codigo')}}</div>
+        <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+=======
+        <div class="text-danger" type="hidden"  id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+
         <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
 
           {{csrf_field()}}
 
 
-
+<<<<<<< HEAD
           <div class="form-group">
             <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
@@ -70,13 +76,42 @@
              @endforeach              
            </select>
            <div class="help-block with-errors"></div>
+=======
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+             <input type="date"   name="fecha" id="fecha" value="" class="form-control mask" >
+           </div>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+         </div>
+
+<<<<<<< HEAD
+       <div class="form-group">
+        <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+=======
+         <div class="form-group">
+          <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="prov" id="prov"   value="prov"  class="form-control select" >  
+              @foreach($provedor as $emp)
+              <option value="{{$emp->nombre}}">
+               {{$emp->nombre}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
          </div>
        </div>
 
        <div class="form-group">
         <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+          <select name="recibio" id="recibio"   value="recibio"  class="form-control select" >  
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
             @foreach($empresas as $emp)
             <option value="{{$emp->nombre}}">
              {{$emp->nombre}} 
@@ -90,7 +125,11 @@
      <div class="form-group">
       <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
+<<<<<<< HEAD
         <select name="entregado_a" id="entregado_a" value=""  class="form-control select2" required>  
+=======
+        <select name="entregado_a" id="entregado_a"   value=""  class="form-control select2" >  
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
           @foreach($empleado as $emp)
           <option value="{{$emp->id}}">
            {{$emp->nombre}} {{$emp->apellidos}} 
@@ -105,7 +144,11 @@
    <div class="form-group">
     <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
+<<<<<<< HEAD
       <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select2" required>  
+=======
+      <select name="recibe_alm" id="recibe_alm" required  value=""  class="form-control select2" required>  
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
         @foreach($empleado as $emp)
         <option value="{{$emp->id}}">
          {{$emp->nombre}} {{$emp->apellidos}} 
@@ -117,7 +160,11 @@
  </div>
 
  <div class="form-group">
+<<<<<<< HEAD
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+=======
+  <label class="col-sm-3 control-label">Observaciónes:</label>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
   <div class="col-sm-6">
 
     <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
@@ -127,12 +174,22 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
+<<<<<<< HEAD
     <input name="nota" id="nota" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
   </div>
 </div>
 
 
 <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i>Registrar Nuevo Material</a>
+=======
+    <input name="nota" id="nota" value="" type="text"   maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+  </div>
+</div>
+
+
+
+<a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.materiales.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" target="_blank" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Nuevo Material </a>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
 
 
 <div class="col-lg-4 col-lg-offset-4">
@@ -195,8 +252,21 @@
 </div>    
 </div>
 
+<<<<<<< HEAD
 
 
+=======
+  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+   <div class="form-group"> 
+    <label for="preciou">$ Precio Unitario </label>
+    <input name="preciou" id="preciou" value="0" max="1000000" min="1" onkeypress=" return soloNumeros(event);" type="text" class="form-control" />
+  </div>    
+</div>    
+</div>
+
+
+
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
   <div class="form-group"> 
     <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
@@ -275,7 +345,7 @@
 
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
-    <button type="submit" onclick="save();" class="btn btn-primary">Guardar</button>
+    <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
     <a href="/almacen/entradas/material" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
@@ -368,6 +438,7 @@
 }
 
 function llenado(){
+<<<<<<< HEAD
 
 
 
@@ -383,6 +454,32 @@ function llenado(){
   id=arregloDeSubCadenas[3];
   nombre=arregloDeSubCadenas[4];
   var tabla = document.getElementById("detalles");
+=======
+  var fechav = document.getElementById('fecha').value;
+  var provedorv =  document.getElementById('prov').value;
+  var empresav =  document.getElementById('recibio').value;
+  var entregadov = document.getElementById('entregado_a').value;
+  var recibev = document.getElementById('recibe_alm').value;
+  var notav = document.getElementById('nota').value;
+  var entradav = document.getElementById('pcantidad').value;
+  var preciou = document.getElementById('preciou').value;
+
+  if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!==""){
+    if (preciou > 0){
+
+      var select=document.getElementById('id_materialk');
+      var cantidadtotal = select.value;
+      limite = "5",
+      separador = "_",
+      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+      var id2= uno++;
+      cantidad=arregloDeSubCadenas[0];
+      descripcion=arregloDeSubCadenas[1];
+      codigo=arregloDeSubCadenas[2];
+      id=arregloDeSubCadenas[3];
+      nombre=arregloDeSubCadenas[4];
+      var tabla = document.getElementById("detalles");
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
     //tabla.setAttribute("id", id2);
     var row = tabla.insertRow(id2);
     var cell1 = row.insertCell(0);
@@ -431,6 +528,7 @@ function llenado(){
     subtota = subtota + sub;
     var d = subtota;
     document.getElementById("subtotal").value=d;
+<<<<<<< HEAD
     
 
     
@@ -447,6 +545,27 @@ function llenado(){
     document.getElementById("total").value= r - 2;
     limpiar();
   }
+=======
+  }else{
+    alert('El precio Unitario no Puede Ser Menor de 0');
+  }}else{
+    alert("Faltan campos Por llenar Favor de Verificar");
+  }
+}   
+function eliminarFila(value) {
+
+  var fila =  console.log(value + "entro");
+  var cantidadanueva=document.getElementById("detalles").rows[value].cells[9].innerHTML;
+  document.getElementById("detalles").deleteRow(value);
+  var id2= uno--;
+  var menos =document.getElementById("detalles").rows
+  var r = menos.length;
+  document.getElementById("total").value= r - 2;
+  var sub= document.getElementById("subtotal").value;
+  document.getElementById("subtotal").value= sub - cantidadanueva;
+  limpiar();
+}
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
 
   function codigos(){
     var cuenta = document.getElementById('codigo');
@@ -479,6 +598,12 @@ function llenado(){
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
     break;
+<<<<<<< HEAD
+=======
+  }else{
+    alert('Codigo de Barras No Encontado');
+    break;
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
   }
   i++;
 }
@@ -488,16 +613,17 @@ function llenado(){
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
-  document.getElementById("nota").value=" ";
-  document.getElementById("preciou").value=" ";
+  document.getElementById("nota").value="";
+  document.getElementById("preciou").value="";
 }
 function save() {
- var z = 1
- var arreglo = [];
- var table = document.getElementById('detalles');
- for (var r = 1, n = table.rows.length-1; r < n; r++) {
-  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-   if (z == 1){
+  if (document.getElementById('total').value > 0){
+   var z = 1
+   var arreglo = [];
+   var table = document.getElementById('detalles');
+   for (var r = 1, n = table.rows.length-1; r < n; r++) {
+    for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+     if (z == 1){
         //alert(z)
        // document.getElementById("id_materialk").id=z;
       // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
@@ -564,7 +690,15 @@ z ++;
    }
    var tam = arreglo.length / 9;
    document.getElementById("total").value=tam;
+<<<<<<< HEAD
  }
+=======
+ }else{
+  alert('No hay Elementos Agregados, Para Poder Guardar');
+  return false;
+
+}}
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
 
 </script>
 

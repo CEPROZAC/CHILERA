@@ -58,6 +58,7 @@
        </div>
      </div>
 
+
               <div class="form-group">
           <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
@@ -131,7 +132,7 @@
       </div>
 
 
-  <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i>Registrar Nuevo Material</a>
+<a class="btn btn-sm btn-success tooltips" href="{{ route('almacenes.limpieza.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" target="_blank" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Nuevo Material </a>
 
 
      <div class="col-lg-4 col-lg-offset-4">
@@ -274,7 +275,7 @@
 
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
-    <button type="submit" onclick="save();" class="btn btn-primary">Guardar</button>
+    <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
     <a href="/almacen/entradas/limpieza" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
@@ -367,7 +368,16 @@
 }
 
 function llenado(){
-
+var fechav = document.getElementById('fecha').value;
+  var provedorv =  document.getElementById('prov').value;
+  var empresav =  document.getElementById('recibio').value;
+  var entregadov = document.getElementById('entregado_a').value;
+  var recibev = document.getElementById('recibe_alm').value;
+  var notav = document.getElementById('factura').value;
+  var entradav = document.getElementById('scantidad').value;
+  var preciou = document.getElementById('preciou').value;
+  if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!==""){
+   if (preciou > 0){
 
 
     var select=document.getElementById('id_materialk');
@@ -430,20 +440,24 @@ function llenado(){
     subtota = subtota + sub;
     var d = subtota;
      document.getElementById("subtotal").value=d;
-    
+}else{
+    alert('El precio Unitario no Puede Ser Menor de 0');
+  }}else{
+    alert("Faltan campos Por llenar Favor de Verificar");
+  }
+}  
 
-  
-
-  
-}   
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
+    var cantidadanueva=document.getElementById("detalles").rows[value].cells[9].innerHTML;
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows
   var r = menos.length;
   document.getElementById("total").value= r - 2;
+    var sub= document.getElementById("subtotal").value;
+  document.getElementById("subtotal").value= sub - cantidadanueva;
   limpiar();
 }
 
@@ -478,6 +492,9 @@ function codigos(){
    document.getElementById("descripcion").value=descripcion;
    document.getElementById("scantidad").value = "1";
 break;
+}else{
+  alert('Codigo de Barras No Encontado');
+  break;
 }
 i++;
 }
@@ -487,10 +504,11 @@ i++;
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
-  document.getElementById("factura").value=" ";
-  document.getElementById("preciou").value=" ";
+  document.getElementById("factura").value="";
+  document.getElementById("preciou").value="";
 }
 function save() {
+   if (document.getElementById('total').value > 0){
  var z = 1
  var arreglo = [];
  var table = document.getElementById('detalles');
@@ -542,7 +560,11 @@ z ++;
   }
   var tam = arreglo.length / 9;
   document.getElementById("total").value=tam;
-}
+}else{
+  alert('No hay Elementos Agregados, Para Poder Guardar');
+  return false;
+
+}}
 
 </script>
 

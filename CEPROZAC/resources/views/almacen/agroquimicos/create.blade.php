@@ -44,6 +44,7 @@
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
+                 <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
 
               </div>
             </div>
@@ -59,6 +60,7 @@
                @endforeach              
              </select>
              <div class="help-block with-errors"></div>
+             <div class="text-danger" id='error_prov'>{{$errors->formulario->first('provedor_name')}}</div>
            </div>
          </div><!--/form-group-->
 

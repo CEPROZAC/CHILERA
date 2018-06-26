@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\SalidasAgroquimicos;
+use CEPROZAC\salidasagroquimicos;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
 
@@ -20,7 +20,7 @@ use \Milon\Barcode\DNS2D;
 use Illuminate\Support\Collection as Collection;
 
 
-class SalidasAgroquimicosController extends Controller
+class salidasagroquimicosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -90,7 +90,7 @@ class SalidasAgroquimicosController extends Controller
    //print_r($limite);
 
         while ($num <= $limite) {
-            $material= new SalidasAgroquimicos;
+            $material= new salidasagroquimicos;
             //print_r($num);
             $producto = $request->get('codigo2');
             $first = head($producto);
@@ -183,7 +183,7 @@ class SalidasAgroquimicosController extends Controller
         Excel::create('salidasagroquimicos', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = SalidasAgroquimicos::join('almacenagroquimicos','almacenagroquimicos.id', '=', 'salidasagroquimicos.id_material')
+            $salidas = salidasagroquimicos::join('almacenagroquimicos','almacenagroquimicos.id', '=', 'salidasagroquimicos.id_material')
             ->select('salidasagroquimicos.id', 'almacenagroquimicos.nombre', 'salidasagroquimicos.cantidad', 'salidasagroquimicos.destino', 'salidasagroquimicos.entrego','salidasagroquimicos.recibio','salidasagroquimicos.tipo_movimiento','salidasagroquimicos.fecha')
             ->get();       
             $sheet->fromArray($salidas);
