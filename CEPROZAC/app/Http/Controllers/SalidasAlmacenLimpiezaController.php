@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\SalidasAlmacenLimpieza;
+use CEPROZAC\salidasalmacenlimpieza;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
 
@@ -18,7 +18,7 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 use Illuminate\Support\Collection as Collection;
-class SalidasAlmacenLimpiezaController extends Controller
+class salidasalmacenlimpiezaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,9 +27,9 @@ class SalidasAlmacenLimpiezaController extends Controller
      */
     public function index()
     {
-        $salida= DB::table('SalidasAlmacenLimpieza')
-        ->join('almacenlimpieza as s', 'SalidasAlmacenLimpieza.id_material', '=', 's.id')
-        ->select('SalidasAlmacenLimpieza.*','s.nombre','SalidasAlmacenLimpieza.*','s.medida')->get();
+        $salida= DB::table('salidasalmacenlimpieza')
+        ->join('almacenlimpieza as s', 'salidasalmacenlimpieza.id_material', '=', 's.id')
+        ->select('salidasalmacenlimpieza.*','s.nombre','salidasalmacenlimpieza.*','s.medida')->get();
         // print_r($salida);
         return view('almacen.limpieza.salidas.index', ['salida' => $salida]);
 
@@ -52,15 +52,15 @@ class SalidasAlmacenLimpiezaController extends Controller
         
 
         if (empty($material)){
-            $salida= DB::table('SalidasAlmacenLimpieza')
-        ->join('almacenlimpieza as s', 'SalidasAlmacenLimpieza.id_material', '=', 's.id')
-        ->select('SalidasAlmacenLimpieza.*','s.nombre','SalidasAlmacenLimpieza.*','s.medida')->get();
+            $salida= DB::table('salidasalmacenlimpieza')
+        ->join('almacenlimpieza as s', 'salidasalmacenlimpieza.id_material', '=', 's.id')
+        ->select('salidasalmacenlimpieza.*','s.nombre','salidasalmacenlimpieza.*','s.medida')->get();
           return view('almacen.limpieza.salidas.index', ['salida' => $salida])->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo'); 
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
-        $salida= DB::table('SalidasAlmacenLimpieza')
-        ->join('almacenlimpieza as s', 'SalidasAlmacenLimpieza.id_material', '=', 's.id')
-        ->select('SalidasAlmacenLimpieza.*','s.nombre','SalidasAlmacenLimpieza.*','s.medida')->get();
+        $salida= DB::table('salidasalmacenlimpieza')
+        ->join('almacenlimpieza as s', 'salidasalmacenlimpieza.id_material', '=', 's.id')
+        ->select('salidasalmacenlimpieza.*','s.nombre','salidasalmacenlimpieza.*','s.medida')->get();
           return view('almacen.limpieza.salidas.index', ['salida' => $salida])->with('message', 'No Hay Empleados Registrados, Favor de Dar de Alta Empleados Para Poder Acceder a Este Modulo'); 
 
       }else{
@@ -84,7 +84,7 @@ class SalidasAlmacenLimpiezaController extends Controller
    //print_r($limite);
 
      while ($num <= $limite) {
-        $material= new SalidasAlmacenLimpieza;
+        $material= new salidasalmacenlimpieza;
             //print_r($num);
         $producto = $request->get('codigo2');
         $first = head($producto);
@@ -173,11 +173,11 @@ class SalidasAlmacenLimpiezaController extends Controller
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('SalidasAlmacenLimpieza', function($excel) {
+        Excel::create('salidasalmacenlimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = SalidasAlmacenLimpieza::join('almacenlimpieza','SalidasAlmacenLimpieza.id', '=', 'SalidasAlmacenLimpieza.id_material')
-            ->select('SalidasAlmacenLimpieza.id', 'almacenlimpieza.nombre', 'SalidasAlmacenLimpieza.cantidad', 'SalidasAlmacenLimpieza.destino', 'SalidasAlmacenLimpieza.entrego','SalidasAlmacenLimpieza.recibio','SalidasAlmacenLimpieza.tipo_movimiento','SalidasAlmacenLimpieza.fecha')
+            $salidas = salidasalmacenlimpieza::join('almacenlimpieza','salidasalmacenlimpieza.id', '=', 'salidasalmacenlimpieza.id_material')
+            ->select('salidasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'salidasalmacenlimpieza.cantidad', 'salidasalmacenlimpieza.destino', 'salidasalmacenlimpieza.entrego','salidasalmacenlimpieza.recibio','salidasalmacenlimpieza.tipo_movimiento','salidasalmacenlimpieza.fecha')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N° de Salida','Material','Cantidad' ,'Destino','Entrego','Recibio','Tipo de Movimiento','Fecha']);

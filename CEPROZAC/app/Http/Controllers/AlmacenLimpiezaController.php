@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
-use CEPROZAC\AlmacenLimpieza;
-use CEPROZAC\Http\Requests\AlmacenLimpiezaRequest;
+use CEPROZAC\almacenlimpieza;
+use CEPROZAC\Http\Requests\almacenlimpiezaRequest;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\EntradasAlmacenLimpieza;
+use CEPROZAC\entradasalmacenlimpieza;
 use CEPROZAC\ProvedorMateriales;
 
 use DB;
@@ -20,7 +20,7 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
-class AlmacenLimpiezaController extends Controller
+class almacenlimpiezaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,10 +29,10 @@ class AlmacenLimpiezaController extends Controller
      */
     public function index()
     {
-      $material = DB::table('AlmacenLimpieza')
-      ->join('provedor_materiales as p', 'AlmacenLimpieza.provedor', '=', 'p.id')
-      ->select('AlmacenLimpieza.*','p.nombre as provedor')
-      ->where('AlmacenLimpieza.estado','Activo')->get();
+      $material = DB::table('almacenlimpieza')
+      ->join('provedor_materiales as p', 'almacenlimpieza.provedor', '=', 'p.id')
+      ->select('almacenlimpieza.*','p.nombre as provedor')
+      ->where('almacenlimpieza.estado','Activo')->get();
       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
       $empleado = DB::table('empleados')->where('estado','Activo')->get();
       $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
@@ -59,7 +59,7 @@ class AlmacenLimpiezaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AlmacenLimpiezaRequest $formulario)
+    public function store(almacenlimpiezaRequest $formulario)
     {
         $validator = Validator::make(
             $formulario->all(), 
@@ -71,12 +71,12 @@ class AlmacenLimpiezaController extends Controller
                 return response()->json(["valid" => true], 200);
             }
             else{
-                $material= new AlmacenLimpieza;
+                $material= new almacenlimpieza;
                 $material->nombre=$formulario->get('nombre');
                 
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
-            $file->move(public_path().'/imagenes/AlmacenLimpieza',$file->getClientOriginalName());//lo movemos a esta ruta                        
+            $file->move(public_path().'/imagenes/almacenlimpieza',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
         }
         $material->descripcion=$formulario->get('descripcion');
@@ -89,7 +89,7 @@ class AlmacenLimpiezaController extends Controller
 
 
         $material->save();
-        $material= DB::table('AlmacenLimpieza')->orderby('created_at','DESC')->take(1)->get();
+        $material= DB::table('almacenlimpieza')->orderby('created_at','DESC')->take(1)->get();
         $date = date('Y-m-d');
         $invoice = "2222";
         $view =  \View::make('almacen.limpieza.invoice', compact('date', 'invoice','material'))->render();
@@ -104,7 +104,7 @@ class AlmacenLimpiezaController extends Controller
 }
 
 public function invoice($id){ 
-    $material= DB::table('AlmacenLimpieza')->where('id',$id)->get();
+    $material= DB::table('almacenlimpieza')->where('id',$id)->get();
          //$material   = AlmacenMaterial:: findOrFail($id);
     $date = date('Y-m-d');
     $invoice = "2222";
@@ -135,7 +135,7 @@ public function invoice($id){
     public function edit($id)
     {
        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
-       return view("almacen.limpieza.edit",["material"=>AlmacenLimpieza::findOrFail($id)],['provedor' => $provedor]);
+       return view("almacen.limpieza.edit",["material"=>almacenlimpieza::findOrFail($id)],['provedor' => $provedor]);
         //
    }
 
@@ -148,12 +148,12 @@ public function invoice($id){
      */
     public function update(Request $request, $id)
     {
-     $material=AlmacenLimpieza::findOrFail($id);
+     $material=almacenlimpieza::findOrFail($id);
      $material->nombre=$request->get('nombre');
      
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
-            $file->move(public_path().'/imagenes/AlmacenLimpieza',$file->getClientOriginalName());//lo movemos a esta ruta
+            $file->move(public_path().'/imagenes/almacenlimpieza',$file->getClientOriginalName());//lo movemos a esta ruta
             $material->imagen=$file->getClientOriginalName();           
         }   
         $material->descripcion=$request->get('descripcion');
@@ -175,12 +175,12 @@ public function invoice($id){
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('AlmacenLimpieza', function($excel) {
+        Excel::create('almacenlimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $material = AlmacenLimpieza::join('provedor_materiales','provedor_materiales.id', '=', 'AlmacenLimpieza.provedor')
-            ->select('AlmacenLimpieza.id','AlmacenLimpieza.nombre','provedor_materiales.nombre as nom','AlmacenLimpieza.descripcion','AlmacenLimpieza.cantidad','AlmacenLimpieza.medida')
-            ->where('AlmacenLimpieza.estado', 'Activo')
+            $material = almacenlimpieza::join('provedor_materiales','provedor_materiales.id', '=', 'almacenlimpieza.provedor')
+            ->select('almacenlimpieza.id','almacenlimpieza.nombre','provedor_materiales.nombre as nom','almacenlimpieza.descripcion','almacenlimpieza.cantidad','almacenlimpieza.medida')
+            ->where('almacenlimpieza.estado', 'Activo')
             ->get();          
             $sheet->fromArray($material);
             $sheet->row(1,['ID','Nombre','Proveedor','Descripción' ,'Cantidad','Medida']);
@@ -208,7 +208,7 @@ public function invoice($id){
      */
     public function destroy($id)
     {
-      $material=AlmacenLimpieza::findOrFail($id);
+      $material=almacenlimpieza::findOrFail($id);
       $material->estado='Inactivo';
       $material->save();
       return Redirect::to('almacenes/limpieza');
@@ -224,7 +224,7 @@ public function invoice($id){
       ->where('provedor_materiales.id',$ex)->get();
       $provedornombre = $materiales[0]->nombre;
       
-      $material2= new EntradasAlmacenLimpieza;
+      $material2= new entradasalmacenlimpieza;
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
       $material2->provedor=$provedornombre;

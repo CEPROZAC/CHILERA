@@ -219,7 +219,7 @@
 
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
-    <button type="submit" onclick="save();" class="btn btn-primary">Guardar</button>
+    <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
     <a href="/almacen/salidas/agroquimicos" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
@@ -313,40 +313,51 @@
 }
 
 function llenado(){
-      var select2=document.getElementById('id_materialk');
-  var cantidadtotal2 = select2.value;
-  limite2 = "5",
-  separador2 = "_",
-  arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
-  x=arregloDeSubCadenas2[3];
+  var fechav = document.getElementById('fecha').value;
+  var recibiov =  document.getElementById('recibio').value;
+  var entregadov = document.getElementById('entrego').value;
+  var destinov = document.getElementById('destino').value;
+  var materialv = document.getElementById('id_materialk').value;
+  var salidav = document.getElementById('scantidad').value;
+
+  if(fechav !== "" && recibiov !== "" &&entregadov !=="" && destinov!=="" && materialv!=="" &&salidav!==""){
+   if (salidav > 0){
 
 
-  var valida = document.getElementById("scantidad").value;
-  var valida2 = document.getElementById("pcantidad").value;
-  var y = parseInt(valida);
-  var z = parseInt(valida2);
-  var comprueba = recorre(x)
+    var select2=document.getElementById('id_materialk');
+    var cantidadtotal2 = select2.value;
+    limite2 = "5",
+    separador2 = "_",
+    arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
+    x=arregloDeSubCadenas2[3];
 
-  if (comprueba == 1){
+
+    var valida = document.getElementById("scantidad").value;
+    var valida2 = document.getElementById("pcantidad").value;
+    var y = parseInt(valida);
+    var z = parseInt(valida2);
+    var comprueba = recorre(x)
+
+    if (comprueba == 1){
       alert("Este Material Ya se ha Insertado en la Tabla");
 
-  }else{
-    if (y > z) {
-    alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
+    }else{
+      if (y > z) {
+        alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
 
-  }else{
-    var select=document.getElementById('id_materialk');
-  var cantidadtotal = select.value;
-  limite = "5",
-  separador = "_",
-  arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-  var id2= uno++;
-  cantidad=arregloDeSubCadenas[0];
-  descripcion=arregloDeSubCadenas[1];
-  codigo=arregloDeSubCadenas[2];
-  id=arregloDeSubCadenas[3];
-  nombre=arregloDeSubCadenas[4];
- var tabla = document.getElementById("detalles");
+      }else{
+        var select=document.getElementById('id_materialk');
+        var cantidadtotal = select.value;
+        limite = "5",
+        separador = "_",
+        arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+        var id2= uno++;
+        cantidad=arregloDeSubCadenas[0];
+        descripcion=arregloDeSubCadenas[1];
+        codigo=arregloDeSubCadenas[2];
+        id=arregloDeSubCadenas[3];
+        nombre=arregloDeSubCadenas[4];
+        var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
     var row = tabla.insertRow(id2);
     var cell1 = row.insertCell(0);
@@ -389,16 +400,19 @@ function llenado(){
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
-        limpiar();
+    limpiar();
     cargar();
     document.getElementById("total").value=id2;
     
-
   }
 }
+}else{
+  alert('La Cantidad de Salida no Puede Ser Menor de 0');
+}}else{
+  alert("Faltan campos Por llenar Favor de Verificar");
+}
+}    
 
-  
-}   
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
@@ -436,14 +450,17 @@ function codigos(){
 
       if (codigo == x){
     //alert(i);
-   document.getElementById('id_materialk').selectedIndex = i;
-   document.getElementById("pcantidad").value=stock;
-   document.getElementById("descripcion").value=descripcion;
-   document.getElementById("scantidad").value = "1";
-   document.getElementById("scantidad").max=stock;
-break;
-}
-i++;
+    document.getElementById('id_materialk').selectedIndex = i;
+    document.getElementById("pcantidad").value=stock;
+    document.getElementById("descripcion").value=descripcion;
+    document.getElementById("scantidad").value = "1";
+    document.getElementById("scantidad").max=stock;
+    break;
+  }else{
+    alert('Codigo de Barras No Encontado');
+    break;
+  }
+  i++;
 }
 }
 
@@ -451,21 +468,22 @@ i++;
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
-  document.getElementById("movimiento").value=" ";
-  document.getElementById("destino").value=" ";
-   document.getElementById("descripcion").value=" ";
+  document.getElementById("movimiento").value="";
+  document.getElementById("destino").value="";
+  document.getElementById("descripcion").value="";
 
 
 }
 
 
 function save() {
- var z = 1
- var arreglo = [];
- var table = document.getElementById('detalles');
- for (var r = 1, n = table.rows.length-1; r < n; r++) {
-  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-   if (z == 1){
+ if (document.getElementById('total').value > 0){
+   var z = 1
+   var arreglo = [];
+   var table = document.getElementById('detalles');
+   for (var r = 1, n = table.rows.length-1; r < n; r++) {
+    for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+     if (z == 1){
         //alert(z)
        // document.getElementById("id_materialk").id=z;
       // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
@@ -485,13 +503,13 @@ function save() {
      }else if(z == 3){
          //alert(z)
        //  document.getElementById("scantidad").value=table.rows[r].cells[c].innerHTML;
-         arreglo.push(table.rows[r].cells[c].innerHTML);
+       arreglo.push(table.rows[r].cells[c].innerHTML);
         //alert(table.rows[r].cells[c].innerHTML);
         z ++;
       }else if(z == 4){
          //alert(z)
         // document.getElementById("destino").value=table.rows[r].cells[c].innerHTML;
-         arreglo.push(table.rows[r].cells[c].innerHTML);
+        arreglo.push(table.rows[r].cells[c].innerHTML);
        // alert(table.rows[r].cells[c].innerHTML);
        z ++;
      } else if (z == 5){
@@ -509,22 +527,28 @@ z ++;
 }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-         arreglo.push(table.rows[r].cells[c].innerHTML);
-         z ++;
-
-       }else{
-       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
         arreglo.push(table.rows[r].cells[c].innerHTML);
-        document.getElementById("codigo2").value=arreglo;
-        z = 1;
+        z ++;
 
-      }
+      }else{
+       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+       document.getElementById("codigo2").value=arreglo;
+       z = 1;
 
-    }
-  }
-  var tam = arreglo.length / 8;
-  document.getElementById("total").value=tam;
+     }
+
+   }
+ }
+ var tam = arreglo.length / 8;
+ document.getElementById("total").value=tam;
+}else{
+  alert('No hay Elementos Agregados, Para Poder Guardar');
+  return false;
+
 }
+}
+
 
 function recorre(valor) {
  var z = 1
@@ -540,11 +564,11 @@ function recorre(valor) {
       if (valor == j ){
         var r = 1;
         return(r);
-       z ++;
+        z ++;
       }
-     }
+    }
 
-     else if(z == 2){
+    else if(z == 2){
          //alert(z)
        //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
        alert(table.rows[r].cells[c].innerHTML);
@@ -552,39 +576,39 @@ function recorre(valor) {
        
 
      }else if(z == 3){
-        alert(table.rows[r].cells[c].innerHTML);
-        z ++;
-      }else if(z == 4){
+      alert(table.rows[r].cells[c].innerHTML);
+      z ++;
+    }else if(z == 4){
 
-       alert(table.rows[r].cells[c].innerHTML);
-       z ++;
-     } else if (z == 5){
+     alert(table.rows[r].cells[c].innerHTML);
+     z ++;
+   } else if (z == 5){
        //  alert(z)
      //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-         alert(table.rows[r].cells[c].innerHTML);
+     alert(table.rows[r].cells[c].innerHTML);
 
 //alert(arreglo);
 z ++;
 }else if (z == 6){
  //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
-  alert(table.rows[r].cells[c].innerHTML);
+ alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-           alert(table.rows[r].cells[c].innerHTML);
-         z ++;
+        alert(table.rows[r].cells[c].innerHTML);
+        z ++;
 
-       }else{
+      }else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-          alert(table.rows[r].cells[c].innerHTML);
-        z = 1;
+       alert(table.rows[r].cells[c].innerHTML);
+       z = 1;
 
-      }
+     }
 
-    }
-  }
+   }
+ }
 }
 
 

@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
-use CEPROZAC\Http\Requests\EntradasAlmacenLimpiezaRequest;
+use CEPROZAC\Http\Requests\entradasalmacenlimpiezaRequest;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\EntradasAlmacenLimpieza;
+use CEPROZAC\entradasalmacenlimpieza;
 use CEPROZAC\Empleado;
-use CEPROZAC\AlmacenLimpieza;
+use CEPROZAC\almacenlimpieza;
 use CEPROZAC\ProvedorMateriales;
 
 use DB;
@@ -20,7 +20,7 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 use Illuminate\Support\Collection as Collection;
-class EntradasAlmacenLimpiezaController extends Controller
+class entradasalmacenlimpiezaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,9 +29,9 @@ class EntradasAlmacenLimpiezaController extends Controller
      */
     public function index()
     {
-     $entrada= DB::table('EntradasAlmacenLimpieza')
-     ->join('almacenlimpieza as a', 'EntradasAlmacenLimpieza.id_material', '=', 'a.id')
-     ->select('EntradasAlmacenLimpieza.*','a.nombre as nombremat','EntradasAlmacenLimpieza.*','a.medida')->get();
+     $entrada= DB::table('entradasalmacenlimpieza')
+     ->join('almacenlimpieza as a', 'entradasalmacenlimpieza.id_material', '=', 'a.id')
+     ->select('entradasalmacenlimpieza.*','a.nombre as nombremat','entradasalmacenlimpieza.*','a.medida')->get();
      return view('almacen.limpieza.entradas.index', ['entrada' => $entrada]);
 
         //
@@ -53,21 +53,21 @@ class EntradasAlmacenLimpiezaController extends Controller
         
 
         if (empty($material)){
-               $entrada= DB::table('EntradasAlmacenLimpieza')
-     ->join('almacenlimpieza as a', 'EntradasAlmacenLimpieza.id_material', '=', 'a.id')
-     ->select('EntradasAlmacenLimpieza.*','a.nombre as nombremat','EntradasAlmacenLimpieza.*','a.medida')->get();
+               $entrada= DB::table('entradasalmacenlimpieza')
+     ->join('almacenlimpieza as a', 'entradasalmacenlimpieza.id_material', '=', 'a.id')
+     ->select('entradasalmacenlimpieza.*','a.nombre as nombremat','entradasalmacenlimpieza.*','a.medida')->get();
      return view('almacen.limpieza.entradas.index', ['entrada' => $entrada]); 
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
-              $entrada= DB::table('EntradasAlmacenLimpieza')
-     ->join('almacenlimpieza as a', 'EntradasAlmacenLimpieza.id_material', '=', 'a.id')
-     ->select('EntradasAlmacenLimpieza.*','a.nombre as nombremat','EntradasAlmacenLimpieza.*','a.medida')->get();
+              $entrada= DB::table('entradasalmacenlimpieza')
+     ->join('almacenlimpieza as a', 'entradasalmacenlimpieza.id_material', '=', 'a.id')
+     ->select('entradasalmacenlimpieza.*','a.nombre as nombremat','entradasalmacenlimpieza.*','a.medida')->get();
      return view('almacen.limpieza.entradas.index', ['entrada' => $entrada]);
 
       }else if (empty($provedor)){
-              $entrada= DB::table('EntradasAlmacenLimpieza')
-     ->join('almacenlimpieza as a', 'EntradasAlmacenLimpieza.id_material', '=', 'a.id')
-     ->select('EntradasAlmacenLimpieza.*','a.nombre as nombremat','EntradasAlmacenLimpieza.*','a.medida')->get();
+              $entrada= DB::table('entradasalmacenlimpieza')
+     ->join('almacenlimpieza as a', 'entradasalmacenlimpieza.id_material', '=', 'a.id')
+     ->select('entradasalmacenlimpieza.*','a.nombre as nombremat','entradasalmacenlimpieza.*','a.medida')->get();
      return view('almacen.limpieza.entradas.index', ['entrada' => $entrada]);
 
       }
@@ -83,7 +83,7 @@ class EntradasAlmacenLimpiezaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EntradasAlmacenLimpiezaRequest $formulario)
+    public function store(entradasalmacenlimpiezaRequest $formulario)
     {
        $cantidad = $formulario->get('cantidad2');
 
@@ -99,7 +99,7 @@ class EntradasAlmacenLimpiezaController extends Controller
                 return response()->json(["valid" => true], 200);
             }
             else{
-              $material= new AlmacenLimpieza;
+              $material= new almacenlimpieza;
 
               $material->nombre=$formulario->get('nombre2');
               $material->provedor=$formulario->get('provedor_id2');
@@ -107,7 +107,7 @@ class EntradasAlmacenLimpiezaController extends Controller
 
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
-            $file->move(public_path().'/imagenes/AlmacenLimpieza',$file->getClientOriginalName());//lo movemos a esta ruta                        
+            $file->move(public_path().'/imagenes/almacenlimpieza',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
         }
         $material->descripcion=$formulario->get('descripcion2');
@@ -120,14 +120,14 @@ class EntradasAlmacenLimpiezaController extends Controller
     }
 }
 
-$ultimo = AlmacenLimpieza::orderBy('id', 'desc')->first()->id;
+$ultimo = almacenlimpieza::orderBy('id', 'desc')->first()->id;
 $ex = $formulario->get('provedor_id2');
 $materiales = DB::table('provedor_materiales')
 ->select('provedor_materiales.nombre')
 ->where('provedor_materiales.id',$ex)->get();
 
 $provedornombre = $materiales[0]->nombre;
-$material2= new EntradasAlmacenLimpieza;
+$material2= new entradasalmacenlimpieza;
 $material2->id_material=$ultimo;
 $material2->cantidad=$formulario->get('cantidad2');
 $material2->provedor=$provedornombre;
@@ -160,7 +160,7 @@ return $pdf->stream('invoice');
    //print_r($limite);
 
     while ($num <= $limite) {
-        $material= new EntradasAlmacenLimpieza;
+        $material= new entradasalmacenlimpieza;
             //print_r($num);
         $producto = $formulario->get('codigo2');
         $first = head($producto);
@@ -245,7 +245,7 @@ return $pdf->stream('invoice');
      */
     public function destroy($id)
     {
-       $material=EntradasAlmacenLimpieza::findOrFail($id);
+       $material=entradasalmacenlimpieza::findOrFail($id);
        $material->delete();
        return Redirect::to('/almacen/entradas/limpieza');   
         //
@@ -257,11 +257,11 @@ return $pdf->stream('invoice');
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('EntradasAlmacenLimpieza', function($excel) {
+        Excel::create('entradasalmacenlimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = EntradasAlmacenLimpieza::join('almacenlimpieza','almacenlimpieza.id', '=', 'EntradasAlmacenLimpieza.id_material')
-            ->select('EntradasAlmacenLimpieza.id', 'almacenlimpieza.nombre', 'EntradasAlmacenLimpieza.cantidad', 'EntradasAlmacenLimpieza.provedor', 'EntradasAlmacenLimpieza.factura','EntradasAlmacenLimpieza.p_unitario','EntradasAlmacenLimpieza.total','EntradasAlmacenLimpieza.comprador','EntradasAlmacenLimpieza.fecha')
+            $salidas = entradasalmacenlimpieza::join('almacenlimpieza','almacenlimpieza.id', '=', 'entradasalmacenlimpieza.id_material')
+            ->select('entradasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'entradasalmacenlimpieza.cantidad', 'entradasalmacenlimpieza.provedor', 'entradasalmacenlimpieza.factura','entradasalmacenlimpieza.p_unitario','entradasalmacenlimpieza.total','entradasalmacenlimpieza.comprador','entradasalmacenlimpieza.fecha')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura ó Nota','Precio Unitario','Subtotal','Comprador','Fecha de Compra']);

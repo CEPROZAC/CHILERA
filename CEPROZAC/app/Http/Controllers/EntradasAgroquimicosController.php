@@ -93,7 +93,7 @@ return view("almacen.agroquimicos.entradas.create",["material"=>$material,"prove
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EntradasAgroquimicosRequest $formulario)
+    public function store(entradasagroquimicosRequest $formulario)
     {
      $cantidad = $formulario->get('cantidad2');
 
@@ -109,7 +109,7 @@ return view("almacen.agroquimicos.entradas.create",["material"=>$material,"prove
             return response()->json(["valid" => true], 200);
         }
         else{
-          $material= new AlmacenAgroquimicos;
+          $material= new almacenagroquimicos;
 
           $material->nombre=$formulario->get('nombre2');
           $material->provedor=$formulario->get('provedor_id2');
@@ -129,14 +129,14 @@ return view("almacen.agroquimicos.entradas.create",["material"=>$material,"prove
     }
 }
 
-$ultimo = AlmacenAgroquimicos::orderBy('id', 'desc')->first()->id;
+$ultimo = almacenagroquimicos::orderBy('id', 'desc')->first()->id;
 $ex = $formulario->get('provedor_id2');
 $materiales = DB::table('provedor_materiales')
 ->select('provedor_materiales.nombre')
 ->where('provedor_materiales.id',$ex)->get();
 
 $provedornombre = $materiales[0]->nombre;
-$material2= new EntradasAgroquimicos;
+$material2= new entradasagroquimicos;
 $material2->id_material=$ultimo;
 $material2->cantidad=$formulario->get('cantidad2');
 $material2->provedor=$provedornombre;
@@ -169,7 +169,7 @@ return $pdf->stream('invoice');
    //print_r($limite);
 
     while ($num <= $limite) {
-        $material= new EntradasAgroquimicos;
+        $material= new entradasagroquimicos;
             //print_r($num);
         $producto = $formulario->get('codigo2');
         $first = head($producto);
@@ -253,7 +253,7 @@ return $pdf->stream('invoice');
      */
     public function destroy($id)
     {
-       $material=EntradasAgroquimicos::findOrFail($id);
+       $material=entradasagroquimicos::findOrFail($id);
        $material->delete();
        return Redirect::to('/almacen/entradas/agroquimicos');   
         //
@@ -268,7 +268,7 @@ return $pdf->stream('invoice');
         Excel::create('entradasagroquimicos', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = EntradasAgroquimicos::join('almacenagroquimicos','almacenagroquimicos.id', '=', 'entradasagroquimicos.id_material')
+            $salidas = entradasagroquimicos::join('almacenagroquimicos','almacenagroquimicos.id', '=', 'entradasagroquimicos.id_material')
             ->select('entradasagroquimicos.id', 'almacenagroquimicos.nombre', 'entradasagroquimicos.cantidad', 'entradasagroquimicos.provedor', 'entradasagroquimicos.factura','entradasagroquimicos.p_unitario','entradasagroquimicos.total','entradasagroquimicos.comprador','entradasagroquimicos.fecha')
             ->get();       
             $sheet->fromArray($salidas);

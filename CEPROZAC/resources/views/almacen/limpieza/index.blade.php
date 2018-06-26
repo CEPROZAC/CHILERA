@@ -98,7 +98,7 @@
                   ?>
 
 
-                  modal          <td>  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                  <td>  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                 </td>
                 <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                 </td>

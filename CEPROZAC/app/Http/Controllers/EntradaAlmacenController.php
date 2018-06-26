@@ -10,7 +10,7 @@ use CEPROZAC\Http\Requests\EntradasMaterialesRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradaAlmacen;
 use CEPROZAC\Empleado;
-use CEPROZAC\AlmacenMaterial;
+use CEPROZAC\almacenmaterial;
 use CEPROZAC\ProvedorMateriales;
 
 
@@ -59,21 +59,21 @@ class EntradaAlmacenController extends Controller
 
       if (empty($material)){
               $entrada= DB::table('entradaalmacenmateriales')
-      ->join('almacenmateriales as a', 'EntradaAlmacenMateriales.id_material', '=', 'a.id')
-      ->select('EntradaAlmacenMateriales.*','a.nombre as nombremat')->get();
+      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+      ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
         // print_r($salida);
       return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
                 $entrada= DB::table('entradaalmacenmateriales')
-      ->join('almacenmateriales as a', 'EntradaAlmacenMateriales.id_material', '=', 'a.id')
-      ->select('EntradaAlmacenMateriales.*','a.nombre as nombremat')->get();
+      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+      ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
       return view('almacen.materiales.entradas.index', ['entrada' => $entrada]); 
 
       }else if (empty($provedor)){
               $entrada= DB::table('entradaalmacenmateriales')
-      ->join('almacenmateriales as a', 'EntradaAlmacenMateriales.id_material', '=', 'a.id')
-      ->select('EntradaAlmacenMateriales.*','a.nombre as nombremat')->get();
+      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+      ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
         // print_r($salida);
       return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
 
@@ -94,7 +94,7 @@ class EntradaAlmacenController extends Controller
      */
 
     
-    public function store(EntradasMaterialesRequest $formulario)
+    public function store(entradasmaterialesrequest $formulario)
     {
         $cantidad = $formulario->get('cantidad2');
 
@@ -109,7 +109,7 @@ class EntradaAlmacenController extends Controller
                 return response()->json(["valid" => true], 200);
             }
             else{
-              $material= new AlmacenMaterial;
+              $material= new almacenmaterial;
 
               $material->nombre=$formulario->get('nombre2');
               $material->provedor=$formulario->get('provedor_id2');
@@ -128,14 +128,14 @@ class EntradaAlmacenController extends Controller
     }
 }
 
-$ultimo = AlmacenMaterial::orderBy('id', 'desc')->first()->id;
+$ultimo = almacenmaterial::orderBy('id', 'desc')->first()->id;
 $ex = $formulario->get('provedor_id2');
 $materiales = DB::table('provedor_materiales')
 ->select('provedor_materiales.nombre')
 ->where('provedor_materiales.id',$ex)->get();
 
 $provedornombre = $materiales[0]->nombre;
-$material2= new EntradaAlmacen;
+$material2= new entradaalmacen;
 $material2->id_material=$ultimo;
 $material2->cantidad=$formulario->get('cantidad2');
 $material2->provedor=$provedornombre;
@@ -161,7 +161,7 @@ return Redirect::to('almacen/entradas/materiales');
    //print_r($limite);
 
     while ($num <= $limite) {
-        $material= new EntradaAlmacen;
+        $material= new entradaalmacen;
             //print_r($num);
         $producto = $formulario->get('codigo2');
         $first = head($producto);
@@ -262,11 +262,11 @@ return Redirect::to('almacen/entradas/materiales');
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('EntradaAlmacenMaterial', function($excel) {
+        Excel::create('entradaalmacenmaterial', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = EntradaAlmacen::join('almacenmateriales','almacenmateriales.id', '=', 'EntradaAlmacenMateriales.id_material')
-            ->select('EntradaAlmacenMateriales.id', 'almacenmateriales.nombre', 'EntradaAlmacenMateriales.cantidad', 'EntradaAlmacenMateriales.provedor', 'EntradaAlmacenMateriales.nota_venta','EntradaAlmacenMateriales.p_unitario','EntradaAlmacenMateriales.total','EntradaAlmacenMateriales.comprador','EntradaAlmacenMateriales.fecha')
+            $salidas = EntradaAlmacen::join('almacenmateriales','almacenmateriales.id', '=', 'entradaalmacenmateriales.id_material')
+            ->select('entradaalmacenmateriales.id', 'almacenmateriales.nombre', 'entradaalmacenmateriales.cantidad', 'entradaalmacenmateriales.provedor', 'entradaalmacenmateriales.nota_venta','entradaalmacenmateriales.p_unitario','entradaalmacenmateriales.total','entradaalmacenmateriales.comprador','entradaalmacenmateriales.fecha')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Nota de Venta','Precio Unitario','Subtotal','Comprador','Fecha de Compra']);

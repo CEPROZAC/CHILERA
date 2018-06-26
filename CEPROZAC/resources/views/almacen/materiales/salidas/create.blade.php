@@ -219,7 +219,7 @@
 
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
-    <button type="submit" onclick="save();" class="btn btn-primary">Guardar</button>
+    <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
     <a href="/almacen/salidas/material" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
@@ -313,6 +313,16 @@
 }
 
 function llenado(){
+    var fechav = document.getElementById('fecha').value;
+  var recibiov =  document.getElementById('recibio').value;
+  var entregadov = document.getElementById('entrego').value;
+  var destinov = document.getElementById('destino').value;
+  var materialv = document.getElementById('id_materialk').value;
+  var salidav = document.getElementById('scantidad').value;
+
+  if(fechav !== "" && recibiov !== "" &&entregadov !=="" && destinov!=="" && materialv!=="" &&salidav!==""){
+   if (salidav > 0){
+
       var select2=document.getElementById('id_materialk');
   var cantidadtotal2 = select2.value;
   limite2 = "5",
@@ -392,13 +402,16 @@ function llenado(){
     //limpiar();
     cargar();
     document.getElementById("total").value=id2;
+    
   }
-    }
+}
+}else{
+  alert('La Cantidad de Salida no Puede Ser Menor de 0');
+}}else{
+  alert("Faltan campos Por llenar Favor de Verificar");
+}
+}    
 
-  
-
-  
-}   
 function eliminarFila(value) {
 
   document.getElementById("detalles").deleteRow(value);
@@ -441,7 +454,10 @@ function codigos(){
    document.getElementById("scantidad").value = "1";
    document.getElementById("scantidad").max=stock;
 break;
-}
+}else{
+    alert('Codigo de Barras No Encontado');
+    break;
+  }
 i++;
 }
 }
@@ -450,14 +466,16 @@ i++;
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
-  document.getElementById("movimiento").value=" ";
-  document.getElementById("destino").value=" ";
+  document.getElementById("movimiento").value="";
+  document.getElementById("destino").value="";
+    document.getElementById("descripcion").value="";
 
 
 }
 
 
 function save() {
+   if (document.getElementById('total').value > 0){
  var z = 1
  var arreglo = [];
  var table = document.getElementById('detalles');
@@ -522,6 +540,11 @@ z ++;
   }
   var tam = arreglo.length / 8;
   document.getElementById("total").value=tam;
+}else{
+  alert('No hay Elementos Agregados, Para Poder Guardar');
+  return false;
+
+}
 }
 
 
