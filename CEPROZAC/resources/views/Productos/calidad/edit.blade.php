@@ -25,7 +25,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Calidad</strong></h2> 
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Calidad</strong></h2> 
             </div>
             <div class="col-md-4">
               <div class="btn-group pull-right">

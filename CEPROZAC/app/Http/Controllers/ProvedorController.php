@@ -145,8 +145,7 @@ class ProvedorController extends Controller
         $empresas= DB::table('empresas')
         ->join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
         ->join('regimen_fiscal as r', 'empresas.idRegimenFiscal', '=', 'r.id')
-        ->join('bancos','empresas.id_Banco','=','bancos.id')
-        ->select('empresas.*','bancos.nombre as nombreBanco','p.nombre as nombreProvedor', 'r.nombre as nomRegimen')
+        ->select('empresas.*','p.nombre as nombreProvedor', 'r.nombre as nomRegimen')
         ->where('empresas.estado','Activo')
         ->where('empresas.provedor_id','=',$id)
         ->get();

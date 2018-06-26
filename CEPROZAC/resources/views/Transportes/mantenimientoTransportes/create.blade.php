@@ -33,31 +33,8 @@
         <div class="porlets-content">
           <form action="{{route('mantenimiento.store')}}" method="post" class="form-horizontal row-border"  parsley-validate novalidate>
             {{csrf_field()}}
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Concepto: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="concepto" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese concepto de el Mantenimiento" maxlength="35" parsley-rangelength="[1,35]"/>
-
-              </div>
-            </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">Descripción</label>
-              <div class="col-sm-6">
-                <textarea name= "descripcion"  onchange="mayus(this);"  class="form-control" maxlength="300" rows="3" resize="none" placeholder="Ejemplo: Cambio de puntas de inyección d‑ Revisión de candelas de precalentamiento.."></textarea>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Fecha: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-               <input name="fecha" type="text" class="form-control mask" data-inputmask="'alias': 'date'">
-             </div>
-           </div>
-
-           <div class="form-group">
              <label class="col-sm-3 control-label"> Vehiculo: <strog class="theme_color">*</strog></label>
              <div class="col-sm-6">
               <select name="idTransporte" class="form-control" required>  
@@ -71,13 +48,40 @@
            </div>
          </div><!--/form-group-->
 
+         
          <div class="form-group">
-           <label class="col-sm-3 control-label">Responsable Vehiculo: <strog class="theme_color">*</strog></label>
-           <div class="col-sm-6">
+          <label class="col-sm-3 control-label">Concepto: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+
+            <input name="concepto" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required  placeholder="Ingrese concepto de el Mantenimiento" maxlength="35" parsley-rangelength="[1,35]"/>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Descripción</label>
+          <div class="col-sm-6">
+            <textarea name= "descripcion"  onchange="mayus(this);"  class="form-control" maxlength="300" rows="3" resize="none" placeholder="Ejemplo: Cambio de puntas de inyección d‑ Revisión de candelas de precalentamiento.."></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Fecha: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+
+           <input name="fecha" type="text" class="form-control mask" data-inputmask="'alias': 'date'" required>
+         </div>
+       </div>
+
+
+
+       <div class="form-group">
+         <label class="col-sm-3 control-label">Responsable Vehiculo: <strog class="theme_color">*</strog></label>
+         <div class="col-sm-6">
            <select name="idChofer" class="form-control" required>
              @foreach($operadores as $operador)
              <option value="{{$operador->id}}">
-       
+
                {{$operador->nombre}} {{$operador->apellidos}}
              </option>
              @endforeach

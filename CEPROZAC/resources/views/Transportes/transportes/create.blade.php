@@ -77,59 +77,59 @@
               <label class="col-sm-3 control-label">Vigencia Seguro: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-               <input name="vigencia_Seguro" type="text" class="form-control mask" data-inputmask="'alias': 'date'">
-             </div>
-           </div>
-
-           <div class="form-group">
-            <label class="col-sm-3 control-label">Aseguradora: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-
-              <input name="aseguradora" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Aseguradora a la  que esta afiliada Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
-
+                <input name="vigencia_Seguro" type="text" class="form-control mask" data-inputmask="'alias': 'date'" required>
+              </div>
             </div>
-          </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Aseguradora: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="aseguradora" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Aseguradora a la  que esta afiliada Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+
+              </div>
+            </div>
 
 
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Capacidad Cubica:</label>
-            <div class="col-sm-6">
-              <input parsley-type="number" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en metros cubicos" name="m3_Unidad" onkeypress=" return soloNumeros(event);" />
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Capacidad Cubica:<strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input parsley-type="number" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en metros cubicos" name="m3_Unidad" onkeypress=" return soloNumeros(event);" />
+              </div>
+            </div><!--/form-group-->
+
+
+            <div class="form-group">
+             <label class="col-sm-3 control-label">Capacidad de la unidad:<strog class="theme_color">*</strog></label>
+             <div class="col-sm-6">
+              <input parsley-type="number" name="capacidad" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en toneladas" onkeypress=" return soloNumeros(event);" />
             </div>
           </div><!--/form-group-->
 
-
           <div class="form-group">
-           <label class="col-sm-3 control-label">Capacidad de la unidad:</label>
-           <div class="col-sm-6">
-            <input parsley-type="number" name="capacidad" type="text" class="form-control" required placeholder="Ingrese capacidad de la unidad en toneladas" onkeypress=" return soloNumeros(event);" />
+            <label class="col-sm-3 control-label">Operador de transporte: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="chofer_id" class="form-control" required>
+               @foreach($operadores as $operador)
+               <option value="{{$operador->id}}">
+                {{$operador->nombre}} {{$operador->apellidos}}
+              </option>
+              @endforeach
+            </select>
+            <div class="help-block with-errors"></div>
           </div>
         </div><!--/form-group-->
 
         <div class="form-group">
-          <label class="col-sm-3 control-label">Chofer: <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="chofer_id" class="form-control" required>
-             @foreach($operadores as $operador)
-             <option value="{{$operador->id}}">
-              {{$operador->nombre}} {{$operador->apellidos}}
-            </option>
-            @endforeach
-          </select>
-          <div class="help-block with-errors"></div>
-        </div>
-      </div><!--/form-group-->
-
-      <div class="form-group">
-        <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <a href="{{url('/transportes')}}" class="btn btn-default"> Cancelar</a>
-        </div>
-      </div><!--/form-group-->
-    </form>
-  </div><!--/porlets-content-->
-</div><!--/block-web-->
+          <div class="col-sm-offset-7 col-sm-5">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{url('/transportes')}}" class="btn btn-default"> Cancelar</a>
+          </div>
+        </div><!--/form-group-->
+      </form>
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->

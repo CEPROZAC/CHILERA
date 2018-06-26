@@ -52,7 +52,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <input type="text" parsley-type="phone" placeholder="Ingrese el número de teléfono de el banco" name="telefono" value="{{$bancos->telefono}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
+              <input type="text" parsley-type="phone" placeholder="Ingrese el número de teléfono de el banco" name="telefono" value="{{$bancos->telefono}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" required>
             </div>
           </div>
 

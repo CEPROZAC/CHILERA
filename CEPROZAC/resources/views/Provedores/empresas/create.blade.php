@@ -68,7 +68,7 @@
            <div class="form-group">
             <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <input type="text" placeholder="Ingrese el número de teléfono de la empresa" name="telefono" value="" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" parsley-type="phone" maxlength="200">
+              <input type="text" placeholder="Ingrese el número de teléfono de la empresa" name="telefono" value="" class="form-control mask" required="" data-inputmask="'mask':'(999) 999-9999'" parsley-type="phone" maxlength="200">
             </div>
           </div>
 
@@ -76,7 +76,7 @@
             <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
 
-              <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
+              <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required  placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
             </div>
           </div>
 

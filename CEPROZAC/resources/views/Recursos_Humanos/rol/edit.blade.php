@@ -44,7 +44,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Rol empleado: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6"> 
-              <input name="rol" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required  placeholder="Ingrese Rol de Empleado"
+              <input name="rol" type="text"  onchange="mayus(this);"  class="form-control" maxlength="100" parsley-rangelength="[1,100]"  required  placeholder="Ingrese Rol de Empleado"
               value="{{$roles->rol_Empleado}}"/>
             </div>
           </div>

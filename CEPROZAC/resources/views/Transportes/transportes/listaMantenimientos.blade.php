@@ -41,7 +41,7 @@
     </div>
     <div class="porlets-content container clear_both padding_fix">
       @if($mantenimientos==null)
-      <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{ route('mantenimiento.create')}}">se encuentran mantenimientos registrados </a> a este Vehiculo. Click Para registrar</div>
+      <div class="alert alert-danger"> <strong>No</strong> se encuentran mantenimientos registrados  a este Vehiculo. <a class="alert-link" href="{{ route('mantenimiento.create')}}">Click Para registrar</a></div>
       
     </b>
   </div>

@@ -141,7 +141,7 @@
                         </div>
 
                         <div class="form-group">
-                          <label class="col-sm-3 control-label">SSN</label>
+                          <label class="col-sm-3 control-label">SSN<strog class="theme_color">*</strog></label>
                           <div class="col-sm-6 ">
                             <input type="text" name="numero_Seguro_Social" value="{{$empleado->numero_Seguro_Social}}" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
                           </div>

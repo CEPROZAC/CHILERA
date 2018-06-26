@@ -243,7 +243,7 @@
                <div class="form-group">
                 <div class="col-sm-offset-7 col-sm-5">
                   <button type="submit" class="btn btn-primary">Guardar</button>
-                  <a href="/empleados" class="btn btn-default"> Cancelar</a>
+                  <a href="/contratos" class="btn btn-default"> Cancelar</a>
                 </div>
               </div><!--/form-group--> 
 

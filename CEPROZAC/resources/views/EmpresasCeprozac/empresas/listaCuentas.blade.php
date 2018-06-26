@@ -40,7 +40,7 @@
       </div>
       <div class="porlets-content container clear_both padding_fix">
        @if($cuentas==null)
-       <div class="alert alert-danger"> <strong>No</strong> <a class="alert-link" href="{{URL::action('CuentasEmpresasCEPROZACController@create1',$empresas->id)}}">se encuentran cuentas registradas </a> a este Empresa. Click Para registrar</div>
+       <div class="alert alert-danger"> <strong>No</strong> se encuentran cuentas registradas a este Empresa. <a class="alert-link" href="{{URL::action('CuentasEmpresasCEPROZACController@create1',$empresas->id)}}">Clic Para registrar</a> </div>
 
      </b>
    </div>
