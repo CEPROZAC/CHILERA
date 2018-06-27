@@ -195,13 +195,7 @@ function myCreateFunction1() {
 function calcularTiempo(){
   var fecha1 =document.getElementById('fechaInicio').value;
   var fecha2= document.getElementById('fechaFin').value;
-  var ano1 = fecha1.substring(0, 2);
-  var mes1 = fecha1.substring(3, 5);
-  var dia1 = fecha1.substring(6, 10);
-  fech1 =ano1+"-"+mes1+"-"+dia1;
-  var ano2 = fecha2.substring(0, 2);
-  var mes2 = fecha2.substring(3, 5);
-  var dia2 = fecha2.substring(6, 10);
+  alert(fecha1);
 
 
   fech2 =ano2+"-"+mes2+"-"+dia2;
@@ -211,7 +205,7 @@ function calcularTiempo(){
       var diff = fecha2m.diff(fecha1m, 'd'); // Diff in days
       document.getElementById("duracionContrato").value = diff;
       tiempo=  document.getElementById("duracionContrato").value;
-      
+      alert(diff);
 
       if(tiempo=="NaN"  || diff <0) {
         alert ("Por favor  verifica que la fecha de Inicio y Fecha fin sean Correctas");

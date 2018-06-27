@@ -22,9 +22,7 @@ class SalidasAlmacenLimpiezaMigrate extends Migration
             $table->string('recibio');
             $table->string('tipo_movimiento');
             $table->date('fecha');
-
-            $table->timestamps();
-
+            $table->timestamps();    
         });
         DB::unprepared('
 
