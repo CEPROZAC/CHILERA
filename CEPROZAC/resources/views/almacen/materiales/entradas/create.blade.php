@@ -44,215 +44,218 @@
           @endif
         </div>
 
-        <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="text-danger" id='error_rfc'>DATOS NO GUARDADOS !!! {{$errors->formulario->first('codigo')}}</div>
         <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
-          =======
-          <div class="text-danger" type="hidden"  id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
-          >>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+=======
+        <div class="text-danger" type="hidden"  id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
 
-          <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+        <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
 
-            {{csrf_field()}}
-
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-               <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
-             </div>
-           </div>
-
-           <div class="form-group">
-            <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="prov" id="prov" value="prov"  class="form-control select" required>  
-                @foreach($provedor as $emp)
-                <option value="{{$emp->nombre}}">
-                 {{$emp->nombre}} 
-               </option>
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-      
-
-             <div class="form-group">
-              <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-               <input type="date"   name="fecha" id="fecha" value="" class="form-control mask" >
-             </div>
-       
-           </div>
-
-      
-           <div class="form-group">
-            <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
-                  <div class="col-sm-6">
-                    <select name="prov" id="prov"   value="prov"  class="form-control select" >  
-                      @foreach($provedor as $emp)
-                      <option value="{{$emp->nombre}}">
-                       {{$emp->nombre}} 
-                     </option>
-                     @endforeach              
-                   </select>
-                   <div class="help-block with-errors"></div>
-                 </div>
-               </div>
-
-               <div class="form-group">
-                <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
-                <div class="col-sm-6">
-                  <select name="recibio" id="recibio"   value="recibio"  class="form-control select" >  
-
-                    @foreach($empresas as $emp)
-                    <option value="{{$emp->nombre}}">
-                     {{$emp->nombre}} 
-                   </option>
-                   @endforeach              
-                 </select>
-                 <div class="help-block with-errors"></div>
-               </div>
-             </div>
-
-             <div class="form-group">
-              <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <select name="entregado_a" id="entregado_a" value=""  class="form-control select2" required>  
+          {{csrf_field()}}
 
 
-                  @foreach($empleado as $emp)
-                  <option value="{{$emp->id}}">
-                   {{$emp->nombre}} {{$emp->apellidos}} 
-                 </option>
-                 @endforeach              
-               </select>
-               <div class="help-block with-errors"></div>
-             </div>
-           </div>
-
-
-           <div class="form-group">
-            <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
+<<<<<<< HEAD
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
 
-              <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select2" required>  
-
-                <select name="recibe_alm" id="recibe_alm" >
-                  @foreach($empleado as $emp)
-                  <option value="{{$emp->id}}">
-                   {{$emp->nombre}} {{$emp->apellidos}} 
-                 </option>
-                 @endforeach              
-               </select>
-               <div class="help-block with-errors"></div>
-             </div>
+             <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
            </div>
+         </div>
 
-           <div class="form-group">
-
-
-
-            <label class="col-sm-3 control-label">Observaciónes:</label>
-
-            <div class="col-sm-6">
-
-              <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
-            </div>
-          </div>
+         <div class="form-group">
+          <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="prov" id="prov" value="prov"  class="form-control select" required>  
+              @foreach($provedor as $emp)
+              <option value="{{$emp->nombre}}">
+               {{$emp->nombre}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+=======
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-3">
-              <<<<<<< HEAD
-              <input name="nota" id="nota" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
-            </div>
-          </div>
+            <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
 
+             <input type="date"   name="fecha" id="fecha" value="" class="form-control mask" >
+           </div>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+         </div>
 
-          <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i>Registrar Nuevo Material</a>
-          =======
-          <input name="nota" id="nota" value="" type="text"   maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
-        </div>
-      </div>
-
-
-
-      <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.materiales.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" target="_blank" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Nuevo Material </a>
-      >>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
-
-
-      <div class="col-lg-4 col-lg-offset-4">
+<<<<<<< HEAD
        <div class="form-group">
-        <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input  id="codigo" value="" name="codigo" type="text" onKeyUp="codigos()"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
-        </div>
-      </div>
-    </div>
+          <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+=======
+         <div class="form-group">
+          <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="prov" id="prov"   value="prov"  class="form-control select" >  
+              @foreach($provedor as $emp)
+              <option value="{{$emp->nombre}}">
+               {{$emp->nombre}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
 
-    <div class="container clear_both padding_fix">
-      <div class="block-web">
-       <div class="row">
-        <div class="panel panel-primary"> 
+       <div class="form-group">
+        <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <select name="recibio" id="recibio"   value="recibio"  class="form-control select" >  
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+            @foreach($empresas as $emp)
+            <option value="{{$emp->nombre}}">
+             {{$emp->nombre}} 
+           </option>
+           @endforeach              
+         </select>
+         <div class="help-block with-errors"></div>
+       </div>
+     </div>
 
-          <div class="panel-body">
-            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-              <div class="form-group"> 
-                <label for="material">Material </label>
-                <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
-                  @foreach($material as $mat)
-                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
-                   {{$mat->nombre}}
-                 </option>
-                 @endforeach              
-               </select>
-               <div class="help-block with-errors"></div>
-             </div>
-           </div><!--/form-group-->
+     <div class="form-group">
+      <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+<<<<<<< HEAD
+        <select name="entregado_a" id="entregado_a" value=""  class="form-control select2" required>  
+=======
+        <select name="entregado_a" id="entregado_a"   value=""  class="form-control select2" >  
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+          @foreach($empleado as $emp)
+          <option value="{{$emp->id}}">
+           {{$emp->nombre}} {{$emp->apellidos}} 
+         </option>
+         @endforeach              
+       </select>
+       <div class="help-block with-errors"></div>
+     </div>
+   </div>
 
-           <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-             <div class="form-group"> 
-              <label for="scantidad">Cantidad de Entrada </label>
-              <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
-            </div>    
-          </div>  
 
-          <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-           <div class="form-group"> 
-            <label for="pcantidad">Cantidad en Almacén </label>
-            <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
-          </div>    
-        </div>  
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+<<<<<<< HEAD
+      <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select2" required>  
+=======
+      <select name="recibe_alm" id="recibe_alm" required  value=""  class="form-control select2" required>  
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+        @foreach($empleado as $emp)
+        <option value="{{$emp->id}}">
+         {{$emp->nombre}} {{$emp->apellidos}} 
+       </option>
+       @endforeach              
+     </select>
+     <div class="help-block with-errors"></div>
+   </div>
+ </div>
 
-        <div class="col-sm-4">
+ <div class="form-group">
+<<<<<<< HEAD
+  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+=======
+  <label class="col-sm-3 control-label">Observaciónes:</label>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+  <div class="col-sm-6">
+
+    <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-3">
+<<<<<<< HEAD
+    <input name="nota" id="nota" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+  </div>
+</div>
+
+
+<a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i>Registrar Nuevo Material</a>
+=======
+    <input name="nota" id="nota" value="" type="text"   maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+  </div>
+</div>
+
+
+
+<a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.materiales.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" target="_blank" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Nuevo Material </a>
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+
+
+<div class="col-lg-4 col-lg-offset-4">
+ <div class="form-group">
+  <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
+    <input  id="codigo" value="" name="codigo" type="text" onKeyUp="codigos()"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+  </div>
+</div>
+</div>
+
+<div class="container clear_both padding_fix">
+  <div class="block-web">
+   <div class="row">
+    <div class="panel panel-primary"> 
+
+      <div class="panel-body">
+        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+          <div class="form-group"> 
+            <label for="material">Material </label>
+            <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
+              @foreach($material as $mat)
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+               {{$mat->nombre}}
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div><!--/form-group-->
+
+       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
          <div class="form-group"> 
-          <label for="descripcion">Descripción </label>
-          <input name="descripcion" id="descripcion" disabled class="form-control" />
+          <label for="scantidad">Cantidad de Entrada </label>
+          <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
         </div>    
       </div>  
 
-
-
       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
        <div class="form-group"> 
-        <label for="preciou">$ Precio Unitario </label>
-        <input name="preciou" id="preciou" value="0" onkeypress=" return soloNumeros(event);" type="text" class="form-control" />
+        <label for="pcantidad">Cantidad en Almacén </label>
+        <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
       </div>    
+    </div>  
+
+    <div class="col-sm-4">
+     <div class="form-group"> 
+      <label for="descripcion">Descripción </label>
+      <input name="descripcion" id="descripcion" disabled class="form-control" />
     </div>    
-  </div>
-
-  <<<<<<< HEAD
+  </div>  
 
 
-  =======
+  
+  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+   <div class="form-group"> 
+    <label for="preciou">$ Precio Unitario </label>
+    <input name="preciou" id="preciou" value="0" onkeypress=" return soloNumeros(event);" type="text" class="form-control" />
+  </div>    
+</div>    
+</div>
+
+<<<<<<< HEAD
+
+
+=======
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
     <label for="preciou">$ Precio Unitario </label>
@@ -435,7 +438,7 @@
 }
 
 function llenado(){
-  <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -451,7 +454,7 @@ function llenado(){
   id=arregloDeSubCadenas[3];
   nombre=arregloDeSubCadenas[4];
   var tabla = document.getElementById("detalles");
-  =======
+=======
   var fechav = document.getElementById('fecha').value;
   var provedorv =  document.getElementById('prov').value;
   var empresav =  document.getElementById('recibio').value;
@@ -476,7 +479,7 @@ function llenado(){
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
       var tabla = document.getElementById("detalles");
-      >>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
     //tabla.setAttribute("id", id2);
     var row = tabla.insertRow(id2);
     var cell1 = row.insertCell(0);
@@ -525,7 +528,7 @@ function llenado(){
     subtota = subtota + sub;
     var d = subtota;
     document.getElementById("subtotal").value=d;
-    <<<<<<< HEAD
+<<<<<<< HEAD
     
 
     
@@ -542,12 +545,12 @@ function llenado(){
     document.getElementById("total").value= r - 2;
     limpiar();
   }
-  =======
-}else{
-  alert('El precio Unitario no Puede Ser Menor de 0');
-}}else{
-  alert("Faltan campos Por llenar Favor de Verificar");
-}
+=======
+  }else{
+    alert('El precio Unitario no Puede Ser Menor de 0');
+  }}else{
+    alert("Faltan campos Por llenar Favor de Verificar");
+  }
 }   
 function eliminarFila(value) {
 
@@ -564,12 +567,12 @@ function eliminarFila(value) {
 }
 >>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
 
-function codigos(){
-  var cuenta = document.getElementById('codigo');
-  var x = cuenta.value;
-  var z = x.length
-  if (z == 12  ) {
-    var busca = z;
+  function codigos(){
+    var cuenta = document.getElementById('codigo');
+    var x = cuenta.value;
+    var z = x.length
+    if (z == 12  ) {
+      var busca = z;
     //  alert ("12 entro");
     var y = document.getElementById("id_materialk").length;
     //  alert(y);
@@ -595,12 +598,12 @@ function codigos(){
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
     break;
-    <<<<<<< HEAD
-    =======
+<<<<<<< HEAD
+=======
   }else{
     alert('Codigo de Barras No Encontado');
     break;
-    >>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
+>>>>>>> 6318657a541678fd2ad00f2d2c6c737e91da454a
   }
   i++;
 }
@@ -687,10 +690,10 @@ z ++;
    }
    var tam = arreglo.length / 9;
    document.getElementById("total").value=tam;
-   <<<<<<< HEAD
+<<<<<<< HEAD
  }
- =======
-}else{
+=======
+ }else{
   alert('No hay Elementos Agregados, Para Poder Guardar');
   return false;
 
