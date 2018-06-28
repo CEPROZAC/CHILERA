@@ -10,11 +10,11 @@
 
 
             <div class="porlets-content" style="margin-bottom: -50px;">
-       <form action="{{route('almacen.entradas.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8" >
+       <form action="{{route('almacen.entradas.agroquimicos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8" >
             {{csrf_field()}}
 
               <div class="form-group">
-            <label class="col-sm-3 control-label">Nombre:  <strog class="theme_color">*</strog></label>
+            <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
               <input name="nombre2" type="text"  value="{{Input::old('nombre2')}}" maxlength="30"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese nombre del producto" />
 
@@ -35,10 +35,10 @@
            </div>
          </div><!--/form-group-->
 
-          <div class="form-group">
+ <div class="form-group">
           <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+            <select name="recibio2" id="recibio2" value="recibio2"  class="form-control select" required>  
               @foreach($empresas as $emp)
               <option value="{{$emp->nombre}}">
                {{$emp->nombre}} 
@@ -48,7 +48,6 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
-       <br> <br>
 
                 <div class="form-group">
           <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
@@ -63,7 +62,6 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
-       <br> <br>
 
 
                        <div class="form-group">
@@ -79,8 +77,6 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
-       <br> <br>
-       <br> <br>
 
               <div class="form-group">
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
@@ -134,11 +130,52 @@
         <input name="cantidad2" maxlength="9" type="number" value="{{Input::old('cantidad2')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"  value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
       </div>    
     </div>
+                   <div class="form-group">
+            <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="medida" value="{{Input::old('medida')}}">
+                @if(Input::old('medida')=="Kilogramos")
+                <option value='Kilogramos' selected>Kilogramos
+                </option>
+                <option value="Toneladas">Toneladas</option>
+                <option value="Litros">Litros</option>
+                <option value="Metros">Metros</option>
+                <option value="Unidades">Unidades</option>
+                @elseif(Input::old('medida')=="Toneladas")
+                <option value='Toneladas' selected>Toneladas
+                </option>
+                <option value="Litros">Litros</option>
+                <option value="Metros">Metros</option>
+                <option value="Unidades">Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                 @elseif(Input::old('medida')=="Litros")
+                <option value='Toneladas'>Toneladas</option>
+                <option value="Litros" selected>Litros</option>
+                <option value="Metros">Metros</option>
+                <option value="Unidades">Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                @elseif(Input::old('medida')=="Metros")
+                <option value='Toneladas'>Toneladas</option>
+                <option value="Litros">Litros</option>
+                <option value="Metros" selected>Metros</option>
+                <option value="Unidades">Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                @else
+                <option value='Toneladas'>Toneladas</option>
+                <option value="Litros">Litros</option>
+                <option value="Metros" >Metros</option>
+                <option value="Unidades" selected>Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                @endif
+              </select>
+              
+            </div>
+          </div>
 
      <div class="form-group">
-        <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
         <div class="col-sm-3">
-          <input name="nota2" id="nota2" value="{{Input::old('nota2 ')}}" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+          <input name="factura2" id="factura2" value="{{Input::old('factura2 ')}}" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
         </div>
       </div>
 

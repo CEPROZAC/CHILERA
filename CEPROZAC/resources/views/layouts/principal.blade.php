@@ -157,18 +157,14 @@
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
               <ul>
+                <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Agroquímicos</b> </a> </li>
+                 <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Limpieza</b> </a> </li>
                 <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materiales</b> </a> </li>
                 
-                
-
-
-                <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Agroquímicos</b> </a> </li>
 
                 
-
-                
-                <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Limpieza</b> </a> </li>
-
+               
+                  <li> <a href="{{url('almacenes/empaque')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empaque</b> </a> </li>
                 <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Generales</b> </a> </li>
 
 

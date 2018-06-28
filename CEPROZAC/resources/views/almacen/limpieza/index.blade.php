@@ -55,7 +55,7 @@
             <table  class="display table table-bordered table-striped" id="dynamic-table">
               <thead>
                 <tr>
-                  <th>Id </th>
+                <th>N° </th>
                   <th>Nombre </th>
                   <th>Proveedor </th>
                   <th>Codigo de Barras </th>
@@ -70,7 +70,7 @@
               <tbody>
                 @foreach($material  as $materiales)
                 <tr class="gradeA">
-                  <td>{{$materiales->id}} </td>
+                <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->provedor}} </td>
                   <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
@@ -112,7 +112,7 @@
         </tbody>
         <tfoot>
           <tr>
-           <th>Id </th>
+          <th>N° </th>
            <th>Nombre </th>
            <th>Proveedor </th>
            <th>Codigo de Barras </th>

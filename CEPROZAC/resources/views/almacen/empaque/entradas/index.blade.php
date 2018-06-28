@@ -2,13 +2,13 @@
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-    <h1>Almacén de Materiales</h1>
+    <h1>Almacén de Empaque</h1>
     <h2 class="">Entradas</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li ><a style="color: #808080" href="{{url('almacen/materiales')}}">Inicio</a></li>
-      <li class="active">Entradas de Almacén de Materiales</a></li>
+      <li ><a style="color: #808080" href="{{url('almacenes/empaque')}}">Inicio</a></li>
+      <li class="active">Entradas de Almacén de Empaque</a></li>
     </ol>
   </div>
 </div>
@@ -20,16 +20,16 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-7">
               <div class="actions"> </div>
-              <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Entradas de Almacén de Materiales</strong></h2>
+              <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Entradas de Almacén de Empaque </strong></h2>
             </div>
             <div class="col-md-5">
               <div class="btn-group pull-right">
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                   <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.entradas.materiales.create')}}"style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
+                   <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.entradas.empaque.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
 
-                   <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.materiales.entradas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                   <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.empaque.entradas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
 
 
@@ -49,7 +49,7 @@
                   <th>N°Compra </th>
                   <th>Fecha de Entrada</th>  
                   <th>Proveedor de Material </th>
-                  <th>N°Nota </th>
+                  <th>N°Factura </th>
                   <th>Nombre de Material</th>
                   <th>Cantidad Comprada</th>
                     <th>Precio Unitario </th>
@@ -66,9 +66,9 @@
                   <td>{{$entradas->id}} </td>
                   <td>{{$entradas->fecha}} </td>
                    <td>{{$entradas->provedor}} </td>
-                   <td>{{$entradas->nota_venta}} </td>
+                   <td>{{$entradas->factura}} </td>
                    <td>{{$entradas->nombremat}} </td>
-                   <td>{{$entradas->cantidad}} </td>
+                   <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
                    <td>${{$entradas->p_unitario}} </td>
                     <td>${{$entradas->importe}} </td>
                     <td>${{$entradas->total}} </td>
@@ -79,7 +79,7 @@
                 </td>
 
               </tr>
-              @include('almacen.materiales.entradas.modal')
+              @include('almacen.empaque.entradas.modal')
               
             
                  @endforeach
@@ -89,7 +89,7 @@
                   <th>N°Entrada </th>
                   <th>Fecha de Entrada</th>  
                   <th>Proveedor </th>
-                  <th>N°Nota </th>
+                  <th>N°Factura </th>
                   <th>Nombre de Material</th>
                   <th>Cantidad </th>
                     <th>Precio Unitario </th>

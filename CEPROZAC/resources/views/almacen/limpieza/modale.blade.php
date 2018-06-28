@@ -5,7 +5,7 @@
         <div class="row">
           <div class="block-web">
             <div class="header">
-              <h3 class="content-header theme_color">&nbsp;Agregar Stock</h3>
+              <h3 class="content-header theme_color">&nbsp;Agregar Stock: {{ $materiales->nombre}}</h3>
             </div>
 
 
@@ -19,7 +19,7 @@
               <div class="form-group">
               <label  class="col-sm-3 control-label">Agregar Stock<strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="cantidades" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
+                <input name="cantidades" id="cantidades" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div>  
                            <br> <br>
@@ -118,7 +118,7 @@
              <div class="input-group-addon">$</div>
 
              
-             <input name="preciou" maxlength="9" type="text" value="{{Input::old('preciou')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Precio de este Producto" onkeypress=" return soloNumeros(event);"/>
+             <input name="preciou" id ="preciou" maxlength="9" type="text" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese el Precio de este Producto" onkeypress=" return soloNumeros(event);"/>
            </div>
          </div>
        </div>
@@ -135,10 +135,32 @@
       <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
          <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-         <button type="submit" class="btn btn-primary">Agregar</button>
+         <button type="submit" onclick="return save();" class="btn btn-primary">Agregar</button>
          </form>
      </div>
    </div>
  </div><!--/modal-content--> 
 </div><!--/modal-dialog--> 
 </div><!--/modal-fade--> 
+
+<script>
+  function save()
+  {
+    var w = document.getElementById('fecha2').value;
+    var x = document.getElementById('preciou').value;
+    var y = document.getElementById('factura').value;
+    var z = document.getElementById('cantidades').value;
+    if (w !== "" && x !== "" && y !== "" && z !== "" ){
+      if (z < 1){
+         alert('El Stock Minimo a Ingresar debe ser Mayor de 0')
+        return false;
+      }
+return true;
+    }else{
+      alert('Los Campos de *Stock, *N° Nota, *Fecha y *Precio, No pueden ir Vacios ')
+      return false;
+
+    }
+
+}
+</script>

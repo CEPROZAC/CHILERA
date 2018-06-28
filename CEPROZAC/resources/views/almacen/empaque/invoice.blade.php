@@ -18,7 +18,7 @@
         <div><span>         </span> EL LAMPOTAL, VETAGRANDE ZACATECAS</div>
         <div><span>EMAIL: </span> <a href="ceprozac@yahoo.com">ceprozac@yahoo.com</a></div>
         <div><span>TEL: </span> (492)936-8080</div>
-        <div><span>Categoria</span> Productos Almacén de Materiales</div>
+        <div><span>Categoria</span> Productos Almacén de Empaque</div>
       </div>
     </header>
     <main>
@@ -46,9 +46,10 @@
       </table>
       </div>
     </main>
-            <div><span>Regresar: </span> <a href="/almacen/materiales">Almacén Materiales</a></div>
+    <div><span>Regresar: </span> <a href="/almacenes/empaque">Almacén Agroquimicos</a></div>
     <footer>
     </footer>
     </div>
   </body>
+
 </html>

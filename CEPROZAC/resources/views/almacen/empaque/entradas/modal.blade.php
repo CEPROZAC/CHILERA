@@ -8,7 +8,7 @@
               <h3 class="content-header theme_color">&nbsp;Eliminar Registro</h3>
             </div>
             <div class="porlets-content" style="margin-bottom: -50px;">
-              <h4>¿Esta segúro que desea eliminar este Registro de Entrada de Almacén de Materiales ?</h4>
+              <h4>¿Esta segúro que desea eliminar este Registro de Entrada de Almacén de Empaque?</h4>
             </div><!--/porlets-content--> 
           </div><!--/block-web--> 
         </div>
@@ -16,7 +16,7 @@
     </div>
     <div class="modal-footer" style="margin-top: -10px;">
       <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
-        <form action="{{url('almacen/entradas/materiales', [$entradas->id])}}" method="POST"> 
+        <form action="{{url('almacen/entradas/empaque', [$entradas->id])}}" method="POST"> 
          <input type="hidden" name="_method" value="DELETE">
          <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

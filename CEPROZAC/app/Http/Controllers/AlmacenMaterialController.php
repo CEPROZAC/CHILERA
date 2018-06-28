@@ -236,7 +236,7 @@ public function invoice($id){
        $material2->total= $material2->p_unitario *  $material2->cantidad;
        $material2->importe= $material2->p_unitario *  $material2->cantidad;
        $material2->save();
-       return Redirect::to('almacen/entradas/materiales');
+       return Redirect::to('almacen/materiales');
         //
    }
 }
