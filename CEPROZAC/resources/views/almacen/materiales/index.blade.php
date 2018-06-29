@@ -49,7 +49,7 @@
             <table  class="display table table-bordered table-striped" id="dynamic-table">
               <thead>
                 <tr>
-                  <th>Id </th>
+                  <th>N° </th>
                   <th>Nombre </th>
                   <th>Proveedor </th>
                   <th>Codigo de Barras </th>
@@ -74,7 +74,11 @@
                     <a href="{{URL::action('AlmacenMaterialController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
                   </td>
                   <td>
+                   @if (($materiales->imagen)!="")
                     <img src="{{asset('imagenes/almacenmaterial/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                                                               @else
+                  No Hay Imagen Disponible
+                  @endif
                   </td>              
                   <td>{{$materiales->descripcion}} </td>
                   <td>{{$materiales->cantidad}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
@@ -105,7 +109,7 @@
           </tbody>
           <tfoot>
             <tr>
-             <th>Id </th>
+             <th>N°</th>
              <th>Nombre </th>
              <th>Proveedor </th>
              <th>Codigo de Barras </th>

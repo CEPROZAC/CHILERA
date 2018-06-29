@@ -70,7 +70,7 @@
                           <label class="col-sm-3 control-label">Fecha de Compra: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                           <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
+                           <input type="date" name="fecha" id="fecha" value="" required class="form-control mask" >
                          </div>
                        </div>
 
@@ -183,7 +183,7 @@
               <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="observacionesc" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+                <input name="observacionesc" type="text"  required maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
               </div>
             </div>
 
@@ -192,9 +192,7 @@
               <div class="col-sm-6">
                 <div class="input-group">
                  <div class="input-group-addon">$</div>
-
-
-                 <input name="precio" maxlength="9" type="text" value="{{Input::old('precio')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
+                 <input required name="precio" maxlength="9" type="text"  min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
                </div>
              </div>
            </div>
@@ -284,7 +282,7 @@
               <label class="col-sm-3 control-label">Codificación de Lote: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="codificacion" id="codificacion" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+                <input name="codificacion" id="codificacion" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra" required/>
               </div>
             </div>
 
@@ -293,7 +291,7 @@
       <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
 
-        <input name="observacionesm" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Muestreo"/>
+        <input name="observacionesm" type="text"  required maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Muestreo"/>
       </div>
     </div>
 
@@ -348,7 +346,7 @@
   <div class="form-group ">
     <label class="col-sm-3 control-label">Diferencia</label>
     <div class="col-sm-6">
-      <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia"  readonly  id="diferencia" class="form-control mask";>
+      <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia" required  readonly  id="diferencia" class="form-control mask";>
     </div>
   </div>
 
@@ -356,7 +354,7 @@
     <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
 
-      <input name="observacionesb" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Pesaje"/>
+      <input name="observacionesb" type="text"  required maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Pesaje"/>
     </div>
   </div>   
 

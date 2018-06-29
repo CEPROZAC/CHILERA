@@ -80,7 +80,11 @@
                     <a href="{{URL::action('AlmacenLimpiezaController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
                   </td>
                   <td>
+                   @if (($materiales->imagen)!="")
                     <img src="{{asset('imagenes/AlmacenLimpieza/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                                           @else
+                  No Hay Imagen Disponible
+                  @endif
                   </td>              
                   <td>{{$materiales->descripcion}} </td>
                   <td>{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
