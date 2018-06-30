@@ -84,19 +84,21 @@ class almacenmaterialController extends Controller
 
         $material->save();
         $material= DB::table('almacenmateriales')->orderby('created_at','DESC')->take(1)->get();
-        $datas= DB::table('cliente')->where('estado','Activo')->get();
-        $date = date('Y-m-d');
-        $x = "HOLA mundo" ;
-        $invoice = "2222";
-        $view =  \View::make('almacen.materiales.invoice', compact('date', 'invoice','x','material'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
+        return Redirect::to('detalle/materiales');
+
 
        // return view('almacen.materiales.pdf', ['material' => $material]);
 
     }
   }        //
+}
+
+public function detalle(){ 
+$material= DB::table('almacenmateriales')->orderby('created_at','DESC')->take(1)->get();
+$provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+
+return view('almacen.materiales.detalle',["material"=>$material,"provedor"=>$provedor]);
+
 }
 
 public function invoice($id){ 
@@ -150,7 +152,7 @@ public function invoice($id){
       
        $material=almacenmaterial::findOrFail($id);
        $material->nombre=$request->get('nombre');
-        $material->provedor=$request->get('provedor_id');
+        $material->provedor=$request->get('provedor_name');
        
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
@@ -217,15 +219,15 @@ public function invoice($id){
        //$material->update();
        //return Redirect::to('almacen/materiales');
        $ex = $request->get('provedor_id2');
-       $materiales = DB::table('provedor_materiales')
-       ->select('provedor_materiales.nombre')
-       ->where('provedor_materiales.id',$ex)->get();
-       $provedornombre = $materiales[0]->nombre;
+        $material=almacenmaterial::findOrFail($id);
+        $prov=$material->provedor;
+        $prove=provedormateriales::findOrFail($prov);
+        $nom_provedor=$prove->nombre;
        
        $material2= new entradaalmacen;
        $material2->id_material=$id;
        $material2->cantidad=$request->get('cantidades');
-       $material2->provedor=$provedornombre;
+       $material2->provedor=$nom_provedor;
                              $material2->entregado=$request->get('entregado_a');
         $material2->recibe_alm=$request->get('recibe_alm');
          $material2->observacionesc=$request->get('observaciones');

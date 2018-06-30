@@ -45,11 +45,18 @@
                           <div class="form-group">
             <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="provedor_name" class="form-control" value="{{Input::old('provedor_name')}}" required>  
+              <select name="provedor_name" class="form-control select2"  required>  
                 @foreach($provedor as $provedores)
+
+                @if($provedores->id == $material->provedor)
+                <option value="{{$provedores->id}}" selected>{{$provedores->nombre}}</option>
+                @else
                 <option value="{{$provedores->id}}">
                  {{$provedores->nombre}}
                </option>
+                @endif
+                
+               
                @endforeach              
              </select>
              <div class="help-block with-errors"></div>
@@ -59,10 +66,10 @@
                             <div class="form-group">
               <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-<input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
-<input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
+<input type="radio" value="1" name="habilitarDeshabilitar" id="1" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
+<input type="radio" value="2" name="habilitarDeshabilitar" id="2"  onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
 
-<input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
+<input type="radio" value="3" name="habilitarDeshabilitar" id="3"  onchange="habilitar(this.value);"> Ninguno
 
               </div>
             </div>
@@ -182,6 +189,21 @@
 @endsection
 
 <script>
+ window.onload=function() {
+
+  var cod = document.getElementById('segundo').value;
+  if (cod > 0){
+    document.getElementById('1').checked;
+
+
+  }else{
+
+    document.getElementById('3').checked=true;
+  document.getElementById("segundo").disabled=true;
+    document.getElementById("segundo").value = "";
+
+  }
+  }
 function habilitar(value)
 {
 if(value=="1")

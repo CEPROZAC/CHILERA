@@ -24,20 +24,6 @@
                </div>  
                            <br> <br>
 
-                <div class="form-group">
-            <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="provedor_id2" class="form-control" required>  
-                @foreach($provedor as $provedores)
-                <option value="{{$provedores->id}}">
-                 {{$provedores->nombre}}
-               </option>
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-            <br> <br>
       <div class="form-group">
         <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
@@ -128,17 +114,18 @@
  
             </div><!--/porlets-content--> 
           </div><!--/block-web--> 
+
+          <br> <br>
+          <div>
+                   <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+         <button type="submit" onclick="return save();" class="btn btn-primary">Agregar</button>
+         </div>
+
         </div>
       </section>
     </div>
-    <div class="modal-footer" style="margin-top: -10px;">
-      <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
-         <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
-         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-         <button type="submit" onclick="return save();" class="btn btn-primary">Agregar</button>
          </form>
-     </div>
-   </div>
  </div><!--/modal-content--> 
 </div><!--/modal-dialog--> 
 </div><!--/modal-fade--> 

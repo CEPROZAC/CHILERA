@@ -91,13 +91,21 @@ class almacenempaquecontroller extends Controller
 
 
         $material->save();
-         return view('almacen.empaque.index');
-
+         return Redirect::to('detalle/agroquimicos');
 
     }
   }        //
         //
     }
+
+    public function detalle(){ 
+$material= DB::table('almacenempaque')->orderby('created_at','DESC')->take(1)->get();
+$provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+
+return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$provedor]);
+
+}
+
 
     public function invoice($id){ 
     $material= DB::table('almacenempaque')->where('id',$id)->get();
@@ -211,16 +219,16 @@ class almacenempaquecontroller extends Controller
 
         public function stock(Request $request, $id)
     {
-      $ex = $request->get('provedor_id2');
-      $materiales = DB::table('provedor_materiales')
-      ->select('provedor_materiales.nombre')
-      ->where('provedor_materiales.id',$ex)->get();
-      $provedornombre = $materiales[0]->nombre;
-      
+
+        $material=almacenempaque::findOrFail($id);
+        $prov=$material->provedor;
+        $prove=provedormateriales::findOrFail($prov);
+        $nom_provedor=$prove->nombre;
+
       $material2= new entradasempaques;
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
-      $material2->provedor=$provedornombre;
+     $material2->provedor=$nom_provedor;
                       $material2->entregado=$request->get('entregado_a');
         $material2->recibe_alm=$request->get('recibe_alm');
          $material2->observacionesc=$request->get('observaciones');

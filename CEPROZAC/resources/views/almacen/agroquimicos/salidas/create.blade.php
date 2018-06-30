@@ -88,7 +88,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Destino del Material"/>
+          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Destino del Material"/>
         </div>
       </div>
 

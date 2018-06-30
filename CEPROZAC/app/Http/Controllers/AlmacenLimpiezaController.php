@@ -90,17 +90,20 @@ class almacenlimpiezaController extends Controller
 
         $material->save();
         $material= DB::table('almacenlimpieza')->orderby('created_at','DESC')->take(1)->get();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('almacen.limpieza.invoice', compact('date', 'invoice','material'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
+         return Redirect::to('detalle/limpieza');
 
-        $material->estado='Activo';
+
 
     }
   }        //
+}
+
+public function detalle(){ 
+$material= DB::table('almacenlimpieza')->orderby('created_at','DESC')->take(1)->get();
+$provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+
+return view('almacen.limpieza.detalle',["material"=>$material,"provedor"=>$provedor]);
+
 }
 
 public function invoice($id){ 
@@ -218,16 +221,15 @@ public function invoice($id){
   public function stock(Request $request, $id)
   {
     
-      $ex = $request->get('provedor_id2');
-      $materiales = DB::table('provedor_materiales')
-      ->select('provedor_materiales.nombre')
-      ->where('provedor_materiales.id',$ex)->get();
-      $provedornombre = $materiales[0]->nombre;
+        $material=almacenlimpieza::findOrFail($id);
+        $prov=$material->provedor;
+        $prove=provedormateriales::findOrFail($prov);
+        $nom_provedor=$prove->nombre;
       
       $material2= new entradasalmacenlimpieza;
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
-      $material2->provedor=$provedornombre;
+       $material2->provedor=$nom_provedor;
                             $material2->entregado=$request->get('entregado_a');
         $material2->recibe_alm=$request->get('recibe_alm');
          $material2->observacionesc=$request->get('observaciones');

@@ -89,8 +89,12 @@ class almacenagroquimicosController extends Controller
         $material->estado='Activo';
 
 
-        $material->save();
+       $material->save();
         $material= DB::table('almacenagroquimicos')->orderby('created_at','DESC')->take(1)->get();
+
+         return Redirect::to('detalle/agroquimicos');
+
+         /**
         $date = date('Y-m-d');
         $invoice = "2222";
         $view =  \View::make('almacen.agroquimicos.invoice', compact('date', 'invoice','material'))->render();
@@ -99,6 +103,7 @@ class almacenagroquimicosController extends Controller
         return $pdf->stream('invoice');
 
         $material->estado='Activo';
+        */
 
     }
   }        //
@@ -115,6 +120,14 @@ public function invoice($id){
     $pdf = \App::make('dompdf.wrapper');
     $pdf->loadHTML($view);
     return $pdf->stream('invoice');
+}
+
+public function detalle(){ 
+$material= DB::table('almacenagroquimicos')->orderby('created_at','DESC')->take(1)->get();
+$provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+
+return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$provedor]);
+
 }
 
     /**
@@ -217,16 +230,15 @@ public function invoice($id){
 
     public function stock(Request $request, $id)
     {
-      $ex = $request->get('provedor_id2');
-      $materiales = DB::table('provedor_materiales')
-      ->select('provedor_materiales.nombre')
-      ->where('provedor_materiales.id',$ex)->get();
-      $provedornombre = $materiales[0]->nombre;
+        $material=almacenagroquimicos::findOrFail($id);
+        $prov=$material->provedor;
+        $prove=provedormateriales::findOrFail($prov);
+        $nom_provedor=$prove->nombre;
       
       $material2= new entradasagroquimicos;
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
-      $material2->provedor=$provedornombre;
+      $material2->provedor=$nom_provedor;
                       $material2->entregado=$request->get('entregado_a');
         $material2->recibe_alm=$request->get('recibe_alm');
          $material2->observacionesc=$request->get('observaciones');

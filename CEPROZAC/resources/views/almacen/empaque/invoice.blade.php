@@ -46,7 +46,6 @@
       </table>
       </div>
     </main>
-    <div><span>Regresar: </span> <a href="/almacenes/empaque">Almacén Agroquimicos</a></div>
     <footer>
     </footer>
     </div>

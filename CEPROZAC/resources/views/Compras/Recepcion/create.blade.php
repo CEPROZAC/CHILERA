@@ -130,7 +130,7 @@
                     <div class="form-group">
                      <label class="col-sm-3 control-label">Transportes: <strog class="theme_color">*</strog></label>
                      <div class="col-sm-6">
-                      <table id="transportes" name="transportes[]" value="" class="table table-striped table-bordered table-condensed table-hover">
+                      <table id="transportes" name="transportes[]" value=""  class="table table-striped table-bordered table-condensed table-hover">
                         <thead style="background-color:#A9D0F5">
                           <th>Opciones</th>
                           <th>Nombre del Transporte</th>
@@ -180,10 +180,10 @@
 
 
              <div class="form-group">
-              <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
 
-                <input name="observacionesc" type="text"  required maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+                <input name="observacionesc" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
               </div>
             </div>
 
@@ -192,7 +192,7 @@
               <div class="col-sm-6">
                 <div class="input-group">
                  <div class="input-group-addon">$</div>
-                 <input required name="precio" maxlength="9" type="text"  min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
+                 <input  name="precio" maxlength="9" type="text"  min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese el Precio de la Compra" onkeypress=" return soloNumeros(event);"/>
                </div>
              </div>
            </div>
@@ -258,23 +258,23 @@
      </div><!--/form-group-->
 
      <div class="form-group ">
-      <label class="col-sm-3 control-label">Porcentaje de humedad</label>
+      <label class="col-sm-3 control-label">Porcentaje de humedad<strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
         <input parsley-type="number"  type="text" maxlength="3" required name="humedad" id="humedad"  class="form-control"  onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
     <div class="form-group ">
-      <label class="col-sm-3 control-label">Número de Pacas</label>
+      <label class="col-sm-3 control-label">Número de Pacas<strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
         <input parsley-type="number" type="text" maxlength="6" required  name="num_pacas" id="num_pacas"   class="form-control" onKeyUp="raiz()"  onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
     <div class="form-group ">
-      <label class="col-sm-3 control-label">Número de Pacas a Revisar</label>
+      <label class="col-sm-3 control-label">Número de Pacas a Revisar<strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input parsley-type="number" type="number" maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
+        <input parsley-type="number" type="number" required maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
@@ -288,10 +288,10 @@
 
 
     <div class="form-group">
-      <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+      <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
       <div class="col-sm-6">
 
-        <input name="observacionesm" type="text"  required maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Muestreo"/>
+        <input name="observacionesm" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Muestreo"/>
       </div>
     </div>
 
@@ -330,31 +330,31 @@
   </div>
 
   <div class="form-group ">
-    <label class="col-sm-3 control-label">KG Enviados</label>
+    <label class="col-sm-3 control-label">KG Enviados<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
       <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="enviados" id="enviados"  class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Enviados"  onKeyUp="calcula()" onkeypress="return soloNumeros(event);">
     </div>
   </div>
 
   <div class="form-group ">
-    <label class="col-sm-3 control-label">KG Recibidos</label>
+    <label class="col-sm-3 control-label">KG Recibidos<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
       <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="recibidos"  onKeyUp="calcula()"  id ="recibidos" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Recibidos" onkeypress=" return soloNumeros(event);">
     </div>
   </div>
 
   <div class="form-group ">
-    <label class="col-sm-3 control-label">Diferencia</label>
+    <label class="col-sm-3 control-label">Diferencia<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
       <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia" required  readonly  id="diferencia" class="form-control mask";>
     </div>
   </div>
 
   <div class="form-group">
-    <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+    <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
     <div class="col-sm-6">
 
-      <input name="observacionesb" type="text"  required maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Pesaje"/>
+      <input name="observacionesb" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Pesaje"/>
     </div>
   </div>   
 
@@ -450,7 +450,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-3 control-label">Observaciónes : <strog class="theme_color">*</strog></label>
+    <label class="col-sm-3 control-label">Observaciónes : <strog class="theme_color"></strog></label>
     <div class="col-sm-6">
       <input name="observacionesu" id="observacionesu" type="text"  onchange="mayus(this);"  class="form-control"  value=""  />
     </div>
@@ -490,7 +490,7 @@
       <div class="form-group">
        <label class="col-sm-3 control-label">Hora de Inicio de La Fumigación: <strog class="theme_color">*</strog></label>
        <div class="col-sm-6">
-        <input id="inicio" name="inicio" type="time" >
+        <input id="inicio" name="inicio" type="time" required>
         <div class="help-block with-errors"></div>
       </div>
     </div><!--/form-group-->
@@ -499,7 +499,7 @@
       <label class="col-sm-3 control-label">Fecha de Inicio: <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
 
-       <input type="date" name="fechai" id="fechai" value="" class="form-control mask" >
+       <input type="date" name="fechai" id="fechai" value="" class="form-control mask" required>
      </div>
    </div>
 
@@ -507,14 +507,14 @@
     <label class="col-sm-3 control-label">Fecha de Termino: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
 
-     <input type="date" name="fechaf" id="fechaf" value="" class="form-control mask" >
+     <input type="date" name="fechaf" id="fechaf" value="" class="form-control mask" required >
    </div>
  </div>
 
  <div class="form-group">
    <label class="col-sm-3 control-label">Hora de Termino de La Fumigación: <strog class="theme_color">*</strog></label>
    <div class="col-sm-6">
-    <input id="final" name="final" type="time" >
+    <input id="final" name="final" type="time" required>
     <div class="help-block with-errors"></div>
   </div>
 </div><!--/form-group-->
@@ -548,7 +548,7 @@
 </div><!--/form-group-->
 
 <div class="form-group">
-  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
     <input name="observacionesf" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Fumigación"/>
@@ -590,14 +590,14 @@
 
 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
  <div class="form-group"> 
-  <label for="scantidad">Cantidad Aplicada </label>
+  <label for="scantidad">Cantidad Aplicada <strog class="theme_color">*</strog></label>
   <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
 </div>    
 </div>  
 
 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
  <div class="form-group"> 
-  <label for="pcantidad">Cantidad en Almacén </label>
+  <label for="pcantidad">Cantidad en Almacén <strog class="theme_color">*</strog></label>
   <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
 </div>    
 </div>  
@@ -652,7 +652,7 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Estado de la Fumigacion: <strog class="theme_color">*</strog></label>
   <div class="col-sm-6">
-    <select name="status" value="{{Input::old('status')}}">
+    <select name="status" value="{{Input::old('status')}}" required>
       @if(Input::old('status')=="Proceso")
       <option value='Proceso' selected>En Proceso
       </option>
@@ -1210,6 +1210,7 @@ function buscar2(){
   document.getElementById('registrado').value="no";
   document.getElementById('transportediv2').style.display = 'block';
   document.getElementById('transportediv').style.display = 'none';
+
 
 }
 
