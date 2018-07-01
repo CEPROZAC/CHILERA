@@ -83,12 +83,18 @@ table, th, td {
                 <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->provedor}} </td>
+                                                      @if (($materiales->codigo)!="")
                   <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
-                    <div style="text-align:center;">
-                    {{$materiales->codigo}}                
-                  </div>
-                   <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" target="_blank" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a> 
+                    <div style="text-align:center;" >
+                      {{$materiales->codigo}}
+                    </div>
+                    <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
                   </td>
+                  @else
+                  <td>Codigo de Barras No Generado </td>
+                  
+                  @endif
+
                   <td>
                   @if (($materiales->imagen)!="")
                       <img src="{{asset('imagenes/almacenagroquimicos/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">

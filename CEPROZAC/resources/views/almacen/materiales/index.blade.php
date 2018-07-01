@@ -3,12 +3,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Almacén de Materiales</h1>
-    <h2 class="">Almacén de Materiales</h2>
+    <h2 class="">Almacén de Materiales/Refacciónes</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
       <li ><a style="color: #808080" href="{{url('almacen/materiales')}}">Inicio</a></li>
-      <li class="active">Almacén de Materiales</a></li>
+      <li class="active">Almacén de Materiales/Refacciónes</a></li>
     </ol>
   </div>
 </div>
@@ -20,7 +20,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-7">
               <div class="actions"> </div>
-              <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Materiales </strong></h2>
+              <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Materiales/Refacciónes </strong></h2>
             </div>
             <div class="col-md-12">
               <div class="btn-group pull-right">
@@ -67,12 +67,18 @@
                   <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->nombre2}} </td>
+                  @if (($materiales->codigo)!="")
                   <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
                     <div style="text-align:center;" >
                       {{$materiales->codigo}}
                     </div>
                     <a href="{{URL::action('AlmacenMaterialController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
                   </td>
+                  @else
+                  <td>Codigo de Barras No Generado </td>
+                  
+                  @endif
+
                   <td>
                    @if (($materiales->imagen)!="")
                     <img src="{{asset('imagenes/almacenmaterial/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">

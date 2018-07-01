@@ -25,7 +25,7 @@
             <div class="btn-group pull-right">
               <b>
                 <div class="btn-group" style="margin-right: 10px;">
-                  <a class="btn btn-sm btn-danger tooltips" href="/almacenes/limpieza" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
+                  <a class="btn btn-sm btn-danger tooltips" href="{{url('/almacenes/limpieza')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
                 </div> 
               </b>
             </div>

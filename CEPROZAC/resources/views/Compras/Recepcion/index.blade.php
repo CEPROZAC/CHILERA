@@ -50,7 +50,7 @@
             <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info7">
               <thead>
                 <tr>
-                 <th style="display:none;" >Id </th>
+                 <th style="display:none;" >N° </th>
                  <th>Nombre de Recepción </th>
                  <th style="display:none;" >Fecha de Compra </th>
                  <th>Provedor </th>
@@ -79,7 +79,7 @@
                  <th style="display:none;" >Observaciónes de Ubicación</th> 
                  <th>Fumigación N°</th>  
                  <th>Ver &nbsp; &nbsp;</th>
-                 <td><center><b>Editar</b></center></td>
+                  <th>Imprimir Etiquetas&nbsp; &nbsp;</th>
                  <td><center><b>Borrar</b></center></td>                            
                </tr>
              </thead>
@@ -118,8 +118,8 @@
                   <td >
        <a href="{{URL::action('RecepcionCompraController@verInformacion',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
 
-                 <td>  <a href="{{URL::action('RecepcionCompraController@edit',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>
-                 </td> 
+                               <td><a href="{{URL::action('RecepcionCompraController@invoice',$compras->id)}}" target="_blank" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a>     </td>
+
                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$compras->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                  </td>
                </tr>
@@ -130,37 +130,37 @@
              <tfoot>
               <tr>
                <th></th> 
-               <th style="display:none;" >N° Recepción </th>
-               <th style="display:none;" >Nombre de Recepción </th>
-               <th style="display:none;" >Fecha de Compra </th>
-               <th>Provedor </th>
-               <th style="display:none;" >Transporte </th>
-               <th style="display:none;" >N° Transportes </th>
-               <th>Empresa</th>
-               <th style="display:none;" >Recibio Compra</th>
-               <th style="display:none;" >Observaciones de Compra</th>  
-               <th style="display:none;" >Total de Compra</th>  
-               <th>Producto</th>  
-               <th style="display:none;" >Calidad</th>  
-               <th style="display:none;" >Empaque</th>  
-               <th style="display:none;" >Humedad</th>  
-               <th style="display:none;" >Pacas</th>  
-               <th style="display:none;" >Pacas a Revisar</th>  
-               <th style="display:none;" >Observaciones de Muestreo</th>  
-               <th style="display:none;" >Bascula</th>  
-               <th style="display:none;" >Ticket</th>
-               <th style="display:none;" >Realizo Pesaje</th>
-               <th>KG Recibidos</th>
-               <th>KG Enviados</th>
-               <th style="display:none;" >Diferencia</th>
-               <th style="display:none;" >Observaciones Pesaje</th>  
-               <th>Enviado a Ubicación</th>
-               <th style="display:none;" >Espacio Asignado</th>  
-               <th style="display:none;" >Observaciónes de Ubicación</th> 
-               <th>Fumigación N°</th>  
-               <th >Ver &nbsp; &nbsp;</th>
-               <td><center><b>Editar</b></center></td>
-               <td><center><b>Borrar</b></center></td> 
+                 <th style="display:none;" >N° </th>
+                 <th>Nombre de Recepción </th>
+                 <th style="display:none;" >Fecha de Compra </th>
+                 <th>Provedor </th>
+                 <th style="display:none;" >Transporte </th>
+                 <th style="display:none;" >N° Transportes </th>
+                 <th>Empresa</th>
+                 <th style="display:none;" >Recibio Compra</th>
+                 <th style="display:none;" >Observaciones de Compra</th>  
+                 <th style="display:none;" >Total de Compra</th>  
+                 <th>Producto</th>  
+                 <th style="display:none;" >Calidad</th>  
+                 <th style="display:none;" >Empaque</th>  
+                 <th style="display:none;" >Humedad</th>  
+                 <th style="display:none;" >Pacas</th>  
+                 <th style="display:none;" >Pacas a Revisar</th>  
+                 <th style="display:none;" >Observaciones de Muestreo</th>  
+                 <th style="display:none;" >Bascula</th>  
+                 <th style="display:none;" >Ticket</th>
+                 <th style="display:none;" >Realizo Pesaje</th>
+                 <th>KG Recibidos</th>
+                 <th>KG Enviados</th>
+                 <th style="display:none;" >Diferencia</th>
+                 <th style="display:none;" >Observaciones Pesaje</th>  
+                 <th>Enviado a Ubicación</th>
+                 <th style="display:none;" >Espacio Asignado</th>  
+                 <th style="display:none;" >Observaciónes de Ubicación</th> 
+                 <th>Fumigación N°</th>  
+                 <th>Ver &nbsp; &nbsp;</th>
+                                   <th>Imprimir Etiquetas &nbsp; &nbsp;</th>
+                 <td><center><b>Borrar</b></center></td>    
 
              </tr>
            </tfoot>

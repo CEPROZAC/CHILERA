@@ -49,9 +49,9 @@
             </div>
 
                 <div class="form-group">
-              <label class="col-sm-3 control-label">Tipo de Capacidad (Casillero,Cajon,Espacio,m2,etc..) : <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Tipo de Unidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="medida" id="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Capacidad (Casillero,Cajon,m2,etc..):" />
+                <input name="medida" id="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Unidad (Casillero,Cajon,M2,Etc..):" />
               </div>
             </div>
 
@@ -66,21 +66,21 @@
 
 
                 <div class="form-group">
-              <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Descripción: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
-                <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+                <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese Descripción del Material" />
               </div>
             </div>
 
               <div class="form-group">
-              <label class="col-sm-3 control-label">Espacio Ocupado Actualmente: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Espacio Ocupado Actualmente: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
                 <input name="ocupado" id="ocupado" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control"   value="" placeholder="Ingrese el Espacio Ocupado Actualmente" readonly/>
               </div>
             </div>
 
                           <div class="form-group">
-              <label class="col-sm-3 control-label">Espacio Libre Actualmente: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Espacio Libre Actualmente: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
                 <input name="libre" id="libre" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control"    value="" placeholder="Espacio Libre" readonly/>
               </div>
@@ -108,7 +108,7 @@ table, td {
 
 <p></p>
     <div class="form-group">
-                  <label class="col-sm-3 control-label">Espacio Actualmente: <strog class="theme_color">*</strog></label>
+                  <label class="col-sm-3 control-label">Espacio Actualmente: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
     <div class="form-group"> 
 <table id="myTable" name="myTable" value=""   class="table table-striped table-bordered table-condensed table-hover">

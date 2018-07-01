@@ -25,9 +25,11 @@
      <h1>{{ $item->nombre }}</h1> </td>
 
 
+
           </tr>
         </tbody>
       </table>
+
       <table>
         <thead >
           <tr>
@@ -46,6 +48,19 @@
         </tbody>
       </table>
 
+
+      <table> 
+      <thead> 
+      <tr>
+      <td> <?php echo DNS1D::getBarcodeHTML("$item->id", "EAN13",2,30);?>
+    <div style="text-align:center;">
+    <font size=12 class="codigo ">{{$item->id}} 
+     </font>
+     </div>
+   </td>
+   </tr>
+   </thead>
+   </table>
 
 
       </div>
@@ -92,6 +107,18 @@
           </tr>
         </tbody>
       </table>
+            <table> 
+      <thead> 
+      <tr>
+      <td> <?php echo DNS1D::getBarcodeHTML("$item->id", "EAN13",2,30);?>
+    <div style="text-align:center;">
+    <font size=12 class="codigo ">{{$item->id}} 
+     </font>
+     </div>
+   </td>
+   </tr>
+   </thead>
+   </table>
 
 
       
@@ -139,6 +166,18 @@
           </tr>
         </tbody>
       </table>
+            <table> 
+      <thead> 
+      <tr>
+      <td> <?php echo DNS1D::getBarcodeHTML("$item->id", "EAN13",2,30);?>
+    <div style="text-align:center;">
+    <font size=12 class="codigo ">{{$item->id}} 
+     </font>
+     </div>
+   </td>
+   </tr>
+   </thead>
+   </table>
 
 
       
@@ -186,6 +225,18 @@
           </tr>
         </tbody>
       </table>
+            <table> 
+      <thead> 
+      <tr>
+      <td> <?php echo DNS1D::getBarcodeHTML("$item->id", "EAN13",2,30);?>
+    <div style="text-align:center;">
+    <font size=12 class="codigo ">{{$item->id}} 
+     </font>
+     </div>
+   </td>
+   </tr>
+   </thead>
+   </table>
 
 
       
@@ -233,6 +284,18 @@
           </tr>
         </tbody>
       </table>
+            <table> 
+      <thead> 
+      <tr>
+      <td> <?php echo DNS1D::getBarcodeHTML("$item->id", "EAN13",2,30);?>
+    <div style="text-align:center;">
+    <font size=12 class="codigo ">{{$item->id}} 
+     </font>
+     </div>
+   </td>
+   </tr>
+   </thead>
+   </table>
 
 
       
