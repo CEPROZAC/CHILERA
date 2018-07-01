@@ -620,7 +620,7 @@
     <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
       <thead style="background-color:#A9D0F5">
         <th>Opciones</th>
-        <th>Id</th>
+        <th>N°</th>
         <th>Nombre de Agroquimico</th>
         <th>Descripcion</th>
         <th>Cantidad Aplicada</th>
@@ -975,6 +975,7 @@ var q = 1;
 
 var reg = document.getElementById("registrado").value;
 if (reg == "si"){
+  if (document.getElementById('transportei').value !== ""  ){
    var select=document.getElementById('transportei');
     var cantidadtotal = select.value;
     limite = "3",
@@ -994,7 +995,11 @@ if (reg == "si"){
     cell2.innerHTML = nombre;
     cell3.innerHTML = placas;
     q=q+1;
+  }else{
+      alert("No ha Seleccionado Ningun Transporte");
+    }
 }else{
+  if (document.getElementById('transporte').value !== ""  ){
   var id2= uno++;
     var tabla = document.getElementById("transportes");
     //tabla.setAttribute("id", id2);
@@ -1007,6 +1012,9 @@ if (reg == "si"){
     cell2.innerHTML = document.getElementById('transporte').value;
     cell3.innerHTML = document.getElementById('transporte').value;
     q=q+1;
+    }else{
+      alert("No ha Seleccionado Ningun Transporte");
+    }
 
 }
   }

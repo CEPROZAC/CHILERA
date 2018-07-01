@@ -169,15 +169,37 @@ $salida->save();
      $material->observacionesu=$request->get('observacionesu');
      $material->id_fumigacion=$ultimo;
      $material->save();
-      $material= DB::table('recepcioncompra')->orderby('created_at','DESC')->take(1)->get();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Compras.Recepcion.invoice', compact('date', 'invoice','material'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
+
+     $ultimoid = recepcioncompra::orderBy('id', 'desc')->first()->id;
+    //  $compra= DB::table('recepcioncompra')->orderby('created_at','DESC')->take(1)->get();
+
+     $compra = RecepcionCompra::findOrFail($ultimoid);
+      $id_provedor= $compra->id_provedor;
+      $recibe= $compra->recibe;
+       $entregado= $compra->entregado;
+      $producto=$compra->id_producto;
+      $calidad=$compra->id_calidad;
+      $id_empaque=$compra->id_empaque;
+      $id_bascula=$compra->id_bascula;
+      $peso=$compra->peso;
+      $ubicacion_act=$compra->ubicacion_act;
+      $id_fumigacion=$compra->id_fumigacion;
 
 
+      $provedor=Provedor::findOrFail($id_provedor);
+      $emp_recibe=empresa::findOrFail($recibe);
+      $entrega=empleado::findOrFail($entregado);
+      $produ=producto::findOrFail($producto);
+      $cali=calidad::findOrFail($calidad);
+      $empaque=formaempaque::findOrFail($id_empaque);
+      $bascula=bascula::findOrFail($id_bascula);
+      $pesaje=empleado::findOrFail($peso);
+      $ubicacion=almacengeneral::findOrFail($ubicacion_act);
+      $fumigacion=fumigaciones::findOrFail($id_fumigacion);
+      $id_fumigador=$fumigacion->id_fumigador;
+      $fumigador=empleado::findOrFail($id_fumigador);
+
+      return view("Compras.Recepcion.lista",["provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador]);
 
 
 
