@@ -121,28 +121,28 @@
                 <div class="form-group">
             <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="medida" value="{{Input::old('medida')}}">
-                @if(Input::old('medida')=="Kilogramos")
+              <select name="medida" value="">
+                @if(($material->medida)=="Kilogramos")
                 <option value='Kilogramos' selected>Kilogramos
                 </option>
                 <option value="Toneladas">Toneladas</option>
                 <option value="Lote">Lote</option>
                 <option value="Libre">Libre</option>
                 <option value="Unidades">Unidades</option>
-                @elseif(Input::old('medida')=="Toneladas")
+                @elseif(($material->medida)=="Toneladas")
                 <option value='Toneladas' selected>Toneladas
                 </option>
                 <option value="Lote">Lote</option>
                 <option value="Libre">Libre</option>
                 <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
-                 @elseif(Input::old('Lote')=="Lote")
+                 @elseif(($material->medida)=="Lote")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Lote" selected>Lote</option>
                 <option value="Libre">Libre</option>
                 <option value="Unidades">Unidades</option>
                 <option value='Kilogramos'>Kilogramos</option>
-                @elseif(Input::old('Libre')=="Libre")
+                @elseif(($material->medida)=="Libre")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Lote">Lote</option>
                 <option value="Libre" selected>Libre</option>
