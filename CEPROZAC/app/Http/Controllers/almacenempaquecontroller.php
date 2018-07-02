@@ -91,7 +91,7 @@ class almacenempaquecontroller extends Controller
 
 
         $material->save();
-         return Redirect::to('detalle/agroquimicos');
+         return Redirect::to('detalle/empaque');
 
     }
   }        //

@@ -19,7 +19,7 @@
               <div class="form-group">
               <label  class="col-sm-3 control-label">Agregar Stock<strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="cantidades" id="cantidades" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
+                <input name="cantidades" id="cantidades" maxlength="9" type="text" value="1" min="1" max='9999999'" class="form-control" required placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div>  
                            <br> <br>
@@ -83,7 +83,7 @@
        <br> <br>
 
               <div class="form-group">
-  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
     <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
@@ -91,9 +91,10 @@
 </div>
             <br> <br>
        <div class="form-group">
-        <label class="col-sm-3 control-label">Número de Nota: </label>
+        <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input name="nota" id="nota"  type="text" value="" maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  placeholder="Ingrese el Número de Nota" required/>
+          <input name="nota" id="nota"  type="text" value="" maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  placeholder="Ingrese el Número de Nota" />
+          <div class="help-block with-errors"></div>
         </div>
       </div>
             <br> <br>

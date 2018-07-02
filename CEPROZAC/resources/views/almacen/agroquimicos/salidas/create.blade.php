@@ -79,7 +79,7 @@
        </div>
 
        <div class="form-group">
-        <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
         <div class="col-sm-6">
           <input name="movimiento" id="movimiento" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
         </div>

@@ -116,7 +116,7 @@
  </div>
 
  <div class="form-group">
-  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
     <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>

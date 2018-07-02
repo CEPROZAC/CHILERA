@@ -278,7 +278,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a  href="{{url('almacen/entradas/material)}}"class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/entradas/materiales')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>

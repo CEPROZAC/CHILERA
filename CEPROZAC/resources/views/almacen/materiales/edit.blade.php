@@ -41,17 +41,16 @@
                 <input name="nombre" type="text" value="{{$material->nombre}}" onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
               </div>
             </div>
-
+              
                           <div class="form-group">
             <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="provedor_name" class="form-control select"  required>  
+              <select name="provedor_name" class="form-control select2"  required>  
                 @foreach($provedor as $provedores)
-
                 @if($provedores->id == $material->provedor)
                 <option value="{{$provedores->id}}" selected>{{$provedores->nombre}}</option>
                 @else
-                <option value="{{$provedores->id}}" selected>
+                <option value="{{$provedores->id}}">
                  {{$provedores->nombre}}
                </option>
                 @endif
