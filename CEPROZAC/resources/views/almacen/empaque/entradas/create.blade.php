@@ -211,7 +211,7 @@
     <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
       <thead style="background-color:#A9D0F5">
         <th>Opciones</th>
-        <th>N°Entrada</th>
+        <th>N°Articulo</th>
         <th>Articulo</th>
         <th>Cantidad de Entrada</th>
         <th>Proveedor</th>
