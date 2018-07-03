@@ -255,7 +255,7 @@
   select.addEventListener('change',
     function(){
       var selectedOption = this.options[select.selectedIndex];
-     // alert(selectedOption.value);
+     alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
    limite = "5",

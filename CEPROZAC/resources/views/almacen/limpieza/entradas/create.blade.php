@@ -378,6 +378,7 @@ var fechav = document.getElementById('fecha').value;
   var preciou = document.getElementById('preciou').value;
   if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!==""){
    if (preciou > 0){
+     if (entradav > 0){
 
 
     var select=document.getElementById('id_materialk');
@@ -440,12 +441,15 @@ var fechav = document.getElementById('fecha').value;
     subtota = subtota + sub;
     var d = subtota;
      document.getElementById("subtotal").value=d;
-}else{
+  }else{
+    alert('La Cantidad de Entrada debe ser Mayor de 0');
+  }}else{
     alert('El precio Unitario no Puede Ser Menor de 0');
   }}else{
     alert("Faltan campos Por llenar Favor de Verificar");
   }
 }  
+
 
 function eliminarFila(value) {
 

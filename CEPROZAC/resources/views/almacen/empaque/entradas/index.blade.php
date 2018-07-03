@@ -80,7 +80,7 @@
 
               </tr>
               @include('almacen.empaque.entradas.modal')
-              
+               
             
                  @endforeach
             </tbody>

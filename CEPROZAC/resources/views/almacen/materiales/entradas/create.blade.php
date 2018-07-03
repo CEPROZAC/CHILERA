@@ -381,6 +381,7 @@ function llenado(){
 
   if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!==""){
     if (preciou > 0){
+      if (entradav > 0){
 
       var select=document.getElementById('id_materialk');
       var cantidadtotal = select.value;
@@ -443,11 +444,14 @@ function llenado(){
     var d = subtota;
     document.getElementById("subtotal").value=d;
   }else{
+    alert('La Cantidad de Entrada debe ser Mayor de 0');
+  }}else{
     alert('El precio Unitario no Puede Ser Menor de 0');
   }}else{
     alert("Faltan campos Por llenar Favor de Verificar");
   }
-}   
+}  
+
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");

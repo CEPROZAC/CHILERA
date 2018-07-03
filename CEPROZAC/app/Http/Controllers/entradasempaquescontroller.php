@@ -202,6 +202,9 @@ $num = 1;
      */
     public function destroy($id)
     {
+          $material=entradasempaques::findOrFail($id);
+       $material->delete();
+       return Redirect::to('/almacen/entradas/empaque');   
         //
     }
 }
