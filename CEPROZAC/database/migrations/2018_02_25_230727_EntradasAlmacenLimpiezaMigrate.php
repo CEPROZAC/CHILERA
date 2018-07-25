@@ -22,6 +22,7 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
             $table->integer('cantidad');
             $table->double('p_unitario');
             $table->double('importe');
+            $table->double('iva');
             $table->double('total');
              $table->string('comprador');
 

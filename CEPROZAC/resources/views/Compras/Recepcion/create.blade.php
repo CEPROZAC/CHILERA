@@ -10,6 +10,8 @@
     margin-top: 30px;
   }
 </style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Recepción de Compra</h1>
@@ -685,7 +687,7 @@
 
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
-    <button type="submit" onclick="save();" class="btn btn-primary">Guardar</button>
+    <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
     <a href="{{url('/compras/recepcion')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group--> 
@@ -913,14 +915,17 @@
     var z = parseInt(valida2);
     var comprueba = recorre(x)
     if (comprueba == 1){
-      alert("Este Material Ya se ha Insertado en la Tabla");
+      //alert("Este Material Ya se ha Insertado en la Tabla");
+      swal("Duplicado!", "Este Material Ya se ha Insertado en la Tabla!", "info");
 
     }else{
       if (y > z) {
-        alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
+        swal("Error!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
+       // alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
 
       }else if(y < 1){
-        alert("El Stock de Salida no Puede Ser Menor de 1");
+        swal("Error!", "El Stock de Salida no Puede Ser Menor de 1 !", "error");
+       // alert("El Stock de Salida no Puede Ser Menor de 1");
 
       }else{
 
@@ -965,7 +970,8 @@ var q = 1;
 function transporte(){
  var valida = document.getElementById("transporte_num");
  if (valida.value < q) {
-  alert("Solo se han Seleccionado"+valida.value+" Transportes");
+ // alert("Solo se han Seleccionado"+valida.value+" Transportes");
+  swal("Error!","Solo se han Seleccionado"+valida.value+" Transportes", "error");
 
 }else{
 
@@ -992,7 +998,8 @@ function transporte(){
     cell3.innerHTML = placas;
     q=q+1;
   }else{
-    alert("No ha Seleccionado Ningun Transporte");
+    swal("Error!","No ha Seleccionado Ningun Transporte", "error");
+    //alert("No ha Seleccionado Ningun Transporte");
   }
 }else{
   if (document.getElementById('transporte').value !== ""  ){
@@ -1009,7 +1016,8 @@ function transporte(){
     cell3.innerHTML = document.getElementById('transporte').value;
     q=q+1;
   }else{
-    alert("No ha Seleccionado Ningun Transporte");
+   // alert("No ha Seleccionado Ningun Transporte");
+    swal("Error!","No ha Seleccionado Ningun Transporte", "error");
   }
 
 }
@@ -1148,6 +1156,7 @@ function limpiar(){
 
 
 function save() {
+    if (document.getElementById('total').value > 0){
  var z = 1
  var arreglo = [];
  var table = document.getElementById('transportes');
@@ -1203,7 +1212,12 @@ document.getElementById("total").value=tam;
 var auxy = document.getElementById('fumigador');
 var nombx = auxy.options[auxy.selectedIndex].text;
 document.getElementById('nombre_fum').value=nombx;
-}
+}else{
+ // alert('No hay Elementos Agregados, Para Poder Guardar');
+  swal("Error!","No hay Elementos Agregados, Para Poder Guardar", "error");
+  return false;
+
+}}
 
 
 
@@ -1472,19 +1486,22 @@ function generar(){
             elmForm.validator('validate');
             var x= document.getElementById('transportes').rows[1].cells[1].innerHTML;
             if(x !== ""){document.getElementById("transporte_num").style.border="1px solid #00ff00";}else{
-              alert('No se ha Ingresado Ningun Transporte en la Tabla de Transporte');
+              //alert('No se ha Ingresado Ningun Transporte en la Tabla de Transporte');
+              swal("Error!", "No se ha Ingresado Ningun Transporte en la Tabla de Transporte!", "error");
               document.getElementById("transporte_num").style.border="1px solid #f00";
               return false;
             }
             if (document.getElementById('precio').value == ""){
-              alert('No se ha Ingresado el Precio Total de la Compra');
+              swal("Error!", "No se ha Ingresado el Precio Total de la Compra!", "error");
+              //alert('No se ha Ingresado el Precio Total de la Compra');
               document.getElementById("precio").style.border="1px solid #f00";
               return false;
             }
 
             if (stepNumber == 3){
               if (document.getElementById('asignado').value == ""){
-                alert('Ingrese el Espacio , donde se Enviara la Materia Prima');
+                swal("Error!", "Ingrese el Espacio , donde se Enviara la Materia Prima!", "error");
+                //alert('Ingrese el Espacio , donde se Enviara la Materia Prima');
                 document.getElementById("asignado").style.border="1px solid #f00";
                 return false;
               }

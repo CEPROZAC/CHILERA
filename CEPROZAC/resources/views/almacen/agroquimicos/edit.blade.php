@@ -89,7 +89,7 @@
               <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
               <div class="col-sm-6" id="muestra_codigo">
 
-   <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "EAN13",3,33);?></td>
+   <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "C128",3,33);?></td>
         </div>    
                </div>  
           

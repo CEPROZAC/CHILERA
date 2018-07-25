@@ -12,6 +12,7 @@ use CEPROZAC\Http\Requests\almacenagroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAgroquimicos;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\empresas_ceprozac;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -36,7 +37,7 @@ class almacenagroquimicosController extends Controller
      ->where('almacenagroquimicos.estado','Activo')->get();
      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
      $empleado = DB::table('empleados')->where('estado','Activo')->get();
-     $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
      return view('almacen.agroquimicos.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas]);
 
  }
