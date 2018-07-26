@@ -25,6 +25,7 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
             $table->double('iva');
             $table->double('total');
              $table->string('comprador');
+             $table->string('moneda');
 
             $table->integer('entregado')->unsigned();
             $table->foreign('entregado')->references('id')->on('empleados');

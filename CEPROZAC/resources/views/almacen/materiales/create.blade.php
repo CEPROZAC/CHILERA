@@ -78,7 +78,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-           <input type="text" onkeypress=" return soloNumeros(event);" name="codigo" id="segundo"  maxlength="12"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="{{Input::old('codigo')}}"/><br>
+           <input type="text" onkeypress=" return soloNumeros(event);" name="codigo" id="segundo"  maxlength="35"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="{{Input::old('codigo')}}"/><br>
            <div class="text-danger"   id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
          </div>
        </div>

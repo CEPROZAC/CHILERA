@@ -104,7 +104,7 @@
        <div class="form-group">
         <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="12"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+          <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
         </div>
       </div>
     </div>
@@ -308,6 +308,7 @@ return false;
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
     document.getElementById("scantidad").max=stock;
+     document.getElementById("codigo").select();
   }
 
   var select = document.getElementById('id_materialk');
@@ -634,12 +635,12 @@ function recorre(valor) {
     else if(z == 2){
          //alert(z)
        //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-       alert(table.rows[r].cells[c].innerHTML);
+     //  alert(table.rows[r].cells[c].innerHTML);
        z ++;
        
 
      }else if(z == 3){
-      alert(table.rows[r].cells[c].innerHTML);
+      ///alert(table.rows[r].cells[c].innerHTML);
       z ++;
     }else if(z == 4){
 
@@ -648,24 +649,24 @@ function recorre(valor) {
    } else if (z == 5){
        //  alert(z)
      //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-     alert(table.rows[r].cells[c].innerHTML);
+     //alert(table.rows[r].cells[c].innerHTML);
 
 //alert(arreglo);
 z ++;
 }else if (z == 6){
  //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
- alert(table.rows[r].cells[c].innerHTML);
+ //alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-        alert(table.rows[r].cells[c].innerHTML);
+   //     alert(table.rows[r].cells[c].innerHTML);
         z ++;
 
       }else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-       alert(table.rows[r].cells[c].innerHTML);
+     //  alert(table.rows[r].cells[c].innerHTML);
        z = 1;
 
      }

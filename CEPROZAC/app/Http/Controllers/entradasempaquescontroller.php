@@ -12,6 +12,8 @@ use CEPROZAC\entradasempaques;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\empresas_ceprozac;
+
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -47,7 +49,7 @@ class entradasempaquescontroller extends Controller
     {
          $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
       $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->get();
-       $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenempaque')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
 
       $cuenta = count($material);
@@ -88,7 +90,7 @@ return view("almacen.empaque.entradas.create",["material"=>$material,"provedor"=
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(request $request)
     {
 $num = 1;
     $y = 0;
@@ -124,12 +126,16 @@ $num = 1;
             // print_r($first = $name[$y]);
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
+          $material->iva=$first = $name[$y];
+        $y = $y + 1;
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
+        $material->moneda=$first = $name[$y];
+        $y = $y + 1;
                 $material->entregado=$request->get('entregado_a');
         $material->recibe_alm=$request->get('recibe_alm');
-         $material->observacionesc=$request->get('observaciones');
+         $material->observacionesc=$request->get('observacionese');
         $material->save();
         $num = $num + 1;
         //
@@ -167,7 +173,7 @@ $num = 1;
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( $id)
     {
                $material=entradasempaques::findOrFail($id);
        $material->delete();
@@ -184,11 +190,11 @@ $num = 1;
         Excel::create('entradasempaques', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = entradasempaques::join('almacenempaque','almacenempaque.id', '=', 'entradasempaques.id_material')
-            ->select('entradasempaques.id', 'almacenempaque.nombre', 'entradasempaques.cantidad', 'entradasempaques.provedor', 'entradasempaques.factura','entradasempaques.p_unitario','entradasempaques.total','entradasempaques.comprador','entradasempaques.fecha')
+            $salidas = entradasempaques::join('almacenempaque','almacenempaque.id', '=', 'entradasempaques.id_material')->join('empleados','empleados.id', '=', 'entradasempaques.entregado')->join('empleados as emp_rec','empleados.id', '=', 'entradasempaques.recibe_alm')
+            ->select('entradasempaques.id', 'almacenempaque.nombre', 'entradasempaques.cantidad', 'entradasempaques.provedor', 'entradasempaques.factura','entradasempaques.p_unitario','entradasempaques.iva','entradasempaques.total','entradasempaques.moneda','entradasempaques.comprador','entradasempaques.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradasempaques.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','Subtotal','Comprador','Fecha de Compra']);
+            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

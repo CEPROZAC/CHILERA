@@ -25,14 +25,13 @@
                            <br> <br>
 
       <div class="form-group">
-        <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Fecha de Compra <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
 
          <input type="date" name="fecha2" id="fecha2" value="" class="form-control mask" >
        </div>
      </div>
 
-            <br> <br>
 
             <br> <br>
         <div class="form-group">
@@ -108,6 +107,37 @@
            </div>
          </div>
        </div>
+
+              <br> <br>
+<br> <br>
+        
+   <div class="form-group"> 
+     <label class="col-sm-3 control-label">% IVA  <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+    <input name="iva" id="iva" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+  </div>    
+  </div>
+
+  <br> <br>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+                   
+                @if(Input::old('moneda')=="Peso MXM")
+                <option value='Peso MXN' selected>Peso MXN
+                </option>
+                <option value="Dolar USD">Dolar USD</option>
+                @else
+                <option value='Dolar USD' selected>Dolar USD
+                </option>
+                <option value="Peso MXN">Peso MXN</option>
+                @endif
+              </select>          
+            </div>
+            </div>
+
        
     </div>
             <br> <br>
@@ -137,14 +167,15 @@
     var x = document.getElementById('preciou').value;
     var y = document.getElementById('factura').value;
     var z = document.getElementById('cantidades').value;
-    if (w !== "" && x !== "" && y !== "" && z !== "" ){
+        var a = document.getElementById('iva').value;
+    if (w !== "" && x !== "" && y !== "" && z !== "" && a !== ""  ){
       if (z < 1){
-         alert('El Stock Minimo a Ingresar debe ser Mayor de 0')
+         swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
         return false;
       }
 return true;
     }else{
-      alert('Los Campos de *Stock, *N° Nota, *Fecha y *Precio, No pueden ir Vacios ')
+      swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
       return false;
 
     }

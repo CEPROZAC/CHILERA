@@ -11,7 +11,6 @@
   }
 </style>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Recepción de Compra</h1>
@@ -126,7 +125,7 @@
 
                         <div class="help-block with-errors"></div>
                       </div>
-                      <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="transporte();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
+                      <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="transporte();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar"> <i class="fa fa-plus"></i>Agregar</a>
                     </div><!--/form-group-->
 
                     <div class="form-group">
@@ -194,7 +193,7 @@
                 <div class="col-sm-6">
                   <div class="input-group">
                    <div class="input-group-addon">$</div>
-                   <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" required placeholder="Ingrese el Precio de la Compra"  value="" onkeypress=" return soloNumeros(event);"/>
+                   <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" required placeholder="Ingrese el Precio de la Compra"  value="" onkeypress=" return soloNumeros(event);" readonly />
                  </div>
                </div>
              </div>
@@ -266,17 +265,33 @@
         </div>
       </div>
 
-      <div class="form-group ">
+
+                           <div class="form-group">
+                      <label class="col-sm-3 control-label">Seleccione el tipo de Recepción: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-3">
+                        <input type="radio" name="tipo_rec" id="tipo_rec" onchange="buscar3()" value="pacas"> Pacas<br>
+                        <input type="radio" name="tipo_rec" id="tipo_rec" onchange="buscar4()" value="granel"> Granel<br>
+                      </div>
+                    </div><!--/form-group-->
+
+      <div class="form-group " style='display:none;' id="pacasdiv">
         <label class="col-sm-3 control-label">Número de Pacas<strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input parsley-type="number" type="text" maxlength="6" required  name="num_pacas" id="num_pacas"   class="form-control" onKeyUp="raiz()"  onkeypress=" return soloNumeros(event);">
+          <input parsley-type="number" type="text" maxlength="6"   name="num_pacas" id="num_pacas"   class="form-control" onKeyUp="raiz()"  onkeypress=" return soloNumeros(event);">
         </div>
       </div>
 
-      <div class="form-group ">
+      <div class="form-group "  id="pacas_revdiv" style='display:none;'>
         <label class="col-sm-3 control-label">Número de Pacas a Revisar<strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input parsley-type="number" type="number" required maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
+          <input parsley-type="number" type="number"  maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
+        </div>
+      </div>
+
+            <div class="form-group "  id="graneldiv" style='display:none;'>
+        <label class="col-sm-3 control-label">Kilogramos a Granel<strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input parsley-type="number" type="text" maxlength="6" required  name="granel" id="granel"   class="form-control"   onkeypress=" return soloNumeros(event);">
         </div>
       </div>
 
@@ -1235,6 +1250,27 @@ function buscar2(){
 
 }
 
+function buscar3(){
+    document.getElementById('tipo_rec').value="granel";
+  document.getElementById('pacasdiv').style.display = 'block';
+  document.getElementById('pacas_revdiv').style.display = 'block';
+  document.getElementById('graneldiv').style.display = 'none';
+    document.getElementById('num_pacas').required = true;
+  document.getElementById('granel').required = false;
+
+
+}
+function buscar4(){
+  document.getElementById('tipo_rec').value="pacas";
+  document.getElementById('graneldiv').style.display = 'block';
+  document.getElementById('pacasdiv').style.display = 'none';
+  document.getElementById('pacas_revdiv').style.display = 'none';
+  document.getElementById('num_pacas').required = false;
+  document.getElementById('granel').required = true;
+
+
+}
+
 function raiz(){
   var aux = document.getElementById('num_pacas').value;
   var z = Math.sqrt(aux) + 1 ;
@@ -1491,12 +1527,13 @@ function generar(){
               document.getElementById("transporte_num").style.border="1px solid #f00";
               return false;
             }
+            /*
             if (document.getElementById('precio').value == ""){
               swal("Error!", "No se ha Ingresado el Precio Total de la Compra!", "error");
               //alert('No se ha Ingresado el Precio Total de la Compra');
               document.getElementById("precio").style.border="1px solid #f00";
               return false;
-            }
+            }*/
 
             if (stepNumber == 3){
               if (document.getElementById('asignado').value == ""){

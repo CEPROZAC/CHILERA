@@ -119,7 +119,7 @@
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
-    <input name="observaciones" id="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciónes de la Compra"/>
+    <input name="observacionesq" id="observacionesq" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciónes de la Compra"/>
   </div>
 </div>
 
@@ -184,7 +184,22 @@
     </div>    
   </div>  
 
-
+            <div class="col-lg-2">
+          <div class="form-group">
+            <label>Tipo de Moneda: <strog class="theme_color">*</strog></label>
+              <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+                @if(Input::old('moneda')=="Peso MXM")
+                <option value='Peso MXN' selected>Peso MXN
+                </option>
+                <option value="Dolar USD">Dolar USD</option>
+                @else
+                <option value='Dolar USD' selected>Dolar USD
+                </option>
+                <option value="Peso MXN">Peso MXN</option>
+                @endif
+              </select>          
+            </div>
+          </div>
 
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
@@ -196,7 +211,7 @@
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
     <label for="iva">% IVA </label>
-    <input name="iva" id="iva" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+    <input name="iva" id="iva" value="16" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
   </div>    
 </div> 
 
@@ -206,6 +221,9 @@
     <input name="ieps" id="ieps" value="1" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
   </div>    
 </div>  
+
+
+
 
 
 
@@ -239,9 +257,11 @@
         <th>IVA</th>
         <th>IEPS</th>
         <th>Subtotal</th>
+        <th>Moneda</th>
 
       </thead>
       <tfoot>
+        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -383,6 +403,7 @@ window.onload=function() {
   document.getElementById("pcantidad").value=stock;
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
+   document.getElementById("codigo").select();
 }
 
 var select = document.getElementById('id_materialk');
@@ -459,6 +480,7 @@ function llenado(){
   var preciou = document.getElementById('preciou').value;
    var ivax = document.getElementById('iva').value * .010;
     var iepsx = document.getElementById('ieps').value  * .010;
+    var tipo_moneda = document.getElementById('moneda').value ;
   if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
    if (preciou > 0){
     if (entradav > 0){
@@ -488,6 +510,7 @@ function llenado(){
     var cell10 = row.insertCell(9);
     var cell11 = row.insertCell(10);
     var cell12 = row.insertCell(11);
+    var cell13 = row.insertCell(12);
 
     var fechas = document.getElementById("fecha");
     var var3 = fechas.value;
@@ -522,6 +545,7 @@ function llenado(){
     cell10.innerHTML = ivatotal;
     cell11.innerHTML = iepstotal;
     cell12.innerHTML = precio * cantidaden + ivatotal + iepstotal;
+    cell13.innerHTML = tipo_moneda;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
@@ -546,7 +570,7 @@ function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
   var cantidadanueva=document.getElementById("detalles").rows[value].cells[11].innerHTML;
-  alert(cantidadanueva);
+  //alert(cantidadanueva);
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows
@@ -653,6 +677,10 @@ function save() {
        arreglo.push(table.rows[r].cells[c].innerHTML);
        z ++;
 
+     }else if(z == 11){
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+       z ++;
+
      }else{
       arreglo.push(table.rows[r].cells[c].innerHTML);
       document.getElementById("codigo2").value=arreglo;
@@ -662,7 +690,7 @@ function save() {
 
   }
 }
-var tam = arreglo.length / 9;
+var tam = arreglo.length / 12;
 document.getElementById("total").value=tam;
 }else{
   //alert('No hay Elementos Agregados, Para Poder Guardar');

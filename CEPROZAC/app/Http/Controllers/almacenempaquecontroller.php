@@ -10,10 +10,11 @@ use CEPROZAC\Http\Requests;
 use CEPROZAC\almacenagroquimicos;
 use CEPROZAC\almacenempaque;
 use CEPROZAC\formaempaque;
-use CEPROZAC\Http\Requests\almacenagroquimicosRequest;
+use CEPROZAC\Http\Requests\almacenempaquerequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\entradasempaques;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\empresas_ceprozac;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,7 +38,7 @@ class almacenempaquecontroller extends Controller
      ->where('almacenempaque.estado','Activo')->get();
      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
      $empleado = DB::table('empleados')->where('estado','Activo')->get();
-     $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
      return view('almacen.empaque.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas]);
         //
     }
@@ -61,7 +62,7 @@ class almacenempaquecontroller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(almacenagroquimicosRequest $formulario)
+    public function store(almacenempaquerequest $formulario)
     {
          $validator = Validator::make(
         $formulario->all(), 
@@ -237,8 +238,13 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
       $material2->factura=$request->get('factura');
       $material2->fecha=$request->get('fecha2');
       $material2->p_unitario=$request->get('preciou');
-      $material2->total= $material2->p_unitario *  $material2->cantidad;
-      $material2->importe= $material2->p_unitario *  $material2->cantidad;
+        $ivaaux=$request->get('iva') * .010;
+       $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+       $material2->iva=$ivatotal;
+
+      $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+      $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+       $material2->moneda=$request->get('moneda');
       $material2->save();
 
 

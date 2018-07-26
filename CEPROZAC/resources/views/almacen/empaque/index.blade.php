@@ -5,6 +5,7 @@
   <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>
   <style>
 table, th, td {
@@ -84,7 +85,7 @@ table, th, td {
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->provedor}} </td>
                                                       @if (($materiales->codigo)!="")
-                  <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
+                  <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
                     <div style="text-align:center;" >
                       {{$materiales->codigo}}
                     </div>
@@ -182,7 +183,7 @@ table, th, td {
         var o =table.rows[r].cells[c].innerHTML;
         var y = parseInt(o);
              if (x < y){
-      alert("El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock" );
+      swal("Stock Minimo!", "El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock", "warning");
     }
 
      z ++;

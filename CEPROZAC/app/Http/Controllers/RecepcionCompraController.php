@@ -11,7 +11,7 @@ use CEPROZAC\Provedor;
 use CEPROZAC\Producto;
 use CEPROZAC\calidad;
 use CEPROZAC\Transporte;
-use CEPROZAC\empresa;
+use CEPROZAC\empresas_ceprozac;
 use CEPROZAC\ServicioBascula;
 use CEPROZAC\Empleado;
 use CEPROZAC\bascula;
@@ -44,7 +44,7 @@ class RecepcionCompraController extends Controller
 
       $compra= DB::table('recepcioncompra')
       ->join( 'provedores as prov', 'recepcioncompra.id_provedor','=','prov.id')
-      ->join( 'empresas as emp', 'recepcioncompra.recibe','=','emp.id')
+      ->join( 'empresas_ceprozac as emp', 'recepcioncompra.recibe','=','emp.id')
       ->join( 'empleados as empleados', 'recepcioncompra.entregado','=','empleados.id')
       ->join('productos as prod' ,'recepcioncompra.id_producto','=','prod.id')
       ->join('calidad as cali' ,'recepcioncompra.id_calidad','=','cali.id')
@@ -67,9 +67,9 @@ class RecepcionCompraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    { 
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-      $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $provedores=DB::table('provedores')->where('estado','=' ,'Activo')->get();
       $productos=DB::table('productos')->where('estado','=' ,'Activo')->get();
       $transportes=DB::table('transportes')->where('estado','=' ,'Activo')->get();

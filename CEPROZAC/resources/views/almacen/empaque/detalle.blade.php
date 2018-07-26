@@ -45,7 +45,7 @@
                 </div>
                 <div class="porlets-content" style="display: block;">
                  <p align="justify"><strong>Codigo de Barras:</strong> {{$mat->codigo}}</p>
-                  <td><?php echo DNS1D::getBarcodeHTML("$mat->codigo", "EAN13");?>
+                  <td><?php echo DNS1D::getBarcodeHTML("$mat->codigo", "C128");?> 
                     <div style="text-align:center;">              
                   </div>
                   </td>

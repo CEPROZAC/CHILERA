@@ -12,6 +12,7 @@ use CEPROZAC\Http\Requests\almacenlimpiezaRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\entradasalmacenlimpieza;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\empresas_ceprozac;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,7 +36,7 @@ class almacenlimpiezaController extends Controller
       ->where('almacenlimpieza.estado','Activo')->get();
       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
       $empleado = DB::table('empleados')->where('estado','Activo')->get();
-      $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       return view('almacen.limpieza.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=> $empresas]);
 
       
@@ -237,8 +238,12 @@ public function invoice($id){
       $material2->factura=$request->get('factura');
       $material2->fecha=$request->get('fecha2');
       $material2->p_unitario=$request->get('preciou');
-      $material2->total= $material2->p_unitario *  $material2->cantidad;
-      $material2->importe= $material2->p_unitario *  $material2->cantidad;
+      $ivaaux=$request->get('iva') * .010;
+      $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+       $material2->iva=$ivatotal;
+      $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+      $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+       $material2->moneda=$request->get('moneda');
       $material2->save();
       return Redirect::to('almacenes/limpieza');
       

@@ -248,8 +248,16 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
       $material2->factura=$request->get('factura');
       $material2->fecha=$request->get('fecha2');
       $material2->p_unitario=$request->get('preciou');
-      $material2->total= $material2->p_unitario *  $material2->cantidad;
-      $material2->importe= $material2->p_unitario *  $material2->cantidad;
+       $ivaaux=$request->get('iva') * .010;
+       $iesaux=$request->get('iesp') * .010;
+       $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+       $iesptotal = $material2->p_unitario *  $material2->cantidad * $iesaux;
+       $material2->iva=$ivatotal;
+       $material2->ieps=$iesptotal;
+
+      $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
+      $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
+      $material2->moneda=$request->get('moneda');
       $material2->save();
 
 

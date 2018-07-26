@@ -26,6 +26,7 @@ class EntradasAgroquimicosMigration extends Migration
             $table->double('ieps');
             $table->double('total');
              $table->string('comprador');
+             $table->string('moneda');
             $table->integer('entregado')->unsigned();
             $table->foreign('entregado')->references('id')->on('empleados');
               $table->integer('recibe_alm')->unsigned();

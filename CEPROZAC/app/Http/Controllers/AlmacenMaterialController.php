@@ -17,6 +17,8 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
+use CEPROZAC\empresas_ceprozac;
+
 
 class almacenmaterialController extends Controller
 {
@@ -33,7 +35,7 @@ class almacenmaterialController extends Controller
         ->where('almacenmateriales.estado','Activo')->get();
         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
         $empleado = DB::table('empleados')->where('estado','Activo')->get();
-        $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+        $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         return view('almacen.materiales.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=>$empresas]);
 
     }
@@ -235,8 +237,14 @@ public function invoice($id){
        $material2->nota_venta=$request->get('nota');
        $material2->fecha=$request->get('fecha2');
        $material2->p_unitario=$request->get('preciou');
-       $material2->total= $material2->p_unitario *  $material2->cantidad;
-       $material2->importe= $material2->p_unitario *  $material2->cantidad;
+
+       $ivaaux=$request->get('iva') * .010;
+        $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+        $material2->iva=$ivatotal;
+
+       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal ;
+       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal ;
+        $material2->moneda=$request->get('moneda');
        $material2->save();
        return Redirect::to('almacen/materiales');
         //

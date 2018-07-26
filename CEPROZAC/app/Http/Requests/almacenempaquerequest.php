@@ -26,7 +26,7 @@ class almacenempaquerequest extends Request
     {
         return [
         'imagen'=>'mimes:jpeg,jpg,png,bmp',
-        'codigo' => 'unique:AlmacenAgroquimicos,codigo',
+        'codigo' => 'unique:almacenempaque,codigo',
         'nombre' => 'required',
             //
         ];

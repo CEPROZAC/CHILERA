@@ -5,7 +5,7 @@
 
     <h1>Inicio</h1>
     <h2 class="">Almacén</h2>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
   </div>
   <div class="pull-right">
@@ -120,7 +120,7 @@
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
-    <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+    <input name="observacionesl" id="observacionesl" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciónes de la Compra"/>
   </div>
 </div>
 
@@ -139,7 +139,7 @@
        <div class="form-group">
         <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input  id="codigo" value="" name="codigo" type="text" onKeyUp="codigos()" onkeypress=" return soloNumeros(event);"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+          <input  id="codigo" value="" name="codigo" type="text" onkeypress="return teclas(event);"  onkeypress=" return soloNumeros(event);"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
         </div>
       </div>
     </div>
@@ -185,6 +185,23 @@
         </div>    
       </div>  
 
+                  <div class="col-lg-2">
+          <div class="form-group">
+            <label>Tipo de Moneda: <strog class="theme_color">*</strog></label>
+              <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+                @if(Input::old('moneda')=="Peso MXM")
+                <option value='Peso MXN' selected>Peso MXN
+                </option>
+                <option value="Dolar USD">Dolar USD</option>
+                @else
+                <option value='Dolar USD' selected>Dolar USD
+                </option>
+                <option value="Peso MXN">Peso MXN</option>
+                @endif
+              </select>          
+            </div>
+          </div>
+
 
     
            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
@@ -193,7 +210,15 @@
             <input name="preciou" id="preciou" value="0" type="text" onkeypress=" return soloNumeros(event);" class="form-control" />
           </div>    
         </div>    
-    </div>
+
+      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+   <div class="form-group"> 
+    <label for="iva">% IVA </label>
+    <input name="iva" id="iva" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+  </div>    
+</div>  
+
+</div>
 
 
 
@@ -203,7 +228,9 @@
       </div>
     </div>
 
-  </div>
+    </div>
+
+  
 
 @include('almacen.limpieza.entradas.modale')
 
@@ -220,10 +247,14 @@
           <th>N° Factura</th>
           <th>Fecha de Compra</th>
           <th>Precio Unitario</th>
+           <th>IVA</th>
           <th>Subtotal</th>
+          <th>Moneda</th>
 
         </thead>
         <tfoot>
+          <th></th>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -289,6 +320,66 @@
 
 <script type="text/javascript">
 
+function teclas(event) {
+    tecla=(document.all) ? event.keyCode : event.which;
+   // alert(tecla);
+
+   var cuenta = document.getElementById('codigo');
+   var x = cuenta.value;
+   var z = x.length
+   if (tecla == 13  ) {
+    var busca = z;
+    //  alert ("12 entro");
+    var y = document.getElementById("id_materialk").length;
+    //  alert(y);
+    var i= 0;
+    while(i <= y){
+
+
+      if (i == y){
+        swal("Producto No Encontrado!", "Verifique el Codigo de Barras!", "error");
+        break;
+      }
+
+      var e = document.getElementById("id_materialk");
+      var value = e.options[e.selectedIndex=i].value;
+      var text = e.options[e.selectedIndex=i].text;
+      var cantidadtotal = value;
+      limite = "5",
+      separador = "_",
+      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+      stock=arregloDeSubCadenas[0];
+      descripcion=arregloDeSubCadenas[1];
+      codigo=arregloDeSubCadenas[2];
+      id=arregloDeSubCadenas[3];
+      nombre=arregloDeSubCadenas[4];
+      tecla=(document.all) ? event.keyCode : event.which;
+      if (codigo == x){
+        swal("Producto Encontrado:"+nombre +"!", "Stock de Entrada!", "success",{content: "input", inputType:"number",}).then((value) => {
+          var aux =`${value}`;
+
+          document.getElementById("scantidad").value = aux;
+  //swal(aux);
+});
+
+        document.getElementById('id_materialk').selectedIndex = i;
+        document.getElementById("pcantidad").value=stock;
+        document.getElementById("descripcion").value=descripcion;
+
+        document.getElementById("scantidad").max=stock;
+        break;
+      }
+
+      i++;
+    }
+
+
+    return false;
+  }
+
+
+}
+
 
   window.onload=function() {
     var select2 = document.getElementById('id_materialk');
@@ -302,6 +393,7 @@
     document.getElementById("pcantidad").value=stock;
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
+     document.getElementById("codigo").select();
   }
 
   var select = document.getElementById('id_materialk');
@@ -376,7 +468,10 @@ var fechav = document.getElementById('fecha').value;
   var notav = document.getElementById('factura').value;
   var entradav = document.getElementById('scantidad').value;
   var preciou = document.getElementById('preciou').value;
-  if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!==""){
+  var ivax = document.getElementById('iva').value * .010;
+   var tipo_moneda = document.getElementById('moneda').value ;
+
+  if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
    if (preciou > 0){
      if (entradav > 0){
 
@@ -405,6 +500,8 @@ var fechav = document.getElementById('fecha').value;
     var cell8 = row.insertCell(7);
     var cell9 = row.insertCell(8);
     var cell10 = row.insertCell(9);
+    var cell11 = row.insertCell(10);
+     var cell12 = row.insertCell(11);
 
     var fechas = document.getElementById("fecha");
     var var3 = fechas.value;
@@ -417,11 +514,14 @@ var fechav = document.getElementById('fecha').value;
     var notax = document.getElementById("factura");
     var notas = notax.value;
 
+
     var scantidadx = document.getElementById("scantidad");
     var cantidaden = scantidadx.value;
 
     var preciox = document.getElementById("preciou");
     var precio = preciox.value;
+    var ivatotal = cantidaden * precio * ivax;
+
     cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
     cell2.innerHTML = id;
     cell3.innerHTML = nombre;
@@ -431,30 +531,35 @@ var fechav = document.getElementById('fecha').value;
     cell7.innerHTML = notas;
     cell8.innerHTML = var3;
     cell9.innerHTML = precio;
-    cell10.innerHTML = precio * cantidaden;
+    cell10.innerHTML = ivatotal;
+    cell11.innerHTML = precio * cantidaden + ivatotal;
+    cell12.innerHTML = tipo_moneda;
 
     var x = document.getElementById("id_materialk");
    // x.remove(x.selectedIndex);
     cargar();
     document.getElementById("total").value=id2;
-    var sub = precio * cantidaden;
+    var sub = precio * cantidaden + ivatotal;
     subtota = subtota + sub;
     var d = subtota;
      document.getElementById("subtotal").value=d;
   }else{
-    alert('La Cantidad de Entrada debe ser Mayor de 0');
+    swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
   }}else{
-    alert('El precio Unitario no Puede Ser Menor de 0');
+    //alert('El precio Unitario no Puede Ser Menor de 0');
+    swal("Alerta!", "El precio Unitario no Puede Ser Menor de 0!", "error");
   }}else{
-    alert("Faltan campos Por llenar Favor de Verificar");
+    swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
+    //alert("Faltan campos Por llenar Favor de Verificar");
   }
 }  
+ 
 
 
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
-    var cantidadanueva=document.getElementById("detalles").rows[value].cells[9].innerHTML;
+    var cantidadanueva=document.getElementById("detalles").rows[value].cells[10].innerHTML;
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows
@@ -553,6 +658,14 @@ z ++;
          arreglo.push(table.rows[r].cells[c].innerHTML);
          z ++;
 
+       }else if(z == 9){
+         arreglo.push(table.rows[r].cells[c].innerHTML);
+         z ++;
+
+       }else if(z == 10){
+         arreglo.push(table.rows[r].cells[c].innerHTML);
+         z ++;
+
        }else{
         arreglo.push(table.rows[r].cells[c].innerHTML);
         document.getElementById("codigo2").value=arreglo;
@@ -562,10 +675,10 @@ z ++;
 
     }
   }
-  var tam = arreglo.length / 9;
+  var tam = arreglo.length / 11;
   document.getElementById("total").value=tam;
 }else{
-  alert('No hay Elementos Agregados, Para Poder Guardar');
+  swal("Alerta!", "No hay Elementos Agregados, Para Poder Guardar!", "error");
   return false;
 
 }}
