@@ -3,12 +3,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Lista de Mantenimientos</h2>
+    <h2 class="">Lista de Cuentas CEPROZAC</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
       <li ><a style="color: #808080" href="{{url('/empleados')}}">Inicio</a></li>
-      <li class="active">Lista de Mantenimientos</a></li>
+      <li class="active">Lista de Cuentas CEPROZAC</a></li>
     </ol>
   </div>
 </div>

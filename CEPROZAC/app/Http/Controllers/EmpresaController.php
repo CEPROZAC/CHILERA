@@ -162,13 +162,39 @@ class EmpresaController extends Controller
     public  function verCuentas($id)
     {
         $empresas=Empresa::findOrFail($id);
-       $cuentas= DB::table('cuentas_banco_provedores')
-       ->join('bancos','bancos.id','=','cuentas_banco_provedores.idBanco')
-       ->select('cuentas_banco_provedores.*','bancos.nombre as nomBanco')
-       ->where('idEmpresa','=',$id)
-       ->where('cuentas_banco_provedores.estado','Activo')
-       ->get();
-       return view('Provedores.empresas.listacuentas',['empresas'=>$empresas,'cuentas'=>$cuentas]);
-   }
+        $cuentas= DB::table('cuentas_banco_provedores')
+        ->join('bancos','bancos.id','=','cuentas_banco_provedores.idBanco')
+        ->select('cuentas_banco_provedores.*','bancos.nombre as nomBanco')
+        ->where('idEmpresa','=',$id)
+        ->where('cuentas_banco_provedores.estado','Activo')
+        ->get();
+        return view('Provedores.empresas.listacuentas',['empresas'=>$empresas,'cuentas'=>$cuentas]);
+    }
+
+
+
+    public function validarRFC($rfc)
+    {
+
+        $empresas= Empresa::
+        select('id','rfc','nombre', 'estado')
+        ->where('rfc','=',$rfc)
+        ->get();
+
+        return response()->json(
+          $empresas->toArray());
+
+    }
+
+
+
+    public function activar(Request $request)
+    { 
+        $id =  $request->get('idEmpresa');
+        $empresas=Empresa::findOrFail($id);
+        $empresas->estado="Activo";
+        $empresas->update();
+        return Redirect::to('empresas');
+    }
 
 }

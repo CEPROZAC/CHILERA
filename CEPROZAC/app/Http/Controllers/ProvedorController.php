@@ -98,8 +98,8 @@ class ProvedorController extends Controller
     public function edit($id)
     {
 
-     return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
- }
+       return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -161,19 +161,47 @@ class ProvedorController extends Controller
             $excel->sheet('Excel sheet', function($sheet) use($id) {
 
                 $mantenimiento = Empresa::join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
-                ->join('bancos','empresas.id_Banco','=','bancos.id')
+             
                 ->join('regimen_fiscal','empresas.idRegimenFiscal','=','regimen_fiscal.id')
-                ->select('empresas.nombre','empresas.rfc','regimen_fiscal.nombre as nomRegimen','empresas.telefono','empresas.direccion','empresas.cve_Interbancaria','empresas.nom_cuenta','bancos.nombre as nombreBanco','p.nombre as nombreProvedor')
+                ->select('empresas.nombre','empresas.rfc','regimen_fiscal.nombre as nomRegimen','empresas.telefono','empresas.direccion','empresas.email')
                 ->where('empresas.estado','Activo')
                 ->where('empresas.provedor_id','=',$id)
                 ->get();
 
                 $sheet->fromArray($mantenimiento);
-                $sheet->row(1,['Nombre Empresa','RFC','Regimen Fiscal','Telefono','Direccion','Correo','Clave Interbancaria','Banco','Numero de cuenta' ]);
+                $sheet->row(1,['Nombre Empresa','RFC','Regimen Fiscal','Telefono','Direccion','Correo']);
                 $sheet->setOrientation('landscape');
             });
         })->export('xls');
 
     }
+
+
+
+
+    public function validarNombre($nombre)
+    {
+
+        $provedor= Provedor::
+        select('id','nombre','direccion', 'estado')
+        ->where('nombre','=',$nombre)
+        ->get();
+
+        return response()->json(
+          $provedor->toArray());
+
+    }
+
+
+         
+    public function activar(Request $request)
+    { 
+        $id =  $request->get('idProvedor');
+        $provedores=Provedor::findOrFail($id);
+        $provedores->estado="Activo";
+        $provedores->update();
+        return Redirect::to('provedores');
+    }
+
 
 }

@@ -58,26 +58,33 @@
          </div>
        </div><!--/form-group-->
 
+
+       <input name="ocultoNumCuenta" id="ocultoNumCuenta"  hidden  value="{{$cuentas->num_cuenta}}" />
        <div class="form-group">
          <label class="col-sm-3 control-label">Numero de cuenta:</label>
          <div class="col-sm-6">
-           <input type="text" name="num_cuenta" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10" value="{{$cuentas->num_cuenta}}" />
+           <input type="text" name="num_cuenta" id="num_cuenta" class="form-control" onblur="validarNumeroCuentaEmCEPROZAC();" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10" value="{{$cuentas->num_cuenta}}" />
+           <span id="errorNumCuenta" style="color:#FF0000;"></span>
          </div>
        </div><!--/form-group--> 
+
+
+       <input name="ocultoCve_Interbancaria" id="ocultoCve_Interbancaria" value="{{$cuentas->cve_interbancaria}}"  hidden  />
 
        <div class="form-group">
         <label class="col-sm-3 control-label">Número de CLABE Interbancaria: </label>
         <div class="col-sm-6">
-          <input type="text"  name= "cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" value="{{$cuentas->cve_interbancaria}}" />
+          <input type="text" id="cve_Interbancaria"  name= "cve_Interbancaria" class="form-control" onblur="validarNumeroCveInterbancariaEmCEPROZAC();" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" value="{{$cuentas->cve_interbancaria}}" />
+          <span id="errorCveInterbancaria" style="color:#FF0000;"></span>
         </div>
       </div><!--/form-group--> 
-
 
 
       <div class="form-group ">
         <label class="col-sm-3 control-label">Saldo</label>
         <div class="col-sm-6">
           <input parsley-type="number" type="text" maxlength="100000000000" required parsley-range="[0, 100000000]" name="saldo"   class="form-control mask"  placeholder="$10343456.00" onkeypress=" return soloNumeros(event);" value="{{$cuentas->saldo}}">
+
         </div>
       </div>
 
@@ -85,7 +92,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
 
           <a href="{{URL::action('EmpresasCeprozacController@verCuentas',$cuentas->idEmpresa)}}" class="btn btn-default "> Cancelar</a> 
 
@@ -97,5 +104,7 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('EmpresasCeprozac.cuentasBancarias.modalReactivar')
 
 @endsection

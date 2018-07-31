@@ -22,7 +22,7 @@ class CreateCuentasBancoProvedoresTable extends Migration
             $table->string('cve_interbancaria');
 
             $table->integer('idEmpresa')->unsigned();
-            $table->foreign('idEmpresa')->references('id')->on('empresas_ceprozac');
+            $table->foreign('idEmpresa')->references('id')->on('empresas');
 
 
             $table->string('estado');

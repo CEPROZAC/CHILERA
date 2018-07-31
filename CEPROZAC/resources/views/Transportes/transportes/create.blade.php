@@ -31,8 +31,10 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{route('transportes.store')}}" method="post" class="form-horizontal row-border"  parsley-validate novalidate>
+          <form action="{{route('transportes.store')}}" method="post" class="form-horizontal row-border"  parsley-validate novalidate  >
             {{csrf_field()}}
+
+            <input name="nombreOculto" id="ocultoPlaca"  hidden  />
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
@@ -42,11 +44,13 @@
               </div>
             </div>
 
+            <input name="serieOculto" id="ocultoSerie"  hidden  />
             <div class="form-group">
               <label class="col-sm-3 control-label">Numero de Serie: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="no_Serie" id="vin" type="text"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Ingrese nombre de Vehículo" minlength="17" maxlength="17" parsley-rangelength="[1,35]"/>
+                <input name="no_Serie" id="no_serie" type="text"  onchange="mayus(this);validarNumeroSerie();"  class="form-control"  required value="" placeholder="Ingrese nombre de Vehículo" minlength="17" maxlength="17" parsley-rangelength="[1,35]"/>
+                <span id="errorSerie" style="color:#FF0000;"></span>
                 <div class="text-danger" id="validation-message"> </div>
               </div>
             </div>
@@ -57,7 +61,9 @@
               <label class="col-sm-3 control-label">Placas: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="placas" type="text" data-mask="AAA-000-A"   onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese placas del Vehículo" maxlength="8" parsley-rangelength="[1,35]"/>
+                <input name="placas" id="placas"; type="text" data-mask="AAA-000-A"   onchange="mayus(this);validarPlacas();"  class="form-control" required value="" placeholder="Ingrese placas del Vehículo" maxlength="8" parsley-rangelength="[1,35]"/>
+
+                <span id="errorPlaca" style="color:#FF0000;"></span>
 
               </div>
             </div>
@@ -123,7 +129,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
             <a href="{{url('/transportes')}}" class="btn btn-default"> Cancelar</a>
           </div>
         </div><!--/form-group-->
@@ -133,6 +139,9 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+
+@include('Transportes.transportes.modalReactivar')
 
 @endsection
 

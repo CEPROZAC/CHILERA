@@ -41,10 +41,12 @@
           {{csrf_field()}}
 
           <input type="hidden" name="_method" value="PUT">
+          <input name="Oculto" id="oculto"  hidden  value="{{$bancos->nombre}}" />
           <div class="form-group">
             <label class="col-sm-3 control-label">Bancos: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6"> 
-              <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$bancos->nombre}}" placeholder="Ingrese nombre de el Banco"/>
+              <input name="nombre" id="nombre" type="text"  onchange="mayus(this);" onblur="validarBanco();" class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$bancos->nombre}}" placeholder="Ingrese nombre de el Banco"/>
+              <span id="errorNombre" style="color:#FF0000;"></span>
             </div>
           </div>
 
@@ -53,13 +55,14 @@
             <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
               <input type="text" parsley-type="phone" placeholder="Ingrese el número de teléfono de el banco" name="telefono" value="{{$bancos->telefono}}" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" required>
+
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-sm-3 control-label">Sucursal: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6"> 
-            <input name="sucursal" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$bancos->sucursal}}" placeholder="Ingrese nombre de sucursal  Bancaria"/>
+              <input name="sucursal" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$bancos->sucursal}}" placeholder="Ingrese nombre de sucursal  Bancaria"/>
             </div>
           </div>
           <div class="form-group">
@@ -70,7 +73,7 @@
           </div>
           <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
               <a href="{{url('/bancos')}}" class="btn btn-default"> Cancelar</a>
             </div>
           </div><!--/form-group-->
@@ -80,5 +83,7 @@
   </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('Provedores.bancos.modalReactivar')
 
 @endsection

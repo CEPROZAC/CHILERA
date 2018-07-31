@@ -48,8 +48,10 @@ class ClienteController extends Controller
      */
     public function create()
     {
-             return view('clientes.create');   //
-           }
+
+      $regimen_fiscal = DB::table('regimen_fiscal')->where('estado','=','Activo')->get();
+             return view('clientes.create', ['regimen_fiscal'=>$regimen_fiscal]);   //
+      }
 
     /**
      * Store a newly created resource in storage.

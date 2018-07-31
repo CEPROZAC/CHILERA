@@ -76,18 +76,7 @@
                       <th>Correo: </th>
                       <td>{{$empresa->email}}</td>
                     </tr>
-                    <tr>
-                      <th>Banco: </th>
-                      <td>{{$empresa->nombreBanco}}</td>
-                    </tr>
-                    <tr>
-                      <th>Clave Interbancaria: </th>
-                      <td>{{$empresa->cve_Interbancaria}}</td>
-                    </tr>
-                    <tr>
-                      <th>Numero de cuenta: </th>
-                      <td>{{$empresa->nom_cuenta}}</td>
-                    </tr>
+                    
                   </tbody>
                 </table>
               </div>

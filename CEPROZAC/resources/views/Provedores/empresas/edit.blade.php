@@ -34,6 +34,8 @@
           <form action="{{url('empresas', [$empresas->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
+
+            <input name="rfcOculto" id="oculto" value="{{$empresas->rfc}}" hidden  />
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
@@ -44,7 +46,9 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="rfc" type="text"  onchange="mayus(this);"  class="form-control" maxlength="13" id="RFC" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="{{$empresas->rfc}}" placeholder="Ingrese RFC de la empresa"/>
+                <input name="rfc" type="text"  onchange="mayus(this);" onblur="validarEmpresa();" class="form-control" maxlength="13" id="RFC" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="{{$empresas->rfc}}" placeholder="Ingrese RFC de la empresa"/>
+
+                <span id="errorRFC" style="color:#FF0000;"></span>
               </div>
             </div>
 
@@ -116,7 +120,7 @@
 
            <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
               <a href="{{url('/empresas')}}" class="btn btn-default"> Cancelar</a>
             </div>
           </div><!--/form-group-->
@@ -126,4 +130,7 @@
   </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+
+@include('Provedores.empresas.modalReactivar')
 @endsection

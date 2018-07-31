@@ -100,7 +100,6 @@ function myDeleteFunction(t) {
 
 function myDeleteFunction1(btn) {
 
-
   var route = "http://localhost:8000/eliminarRolEmpleado/"+btn.value+"";
   var token = $("#token").val();
 
@@ -114,17 +113,9 @@ function myDeleteFunction1(btn) {
     }
   });
 
-
-
 }
 
 
-document.getElementById("div").onload = oQuickReplyswap();
-function oQuickReplyswap() {
-
-  var id=document.getElementById("idEmpleado").value;
-  Carga(id);
-}
 
 
 
@@ -192,37 +183,93 @@ function myCreateFunction1() {
 
 
 
-function calcularTiempo(){
+function validarFecha1(){
+  var fecha1 =document.getElementById('fechaInicio').value;
+
+
+  if (!moment(fecha1).isValid()) {
+    document.getElementById("errorFechaInicio").innerHTML = "Fecha Invalida";
+  } else {
+    document.getElementById("errorFechaInicio").innerHTML = "";
+  }
+
+}
+
+
+
+function validarFecha2(){
+
+  var fecha2= document.getElementById('fechaFin').value;  
+
+  if (!moment(fecha2).isValid()) {
+    document.getElementById("errorFechaFin").innerHTML = "Fecha Invalida";
+  } else {
+   document.getElementById("errorFechaFin").innerHTML = "";
+ }
+
+}
+
+function validarFechas(){
+
+
+  alert("entre");
   var fecha1 =document.getElementById('fechaInicio').value;
   var fecha2= document.getElementById('fechaFin').value;
-  alert(fecha1);
+  var FechaIngreso= document.getElementById('FechaIngreso').value;
+
+  if (moment(fecha2).isBefore(moment(fecha1))    || moment(fecha2).isSame(moment(fecha1))  ){
+    document.getElementById("errorFechas").innerHTML="La fecha  de  Inicio  es mayor o igual que la fecha de Fin";
+    
+  } else {
+    document.getElementById("errorFechas").innerHTML="";
+
+  }
+
+  alert(moment('2013-02-03', 'YYYY-MM-DD').diff(moment('2013-02-06', 'YYYY-MM-DD'), 'days'));
 
 
-  fech2 =ano2+"-"+mes2+"-"+dia2;
-  fecha1m=moment(fech1);
-  fecha2m=moment(fech2);
-
-      var diff = fecha2m.diff(fecha1m, 'd'); // Diff in days
-      document.getElementById("duracionContrato").value = diff;
-      tiempo=  document.getElementById("duracionContrato").value;
-      alert(diff);
-
-      if(tiempo=="NaN"  || diff <0) {
-        alert ("Por favor  verifica que la fecha de Inicio y Fecha fin sean Correctas");
-      } else  {
-        document.getElementById("duracionContrato").value = diff;
-      }
-
-    }
+  var fechaF =   moment(fecha1).format('YYYY-DD-MM');
+  var fechaF2 =   moment(fecha2).format('YYYY-DD-MM');
 
 
-    function doSearch()
-    {
-      var tableReg = document.getElementById('datos');
-      var searchText = document.getElementById('searchTerm').value.toLowerCase();
-      var cellsOfRow="";
-      var found=false;
-      var compareWith="";
+
+  //alert(fecha22.diff(fecha11, 'days'));
+
+   var diff =moment( fechaF2).diff(moment(fechaF), "days"); // Diff in days
+
+
+
+   document.getElementById("duracionContrato").value = diff;
+
+
+ }
+
+ function validarFechaIngreso(){
+
+  var fecha1 =document.getElementById('fechaInicio').value;
+  var fecha2= document.getElementById('fechaFin').value;
+  var FechaIngreso= document.getElementById('FechaIngreso').value;
+
+  if (moment(fecha2).isBefore(moment(fecha1))    || moment(fecha2).isSame(moment(fecha1))  ){
+    document.getElementById("errorFechas").innerHTML="La fecha  de  Inicio  es mayor o igual que la fecha de Fin";
+    
+  } else {
+    document.getElementById("errorFechas").innerHTML="";
+  }
+
+}
+
+
+
+
+
+function doSearch()
+{
+  var tableReg = document.getElementById('datos');
+  var searchText = document.getElementById('searchTerm').value.toLowerCase();
+  var cellsOfRow="";
+  var found=false;
+  var compareWith="";
 
       // Recorremos todas las filas con contenido de la tabla
       for (var i = 1; i < tableReg.rows.length; i++)
@@ -248,4 +295,544 @@ function calcularTiempo(){
           tableReg.rows[i].style.display = 'none';
         }
       }
+    }
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    function  validarProvedor(){
+
+     var nombre =document.getElementById('nombre').value;
+     var oculto =document.getElementById('oculto').value;
+
+     var route = "http://localhost:8000/validarProvedor/"+nombre;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idProvedor = res[0].id;
+       document.getElementById("idProvedor").value= idProvedor;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].nombre != oculto )  {
+
+      document.getElementById("errorNombre").innerHTML = "El proveedor intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorNombre").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
+
+
+   function  validarFormularioProvedor(){
+
+    var nombre =document.getElementById('nombre').value;
+
+    var route = "http://localhost:8000/validarProvedor/"+nombre;
+
+    $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+        var idProvedor = res[0].id;
+        document.getElementById("idProvedor").value= idProvedor;
+        $("#modal-reactivar").modal();
+        
+      } 
+      else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].nombre != oculto )  {
+
+
+        document.getElementById("errorNombre").innerHTML = "El proveedor intenta registrar ya existe en el sistema";
+        document.getElementById('submit').disabled=false;
+      }
+      else {
+        document.getElementById("errorNombre").innerHTML = "";
+
+        return true;
+      }
+    });
+
+  }
+
+//Validacion empresas de  proveedores 
+
+function  validarEmpresa(){
+
+ var rfc =document.getElementById('RFC').value;
+ var oculto =document.getElementById('oculto').value;
+
+ var route = "http://localhost:8000/validarEmpresa/"+rfc;
+
+ $.get(route,function(res){
+  if(res.length > 0  &&  res[0].estado =="Inactivo"){
+   document.getElementById('submit').disabled=true;
+   var idEmpresa = res[0].id;
+   document.getElementById("idEmpresa").value= idEmpresa;
+   $("#modal-reactivar").modal();
+
+ } 
+ else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != oculto )  {
+
+  document.getElementById("errorRFC").innerHTML = "La empresa que  intenta registrar ya existe en el sistema";
+  document.getElementById('submit').disabled=true;
+
+}
+else {
+  document.getElementById("errorRFC").innerHTML = "";
+  document.getElementById('submit').disabled=false;
+
+}
+});
+
+}
+   //Aqui termina validacion de  empresas de proveedor
+
+   ///////////////////
+   //Aqui comienza la  validacion de bancos
+   /////
+   function  validarBanco(){
+
+     var nombre =document.getElementById('nombre').value;
+     var oculto =document.getElementById('oculto').value;
+
+     var route = "http://localhost:8000/validarBanco/"+nombre;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idBanco = res[0].id;
+       document.getElementById("idBanco").value= idBanco;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].nombre != oculto )  {
+
+      document.getElementById("errorNombre").innerHTML = "El banco que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorNombre").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
+
+/////////////////////////////
+//Comienza la  validacion de Transportes
+/////////////////
+//Validacion de Placas
+////////////////
+
+function  validarPlacas(){
+
+  var placa =document.getElementById('placas').value;
+  var ocultoPlaca =document.getElementById('ocultoPlaca').value;
+  var route = "http://localhost:8000/validarPlacas/"+placa;
+
+
+
+  $.get(route,function(res){
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idVehiculo = res[0].id;
+     document.getElementById("idVehiculo").value= idVehiculo;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].placas != ocultoPlaca )  {
+
+
+    document.getElementById("errorPlaca").innerHTML = "El vehiculo que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
+
+  }
+  else {
+    console.log(res.length);
+    console.log("ERROR NULO");
+    document.getElementById("errorPlaca").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+}
+////////////////////////
+///Validacion de Numero de  Serie
+///////////////////////
+
+function  validarNumeroSerie(){
+
+  var serie =document.getElementById('no_serie').value;
+  var ocultoSerie =document.getElementById('ocultoSerie').value;
+  var route = "http://localhost:8000/validarPlacas/"+serie;
+
+
+
+  $.get(route,function(res){
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idVehiculo = res[0].id;
+     document.getElementById("idVehiculo").value= idVehiculo;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].no_Serie != ocultoSerie )  {
+
+
+    document.getElementById("errorSerie").innerHTML = "El vehiculo que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
+
+  }
+  else {
+
+    document.getElementById("errorSerie").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+}
+
+////////////////////////////////////////////////////
+//Validar Empresa CEPROZAC
+/////////////////
+function  validarEmpresaCEPROZAC(){
+
+  var rfc =document.getElementById('rfc').value;
+  var ocultoRFC =document.getElementById('ocultoRFC').value;
+  var route = "http://localhost:8000/validarEmpresasCEPROZAC/"+rfc;
+
+  console.log(ocultoRFC);
+
+  $.get(route,function(res){
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idEmpresa = res[0].id;
+     document.getElementById("idEmpresa").value= idEmpresa;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != ocultoRFC )  {
+
+
+    document.getElementById("errorRFC").innerHTML = "La empresa que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
+
+  }
+  else {
+
+    document.getElementById("errorRFC").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+}
+/////////////////////////
+//Validacion de Cuentas Bancarias de Empresas de Provedores
+////////////////////////
+///Validar numero de cuenta
+function  validarNumeroCuentaEmProvedor(){
+
+  var num_cuenta =document.getElementById('num_cuenta').value;
+
+  var ocultoNumCuenta =document.getElementById('ocultoNumCuenta').value;
+  var route = "http://localhost:8000/validarNumCuenta_Cve_Interbancaria/"+num_cuenta;
+
+
+
+  $.get(route,function(res){
+    console.log(res);
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idCuenta = res[0].id;
+     document.getElementById("idCuenta").value= idCuenta;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].num_cuenta != ocultoNumCuenta )  {
+
+
+    document.getElementById("errorNumCuenta").innerHTML = "El numero de cuenta que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
+
+  }
+  else {
+
+    document.getElementById("errorNumCuenta").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+}
+
+////////////////////////////
+///Validar Clave Interbancaria
+
+function  validarNumeroCveInterbancariaEmProvedor(){
+
+  var cve_Interbancaria =document.getElementById('cve_Interbancaria').value;
+  var ocultoCve_Interbancaria =document.getElementById('ocultoCve_Interbancaria').value;
+  var route = "http://localhost:8000/validarNumCuenta_Cve_Interbancaria/"+cve_Interbancaria;
+
+
+
+  $.get(route,function(res){
+    console.log(res);
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idCuenta = res[0].id;
+     document.getElementById("idCuenta").value= idCuenta;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].cve_interbancaria != ocultoCve_Interbancaria )  {
+
+
+    document.getElementById("errorCveInterbancaria").innerHTML = "La clave interbancaria que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
+
+  }
+  else {
+
+    document.getElementById("errorCveInterbancaria").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+}
+
+
+////////////////////////////////////////////////////////
+//Validacion de cuentas de CEPROZAC
+////////////////////////////////////////
+
+function  validarNumeroCuentaEmCEPROZAC(){
+
+  var num_cuenta =document.getElementById('num_cuenta').value;
+  var ocultoNumCuenta =document.getElementById('ocultoNumCuenta').value;
+  var route = "http://localhost:8000/validarNumCuenta_Cve_InterbancariaCEPROZAC/"+num_cuenta;
+  console.log(route);
+
+  $.get(route,function(res){
+    console.log(res);
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idCuenta = res[0].id;
+     document.getElementById("idCuenta").value= idCuenta;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].num_cuenta != ocultoNumCuenta )  {
+
+
+    document.getElementById("errorNumCuenta").innerHTML = "El numero de cuenta que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
+
+  }
+  else {
+
+    document.getElementById("errorNumCuenta").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+}
+
+////////////////////////////
+///Validar Clave Interbancaria
+
+function  validarNumeroCveInterbancariaEmCEPROZAC(){
+
+  var cve_Interbancaria =document.getElementById('cve_Interbancaria').value;
+  var ocultoCve_Interbancaria =document.getElementById('ocultoCve_Interbancaria').value;
+  var route = "http://localhost:8000/validarNumCuenta_Cve_InterbancariaCEPROZAC/"+cve_Interbancaria;
+
+
+
+  $.get(route,function(res){
+
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idCuenta = res[0].id;
+     document.getElementById("idCuenta").value= idCuenta;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].cve_interbancaria != ocultoCve_Interbancaria )  {
+
+
+    document.getElementById("errorCveInterbancaria").innerHTML = "La clave interbancaria que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
+
+  }
+  else {
+
+    document.getElementById("errorCveInterbancaria").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+}
+
+
+
+
+
+////////////////////////////////////////////
+///Validar  Empleado Normal
+////////////////////////////////////////
+
+
+function  validarCURP(){
+
+  var curp =document.getElementById('curp').value;
+  var curpOculta =document.getElementById('curpOculta').value;
+  var route = "http://localhost:8000/validarCURP/"+curp;
+
+  $.get(route,function(res){
+
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idEmpleado= res[0].id;
+   
+
+     document.getElementById("idEmpleadoModal").value= idEmpleado;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].curp != curpOculta )  {
+
+     var tipo = res[0].tipo;
+     if(tipo ==  "NORMAL"){
+       document.getElementById("errorCURP").innerHTML = "El empleado que  intenta registrar ya existe en el sistema  y es un empleado de tipo  \"CONFIANZA\"";
+
+     } else {
+      document.getElementById("errorCURP").innerHTML = "El empleado que  intenta registrar ya existe en el sistema  y es un empleado de tipo  \"CONTRATADO\"";
+     }
+     document.getElementById('submit').disabled=true;
+   }
+   else {
+
+    document.getElementById("errorCURP").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+
+} 
+
+//////////////////////////////////////////////////////////////////
+//Validar  empelado por numero de seguro social
+/////////////////////////////////
+
+
+function  validarSSN(){
+
+  var numero_Seguro_Social =document.getElementById('numero_Seguro_Social').value;
+  var ssnOculta =document.getElementById('SSNOculto').value;
+  var route = "http://localhost:8000/validarCURP/"+numero_Seguro_Social;
+
+console.log("entre");
+  $.get(route,function(res){
+
+
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idEmpleado= res[0].id;
+   
+
+     document.getElementById("idEmpleadoModal").value= idEmpleado;
+
+     $("#modal-reactivar").modal();
+
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].curp != ssnOculta )  {
+
+     var tipo = res[0].tipo;
+     if(tipo ==  "NORMAL"){
+       document.getElementById("errorSSN").innerHTML = "El empleado que  intenta registrar ya existe en el sistema  y es un empleado de tipo  \"CONFIANZA\"";
+
+     } else {
+      document.getElementById("errorSSN").innerHTML = "El empleado que  intenta registrar ya existe en el sistema  y es un empleado de tipo  \"CONTRATADO\"";
+     }
+     document.getElementById('submit').disabled=true;
+   }
+   else {
+
+    document.getElementById("errorCURP").innerHTML = "";
+    document.getElementById('submit').disabled=false;
+
+  }
+});
+
+
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////
+    //Validar
+
+
+    document.getElementById("div").onload = oQuickReplyswap();
+    function oQuickReplyswap() {
+
+      var id=document.getElementById("idEmpleado").value;
+      Carga(id);
     }

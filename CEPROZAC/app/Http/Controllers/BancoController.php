@@ -139,4 +139,30 @@ public function edit($id)
             });
         })->export('xls');
     }
+
+
+
+    public function validarNombre($nombre)
+    {
+
+        $bancos= Banco::
+        select('id','nombre', 'estado')
+        ->where('nombre','=',$nombre)
+        ->get();
+
+        return response()->json(
+          $bancos->toArray());
+
+    }
+
+
+
+    public function activar(Request $request)
+    { 
+        $id =  $request->get('idBanco');
+        $bancos=Banco::findOrFail($id);
+        $bancos->estado="Activo";
+        $bancos->update();
+        return Redirect::to('bancos');
+    }
 }

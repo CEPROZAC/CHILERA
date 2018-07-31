@@ -31,17 +31,19 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{route('provedores.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          <form action="{{route('provedores.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  >
             {{csrf_field()}}
+
+            <input name="nombreOculto" id="oculto"  hidden  />
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de proveedor" maxlength="80" parsley-rangelength="[1,70]"/>
+                <input name="nombre" type="text"  onchange="mayus(this);validarProvedor();"  class="form-control" onkeypress=" return soloLetras(event);" required  id="nombre" placeholder="Ingrese nombre de proveedor" maxlength="80" parsley-rangelength="[1,70]"      >
+                <span id="errorNombre" style="color:#FF0000;"></span>
 
               </div>
             </div>
-
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
@@ -65,30 +67,21 @@
               </div>
             </div>
 
-           
-          <div class="form-group">
-            <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <a href="{{url('/provedores')}}" class="btn btn-default"> Cancelar</a>
-            </div>
-          </div><!--/form-group-->
-        </form>
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
-</div><!--/row-->
+
+            <div class="form-group">
+              <div class="col-sm-offset-7 col-sm-5">
+                <button type="submit" class="btn btn-primary" value="submit" id="submit">Guardar</button>
+                <a href="{{url('/provedores')}}" class="btn btn-default"> Cancelar</a>
+              </div>
+            </div><!--/form-group-->
+          </form>
+        </div><!--/porlets-content-->
+      </div><!--/block-web-->
+    </div><!--/col-md-12-->
+  </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('Provedores.provedores.modalReactivar')
 
 @endsection
 
-<!--
- id         | int(10) unsigned | NO   | PRI | NULL                | auto_increment |
-| nombre     | varchar(255)     | NO   |     | NULL                |                |
-| telefono   | varchar(255)     | NO   |     | NULL                |                |
-| direccion  | varchar(255)     | NO   |     | NULL                |                |
-| email      | varchar(255)     | NO   |     | NULL                |                |
-| estado     | varchar(255)     | NO   |     | NULL                |                |
-| empresa_id | int(10) unsigned | NO   | MUL | NULL                |                |
-| created_at | timestamp        | NO   |     | 0000-00-00 00:00:00 |                |
-| updated_at | timestamp        | NO   |  
--->

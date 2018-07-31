@@ -27,12 +27,13 @@
 
                 <div class="btn-group" style="margin-right: 10px;">  
 
-                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Liquidacion</a>
 
-                  
                   @if($contrato->estado_Contrato=='Vencido')
 
                   <a class="btn btn-primary btn-sm tooltips" data-target="#modal-renovar-{{$empleado->id}}-{{$empresa->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-edit"></i>Renovar Contrato</a>
+
+
+                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ContratosController@liquidacion',$contrato->id)}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar Formato de Liquidacion"> <i class="fa fa-download"></i> Liquidacion</a>
                   @endif
 
                   <a class="btn btn-sm btn-danger tooltips" href="/contratos" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>

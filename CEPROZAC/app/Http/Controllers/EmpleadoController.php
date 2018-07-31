@@ -209,4 +209,29 @@ class EmpleadoController extends Controller
 
       }
 
+
+
+      public function validarCURP($curp_or_ssn)
+      {
+
+        $empleado= Empleado::
+        select('nombre','apellidos','estado','id','tipo','curp','numero_Seguro_Social')
+        ->where('curp','=',$curp_or_ssn)
+        ->orwhere('numero_Seguro_Social','=',$curp_or_ssn)
+        ->get();
+        return response()->json(
+          $empleado->toArray());
+
+      }
+
+
+      public function activar(Request $request)
+      { 
+        $id =  $request->get('idEmpleado');
+        $empleados=Empleado::findOrFail($id);
+        $empleados->estado="Activo";
+        $empleados->update();
+        return Redirect::to('empleados');
+      }
+
     }

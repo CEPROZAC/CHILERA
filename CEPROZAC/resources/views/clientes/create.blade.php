@@ -63,22 +63,21 @@
             </div>
           </div>
 
-
+        
           <div class="form-group">
             <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
               <select name="fiscal" value="{{Input::old('fiscal')}}">
-                @if(Input::old('fiscal')=="Fisica")
-                <option value='Fisica' selected>Fisica
-                </option>
-                <option value="Moral">Moral</option>
-                @else
-                <option value='Moral' selected>Moral
-                </option>
-                <option value="Fisica">Fisica</option>
-                @endif
-              </select>
               
+            
+              @foreach($regimen_fiscal as $regimen)
+                <option value='{{$regimen->id}}'>
+                  {{$regimen->nombre}}
+                </option>
+          
+                @endforeach
+              </select>
+           
             </div>
           </div>
 

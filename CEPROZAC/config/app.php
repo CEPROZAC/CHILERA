@@ -149,6 +149,8 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
 
 
+
+
         ],
 
     /*

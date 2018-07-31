@@ -169,6 +169,68 @@ Route::get('historialContratos/{id}', 'ContratosController@historial');
 Route::post("renovarContrato", "ContratosController@renovarContrato");
 
 
+Route::resource('almacenes','AlmacenController');
+
+
+
+//VALIDACIONES DE DATOS UNICOS   CON AJAX 
+//Validar Vehiculo numero de placa
+Route::get('validarPlacas/{placas}', 'TransporteController@validarPlacas');
+Route::post("activarVehiculo", "TransporteController@activar");
+/////////////
+//Validar numero de serie
+Route::get('validarPlacas/{placas}', 'TransporteController@validarPlacas');
+
+
+
+
+
+
+//Validacion de Provedores
+
+Route::get('validarProvedor/{nombre}', 'ProvedorController@validarNombre');
+
+Route::post("activarProvedor", "ProvedorController@activar");
+
+///////////////////
+//Validacion de empresas de proveedores
+Route::get('validarEmpresa/{rfc}', 'EmpresaController@validarRFC');
+Route::post("activarEmpresa", "EmpresaController@activar");
+////////////////
+//Validaccion de bancos
+Route::get('validarBanco/{nombre}', 'BancoController@validarnombre');
+Route::post("activarBanco", "BancoController@activar");
+//////////////////////////
+///Validar Empresa CEPROZAC
+//
+Route::get('validarEmpresasCEPROZAC/{rfc}', 'EmpresasCeprozacController@validarRFC');
+Route::post("activarEmpresaCEPROZAC", "EmpresasCeprozacController@activar");
+//////////////Termina validacion de Empresas CEPROZAC
+
+/////////////////
+//Comienza  validacion de cuentas bancarias de Empresas de Provedores
+Route::get('validarNumCuenta_Cve_Interbancaria/{numCuenta_or_cveInterbancaria}', 'Cuentas_Banco_ProvedoresController@validarNumCuenta_Cve_Interbancaria');
+Route::post("activarCuentaBancoProvedores", "Cuentas_Banco_ProvedoresController@activar");
+
+
+//////////////////////////////
+//Comienza validacion de cuentas bancarias de Empresas de CEPROZAC
+
+Route::get('validarNumCuenta_Cve_InterbancariaCEPROZAC/{numCuenta_or_cveInterbancaria}', 'CuentasEmpresasCEPROZACController@validarNumCuenta_Cve_Interbancaria');
+Route::post("activarCuentaBancoCEPROZAC", "CuentasEmpresasCEPROZACController@activar");
+
+
+
+
+//////////////////////////
+//Validacion curp Empleado
+//////////////////////////////
+
+Route::get('validarCURP/{curp}', 'EmpleadoController@validarCURP');
+Route::post('activarEmpleado', 'EmpleadoController@activar');
+
+//AQUI TERMINA VALIDACIONES
+
 
 
 

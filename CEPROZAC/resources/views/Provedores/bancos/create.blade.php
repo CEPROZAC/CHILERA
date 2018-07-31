@@ -38,10 +38,14 @@
         <div class="porlets-content">
           <form action="{{route('bancos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
             {{csrf_field()}}
+
+              <input name="nombreOculto" id="oculto"  hidden  />
             <div class="form-group">
               <label class="col-sm-3 control-label">Bancos: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6"> 
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="" placeholder="Ingrese nombre de el Banco"/>
+                <input name="nombre" type="text"  onchange="mayus(this);validarBanco();"  class="form-control" maxlength="30" parsley-rangelength="[1,50]" id="nombre"  required value="" placeholder="Ingrese nombre de el Banco"/>
+
+                <span id="errorNombre" style="color:#FF0000;"></span>
               </div>
             </div>
 
@@ -69,7 +73,7 @@
 
             <div class="form-group">
               <div class="col-sm-offset-7 col-sm-5">
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
                 <a href="{{url('/rol')}}" class="btn btn-default"> Cancelar</a>
               </div>
             </div><!--/form-group-->
@@ -79,5 +83,7 @@
     </div><!--/col-md-12-->
   </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('Provedores.bancos.modalReactivar')
 
 @endsection

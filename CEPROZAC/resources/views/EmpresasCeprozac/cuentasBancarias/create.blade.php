@@ -48,17 +48,23 @@
            </div>
          </div><!--/form-group-->
 
+         <input name="ocultoNumCuenta" id="ocultoNumCuenta"  hidden  />
+
          <div class="form-group">
            <label class="col-sm-3 control-label">Numero de cuenta:</label>
            <div class="col-sm-6">
-            <input type="text" name="num_cuenta" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10" />
+            <input type="text" name="num_cuenta" id="num_cuenta"  onblur="validarNumeroCuentaEmCEPROZAC();" class="form-control" required parsley-rangelength="[10,16]" placeholder="Número de cuenta bancaria" maxlength="16" minlength="10" />
+            <span id="errorNumCuenta" style="color:#FF0000;"></span>
           </div>
         </div><!--/form-group--> 
 
+
+        <input name="ocultoCve_Interbancaria" id="ocultoCve_Interbancaria"  hidden  />
         <div class="form-group">
           <label class="col-sm-3 control-label">Número de CLABE Interbancaria: </label>
           <div class="col-sm-6">
-            <input type="text"  name= "cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" />
+          <input type="text"  name= "cve_Interbancaria" onblur="validarNumeroCveInterbancariaEmCEPROZAC();" id="cve_Interbancaria" class="form-control" required parsley-rangelength="[18,19]" placeholder="Número de CLABE Interbancaria" maxlength="19" minlength="18" />
+            <span id="errorCveInterbancaria" style="color:#FF0000;"></span>
           </div>
         </div><!--/form-group--> 
 
@@ -75,7 +81,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
 
             <a href="{{URL::action('EmpresasCeprozacController@verCuentas',$empresas->id)}}" class="btn btn-default "> Cancelar</a> 
 
@@ -87,5 +93,8 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+
+@include('EmpresasCeprozac.cuentasBancarias.modalReactivar')
 
 @endsection
