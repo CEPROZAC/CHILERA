@@ -201,4 +201,34 @@ class TransporteController extends Controller
         })->export('xls');
 
     }
+
+
+
+    public function validarPlacas($placas_Or_serie)
+    {
+
+        $transportes= Transporte::
+        select('id','nombre_Unidad','placas','no_Serie','aseguradora','capacidad','estado')
+
+        ->where('placas','=',$placas_Or_serie)
+        ->orWhere('no_Serie', '=',$placas_Or_serie)
+        ->get();
+
+        return response()->json(
+            $transportes->toArray());
+
+    }
+
+    public function activar(Request $request)
+    { 
+        $id =  $request->get('idVehiculo');
+        $transportes=Transporte::findOrFail($id);
+        $transportes->estado="Activo";
+        $transportes->update();
+        return Redirect::to('transportes');
+    }
+
+
+
 }
+

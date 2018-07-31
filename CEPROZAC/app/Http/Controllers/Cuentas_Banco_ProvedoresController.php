@@ -10,6 +10,7 @@ use CEPROZAC\Empresa;
 use DB;
 use CEPROZAC\Cuentas_Banco_Provedores;
 use Maatwebsite\Excel\Facades\Excel;
+
 class Cuentas_Banco_ProvedoresController extends Controller
 {
     /**
@@ -178,6 +179,47 @@ class Cuentas_Banco_ProvedoresController extends Controller
       });
     })->export('xls');
 
+  }
+
+
+  public function validarNumCuenta_Cve_Interbancaria($num_cuenta_or_cve_interbancaria)
+  {
+
+    $cuentas_bancarias= Cuentas_Banco_Provedores::
+    select('id','num_cuenta', 'estado','cve_interbancaria')
+
+    ->where('num_cuenta','=',$num_cuenta_or_cve_interbancaria)
+    ->orwhere('cve_interbancaria','=',$num_cuenta_or_cve_interbancaria)
+
+    ->get();
+
+    return response()->json(
+      $cuentas_bancarias->toArray());
+
+  }
+
+
+
+  public function activar(Request $request)
+  { 
+
+    $idCuenta =  $request->get('idCuenta');
+    $cuentas_bancarias=Cuentas_Banco_Provedores::findOrFail($idCuenta);
+    $cuentas_bancarias->estado="Activo";
+    $cuentas_bancarias->update();
+
+    $id=$cuentas_bancarias->idEmpresa;
+    $empresas=Empresa::findOrFail($id);
+
+    $cuentas= DB::table('cuentas_banco_provedores')
+    ->join('bancos','bancos.id','=','cuentas_banco_provedores.idBanco')
+    ->select('cuentas_banco_provedores.*','bancos.nombre as nomBanco')
+    ->where('idEmpresa','=',$id)
+    ->where('cuentas_banco_provedores.estado','Activo')
+    ->get();
+
+    DB::commit();
+    return view('Provedores.empresas.listacuentas',['empresas'=>$empresas,'cuentas'=>$cuentas]);
   }
 
 }

@@ -200,7 +200,7 @@
                       <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
 
-                        <input name="fechaFin" id="fechaFin"  value="{{$contrato->fechaFin}}"  type="text" onblur="calcularTiempo();" required class="form-control mask" data-inputmask="'alias': 'date'">
+                        <input name="fechaFin" id="fechaFin"  value="{{$contrato->fechaFin}}"  type="text" onblur="validarFecha2();validarFechas();" required class="form-control mask" data-inputmask="'alias': 'date'">
                       </div>
                     </div>
                     <input type="hidden" name="duracionContrato" id="duracionContrato" value="{{$contrato->duracionContrato}}" />    

@@ -47,7 +47,7 @@
 
         <div class="porlets-content">
           <div  class="form-horizontal row-border" > <!--acomodo-->
-            <form class="" id="myForm" action="{{route('empleados.store')}}" method="post" role="form" enctype="multipart/form-data" parsley-validate novalidate data-toggle="validator">
+            <form class="" id="myForm" action="{{route('empleados.store')}}" method="post" role="form" enctype="multipart/form-data" parsley-validate novalidate data-toggle="validator" onsubmit="return validarEmpleadoConfianza()">
               {{csrf_field()}}
               <div id="smartwizard">
                 <ul>
@@ -93,26 +93,34 @@
                        </div>
                      </div>
 
+                     <input type="text" name="ssnOculto" id="SSNOculto" hidden>
+
                      <div class="form-group">
                       <label class="col-sm-3 control-label">SSN</label>
                       <div class="col-sm-6 ">
-                        <input type="text" name="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'" required>
+                        <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'" onblur="validarSSN();" required>
+                        <span id="errorSSN" style="color:#FF0000;"></span>
                       </div>
                     </div>
 
 
+                     <input type="text" name="curpOculta" id="curpOculta" hidden>
 
                     <div class="form-group">
                       <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();"  class="form-control"   placeholder="Ingrese CURP de el empleado"/>
+                        <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();"  class="form-control"   placeholder="Ingrese CURP de el empleado" onchange="validarCURP();" />
+
+                        <span id="errorCURP" style="color:#FF0000;"></span>
                       </div>
+
+
                     </div><!--/form-group-->
 
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" >
+                        <input type="text" onchange="mayus(this);"  name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" >
                       </div>
                     </div>
 
@@ -129,7 +137,6 @@
                       <div class="col-sm-6">
 
                         <input name="email" value="" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
-
                       </div>
                     </div>
 
@@ -189,7 +196,7 @@
                      </div>
                      <div class="form-group">
                       <div class="col-sm-offset-7 col-sm-5">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
                         <a href="/empleados" class="btn btn-default"> Cancelar</a>
                       </div>
                     </div><!--/form-group--> 
@@ -210,6 +217,8 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('Recursos_Humanos.empleados.modalReactivar')
 
 <!-- Include jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

@@ -7,6 +7,8 @@ use CEPROZAC\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use CEPROZAC\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+
+use CEPROZAC\Helpers\Convertidor;
 use CEPROZAC\Empleado;
 use CEPROZAC\Contratos;
 use CEPROZAC\EmpresasCeprozac;
@@ -40,9 +42,7 @@ class ContratosController extends Controller
       ->where('e.estado','Activo')
       ->get();
 
-
       return view('Recursos_Humanos.contratos.index', ['contratos' => $contratos]);
-
 
     }
 
@@ -378,7 +378,12 @@ class ContratosController extends Controller
 
    static function calcularPesos($sueldo)
    {
-    return  $letras = \NumeroALetras::convertir($sueldo, 'PESOS', 'CENTAVOS');
+
+     
+    $valor = Convertidor::numtoletras($sueldo);
+    return $valor;
+
+//IMPRIME UN MILLON ONCE MIL CIENTO ONCE PESOS 00/100 M.N
 
   }
 
@@ -462,6 +467,21 @@ class ContratosController extends Controller
     $contratos= Contratos::findOrFail($id);
     $contratos->estado_Contrato='Vencido';
     $contratos->update();
+  }
+
+
+  public  function calcularMontoLiquidacion($sueldo,$duracionContrato){
+
+    $parteProporcionalAguinaldo =round(15/360*$sueldo*$duracionContrato,2);
+
+    $parteProporcionalVacaciones=6/365*$sueldo*$duracionContrato;
+
+    $parteProporcionalPrimaVacasiones=$parteProporcionalVacaciones*($duracionContrato/100);
+    $primaAntiguedad =12/365*$sueldo*25;
+
+    $total = $parteProporcionalAguinaldo+$parteProporcionalVacaciones+$parteProporcionalPrimaVacasiones+ $primaAntiguedad ;
+    return  round($total,2);
+
   }
 
 }

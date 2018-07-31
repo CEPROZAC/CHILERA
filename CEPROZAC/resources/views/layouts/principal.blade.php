@@ -107,7 +107,7 @@
         <!--\\\\\\\ inner start \\\\\\--><div class="left_nav">
 
         <!--\\\\\\\left_nav start \\\\\\-->
-    
+
         <div class="left_nav_slidebar">
           <ul >
             <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> Provedores<span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
@@ -119,7 +119,7 @@
                 <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Bancos</b> </a> </li>
                 <li> <a href="{{url('materiales/provedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b >Materiales</b> </a> </li>
 
-  
+
               </ul>
             </li>
             <li> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> Clientes <span class="plus"><i class="fa fa-plus"></i></span></a>
@@ -166,6 +166,8 @@
                
                   <li> <a href="{{url('almacenes/empaque')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empaque</b> </a> </li>
                 <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Generales</b> </a> </li>
+
+                <li> <a href="{{url('almacenes')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacenes</b> </a> </li>
 
 
               </ul>

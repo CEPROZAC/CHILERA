@@ -48,10 +48,13 @@
               </div>
             </div>
 
+            <input name="rfcOculto" id="ocultoRFC"  hidden value="{{$empresasCEPROZAC->rfc}}" />
+
             <div class="form-group">
               <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="rfc" type="text"  onchange="mayus(this);"  class="form-control" maxlength="13" id="RFC" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="{{$empresasCEPROZAC->rfc}}" placeholder="Ingrese RFC de la empresa"/>
+                <input name="rfc" type="text" id="rfc"  onchange="mayus(this);" onblur="validarEmpresaCEPROZAC()"  class="form-control" maxlength="13" id="RFC" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="{{$empresasCEPROZAC->rfc}}" placeholder="Ingrese RFC de la empresa"/>
+                <span id="errorRFC" style="color:#FF0000;"></span>
               </div>
             </div>
 
@@ -116,7 +119,7 @@
 
           <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
               <a href="{{url('/empresasCEPROZAC')}}" class="btn btn-default"> Cancelar</a>
             </div>
           </div><!--/form-group-->
@@ -126,5 +129,7 @@
   </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('EmpresasCeprozac.empresas.modalReactivar')
 
 @endsection

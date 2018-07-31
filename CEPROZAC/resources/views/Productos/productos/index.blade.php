@@ -43,7 +43,7 @@
 
                   <th>Nombre </th>
 
-                  <th>Calidad </th>
+
                   <th >Unidad de Medida</th>
                   <th >Formato de Empaque</th>
                   <th >% de humedad</th>
@@ -56,9 +56,7 @@
                @foreach($producto  as $producto)
                <tr class="gradeA">
 
-                <td>{{$producto->nombre}} </td>
-
-                <td >{{$producto->nomCalidad}}</td>
+                <td>{{$producto->nombre}} {{$producto->nomCalidad}}</td>
                 <td >{{$producto->unidad_de_Medida}}</td>
                 <td >{{$producto->formaEmpaque}}</td>
                 <td >{{$producto->porcentaje_Humedad}}%</td> 
@@ -83,7 +81,7 @@
             <tr>
 
               <th>Nombre </th>
-              <th>Calidad </th>
+
               <th >Unidad de Medida</th>
               <th >Formato de Empaque</th>
               <th >% de humedad</th>

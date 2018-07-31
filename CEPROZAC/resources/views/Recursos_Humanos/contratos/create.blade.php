@@ -124,137 +124,140 @@
                           <label class="col-sm-3 control-label">Fecha Ingreso: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                           <input name="fecha_Ingreso" required type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+                            <input name="fecha_Ingreso" id="FechaIngreso" required type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
+                          <div class="col-sm-6">
+
+                           <input type="text" name="fecha_Alta_Seguro" required class="form-control mask" data-inputmask="'alias': 'date'">
                          </div>
                        </div>
 
                        <div class="form-group">
-                        <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
-                        <div class="col-sm-6">
+                        <label class="col-sm-3 control-label">SSN<strog class="theme_color">*</strog></label>
+                        <div class="col-sm-6 ">
+                          <input type="text" name="numero_Seguro_Social" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
+                        </div>
+                      </div>
 
-                         <input type="text" name="fecha_Alta_Seguro" required class="form-control mask" data-inputmask="'alias': 'date'">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Empresa contrata: <strog class="theme_color">*</strog></label>
+                        <div class="col-sm-6">
+                          <select name="idEmpresa" class="form-control" required>  
+                            @foreach($empresas as $empresa)
+                            <option value="{{$empresa->id}}">
+                             {{$empresa->nombre}}
+                           </option>
+                           @endforeach              
+                         </select>
+                         <div class="help-block with-errors"></div>
+                       </div>
+                     </div><!--/form-group-->
+
+                     <div class="form-row">    
+                      <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-3">
+                        <div class="input-group">
+                         <div class="input-group-addon">$</div>
+
+
+                         <input name="sueldo_Fijo"  parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
                        </div>
                      </div>
-
-                     <div class="form-group">
-                      <label class="col-sm-3 control-label">SSN<strog class="theme_color">*</strog></label>
-                      <div class="col-sm-6 ">
-                        <input type="text" name="numero_Seguro_Social" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Empresa contrata: <strog class="theme_color">*</strog></label>
-                      <div class="col-sm-6">
-                        <select name="idEmpresa" class="form-control" required>  
-                          @foreach($empresas as $empresa)
-                          <option value="{{$empresa->id}}">
-                           {{$empresa->nombre}}
-                         </option>
-                         @endforeach              
-                       </select>
-                       <div class="help-block with-errors"></div>
-                     </div>
-                   </div><!--/form-group-->
-
-                   <div class="form-row">    
-                    <label class="col-sm-3 control-label">Sueldo empleado: <strog class="theme_color">*</strog></label>
-                    <div class="col-sm-3">
-                      <div class="input-group">
-                       <div class="input-group-addon">$</div>
-
-
-                       <input name="sueldo_Fijo"  parsley-range="[1,50000]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="189.00" onkeypress=" return soloNumeros(event);"/>
-                     </div>
                    </div>
+
+
+                 </div><!--validator-->
+               </div><!--user-profile-content-->
+             </div><!--step-2-->
+
+             <div id="step-3" class="">
+              <div class="user-profile-content">
+                <div id="form-step-2" role="form" data-toggle="validator">
+                  <h3 class="h3titulo">Datos de Contrato</h3>
+
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
+                    <div class="col-sm-6">
+                      <input name="fechaInicio"  id="fechaInicio"    type="text" onblur="validarFecha1();" required class="form-control mask" data-inputmask="'alias': 'date'">
+                      <span  style="color: #C0392B;" id="errorFechaInicio"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
+                    <div class="col-sm-6">
+
+                      <input name="fechaFin" id="fechaFin"    type="text" onblur="validarFecha2();validarFechas();" required class="form-control mask" data-inputmask="'alias': 'date'">
+                      <span id="errorFechaFin" style="color: #C0392B;"></span>
+                    </div>
+                  </div>
+
+                 <center> <span style="color: #C0392B;" id="errorFechas"> </span></center>
+                  <input type="hidden" name="duracionContrato" id="duracionContrato" />    
+
+                </div><!--validator-->
+              </div><!--user-profile-content-->
+            </div><!--step-3-->
+
+
+            <div id="step-4" class="">
+              <div class="user-profile-content">
+                <div id="form-step-3" role="form" >
+                  <h3 class="h3titulo">Roles de empleados</h3>
+                  <br>
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th> 
+                            Rol
+                          </th> 
+                          <th>Agregar Rol</th>
+                          <th>Quitar Rol</th>
+                        </tr>
+                      </thead>
+                      <tbody id="myTable">
+                        <tr>
+                          <td>
+                            <div class="col-sm-8">
+                              <select   id="rol" class="form-control" required>  
+                                @foreach($roles as $rol)
+                                <option  label="{{$rol->rol_Empleado}}" value="{{$rol->id}}">
+
+                                 {{$rol->rol_Empleado}} 
+                               </option>
+
+                               @endforeach              
+                             </select>
+                           </div>
+                         </td>
+                         <input type="hidden" name="_token" id="idEmpleado">
+                         <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                         <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                       </tr>
+                     </tbody>
+                   </table>
                  </div>
-
-
-               </div><!--validator-->
-             </div><!--user-profile-content-->
-           </div><!--step-2-->
-
-           <div id="step-3" class="">
-            <div class="user-profile-content">
-              <div id="form-step-2" role="form" data-toggle="validator">
-                <h3 class="h3titulo">Datos de Contrato</h3>
-
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
-                  <div class="col-sm-6">
-
-                    <input name="fechaInicio"  id="fechaInicio"   type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
+                 <div class="form-group">
+                  <div class="col-sm-offset-7 col-sm-5">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="/contratos" class="btn btn-default"> Cancelar</a>
                   </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
-                  <div class="col-sm-6">
-
-                    <input name="fechaFin" id="fechaFin"    type="text" onblur="calcularTiempo();" required class="form-control mask" data-inputmask="'alias': 'date'">
-                  </div>
-                </div>
-                <input type="hidden" name="duracionContrato" id="duracionContrato" />    
+                </div><!--/form-group--> 
 
               </div><!--validator-->
             </div><!--user-profile-content-->
-          </div><!--step-3-->
-          
+          </div><!--step-2-->
 
-          <div id="step-4" class="">
-            <div class="user-profile-content">
-              <div id="form-step-3" role="form" >
-                <h3 class="h3titulo">Roles de empleados</h3>
-                <br>
-                <div class="table-responsive">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th> 
-                          Rol
-                        </th> 
-                        <th>Agregar Rol</th>
-                        <th>Quitar Rol</th>
-                      </tr>
-                    </thead>
-                    <tbody id="myTable">
-                      <tr>
-                        <td>
-                          <div class="col-sm-8">
-                            <select   id="rol" class="form-control" required>  
-                              @foreach($roles as $rol)
-                              <option  label="{{$rol->rol_Empleado}}" value="{{$rol->id}}">
-
-                               {{$rol->rol_Empleado}} 
-                             </option>
-
-                             @endforeach              
-                           </select>
-                         </div>
-                       </td>
-                       <input type="hidden" name="_token" id="idEmpleado">
-                       <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                       <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
-                     </tr>
-                   </tbody>
-                 </table>
-               </div>
-               <div class="form-group">
-                <div class="col-sm-offset-7 col-sm-5">
-                  <button type="submit" class="btn btn-primary">Guardar</button>
-                  <a href="/contratos" class="btn btn-default"> Cancelar</a>
-                </div>
-              </div><!--/form-group--> 
-
-            </div><!--validator-->
-          </div><!--user-profile-content-->
-        </div><!--step-2-->
-
-      </div>
-    </div>  <!--smartwizard-->            
-  </form>
-</div><!--/form-horizontal-->
+        </div>
+      </div>  <!--smartwizard-->            
+    </form>
+  </div><!--/form-horizontal-->
 </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
@@ -265,31 +268,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
+
+
+
+
 <script type="text/javascript">
-
-
-  function calcularTiempo(){
-    var fecha1 =document.getElementById('fechaInicio').value;
-    var fecha2= document.getElementById('fechaFin').value;
-    var ano1 = fecha1.substring(0, 2);
-    var mes1 = fecha1.substring(3, 5);
-    var dia1 = fecha1.substring(6, 10);
-    fech1 =ano1+"-"+mes1+"-"+dia1;
-    var ano2 = fecha2.substring(0, 2);
-    var mes2 = fecha2.substring(3, 5);
-    var dia2 = fecha2.substring(6, 10);
-    fech2 =ano2+"-"+mes2+"-"+dia2;
-    fecha1m=moment(fech1);
-    fecha2m=moment(fech2);
-      var diff = fecha2m.diff(fecha1m, 'd'); // Diff in days
-      document.getElementById("duracionContrato").value = diff;
-
-
-    }
-  </script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
+  $(document).ready(function(){
         // Toolbar extra buttons
         var btnFinish = $('<button></button>').text('Finish')
         .addClass('btn btn-info')

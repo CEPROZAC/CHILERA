@@ -174,17 +174,43 @@ class EmpresasCeprozacController extends Controller
 
         $excel->sheet('Excel sheet', function($sheet) use($id) {
 
-         $cuentas= DB::table('cuentas_empresas_ceprozac')
-         ->join('bancos','bancos.id','=','cuentas_empresas_ceprozac.idBanco')
-         ->select('cuentas_empresas_ceprozac.*','bancos.nombre as nomBanco')
-         ->where('idEmpresa','=',$id)
-         ->where('cuentas_empresas_ceprozac.estado','Activo')
-         ->get();
-         $sheet->fromArray($cuentas);
-         $sheet->row(1,['Banco','Clave Interbancaria','Numero de cuenta','Saldo' ]);
-         $sheet->setOrientation('landscape');
-     });
+           $cuentas= DB::table('cuentas_empresas_ceprozac')
+           ->join('bancos','bancos.id','=','cuentas_empresas_ceprozac.idBanco')
+           ->select('cuentas_empresas_ceprozac.*','bancos.nombre as nomBanco')
+           ->where('idEmpresa','=',$id)
+           ->where('cuentas_empresas_ceprozac.estado','Activo')
+           ->get();
+           $sheet->fromArray($cuentas);
+           $sheet->row(1,['Banco','Clave Interbancaria','Numero de cuenta','Saldo' ]);
+           $sheet->setOrientation('landscape');
+       });
     })->export('xls');
 
+}
+
+
+
+public function validarRFC($rfc)
+{
+
+    $empresas= EmpresasCeprozac::
+    select('id','rfc','nombre', 'estado')
+    ->where('rfc','=',$rfc)
+    ->get();
+
+    return response()->json(
+      $empresas->toArray());
+
+}
+
+
+
+public function activar(Request $request)
+{ 
+    $id =  $request->get('idEmpresa');
+    $empresas=EmpresasCeprozac::findOrFail($id);
+    $empresas->estado="Activo";
+    $empresas->update();
+    return Redirect::to('empresasCEPROZAC');
 }
 }

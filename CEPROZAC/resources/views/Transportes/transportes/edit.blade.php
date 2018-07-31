@@ -35,7 +35,7 @@
             {{csrf_field()}}
 
             <input type="hidden" name="_method" value="PUT">
-            {{csrf_field()}}
+            
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
@@ -54,13 +54,15 @@
               </div>
             </div>
 
-
+            <input name="nombreOculto" id="ocultoPlaca"  hidden value="{{$vehiculo->placas}}"  />
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Placas: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="placas" type="text"   onchange="mayus(this);"  class="form-control" required value="{{$vehiculo->placas}}" placeholder="Ingrese placas del Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="placas" type="text" id="placas"   onchange="mayus(this);" onblur=";validarPlacas();"  class="form-control" required value="{{$vehiculo->placas}}" placeholder="Ingrese placas del Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+
+                <span id="errorPlaca" style="color:#FF0000;"></span>
 
               </div>
             </div>
@@ -131,7 +133,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
             <a href="{{url('/transportes')}}" class="btn btn-default"> Cancelar</a>
           </div>
         </div><!--/form-group-->
@@ -141,6 +143,8 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('Transportes.transportes.modalReactivar')
 
 @endsection
 
