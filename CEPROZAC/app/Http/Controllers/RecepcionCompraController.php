@@ -11,7 +11,7 @@ use CEPROZAC\Provedor;
 use CEPROZAC\Producto;
 use CEPROZAC\calidad;
 use CEPROZAC\Transporte;
-use CEPROZAC\empresas_ceprozac;
+use CEPROZAC\EmpresasCeprozac;
 use CEPROZAC\ServicioBascula;
 use CEPROZAC\Empleado;
 use CEPROZAC\bascula;
@@ -21,6 +21,8 @@ use CEPROZAC\fumigaciones;
 use CEPROZAC\salidasagroquimicos;
 use CEPROZAC\recepcioncompra;
 use CEPROZAC\formaempaque;
+use CEPROZAC\entradas_almacengeneral;
+use CEPROZAC\espacios_almacen;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
@@ -67,7 +69,9 @@ class RecepcionCompraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+
     { 
+
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $provedores=DB::table('provedores')->where('estado','=' ,'Activo')->get();
@@ -78,8 +82,15 @@ class RecepcionCompraController extends Controller
       $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
       $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
       $almacenagroquimicos=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->orwhere('cantidad','>','0')->get();
-      return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral,"almacenagroquimicos"=>$almacenagroquimicos,"empresas"=>$empresas]);
-    }
+
+      if (empty($almacenagroquimicos) or empty($empleado) or empty($empresas) or empty($provedores) or empty($productos)  or empty($servicio)  or empty($empaque) ){
+       return Redirect::to('compras/recepcion');
+
+
+     }
+
+     return view("compras.recepcion.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral,"almacenagroquimicos"=>$almacenagroquimicos,"empresas"=>$empresas]);
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -122,11 +133,11 @@ class RecepcionCompraController extends Controller
        $y= $y + 1;
        $cantidadagro = $name[$y];
        $salida->cantidad = $cantidadagro;
-        $salida->destino = "Materia Prima Embarque: ".$request->get('codificacion');
-$salida->recibio = $request->get('nombre_fum');
-$salida->entrego = $request->get('entrego_qui');
-$salida->tipo_movimiento ="Fumigacion de Materia Prima";
-$salida->fecha=$request->get('fechai');
+       $salida->destino = "Materia Prima Embarque: ".$request->get('codificacion');
+       $salida->recibio = $request->get('nombre_fum');
+       $salida->entrego = $request->get('entrego_qui');
+       $salida->tipo_movimiento ="Fumigacion de Materia Prima";
+       $salida->fecha=$request->get('fechai');
 $salida->save();
        $y= $y + 1;
        $num = $num + 1;
@@ -170,13 +181,67 @@ $salida->save();
      $material->id_fumigacion=$ultimo;
      $material->save();
 
+
+
+
+
+     $aux = 0;
+     $num=1;
+     $h=$material->espacio_asignado;
+     $lim= substr_count($h,",");
+     $limi = $lim +1;
+
+
+     while ($num <= $limi) {
+       $producto = [$material->espacio_asignado];
+       $first = head($producto);
+       $name = explode(",",$first); 
+       $entrada = new entradas_almacengeneral;
+       $entrada->id_almacen = $divide[0];
+       $entrada->id_espacio = $first = $name[$aux];
+       $idalm = $divide[0];
+       $idesp = $first = $name[$aux];
+       //$espacio=espacios_almacen::where('id_almacen', $divide[0])->findOrFail($entrada->id_espacio);
+       $espacio = espacios_almacen::where('id_almacen', '=', $idalm)->where('num_espacio','=', $idesp)->firstOrFail();
+   
+       $aux= $aux+1;
+       $entrada->origen= "Recepción de Compra de Materia Prima";
+       $entrada->fecha= $request->get('fecha');
+       $entrada->kg_entrada= $request->get('recibidos');
+       $entrada->id_producto= $request->get('producto');
+       $entrada->id_provedor= $request->get('provedor');
+       $entrada->entrego= $request->get('recibe_em');
+       $entrada->recibe_alm= $request->get('recibe_em');
+       $entrada->observacionesc= $request->get('observacionesu');
+          $espacio->total_ocupado =  $espacio->total_ocupado + $entrada->kg_entrada;
+          $espacio->total_libre = $espacio->capacidad - $espacio->total_ocupado;
+          $espacio->id_producto = $entrada->id_provedor;
+          $espacio->id_provedor = $entrada->id_provedor;
+          $espacio->descripcion =  $entrada->observacionesc;
+           $espacio->estado = "Ocupado";
+           $espacio->fecha_entrada = $request->get('fecha');
+          $espacio->update();
+$entrada->save();
+
+$almacen=almacengeneral::findOrFail($idalm);
+               $almacen->esp_ocupado=$request->get('ocupado');
+        $almacen->esp_libre=$request->get('libre'); 
+         $almacen->total_ocupado=$request->get('totalocupado');
+          $almacen->total_libre=$request->get('totallibre');
+          $almacen->update();
+       $num = $num + 1;
+
+     }
+
+
+
      $ultimoid = recepcioncompra::orderBy('id', 'desc')->first()->id;
     //  $compra= DB::table('recepcioncompra')->orderby('created_at','DESC')->take(1)->get();
 
-     $compra = RecepcionCompra::findOrFail($ultimoid);
+      $compra = RecepcionCompra::findOrFail($ultimoid);
       $id_provedor= $compra->id_provedor;
       $recibe= $compra->recibe;
-       $entregado= $compra->entregado;
+      $entregado= $compra->entregado;
       $producto=$compra->id_producto;
       $calidad=$compra->id_calidad;
       $id_empaque=$compra->id_empaque;
@@ -187,7 +252,7 @@ $salida->save();
 
 
       $provedor=Provedor::findOrFail($id_provedor);
-      $emp_recibe=empresa::findOrFail($recibe);
+      $emp_recibe=EmpresasCeprozac::findOrFail($recibe);
       $entrega=empleado::findOrFail($entregado);
       $produ=producto::findOrFail($producto);
       $cali=calidad::findOrFail($calidad);
@@ -199,7 +264,7 @@ $salida->save();
       $id_fumigador=$fumigacion->id_fumigador;
       $fumigador=empleado::findOrFail($id_fumigador);
 
-      return view("Compras.Recepcion.lista",["provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador]);
+     return view("Compras.Recepcion.lista",["provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador]);
 
 
 
@@ -214,8 +279,8 @@ $salida->save();
     $view =  \View::make('Compras.Recepcion.invoice', compact('date', 'invoice','material'))->render();
     $pdf = \App::make('dompdf.wrapper');
     $pdf->loadHTML($view);
-  return $pdf->stream('invoice');
-}
+    return $pdf->stream('invoice');
+  }
 
     /**
      * Display the specified resource.
@@ -261,7 +326,7 @@ $salida->save();
      */
     public function destroy($id)
     {
-            $compra=RecepcionCompra::findOrFail($id);
+      $compra=RecepcionCompra::findOrFail($id);
       $compra->delete();
       return Redirect::to('compras/recepcion');
 
@@ -274,7 +339,7 @@ $salida->save();
       $compra = RecepcionCompra::findOrFail($id);
       $id_provedor= $compra->id_provedor;
       $recibe= $compra->recibe;
-       $entregado= $compra->entregado;
+      $entregado= $compra->entregado;
       $producto=$compra->id_producto;
       $calidad=$compra->id_calidad;
       $id_empaque=$compra->id_empaque;
@@ -285,7 +350,7 @@ $salida->save();
 
 
       $provedor=Provedor::findOrFail($id_provedor);
-      $emp_recibe=empresa::findOrFail($recibe);
+      $emp_recibe=EmpresasCeprozac::findOrFail($recibe);
       $entrega=empleado::findOrFail($entregado);
       $produ=producto::findOrFail($producto);
       $cali=calidad::findOrFail($calidad);
@@ -300,7 +365,7 @@ $salida->save();
       return view("Compras.Recepcion.lista",["provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador]);
     }
 
-        public function excel()
+    public function excel()
     {        
         /**
          * toma en cuenta que para ver los mismos 
@@ -310,20 +375,20 @@ $salida->save();
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
             $compras = RecepcionCompra::join('provedores as prov', 'recepcioncompra.id_provedor','=','prov.id')
-      ->join('empresas as emp', 'recepcioncompra.recibe','=','emp.id')
-      ->join('empleados as empleados', 'recepcioncompra.entregado','=','empleados.id')
-      ->join('productos as prod' ,'recepcioncompra.id_producto','=','prod.id')
-      ->join('calidad as cali' ,'recepcioncompra.id_calidad','=','cali.id')
-      ->join('forma_empaques as forma' ,'recepcioncompra.id_empaque','=','forma.id')
-      ->join('basculas as bas' ,'recepcioncompra.id_bascula','=','bas.id')
-      ->join('empleados as emple', 'recepcioncompra.peso','=','emple.id')
-      ->join('almacengeneral as alma', 'recepcioncompra.ubicacion_act','=','alma.id')
-      ->join('fumigaciones as fum', 'recepcioncompra.id_fumigacion','=','fum.id')
+            ->join('empresas as emp', 'recepcioncompra.recibe','=','emp.id')
+            ->join('empleados as empleados', 'recepcioncompra.entregado','=','empleados.id')
+            ->join('productos as prod' ,'recepcioncompra.id_producto','=','prod.id')
+            ->join('calidad as cali' ,'recepcioncompra.id_calidad','=','cali.id')
+            ->join('forma_empaques as forma' ,'recepcioncompra.id_empaque','=','forma.id')
+            ->join('basculas as bas' ,'recepcioncompra.id_bascula','=','bas.id')
+            ->join('empleados as emple', 'recepcioncompra.peso','=','emple.id')
+            ->join('almacengeneral as alma', 'recepcioncompra.ubicacion_act','=','alma.id')
+            ->join('fumigaciones as fum', 'recepcioncompra.id_fumigacion','=','fum.id')
             ->select('recepcioncompra.id','recepcioncompra.nombre','recepcioncompra.fecha_compra','prov.nombre as provnombre','recepcioncompra.transporte','recepcioncompra.num_transportes','emp.nombre as empnombre','empleados.nombre as emplnombre','recepcioncompra.observacionesc','recepcioncompra.total_compra','prod.nombre as prodnombre','cali.nombre as calinombre','forma.formaEmpaque','recepcioncompra.humedad','recepcioncompra.pacas','recepcioncompra.pacas_rev','recepcioncompra.observacionesm','bas.nombreBascula','recepcioncompra.ticket','emple.nombre as empleenombre','recepcioncompra.kg_recibidos','recepcioncompra.kg_enviados','recepcioncompra.diferencia','recepcioncompra.observacionesb','alma.nombre as almanombre','recepcioncompra.espacio_asignado','recepcioncompra.observacionesu','fum.id as fumid')->get();
             $sheet->fromArray($compras);
             $sheet->row(1,['N° Compra','Nombre de Lote','Fecha de Compra' ,'Provedor','Transporte/Placas','N°Transportes','Empresa','Recibe Empleado','Observaciónes de Compra','Precio Total de Compra','Producto' ,'Calidad','Empaque','%Humedad','Total de Pacas','Pacas a Revisar','Observaciónes de Muestreo','Bascula','Ticket' ,'Realizo Pesaje','KG recibidos','KG Enviados','Diferencia','Observaciones Pesaje','Ubicación Actual','Espacio Asignado','Observaciones' ,'N° Fumigación']);
             $sheet->setOrientation('landscape');
-        });
-      })->export('xls');
+          });
+        })->export('xls');
+      }
     }
-  }

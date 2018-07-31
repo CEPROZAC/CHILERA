@@ -90,6 +90,18 @@
                     </tr>
                     <th>Observaciónes de la Compra: </th>
                       <td>{{$compra->observacionesc}}</td>
+                                          <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
                     </tr>
                   </tbody>
                 </table>
@@ -141,6 +153,30 @@
                       <td></td>
                     </tr>
                     <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
+                      <th> <div style="visibility: hidden"> Dato Nulo</div></th>
+                      <td></td>
+                    </tr>
+                                        <tr>
                       <th> <div style="visibility: hidden"> Dato Nulo</div></th>
                       <td></td>
                     </tr>

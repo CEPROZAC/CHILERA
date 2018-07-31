@@ -55,7 +55,8 @@
                   <th style="display:none;" >Estado</th>  
                   <th style="display:none;" >N° Almacén </th>
                   <td><center><b>Editar</b></center></td>
-                  <td><center><b>Borrar</b></center></td>                            
+                  <td><center><b>Borrar</b></center></td> 
+                  <th>Ver &nbsp; &nbsp;</th>                           
                 </tr>
               </thead>
               <tbody>
@@ -70,11 +71,15 @@
                   <td style="display:none;" >{{$almacenes->esp_ocupado}} </td>
                   <td style="display:none;" >{{$almacenes->esp_libre}}</td>
                   <td style="display:none;" >{{$almacenes->estado}}</td>
-                  <td style="display:none;" >{{$almacenes->id}} </td>
+                  <td style="display:none;" >{{$almacenes->id}} </td> 
+
                   <td>  <a href="{{URL::action('AlmacenGeneralController@edit',$almacenes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$almacenes->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
+                                    <td >
+       <a href="{{URL::action('AlmacenGeneralController@verInformacion',$almacenes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
+       
                 </td>
               </td>
 
@@ -95,7 +100,9 @@
                   <th style="display:none;" >Estado</th> 
                   <th style="display:none;" >N° Almacén </th> 
                   <td><center><b>Editar</b></center></td>
-                  <td><center><b>Borrar</b></center></td>         
+                  <td><center><b>Borrar</b></center></td>  
+                  <th>Ver &nbsp; &nbsp;</th>
+
             </tr>
           </tfoot>
         </table>

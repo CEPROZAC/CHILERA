@@ -193,7 +193,7 @@
                 <div class="col-sm-6">
                   <div class="input-group">
                    <div class="input-group-addon">$</div>
-                   <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" required placeholder="Ingrese el Precio de la Compra"  value="" onkeypress=" return soloNumeros(event);" readonly />
+                   <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" placeholder="Ingrese el Precio de la Compra"  value="" onkeypress=" return soloNumeros(event);" readonly />
                  </div>
                </div>
              </div>
@@ -357,13 +357,13 @@
     <label class="col-sm-3 control-label">KG Recibidos<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
       <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="recibidos"  onKeyUp="calcula()"  id ="recibidos" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Recibidos" onkeypress=" return soloNumeros(event);">
-    </div>
+    </div> 
   </div>
 
   <div class="form-group ">
     <label class="col-sm-3 control-label">Diferencia<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia" required  readonly  id="diferencia" class="form-control mask";>
+      <input parsley-type="number" type="text" maxlength="5" parsley-range="[-1000, 10000]" name="diferencia" required  readonly  id="diferencia" class="form-control mask";>
     </div>
   </div>
 

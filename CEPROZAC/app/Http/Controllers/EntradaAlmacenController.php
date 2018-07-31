@@ -145,7 +145,7 @@ $material2->comprador=$formulario->get('recibio2');
         $material2->recibe_alm=$formulario->get('recibe_alm');
          $material2->observacionesc=$formulario->get('observaciones');
 
-$material2->nota_venta=$formulario->get('nota2');
+$material2->nota_venta=$formulario->get('nota2') . "-".$formulario->get('fecha2') ;
 $material2->fecha=$formulario->get('fecha2');
 $material2->p_unitario=$formulario->get('preciou2');
 $material2->total= $material2->p_unitario *  $material2->cantidad;

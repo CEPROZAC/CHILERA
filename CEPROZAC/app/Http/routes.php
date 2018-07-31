@@ -96,6 +96,7 @@ Route::resource('almacenes/limpieza','AlmacenLimpiezaController');
 Route::resource('almacenes/limpieza/stock', 'AlmacenLimpiezaController@stock');
 Route::resource('detalle/limpieza', 'almacenlimpiezaController@detalle');
 Route::resource('almacen/general','AlmacenGeneralController');
+Route::get('veralmacen/{id}', array('as'=> '/veralmacen','uses'=>'AlmacenGeneralController@verInformacion'));
 Route::resource('almacenes/empaque','almacenempaquecontroller');	
 Route::resource('almacenes/empaque/stock', 'almacenempaquecontroller@stock');
 Route::resource('detalle/empaque', 'almacenempaquecontroller@detalle');
