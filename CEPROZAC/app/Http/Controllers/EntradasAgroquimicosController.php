@@ -12,6 +12,7 @@ use CEPROZAC\EntradasAgroquimicos;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\empresas_ceprozac;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,6 +38,7 @@ class EntradasAgroquimicosController extends Controller
      return view('almacen.agroquimicos.entradas.index', ['entrada' => $entrada]);
 
      
+
         //
  }
 
@@ -49,7 +51,7 @@ class EntradasAgroquimicosController extends Controller
     {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
       $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->get();
-       $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
 
       $cuenta = count($material);
@@ -143,7 +145,7 @@ $material2->provedor=$provedornombre;
 $material2->comprador=$formulario->get('recibio2');
                 $material2->entregado=$formulario->get('entregado_a');
         $material2->recibe_alm=$formulario->get('recibe_alm');
-         $material2->observacionesc=$formulario->get('observaciones');
+         $material2->observacionesc=$formulario->get('observacionesq');
 $material2->factura=$formulario->get('factura2');
 $material2->fecha=$formulario->get('fecha2');
 $material2->p_unitario=$formulario->get('preciou2');
@@ -197,12 +199,18 @@ return $pdf->stream('invoice');
             // print_r($first = $name[$y]);
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
+        $material->iva=$first = $name[$y];
+        $y = $y + 1;
+        $material->ieps=$first = $name[$y];
+        $y = $y + 1;
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
+        $material->moneda=$first = $name[$y];
+        $y = $y + 1;
                 $material->entregado=$formulario->get('entregado_a');
         $material->recibe_alm=$formulario->get('recibe_alm');
-         $material->observacionesc=$formulario->get('observaciones');
+         $material->observacionesc=$formulario->get('observacionesq');
         $material->save();
         $num = $num + 1;
         //
@@ -268,11 +276,11 @@ return $pdf->stream('invoice');
         Excel::create('entradasagroquimicos', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = entradasagroquimicos::join('almacenagroquimicos','almacenagroquimicos.id', '=', 'entradasagroquimicos.id_material')
-            ->select('entradasagroquimicos.id', 'almacenagroquimicos.nombre', 'entradasagroquimicos.cantidad', 'entradasagroquimicos.provedor', 'entradasagroquimicos.factura','entradasagroquimicos.p_unitario','entradasagroquimicos.total','entradasagroquimicos.comprador','entradasagroquimicos.fecha')
+            $salidas = entradasagroquimicos::join('almacenagroquimicos','almacenagroquimicos.id', '=', 'entradasagroquimicos.id_material')->join('empleados','empleados.id', '=', 'entradasagroquimicos.entregado')->join('empleados as emp_rec','empleados.id', '=', 'entradasagroquimicos.recibe_alm')
+            ->select('entradasagroquimicos.id', 'almacenagroquimicos.nombre', 'entradasagroquimicos.cantidad', 'entradasagroquimicos.provedor', 'entradasagroquimicos.factura','entradasagroquimicos.p_unitario','entradasagroquimicos.iva','entradasagroquimicos.ieps','entradasagroquimicos.total','entradasagroquimicos.moneda','entradasagroquimicos.comprador','entradasagroquimicos.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradasagroquimicos.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','Subtotal','Comprador','Fecha de Compra']);
+            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','IEPS','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

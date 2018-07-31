@@ -45,24 +45,35 @@
                           <div class="form-group">
             <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="provedor_name" class="form-control" value="{{Input::old('provedor_name')}}" required>  
+              <select name="provedor_name" class="form-control select2"  required>  
                 @foreach($provedor as $provedores)
+
+                @if($provedores->id == $material->provedor)
+                <option value="{{$provedores->id}}" selected>{{$provedores->nombre}}</option>
+                @else
                 <option value="{{$provedores->id}}">
                  {{$provedores->nombre}}
                </option>
+                @endif
+                
+               
                @endforeach              
              </select>
              <div class="help-block with-errors"></div>
            </div>
          </div><!--/form-group-->
 
+
+
+
+
                             <div class="form-group">
               <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-<input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
-<input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
+<input type="radio" value="1" name="habilitarDeshabilitar" id="1" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
+<input type="radio" value="2" name="habilitarDeshabilitar" id="2" onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
 
-<input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
+<input type="radio" value="3" name="habilitarDeshabilitar"  id="3" onchange="habilitar(this.value);"> Ninguno
 
               </div>
             </div>
@@ -76,9 +87,9 @@
 
                <div class="form-group">
               <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
+              <div class="col-sm-6" id="muestra_codigo">
 
-   <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "EAN13",3,33);?></td>
+   <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "C128",3,33);?></td>
         </div>    
                </div>  
           
@@ -114,28 +125,28 @@
                 <div class="form-group">
             <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="medida" value="{{Input::old('medida')}}">
-                @if(Input::old('medida')=="Kilogramos")
+              <select name="medida" value="">
+                @if(($material->medida)=="Kilogramos")
                 <option value='Kilogramos' selected>Kilogramos
                 </option>
                 <option value="Toneladas">Toneladas</option>
                 <option value="Litros">Litros</option>
                 <option value="Metros">Metros</option>
                 <option value="Unidad">Unidad</option>
-                @elseif(Input::old('medida')=="Toneladas")
+                @elseif(($material->medida)=="Toneladas")
                 <option value='Toneladas' selected>Toneladas
                 </option>
                 <option value="Litros">Litros</option>
                 <option value="Metros">Metros</option>
                 <option value="Unidad">Unidad</option>
                 <option value='Kilogramos'>Kilogramos</option>
-                 @elseif(Input::old('medida')=="Litros")
+                 @elseif(($material->medida)=="Litros")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros" selected>Litros</option>
                 <option value="Metros">Metros</option>
                 <option value="Unidad">Unidad</option>
                 <option value='Kilogramos'>Kilogramos</option>
-                @elseif(Input::old('medida')=="Metros")
+                @elseif(($material->medida)=="Metros")
                 <option value='Toneladas'>Toneladas</option>
                 <option value="Litros">Litros</option>
                 <option value="Metros" selected>Metros</option>
@@ -179,9 +190,24 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
-@endsection
 
 <script>
+ window.onload=function() {
+
+  var cod = document.getElementById('segundo').value;
+  if (cod > 0){
+    document.getElementById('1').checked;
+
+
+  }else{
+
+    document.getElementById('3').checked=true;
+  document.getElementById("segundo").disabled=true;
+    document.getElementById("segundo").value = "";
+
+  }
+  }
+
 function habilitar(value)
 {
 if(value=="1")
@@ -205,3 +231,5 @@ document.getElementById("segundo").value=aleatorio;
 
 
 </script>
+
+@endsection

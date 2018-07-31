@@ -5,6 +5,7 @@
   <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>
   <style>
 table, th, td {
@@ -65,7 +66,7 @@ table, th, td {
             <table  class="display table table-bordered table-striped" id="dynamic-table">
               <thead>
                 <tr>
-                  <th>Id </th>
+                 <th>N° </th>
                    <th>Nombre </th>
                    <th>Proveedor </th>
                     <th>Codigo de Barras </th>
@@ -80,17 +81,27 @@ table, th, td {
               <tbody>
                 @foreach($material  as $materiales)
                 <tr class="gradeA">
-                  <td>{{$materiales->id}} </td>
+                <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->provedor}} </td>
-                  <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "EAN13");?>
-                    <div style="text-align:center;">
-                    {{$materiales->codigo}}                
-                  </div>
-                   <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" target="_blank" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a> 
+                                                      @if (($materiales->codigo)!="")
+                  <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
+                    <div style="text-align:center;" >
+                      {{$materiales->codigo}}
+                    </div>
+                    <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
                   </td>
+                  @else
+                  <td>Codigo de Barras No Generado </td>
+                  
+                  @endif
+
                   <td>
+                  @if (($materiales->imagen)!="")
                       <img src="{{asset('imagenes/almacenagroquimicos/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                        @else
+                  No Hay Imagen Disponible
+                  @endif
                     </td>              
                    <td>{{$materiales->descripcion}} </td>
                   <td>{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
@@ -122,7 +133,7 @@ table, th, td {
             </tbody>
             <tfoot>
               <tr>
-                   <th>Id </th>
+              <th>N° </th>
                    <th>Nombre </th>
                    <th>Proveedor </th>
                     <th>Codigo de Barras </th>
@@ -172,7 +183,8 @@ table, th, td {
         var o =table.rows[r].cells[c].innerHTML;
         var y = parseInt(o);
              if (x < y){
-      alert("El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock" );
+      //alert("El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock" );
+      swal("Stock Minimo!", "El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock", "warning");
     }
 
      z ++;

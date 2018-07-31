@@ -11,7 +11,7 @@ use CEPROZAC\Provedor;
 use CEPROZAC\Producto;
 use CEPROZAC\calidad;
 use CEPROZAC\Transporte;
-use CEPROZAC\empresa;
+use CEPROZAC\empresas_ceprozac;
 use CEPROZAC\ServicioBascula;
 use CEPROZAC\Empleado;
 use CEPROZAC\bascula;
@@ -23,6 +23,7 @@ use CEPROZAC\recepcioncompra;
 use CEPROZAC\formaempaque;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
+
 
 
 use DB;
@@ -43,7 +44,7 @@ class RecepcionCompraController extends Controller
 
       $compra= DB::table('recepcioncompra')
       ->join( 'provedores as prov', 'recepcioncompra.id_provedor','=','prov.id')
-      ->join( 'empresas as emp', 'recepcioncompra.recibe','=','emp.id')
+      ->join( 'empresas_ceprozac as emp', 'recepcioncompra.recibe','=','emp.id')
       ->join( 'empleados as empleados', 'recepcioncompra.entregado','=','empleados.id')
       ->join('productos as prod' ,'recepcioncompra.id_producto','=','prod.id')
       ->join('calidad as cali' ,'recepcioncompra.id_calidad','=','cali.id')
@@ -66,9 +67,9 @@ class RecepcionCompraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    { 
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-      $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $provedores=DB::table('provedores')->where('estado','=' ,'Activo')->get();
       $productos=DB::table('productos')->where('estado','=' ,'Activo')->get();
       $transportes=DB::table('transportes')->where('estado','=' ,'Activo')->get();
@@ -168,15 +169,37 @@ $salida->save();
      $material->observacionesu=$request->get('observacionesu');
      $material->id_fumigacion=$ultimo;
      $material->save();
-      $material= DB::table('recepcioncompra')->orderby('created_at','DESC')->take(1)->get();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Compras.Recepcion.invoice', compact('date', 'invoice','material'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
+
+     $ultimoid = recepcioncompra::orderBy('id', 'desc')->first()->id;
+    //  $compra= DB::table('recepcioncompra')->orderby('created_at','DESC')->take(1)->get();
+
+     $compra = RecepcionCompra::findOrFail($ultimoid);
+      $id_provedor= $compra->id_provedor;
+      $recibe= $compra->recibe;
+       $entregado= $compra->entregado;
+      $producto=$compra->id_producto;
+      $calidad=$compra->id_calidad;
+      $id_empaque=$compra->id_empaque;
+      $id_bascula=$compra->id_bascula;
+      $peso=$compra->peso;
+      $ubicacion_act=$compra->ubicacion_act;
+      $id_fumigacion=$compra->id_fumigacion;
 
 
+      $provedor=Provedor::findOrFail($id_provedor);
+      $emp_recibe=empresa::findOrFail($recibe);
+      $entrega=empleado::findOrFail($entregado);
+      $produ=producto::findOrFail($producto);
+      $cali=calidad::findOrFail($calidad);
+      $empaque=formaempaque::findOrFail($id_empaque);
+      $bascula=bascula::findOrFail($id_bascula);
+      $pesaje=empleado::findOrFail($peso);
+      $ubicacion=almacengeneral::findOrFail($ubicacion_act);
+      $fumigacion=fumigaciones::findOrFail($id_fumigacion);
+      $id_fumigador=$fumigacion->id_fumigador;
+      $fumigador=empleado::findOrFail($id_fumigador);
+
+      return view("Compras.Recepcion.lista",["provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador]);
 
 
 
@@ -213,6 +236,8 @@ $salida->save();
      */
     public function edit($id)
     {
+
+      return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
         //
     }
 
@@ -236,6 +261,10 @@ $salida->save();
      */
     public function destroy($id)
     {
+            $compra=RecepcionCompra::findOrFail($id);
+      $compra->delete();
+      return Redirect::to('compras/recepcion');
+
         //
     }
 
@@ -277,13 +306,22 @@ $salida->save();
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('RecepcionCompra', function($excel) {
+        Excel::create('recepcioncompra', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $compras = RecepcionCompra::join('provedores','recepcioncompra.id_provedor','=','provedores.id','empresas', 'recepcioncompra.recibe','=','empresas.id','empleados', 'recepcioncompra.entregado','=','empleados.id','productos' ,'recepcioncompra.id_producto','=','productos.id','calidad' ,'recepcioncompra.id_calidad','=','calidad.id','forma_empaques' ,'recepcioncompra.id_empaque','=','forma_empaques.id','basculas' ,'recepcioncompra.id_bascula','=','basculas.id','empleados', 'recepcioncompra.peso','=','empleados.id','almacengeneral', 'recepcioncompra.ubicacion_act','=','almacengeneral.id','fumigaciones', 'recepcioncompra.id_fumigacion','=','fumigaciones.id')
-            ->select('recepcioncompra.id','recepcioncompra.nombre','provedores.nombre','recepcioncompra.transporte','recepcioncompra.num_transportes','empresas.nombre','empleados.nombre','recepcioncompra.observacionesc','recepcioncompra.total_compra','productos.nombre','calidad.nombre','forma_empaques.formaEmpaque','recepcioncompra.humedad','recepcioncompra.pacas','recepcioncompra.pacas_rev','recepcioncompra.observacionesm','basculas.nombreBascula','recepcioncompra.ticket','empleados.nombre','recepcioncompra.kg_recibidos','recepcioncompra.kg_enviados','recepcioncompra.diferencia','recepcioncompra.observacionesb','almacengeneral.nombre','recepcioncompra.espacio_asignado','recepcioncompra.observacionesu','fumigaciones.id')->get();
+            $compras = RecepcionCompra::join('provedores as prov', 'recepcioncompra.id_provedor','=','prov.id')
+      ->join('empresas as emp', 'recepcioncompra.recibe','=','emp.id')
+      ->join('empleados as empleados', 'recepcioncompra.entregado','=','empleados.id')
+      ->join('productos as prod' ,'recepcioncompra.id_producto','=','prod.id')
+      ->join('calidad as cali' ,'recepcioncompra.id_calidad','=','cali.id')
+      ->join('forma_empaques as forma' ,'recepcioncompra.id_empaque','=','forma.id')
+      ->join('basculas as bas' ,'recepcioncompra.id_bascula','=','bas.id')
+      ->join('empleados as emple', 'recepcioncompra.peso','=','emple.id')
+      ->join('almacengeneral as alma', 'recepcioncompra.ubicacion_act','=','alma.id')
+      ->join('fumigaciones as fum', 'recepcioncompra.id_fumigacion','=','fum.id')
+            ->select('recepcioncompra.id','recepcioncompra.nombre','recepcioncompra.fecha_compra','prov.nombre as provnombre','recepcioncompra.transporte','recepcioncompra.num_transportes','emp.nombre as empnombre','empleados.nombre as emplnombre','recepcioncompra.observacionesc','recepcioncompra.total_compra','prod.nombre as prodnombre','cali.nombre as calinombre','forma.formaEmpaque','recepcioncompra.humedad','recepcioncompra.pacas','recepcioncompra.pacas_rev','recepcioncompra.observacionesm','bas.nombreBascula','recepcioncompra.ticket','emple.nombre as empleenombre','recepcioncompra.kg_recibidos','recepcioncompra.kg_enviados','recepcioncompra.diferencia','recepcioncompra.observacionesb','alma.nombre as almanombre','recepcioncompra.espacio_asignado','recepcioncompra.observacionesu','fum.id as fumid')->get();
             $sheet->fromArray($compras);
-            $sheet->row(1,['N° de Compra','Nombre de Lote','Fecha de Compra' ,'Provedor','Transporte','N°Transportes','Empresa','Recibe Empleado','Observaciónes de Compra','Precio Total de Compra','Producto' ,'Calidad','Empaque','%Humedad','Total de Pacas','Pacas a Revisar','Observaciónes de Muestreo','Bascula','Ticket' ,'Realizo Pesaje','KG recibidos','KG Enviados','Diferencia','Observaciones Pesaje','Ubicación Actual','Espacio Asignado','Observaciones' ,'N° Fumigación']);
+            $sheet->row(1,['N° Compra','Nombre de Lote','Fecha de Compra' ,'Provedor','Transporte/Placas','N°Transportes','Empresa','Recibe Empleado','Observaciónes de Compra','Precio Total de Compra','Producto' ,'Calidad','Empaque','%Humedad','Total de Pacas','Pacas a Revisar','Observaciónes de Muestreo','Bascula','Ticket' ,'Realizo Pesaje','KG recibidos','KG Enviados','Diferencia','Observaciones Pesaje','Ubicación Actual','Espacio Asignado','Observaciones' ,'N° Fumigación']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

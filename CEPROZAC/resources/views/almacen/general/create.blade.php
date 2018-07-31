@@ -49,9 +49,9 @@
             </div>
 
                 <div class="form-group">
-              <label class="col-sm-3 control-label">Tipo de Capacidad (Casillero,Cajon,Espacio,m2,etc..) : <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Tipo de Unidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="medida" id="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Capacidad (Casillero,Cajon,m2,etc..):" />
+                <input name="medida" id="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Unidad (Casillero,Cajon,M2,Etc..):" />
               </div>
             </div>
 
@@ -66,21 +66,21 @@
 
 
                 <div class="form-group">
-              <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Descripción: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
-                <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+                <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese Descripción del Material" />
               </div>
             </div>
 
               <div class="form-group">
-              <label class="col-sm-3 control-label">Espacio Ocupado Actualmente: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Espacio Ocupado Actualmente: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
                 <input name="ocupado" id="ocupado" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control"   value="" placeholder="Ingrese el Espacio Ocupado Actualmente" readonly/>
               </div>
             </div>
 
                           <div class="form-group">
-              <label class="col-sm-3 control-label">Espacio Libre Actualmente: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Espacio Libre Actualmente: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
                 <input name="libre" id="libre" type="text"  value="{{Input::old('ocupado')}}"  maxlength="70"  onchange="soloNumeros(this);"  class="form-control"    value="" placeholder="Espacio Libre" readonly/>
               </div>
@@ -108,7 +108,7 @@ table, td {
 
 <p></p>
     <div class="form-group">
-                  <label class="col-sm-3 control-label">Espacio Actualmente: <strog class="theme_color">*</strog></label>
+                  <label class="col-sm-3 control-label">Espacio Actualmente: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
     <div class="form-group"> 
 <table id="myTable" name="myTable" value=""   class="table table-striped table-bordered table-condensed table-hover">
@@ -260,6 +260,42 @@ arreglolibre.sortNumbers();
 
 }
 }
+sortTable();
+}
+
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 0; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
 }
 
 

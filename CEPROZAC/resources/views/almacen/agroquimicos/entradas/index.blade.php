@@ -53,8 +53,11 @@
                   <th>Nombre de Material</th>
                   <th>Cantidad Comprada</th>
                     <th>Precio Unitario </th>
+                     <th>IVA </th>
+                     <th>IEPS</th>
                    <th>Subtotal </th>
                     <th>Total de Compra </th>
+                    <th>Tipo de Moneda </th>
                   <th>Comprador</th>
                   
                   <td><center><b>Borrar</b></center></td>                            
@@ -70,8 +73,11 @@
                    <td>{{$entradas->nombremat}} </td>
                    <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
                    <td>${{$entradas->p_unitario}} </td>
+                   <td>${{$entradas->iva}} </td>
+                   <td>${{$entradas->ieps}} </td>
                     <td>${{$entradas->importe}} </td>
                     <td>${{$entradas->total}} </td>
+                    <td>${{$entradas->moneda}} </td>
                      <td>{{$entradas->comprador}} </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
@@ -93,8 +99,11 @@
                   <th>Nombre de Material</th>
                   <th>Cantidad </th>
                     <th>Precio Unitario </th>
+                      <th>IVA </th>
+                       <th>IEPS</th>
                    <th>Subtotal </th>
                     <th>Total de Compra </th>
+                    <th>Tipo de Moneda </th>
                   <th>Comprador</th>
                   <td><center><b>Borrar</b></center></td>   
              </tr>

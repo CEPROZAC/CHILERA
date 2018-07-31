@@ -26,7 +26,7 @@ class AlmacenLimpiezaRequest extends Request
     {
         return [
         'imagen'=>'mimes:jpeg,jpg,png,bmp',
-        'codigo' => 'unique:AlmacenAgroquimicos,codigo'
+        'codigo' => 'unique:almacenlimpieza,codigo'
             //
         ];
     }

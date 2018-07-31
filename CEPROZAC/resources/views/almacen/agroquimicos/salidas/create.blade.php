@@ -6,7 +6,7 @@
     <h1>Inicio</h1>
     <h2 class="">Almacén de Agroquímicos</h2>
 
-    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
@@ -79,7 +79,7 @@
        </div>
 
        <div class="form-group">
-        <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
         <div class="col-sm-6">
           <input name="movimiento" id="movimiento" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
         </div>
@@ -88,7 +88,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Destino del Material"/>
+          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Destino del Material"/>
         </div>
       </div>
 
@@ -104,7 +104,7 @@
        <div class="form-group">
         <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input  id="codigo" value="" name="codigo" type="text" onKeyUp="codigos()"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+          <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
         </div>
       </div>
     </div>
@@ -168,7 +168,7 @@
       <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
         <thead style="background-color:#A9D0F5">
           <th>Opciones</th>
-          <th>Id</th>
+          <th>N°Articulo</th>
           <th>Articulo</th>
           <th>Cantidad</th>
           <th>Destino</th>
@@ -220,7 +220,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="/almacen/salidas/agroquimicos" class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/salidas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -233,6 +233,66 @@
 
 
 <script type="text/javascript">
+function teclas(event) {
+    tecla=(document.all) ? event.keyCode : event.which;
+   // alert(tecla);
+
+    var cuenta = document.getElementById('codigo');
+  var x = cuenta.value;
+  var z = x.length
+  if (tecla == 13  ) {
+    var busca = z;
+    //  alert ("12 entro");
+    var y = document.getElementById("id_materialk").length;
+    //  alert(y);
+    var i= 0;
+    while(i <= y){
+
+
+        if (i == y){
+    swal("Producto No Encontrado!", "Verifique el Codigo de Barras!", "error");
+    break;
+  }
+
+      var e = document.getElementById("id_materialk");
+      var value = e.options[e.selectedIndex=i].value;
+      var text = e.options[e.selectedIndex=i].text;
+      var cantidadtotal = value;
+      limite = "5",
+      separador = "_",
+      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+      stock=arregloDeSubCadenas[0];
+      descripcion=arregloDeSubCadenas[1];
+      codigo=arregloDeSubCadenas[2];
+      id=arregloDeSubCadenas[3];
+      nombre=arregloDeSubCadenas[4];
+      tecla=(document.all) ? event.keyCode : event.which;
+             if (codigo == x){
+              swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
+                var aux =`${value}`;
+
+                 document.getElementById("scantidad").value = aux;
+  //swal(aux);
+});
+   
+    document.getElementById('id_materialk').selectedIndex = i;
+    document.getElementById("pcantidad").value=stock;
+   document.getElementById("descripcion").value=descripcion;
+   
+    document.getElementById("scantidad").max=stock;
+    break;
+  }
+
+  i++;
+}
+
+
+return false;
+}
+
+ //return false;
+    
+}
 
 
   window.onload=function() {
@@ -248,6 +308,7 @@
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
     document.getElementById("scantidad").max=stock;
+     document.getElementById("codigo").select();
   }
 
   var select = document.getElementById('id_materialk');
@@ -255,7 +316,7 @@
   select.addEventListener('change',
     function(){
       var selectedOption = this.options[select.selectedIndex];
-     // alert(selectedOption.value);
+     alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
    limite = "5",
@@ -339,11 +400,12 @@ function llenado(){
     var comprueba = recorre(x)
 
     if (comprueba == 1){
-      alert("Este Material Ya se ha Insertado en la Tabla");
+      swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+
 
     }else{
       if (y > z) {
-        alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
+        swal("Alerta!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
 
       }else{
         var select=document.getElementById('id_materialk');
@@ -407,9 +469,10 @@ function llenado(){
   }
 }
 }else{
-  alert('La Cantidad de Salida no Puede Ser Menor de 0');
+      swal("Alerta!", "La Cantidad de Salida no Puede Ser Menor de 0!", "error");
 }}else{
-  alert("Faltan campos Por llenar Favor de Verificar");
+
+  swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
 }
 }    
 
@@ -543,7 +606,8 @@ z ++;
  var tam = arreglo.length / 8;
  document.getElementById("total").value=tam;
 }else{
-  alert('No hay Elementos Agregados, Para Poder Guardar');
+
+  swal("Alerta!", "No hay Elementos Agregados a la Tabla, Para Poder Guardar!", "error");
   return false;
 
 }
@@ -571,12 +635,12 @@ function recorre(valor) {
     else if(z == 2){
          //alert(z)
        //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-       alert(table.rows[r].cells[c].innerHTML);
+     //  alert(table.rows[r].cells[c].innerHTML);
        z ++;
        
 
      }else if(z == 3){
-      alert(table.rows[r].cells[c].innerHTML);
+      ///alert(table.rows[r].cells[c].innerHTML);
       z ++;
     }else if(z == 4){
 
@@ -585,24 +649,24 @@ function recorre(valor) {
    } else if (z == 5){
        //  alert(z)
      //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-     alert(table.rows[r].cells[c].innerHTML);
+     //alert(table.rows[r].cells[c].innerHTML);
 
 //alert(arreglo);
 z ++;
 }else if (z == 6){
  //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
- alert(table.rows[r].cells[c].innerHTML);
+ //alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-        alert(table.rows[r].cells[c].innerHTML);
+   //     alert(table.rows[r].cells[c].innerHTML);
         z ++;
 
       }else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-       alert(table.rows[r].cells[c].innerHTML);
+     //  alert(table.rows[r].cells[c].innerHTML);
        z = 1;
 
      }

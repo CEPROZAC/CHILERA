@@ -176,7 +176,7 @@ class salidasalmacenlimpiezaController extends Controller
         Excel::create('salidasalmacenlimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = salidasalmacenlimpieza::join('almacenlimpieza','salidasalmacenlimpieza.id', '=', 'salidasalmacenlimpieza.id_material')
+            $salidas = salidasalmacenlimpieza::join('almacenlimpieza','almacenlimpieza.id', '=', 'salidasalmacenlimpieza.id_material')
             ->select('salidasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'salidasalmacenlimpieza.cantidad', 'salidasalmacenlimpieza.destino', 'salidasalmacenlimpieza.entrego','salidasalmacenlimpieza.recibio','salidasalmacenlimpieza.tipo_movimiento','salidasalmacenlimpieza.fecha')
             ->get();       
             $sheet->fromArray($salidas);
@@ -186,3 +186,5 @@ class salidasalmacenlimpiezaController extends Controller
       })->export('xls');
     }
 }
+
+            

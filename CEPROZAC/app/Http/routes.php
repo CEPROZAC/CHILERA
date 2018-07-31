@@ -88,13 +88,20 @@ Route::get('descargar-bancos', 'BancoController@excel')->name('bancos.excel');
 Route::get('descargar-servicioBasculas', 'ServicioBasculaController@excel')->name('serviciosBascula.excel');
 Route::resource('almacen/materiales','AlmacenMaterialController');	
 Route::resource('almacen/materiales/stock', 'AlmacenMaterialController@stock');
+Route::resource('detalle/materiales', 'AlmacenMaterialController@detalle');
 Route::resource('almacenes/agroquimicos','AlmacenAgroquimicosController');	
 Route::resource('almacenes/agroquimicos/stock', 'AlmacenAgroquimicosController@stock');
+Route::resource('detalle/agroquimicos', 'AlmacenAgroquimicosController@detalle');
 Route::resource('almacenes/limpieza','AlmacenLimpiezaController');	
 Route::resource('almacenes/limpieza/stock', 'AlmacenLimpiezaController@stock');
-Route::resource('almacen/general','AlmacenGeneralController');	
+Route::resource('detalle/limpieza', 'almacenlimpiezaController@detalle');
+Route::resource('almacen/general','AlmacenGeneralController');
+Route::resource('almacenes/empaque','almacenempaquecontroller');	
+Route::resource('almacenes/empaque/stock', 'almacenempaquecontroller@stock');
+Route::resource('detalle/empaque', 'almacenempaquecontroller@detalle');
 Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('almacen.materiales.excel');
 Route::get('descargar-agroquímicos', 'AlmacenAgroquimicosController@excel')->name('almacen.agroquimicos.excel');
+Route::get('descargar-empaquesalm', 'almacenempaquecontroller@excel')->name('almacen.empaque.excel');
 Route::get('descargar-limpieza', 'AlmacenLimpiezaController@excel')->name('almacen.limpieza.excel');
 Route::get('descargar-calidad', 'CalidadController@excel')->name('productos.calidad.excel');
 Route::get('descargar-mantenimiento', 'MantenimientoTransporteController@excel')->name('mantenimiento.excel');
@@ -120,6 +127,7 @@ Route::get('descargar-entradas', 'EntradaAlmacenController@excel')->name('almace
 Route::get('pdfmaterial/{id}', array('as'=> '/pdfmaterial','uses'=>'AlmacenMaterialController@invoice'));
 Route::get('pdfagroquimicos/{id}', array('as'=> '/pdfagroquimicos','uses'=>'AlmacenAgroquimicosController@invoice'));
 Route::get('pdflimpieza/{id}', array('as'=> '/pdflimpieza','uses'=>'AlmacenLimpiezaController@invoice'));
+Route::get('pdfempaque/{id}', array('as'=> '/pdflimpieza','uses'=>'almacenempaquecontroller@invoice'));
 
 Route::resource('almacen/salidas/agroquimicos','SalidasAgroquimicosController');	
 Route::get('descargar-salidas-agro', 'SalidasAgroquimicosController@excel')->name('almacen.agroquimicos.salidas.excel');
@@ -129,9 +137,15 @@ Route::get('descargar-entradas-agro', 'EntradasAgroquimicosController@excel')->n
 
 Route::resource('almacen/salidas/limpieza','SalidasAlmacenLimpiezaController');	
 Route::get('descargar-salidas-limpieza', 'SalidasAlmacenLimpiezaController@excel')->name('almacen.limpieza.salidas.excel');
-
 Route::resource('almacen/entradas/limpieza','EntradasAlmacenLimpiezaController');	
 Route::get('descargar-entradas-limpieza', 'EntradasAlmacenLimpiezaController@excel')->name('almacen.limpieza.entradas.excel');
+
+Route::resource('almacen/salidas/empaque','salidasempaquescontroller');	
+
+Route::get('descargar-salidas-empaque', 'salidasempaquescontroller@excel')->name('almacen.empaque.salidas.excel');
+Route::resource('almacen/entradas/empaque','entradasempaquescontroller');	
+Route::get('descargar-entradas-empaque', 'entradasempaquescontroller@excel')->name('almacen.empaque.entradas.excel');
+
 
 Route::resource('compras/recepcion','RecepcionCompraController');
 Route::get('vercompra/{id}', array('as'=> '/vercompra','uses'=>'RecepcionCompraController@verInformacion'));

@@ -12,6 +12,7 @@ use CEPROZAC\Http\Requests\almacenlimpiezaRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\entradasalmacenlimpieza;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\empresas_ceprozac;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,7 +36,7 @@ class almacenlimpiezaController extends Controller
       ->where('almacenlimpieza.estado','Activo')->get();
       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
       $empleado = DB::table('empleados')->where('estado','Activo')->get();
-      $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       return view('almacen.limpieza.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=> $empresas]);
 
       
@@ -90,17 +91,20 @@ class almacenlimpiezaController extends Controller
 
         $material->save();
         $material= DB::table('almacenlimpieza')->orderby('created_at','DESC')->take(1)->get();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('almacen.limpieza.invoice', compact('date', 'invoice','material'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
+         return Redirect::to('detalle/limpieza');
 
-        $material->estado='Activo';
+
 
     }
   }        //
+}
+
+public function detalle(){ 
+$material= DB::table('almacenlimpieza')->orderby('created_at','DESC')->take(1)->get();
+$provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+
+return view('almacen.limpieza.detalle',["material"=>$material,"provedor"=>$provedor]);
+
 }
 
 public function invoice($id){ 
@@ -218,16 +222,15 @@ public function invoice($id){
   public function stock(Request $request, $id)
   {
     
-      $ex = $request->get('provedor_id2');
-      $materiales = DB::table('provedor_materiales')
-      ->select('provedor_materiales.nombre')
-      ->where('provedor_materiales.id',$ex)->get();
-      $provedornombre = $materiales[0]->nombre;
+        $material=almacenlimpieza::findOrFail($id);
+        $prov=$material->provedor;
+        $prove=provedormateriales::findOrFail($prov);
+        $nom_provedor=$prove->nombre;
       
       $material2= new entradasalmacenlimpieza;
       $material2->id_material=$id;
       $material2->cantidad=$request->get('cantidades');
-      $material2->provedor=$provedornombre;
+       $material2->provedor=$nom_provedor;
                             $material2->entregado=$request->get('entregado_a');
         $material2->recibe_alm=$request->get('recibe_alm');
          $material2->observacionesc=$request->get('observaciones');
@@ -235,8 +238,12 @@ public function invoice($id){
       $material2->factura=$request->get('factura');
       $material2->fecha=$request->get('fecha2');
       $material2->p_unitario=$request->get('preciou');
-      $material2->total= $material2->p_unitario *  $material2->cantidad;
-      $material2->importe= $material2->p_unitario *  $material2->cantidad;
+      $ivaaux=$request->get('iva') * .010;
+      $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+       $material2->iva=$ivatotal;
+      $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+      $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+       $material2->moneda=$request->get('moneda');
       $material2->save();
       return Redirect::to('almacenes/limpieza');
       

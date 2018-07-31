@@ -12,6 +12,7 @@ use CEPROZAC\entradasalmacenlimpieza;
 use CEPROZAC\Empleado;
 use CEPROZAC\almacenlimpieza;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\empresas_ceprozac;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -46,7 +47,7 @@ class entradasalmacenlimpiezaController extends Controller
     {
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
         $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->get();
-         $empresas=DB::table('empresas')->where('estado','=' ,'Activo')->get();
+         $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
 
         $cuenta = count($material);
@@ -134,7 +135,7 @@ $material2->provedor=$provedornombre;
 $material2->comprador=$formulario->get('recibio2');
                 $material2->entregado=$formulario->get('entregado_a');
         $material2->recibe_alm=$formulario->get('recibe_alm');
-         $material2->observacionesc=$formulario->get('observaciones');
+         $material2->observacionesc=$formulario->get('observacionesl');
 $material2->factura=$formulario->get('factura2');
 $material2->fecha=$formulario->get('fecha2');
 $material2->p_unitario=$formulario->get('preciou2');
@@ -188,12 +189,16 @@ return $pdf->stream('invoice');
             // print_r($first = $name[$y]);
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
+         $material->iva=$first = $name[$y];
+        $y = $y + 1;
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
+        $material->moneda=$first = $name[$y];
+        $y = $y + 1;
                 $material->entregado=$formulario->get('entregado_a');
         $material->recibe_alm=$formulario->get('recibe_alm');
-         $material->observacionesc=$formulario->get('observaciones');
+         $material->observacionesc=$formulario->get('observacionesl');
         $material->save();
         $num = $num + 1;
         //
@@ -260,11 +265,11 @@ return $pdf->stream('invoice');
         Excel::create('entradasalmacenlimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = entradasalmacenlimpieza::join('almacenlimpieza','almacenlimpieza.id', '=', 'entradasalmacenlimpieza.id_material')
-            ->select('entradasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'entradasalmacenlimpieza.cantidad', 'entradasalmacenlimpieza.provedor', 'entradasalmacenlimpieza.factura','entradasalmacenlimpieza.p_unitario','entradasalmacenlimpieza.total','entradasalmacenlimpieza.comprador','entradasalmacenlimpieza.fecha')
+            $salidas = entradasalmacenlimpieza::join('almacenlimpieza','almacenlimpieza.id', '=', 'entradasalmacenlimpieza.id_material')->join('empleados','empleados.id', '=', 'entradasalmacenlimpieza.entregado')->join('empleados as emp_rec','empleados.id', '=', 'entradasalmacenlimpieza.recibe_alm')
+            ->select('entradasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'entradasalmacenlimpieza.cantidad', 'entradasalmacenlimpieza.provedor', 'entradasalmacenlimpieza.factura','entradasalmacenlimpieza.p_unitario','entradasalmacenlimpieza.iva','entradasalmacenlimpieza.total','entradasalmacenlimpieza.comprador','entradasalmacenlimpieza.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradasalmacenlimpieza.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura ó Nota','Precio Unitario','Subtotal','Comprador','Fecha de Compra']);
+            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura ó Nota','Precio Unitario','IVA','Subtotal','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

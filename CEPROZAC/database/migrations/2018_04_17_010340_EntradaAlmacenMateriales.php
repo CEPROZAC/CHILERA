@@ -22,8 +22,10 @@ class EntradaAlmacenMateriales extends Migration
         $table->integer('cantidad');
         $table->double('p_unitario');
         $table->double('importe');
+        $table->double('iva');
         $table->double('total');
         $table->string('comprador');
+        $table->string('moneda');
             $table->integer('entregado')->unsigned();
             $table->foreign('entregado')->references('id')->on('empleados');
               $table->integer('recibe_alm')->unsigned();

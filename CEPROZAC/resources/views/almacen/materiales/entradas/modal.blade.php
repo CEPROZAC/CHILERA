@@ -8,7 +8,7 @@
               <h3 class="content-header theme_color">&nbsp;Eliminar Registro</h3>
             </div>
             <div class="porlets-content" style="margin-bottom: -50px;">
-              <h4>¿Esta segúro que desea eliminar este Registro de Entrada de Almacén de Materiales?</h4>
+              <h4>¿Esta segúro que desea eliminar este Registro de Entrada de Almacén de Materiales ?</h4>
             </div><!--/porlets-content--> 
           </div><!--/block-web--> 
         </div>

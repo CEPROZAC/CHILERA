@@ -571,7 +571,7 @@ $(document).ready(function() {
      */
      var nCloneTh = document.createElement( 'th' );
      var nCloneTd = document.createElement( 'td' );
-     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">';
+     nCloneTd.innerHTML = '<img src="/plugins/advanced-datatable/images/details_open.png">';
      nCloneTd.className = "center";
 
      $('#hidden-table-info7 thead tr').each( function () {
@@ -601,13 +601,13 @@ $(document).ready(function() {
         if ( oTable.fnIsOpen(nTr) )
         {
             /* This row is already open - close it */
-            this.src = "plugins/advanced-datatable/images/details_open.png";
+            this.src = "/plugins/advanced-datatable/images/details_open.png";
             oTable.fnClose( nTr );
         }
         else
         {
             /* Open this row */
-            this.src = "plugins/advanced-datatable/images/details_close.png";
+            this.src = "/plugins/advanced-datatable/images/details_close.png";
             oTable.fnOpen( nTr, fnFormatDetails7(oTable, nTr), 'details' );
         }
     } );
