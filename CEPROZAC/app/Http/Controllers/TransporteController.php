@@ -11,6 +11,7 @@ use CEPROZAC\Transporte;
 use CEPROZAC\MantenimientoTransporte;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class TransporteController extends Controller
 {
@@ -228,6 +229,20 @@ class TransporteController extends Controller
         return Redirect::to('transportes');
     }
 
+    public function calcularFecha($fechaFin){
+
+       $date = Carbon::now();
+       $date->format('Y-m-d');
+
+       $dia=substr($fechaFin,0,2);
+       $mes=substr($fechaFin, 3,2);
+       $ano=substr($fechaFin, 6,7);
+     // $fecha =$ano."-".$mes."-".$;
+       $dt = Carbon::createMidnightDate($ano, $mes, $dia);
+       return $date->diffInDays($dt,false);                        
+
+
+   }
 
 
 }

@@ -12,14 +12,14 @@
 </style>
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
-    <h1>Beneficiario con RFC</h1>
-    <h2 class="active"></h2>
+    <h1>Inicio </h1>
+    <h2 class="active">Empleados</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a href="?c=Inicio">Inicio</a></li>
-      <li><a href="?c=Beneficiario">Beneficiario con RFC</a></li>
-      <li class="active"></li>
+      <li style="color: #808080"> <a>Inicio</a></li>
+      <li style="color: #808080"><a>Empleados</a></li>
+
     </ol>
   </div>
 </div>
@@ -95,26 +95,31 @@
                        </div>
                      </div>
 
+
+                     <input type="text" name="ssnOculto" id="SSNOculto" value="{{$empleado->numero_Seguro_Social}}" hidden>
                      <div class="form-group">
                       <label class="col-sm-3 control-label">SSN</label>
                       <div class="col-sm-6 ">
-                        <input type="text" name="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'" required value="{{$empleado->numero_Seguro_Social}}">
+                        <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" onblur="validarSSN();" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'" required value="{{$empleado->numero_Seguro_Social}}"/>
+                        <span id="errorSSN" style="color:#FF0000;"></span>
                       </div>
                     </div>
 
 
-
+                    <input type="text" name="curpOculta" id="curpOculta" value="{{$empleado->curp}}" hidden>
                     <div class="form-group">
                       <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();"  class="form-control"   placeholder="Ingrese CURP de el empleado" value="{{$empleado->curp}}" />
+                        <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();validarCURP();"  class="form-control"   placeholder="Ingrese CURP de el empleado" value="{{$empleado->curp}}"   />
+                        <span id="errorCURP" style="color:#FF0000;"></span>
                       </div>
                     </div><!--/form-group-->
 
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
-                        <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" value="{{$empleado->domicilio}}" >
+                        <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask" value="{{$empleado->domicilio}}" />
+
                       </div>
                     </div>
 
@@ -190,7 +195,7 @@
                      </div>
                      <div class="form-group">
                       <div class="col-sm-offset-7 col-sm-5">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                      <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
                         <a href="/empleados" class="btn btn-default"> Cancelar</a>
                       </div>
                     </div><!--/form-group--> 
@@ -207,6 +212,9 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+
+@include('Recursos_Humanos.empleados.modalReactivar')
 
 <!-- Include jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

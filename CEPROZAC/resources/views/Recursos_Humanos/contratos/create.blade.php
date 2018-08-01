@@ -80,10 +80,12 @@
                           </div>
                         </div>
                         <input type="hidden"  name="fecha_Nacimiento"   id="fechaNacimiento"   />
+                        <input type="text" name="curpOculta" id="curpOculta" hidden>
                         <div class="form-group">
                           <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
-                            <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();"  class="form-control"   placeholder="Ingrese CURP de el empleado"/>
+                            <input name="curp"  maxlength="18" id="curp" type="text" required parsley-regexp="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"   required parsley-rangelength="[18,18]"  onkeypress="mayus(this);" onblur="curp2date();validarCURP();"  class="form-control"   placeholder="Ingrese CURP de el empleado"/>
+                            <span id="errorCURP" style="color:#FF0000;"></span>
                           </div>
                         </div><!--/form-group-->
 
@@ -135,11 +137,11 @@
                            <input type="text" name="fecha_Alta_Seguro" required class="form-control mask" data-inputmask="'alias': 'date'">
                          </div>
                        </div>
-
+                       <input type="text" name="ssnOculto" id="SSNOculto" hidden>
                        <div class="form-group">
                         <label class="col-sm-3 control-label">SSN<strog class="theme_color">*</strog></label>
                         <div class="col-sm-6 ">
-                          <input type="text" name="numero_Seguro_Social" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
+                        <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" onblur="validarSSN();" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
                         </div>
                       </div>
 
@@ -197,7 +199,7 @@
                     </div>
                   </div>
 
-                 <center> <span style="color: #C0392B;" id="errorFechas"> </span></center>
+                  <center> <span style="color: #C0392B;" id="errorFechas"> </span></center>
                   <input type="hidden" name="duracionContrato" id="duracionContrato" />    
 
                 </div><!--validator-->
@@ -245,7 +247,7 @@
                  </div>
                  <div class="form-group">
                   <div class="col-sm-offset-7 col-sm-5">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
                     <a href="/contratos" class="btn btn-default"> Cancelar</a>
                   </div>
                 </div><!--/form-group--> 
@@ -263,6 +265,8 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
+
+@include('Recursos_Humanos.empleados.modalReactivar')
 
 <!-- Include jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
