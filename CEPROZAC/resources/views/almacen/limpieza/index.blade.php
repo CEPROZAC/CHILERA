@@ -70,7 +70,45 @@
               </thead>
               <tbody>
                 @foreach($material  as $materiales)
+                @if( $materiales->cantidad < $materiales->stock_minimo )
+
                 <tr class="gradeA">
+                <td style="background-color: #FFE4E1;">{{$materiales->id}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->nombre}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->provedor}} </td>
+                                    @if (($materiales->codigo)!="")
+                  <td style="background-color: #FFE4E1;"><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
+                    <div style="text-align:center;" >
+                      {{$materiales->codigo}}
+                    </div>
+                    <a href="{{URL::action('AlmacenLimpiezaController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
+                  </td>
+                  @else
+                  <td style="background-color: #FFE4E1;">Codigo de Barras No Generado </td>
+                  
+                  @endif
+                  <td style="background-color: #FFE4E1;">
+                   @if (($materiales->imagen)!="")
+                    <img src="{{asset('imagenes/AlmacenLimpieza/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                                           @else
+                  No Hay Imagen Disponible
+                  @endif
+                  </td>              
+                  <td style="background-color: #FFE4E1;">{{$materiales->descripcion}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->stock_minimo}} </td>
+
+
+                  <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                </td>
+                <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                </td>
+              </td>
+            </td>
+
+          </tr>
+          @else
+                          <tr class="gradeA">
                 <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->provedor}} </td>
@@ -94,19 +132,7 @@
                   </td>              
                   <td>{{$materiales->descripcion}} </td>
                   <td>{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
-                    <?php
-                  $x= $materiales->cantidad;
-                  $y= $materiales->stock_minimo;
-                  $estilo='style="background:green"';
-                  if ($x < $y){
-                       $z=1;
-                       echo "<td style='color:#FF0000'>{$materiales->stock_minimo}</td>";
-
-                  } else {
-                         echo "<td>{$materiales->stock_minimo} </td>"; 
-                  }
-                  ?>
-
+       <td>{{$materiales->stock_minimo}} </td>
 
                   <td>  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                 </td>
@@ -116,6 +142,8 @@
             </td>
 
           </tr>
+
+          @endif
           @include('almacen.limpieza.modal')
           @include('almacen.limpieza.modale')
           @endforeach

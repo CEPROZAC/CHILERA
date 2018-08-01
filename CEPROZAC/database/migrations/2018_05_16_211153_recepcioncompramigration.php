@@ -21,11 +21,11 @@ class Recepcioncompramigration extends Migration
             $table->string('transporte');
             $table->integer('num_transportes');
             $table->integer('recibe')->unsigned();
-            $table->foreign('recibe')->references('id')->on('empresas');
+            $table->foreign('recibe')->references('id')->on('empresas_ceprozac');
             $table->integer('entregado')->unsigned();
             $table->foreign('entregado')->references('id')->on('empleados');
             $table->string('observacionesc')->nullable();
-            $table->double('total_compra');
+            $table->double('total_compra')->nullable();
 
             $table->integer('id_producto')->unsigned();
             $table->foreign('id_producto')->references('id')->on('productos');
@@ -34,8 +34,10 @@ class Recepcioncompramigration extends Migration
             $table->integer('id_empaque')->unsigned();
             $table->foreign('id_empaque')->references('id')->on('forma_empaques');
             $table->string('humedad');
-            $table->double('pacas');
-            $table->double('pacas_rev');
+            $table->double('pacas')->nullable();
+            $table->double('pacas_rev')->nullable();
+            $table->double('granel')->nullable();
+
             $table->string('observacionesm')->nullable();
 
             $table->integer('id_bascula')->unsigned();

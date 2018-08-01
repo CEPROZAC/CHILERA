@@ -316,7 +316,7 @@ return false;
   select.addEventListener('change',
     function(){
       var selectedOption = this.options[select.selectedIndex];
-     alert(selectedOption.value);
+    // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
    limite = "5",
@@ -644,7 +644,7 @@ function recorre(valor) {
       z ++;
     }else if(z == 4){
 
-     alert(table.rows[r].cells[c].innerHTML);
+   //  alert(table.rows[r].cells[c].innerHTML);
      z ++;
    } else if (z == 5){
        //  alert(z)

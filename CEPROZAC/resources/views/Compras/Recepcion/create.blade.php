@@ -100,6 +100,7 @@
                       <label class="col-sm-3 control-label">Número de Transportes: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-1">
                         <input name="transporte_num" id ="transporte_num" type="number"  value="1" maxlength="5" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);" required /><br></div>
+                           <span id="errornumtrans" style="color:#FF0000;"></span>
                       </div>
 
                       <div class="form-group" id="transportediv" style='display:none;'>
@@ -149,7 +150,15 @@
 
                       </table>
                     </div>
+                    
                   </div>
+                  <div class="form-group">
+                   <label class="col-sm-3 control-label"> <strog class="theme_color"></strog></label>
+                     <div class="col-sm-6">
+                  <span id="errortransp" style="color:#FF0000;"></span>
+                  </div>
+                  </div>
+
 
                   <div class="form-group">
                     <label class="col-sm-3 control-label">Recibe Empresa: <strog class="theme_color">*</strog></label>
@@ -193,7 +202,7 @@
                 <div class="col-sm-6">
                   <div class="input-group">
                    <div class="input-group-addon">$</div>
-                   <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" required placeholder="Ingrese el Precio de la Compra"  value="" onkeypress=" return soloNumeros(event);" readonly />
+                   <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" placeholder="Ingrese el Precio de la Compra"  value="" onkeypress=" return soloNumeros(event);" readonly />
                  </div>
                </div>
              </div>
@@ -291,7 +300,7 @@
             <div class="form-group "  id="graneldiv" style='display:none;'>
         <label class="col-sm-3 control-label">Kilogramos a Granel<strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input parsley-type="number" type="text" maxlength="6" required  name="granel" id="granel"   class="form-control"   onkeypress=" return soloNumeros(event);">
+          <input parsley-type="number" type="text" maxlength="6"   name="granel" id="granel"   class="form-control"   onkeypress=" return soloNumeros(event);">
         </div>
       </div>
 
@@ -357,13 +366,13 @@
     <label class="col-sm-3 control-label">KG Recibidos<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
       <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="recibidos"  onKeyUp="calcula()"  id ="recibidos" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Recibidos" onkeypress=" return soloNumeros(event);">
-    </div>
+    </div> 
   </div>
 
   <div class="form-group ">
     <label class="col-sm-3 control-label">Diferencia<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia" required  readonly  id="diferencia" class="form-control mask";>
+      <input parsley-type="number" type="text" maxlength="5" parsley-range="[-1000, 10000]" name="diferencia" required  readonly  id="diferencia" class="form-control mask";>
     </div>
   </div>
 
@@ -596,6 +605,7 @@
    </option>
    @endforeach
  </select>
+   <span id="erroragro" style="color:#FF0000;"></span>
  <div class="help-block with-errors"></div>
 </div>
 <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
@@ -610,6 +620,7 @@
   <label for="scantidad">Cantidad Aplicada <strog class="theme_color">*</strog></label>
   <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
 </div>    
+  <span id="errorcantidad" style="color:#FF0000;"></span>
 </div>  
 
 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
@@ -931,18 +942,23 @@
     var comprueba = recorre(x)
     if (comprueba == 1){
       //alert("Este Material Ya se ha Insertado en la Tabla");
-      swal("Duplicado!", "Este Material Ya se ha Insertado en la Tabla!", "info");
+     // swal("Duplicado!", "Este Material Ya se ha Insertado en la Tabla!", "info");
+       document.getElementById("erroragro").innerHTML = "Este Material Ya se ha Insertado en la Tabla";
 
     }else{
       if (y > z) {
-        swal("Error!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
+       // swal("Error!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
        // alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
+       document.getElementById("errorcantidad").innerHTML = "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén";
 
       }else if(y < 1){
-        swal("Error!", "El Stock de Salida no Puede Ser Menor de 1 !", "error");
+        document.getElementById("errorcantidad").innerHTML = "El Stock de Salida no Puede Ser Menor de 1";
+     //   swal("Error!", "El Stock de Salida no Puede Ser Menor de 1 !", "error");
        // alert("El Stock de Salida no Puede Ser Menor de 1");
 
       }else{
+        document.getElementById("erroragro").innerHTML =""
+        document.getElementById("errorcantidad").innerHTML =""
 
         var select=document.getElementById('quimicos');
         var cantidadtotal = select.value;
@@ -987,8 +1003,10 @@ function transporte(){
  if (valida.value < q) {
  // alert("Solo se han Seleccionado"+valida.value+" Transportes");
   swal("Error!","Solo se han Seleccionado"+valida.value+" Transportes", "error");
+ // document.getElementById("errornumtrans").innerHTML = "Error!","Solo se han Seleccionado"+valida.value+" Transportes";
 
 }else{
+  document.getElementById("errornumtrans").innerHTML = "";
 
   var reg = document.getElementById("registrado").value;
   if (reg == "si"){
@@ -1013,13 +1031,15 @@ function transporte(){
     cell3.innerHTML = placas;
     q=q+1;
   }else{
-    swal("Error!","No ha Seleccionado Ningun Transporte", "error");
+    //swal("Error!","No ha Seleccionado Ningun Transporte", "error");
+     document.getElementById("errortransp").innerHTML = "No ha Seleccionado Ningun Transporte";
     //alert("No ha Seleccionado Ningun Transporte");
   }
 }else{
   if (document.getElementById('transporte').value !== ""  ){
     var id2= uno++;
     var tabla = document.getElementById("transportes");
+    document.getElementById("errortransp").innerHTML = "";
     //tabla.setAttribute("id", id2);
     var row = tabla.insertRow(id2);
     var cell1 = row.insertCell(0);
@@ -1032,7 +1052,8 @@ function transporte(){
     q=q+1;
   }else{
    // alert("No ha Seleccionado Ningun Transporte");
-    swal("Error!","No ha Seleccionado Ningun Transporte", "error");
+   // swal("Error!","No ha Seleccionado Ningun Transporte", "error");
+    document.getElementById("errortransp").innerHTML = "No ha Seleccionado Ningun Transporte";
   }
 
 }
@@ -1523,7 +1544,8 @@ function generar(){
             var x= document.getElementById('transportes').rows[1].cells[1].innerHTML;
             if(x !== ""){document.getElementById("transporte_num").style.border="1px solid #00ff00";}else{
               //alert('No se ha Ingresado Ningun Transporte en la Tabla de Transporte');
-              swal("Error!", "No se ha Ingresado Ningun Transporte en la Tabla de Transporte!", "error");
+             // swal("Error!", "No se ha Ingresado Ningun Transporte en la Tabla de Transporte!", "error");
+              document.getElementById("errortransp").innerHTML = "No se ha Ingresado Ningun Transporte en la Tabla de Transporte";
               document.getElementById("transporte_num").style.border="1px solid #f00";
               return false;
             }

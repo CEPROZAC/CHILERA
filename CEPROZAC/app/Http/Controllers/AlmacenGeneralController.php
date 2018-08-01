@@ -11,6 +11,8 @@ use CEPROZAC\almacengeneral;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
+use CEPROZAC\espacios_almacen;
+
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -63,9 +65,54 @@ class almacengeneralController extends Controller
          $almacen->total_ocupado=$request->get('totalocupado');
           $almacen->total_libre=$request->get('totallibre');
         $almacen->save();
-       return Redirect::to('almacen/general');
+            $ultimo = almacengeneral::orderBy('id', 'desc')->first()->id;
+
+$num = 1;
+    $y = 0;
+    $limite =  $almacen->total_libre;
+
+    while ($num <= $limite) {
+        $espacio= new espacios_almacen;
+            //print_r($num);
+        $producto = [$almacen->esp_libre];
+        $first = head($producto);
+        $name = explode(",",$first);
+$espacio->num_espacio=$first = $name[$y];
+$espacio->id_almacen=$ultimo;
+$espacio->capacidad=$request->get('capacidad_espacio');
+$espacio->medida=$request->get('medida_espacio');
+$espacio->estado="Libre";
+$espacio->save();
+$y = $y + 1;
+$num = $num + 1;
+       //
         //
     }
+
+    $num = 1;
+    $y = 0;
+    $limite =  $almacen->total_ocupado;
+
+    while ($num <= $limite) {
+        $espacio= new espacios_almacen;
+            //print_r($num);
+        $producto = [$almacen->esp_ocupado];
+        $first = head($producto);
+        $name = explode(",",$first);
+$espacio->num_espacio=$first = $name[$y];
+$espacio->id_almacen=$ultimo;
+$espacio->capacidad=$request->get('capacidad_espacio');
+$espacio->medida=$request->get('medida_espacio');
+$espacio->estado="Ocupado";
+$espacio->save();
+$y = $y + 1;
+$num = $num + 1;
+       //
+        //
+    }
+
+    return Redirect::to('almacen/general');
+}
 
     /**
      * Display the specified resource.
@@ -129,4 +176,19 @@ class almacengeneralController extends Controller
         return Redirect::to('almacen/general');
         //
     }
+
+        public function verInformacion($id)
+    {
+ /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
+  $almacen2 = almacengeneral::findOrFail($id);
+
+      $almacen= DB::table('espacios_almacen')->where('id_almacen', '=', $id)
+      ->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')
+      ->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')
+      ->select('espacios_almacen.*','prov.nombre as nombreprov','prod.nombre as nomprod')->get();
+
+
+      return view("almacen.general.detalle",["almacen"=>$almacen,"almacen2"=>$almacen2]);
+    }
+
 }

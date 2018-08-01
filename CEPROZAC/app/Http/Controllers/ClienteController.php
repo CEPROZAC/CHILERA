@@ -238,6 +238,28 @@ class ClienteController extends Controller
         })->export('xls');
       }
 
+public function validarRFC($rfc)
+{
 
+    $cliente= cliente::
+    select('id','rfc','nombre', 'estado')
+    ->where('rfc','=',$rfc)
+    ->get();
+
+    return response()->json(
+      $cliente->toArray());
+
+}
+
+
+
+public function activar(Request $request)
+{ 
+    $id =  $request->get('idCliente');
+    $cliente=cliente::findOrFail($id);
+    $cliente->estado="Activo";
+    $cliente->update();
+    return Redirect::to('clientes');
+}
 
     }

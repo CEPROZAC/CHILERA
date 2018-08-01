@@ -37,7 +37,7 @@
           {{Session::get('message')}}
           @endif
         </div>
-        <form method="post" action="{{url('materiales/provedores/validar')}}" class="form-horizontal row-border" parsley-validate novalidate id='form'>
+        <form method="post" action="{{url('materiales/provedores/validar')}}" class="form-horizontal row-border" parsley-validate novalidate '>
           {{csrf_field()}}
           <div class="form-group">
             <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
@@ -49,11 +49,13 @@
             </div>
           </div>
 
+ <input name="rfcOculto" id="oculto"  hidden  />
           <div class="form-group">
             <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <input name="rfc" type="text"  onchange="mayus(this);" value="{{Input::old('rfc')}}"  class="form-control" maxlength="13" id="RFC" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="" placeholder="Ingrese RFC del Proveedor"/>
+              <input name="rfc" id="rfc" type="text"  onchange="mayus(this);validarprovmat();"  class="form-control" maxlength="13"  type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="" placeholder="Ingrese RFC del Proveedor"/>
               <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('rfc')}}</div>
+              <span id="errorRFC" style="color:#FF0000;"></span>
             </div>
           </div>
 
@@ -83,7 +85,7 @@
           
           <div class="form-group">
             <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
               <a href="{{url('/materiales/provedores')}}" class="btn btn-default"> Cancelar</a>
             </div>
           </div><!--/form-group-->
@@ -95,34 +97,6 @@
 </div><!--/container clear_both padding_fix-->
 
 </html>
-<script>
- $(function(){
-   $("#form").submit(function(e){
 
-     var fields = $(this).serialize();
-     $.post("{{url('materiales/provedores/validar')}}", fields, function(data){
-
-       if(data.valid !== undefined){
-         $("#result").html("Enhorabuena formulario enviado correctamente");
-         $("#form")[0].reset();
-         $("#error_nombre").html('');
-         $("#error_email").html('');
-       }
-       else{
-         $("#error_nombre").html('');
-         $("#error_email").html('');
-         if (data.nombre !== undefined){
-          $("#error_nombre").html(data.nombre); 
-        }
-        if (data.email !== undefined){
-         $("#error_email").html(data.email);
-       }
-     }
-     
-   });
-     
-     return false;
-   });
- });
-</script>
+@include('Provedores.materiales.modalreactivar')
 @endsection

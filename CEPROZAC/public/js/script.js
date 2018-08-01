@@ -809,6 +809,195 @@ function  validarSSN(){
 
 } 
 
+/////////////////////////////////////////////////
+
+/////validar cliente///////
+
+ function  validarcliente(){
+
+    var rfc =document.getElementById('rfc').value;
+  var oculto =document.getElementById('oculto').value;
+  var route = "http://localhost:8000/validarcliente/"+rfc;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idCliente = res[0].id;
+       document.getElementById("idCliente").value= idCliente;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != oculto )  {
+
+      document.getElementById("errorRFC").innerHTML = "El Cliente  que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorRFC").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
+
+/////////////////////////////// validar provedor de materiales
+
+ function  validarprovmat(){
+
+    var rfc =document.getElementById('rfc').value;
+  var oculto =document.getElementById('oculto').value;
+  var route = "http://localhost:8000/validarprovedormat/"+rfc;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idProvedor = res[0].id;
+       document.getElementById("idProvedor").value= idProvedor;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != oculto )  {
+
+      document.getElementById("errorRFC").innerHTML = "El Provedor  que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorRFC").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
+   /////////////////////////////// validar agroquimicos
+
+ function  validaragroquimicos(){
+
+    var codigo =document.getElementById('segundo').value;
+  var oculto =document.getElementById('oculto').value;
+  var route = "http://localhost:8000/validaragroquimicos/"+codigo;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idAgro = res[0].id;
+       document.getElementById("idAgro").value= idAgro;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
+
+      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorCodigo").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
+   /////////////////////////////// validar materiales/refacciones
+
+ function  validarmateriales(){
+
+    var codigo =document.getElementById('segundo').value;
+  var oculto =document.getElementById('oculto').value;
+  var route = "http://localhost:8000/validarmateriales/"+codigo;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idMat = res[0].id;
+       document.getElementById("idMat").value= idMat;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
+
+      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorCodigo").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
+   /////////////////////////////// validar empaques
+
+ function  validarempaque(){
+
+    var codigo =document.getElementById('segundo').value;
+  var oculto =document.getElementById('oculto').value;
+  var route = "http://localhost:8000/validarempaque/"+codigo;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idEmp = res[0].id;
+       document.getElementById("idEmp").value= idEmp;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
+
+      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorCodigo").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
+      /////////////////////////////// validar limpieza
+
+ function  validarlimpieza(){
+
+    var codigo =document.getElementById('segundo').value;
+  var oculto =document.getElementById('oculto').value;
+  var route = "http://localhost:8000/validarlimpieza/"+codigo;
+
+     $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idLim = res[0].id;
+       document.getElementById("idLim").value= idLim;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
+
+      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorCodigo").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+   }
+
 
 
 function validarRoles(){

@@ -96,6 +96,7 @@ Route::resource('almacenes/limpieza','AlmacenLimpiezaController');
 Route::resource('almacenes/limpieza/stock', 'AlmacenLimpiezaController@stock');
 Route::resource('detalle/limpieza', 'almacenlimpiezaController@detalle');
 Route::resource('almacen/general','AlmacenGeneralController');
+Route::get('veralmacen/{id}', array('as'=> '/veralmacen','uses'=>'AlmacenGeneralController@verInformacion'));
 Route::resource('almacenes/empaque','almacenempaquecontroller');	
 Route::resource('almacenes/empaque/stock', 'almacenempaquecontroller@stock');
 Route::resource('detalle/empaque', 'almacenempaquecontroller@detalle');
@@ -243,6 +244,37 @@ Route::post("activarCuentaBancoCEPROZAC", "CuentasEmpresasCEPROZACController@act
 Route::get('validarCURP/{curp}', 'EmpleadoController@validarCURP');
 Route::post('activarEmpleado', 'EmpleadoController@activar');
 
+
+///Validacion Clientes//
+Route::get('validarcliente/{rfc}', 'ClienteController@validarRFC');
+Route::post('activarcliente', 'ClienteController@activar');
+////////////
+//validacion provedor de materiales
+
+Route::get('validarprovedormat/{rfc}', 'ProvedorMaterialesController@validarRFC');
+Route::post('activarprovedormat', 'ProvedorMaterialesController@activar');
+///////////
+
+//validacion agroquimicos
+
+Route::get('validaragroquimicos/{codigo}', 'AlmacenAgroquimicosController@validarcodigo');
+Route::post('activaragroquimicos', 'AlmacenAgroquimicosController@activar');
+///////////
+//validacion materiales/refacciones
+
+Route::get('validarmateriales/{codigo}', 'AlmacenMaterialController@validarcodigo');
+Route::post('activarmateriales', 'AlmacenMaterialController@activar');
+///////////
+//validacion agroquimicos
+
+Route::get('validarlimpieza/{codigo}', 'AlmacenLimpiezaController@validarcodigo');
+Route::post('activarlimpieza', 'AlmacenLimpiezaController@activar');
+///////////
+//validacion agroquimicos
+
+Route::get('validarempaque/{codigo}', 'almacenempaquecontroller@validarcodigo');
+Route::post('activarempaque', 'almacenempaquecontroller@activar');
+///////////
 //AQUI TERMINA VALIDACIONES
 
 

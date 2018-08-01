@@ -54,7 +54,7 @@
         <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
 
-         <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
+         <input type="date" name="fecha" id="fecha" value="{{Input::old('fecha')}}" class="form-control mask" >
        </div>
      </div>
 
@@ -62,7 +62,7 @@
               <div class="form-group">
           <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="prov" id="prov" value="prov"  class="form-control select" required>  
+            <select name="prov" id="prov"   value="{{Input::old('prov')}}" class="form-control select" required>  
               @foreach($provedor as $emp)
               <option value="{{$emp->nombre}}">
                {{$emp->nombre}} 
@@ -76,7 +76,7 @@
           <div class="form-group">
           <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+            <select name="recibio" id="recibio"  value="{{Input::old('recibio')}}" class="form-control select" required>  
               @foreach($empresas as $emp)
               <option value="{{$emp->nombre}}">
                {{$emp->nombre}} 
@@ -120,14 +120,15 @@
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
-    <input name="observacionesl" id="observacionesl" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciónes de la Compra"/>
+    <input name="observacionesl" id="observacionesl" type="text" value="{{Input::old('observacionesl')}}" maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciónes de la Compra"/>
   </div>
 </div>
 
        <div class="form-group">
         <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
         <div class="col-sm-3">
-          <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
+          <input name="factura" id="factura"  type="text"  value="{{Input::old('factura')}}" maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
+           <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
         </div>
       </div>
 
@@ -168,6 +169,7 @@
              <div class="form-group"> 
               <label for="scantidad">Cantidad de Entrada </label>
               <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+               <span id="errorCantidad" style="color:#FF0000;"></span>
             </div>    
           </div>  
 
@@ -207,7 +209,8 @@
            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
            <div class="form-group"> 
             <label for="preciou">$ Precio Unitario </label>
-            <input name="preciou" id="preciou" value="0" type="text" onkeypress=" return soloNumeros(event);" class="form-control" />
+            <input name="preciou" id="preciou"  type="text" value="{{Input::old('preciou')}}" onkeypress=" return soloNumeros(event);" class="form-control" />
+            <span id="errorprecio" style="color:#FF0000;"></span>
           </div>    
         </div>    
 
@@ -473,8 +476,11 @@ var fechav = document.getElementById('fecha').value;
 
   if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
    if (preciou > 0){
+    document.getElementById("errorprecio").innerHTML = "";
      if (entradav > 0){
 
+ document.getElementById("errorCantidad").innerHTML = "";
+       
 
     var select=document.getElementById('id_materialk');
   var cantidadtotal = select.value;
@@ -544,10 +550,12 @@ var fechav = document.getElementById('fecha').value;
     var d = subtota;
      document.getElementById("subtotal").value=d;
   }else{
-    swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
+    //swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
+    document.getElementById("errorCantidad").innerHTML = "La Cantidad de Entrada debe ser Mayor de 0";
   }}else{
     //alert('El precio Unitario no Puede Ser Menor de 0');
-    swal("Alerta!", "El precio Unitario no Puede Ser Menor de 0!", "error");
+  //  swal("Alerta!", "El precio Unitario no Puede Ser Menor de 0!", "error");
+    document.getElementById("errorprecio").innerHTML = "El precio Unitario no Puede Ser Menor de 0";
   }}else{
     swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
     //alert("Faltan campos Por llenar Favor de Verificar");

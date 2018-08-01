@@ -75,13 +75,15 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-           <input type="text" onkeypress=" return soloNumeros(event);" name="codigo" id="segundo"  maxlength="35"   class="form-control" placeholder="Ingrese el Codigo de Barras" required value="{{Input::old('codigo')}}"/><br>
-           <div class="text-danger"   id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
-         </div>
-       </div>
+<input name="nombreOculto" id="oculto"  hidden  />
+ <div class="form-group">
+              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+ <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validarmateriales();"  placeholder="Ingrese el Codigo de Barras" onkeypress=" return soloNumeros(event);" required value="{{Input::old('codigo')}}"/><br>
+ <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+  <span id="errorCodigo" style="color:#FF0000;"></span>
+</div>
+</div>
 
        <div class="form-group ">
         <label class="col-sm-3 control-label">Imagen</label>
@@ -119,7 +121,7 @@
 
     <div class="form-group">
       <div class="col-sm-offset-7 col-sm-5">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
         <a href="{{url('/almacen/materiales')}}" class="btn btn-default"> Cancelar</a>
       </div>
     </div><!--/form-group-->
@@ -131,6 +133,7 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
+@include('almacen.materiales.modalreactivar')
 @endsection
 
 <script>

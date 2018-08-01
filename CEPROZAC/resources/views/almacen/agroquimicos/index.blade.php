@@ -54,8 +54,11 @@ table, th, td {
 
 
 
+
+
 </div>
                 </b>
+                 <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
               </div>
             </div>
           </div>
@@ -80,7 +83,47 @@ table, th, td {
               </thead>
               <tbody>
                 @foreach($material  as $materiales)
+                
+                @if( $materiales->cantidad < $materiales->stock_minimo )
                 <tr class="gradeA">
+                <td style="background-color: #FFE4E1;">{{$materiales->id}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->nombre}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->provedor}} </td>
+                                                      @if (($materiales->codigo)!="")
+                  <td style="background-color: #FFE4E1;"><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
+                    <div style="text-align:center;" >
+                      {{$materiales->codigo}}
+                    </div>
+                    <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
+                  </td>
+                  @else
+                  <td style="background-color: #FFE4E1;">Codigo de Barras No Generado </td>
+                  
+                  @endif
+
+                  <td style="background-color: #FFE4E1;">
+                  @if (($materiales->imagen)!="")
+                      <img src="{{asset('imagenes/almacenagroquimicos/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                        @else
+                  No Hay Imagen Disponible
+                  @endif
+                    </td>              
+                   <td style="background-color: #FFE4E1;">{{$materiales->descripcion}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
+                       <td style="background-color: #FFE4E1;">{{$materiales->stock_minimo}} </td>
+
+    
+
+                     <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                  </td>
+                  <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->id}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                  </td>
+                </td>
+                </td>
+
+              </tr>
+              @else
+                  <tr class="gradeA">
                 <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
                   <td>{{$materiales->provedor}} </td>
@@ -105,18 +148,7 @@ table, th, td {
                     </td>              
                    <td>{{$materiales->descripcion}} </td>
                   <td>{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
-                  <?php
-                  $x= $materiales->cantidad;
-                  $y= $materiales->stock_minimo;
-                  $estilo='style="background:green"';
-                  if ($x < $y){
-                       $z=1;
-                       echo "<td style='color:#FF0000'>{$materiales->stock_minimo}</td>";
-
-                  } else {
-                         echo "<td>{$materiales->stock_minimo} </td>"; 
-                  }
-                  ?>
+               <td>{{$materiales->stock_minimo}} </td>
     
 
                      <td>  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
@@ -127,6 +159,8 @@ table, th, td {
                 </td>
 
               </tr>
+
+              @endif
               @include('almacen.agroquimicos.modal')
                 @include('almacen.agroquimicos.modale')
               @endforeach
@@ -152,56 +186,5 @@ table, th, td {
  </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
-<script>
-  window.onload=function() {
-   var z = 1
-   var table = document.getElementById('dynamic-table');
-   for (var r = 1, n = table.rows.length-1; r < n; r++) {
-    for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-     if (z == 1){
-            var nom = table.rows[r].cells[c].innerHTML;
-      z ++;
-    }
-    else if(z == 2){
-     z ++;
-   }else if(z == 3){
-     z ++;
-   }else if(z == 4){
-     z ++;
-   } else if (z == 5){
-     z ++;
-   }else if (z == 6){
-     var d =table.rows[r].cells[c].innerHTML;
-                limite = "1",
-            separador = " ",
-            arregloDeSubCadenas = d.split(separador, limite);
-            var g=arregloDeSubCadenas[0];
-          var x = parseInt(g);
-
-     z ++;
-   }else if(z == 7){
-        var o =table.rows[r].cells[c].innerHTML;
-        var y = parseInt(o);
-             if (x < y){
-      //alert("El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock" );
-      swal("Stock Minimo!", "El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock", "warning");
-    }
-
-     z ++;
-
-   }else if(z == 8){
-  
-     z ++;
-
-   }else{
-      z = 1;
-
-  }
-
-}
-}
-}
-
-</script>
 
 @endsection
