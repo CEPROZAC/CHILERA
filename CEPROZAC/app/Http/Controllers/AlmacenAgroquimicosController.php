@@ -62,32 +62,22 @@ class almacenagroquimicosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(almacenagroquimicosRequest $formulario)
+    public function store(request $request)
     {
-      $validator = Validator::make(
-        $formulario->all(), 
-        $formulario->rules(),
-        $formulario->messages());
-      if ($validator->valid()){
-
-        if ($formulario->ajax()){
-            return response()->json(["valid" => true], 200);
-        }
-        else{
             $material= new almacenagroquimicos;
-            $material->nombre=$formulario->get('nombre');
+            $material->nombre=$request->get('nombre');
             
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenagroquimicos',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
         }
-        $material->descripcion=$formulario->get('descripcion');
-        $material->cantidad=$formulario->get('cantidad');
-        $material->medida=$formulario->get('medida');
-        $material->codigo=$formulario->get('codigo');
-        $material->provedor=$formulario->get('provedor_name');
-        $material->stock_minimo=$formulario->get('stock_min');
+        $material->descripcion=$request->get('descripcion');
+        $material->cantidad=$request->get('cantidad');
+        $material->medida=$request->get('medida');
+        $material->codigo=$request->get('codigo');
+        $material->provedor=$request->get('provedor_name');
+        $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
 
 
@@ -108,9 +98,9 @@ class almacenagroquimicosController extends Controller
         */
 
     }
-  }        //
+         //
         //
-}
+
 
 public function invoice($id){ 
     $material= DB::table('almacenagroquimicos')->where('id',$id)->get();
