@@ -172,6 +172,7 @@
          <div class="form-group"> 
           <label for="scantidad">Cantidad de Entrada </label>
           <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+          <span id="errorCantidad" style="color:#FF0000;"></span>
         </div>    
       </div>  
 
@@ -212,6 +213,7 @@
    <div class="form-group"> 
     <label for="preciou">$ Precio Unitario </label>
     <input name="preciou" id="preciou" value="0" max="1000000" min="1" onkeypress=" return soloNumeros(event);" type="text" class="form-control" />
+        <span id="errorprecio" style="color:#FF0000;"></span>
   </div>    
 </div> 
 
@@ -473,7 +475,9 @@ function llenado(){
   var tipo_moneda = document.getElementById('moneda').value ;
   if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
     if (preciou > 0){
+        document.getElementById("errorprecio").innerHTML = "";
       if (entradav > 0){
+        document.getElementById("errorCantidad").innerHTML = "";
 
         var select=document.getElementById('id_materialk');
         var cantidadtotal = select.value;
@@ -542,10 +546,10 @@ function llenado(){
     var d = subtota;
     document.getElementById("subtotal").value=d;
   }else{
-    swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
+   document.getElementById("errorCantidad").innerHTML = "La Cantidad de Entrada debe ser Mayor de 0";
   }}else{
     //alert('El precio Unitario no Puede Ser Menor de 0');
-    swal("Alerta!", "El precio Unitario no Puede Ser Menor de 0!", "error");
+   document.getElementById("errorprecio").innerHTML = "El precio Unitario no Puede Ser Menor de 0";
   }}else{
     swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
     //alert("Faltan campos Por llenar Favor de Verificar");
