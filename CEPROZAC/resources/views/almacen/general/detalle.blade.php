@@ -76,8 +76,7 @@
 						@endforeach
 					</tbody>
 					<tfoot>
-						<tr>
-							<th></th>                                 
+						<tr>                              
 
 							<th>N° Espacio </th>
 							<th>Capacidad </th>

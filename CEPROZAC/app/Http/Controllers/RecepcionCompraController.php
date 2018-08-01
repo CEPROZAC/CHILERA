@@ -164,6 +164,7 @@ $salida->save();
      $material->humedad=$request->get('humedad');
      $material->pacas=$request->get('num_pacas');
      $material->pacas_rev=$request->get('pacas_rev');
+      $material->granel=$request->get('granel');
      $material->observacionesm=$request->get('observacionesm');
      $material->id_bascula=$request->get('bascula');
      $material->ticket=$request->get('numeroticket');

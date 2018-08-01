@@ -280,6 +280,7 @@
                       <div class="col-sm-3">
                         <input type="radio" name="tipo_rec" id="tipo_rec" onchange="buscar3()" value="pacas"> Pacas<br>
                         <input type="radio" name="tipo_rec" id="tipo_rec" onchange="buscar4()" value="granel"> Granel<br>
+                           <span id="error_rec" style="color:#FF0000;"></span>
                       </div>
                     </div><!--/form-group-->
 
@@ -455,6 +456,7 @@
     <label class="col-sm-3 control-label">Espacio Asignado: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
       <input name="asignado" id="asignado" type="text"   onchange="mayus(this);"  class="form-control" required  readonly/>
+       <span id="error_asig" style="color:#FF0000;"></span>
     </div>
   </div>
 
@@ -1542,11 +1544,13 @@ function generar(){
           if(stepDirection === 'forward' && elmForm){
             elmForm.validator('validate');
             var x= document.getElementById('transportes').rows[1].cells[1].innerHTML;
-            if(x !== ""){document.getElementById("transporte_num").style.border="1px solid #00ff00";}else{
+            if(x !== ""){
+             // document.getElementById("transporte_num").style.border="1px solid #00ff00";
+            }else{
               //alert('No se ha Ingresado Ningun Transporte en la Tabla de Transporte');
              // swal("Error!", "No se ha Ingresado Ningun Transporte en la Tabla de Transporte!", "error");
               document.getElementById("errortransp").innerHTML = "No se ha Ingresado Ningun Transporte en la Tabla de Transporte";
-              document.getElementById("transporte_num").style.border="1px solid #f00";
+             // document.getElementById("transporte_num").style.border="1px solid #f00";
               return false;
             }
             /*
@@ -1556,13 +1560,28 @@ function generar(){
               document.getElementById("precio").style.border="1px solid #f00";
               return false;
             }*/
+                        if (stepNumber == 2){
+                          var p = document.getElementById('tipo_rec').value;
+
+                          if(p == ""){
+                            
+                            document.getElementById("error_rec").innerHTML = "Este Material Ya se ha Insertado en la Tabla";
+                             return false;
+                          }else{
+                            document.getElementById("error_rec").innerHTML = "";
+                          }
+            }
+
 
             if (stepNumber == 3){
               if (document.getElementById('asignado').value == ""){
-                swal("Error!", "Ingrese el Espacio , donde se Enviara la Materia Prima!", "error");
+                 document.getElementById("error_asig").innerHTML = "Ingrese el Espacio , donde se Enviara la Materia Prima";
+                //swal("Error!", "Ingrese el Espacio , donde se Enviara la Materia Prima!", "error");
                 //alert('Ingrese el Espacio , donde se Enviara la Materia Prima');
-                document.getElementById("asignado").style.border="1px solid #f00";
+                //document.getElementById("asignado").style.border="1px solid #f00";
                 return false;
+              }else{
+                document.getElementById("error_asig").innerHTML = "";
               }
 
             }
