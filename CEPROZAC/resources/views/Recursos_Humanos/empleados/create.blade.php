@@ -98,7 +98,7 @@
                      <div class="form-group">
                       <label class="col-sm-3 control-label">SSN</label>
                       <div class="col-sm-6 ">
-                        <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'" onblur="validarSSN();" required>
+                        <input type="text" name="numero_Seguro_Social"  id="numero_Seguro_Social" type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'" onblur="validarSSN();" required>
                         <span id="errorSSN" style="color:#FF0000;"></span>
                       </div>
                     </div>
@@ -189,7 +189,7 @@
                              </td>
                              <input type="hidden" name="_token" id="idEmpleado">
                              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                             <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                             <td colspan="2"><button type="button"  onclick="validarRoles();myCreateFunction();" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
                            </tr>
                          </tbody>
                        </table>

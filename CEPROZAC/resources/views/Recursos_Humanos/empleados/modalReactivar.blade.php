@@ -20,7 +20,7 @@
         <form action="{{ url('activarEmpleado') }}" method="POST"> 
          {{csrf_field()}}
 
-         <input  name="idEmpleado" id="idEmpleadoModal"  />
+         <input  name="idEmpleado" id="idEmpleadoModal" type="hidden"  />
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
          <button type="submit" class="btn btn-primary">Aceptar</button>
        </form>

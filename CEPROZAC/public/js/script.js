@@ -733,7 +733,7 @@ function  validarCURP(){
     if(res.length > 0  &&  res[0].estado =="Inactivo"){
      document.getElementById('submit').disabled=true;
      var idEmpleado= res[0].id;
-   
+
 
      document.getElementById("idEmpleadoModal").value= idEmpleado;
 
@@ -748,10 +748,10 @@ function  validarCURP(){
 
      } else {
       document.getElementById("errorCURP").innerHTML = "El empleado que  intenta registrar ya existe en el sistema  y es un empleado de tipo  \"CONTRATADO\"";
-     }
-     document.getElementById('submit').disabled=true;
-   }
-   else {
+    }
+    document.getElementById('submit').disabled=true;
+  }
+  else {
 
     document.getElementById("errorCURP").innerHTML = "";
     document.getElementById('submit').disabled=false;
@@ -773,14 +773,14 @@ function  validarSSN(){
   var ssnOculta =document.getElementById('SSNOculto').value;
   var route = "http://localhost:8000/validarCURP/"+numero_Seguro_Social;
 
-console.log("entre");
+  console.log("entre");
   $.get(route,function(res){
 
 
     if(res.length > 0  &&  res[0].estado =="Inactivo"){
      document.getElementById('submit').disabled=true;
      var idEmpleado= res[0].id;
-   
+
 
      document.getElementById("idEmpleadoModal").value= idEmpleado;
 
@@ -795,10 +795,10 @@ console.log("entre");
 
      } else {
       document.getElementById("errorSSN").innerHTML = "El empleado que  intenta registrar ya existe en el sistema  y es un empleado de tipo  \"CONTRATADO\"";
-     }
-     document.getElementById('submit').disabled=true;
-   }
-   else {
+    }
+    document.getElementById('submit').disabled=true;
+  }
+  else {
 
     document.getElementById("errorCURP").innerHTML = "";
     document.getElementById('submit').disabled=false;
@@ -811,8 +811,21 @@ console.log("entre");
 
 
 
+function validarRoles(){
 
 
+var elementos = document.getElementsByName("idRol");
+
+  console.log("nueva"+elementos.length);
+  var i;
+
+  for (i=0; i<elementos.length;i++) {
+    alert(document.getElementsByName("username")[0].value);
+    console.log(elementos[i].value);
+  }
+
+
+}
 
 
 
