@@ -127,6 +127,7 @@
   <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
     <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
+     <div class="text-danger" id='error_fac'>{{$errors->formulario->first('factura')}}</div>
   </div>
 </div>
 

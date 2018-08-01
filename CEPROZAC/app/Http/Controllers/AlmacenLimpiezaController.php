@@ -250,4 +250,29 @@ public function invoice($id){
       
 
   }
+
+   public function validarcodigo($codigo)
+{
+
+    $quimico= almacenlimpieza::
+    select('id','codigo','nombre', 'estado')
+    ->where('codigo','=',$codigo)
+    ->get();
+
+    return response()->json(
+      $quimico->toArray());
+
+}
+
+
+
+public function activar(Request $request)
+{ 
+    $id =  $request->get('idLim');
+    $quimico=almacenlimpieza::findOrFail($id);
+    $quimico->estado="Activo";
+    $quimico->update();
+    return Redirect::to('almacenes/limpieza');
+}
+
 }

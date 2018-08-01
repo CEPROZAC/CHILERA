@@ -130,6 +130,7 @@
   <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
     <input name="nota" id="nota" value="" type="text"   maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Nota"/>
+       <div class="text-danger" id='error_nota'>{{$errors->formulario->first('nota')}}</div>
   </div>
 </div>
 

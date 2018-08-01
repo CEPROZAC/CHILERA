@@ -18,7 +18,7 @@
 
               <div class="form-group">
               <label  class="col-sm-3 control-label">Agregar Stock<strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
+              <div class="col-sm-8">
                 <input name="cantidades" id="cantidades" maxlength="9" type="text" value="1" min="1" max='9999999'" class="form-control" required placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div>
@@ -26,7 +26,7 @@
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Fecha de Compra <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
 
          <input type="date" name="fecha2" id="fecha2" value="" class="form-control mask" >
        </div>
@@ -36,7 +36,7 @@
             <br> <br>
        <div class="form-group">
           <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
               @foreach($empresas as $emp)
               <option value="{{$emp->nombre}}">
@@ -51,7 +51,7 @@
 
                 <div class="form-group">
           <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <select name="entregado_a" id="entregado_a" value=""  class="form-control select" required>  
               @foreach($empleado as $emp)
               <option value="{{$emp->id}}">
@@ -66,8 +66,8 @@
 
 
                        <div class="form-group">
-          <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
+          <label class="col-sm-3 control-label">Recibe : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-8">
             <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select" required>  
               @foreach($empleado as $emp)
               <option value="{{$emp->id}}">
@@ -79,26 +79,25 @@
          </div>
        </div>
        <br> <br>
-       <br> <br>
 
               <div class="form-group">
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color">*</strog></label>
-  <div class="col-sm-6">
+  <div class="col-sm-8">
 
     <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
   </div>
 </div>
             <br> <br>
        <div class="form-group">
-        <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
+        <label class="col-sm-3 control-label">N° Factura: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-8">
           <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
         </div>
       </div>
             <br> <br>
       <div class="form-row">    
           <label class="col-sm-3 control-label">Precio Unitario <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <div class="input-group">
              <div class="input-group-addon">$</div>
 
@@ -112,7 +111,7 @@
         
    <div class="form-group"> 
      <label class="col-sm-3 control-label">% IVA  <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
+      <div class="col-sm-8">
     <input name="iva" id="iva" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
   </div>    
   </div>
@@ -120,7 +119,7 @@
 
           <div class="form-group">
             <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
               <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
                    
                 @if(Input::old('moneda')=="Peso MXM")
@@ -145,14 +144,21 @@
 
           <br> <br>
           <div>
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+                   <                   <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+                   <div class="form-group">
+                    <label class="col-sm-3 control-label"> <strog class="theme_color"></strog></label>
+                        <div class="col-sm-8">
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
          <button type="submit" onclick="return save();" class="btn btn-primary">Agregar</button>
+         </div>
+         </div>
+         <br> <br>
          </div>
 
         </div>
       </section>
     </div>
+    
          </form>
  </div><!--/modal-content--> 
 </div><!--/modal-dialog--> 

@@ -249,5 +249,30 @@ public function invoice($id){
        return Redirect::to('almacen/materiales');
         //
    }
+
+    public function validarcodigo($codigo)
+{
+
+    $quimico= almacenmaterial::
+    select('id','codigo','nombre', 'estado')
+    ->where('codigo','=',$codigo)
+    ->get();
+
+    return response()->json(
+      $quimico->toArray());
+
+}
+
+
+
+public function activar(Request $request)
+{ 
+    $id =  $request->get('idMat');
+    $quimico=almacenmaterial::findOrFail($id);
+    $quimico->estado="Activo";
+    $quimico->update();
+    return Redirect::to('almacen/materiales');
+}
+
 }
 

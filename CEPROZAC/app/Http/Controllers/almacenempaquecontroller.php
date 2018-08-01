@@ -250,4 +250,29 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
 
       return Redirect::to('almacenes/empaque');
   }
+
+
+   public function validarcodigo($codigo)
+{
+
+    $quimico= almacenempaque::
+    select('id','codigo','nombre', 'estado')
+    ->where('codigo','=',$codigo)
+    ->get();
+
+    return response()->json(
+      $quimico->toArray());
+
+}
+
+
+
+public function activar(Request $request)
+{ 
+    $id =  $request->get('idEmp');
+    $quimico=almacenempaque::findOrFail($id);
+    $quimico->estado="Activo";
+    $quimico->update();
+    return Redirect::to('almacenes/empaque');
+}
 }

@@ -27,11 +27,6 @@
 								<b>
 
 
-									<div class="btn-group" style="margin-right: 10px;">
-										<a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.general.create')}}"style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Almacén"> <i class="fa fa-plus"></i> Registrar Almacén </a>
-
-
-									</div>
 								</b>
 							</div>
 						</div>
@@ -40,7 +35,7 @@
 
 				<div class="porlets-content">
 					<div class="table-responsive">
-						<table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered " id="hidden-table-info6">
+						<table  class="display table table-bordered table-striped" id="dynamic-table">
 							<thead>
 								<tr>                 
 									<th>N° Espacio </th>
@@ -73,35 +68,35 @@
 									<td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$almacenes->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
 									</td>
 
-									</td>
 								</td>
+							</td>
 
-							</tr>
-							@include('almacen.general.modal')
-							@endforeach
-						</tbody>
-						<tfoot>
-							<tr>
-								<th></th>                                 
+						</tr>
+						@include('almacen.general.modal')
+						@endforeach
+					</tbody>
+					<tfoot>
+						<tr>
+							<th></th>                                 
 
-								<th>N° Espacio </th>
-								<th>Capacidad </th>
-								<th>Espacio Ocupado</th>
-								<th>Espacio Libre </th>
-								<th>Producto </th>
-								<th>Provedor </th>
-								<th>Observaciónes </th>
-								<th>Estado Actual </th>
-								<td><center><b>Editar</b></center></td>
-								<td><center><b>Borrar</b></center></td>  
+							<th>N° Espacio </th>
+							<th>Capacidad </th>
+							<th>Espacio Ocupado</th>
+							<th>Espacio Libre </th>
+							<th>Producto </th>
+							<th>Provedor </th>
+							<th>Observaciónes </th>
+							<th>Estado Actual </th>
+							<td><center><b>Editar</b></center></td>
+							<td><center><b>Borrar</b></center></td>  
 
-							</tr>
-						</tfoot>
-					</table>
-				</div><!--/table-responsive-->
-			</div><!--/porlets-content-->
-		</div><!--/block-web-->
-	</div><!--/col-md-12-->
+						</tr>
+					</tfoot>
+				</table>
+			</div><!--/table-responsive-->
+		</div><!--/porlets-content-->
+	</div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

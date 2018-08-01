@@ -184,4 +184,29 @@ class ProvedorMaterialesController extends Controller
         })->export('xls');
 
       }
+
+      public function validarRFC($rfc)
+{
+
+    $provedor= ProvedorMateriales::
+    select('id','rfc','nombre', 'estado')
+    ->where('rfc','=',$rfc)
+    ->get();
+
+    return response()->json(
+      $provedor->toArray());
+
+}
+
+
+
+public function activar(Request $request)
+{ 
+    $id =  $request->get('idProvedor');
+    $provedor=ProvedorMateriales::findOrFail($id);
+    $provedor->estado="Activo";
+    $provedor->update();
+    return Redirect::to('materiales/provedores');
+}
+
     }

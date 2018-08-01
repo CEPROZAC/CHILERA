@@ -28,7 +28,7 @@ public function rules()
         return [
 
         //'rfc' => 'required|min:3|max:20|regex:/^[a-z]+$/i',
-            'rfc' => 'unique:cliente,rfc'
+           // 'rfc' => 'unique:cliente,rfc'
             //
         ];        
     }
@@ -45,7 +45,7 @@ public function rules()
             'email.email' => 'El formato de email es incorrecto',
              'email.unique'=> 'El Campo Email ya ha sido insertado antes',
              */
-             'rfc.unique' => 'El campo RFC ya ha sido registrado anteriormente, Verifique el campo',
+             //'rfc.unique' => 'El campo RFC ya ha sido registrado anteriormente, Verifique el campo',
         ];
     }
 

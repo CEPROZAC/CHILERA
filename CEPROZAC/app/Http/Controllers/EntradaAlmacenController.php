@@ -95,7 +95,7 @@ class EntradaAlmacenController extends Controller
      */
 
     
-    public function store(entradasmaterialesrequest $formulario)
+    public function store(EntradasMaterialesRequest $formulario)
     {
         $cantidad = $formulario->get('cantidad2');
 

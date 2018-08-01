@@ -20,6 +20,7 @@ use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
+use CEPROZAC\Http\Requests\modalentradaagro;
 
 
 class almacenagroquimicosController extends Controller
@@ -229,8 +230,18 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
       })->export('xls');
     }
 
-    public function stock(Request $request, $id)
+    public function stock(modalentradaagro $formulario, $id)
     {
+         $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages());
+      if ($validator->valid()){
+
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
+        }
+        else{
         $material=almacenagroquimicos::findOrFail($id);
         $prov=$material->provedor;
         $prove=provedormateriales::findOrFail($prov);
@@ -238,18 +249,18 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
       
       $material2= new entradasagroquimicos;
       $material2->id_material=$id;
-      $material2->cantidad=$request->get('cantidades');
+      $material2->cantidad=$formulario->get('cantidades');
       $material2->provedor=$nom_provedor;
-                      $material2->entregado=$request->get('entregado_a');
-        $material2->recibe_alm=$request->get('recibe_alm');
-         $material2->observacionesc=$request->get('observaciones');
+                      $material2->entregado=$formulario->get('entregado_a');
+        $material2->recibe_alm=$formulario->get('recibe_alm');
+         $material2->observacionesc=$formulario->get('observaciones');
 
-      $material2->comprador=$request->get('recibio');
-      $material2->factura=$request->get('factura');
-      $material2->fecha=$request->get('fecha2');
-      $material2->p_unitario=$request->get('preciou');
-       $ivaaux=$request->get('iva') * .010;
-       $iesaux=$request->get('iesp') * .010;
+      $material2->comprador=$formulario->get('recibio');
+      $material2->factura=$formulario->get('factura');
+      $material2->fecha=$formulario->get('fecha2');
+      $material2->p_unitario=$formulario->get('preciou');
+       $ivaaux=$formulario->get('iva') * .010;
+       $iesaux=$formulario->get('iesp') * .010;
        $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
        $iesptotal = $material2->p_unitario *  $material2->cantidad * $iesaux;
        $material2->iva=$ivatotal;
@@ -257,12 +268,38 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
 
       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
-      $material2->moneda=$request->get('moneda');
+      $material2->moneda=$formulario->get('moneda');
       $material2->save();
 
 
       return Redirect::to('almacenes/agroquimicos');
   }
+}
+}
+
+ public function validarcodigo($codigo)
+{
+
+    $quimico= almacenagroquimicos::
+    select('id','codigo','nombre', 'estado')
+    ->where('codigo','=',$codigo)
+    ->get();
+
+    return response()->json(
+      $quimico->toArray());
+
+}
+
+
+
+public function activar(Request $request)
+{ 
+    $id =  $request->get('idAgro');
+    $quimico=almacenagroquimicos::findOrFail($id);
+    $quimico->estado="Activo";
+    $quimico->update();
+    return Redirect::to('almacenes/agroquimicos');
+}
         //
 }
 

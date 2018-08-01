@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Requests\EntradasAgroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
+use CEPROZAC\Http\Requests\entradasempaquerequest;
 use CEPROZAC\entradasempaques;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
@@ -90,8 +91,19 @@ return view("almacen.empaque.entradas.create",["material"=>$material,"provedor"=
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(request $request)
+    public function store(entradasempaquerequest $formulario)
     {
+           $validator = Validator::make(
+            $formulario->all(), 
+            $formulario->rules(),
+            $formulario->messages());
+          if ($validator->valid()){
+
+            if ($formulario->ajax()){
+                return response()->json(["valid" => true], 200);
+            }
+            else{
+
 $num = 1;
     $y = 0;
     $limite = $request->get('total');
@@ -138,6 +150,7 @@ $num = 1;
          $material->observacionesc=$request->get('observacionese');
         $material->save();
         $num = $num + 1;
+    }}
         //
     }
     return redirect('/almacen/entradas/empaque');
