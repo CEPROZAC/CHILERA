@@ -180,7 +180,7 @@
                     <select name="recibe_em"  class="form-control select2" required>  
                       @foreach($empleado as $em)
                       <option value="{{$em->id}}">
-                       {{$em->nombre}}
+                       {{$em->nombre}} {{$em->apellidos}}
                      </option>
                      @endforeach              
                    </select>
@@ -391,7 +391,7 @@
       <select name="pesaje"  class="form-control select" required>  
         @foreach($empleado as $em)
         <option value="{{$em->id}}">
-         {{$em->nombre}}
+         {{$em->nombre}} {{$em->apellidos}}
        </option>
        @endforeach              
      </select>
@@ -515,10 +515,21 @@
       <h3 class="h3titulo">Programar Fumigación</h3>
       <br>
 
+
+                           <div class="form-group">
+                      <label class="col-sm-3 control-label">Programar Fumigacion Ahora: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-3">
+                        <input type="radio" name="programar" id="programar" onchange="buscar5()" value="si"> Si<br>
+                        <input type="radio" name="programar" id="programar" onchange="buscar6()" value="no"> No<br>
+                           <span id="error_rec" style="color:#FF0000;"></span>
+                      </div>
+                    </div><!--/form-group-->
+
+
       <div class="form-group">
        <label class="col-sm-3 control-label">Hora de Inicio de La Fumigación: <strog class="theme_color">*</strog></label>
        <div class="col-sm-6">
-        <input id="inicio" name="inicio" type="time" required>
+        <input id="inicio" name="inicio" type="time" >
         <div class="help-block with-errors"></div>
       </div>
     </div><!--/form-group-->
@@ -527,7 +538,7 @@
       <label class="col-sm-3 control-label">Fecha de Inicio: <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
 
-       <input type="date" name="fechai" id="fechai" value="" class="form-control mask" required>
+       <input type="date" name="fechai" id="fechai" value="" class="form-control mask" >
      </div>
    </div>
 
@@ -535,14 +546,14 @@
     <label class="col-sm-3 control-label">Fecha de Termino: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
 
-     <input type="date" name="fechaf" id="fechaf" value="" class="form-control mask" required >
+     <input type="date" name="fechaf" id="fechaf" value="" class="form-control mask"  >
    </div>
  </div>
 
  <div class="form-group">
    <label class="col-sm-3 control-label">Hora de Termino de La Fumigación: <strog class="theme_color">*</strog></label>
    <div class="col-sm-6">
-    <input id="final" name="final" type="time" required>
+    <input id="final" name="final" type="time" >
     <div class="help-block with-errors"></div>
   </div>
 </div><!--/form-group-->
@@ -550,7 +561,7 @@
 <div class="form-group">
  <label class="col-sm-3 control-label">Fumigador: <strog class="theme_color">*</strog></label>
  <div class="col-sm-6">
-  <select name="fumigador" id="fumigador"  class="form-control select" required>
+  <select name="fumigador" id="fumigador"  class="form-control select" >
     @foreach($empleado as $empleados)
     <option value="{{$empleados->id}}}">
      {{$empleados->nombre}} {{$empleados->apellidos}} 
@@ -564,7 +575,7 @@
 <div class="form-group">
  <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
  <div class="col-sm-6">
-  <select name="entrego_qui" id="entrego_qui"  class="form-control select" required>
+  <select name="entrego_qui" id="entrego_qui"  class="form-control select" >
     @foreach($empleado as $empleados)
     <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
      {{$empleados->nombre}} {{$empleados->apellidos}} 
@@ -579,7 +590,7 @@
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
-    <input name="observacionesf" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Fumigación"/>
+    <input name="observacionesf" id="observacionesf"  type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Fumigación"/>
   </div>
 </div>
 
@@ -597,10 +608,10 @@
 <div class="form-group">
 </div>
 
-<div class="form-group">
+<div class="form-group"  >
  <label class="col-sm-3 control-label">Agroquímicos a Aplicar: <strog class="theme_color">*</strog></label>
  <div class="col-sm-6">
-  <select name="quimicos" id="quimicos"  class="form-control select" required>
+  <select name="quimicos" id="quimicos"  class="form-control select" >
     @foreach($almacenagroquimicos as $quimico)
     <option value="{{$quimico->id}}_{{$quimico->nombre}}_{{$quimico->codigo}}_{{$quimico->descripcion}}_{{$quimico->cantidad}}_{{$quimico->medida}}">
      {{$quimico->nombre}} 
@@ -610,7 +621,7 @@
    <span id="erroragro" style="color:#FF0000;"></span>
  <div class="help-block with-errors"></div>
 </div>
-<a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
+<button id="agregar_agro" class="btn btn-sm btn-danger"  style="margin-right: 10px;"  onclick="agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</button>
 </div><!--/form-group-->
 
 
@@ -620,7 +631,7 @@
 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
  <div class="form-group"> 
   <label for="scantidad">Cantidad Aplicada <strog class="theme_color">*</strog></label>
-  <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+  <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1"  data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
 </div>    
   <span id="errorcantidad" style="color:#FF0000;"></span>
 </div>  
@@ -682,13 +693,13 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Estado de la Fumigacion: <strog class="theme_color">*</strog></label>
   <div class="col-sm-6">
-    <select name="status" value="{{Input::old('status')}}" required>
+    <select name="status" id="status" value="{{Input::old('status')}}" >
       @if(Input::old('status')=="Proceso")
       <option value='Proceso' selected>En Proceso
       </option>
-      <option value="Realizada">Realizada</option>
+      <option value="Pendiente">Pendiente</option>
       @else
-      <option value='Realizada' selected>Realizada
+      <option value='Pendiente' selected>Pendiente
       </option>
       <option value="Proceso">En Proceso</option>
       @endif
@@ -1194,6 +1205,7 @@ function limpiar(){
 
 
 function save() {
+  if (document.getElementById('programar').value == si){
     if (document.getElementById('total').value > 0){
  var z = 1
  var arreglo = [];
@@ -1252,9 +1264,30 @@ var nombx = auxy.options[auxy.selectedIndex].text;
 document.getElementById('nombre_fum').value=nombx;
 }else{
  // alert('No hay Elementos Agregados, Para Poder Guardar');
-  swal("Error!","No hay Elementos Agregados, Para Poder Guardar", "error");
+  swal("Error!","No hay Elementos Agregados en la Tabla de Fumigaciones, Para Poder Guardar", "error");
   return false;
 
+}}else{
+   var z = 1
+ var arreglo = [];
+ var table = document.getElementById('transportes');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+        //alert(z)
+       // document.getElementById("id_materialk").id=z;
+      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
+      arreglo.push(table.rows[r].cells[c].innerHTML);
+      z ++;
+    }else{
+      arreglo.push(table.rows[r].cells[c].innerHTML);
+      document.getElementById("transportes2").value=arreglo;
+      z = 1;
+
+    }
+
+  }
+}
 }}
 
 
@@ -1293,6 +1326,66 @@ function buscar4(){
 
 
 }
+
+function buscar5(){
+    document.getElementById('programar').value="si";
+    document.getElementById('inicio').required = true;
+  document.getElementById('fechai').required = true;
+      document.getElementById('fechaf').required = true;
+  document.getElementById('final').required = true;
+      document.getElementById('fumigador').required = true;
+  document.getElementById('entrego_qui').required = true; 
+  document.getElementById('quimicos').required = true;
+  document.getElementById('scantidad').required = true;
+    document.getElementById('status').required = true;
+
+
+        document.getElementById('inicio').readOnly = false;
+  document.getElementById('fechai').readOnly = false;
+      document.getElementById('fechaf').readOnly = false;
+  document.getElementById('final').readOnly = false;
+      document.getElementById('fumigador').disabled = false;
+  document.getElementById('entrego_qui').disabled = false; 
+  document.getElementById('quimicos').disabled = false;
+  document.getElementById('scantidad').disabled = false;
+    document.getElementById('status').readOnly = false;
+    document.getElementById('agregar_agro').disabled = false;
+      document.getElementById('observacionesf').readOnly = false; 
+
+
+
+
+
+}
+function buscar6(){
+  document.getElementById('programar').value="no";
+    document.getElementById('inicio').required = false;
+     document.getElementById('inicio').readonly = false;
+  document.getElementById('fechai').required = false;
+      document.getElementById('fechaf').required = false;
+  document.getElementById('final').required = false;
+      document.getElementById('fumigador').required = false;
+  document.getElementById('entrego_qui').required = false; 
+  document.getElementById('quimicos').required = false;
+  document.getElementById('scantidad').required = false;
+    document.getElementById('status').required = false;
+
+        document.getElementById('inicio').readOnly = true;
+  document.getElementById('fechai').readOnly = true;
+      document.getElementById('fechaf').readOnly = true;
+  document.getElementById('final').readOnly = true;
+      document.getElementById('fumigador').disabled = true;
+  document.getElementById('entrego_qui').disabled = true; 
+  document.getElementById('quimicos').disabled = true;
+  document.getElementById('scantidad').disabled = true;
+    document.getElementById('status').readOnly = true;
+       document.getElementById('agregar_agro').disabled = true;
+     document.getElementById('observacionesf').readOnly = true;
+        document.getElementById('status').value = "Pendiente";
+
+
+}
+
 
 function raiz(){
   var aux = document.getElementById('num_pacas').value;
@@ -1545,12 +1638,12 @@ function generar(){
             elmForm.validator('validate');
             var x= document.getElementById('transportes').rows[1].cells[1].innerHTML;
             if(x !== ""){
-             // document.getElementById("transporte_num").style.border="1px solid #00ff00";
+              document.getElementById("errortransp").innerHTML = "";
             }else{
               //alert('No se ha Ingresado Ningun Transporte en la Tabla de Transporte');
-             // swal("Error!", "No se ha Ingresado Ningun Transporte en la Tabla de Transporte!", "error");
               document.getElementById("errortransp").innerHTML = "No se ha Ingresado Ningun Transporte en la Tabla de Transporte";
-             // document.getElementById("transporte_num").style.border="1px solid #f00";
+             // swal("Error!", "No se ha Ingresado Ningun Transporte en la Tabla de Transporte!", "error");
+              //document.getElementById("transporte_num").style.border="1px solid #f00";
               return false;
             }
             /*
@@ -1560,28 +1653,16 @@ function generar(){
               document.getElementById("precio").style.border="1px solid #f00";
               return false;
             }*/
-                        if (stepNumber == 2){
-                          var p = document.getElementById('tipo_rec').value;
-
-                          if(p == ""){
-                            
-                            document.getElementById("error_rec").innerHTML = "Este Material Ya se ha Insertado en la Tabla";
-                             return false;
-                          }else{
-                            document.getElementById("error_rec").innerHTML = "";
-                          }
-            }
-
 
             if (stepNumber == 3){
               if (document.getElementById('asignado').value == ""){
-                 document.getElementById("error_asig").innerHTML = "Ingrese el Espacio , donde se Enviara la Materia Prima";
-                //swal("Error!", "Ingrese el Espacio , donde se Enviara la Materia Prima!", "error");
+                document.getElementById("error_asig").innerHTML = "Ingrese el Espacio , donde se Enviara la Materia Prima";
+               // swal("Error!", "Ingrese el Espacio , donde se Enviara la Materia Prima!", "error");
                 //alert('Ingrese el Espacio , donde se Enviara la Materia Prima');
                 //document.getElementById("asignado").style.border="1px solid #f00";
                 return false;
               }else{
-                document.getElementById("error_asig").innerHTML = "";
+                 document.getElementById("error_asig").innerHTML = "";
               }
 
             }

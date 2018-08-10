@@ -40,6 +40,7 @@
                   </div>
 
                 </b>
+                              <div class="text-danger" id='errorventa'>{{$errors->formulario->first('nota')}}</div>
               </div>
             </div>
           </div>

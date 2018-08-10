@@ -269,7 +269,7 @@ return $pdf->stream('invoice');
             ->select('entradasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'entradasalmacenlimpieza.cantidad', 'entradasalmacenlimpieza.provedor', 'entradasalmacenlimpieza.factura','entradasalmacenlimpieza.p_unitario','entradasalmacenlimpieza.iva','entradasalmacenlimpieza.total','entradasalmacenlimpieza.comprador','entradasalmacenlimpieza.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradasalmacenlimpieza.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura ó Nota','Precio Unitario','IVA','Subtotal','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
+            $sheet->row(1,['N°Compra','Material','Cantidad' ,'Proveedor','Numero de Factura ó Nota','Precio Unitario','IVA','Subtotal','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

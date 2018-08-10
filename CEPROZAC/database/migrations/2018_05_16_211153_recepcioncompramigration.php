@@ -58,6 +58,7 @@ class Recepcioncompramigration extends Migration
 
             $table->integer('id_fumigacion')->unsigned();
             $table->foreign('id_fumigacion')->references('id')->on('fumigaciones');
+            $table->string('codigo');
 
 
             $table->timestamps();

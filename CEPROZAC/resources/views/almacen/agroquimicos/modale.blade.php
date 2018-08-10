@@ -20,6 +20,7 @@
               <label  class="col-sm-3 control-label">Agregar Stock<strog class="theme_color">*</strog></label>
               <div class="col-sm-8">
                 <input name="cantidades" id="cantidades" maxlength="9" type="text" value="1" min="1" max='9999999'" class="form-control" required placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
+                
                </div>    
                </div>
                            <br> <br>

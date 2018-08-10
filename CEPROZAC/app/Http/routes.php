@@ -117,6 +117,8 @@ Route::resource('almacen/materiales/salidas','SalidaAlmacenMaterialController');
 
 Route::get('pruebas', 'ProductosController@pruebas')->name('productos.pruebas');	
 
+///ALMACENES
+
 Route::resource('almacen/salidas/material','SalidaAlmacenMaterialController');	
 Route::get('descargar-salidas', 'SalidaAlmacenMaterialController@excel')->name('almacen.materiales.salidas.excel');
 
@@ -147,12 +149,16 @@ Route::get('descargar-salidas-empaque', 'salidasempaquescontroller@excel')->name
 Route::resource('almacen/entradas/empaque','entradasempaquescontroller');	
 Route::get('descargar-entradas-empaque', 'entradasempaquescontroller@excel')->name('almacen.empaque.entradas.excel');
 
+/////////
+
+///RECEPCION DE COMPRAS
+
 
 Route::resource('compras/recepcion','RecepcionCompraController');
 Route::get('vercompra/{id}', array('as'=> '/vercompra','uses'=>'RecepcionCompraController@verInformacion'));
 Route::get('pdfrecepcion/{id}', array('as'=> '/pdfrecepcion','uses'=>'RecepcionCompraController@invoice'));
 Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compras.recepcion.excel');
-
+//////////////////////////////////
 
 Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');
 
@@ -278,5 +284,11 @@ Route::post('activarempaque', 'almacenempaquecontroller@activar');
 //AQUI TERMINA VALIDACIONES
 
 
+///FUMIGACIONES
 
+Route::resource('fumigaciones','fumigacionesController');
+Route::get('verfumigacion/{id}', array('as'=> '/verfumigacion','uses'=>'fumigacionesController@verInformacion'));
+Route::get('pdffumigacion/{id}', array('as'=> '/pdffumigacion','uses'=>'fumigacionesController@invoice'));
+Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compras.recepcion.excel');
+/////////////
 

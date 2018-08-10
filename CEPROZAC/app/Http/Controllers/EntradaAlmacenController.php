@@ -274,7 +274,7 @@ return Redirect::to('almacen/entradas/materiales');
             ->select('entradaalmacenmateriales.id', 'almacenmateriales.nombre', 'entradaalmacenmateriales.cantidad', 'entradaalmacenmateriales.provedor', 'entradaalmacenmateriales.nota_venta','entradaalmacenmateriales.p_unitario','entradaalmacenmateriales.iva','entradaalmacenmateriales.total','entradaalmacenmateriales.comprador','entradaalmacenmateriales.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradaalmacenmateriales.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Nota de Venta','Precio Unitario','IVA','Subtotal','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
+            $sheet->row(1,['N°Compra','Material','Cantidad' ,'Proveedor','Nota de Venta','Precio Unitario','IVA','Subtotal','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

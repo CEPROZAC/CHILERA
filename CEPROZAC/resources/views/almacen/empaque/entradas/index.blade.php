@@ -90,19 +90,20 @@
             </tbody>
             <tfoot>
               <tr>
-                  <th>N°Entrada </th>
+                  <th>N°Compra </th>
                   <th>Fecha de Entrada</th>  
-                  <th>Proveedor </th>
+                  <th>Proveedor de Material </th>
                   <th>N°Factura </th>
                   <th>Nombre de Material</th>
-                  <th>Cantidad </th>
+                  <th>Cantidad Comprada</th>
                     <th>Precio Unitario </th>
-                    <th>IVA </th>
+                     <th>IVA </th>
                    <th>Subtotal </th>
                     <th>Total de Compra </th>
                     <th>Tipo de Moneda</th>
                   <th>Comprador</th>
-                  <td><center><b>Borrar</b></center></td>   
+                  
+                  <td><center><b>Borrar</b></center></td> 
              </tr>
            </tfoot>
          </table>
