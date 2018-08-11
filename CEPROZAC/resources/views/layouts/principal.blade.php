@@ -167,7 +167,7 @@
                   <li> <a href="{{url('almacenes/empaque')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empaque</b> </a> </li>
                 <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Generales</b> </a> </li>
 
-                <li> <a href="{{url('almacenes')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Almacenes</b> </a> </li>
+     
 
 
               </ul>
@@ -192,6 +192,12 @@
             <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Compras <span class="plus"><i class="fa fa-plus"></i></span> </a>
               <ul>
                 <li> <a href="{{url('compras/recepcion/')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materia Prima</b> </a> </li>
+              </ul>
+            </li>
+
+                        <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Fumigaciones <span class="plus"><i class="fa fa-plus"></i></span> </a>
+              <ul>
+                <li> <a href="{{url('fumigaciones')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Fumigaciones</b> </a> </li>
               </ul>
             </li>
 

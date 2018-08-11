@@ -56,6 +56,7 @@ table, th, td {
 
 </div>
                 </b>
+                 <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
               </div>
             </div>
           </div>

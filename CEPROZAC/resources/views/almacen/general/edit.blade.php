@@ -68,7 +68,7 @@
 
 
                 <div class="form-group">
-              <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Descripción: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
                 <input name="descripcion" type="text"  value="{{$almacen->descripcion}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
               </div>

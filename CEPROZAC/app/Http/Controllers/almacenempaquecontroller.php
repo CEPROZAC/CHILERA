@@ -11,6 +11,7 @@ use CEPROZAC\almacenagroquimicos;
 use CEPROZAC\almacenempaque;
 use CEPROZAC\formaempaque;
 use CEPROZAC\Http\Requests\almacenempaquerequest;
+use CEPROZAC\Http\Requests\modalentradaemp;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\entradasempaques;
 use CEPROZAC\ProvedorMateriales;
@@ -218,8 +219,18 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
       })->export('xls');
     }
 
-        public function stock(Request $request, $id)
+        public function stock(modalentradaemp $formulario, $id)
     {
+                 $validator = Validator::make(
+        $formulario->all(), 
+        $formulario->rules(),
+        $formulario->messages());
+      if ($validator->valid()){
+
+        if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
+        }
+        else{
 
         $material=almacenempaque::findOrFail($id);
         $prov=$material->provedor;
@@ -228,29 +239,30 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
 
       $material2= new entradasempaques;
       $material2->id_material=$id;
-      $material2->cantidad=$request->get('cantidades');
+      $material2->cantidad=$formulario->get('cantidades');
      $material2->provedor=$nom_provedor;
-                      $material2->entregado=$request->get('entregado_a');
-        $material2->recibe_alm=$request->get('recibe_alm');
-         $material2->observacionesc=$request->get('observaciones');
+                      $material2->entregado=$formulario->get('entregado_a');
+        $material2->recibe_alm=$formulario->get('recibe_alm');
+         $material2->observacionesc=$formulario->get('observaciones');
 
-      $material2->comprador=$request->get('recibio');
-      $material2->factura=$request->get('factura');
-      $material2->fecha=$request->get('fecha2');
-      $material2->p_unitario=$request->get('preciou');
-        $ivaaux=$request->get('iva') * .010;
+      $material2->comprador=$formulario->get('recibio');
+      $material2->factura=$formulario->get('factura');
+      $material2->fecha=$formulario->get('fecha2');
+      $material2->p_unitario=$formulario->get('preciou');
+        $ivaaux=$formulario->get('iva') * .010;
        $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
        $material2->iva=$ivatotal;
 
       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
-       $material2->moneda=$request->get('moneda');
+       $material2->moneda=$formulario->get('moneda');
       $material2->save();
 
 
       return Redirect::to('almacenes/empaque');
   }
-
+}
+}
 
    public function validarcodigo($codigo)
 {

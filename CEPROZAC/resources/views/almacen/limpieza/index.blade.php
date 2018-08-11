@@ -26,7 +26,7 @@
             <div class="col-md-12">
               <div class="btn-group pull-right">
                 <b>
-
+ 
 
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="{{ route('almacenes.limpieza.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Material </a>
@@ -40,12 +40,9 @@
 
                   </div>
 
-                           <div class="text-success" id='result'>
-          @if(Session::has('message'))
-          {{Session::get('message')}}
-          @endif
-        </div>
+
                 </b>
+                 <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
               </div>
             </div>
           </div>
@@ -169,54 +166,6 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
-<script>
-  window.onload=function() {
-   var z = 1
-   var table = document.getElementById('dynamic-table');
-   for (var r = 1, n = table.rows.length-1; r < n; r++) {
-    for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-     if (z == 1){
-            var nom = table.rows[r].cells[c].innerHTML;
-      z ++;
-    }
-    else if(z == 2){
-     z ++;
-   }else if(z == 3){
-     z ++;
-   }else if(z == 4){
-     z ++;
-   } else if (z == 5){
-     z ++;
-   }else if (z == 6){
-             var d =table.rows[r].cells[c].innerHTML;
-                limite = "1",
-            separador = " ",
-            arregloDeSubCadenas = d.split(separador, limite);
-            var g=arregloDeSubCadenas[0];
-          var x = parseInt(g);
 
-     z ++;
-
-   }else if(z == 7){
-     var o =table.rows[r].cells[c].innerHTML;
-        var y = parseInt(o);
-             if (x < y){
-        swal("Stock Minimo!", "El Stock Minimo del Producto "+nom+" debe ser Minimo de "+y+ " Unidad(es), Favor de Agregar mas Stock", "warning");
-    }
-     z ++;
-
-   }else if(z == 8){
-
-     z ++;
-
-   }else {
-    z = 1;}
-  
-
-}
-}
-}
-
-</script>
 
 @endsection

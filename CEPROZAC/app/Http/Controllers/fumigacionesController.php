@@ -16,9 +16,18 @@ use CEPROZAC\Empleado;
 use CEPROZAC\Bascula;
 use CEPROZAC\fumigaciones;
 use CEPROZAC\AlmacenGeneral;
+use \Milon\Barcode\DNS1D;
+use \Milon\Barcode\DNS2D;
+
+use Carbon\Carbon;
 
 use DB;
+use Validator; 
+use PHPExcel_Worksheet_Drawing;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Collection as Collection;
+
+
 
 class fumigacionesController extends Controller
 {
@@ -29,6 +38,13 @@ class fumigacionesController extends Controller
      */
     public function index()
     {
+             $fumigaciones= DB::table('fumigaciones')
+     ->join('empleados as a', 'fumigaciones.id_fumigador', '=', 'a.id')
+        ->join('productos as p', 'fumigaciones.id_producto', '=', 'p.id')
+         ->join('almacengeneral as alm', 'fumigaciones.id_almacen', '=', 'alm.id')
+     ->select('fumigaciones.*','a.nombre as nomfum', 'a.apellidos as apellidos', 'p.nombre as produnom','alm.nombre as almnom')->get();
+     return view('fumigaciones.index', ['fumigaciones' => $fumigaciones]);
+
 
         //
     }
@@ -40,6 +56,26 @@ class fumigacionesController extends Controller
      */
     public function create()
     {
+              $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+      $provedores=DB::table('provedores')->where('estado','=' ,'Activo')->get();
+      $productos=DB::table('productos')->where('estado','=' ,'Activo')->get();
+      $transportes=DB::table('transportes')->where('estado','=' ,'Activo')->get();
+      $servicio=DB::table('basculas')->where('estado','=' ,'Activo')->get();
+      $empaque=DB::table('forma_empaques')->where('estado','=' ,'Activo')->get();
+      $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
+      $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
+      $almacenagroquimicos=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->orwhere('cantidad','>','0')->get();
+      $espacio=DB::table('espacios_almacen')->where('nombre_lote','<>','')->join('almacengeneral as alm', 'espacios_almacen.id_almacen', '=', 'alm.id') ->select('espacios_almacen.*','alm.nombre as almnom')->get();
+
+      if (empty($almacenagroquimicos) or empty($empleado) or empty($empresas) or empty($provedores) or empty($productos)  or empty($servicio)  or empty($empaque) ){
+       return Redirect::to('fumigaciones');
+
+
+     }
+
+     return view("fumigaciones.create",["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral,"almacenagroquimicos"=>$almacenagroquimicos,"empresas"=>$empresas,'espacio'=>$espacio]);
+
         //
     }
 
@@ -98,4 +134,38 @@ class fumigacionesController extends Controller
     {
         //
     }
+
+        public function verInformacion($id)
+    {
+
+
+
+                   $fumigaciones = fumigaciones::findOrFail($id);
+                   $idempleado= $fumigaciones->id_fumigador;
+                   $idalm= $fumigaciones->id_almacen;
+                   $idpro= $fumigaciones->id_producto;
+                     $empleado=empleado::findOrFail($idempleado);
+      $produ=producto::findOrFail($idpro);
+       $ubicacion=almacengeneral::findOrFail($idalm);
+
+     return view('fumigaciones.lista', ['fumigaciones' => $fumigaciones,'empleado' => $empleado,'produ'=> $produ,'ubicacion'=>$ubicacion]);
+    }
+
+       public function invoice($id){ 
+    $material= DB::table('fumigaciones')->where('id',$id)->get();
+     $fumigaciones = fumigaciones::findOrFail($id);
+    $idemp=$fumigaciones->id_fumigador;
+      $empleado= DB::table('empleados')->where('id',$idemp)->get();
+
+    $date = date('Y-m-d');
+    $invoice = "2222";   
+    $view =  \View::make('Fumigaciones.invoice', compact('date', 'invoice','fumigaciones','empleado'))->render();
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($view);
+    return $pdf->stream('invoice');
+  }
+
+
+
+
 }

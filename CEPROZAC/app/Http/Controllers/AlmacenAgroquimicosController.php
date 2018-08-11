@@ -220,7 +220,7 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
       })->export('xls');
     }
 
-    public function stock(modalentradaagro $formulario, $id)
+    public function stock(modalentradaagro $formulario, $id) 
     {
          $validator = Validator::make(
         $formulario->all(), 
@@ -250,7 +250,7 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
       $material2->fecha=$formulario->get('fecha2');
       $material2->p_unitario=$formulario->get('preciou');
        $ivaaux=$formulario->get('iva') * .010;
-       $iesaux=$formulario->get('iesp') * .010;
+       $iesaux=$formulario->get('ieps') * .010; 
        $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
        $iesptotal = $material2->p_unitario *  $material2->cantidad * $iesaux;
        $material2->iva=$ivatotal;

@@ -106,13 +106,13 @@ return view("almacen.empaque.entradas.create",["material"=>$material,"provedor"=
 
 $num = 1;
     $y = 0;
-    $limite = $request->get('total');
+    $limite = $formulario->get('total');
    //print_r($limite);
 
     while ($num <= $limite) {
         $material= new entradasempaques;
             //print_r($num);
-        $producto = $request->get('codigo2');
+        $producto = $formulario->get('codigo2');
         $first = head($producto);
         $name = explode(",",$first);
             //print_r($producto);
@@ -145,9 +145,9 @@ $num = 1;
         $y = $y + 1;
         $material->moneda=$first = $name[$y];
         $y = $y + 1;
-                $material->entregado=$request->get('entregado_a');
-        $material->recibe_alm=$request->get('recibe_alm');
-         $material->observacionesc=$request->get('observacionese');
+                $material->entregado=$formulario->get('entregado_a');
+        $material->recibe_alm=$formulario->get('recibe_alm');
+         $material->observacionesc=$formulario->get('observacionese');
         $material->save();
         $num = $num + 1;
     }}
@@ -207,7 +207,7 @@ $num = 1;
             ->select('entradasempaques.id', 'almacenempaque.nombre', 'entradasempaques.cantidad', 'entradasempaques.provedor', 'entradasempaques.factura','entradasempaques.p_unitario','entradasempaques.iva','entradasempaques.total','entradasempaques.moneda','entradasempaques.comprador','entradasempaques.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradasempaques.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
+            $sheet->row(1,['N°Compra','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

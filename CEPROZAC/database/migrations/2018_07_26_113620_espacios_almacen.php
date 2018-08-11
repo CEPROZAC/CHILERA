@@ -28,6 +28,9 @@ class EspaciosAlmacen extends Migration
          $table->string('descripcion')->nullable();
           $table->string('estado')->nullable();
           $table->date('fecha_entrada')->nullable();
+          $table->string('nombre_lote')->nullable();
+          $table->date('fumigacion_status')->nullable();
+          $table->date('ultima_fumigacion')->nullable();
          $table->timestamps();
      });
     }

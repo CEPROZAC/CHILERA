@@ -77,7 +77,7 @@
                  <th>Enviado a Ubicación</th>
                  <th style="display:none;" >Espacio Asignado</th>  
                  <th style="display:none;" >Observaciónes de Ubicación</th> 
-                 <th>Fumigación N°</th>  
+                 <th>Fumigación </th>  
                  <th>Ver &nbsp; &nbsp;</th>
                   <th>Imprimir Etiquetas&nbsp; &nbsp;</th>
                  <td><center><b>Borrar</b></center></td>                            
@@ -113,7 +113,7 @@
                  <td >{{$compras->nomalma}} </td>
                  <td style="display:none;" >{{$compras->espacio_asignado}} </td>
                  <td style="display:none;" >{{$compras->observacionesu}} </td>
-                 <td >{{$compras->idfumi}} </td>
+                 <td >{{$compras->fumest}} </td>
 
                   <td >
        <a href="{{URL::action('RecepcionCompraController@verInformacion',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
@@ -157,7 +157,7 @@
                  <th>Enviado a Ubicación</th>
                  <th style="display:none;" >Espacio Asignado</th>  
                  <th style="display:none;" >Observaciónes de Ubicación</th> 
-                 <th>Fumigación N°</th>  
+                 <th>Fumigación </th>  
                  <th>Ver &nbsp; &nbsp;</th>
                                    <th>Imprimir Etiquetas &nbsp; &nbsp;</th>
                  <td><center><b>Borrar</b></center></td>    

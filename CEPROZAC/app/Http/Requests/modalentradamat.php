@@ -4,9 +4,10 @@ namespace CEPROZAC\Http\Requests;
 
 use CEPROZAC\Http\Requests\Request;
 
-class EntradasMaterialesRequest extends Request
+class modalentradamat extends Request
 {
-     protected $redirect = "/almacen/entradas/materiales/create";
+       protected $redirect = "almacen/materiales";
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,10 +25,9 @@ class EntradasMaterialesRequest extends Request
     public function rules()
     {
         return [
+     //   'imagen'=>'mimes:jpeg,jpg,png,bmp',
+       // 'codigo' => 'unique:almacenagroquimicos,codigo',
         'nota' => 'unique:entradaalmacenmateriales,nota_venta',
-        'imagen'=>'mimes:jpeg,jpg,png,bmp',
-       'codigo' => 'unique:almacenmateriales,codigo'
-        
             //
         ];
     }
@@ -43,8 +43,8 @@ class EntradasMaterialesRequest extends Request
             'email.email' => 'El formato de email es incorrecto',
              'email.unique'=> 'El Campo Email ya ha sido insertado antes',
              */
-             'nota' => 'La Nota de Compra ya ha sido registrado anteriormente, Verifique el campo',
-             'codigo.unique' => 'El CODIGO DE BARRAS ya ha sido registrado anteriormente, Verifique el campo',
+             //'codigo.unique' => 'El CODIGO DE BARRAS ya ha sido registrado anteriormente, Verifique el campo',
+              'nota.unique' => 'La Nota Insertada,  ya ha sido registrada anteriormente, Verifique el Campo'
         ];
     }
     public function response(array $errors){

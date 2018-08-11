@@ -280,7 +280,7 @@ return $pdf->stream('invoice');
             ->select('entradasagroquimicos.id', 'almacenagroquimicos.nombre', 'entradasagroquimicos.cantidad', 'entradasagroquimicos.provedor', 'entradasagroquimicos.factura','entradasagroquimicos.p_unitario','entradasagroquimicos.iva','entradasagroquimicos.ieps','entradasagroquimicos.total','entradasagroquimicos.moneda','entradasagroquimicos.comprador','entradasagroquimicos.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradasagroquimicos.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Entrada','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','IEPS','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
+            $sheet->row(1,['N°Compra','Material','Cantidad' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','IEPS','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

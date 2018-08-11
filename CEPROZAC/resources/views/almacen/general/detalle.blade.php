@@ -40,6 +40,7 @@
 								<tr>                 
 									<th>N° Espacio </th>
 									<th>Capacidad </th>
+									<th>Lote Actual</th>
 									<th>Espacio Ocupado</th>
 									<th>Espacio Libre </th>
 									<th>Producto </th>
@@ -55,7 +56,9 @@
 								<tr class="gradeX">
 
 									<td>{{$almacenes->num_espacio}} </td>
-									<td>{{$almacenes->capacidad}} {{$almacenes->medida}} </td>            
+									
+									<td>{{$almacenes->capacidad}} {{$almacenes->medida}} </td>   
+									<td>{{$almacenes->nombre_lote}} </td>         
 									<td>{{$almacenes->total_ocupado}} {{$almacenes->medida}}</td>
 									<td>{{$almacenes->total_libre}} {{$almacenes->medida}}</td>
 									<td>{{$almacenes->nomprod}} </td>
@@ -76,11 +79,11 @@
 						@endforeach
 					</tbody>
 					<tfoot>
-						<tr>
-							<th></th>                                 
+						<tr>                              
 
 							<th>N° Espacio </th>
 							<th>Capacidad </th>
+							<th>Lote Actual</th>
 							<th>Espacio Ocupado</th>
 							<th>Espacio Libre </th>
 							<th>Producto </th>

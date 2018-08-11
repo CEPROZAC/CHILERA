@@ -7,11 +7,7 @@
   </head>
   <body>
       <div style="border-width: 2px; border-style: dashed; border-color: black; "> 
-    <header class="clearfix">
-      <div id="logo">
-        <img src="images/logoCeprozac.png"  width="100" height="100"/>
-      </div>
-    </header>
+
       <table>
         <thead >
           <tr>
@@ -52,9 +48,10 @@
       <table> 
       <thead> 
       <tr>
-      <td> <?php echo DNS1D::getBarcodeHTML("$item->id", "EAN13",2,30);?>
+
+      <td> <?php $var=$item->id.$item->nombre; echo DNS1D::getBarcodeHTML("$item->codigo", "C128",2,30);?>
     <div style="text-align:center;">
-    <font size=12 class="codigo ">{{$item->id}} 
+    <font size=12 class="codigo ">{{$item->codigo}}
      </font>
      </div>
    </td>

@@ -55,7 +55,7 @@ class RecepcionCompraController extends Controller
       ->join( 'empleados as emple', 'recepcioncompra.peso','=','emple.id')
       ->join( 'almacengeneral as alma', 'recepcioncompra.ubicacion_act','=','alma.id')
       ->join( 'fumigaciones as fum', 'recepcioncompra.id_fumigacion','=','fum.id')
-      ->select('recepcioncompra.*','prov.nombre as nombreprov','emp.nombre as nomempresa','empleados.nombre as nomemple','prod.nombre as nomprod','cali.nombre as nomcali','forma.formaEmpaque as nomforma','bas.nombreBascula as nombas','emple.nombre as nomepleado','alma.nombre as nomalma','fum.id as idfumi')->get();
+      ->select('recepcioncompra.*','prov.nombre as nombreprov','emp.nombre as nomempresa','empleados.nombre as nomemple','prod.nombre as nomprod','cali.nombre as nomcali','forma.formaEmpaque as nomforma','bas.nombreBascula as nombas','emple.nombre as nomepleado','alma.nombre as nomalma','fum.id as idfumi','fum.status as fumest')->get();
 
 
       return view('compras.recepcion.index', ['compra' => $compra]);
@@ -111,14 +111,19 @@ class RecepcionCompraController extends Controller
       $fumigacion->fechaf=$request->get('fechaf');
       $fumigacion->horaf=$request->get('final');
       $fumigacion->destino=$request->get('codificacion');
+           $almacenid = $request->get('almacen');
+     $divide=explode("_", $almacenid);
+     $fumigacion->id_almacen=$divide[0];  
+      $fumigacion->id_producto=$request->get('producto');
 
       $fumigacion->id_fumigador=$request->get('fumigador');
       $fumigacion->cantidad_aplicada=$request->get('scantidad');
       $fumigacion->status=$request->get('status');
       $fumigacion->observaciones=$request->get('observacionesf');
       $fumigacion->estado="Activo";
+      $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDMP";
 
-
+if($fumigacion->status == "En Proceso"){
       while ($num <= $limite) {
        $producto = $request->get('codigo2');;
        $first = head($producto);
@@ -133,7 +138,7 @@ class RecepcionCompraController extends Controller
        $y= $y + 1;
        $cantidadagro = $name[$y];
        $salida->cantidad = $cantidadagro;
-       $salida->destino = "Materia Prima Embarque: ".$request->get('codificacion');
+       $salida->destino = "Fumigacion de Materia Prima Embarque: ".$request->get('codificacion')." ".$request->get('fechai');
        $salida->recibio = $request->get('nombre_fum');
        $salida->entrego = $request->get('entrego_qui');
        $salida->tipo_movimiento ="Fumigacion de Materia Prima";
@@ -143,6 +148,7 @@ $salida->save();
        $num = $num + 1;
      }
      $fumigacion->agroquimicos=$agro;
+   }
      $fumigacion->save();
 
      $ultimo = fumigaciones::orderBy('id', 'desc')->first()->id;
@@ -164,6 +170,7 @@ $salida->save();
      $material->humedad=$request->get('humedad');
      $material->pacas=$request->get('num_pacas');
      $material->pacas_rev=$request->get('pacas_rev');
+      $material->granel=$request->get('granel');
      $material->observacionesm=$request->get('observacionesm');
      $material->id_bascula=$request->get('bascula');
      $material->ticket=$request->get('numeroticket');
@@ -179,6 +186,7 @@ $salida->save();
      $material->espacio_asignado=$request->get('asignado');
      $material->observacionesu=$request->get('observacionesu');
      $material->id_fumigacion=$ultimo;
+     $material->codigo=$ultimo.$material->ticket."RDC";
      $material->save();
 
 
@@ -215,11 +223,12 @@ $salida->save();
        $entrada->observacionesc= $request->get('observacionesu');
           $espacio->total_ocupado =  $espacio->total_ocupado + $entrada->kg_entrada;
           $espacio->total_libre = $espacio->capacidad - $espacio->total_ocupado;
-          $espacio->id_producto = $entrada->id_provedor;
+          $espacio->id_producto = $entrada->id_producto;
           $espacio->id_provedor = $entrada->id_provedor;
           $espacio->descripcion =  $entrada->observacionesc;
            $espacio->estado = "Ocupado";
            $espacio->fecha_entrada = $request->get('fecha');
+           $espacio->nombre_lote = $request->get('codificacion');
           $espacio->update();
 $entrada->save();
 
