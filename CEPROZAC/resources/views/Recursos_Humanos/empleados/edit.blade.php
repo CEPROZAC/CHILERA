@@ -184,9 +184,11 @@
                                  </select>
                                </div>   
                              </td>
+                              <span id="errorRoles" style="color:#FF0000;"></span>
 
                              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                              <input type="hidden" value="{{ $empleado->id}}" id="idEmpleado">
+
                              <td colspan="2"><button type="button"  onclick="myCreateFunction1();" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
                            </tr>
 
@@ -195,7 +197,7 @@
                      </div>
                      <div class="form-group">
                       <div class="col-sm-offset-7 col-sm-5">
-                      <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
+                      <button type="submit" id="submit" onclick="validarRoles();" class="btn btn-primary">Guardar</button>
                         <a href="/empleados" class="btn btn-default"> Cancelar</a>
                       </div>
                     </div><!--/form-group--> 

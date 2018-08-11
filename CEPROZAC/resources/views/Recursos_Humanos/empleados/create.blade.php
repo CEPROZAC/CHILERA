@@ -104,7 +104,7 @@
                     </div>
 
 
-                     <input type="text" name="curpOculta" id="curpOculta" hidden>
+                    <input type="text" name="curpOculta" id="curpOculta" hidden>
 
                     <div class="form-group">
                       <label class="col-sm-3 control-label">CURP<strog class="theme_color">*</strog></label>
@@ -187,16 +187,17 @@
                                  </select>
                                </div>
                              </td>
+                             <span id="errorRoles" style="color:#FF0000;"></span>
                              <input type="hidden" name="_token" id="idEmpleado">
                              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                             <td colspan="2"><button type="button"  onclick="validarRoles();myCreateFunction();" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                             <td colspan="2"><button type="button"  onclick="myCreateFunction();" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
                            </tr>
                          </tbody>
                        </table>
                      </div>
                      <div class="form-group">
                       <div class="col-sm-offset-7 col-sm-5">
-                        <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
+                        <button type="submit" onclick="validarRolesCrear();" class="btn btn-primary" id="submit" >Guardar</button>
                         <a href="/empleados" class="btn btn-default"> Cancelar</a>
                       </div>
                     </div><!--/form-group--> 
