@@ -35,8 +35,8 @@
         <tbody>
           <tr>
 
-     <td> <?php echo DNS1D::getBarcodeHTML("$fumigaciones->codigo", "C128",2,40);?>
-    <div style="text-align:center;">
+     <td> <?php echo DNS1D::getBarcodeHTML("$fumigaciones->codigo", "C128",1,40);?>
+    <div style="text-align:left;">
     <font size=18 class="codigo	">{{$fumigaciones->codigo}} 
      </font>
    </td>

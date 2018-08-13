@@ -289,6 +289,7 @@ Route::post('activarempaque', 'almacenempaquecontroller@activar');
 Route::resource('fumigaciones','fumigacionesController');
 Route::get('verfumigacion/{id}', array('as'=> '/verfumigacion','uses'=>'fumigacionesController@verInformacion'));
 Route::get('pdffumigacion/{id}', array('as'=> '/pdffumigacion','uses'=>'fumigacionesController@invoice'));
+Route::get('registrarfumigacion/{id}', array('as'=> '/registrarfumigacion','uses'=>'fumigacionesController@registrar'));
 Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compras.recepcion.excel');
 /////////////
 

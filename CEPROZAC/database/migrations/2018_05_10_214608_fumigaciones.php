@@ -24,9 +24,10 @@ class Fumigaciones extends Migration
             $table->foreign('id_almacen')->references('id')->on('almacengeneral');
                   $table->integer('id_producto')->nullable()->unsigned();
             $table->foreign('id_producto')->references('id')->on('productos');
-
             $table->integer('id_fumigador')->nullable()->unsigned();
             $table->foreign('id_fumigador')->references('id')->on('empleados');
+                        $table->integer('id_salida')->nullable()->unsigned();
+            $table->foreign('id_salida')->references('id')->on('salidasagroquimicos');
             $table->string('cantidad_aplicada')->nullable();
             $table->string('status')->nullable();
             $table->string('observaciones')->nullable();

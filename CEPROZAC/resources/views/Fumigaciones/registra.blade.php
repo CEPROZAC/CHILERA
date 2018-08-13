@@ -21,7 +21,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Fumigacion: {{$fumigaciones->destino}} {{$fumigaciones->horai}}</strong></h2>
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Fumigacion: {{$fumigaciones->destino}}</strong></h2>
             </div>
             <div class="col-md-4">
               <div class="btn-group pull-right">
@@ -62,7 +62,7 @@
       <div class="form-group">
        <label class="col-sm-3 control-label">Hora de Inicio de La Fumigación: <strog class="theme_color">*</strog></label>
        <div class="col-sm-6">
-        <input id="inicio" name="inicio" value="{{$fumigaciones->horai}}" type="time" required>
+        <input id="inicio" name="inicio" type="time" required>
         <div class="help-block with-errors"></div>
       </div>
     </div><!--/form-group-->
@@ -71,7 +71,7 @@
       <label class="col-sm-3 control-label">Fecha de Inicio: <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
 
-       <input type="date" name="fechai" id="fechai"  value="{{$fumigaciones->fechai}}" class="form-control mask" required>
+       <input type="date" name="fechai" id="fechai" value="" class="form-control mask" required>
      </div>
    </div>
 
@@ -79,14 +79,14 @@
     <label class="col-sm-3 control-label">Fecha de Termino: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
 
-     <input type="date" name="fechaf" id="fechaf" value="{{$fumigaciones->fechaf}}" class="form-control mask" required >
+     <input type="date" name="fechaf" id="fechaf" value="" class="form-control mask" required >
    </div>
  </div>
 
  <div class="form-group">
    <label class="col-sm-3 control-label">Hora de Termino de La Fumigación: <strog class="theme_color">*</strog></label>
    <div class="col-sm-6">
-    <input id="final" name="final" value="{{$fumigaciones->horaf}}" type="time" required>
+    <input id="final" name="final" type="time" required>
     <div class="help-block with-errors"></div>
   </div>
 </div><!--/form-group-->
@@ -95,58 +95,34 @@
 
 
 
-                          <div class="form-group">
-            <label class="col-sm-3 control-label"> Fumigador: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="fumigador"  id="fumigador" class="form-control select2"  required>  
-                @foreach($empleado as $empleados)
 
-                @if($empleados->id == $fumigaciones->id_fumigador)
-                <option value="{{$empleados->id}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
-                @else
-                <option value="{{$empleados->id}}">
-                 {{$empleados->nombre}} {{$empleados->apellidos}} 
-               </option>
-                @endif
-                
-               
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
+<div class="form-group">
+ <label class="col-sm-3 control-label">Fumigador: <strog class="theme_color">*</strog></label>
+ <div class="col-sm-6">
+  <select name="fumigador" id="fumigador"  class="form-control select" required>
+    @foreach($empleado as $empleados)
+    <option value="{{$empleados->id}}">
+     {{$empleados->nombre}} {{$empleados->apellidos}} 
+   </option>
+   @endforeach
+ </select>
+ <div class="help-block with-errors"></div>
+</div>
+</div><!--/form-group-->
 
-
-
-
-
-                          <div class="form-group">
-            <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="entrego_qui"  id="entrego_qui" class="form-control select2"  required>  
-                @foreach($empleado as $empleados)
-                 <?php
-												$nom = $empleados->nombre." ".$empleados->apellidos;
-												
-												
-												?>
-
-                 
-                @if($mat->entrego == $nom)
-                <option value="{{$empleados->nombre}} {{$empleados->apellidos}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
-                @else
-                <option value="{{$empleados->nombre}} {{$empleados->apellidos}}">
-                 {{$empleados->nombre}} {{$empleados->apellidos}} 
-               </option>
-                @endif
-                
-               
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
+<div class="form-group">
+ <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
+ <div class="col-sm-6">
+  <select name="entrego_qui" id="entrego_qui"  class="form-control select" required>
+    @foreach($empleado as $empleados)
+    <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
+     {{$empleados->nombre}} {{$empleados->apellidos}} 
+   </option>
+   @endforeach
+ </select>
+ <div class="help-block with-errors"></div>
+</div>
+</div><!--/form-group-->
 
 <div class="form-group">
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
@@ -255,8 +231,8 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Estado de la Fumigacion: <strog class="theme_color">*</strog></label>
   <div class="col-sm-6">
-    <select name="status"  required>
-      @if($fumigaciones->status == "En Proceso")
+    <select name="status" value="{{Input::old('status')}}" required>
+      @if(Input::old('status')=="Proceso")
       <option value='En Proceso' selected>En Proceso
       </option>
       <option value="Realizada">Realizada</option>
@@ -269,8 +245,6 @@
 
   </div>
 </div>
-
-
 
 <div class="form-group">
   <div class="col-sm-6">
@@ -286,7 +260,7 @@
 
 <div class="form-group">
   <div class="col-sm-6">
-    <input  id="edit" value="1" name="edit" type="hidden"  class="form-control"  placeholder=""/>
+    <input  id="edit" value="2" name="edit" type="hidden"  class="form-control"  placeholder=""/>
   </div>
 </div>
 
@@ -296,8 +270,6 @@
     <a href="{{url('/fumigaciones')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group--> 
-
-
 
 
 
@@ -400,31 +372,6 @@ return false;
      document.getElementById("amedida").value=medidaa;
      document.getElementById("scantidad").value = "1";
        document.getElementById("codigo").select();
-
-        var tabla = document.getElementById("detalles");
-    //tabla.setAttribute("id", id2);
-    var row = tabla.insertRow(1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-
-    var scantidadx = document.getElementById("scantidad");
-    var cantidaden = scantidadx.value;
-
-    cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
-    cell2.innerHTML = '{{$salida->id_material}}';
-    cell3.innerHTML = '{{$mat->nombre}}';
-    cell4.innerHTML = '{{$salida->tipo_movimiento}}';
-    cell5.innerHTML = '{{$salida->cantidad}}';
-
-    var x = document.getElementById("quimicos");
-    //x.remove(x.selectedIndex);
-    var xrow = tabla.rows.length-2;
-    document.getElementById("total").value=xrow;
-    limpiar();
-
    }
     //  <option value="{{$quimico->id}}}_{{$quimico->nombre}}_{{$quimico->codigo}}_{{$quimico->descripcion}}_{{$quimico->cantidad}}_{{$quimico->medida}}">
 

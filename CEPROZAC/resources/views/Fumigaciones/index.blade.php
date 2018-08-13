@@ -93,13 +93,14 @@
 										<td><center><b>Editar</b></center></td>
 										<td><center><b>Borrar</b></center></td>
 										<th>Ver &nbsp; &nbsp;</th>
-										<th>Imprimir Etiquetas &nbsp; &nbsp;</th>                            
+										<th>Imprimir Etiquetas &nbsp; &nbsp;</th>       
+										<td><center><b>Registrar Fumigación</b></center></td>                      
 									</tr>
 								</thead>
 								<tbody>
 									@foreach($fumigaciones  as $fumiga)
 
-									@if ($fumiga->status == "Terminada")
+									@if ($fumiga->status == "Realizada")
 
 
 									<tr class="gradeX">
@@ -125,6 +126,7 @@
 											<td style="background-color: #C2FFC4;">
 											<a href="{{URL::action('fumigacionesController@verInformacion',$fumiga->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
                                                 
+															<td style="background-color: #C2FFC4;">Fumigacion Terminada </td>
 															<td style="background-color: #C2FFC4;">Fumigacion Terminada </td>
 														</td>
 													</td>
@@ -176,6 +178,7 @@
 																		<a href="{{URL::action('fumigacionesController@verInformacion',$fumiga->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
 
 																		<td style="background-color: #FFE4E1;"><a href="{{URL::action('fumigacionesController@invoice',$fumiga->id)}}" target="_blank" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a>     </td>
+																		<td style="background-color: #FFE4E1;">Fumigacion Vencida </td>
 																	</td>
 																</td>
 
@@ -220,6 +223,8 @@
 																					<a href="{{URL::action('fumigacionesController@verInformacion',$fumiga->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
 
 																					<td style="background-color: #FDFFC2;"><a href="{{URL::action('fumigacionesController@invoice',$fumiga->id)}}" target="_blank" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a>     </td>
+																					<td style="background-color: #FDFFC2;">Fumigacion en Proceso     </td>
+
 																				</td>
 																			</td>
 
@@ -245,20 +250,22 @@
 
 																	<td style="background-color: #FFE4E1;">Fumigacion Pendiente  , Favor de Realizarla Lo antes posible</td>
 
-																	<td style="background-color: #FFE4E1;">  <a href="{{URL::action('fumigacionesController@edit',$fumiga->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-																	</td>
-																	<td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$fumiga->id}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-																	</td>
+																	<td style="background-color: #FFE4E1;">Fumigacion Pendiente   </td>
+								<td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$fumiga->id}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+											</td>
 																	<td style="background-color: #FFE4E1;">
 																		<a href="{{URL::action('fumigacionesController@verInformacion',$fumiga->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
 
 																		<td style="background-color: #FFE4E1;">Fumigacion Pendiente   </td>
+																		<td style="background-color: #FFE4E1;">
+																		<a href="{{URL::action('fumigacionesController@registrar',$fumiga->id)}}" class="btn btn-sm btn-success tooltips" role="button"><i class="fa fa-plus"></i></a>    </td>
 																	</td>
 																</td>
 
 															</tr>
 
-																		@endif			
+																		@endif
+																		@include('fumigaciones.modal')			
 																		@endforeach
 																	</tbody>
 																	<tfoot>
@@ -280,9 +287,10 @@
 
 
 																			<td><center><b>Editar</b></center></td>
-																			<td><center><b>Borrar</b></center></td>    
+																			<td><center><b>Borrar</b></center></td>  
 																			<th>Ver &nbsp; &nbsp;</th>
 																			<th>Imprimir Etiquetas &nbsp; &nbsp;</th> 
+																			<td><center><b>Registrar Fumigación</b></center></td>  
 																		</tr>
 																	</tfoot>
 																</table>
@@ -292,6 +300,7 @@
 												</div><!--/col-md-12-->
 											</div><!--/row-->
 										</div>
+										
 
 										<script>
 											var myVar = setInterval(myTimer, 1000);
@@ -304,5 +313,4 @@
 												document.getElementById("demo").innerHTML =  "Hora Actual: " +t+"              Fecha: "+g;
 											}
 										</script>
-
 										@endsection

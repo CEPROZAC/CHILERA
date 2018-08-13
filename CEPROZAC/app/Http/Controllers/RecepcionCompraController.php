@@ -123,7 +123,7 @@ class RecepcionCompraController extends Controller
       $fumigacion->estado="Activo";
       $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDMP";
 
-if($fumigacion->status == "En Proceso"){
+if($fumigacion->status == "En Proceso"){ 
       while ($num <= $limite) {
        $producto = $request->get('codigo2');;
        $first = head($producto);
@@ -148,6 +148,8 @@ $salida->save();
        $num = $num + 1;
      }
      $fumigacion->agroquimicos=$agro;
+     $ultimo = salidasagroquimicos::orderBy('id', 'desc')->first()->id;
+     $fumigacion->id_salida=$ultimo;
    }
      $fumigacion->save();
 

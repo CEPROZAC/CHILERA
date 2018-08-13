@@ -1344,8 +1344,8 @@ function buscar5(){
   document.getElementById('fechai').readOnly = false;
       document.getElementById('fechaf').readOnly = false;
   document.getElementById('final').readOnly = false;
-      document.getElementById('fumigador').disabled = false;
-  document.getElementById('entrego_qui').disabled = false; 
+      document.getElementById('fumigador').readOnly = false;
+  document.getElementById('entrego_qui').readOnly = false; 
   document.getElementById('quimicos').disabled = false;
   document.getElementById('scantidad').disabled = false;
     document.getElementById('status').readOnly = false;
@@ -1374,8 +1374,8 @@ function buscar6(){
   document.getElementById('fechai').readOnly = true;
       document.getElementById('fechaf').readOnly = true;
   document.getElementById('final').readOnly = true;
-      document.getElementById('fumigador').disabled = true;
-  document.getElementById('entrego_qui').disabled = true; 
+      document.getElementById('fumigador').readOnly = true;
+  document.getElementById('entrego_qui').readOnly = true; 
   document.getElementById('quimicos').disabled = true;
   document.getElementById('scantidad').disabled = true;
     document.getElementById('status').readOnly = true;
