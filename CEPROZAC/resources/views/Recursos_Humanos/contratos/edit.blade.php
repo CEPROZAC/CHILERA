@@ -94,7 +94,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
-                          <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" required class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" value="{{$empleado->telefono}}"  parsley-type="phone">
+                            <input type="text" name="telefono" placeholder="Ingrese el número de teléfono de Empleado" name="telefono" required class="form-control mask" data-inputmask="'mask':'(999) 999-9999'" value="{{$empleado->telefono}}"  parsley-type="phone">
                           </div>
                         </div>
 
@@ -239,7 +239,7 @@
                                </select>
                              </div>   
                            </td>
-
+                           <span id="errorRoles" style="color:#FF0000;"></span>
                            <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                            <input type="hidden" value="{{ $empleado->id}}" id="idEmpleado">
                            <td colspan="2"><button type="button"  onclick="myCreateFunction1();" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
@@ -250,7 +250,7 @@
                    </div>
                    <div class="form-group">
                     <div class="col-sm-offset-7 col-sm-5">
-                      <button type="submit" class="btn btn-primary">Guardar</button>
+                      <button type="submit" class="btn btn-primary" onclick="validarRoles();">Guardar</button>
                       <a href="/contratos" class="btn btn-default"> Cancelar</a>
                     </div>
                   </div><!--/form-group--> 

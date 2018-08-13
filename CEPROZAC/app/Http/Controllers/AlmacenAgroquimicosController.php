@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
-use CEPROZAC\almacenagroquimicos;
+use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\Http\Requests\almacenagroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAgroquimicos;

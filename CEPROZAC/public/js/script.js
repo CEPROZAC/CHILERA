@@ -79,14 +79,21 @@ function myCreateFunction() {
   var x = select.options[select.selectedIndex].text;
 
 
-
-  var fila="<tr><td style=\"display:none;\"><input name=\"idRol[]\" value=\""+idRol+"\"></td><td colspan=\"2\">"+x+"</td>"+""+"<td>"+
-  " <button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\"> Quitar<i class=\"fa fa-times\"></i> </button>"
-  +"</td>";
-  var btn = document.createElement("TR");
-  btn.innerHTML=fila;
-  document.getElementById("myTable").appendChild(btn);
-
+  if(!validarRolesDuplicadosCrear(x)){
+    document.getElementById("errorRoles").innerHTML = "";
+    var fila="<tr><td style=\"display:none;\"><input name=\"idRol[]\" value=\""+idRol+"\">"
+    +"</td><td colspan=\"2\">"+x+"</td>"
+    +""+
+    "<td>"+
+    " <button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\"> Quitar<i class=\"fa fa-times\"></i> </button>"
+    +"</td>";
+    var btn = document.createElement("TR");
+    btn.innerHTML=fila;
+    document.getElementById("myTable").appendChild(btn);
+    validarRolesCrear();
+  } else {
+    document.getElementById("errorRoles").innerHTML = "Rol que intentas ingresar ya pertenece a el empleado";
+  }
 
 }
 
@@ -132,6 +139,9 @@ function Carga($id){
         +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
     });
   });
+
+
+
 }
 
 
@@ -145,8 +155,11 @@ function Carga1(){
       tablaDatos.append("<tr><td colspan=\"2\">"+value.rol_Empleado+ "</td><td>"+""+
         "<button type=\"button\" id=\"btn\" onclick=\"myDeleteFunction1(this);myDeleteFunction(this);\" value="+ value.idERT+" class=\"btn btn-danger btn-icon\">"
         +"Quitar<i class=\"fa fa-times\"></i> </button><td></tr>");
+      validarRoles();
     });
   });
+
+
 }
 
 
@@ -161,23 +174,32 @@ function myCreateFunction1() {
 
 
 
- var dato1 = select.value;
- var dato2 = $("#idEmpleado").val();
- var route = "/empleadoRoles";
- var token = $("#token").val();
+ if(!validarRolesDuplicados(x)){
+  document.getElementById("errorRoles").innerHTML = "";
 
- $.ajax({
-  url: route,
-  headers: {'X-CSRF-TOKEN': token},
-  type: 'POST',
-  dataType: 'json',
-  data:{idRol: dato1,idEmpleado: dato2},
+  var dato1 = select.value;
+  var dato2 = $("#idEmpleado").val();
+  var route = "/empleadoRoles";
+  var token = $("#token").val();
 
-  success:function(){
-    $("#msj-success").fadeIn();
-  }
-});
- Carga1();
+  $.ajax({
+    url: route,
+    headers: {'X-CSRF-TOKEN': token},
+    type: 'POST',
+    dataType: 'json',
+    data:{idRol: dato1,idEmpleado: dato2},
+
+    success:function(){
+      $("#msj-success").fadeIn();
+    }
+  });
+  Carga1();
+}
+else {
+
+  document.getElementById("errorRoles").innerHTML = "El rol que intentas ingresar ya existe";
+}
+
 }
 
 
@@ -813,76 +835,76 @@ function  validarSSN(){
 
 /////validar cliente///////
 
- function  validarcliente(){
+function  validarcliente(){
 
-    var rfc =document.getElementById('rfc').value;
+  var rfc =document.getElementById('rfc').value;
   var oculto =document.getElementById('oculto').value;
   var route = "http://localhost:8000/validarcliente/"+rfc;
 
-     $.get(route,function(res){
-      if(res.length > 0  &&  res[0].estado =="Inactivo"){
-       document.getElementById('submit').disabled=true;
-       var idCliente = res[0].id;
-       document.getElementById("idCliente").value= idCliente;
-       $("#modal-reactivar").modal();
+  $.get(route,function(res){
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idCliente = res[0].id;
+     document.getElementById("idCliente").value= idCliente;
+     $("#modal-reactivar").modal();
 
-     } 
-     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != oculto )  {
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != oculto )  {
 
-      document.getElementById("errorRFC").innerHTML = "El Cliente  que  intenta registrar ya existe en el sistema";
-      document.getElementById('submit').disabled=true;
+    document.getElementById("errorRFC").innerHTML = "El Cliente  que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
 
-    }
-    else {
-      document.getElementById("errorRFC").innerHTML = "";
-      document.getElementById('submit').disabled=false;
+  }
+  else {
+    document.getElementById("errorRFC").innerHTML = "";
+    document.getElementById('submit').disabled=false;
 
-    }
-  });
+  }
+});
 
-   }
+}
 
 
 /////////////////////////////// validar provedor de materiales
 
- function  validarprovmat(){
+function  validarprovmat(){
 
-    var rfc =document.getElementById('rfc').value;
+  var rfc =document.getElementById('rfc').value;
   var oculto =document.getElementById('oculto').value;
   var route = "http://localhost:8000/validarprovedormat/"+rfc;
 
-     $.get(route,function(res){
-      if(res.length > 0  &&  res[0].estado =="Inactivo"){
-       document.getElementById('submit').disabled=true;
-       var idProvedor = res[0].id;
-       document.getElementById("idProvedor").value= idProvedor;
-       $("#modal-reactivar").modal();
+  $.get(route,function(res){
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+     document.getElementById('submit').disabled=true;
+     var idProvedor = res[0].id;
+     document.getElementById("idProvedor").value= idProvedor;
+     $("#modal-reactivar").modal();
 
-     } 
-     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != oculto )  {
+   } 
+   else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].rfc != oculto )  {
 
-      document.getElementById("errorRFC").innerHTML = "El Provedor  que  intenta registrar ya existe en el sistema";
-      document.getElementById('submit').disabled=true;
+    document.getElementById("errorRFC").innerHTML = "El Provedor  que  intenta registrar ya existe en el sistema";
+    document.getElementById('submit').disabled=true;
 
-    }
-    else {
-      document.getElementById("errorRFC").innerHTML = "";
-      document.getElementById('submit').disabled=false;
+  }
+  else {
+    document.getElementById("errorRFC").innerHTML = "";
+    document.getElementById('submit').disabled=false;
 
-    }
-  });
+  }
+});
 
-   }
+}
 
    /////////////////////////////// validar agroquimicos
 
- function  validaragroquimicos(){
+   function  validaragroquimicos(){
 
     var codigo =document.getElementById('segundo').value;
-  var oculto =document.getElementById('oculto').value;
-  var route = "http://localhost:8000/validaragroquimicos/"+codigo;
+    var oculto =document.getElementById('oculto').value;
+    var route = "http://localhost:8000/validaragroquimicos/"+codigo;
 
-     $.get(route,function(res){
+    $.get(route,function(res){
       if(res.length > 0  &&  res[0].estado =="Inactivo"){
        document.getElementById('submit').disabled=true;
        var idAgro = res[0].id;
@@ -903,17 +925,17 @@ function  validarSSN(){
     }
   });
 
-   }
+  }
 
    /////////////////////////////// validar materiales/refacciones
 
- function  validarmateriales(){
+   function  validarmateriales(){
 
     var codigo =document.getElementById('segundo').value;
-  var oculto =document.getElementById('oculto').value;
-  var route = "http://localhost:8000/validarmateriales/"+codigo;
+    var oculto =document.getElementById('oculto').value;
+    var route = "http://localhost:8000/validarmateriales/"+codigo;
 
-     $.get(route,function(res){
+    $.get(route,function(res){
       if(res.length > 0  &&  res[0].estado =="Inactivo"){
        document.getElementById('submit').disabled=true;
        var idMat = res[0].id;
@@ -934,17 +956,17 @@ function  validarSSN(){
     }
   });
 
-   }
+  }
 
    /////////////////////////////// validar empaques
 
- function  validarempaque(){
+   function  validarempaque(){
 
     var codigo =document.getElementById('segundo').value;
-  var oculto =document.getElementById('oculto').value;
-  var route = "http://localhost:8000/validarempaque/"+codigo;
+    var oculto =document.getElementById('oculto').value;
+    var route = "http://localhost:8000/validarempaque/"+codigo;
 
-     $.get(route,function(res){
+    $.get(route,function(res){
       if(res.length > 0  &&  res[0].estado =="Inactivo"){
        document.getElementById('submit').disabled=true;
        var idEmp = res[0].id;
@@ -965,76 +987,130 @@ function  validarSSN(){
     }
   });
 
-   }
+  }
 
       /////////////////////////////// validar limpieza
 
- function  validarlimpieza(){
+      function  validarlimpieza(){
 
-    var codigo =document.getElementById('segundo').value;
-  var oculto =document.getElementById('oculto').value;
-  var route = "http://localhost:8000/validarlimpieza/"+codigo;
+        var codigo =document.getElementById('segundo').value;
+        var oculto =document.getElementById('oculto').value;
+        var route = "http://localhost:8000/validarlimpieza/"+codigo;
 
-     $.get(route,function(res){
-      if(res.length > 0  &&  res[0].estado =="Inactivo"){
-       document.getElementById('submit').disabled=true;
-       var idLim = res[0].id;
-       document.getElementById("idLim").value= idLim;
-       $("#modal-reactivar").modal();
+        $.get(route,function(res){
+          if(res.length > 0  &&  res[0].estado =="Inactivo"){
+           document.getElementById('submit').disabled=true;
+           var idLim = res[0].id;
+           document.getElementById("idLim").value= idLim;
+           $("#modal-reactivar").modal();
 
-     } 
-     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
+         } 
+         else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
 
-      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
-      document.getElementById('submit').disabled=true;
+          document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
+          document.getElementById('submit').disabled=true;
 
+        }
+        else {
+          document.getElementById("errorCodigo").innerHTML = "";
+          document.getElementById('submit').disabled=false;
+
+        }
+      });
+
+      }
+
+
+
+      document.getElementById("div").onload = oQuickReplyswap();
+
+      function oQuickReplyswap() {
+        var id=document.getElementById("idEmpleado").value;
+        Carga(id);
+
+      }
+
+
+      function validarRoles(){
+
+        var filas = $("#myTable").find("tr"); //devulve las filas del body de tu tabla segun el ejemplo que brindaste
+
+        if (filas.length <=1 ){
+         document.getElementById('submit').disabled=true;
+         document.getElementById("errorRoles").innerHTML = "No hay roles registrados a este empleado";
+       } else {
+
+         document.getElementById('submit').disabled=false;
+         document.getElementById("errorRoles").innerHTML = "";
+       }
+
+
+
+
+     }
+
+
+     function validarRolesDuplicados(rol){
+
+
+       var filas = $("#myTable").find("tr"); //devulve las filas del body de tu tabla segun el ejemplo que brindaste
+       var resultado = false;
+       for(i=1; i<filas.length; i++)
+       { 
+       var celdas = $(filas[i]).find("td"); //devolverá las celdas de una fila
+       //valor = $($(celdas[1]).children("input")[0]).val();
+       rol_Agregar = $(celdas[0]).text();
+
+       if(rol_Agregar== rol){
+        resultado =true;
+        break;
+      }else {
+        resultado =false;
+      }
     }
-    else {
-      document.getElementById("errorCodigo").innerHTML = "";
-      document.getElementById('submit').disabled=false;
 
-    }
-  });
-
-   }
-
-
-
-function validarRoles(){
-
-
-var elementos = document.getElementsByName("idRol");
-
-  console.log("nueva"+elementos.length);
-  var i;
-
-  for (i=0; i<elementos.length;i++) {
-    alert(document.getElementsByName("username")[0].value);
-    console.log(elementos[i].value);
+    return resultado;
   }
 
 
-}
+  function validarRolesCrear(){
+
+        var filas = $("#myTable").find("tr"); //devulve las filas del body de tu tabla segun el ejemplo que brindaste
+
+        if (filas.length <=1 ){
+         document.getElementById('submit').disabled=true;
+         document.getElementById("errorRoles").innerHTML = "No hay roles registrados a este empleado";
+       } else {
+
+         document.getElementById('submit').disabled=false;
+         document.getElementById("errorRoles").innerHTML = "";
+       }
+
+     }
 
 
 
+     function validarRolesDuplicadosCrear(rol){
 
+       var filas = $("#myTable").find("tr"); //devulve las filas del body de tu tabla segun el ejemplo que brindaste
+       var resultado = false;
+       
+       for(i=1; i<filas.length; i++)
+       { 
+         var celdas = $(filas[i]).find("td"); //devolverá las celdas de una fila
+          //valor = $($(celdas[1]).children("input")[0]).val();
+          rol_Agregar = $(celdas[1]).text();
 
+          if(rol_Agregar== rol){
+           resultado =true;
+           break;
+         }else {
+          resultado =false;
+        }
+      }
 
+      return resultado;
 
-
-
-
-
-
-
-    //////////////////////////////
-    //Validar
-
-
-    document.getElementById("div").onload = oQuickReplyswap();
-    function oQuickReplyswap() {
-
-      var id=document.getElementById("idEmpleado").value;
-      Carga(id);
     }
+
+

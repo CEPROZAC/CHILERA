@@ -141,7 +141,8 @@
                        <div class="form-group">
                         <label class="col-sm-3 control-label">SSN<strog class="theme_color">*</strog></label>
                         <div class="col-sm-6 ">
-                        <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" onblur="validarSSN();" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'">
+                          <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" onblur="validarSSN();" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'"/>
+                          <span id="errorSSN" style="color:#FF0000;"></span>
                         </div>
                       </div>
 
@@ -238,6 +239,7 @@
                              </select>
                            </div>
                          </td>
+                         <span id="errorRoles" style="color:#FF0000;"></span>
                          <input type="hidden" name="_token" id="idEmpleado">
                          <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                          <td colspan="2"><button type="button"  onclick="myCreateFunction()" class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
@@ -247,7 +249,7 @@
                  </div>
                  <div class="form-group">
                   <div class="col-sm-offset-7 col-sm-5">
-                    <button type="submit" class="btn btn-primary" id="submit">Guardar</button>
+                  <button type="submit" onclick="validarRolesCrear();" class="btn btn-primary" id="submit">Guardar</button>
                     <a href="/contratos" class="btn btn-default"> Cancelar</a>
                   </div>
                 </div><!--/form-group--> 
