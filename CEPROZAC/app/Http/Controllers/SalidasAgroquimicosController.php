@@ -29,7 +29,7 @@ class salidasagroquimicosController extends Controller
      */
     public function index()
     {
-        $salida= DB::table('salidasagroquimicos')
+        $salida= DB::table('salidasagroquimicos')->where('estado','=','Activo')
         ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
         ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
         // print_r($salida);
@@ -116,6 +116,7 @@ class salidasagroquimicosController extends Controller
             $y = $y + 1;
             // print_r($first = $name[$y]);
             $material->fecha=$first = $name[$y];
+             $material->estado="Activo";
             $y = $y + 1;
             $material->save();
             $num = $num + 1;
@@ -168,7 +169,8 @@ class salidasagroquimicosController extends Controller
     public function destroy($id)
     {
        $material=salidasagroquimicos::findOrFail($id);
-       $material->delete();
+         $material->estado="Inactivo";
+       $material->update();
        return Redirect::to('/almacen/salidas/agroquimicos');   
 
         //

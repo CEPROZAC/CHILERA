@@ -16,7 +16,7 @@ class Entradasempaques extends Migration
             $table->increments('id');
             $table->string('provedor');
             $table->date('fecha');
-            $table->integer('factura');
+            $table->string('factura');
             $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenempaque');
             $table->integer('cantidad');

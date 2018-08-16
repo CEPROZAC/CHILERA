@@ -91,7 +91,7 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">Número de Nota: <strog class="theme_color">*</strog></label>
         <div class="col-sm-8">
-          <input name="nota" id="nota"  type="text" value="" maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  placeholder="Ingrese el Número de Nota" />
+          <input name="nota" id="nota"  type="text" value="" maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress="   placeholder="Ingrese el Número de Nota" />
           <div class="help-block with-errors"></div>
         </div>
       </div>

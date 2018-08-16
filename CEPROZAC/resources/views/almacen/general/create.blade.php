@@ -58,35 +58,9 @@
                 <div class="form-group">
               <label class="col-sm-3 control-label">Capacidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="capacidad" id="capacidad" type="text"  value="{{Input::old('capacidad')}}"  maxlength="70"  onKeyUp="generar()" onchange="soloNumeros(this);"   class="form-control" required value="" placeholder="Ingrese la Capacidad del Almacén" />
+                <input name="capacidad" id="capacidad" type="text"  value="{{Input::old('capacidad')}}"  min="0" max="30" maxlength="2"  onKeyUp="generar()" onchange="soloNumeros(this);"   class="form-control" required value="" placeholder="Ingrese la Capacidad del Almacén" />
               </div>
             </div>
-
-                            <div class="form-group">
-              <label class="col-sm-3 control-label">Capacidad por cada espacio Asignado: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="capacidad_espacio" id="capacidad_espacio" type="text"  value="{{Input::old('capacidad_espacio')}}"  maxlength="70"  onKeyUp="generar()" onchange="soloNumeros(this);"   class="form-control" required value="" placeholder="Ingrese la Capacidad de Cada espacio en el almacén " />
-              </div>
-            </div>
-
-                        <div class="form-group">
-             <label class="col-sm-3 control-label">Tipo de Unidad para cada Espacio: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="medida_espacio"  id ="medida_espacio" class="form-control select" data-live-search="true"  value="{{Input::old('medida_espacio')}}">
-                 
-                 @if(Input::old('medida_espacio')=="Kilogramos")
-                 <option value='Kilogramos' selected>Kilogramos
-                 </option>
-                 <option value="Toneladas">Toneladas</option>
-                 @else
-                 <option value='Toneladas' selected>Toneladas
-                 </option>
-                 <option value="Kilogramos">Kilogramos</option>
-                 @endif
-               </select>
-               
-             </div>   
-           </div>
 
 
 
@@ -268,7 +242,7 @@ arreglolibre.sortNumbers();
   }
 }
 
-
+ 
 
           document.getElementById(""+aux).value = "Ocupado";
     document.getElementById(""+aux).style.color = "#ff0000";

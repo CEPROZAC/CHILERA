@@ -16,7 +16,7 @@ class EntradaAlmacenMateriales extends Migration
         $table->increments('id');
         $table->string('provedor');
         $table->date('fecha');
-        $table->integer('nota_venta');
+        $table->string('nota_venta');
         $table->integer('id_material')->unsigned();
         $table->foreign('id_material')->references('id')->on('almacenmateriales');
         $table->integer('cantidad');

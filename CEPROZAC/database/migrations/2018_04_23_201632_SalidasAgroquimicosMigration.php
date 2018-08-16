@@ -22,6 +22,7 @@ class SalidasAgroquimicosMigration extends Migration
             $table->string('recibio');
             $table->string('tipo_movimiento');
             $table->date('fecha');
+            $table->string('estado');
 
             $table->timestamps();
 

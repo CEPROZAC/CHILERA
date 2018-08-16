@@ -29,10 +29,11 @@ class Fumigaciones extends Migration
                         $table->integer('id_salida')->nullable()->unsigned();
             $table->foreign('id_salida')->references('id')->on('salidasagroquimicos');
             $table->string('cantidad_aplicada')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->nullable(); 
             $table->string('observaciones')->nullable();
             $table->string('estado')->nullable();
              $table->string('codigo')->nullable();
+              $table->string('plaga_combate')->nullable();
             $table->timestamps();
         });
     }

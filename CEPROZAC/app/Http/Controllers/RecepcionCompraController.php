@@ -100,17 +100,22 @@ class RecepcionCompraController extends Controller
      */
     public function store(Request $request)
     {
-      $num = 1;
+ $fumigacionstatus=$request->get('status');
+///si la fumigacion esta en proceso
+if($fumigacionstatus == "En Proceso"){ 
+        $num = 1;
       $y = 0;
       $limite = $request->get('total');
       $agro = "";
-
-      $fumigacion = new fumigaciones;
+      while ($num <= $limite) {
+        //registro de fumigacion
+                $fumigacion = new fumigaciones;
       $fumigacion->horai=$request->get('inicio');
       $fumigacion->fechai=$request->get('fechai');
       $fumigacion->fechaf=$request->get('fechaf');
       $fumigacion->horaf=$request->get('final');
       $fumigacion->destino=$request->get('codificacion');
+      $fumigacion->plaga_combate=$request->get('plaga');
            $almacenid = $request->get('almacen');
      $divide=explode("_", $almacenid);
      $fumigacion->id_almacen=$divide[0];  
@@ -122,17 +127,16 @@ class RecepcionCompraController extends Controller
       $fumigacion->observaciones=$request->get('observacionesf');
       $fumigacion->estado="Activo";
       $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDMP";
-
-if($fumigacion->status == "En Proceso"){ 
-      while ($num <= $limite) {
-       $producto = $request->get('codigo2');;
+      ////salida de almacen
+       $producto = $request->get('codigo2');
        $first = head($producto);
        $name = explode(",",$first); 
        $salida = new salidasagroquimicos;
        $idagro = $first = $name[$y];
        $salida->id_material = $idagro;
-       $y= $y+1;
-       $agro = $agro." ".$first = $name[$y];
+       $y= $y + 1;
+       $nombreaux=$first = $name[$y];
+       $agro = $agro.",".$nombreaux;
        $y= $y + 1;
        $descripcionagro= $name[$y];
        $y= $y + 1;
@@ -146,12 +150,34 @@ if($fumigacion->status == "En Proceso"){
 $salida->save();
        $y= $y + 1;
        $num = $num + 1;
-     }
-     $fumigacion->agroquimicos=$agro;
+            $fumigacion->agroquimicos=$nombreaux;
      $ultimo = salidasagroquimicos::orderBy('id', 'desc')->first()->id;
      $fumigacion->id_salida=$ultimo;
-   }
      $fumigacion->save();
+     }
+ //si la fumigacion esta pendiente, no hay salida de almacen
+   }else{
+          $fumigacion = new fumigaciones;
+      $fumigacion->horai=$request->get('inicio');
+      $fumigacion->fechai=$request->get('fechai');
+      $fumigacion->fechaf=$request->get('fechaf');
+      $fumigacion->horaf=$request->get('final');
+      $fumigacion->destino=$request->get('codificacion');
+       $fumigacion->plaga_combate=$request->get('plaga');
+           $almacenid = $request->get('almacen');
+     $divide=explode("_", $almacenid);
+     $fumigacion->id_almacen=$divide[0];  
+      $fumigacion->id_producto=$request->get('producto');
+
+      $fumigacion->id_fumigador=$request->get('fumigador');
+      $fumigacion->cantidad_aplicada=$request->get('scantidad');
+      $fumigacion->status=$request->get('status');
+      $fumigacion->observaciones=$request->get('observacionesf');
+      $fumigacion->estado="Activo";
+      $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDMP";
+     $fumigacion->save();
+   }
+     
 
      $ultimo = fumigaciones::orderBy('id', 'desc')->first()->id;
      $material= new recepcioncompra;
@@ -212,34 +238,41 @@ $salida->save();
        $idalm = $divide[0];
        $idesp = $first = $name[$aux];
        //$espacio=espacios_almacen::where('id_almacen', $divide[0])->findOrFail($entrada->id_espacio);
-       $espacio = espacios_almacen::where('id_almacen', '=', $idalm)->where('num_espacio','=', $idesp)->firstOrFail();
+       $espacio =  new espacios_almacen;
+       $espacio->num_espacio=$idesp;
+       $espacio->id_almacen=$idalm;
    
        $aux= $aux+1;
        $entrada->origen= "Recepción de Compra de Materia Prima";
        $entrada->fecha= $request->get('fecha');
        $entrada->kg_entrada= $request->get('recibidos');
+        $entrada->medida= "Kilogramos";
        $entrada->id_producto= $request->get('producto');
        $entrada->id_provedor= $request->get('provedor');
        $entrada->entrego= $request->get('recibe_em');
        $entrada->recibe_alm= $request->get('recibe_em');
        $entrada->observacionesc= $request->get('observacionesu');
-          $espacio->total_ocupado =  $espacio->total_ocupado + $entrada->kg_entrada;
-          $espacio->total_libre = $espacio->capacidad - $espacio->total_ocupado;
+          $espacio->ocupado =  $entrada->kg_entrada;
           $espacio->id_producto = $entrada->id_producto;
           $espacio->id_provedor = $entrada->id_provedor;
           $espacio->descripcion =  $entrada->observacionesc;
+          $espacio->fumigacion_status = $request->get('status');
+          if ($espacio->fumigacion_status == "En Proceso"){
+          $espacio->ultima_fumigacion = $request->get('fechai');
+          }
+          $espacio->medida = "Kilogramos";
            $espacio->estado = "Ocupado";
            $espacio->fecha_entrada = $request->get('fecha');
            $espacio->nombre_lote = $request->get('codificacion');
-          $espacio->update();
+          $espacio->save();
 $entrada->save();
 
-$almacen=almacengeneral::findOrFail($idalm);
-               $almacen->esp_ocupado=$request->get('ocupado');
-        $almacen->esp_libre=$request->get('libre'); 
-         $almacen->total_ocupado=$request->get('totalocupado');
-          $almacen->total_libre=$request->get('totallibre');
-          $almacen->update();
+//$almacen=almacengeneral::findOrFail($idalm);
+          //     $almacen->esp_ocupado=$request->get('ocupado');
+      //  $almacen->esp_libre=$request->get('libre'); 
+        // $almacen->total_ocupado=$request->get('totalocupado');
+          //$almacen->total_libre=$request->get('totallibre');
+          //$almacen->update();
        $num = $num + 1;
 
      }

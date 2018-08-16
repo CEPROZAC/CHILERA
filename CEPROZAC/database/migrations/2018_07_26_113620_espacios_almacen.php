@@ -17,12 +17,10 @@ class EspaciosAlmacen extends Migration
          $table->string('num_espacio');
          $table->integer('id_almacen')->unsigned();
          $table->foreign('id_almacen')->references('id')->on('almacengeneral');
-         $table->string('capacidad')->nullable();
-         $table->string('medida')->nullable();
-         $table->string('total_ocupado')->nullable();
-         $table->string('total_libre')->nullable();
+         $table->string('ocupado')->nullable();
          $table->integer('id_producto')->unsigned()->nullable();
          $table->foreign('id_producto')->references('id')->on('productos');
+         $table->string('medida');
          $table->integer('id_provedor')->unsigned()->nullable();
          $table->foreign('id_provedor')->references('id')->on('provedores');
          $table->string('descripcion')->nullable();

@@ -92,7 +92,7 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">N° Factura: <strog class="theme_color">*</strog></label>
         <div class="col-sm-8">
-          <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
+          <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Número de Factura"/>
            <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
         </div>
       </div>

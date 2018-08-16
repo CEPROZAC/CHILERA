@@ -632,7 +632,8 @@ function fnFormatDetails8 ( oTable, nTr )
        sOut += '<tr><td><strong>Producto :</strong></td><td>'+aData[10]+' </td></tr>';
          sOut += '<tr><td><strong>Fumigador :</strong></td><td>'+aData[11]+' </td></tr>';
                sOut += '<tr><td><strong>Estado :</strong></td><td>'+aData[12]+' </td></tr>';
-                       sOut += '<tr><td><strong>Observaciones :</strong></td><td>'+aData[13]+' </td></tr>';
+                  sOut += '<tr><td><strong>Plaga que Combate :</strong></td><td>'+aData[13]+' </td></tr>';
+                       sOut += '<tr><td><strong>Observaciones :</strong></td><td>'+aData[14]+' </td></tr>';
 
 
     sOut += '</table>';
