@@ -577,7 +577,7 @@
  <div class="col-sm-6">
   <select name="entrego_qui" id="entrego_qui"  class="form-control select" >
     @foreach($empleado as $empleados)
-    <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
+    <option value=" {{$empleados->id}}">
      {{$empleados->nombre}} {{$empleados->apellidos}} 
    </option>
    @endforeach
@@ -589,7 +589,7 @@
   <div class="form-group">
     <label class="col-sm-3 control-label">Plaga que Combate : <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="plaga" id="plaga" type="text"  onchange="mayus(this);"  class="form-control"  value="" required=" " />
+      <input name="plaga" id="plaga" type="text"  onchange="mayus(this);"  class="form-control"  />
     </div>
   </div>
 
@@ -1387,6 +1387,7 @@ function buscar5(){
   document.getElementById('quimicos').required = true;
   document.getElementById('scantidad').required = true;
     document.getElementById('status').required = true;
+    document.getElementById('plaga').required = true;
 
 
         document.getElementById('inicio').readOnly = false;
@@ -1400,6 +1401,7 @@ function buscar5(){
     document.getElementById('status').readOnly = false;
     document.getElementById('agregar_agro').disabled = false;
       document.getElementById('observacionesf').readOnly = false; 
+         document.getElementById('plaga').readOnly = false; 
 
 
 
@@ -1418,6 +1420,7 @@ function buscar6(){
   document.getElementById('quimicos').required = false;
   document.getElementById('scantidad').required = false;
     document.getElementById('status').required = false;
+     document.getElementById('plaga').required = false;
 
         document.getElementById('inicio').readOnly = true;
   document.getElementById('fechai').readOnly = true;
@@ -1431,6 +1434,7 @@ function buscar6(){
        document.getElementById('agregar_agro').disabled = true;
      document.getElementById('observacionesf').readOnly = true;
         document.getElementById('status').value = "Pendiente";
+              document.getElementById('plaga').readOnly = true; 
 
 
 }

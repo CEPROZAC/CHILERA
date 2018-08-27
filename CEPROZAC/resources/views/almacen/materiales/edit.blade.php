@@ -109,12 +109,62 @@
               </div>
             </div>
 
+         <div class="form-group">
+      <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
+      </div>
+    </div>
+
+
                <div class="form-group">
               <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="cantidad" value="{{$material->cantidad }}" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div>  
+
+                   <div class="form-group">
+            <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="medida" value="">
+                @if(($material->medida)=="Kilogramos")
+                <option value='Kilogramos' selected>Kilogramos
+                </option>
+                <option value="Toneladas">Toneladas</option>
+                <option value="Lote">Lote</option>
+                <option value="Libre">Libre</option>
+                <option value="Unidades">Unidades</option>
+                @elseif(($material->medida)=="Toneladas")
+                <option value='Toneladas' selected>Toneladas
+                </option>
+                <option value="Lote">Lote</option>
+                <option value="Libre">Libre</option>
+                <option value="Unidades">Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                 @elseif(($material->medida)=="Lote")
+                <option value='Toneladas'>Toneladas</option>
+                <option value="Lote" selected>Lote</option>
+                <option value="Libre">Libre</option>
+                <option value="Unidades">Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                @elseif(($material->medida)=="Libre")
+                <option value='Toneladas'>Toneladas</option>
+                <option value="Lote">Lote</option>
+                <option value="Libre" selected>Libre</option>
+                <option value="Unidades">Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                @else
+                <option value='Toneladas'>Toneladas</option>
+                <option value="Lote">Lote</option>
+                <option value="Libre" >Libre</option>
+                <option value="Unidades" selected>Unidades</option>
+                <option value='Kilogramos'>Kilogramos</option>
+                @endif
+              </select>
+              
+            </div>
+          </div>
 
                                                   <div class="form-group">
               <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>

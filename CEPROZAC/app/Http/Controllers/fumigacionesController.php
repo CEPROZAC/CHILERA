@@ -133,7 +133,7 @@ class fumigacionesController extends Controller
          $salida->cantidad = $cantidadagro;
          $salida->destino = "Fumigacion de Producto: ".$fumigacion->destino." ".$request->get('fechai');
          $salida->recibio = $request->get('nombre_fum');
-         $salida->entrego = $request->get('entrego_qui');
+         $salida->entrego = $request->get('entrego_qui'); 
          $salida->tipo_movimiento ="Fumigacion de Materia Prima";
          $salida->fecha=$request->get('fechai');
          $salida->save();

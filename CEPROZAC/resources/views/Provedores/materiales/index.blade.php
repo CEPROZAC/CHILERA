@@ -50,6 +50,7 @@
                   <th>Telefono </th>
                   <th>Direccion </th>
                   <th>Email </th>
+                   <th>Tipo </th>
            
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>
@@ -63,6 +64,7 @@
                   <td>{{$provedores->telefono}} </td>
                   <td>{{$provedores->direccion}}</td>
                   <td>{{$provedores->email}}</td>
+                   <td>{{$provedores->tipo}}</td>
           
                   <td> 
                   <center>
@@ -85,6 +87,7 @@
                <th>Telefono </th>
                <th>Direccion </th>
                <th>Email </th>
+                 <th>Tipo </th>
                <th><center><b>Editar</b></center></th>
                <th><center><b>Borrar</b></center></th>
              </tr>

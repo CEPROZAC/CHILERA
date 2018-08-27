@@ -50,7 +50,7 @@ class almacenagroquimicosController extends Controller
      */
     public function create()
     {
-        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Agroquimicos%')->get();
         return view('almacen.agroquimicos.create',['provedor' => $provedor]);
 
         //
@@ -141,7 +141,7 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
      */
     public function edit($id)
     {
-       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Agroquimicos%')->get();
        return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
         //
    }
@@ -234,13 +234,12 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
         else{
         $material=almacenagroquimicos::findOrFail($id);
         $prov=$material->provedor;
-        $prove=provedormateriales::findOrFail($prov);
-        $nom_provedor=$prove->nombre;
+
       
       $material2= new entradasagroquimicos;
       $material2->id_material=$id;
       $material2->cantidad=$formulario->get('cantidades');
-      $material2->provedor=$nom_provedor;
+      $material2->provedor=$prov;
                       $material2->entregado=$formulario->get('entregado_a');
         $material2->recibe_alm=$formulario->get('recibe_alm');
          $material2->observacionesc=$formulario->get('observaciones');
@@ -259,6 +258,7 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
       $material2->moneda=$formulario->get('moneda');
+      $material2->estado="Activo";
       $material2->save();
 
 

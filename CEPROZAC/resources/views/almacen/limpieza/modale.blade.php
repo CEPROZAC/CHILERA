@@ -39,7 +39,7 @@
           <div class="col-sm-8">
             <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
               @foreach($empresas as $emp)
-              <option value="{{$emp->nombre}}">
+              <option value="{{$emp->id}}">
                {{$emp->nombre}} 
              </option>
              @endforeach              

@@ -4,14 +4,14 @@
   <div class="pull-left page_title theme_color">
 
     <h1>Inicio</h1>
-    <h2 class="">Almacén de Agroquímicos</h2>
+    <h2 class="">Almacén de Limpieza</h2>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a style="color: #808080" href="{{url('almacenes/agroquimicos')}}">Inicio</a></li>
-      <li><a style="color: #808080" href="{{url('almacenes/agroquimicos')}}">Salidas de Almacén de Agroquímicos</a></li>
+      <li><a style="color: #808080" href="{{url('almacenes/limpieza')}}">Inicio</a></li>
+      <li><a style="color: #808080" href="{{url('almacen/salidas/limpieza')}}">Salidas de Almacén de Limpieza</a></li>
     </ol>
   </div>
 </div>
@@ -23,7 +23,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Salida de Agroquímicos</strong></h2>
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Salida de Limpieza: {{$material->nombre}} </strong></h2>
             </div>
 
             <div class="col-md-4">
@@ -43,53 +43,69 @@
           {{Session::get('message')}}
           @endif
         </div>
-        <form action="{{route('almacen.salidas.agroquimicos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
-
+        <form action="{{url('/almacen/salidas/limpieza', [$salida->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
           {{csrf_field()}}
+          <input type="hidden" name="_method" value="PUT">
+
+
+
+
+              <div class="form-group">
+      <label class="col-sm-3 control-label">Entrego : <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <select name="entrego" id="entrego" class="form-control select2" required>  
+
+         @foreach($empleado as $emp)
+
+         @if($emp->id == $salida->entrego)
+         <option value="{{$emp->id}}" selected>{{$emp->nombre}} {{$emp->apellidos}} </option>
+         @else
+         <option value="{{$emp->id}}">
+           {{$emp->nombre}} {{$emp->apellidos}} 
+         </option>
+         @endif             
+         @endforeach               
+       </select>
+           <span id="errorentrego" style="color:#FF0000;"></span>
+       <div class="help-block with-errors"></div>
+     </div>
+   </div>
+
 
 
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">Entrego : <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="entrego" id="entrego"  class="form-control select" value="entrego" data-live-search="true" required >  
-                @foreach($empleado as $emp)
-                <option value="{{$emp->id}} ">
-                 {{$emp->nombre}} {{$emp->apellidos}} 
-               </option>
-               @endforeach              
-             </select>
-             <span id="errorentrego" style="color:#FF0000;"></span>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div>
+    <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+      <select name="recibio" id="recibio"   class="form-control select2" required>  
+       @foreach($empleado as $emp)
+
+       @if($emp->id == $salida->recibio)
+       <option value="{{$emp->id}}" selected>{{$emp->nombre}} {{$emp->apellidos}} </option>
+       @else
+       <option value="{{$emp->id}}">
+         {{$emp->nombre}} {{$emp->apellidos}} 
+       </option>
+       @endif             
+       @endforeach              
+     </select>
+     <div class="help-block with-errors"></div>
+   </div>
+ </div>
 
 
-         <div class="form-group">
-          <label class="col-sm-3 control-label">Recibio : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
-              @foreach($empleado as $emp)
-              <option value="{{$emp->id}}">
-               {{$emp->nombre}} {{$emp->apellidos}} 
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
-         </div>
-       </div>
 
        <div class="form-group">
         <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
         <div class="col-sm-6">
-          <input name="movimiento" id="movimiento" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="" placeholder="Ingrese el Tipo de Movimiento Realizado"/>
+          <input name="movimiento" id="movimiento" value="{{$salida->tipo_movimiento}}"  type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  placeholder="Ingrese el Tipo de Movimiento Realizado"/>
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Destino del Material"/>
+          <input name="destino" id="destino" value="{{$salida->destino}}"  type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"   placeholder="Ingrese el Destino del Material"/>
         </div>
       </div>
 
@@ -97,7 +113,7 @@
         <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
 
-         <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
+         <input type="date" name="fecha" id="fecha" value="{{$salida->fecha}}" class="form-control mask" >
        </div>
      </div>
 
@@ -121,8 +137,8 @@
               <div class="form-group"> 
                 <label for="material">Material </label>
                 <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
-                  @foreach($material as $mat)
-                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+                  @foreach($materiales as $mat)
+                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->medida}}">
                    {{$mat->nombre}}
                  </option>
                  @endforeach              
@@ -144,7 +160,13 @@
             <label for="pcantidad">Cantidad en Almacén </label>
             <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
           </div>    
-        </div>  
+        </div> 
+        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="form-group"> 
+  <label for="amedida">Medida </label>
+  <input name="amedida" id="amedida" value="" type="text" disabled class="form-control" />
+</div>
+</div>   
 
         <div class="col-sm-4">
          <div class="form-group"> 
@@ -218,7 +240,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="{{url('/almacen/salidas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/salidas/limpieza')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -228,9 +250,8 @@
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 </html> 
-
-
 <script type="text/javascript">
+
 function teclas(event) {
     tecla=(document.all) ? event.keyCode : event.which;
    // alert(tecla);
@@ -256,14 +277,16 @@ function teclas(event) {
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "5",
+      limite = "6",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      stock=arregloDeSubCadenas[0];
-      descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
+     var ida =arregloDeSubCadenas[3];
+     var nombrea =arregloDeSubCadenas[4];
+     var codigoa = arregloDeSubCadenas[2];
+     var descripciona = arregloDeSubCadenas[1];
+     var cantidada = arregloDeSubCadenas[0];
+     var medidaa = arregloDeSubCadenas[5]; 
+       stock=arregloDeSubCadenas[0];
       tecla=(document.all) ? event.keyCode : event.which;
              if (codigo == x){
               swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
@@ -274,8 +297,9 @@ function teclas(event) {
 });
    
     document.getElementById('id_materialk').selectedIndex = i;
-    document.getElementById("pcantidad").value=stock;
-   document.getElementById("descripcion").value=descripcion;
+     document.getElementById("pcantidad").value=cantidada ;
+     document.getElementById("descripcion").value=descripciona;
+     document.getElementById("amedida").value=medidaa;
    
     document.getElementById("scantidad").max=stock;
     break;
@@ -286,30 +310,62 @@ function teclas(event) {
 
 
 return false;
-}
+} 
 
  //return false;
     
 }
 
+	  window.onload=function() {
+     //stock agroquimicos
+     var select2 = document.getElementById('id_materialk');
+     var selectedOption2 = select2.selectedIndex;
+     var cantidadtotal = select2.value;
+     limite = "6",
+     separador = "_",
+     arregloDeSubCadenas = cantidadtotal.split(separador, limite);  
+     var ida =arregloDeSubCadenas[3];
+     var nombrea =arregloDeSubCadenas[4];
+     var codigoa = arregloDeSubCadenas[2];
+     var descripciona = arregloDeSubCadenas[1];
+     var cantidada = arregloDeSubCadenas[0];
+     var medidaa = arregloDeSubCadenas[5]; 
+     document.getElementById("pcantidad").value=cantidada ;
+     document.getElementById("descripcion").value=descripciona;
+     document.getElementById("amedida").value=medidaa;
+     document.getElementById("scantidad").value = "1";
+       document.getElementById("codigo").select();
 
-  window.onload=function() {
-    var select2 = document.getElementById('id_materialk');
-    var selectedOption2 = select2.selectedIndex;
-    var cantidadtotal = select2.value;
-    limite = "5",
-    separador = "_",
-    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-    stock=arregloDeSubCadenas[0];
-    descripcion=arregloDeSubCadenas[1];
-    document.getElementById("pcantidad").value=stock;
-    document.getElementById("descripcion").value=descripcion;
-    document.getElementById("scantidad").value = "1";
-    document.getElementById("scantidad").max=stock;
-     document.getElementById("codigo").select();
-  }
+        var tabla = document.getElementById("detalles");
+    //tabla.setAttribute("id", id2);
+    var row = tabla.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+     var cell6 = row.insertCell(5);
+      var cell7 = row.insertCell(6);
 
-  var select = document.getElementById('id_materialk');
+    var scantidadx = document.getElementById("scantidad");
+    var cantidaden = scantidadx.value;
+
+    cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
+    cell2.innerHTML = '{{$salida->id_material}}';
+    cell3.innerHTML = '{{$material->nombre}}';
+     cell4.innerHTML = '{{$salida->cantidad}}';
+      cell5.innerHTML = '{{$salida->destino}}';
+    cell6.innerHTML = '{{$salida->tipo_movimiento}}';
+    cell7.innerHTML = '{{$salida->fecha}}';
+
+    var x = document.getElementById("id_materialk");
+    //x.remove(x.selectedIndex);
+    var xrow = tabla.rows.length-2;
+    document.getElementById("total").value=xrow;
+    limpiar();
+
+   }
+   var select = document.getElementById('id_materialk');
   //alert(select);
   select.addEventListener('change',
     function(){
@@ -317,61 +373,43 @@ return false;
     // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
-   limite = "5",
+   limite = "6",
    separador = "_",
    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-   stock=arregloDeSubCadenas[0];
-   descripcion=arregloDeSubCadenas[1];
+     var ida =arregloDeSubCadenas[3];
+     var nombrea =arregloDeSubCadenas[4];
+     var codigoa = arregloDeSubCadenas[2];
+     var descripciona = arregloDeSubCadenas[1];
+     var cantidada = arregloDeSubCadenas[0];
+     var medidaa = arregloDeSubCadenas[5]; 
    // id_materiales=arregloDeSubCadenas[3];
 
   // console.log(arregloDeSubCadenas); 
-  document.getElementById("pcantidad").value=stock;
-  document.getElementById("descripcion").value=descripcion;
+     document.getElementById("pcantidad").value=cantidada ;
+     document.getElementById("descripcion").value=descripciona;
+     document.getElementById("amedida").value=medidaa;
   document.getElementById("scantidad").value = "1";
-  document.getElementById("scantidad").max=stock;
+  });
 
-
-
-});
-
-  function cargar(){
-   var select2 = document.getElementById('id_materialk');
-          // alert(select2.value);
-          var z = select2.value;
-          if (z != ""){
-            var selectedOption2 = select2.selectedIndex;
-            var cantidadtotal = select2.value;
-            limite = "5",
-            separador = "_",
-            arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-            stock=arregloDeSubCadenas[0];
-            descripcion=arregloDeSubCadenas[1];
-            document.getElementById("pcantidad").value=stock;
-            document.getElementById("descripcion").value=descripcion;
-            document.getElementById("scantidad").value = "1";
-            document.getElementById("scantidad").max=stock;
-          }
-
-        }
-
-        var uno = 1;
-        function agregar(){
-          var valor = document.getElementById('id_materialk');
-          var x = valor.value;
-    //alert(x);
-    if (x == "") {
-     // alert("No hay Datos que Cargar");
-     var uno = 1;
-     // llenado();
-   }
-   else{
- // alert("llena");
- llenado();
+   function limpiar(){
+  document.getElementById("scantidad").value="1";
 }
 
-}
+  function eliminarFila(value) {
 
-function llenado(){
+    document.getElementById("detalles").deleteRow(value);
+   // var id2= uno2--;
+    var menos =document.getElementById("detalles").rows
+    var r = menos.length;
+    document.getElementById("total").value= r - 2;
+    limpiar();
+  } 
+
+
+function agregar(){
+	      var menos =document.getElementById("detalles").rows
+    var r = menos.length - 2;
+if (r == 0){
   var fechav = document.getElementById('fecha').value;
   var recibiov =  document.getElementById('recibio').value;
   var entregadov = document.getElementById('entrego').value;
@@ -388,7 +426,7 @@ function llenado(){
 
     var select2=document.getElementById('id_materialk');
     var cantidadtotal2 = select2.value;
-    limite2 = "5",
+    limite2 = "6",
     separador2 = "_",
     arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
     x=arregloDeSubCadenas2[3];
@@ -411,10 +449,10 @@ function llenado(){
       }else{
         var select=document.getElementById('id_materialk');
         var cantidadtotal = select.value;
-        limite = "5",
+        limite = "6",
         separador = "_",
         arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-        var id2= uno++;
+        //var id2= uno++;
         cantidad=arregloDeSubCadenas[0];
         descripcion=arregloDeSubCadenas[1];
         codigo=arregloDeSubCadenas[2];
@@ -422,7 +460,7 @@ function llenado(){
         nombre=arregloDeSubCadenas[4];
         var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
-    var row = tabla.insertRow(id2);
+    var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
@@ -457,8 +495,11 @@ function llenado(){
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
     limpiar();
-    cargar();
-    document.getElementById("total").value=id2;
+    //cargar();
+
+      var menos =document.getElementById("detalles").rows
+    var r = menos.length;
+    document.getElementById("total").value= r - 2;
     
   }
 }
@@ -470,71 +511,68 @@ function llenado(){
 }}else{
 
   swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
+}}else{
+	  swal("Alerta!", "Solo puede Agregar 1 Producto para Poder Modificar la Salida de Almacén!", "error");
 }
-}    
+} 
 
-function eliminarFila(value) {
+function recorre(valor) {
+ var z = 1
+ var arreglo = [];
+ var table = document.getElementById('detalles');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+        //alert(z)
+       // document.getElementById("id_materialk").id=z;
+      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
+      var j = table.rows[r].cells[c].innerHTML
+      if (valor == j ){
+        var r = 1;
+        return(r);
+        z ++;
+      }
+    }
 
-  var fila =  console.log(value + "entro");
-  document.getElementById("detalles").deleteRow(value);
-  var id2= uno--;
-  var menos =document.getElementById("detalles").rows
-  var r = menos.length;
-  document.getElementById("total").value= r - 2;
-  //limpiar();
-}
+    else if(z == 2){
+       z ++;
+       
 
-function codigos(){
-  var cuenta = document.getElementById('codigo');
-  var x = cuenta.value;
-  var z = x.length
-  if (z == 12  ) {
-    var busca = z;
-    //  alert ("12 entro");
-    var y = document.getElementById("id_materialk").length;
-    //  alert(y);
-    var i= 0;
-    while(i < y){
-      var e = document.getElementById("id_materialk");
-      var value = e.options[e.selectedIndex=i].value;
-      var text = e.options[e.selectedIndex=i].text;
-      var cantidadtotal = value;
-      limite = "5",
-      separador = "_",
-      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      stock=arregloDeSubCadenas[0];
-      descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
+     }else if(z == 3){
+      ///alert(table.rows[r].cells[c].innerHTML);
+      z ++;
+    }else if(z == 4){
 
-      if (codigo == x){
-    //alert(i);
-    document.getElementById('id_materialk').selectedIndex = i;
-    document.getElementById("pcantidad").value=stock;
-    document.getElementById("descripcion").value=descripcion;
-    document.getElementById("scantidad").value = "1";
-    document.getElementById("scantidad").max=stock;
-    break;
-  }else{
-    alert('Codigo de Barras No Encontado');
-    break;
-  }
-  i++;
-}
-}
+   //  alert(table.rows[r].cells[c].innerHTML);
+     z ++;
+   } else if (z == 5){
+       //  alert(z)
+     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
+     //alert(table.rows[r].cells[c].innerHTML);
 
-}
+//alert(arreglo);
+z ++;
+}else if (z == 6){
+ //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
+ //alert(table.rows[r].cells[c].innerHTML);
+ z ++;
 
-function limpiar(){
-  document.getElementById("scantidad").value="1";
-  document.getElementById("movimiento").value="";
-  document.getElementById("destino").value="";
-  document.getElementById("descripcion").value="";
+}else if(z == 7){
+         //alert(z)
+        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
+   //     alert(table.rows[r].cells[c].innerHTML);
+        z ++;
 
+      }else{
+       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
+     //  alert(table.rows[r].cells[c].innerHTML);
+       z = 1;
 
-}
+     }
 
+   }
+ }
+}   
 
 function save() {
  if (document.getElementById('total').value > 0){
@@ -600,74 +638,6 @@ z ++;
 }
 }
 
-
-function recorre(valor) {
- var z = 1
- var arreglo = [];
- var table = document.getElementById('detalles');
- for (var r = 1, n = table.rows.length-1; r < n; r++) {
-  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-   if (z == 1){
-        //alert(z)
-       // document.getElementById("id_materialk").id=z;
-      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-      var j = table.rows[r].cells[c].innerHTML
-      if (valor == j ){
-        var r = 1;
-        return(r);
-        z ++;
-      }
-    }
-
-    else if(z == 2){
-         //alert(z)
-       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-     //  alert(table.rows[r].cells[c].innerHTML);
-       z ++;
-       
-
-     }else if(z == 3){
-      ///alert(table.rows[r].cells[c].innerHTML);
-      z ++;
-    }else if(z == 4){
-
-   //  alert(table.rows[r].cells[c].innerHTML);
-     z ++;
-   } else if (z == 5){
-       //  alert(z)
-     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-     //alert(table.rows[r].cells[c].innerHTML);
-
-//alert(arreglo);
-z ++;
-}else if (z == 6){
- //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
- //alert(table.rows[r].cells[c].innerHTML);
- z ++;
-
-}else if(z == 7){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-   //     alert(table.rows[r].cells[c].innerHTML);
-        z ++;
-
-      }else{
-       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-     //  alert(table.rows[r].cells[c].innerHTML);
-       z = 1;
-
-     }
-
-   }
- }
-}
-
-
-
-
-
-
 </script>
-
 
 @endsection

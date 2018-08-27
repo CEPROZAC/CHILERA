@@ -114,7 +114,7 @@
  <div class="col-sm-6">
   <select name="entrego_qui" id="entrego_qui"  class="form-control select" required>
     @foreach($empleado as $empleados)
-    <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
+    <option value=" {{$empleados->id}}">
      {{$empleados->nombre}} {{$empleados->apellidos}} 
    </option>
    @endforeach
