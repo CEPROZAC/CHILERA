@@ -23,6 +23,11 @@ class Cuentas_Banco_ProvedoresController extends Controller
 
     }
 
+    public function __construct()
+    {
+      $this->middleware('guest', ['except' => 'getLogout']);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

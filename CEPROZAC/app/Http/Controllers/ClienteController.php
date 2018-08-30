@@ -29,6 +29,12 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class ClienteController extends Controller
 {
 
+
+
+ public function __construct()
+ {
+  $this->middleware('guest', ['except' => 'getLogout']);
+}
     /**
     use DispatchesJobs, ValidatesRequests;
      * Display a listing of the resource.
@@ -51,7 +57,7 @@ class ClienteController extends Controller
 
       $regimen_fiscal = DB::table('regimen_fiscal')->where('estado','=','Activo')->get();
              return view('clientes.create', ['regimen_fiscal'=>$regimen_fiscal]);   //
-      }
+           }
 
     /**
      * Store a newly created resource in storage.
@@ -238,28 +244,28 @@ class ClienteController extends Controller
         })->export('xls');
       }
 
-public function validarRFC($rfc)
-{
+      public function validarRFC($rfc)
+      {
 
-    $cliente= cliente::
-    select('id','rfc','nombre', 'estado')
-    ->where('rfc','=',$rfc)
-    ->get();
+        $cliente= cliente::
+        select('id','rfc','nombre', 'estado')
+        ->where('rfc','=',$rfc)
+        ->get();
 
-    return response()->json(
-      $cliente->toArray());
+        return response()->json(
+          $cliente->toArray());
 
-}
+      }
 
 
 
-public function activar(Request $request)
-{ 
-    $id =  $request->get('idCliente');
-    $cliente=cliente::findOrFail($id);
-    $cliente->estado="Activo";
-    $cliente->update();
-    return Redirect::to('clientes');
-}
+      public function activar(Request $request)
+      { 
+        $id =  $request->get('idCliente');
+        $cliente=cliente::findOrFail($id);
+        $cliente->estado="Activo";
+        $cliente->update();
+        return Redirect::to('clientes');
+      }
 
     }

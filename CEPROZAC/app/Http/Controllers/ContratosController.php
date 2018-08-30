@@ -22,6 +22,11 @@ use Carbon\Carbon;
 
 class ContratosController extends Controller
 {
+
+ public function __construct()
+ {
+  $this->middleware('guest', ['except' => 'getLogout']);
+}
     /**
      * Display a listing of the resource.
      *

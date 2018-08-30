@@ -15,6 +15,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class EmpleadoController extends Controller
 {
+
+
+ public function __construct()
+ {
+  $this->middleware('guest', ['except' => 'getLogout']);
+}
     /**
      * Display a listing of the resource.
      *
