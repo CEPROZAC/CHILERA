@@ -19,7 +19,7 @@
               <div class="form-group">
               <label  class="col-sm-3 control-label">Agregar Stock<strog class="theme_color">*</strog></label>
               <div class="col-sm-8">
-                <input name="cantidades" id="cantidades" maxlength="9" type="text" value="1" min="1" max='9999999'" class="form-control" required placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
+                <input name="cantidades{{$materiales->id}}" id="cantidades{{$materiales->id}}" maxlength="9" type="text" value="1" min="1" max='9999999'" class="form-control" required placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div>
                            <br> <br>
@@ -28,7 +28,7 @@
         <label class="col-sm-3 control-label">Fecha de Compra <strog class="theme_color">*</strog></label>
         <div class="col-sm-8">
 
-         <input type="date" name="fecha2" id="fecha2" value="" class="form-control mask" >
+         <input type="date" name="fecha2{{$materiales->id}}" id="fecha2{{$materiales->id}}" value="" class="form-control mask" >
        </div>
      </div>
 
@@ -37,7 +37,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
           <div class="col-sm-8">
-            <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+            <select name="recibio{{$materiales->id}}" id="recibio{{$materiales->id}}" value=""  class="form-control select" required>  
               @foreach($empresas as $emp)
               <option value="{{$emp->id}}">
                {{$emp->nombre}} 
@@ -52,7 +52,7 @@
                 <div class="form-group">
           <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
           <div class="col-sm-8">
-            <select name="entregado_a" id="entregado_a" value=""  class="form-control select" required>  
+            <select name="entregado_a{{$materiales->id}}" id="entregado_a{{$materiales->id}}" value=""  class="form-control select" required>  
               @foreach($empleado as $emp)
               <option value="{{$emp->id}}">
                {{$emp->nombre}} {{$emp->apellidos}} 
@@ -68,7 +68,7 @@
                        <div class="form-group">
           <label class="col-sm-3 control-label">Recibe: <strog class="theme_color">*</strog></label>
           <div class="col-sm-8">
-            <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select" required>  
+            <select name="recibe_alm{{$materiales->id}}" id="recibe_alm{{$materiales->id}}" value=""  class="form-control select" required>  
               @foreach($empleado as $emp)
               <option value="{{$emp->id}}">
                {{$emp->nombre}} {{$emp->apellidos}} 
@@ -84,14 +84,14 @@
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-8">
 
-    <input name="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+    <input name="observaciones{{$materiales->id}}" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
   </div>
 </div>
             <br> <br>
        <div class="form-group">
         <label class="col-sm-3 control-label">N° Factura: <strog class="theme_color">*</strog></label>
         <div class="col-sm-8">
-          <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"   value="" placeholder="Ingrese el Número de Factura"/>
+          <input name="factura{{$materiales->id}}" id="factura{{$materiales->id}}" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"   value="" placeholder="Ingrese el Número de Factura"/>
           <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
         </div>
       </div>
@@ -103,7 +103,7 @@
              <div class="input-group-addon">$</div>
 
              
-             <input name="preciou" id ="preciou" maxlength="9" type="text" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese el Precio de este Producto" onkeypress=" return soloNumeros(event);"/>
+             <input name="preciou{{$materiales->id}}" id ="preciou{{$materiales->id}}" maxlength="9" type="text" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese el Precio de este Producto" onkeypress=" return soloNumeros(event);"/>
            </div>
          </div>
        </div>
@@ -114,7 +114,7 @@
    <div class="form-group"> 
      <label class="col-sm-3 control-label">% IVA  <strog class="theme_color">*</strog></label>
       <div class="col-sm-8">
-    <input name="iva" id="iva" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+    <input name="iva{{$materiales->id}}" id="iva{{$materiales->id}}" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
   </div>    
   </div>
 
@@ -123,7 +123,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
             <div class="col-sm-8">
-              <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+              <select name="moneda{{$materiales->id}}"  id ="moneda{{$materiales->id}}" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
                    
                 @if(Input::old('moneda')=="Peso MXM")
                 <option value='Peso MXN' selected>Peso MXN
@@ -151,7 +151,7 @@
                     <label class="col-sm-3 control-label"> <strog class="theme_color"></strog></label>
                         <div class="col-sm-8">
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-         <button type="submit" onclick="return save();" class="btn btn-primary">Agregar</button>
+         <button type="submit" onclick="return save({{$materiales->id}});" class="btn btn-primary">Agregar</button>
          </div>
          </div>
          <br> <br>
@@ -167,13 +167,13 @@
 </div><!--/modal-fade--> 
 
 <script>
-  function save()
+  function save($id2)
   {
-    var w = document.getElementById('fecha2').value;
-    var x = document.getElementById('preciou').value;
-    var y = document.getElementById('factura').value;
-    var z = document.getElementById('cantidades').value;
-        var a = document.getElementById('iva').value;
+    var w = document.getElementById('fecha2'+$id2).value;
+    var x = document.getElementById('preciou'+$id2).value;
+    var y = document.getElementById('factura'+$id2).value;
+    var z = document.getElementById('cantidades'+$id2).value;
+        var a = document.getElementById('iva'+$id2).value;
     if (w !== "" && x !== "" && y !== "" && z !== "" && a !== ""  ){
       if (z < 1){
          swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");

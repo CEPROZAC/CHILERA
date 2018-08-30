@@ -282,7 +282,7 @@ function teclas(event) {
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
      var ida =arregloDeSubCadenas[3];
      var nombrea =arregloDeSubCadenas[4];
-     var codigoa = arregloDeSubCadenas[2];
+     var codigo = arregloDeSubCadenas[2];
      var descripciona = arregloDeSubCadenas[1];
      var cantidada = arregloDeSubCadenas[0];
      var medidaa = arregloDeSubCadenas[5]; 

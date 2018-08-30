@@ -45,7 +45,7 @@
         </div>
         <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
 
-        <form action="{{url('/almacen/entradas/empaque', [$entrada->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+        <form action="{{url('/almacen/entradas/materiales', [$entrada->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
           {{csrf_field()}}
           <input type="hidden" name="_method" value="PUT">
           {{csrf_field()}}
@@ -338,7 +338,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="{{url('/almacen/entradas/empaque')}}" class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/entradas/materiales')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -385,6 +385,7 @@
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
       tecla=(document.all) ? event.keyCode : event.which;
+
       if (codigo == x){
         swal("Producto Encontrado:"+nombre +"!", "Stock de Entrada!", "success",{content: "input", inputType:"number",}).then((value) => {
           var aux =`${value}`;

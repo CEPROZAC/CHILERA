@@ -10,7 +10,7 @@ use CEPROZAC\Http\Requests;
 use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\Http\Requests\almacenagroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\EntradasAgroquimicos;
+use CEPROZAC\EntradasAgroquimicos; 
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\empresas_ceprozac;
 
@@ -238,16 +238,16 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
       
       $material2= new entradasagroquimicos;
       $material2->id_material=$id;
-      $material2->cantidad=$formulario->get('cantidades');
+      $material2->cantidad=$formulario->get('cantidades'.$id);
       $material2->provedor=$prov;
-                      $material2->entregado=$formulario->get('entregado_a');
-        $material2->recibe_alm=$formulario->get('recibe_alm');
-         $material2->observacionesc=$formulario->get('observaciones');
+                      $material2->entregado=$formulario->get('entregado_a'.$id);
+        $material2->recibe_alm=$formulario->get('recibe_alm'.$id);
+         $material2->observacionesc=$formulario->get('observaciones'.$id);
 
-      $material2->comprador=$formulario->get('recibio');
-      $material2->factura=$formulario->get('factura');
-      $material2->fecha=$formulario->get('fecha2');
-      $material2->p_unitario=$formulario->get('preciou');
+      $material2->comprador=$formulario->get('recibio'.$id);
+      $material2->factura=$formulario->get('factura'.$id);
+      $material2->fecha=$formulario->get('fecha2'.$id);
+      $material2->p_unitario=$formulario->get('preciou'.$id);
        $ivaaux=$formulario->get('iva') * .010;
        $iesaux=$formulario->get('ieps') * .010; 
        $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
@@ -257,7 +257,7 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
 
       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
-      $material2->moneda=$formulario->get('moneda');
+      $material2->moneda=$formulario->get('moneda'.$id);
       $material2->estado="Activo";
       $material2->save();
 

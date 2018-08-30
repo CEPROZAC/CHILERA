@@ -85,6 +85,7 @@ class almacenmaterialController extends Controller
           $material->stock_minimo=$formulario->get('stock_min');
                     $material->ubicacion=$formulario->get('ubicacion');
         $material->estado='Activo';
+        $material->medida=$formulario->get('medida');
 
         $material->save();
         $material= DB::table('almacenmateriales')->orderby('created_at','DESC')->take(1)->get();
@@ -236,27 +237,28 @@ public function invoice($id){
         $material=almacenmaterial::findOrFail($id);
         $prov=$material->provedor;
         $prove=provedormateriales::findOrFail($prov);
-        $nom_provedor=$prove->nombre;
+        $nom_provedor=$prove->id;
        
        $material2= new entradaalmacen;
        $material2->id_material=$id;
-       $material2->cantidad=$formulario->get('cantidades');
+       $material2->cantidad=$formulario->get('cantidades'.$id);
        $material2->provedor=$nom_provedor;
-                             $material2->entregado=$formulario->get('entregado_a');
-        $material2->recibe_alm=$formulario->get('recibe_alm');
-         $material2->observacionesc=$formulario->get('observaciones');
-       $material2->comprador=$formulario->get('recibio');
-       $material2->nota_venta=$formulario->get('nota');
-       $material2->fecha=$formulario->get('fecha2');
-       $material2->p_unitario=$formulario->get('preciou');
+                             $material2->entregado=$formulario->get('entregado_a'.$id);
+        $material2->recibe_alm=$formulario->get('recibe_alm'.$id);
+         $material2->observacionesc=$formulario->get('observaciones'.$id);
+       $material2->comprador=$formulario->get('recibio'.$id);
+       $material2->nota_venta=$formulario->get('nota'.$id);
+       $material2->fecha=$formulario->get('fecha2'.$id);
+       $material2->p_unitario=$formulario->get('preciou'.$id);
 
-       $ivaaux=$formulario->get('iva') * .010;
+       $ivaaux=$formulario->get('iva'.$id) * .010;
         $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
         $material2->iva=$ivatotal;
 
        $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal ;
        $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal ;
-        $material2->moneda=$formulario->get('moneda');
+        $material2->moneda=$formulario->get('moneda'.$id);
+        $material2->estado='Activo';
        $material2->save();
        return Redirect::to('almacen/materiales');
         //

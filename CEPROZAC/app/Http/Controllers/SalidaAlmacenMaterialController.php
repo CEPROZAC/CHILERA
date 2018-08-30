@@ -33,12 +33,14 @@ class salidaalmacenmaterialController extends Controller
      */
     public function index(Request $request)
     {
-       
-     $salida= DB::table('salidasalmacenmaterial')
-     ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
-     ->select('salidasalmacenmaterial.*','s.nombre')->get();
+        
+                $salida= DB::table('salidasalmacenmaterial')->where('salidasalmacenmaterial.estado','=','Activo')
+        ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+        ->join('empleados as e', 'salidasalmacenmaterial.entrego', '=', 'e.id')
+        ->join('empleados as emp', 'salidasalmacenmaterial.recibio', '=', 'emp.id')
+        ->select('salidasalmacenmaterial.*','s.nombre','salidasalmacenmaterial.*','s.medida','e.nombre as emp1','e.apellidos as ap1','emp.nombre as emp2','emp.apellidos as ap2')->get();
         // print_r($salida);
-     return view('almacen.materiales.salidas.index', ['salida' => $salida]);
+        return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
 
 
@@ -116,11 +118,9 @@ class salidaalmacenmaterialController extends Controller
             $material->destino=$first = $name[$y];
             $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->entrego=$first = $name[$y];
-            $y = $y + 1;
-             //print_r($first = $name[$y]);
-            $material->recibio=$first = $name[$y];
-            $y = $y + 1;
+            $material->entrego=$request->get('entrego');
+            $material->recibio=$request->get('recibio');
+             $material->estado="Activo";
              //print_r($first = $name[$y]);
             $material->tipo_movimiento=$first = $name[$y];
             $y = $y + 1;
@@ -152,7 +152,13 @@ class salidaalmacenmaterialController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    { 
+
+        $salida = SalidaAlmacenMaterial::findOrFail($id);
+        $material = AlmacenMaterial::findOrFail($salida->id_material);
+        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+        $materiales=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+        return view("almacen.materiales.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales]);
         
         //
     }
@@ -165,9 +171,50 @@ class salidaalmacenmaterialController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
-    }
+ {
+      $salida = SalidaAlmacenMaterial::findOrFail($id);
+      $mat = AlmacenMaterial::findOrFail($salida->id_material);
+      $mat->cantidad= $mat->cantidad + $salida->cantidad;
+      $mat->update();
+
+      $limite = $request->get('total');
+      $num = 1;
+      $y = 0;
+
+      if ($limite == 1){
+         $mat = AlmacenMaterial::findOrFail($salida->id_material);
+       $producto = $request->get('codigo2');
+       $first = head($producto);
+       $name = explode(",",$first);
+            //$first = $name[0];
+             //$first = $name[1];
+
+       $salida->id_material=$first = $name[$y];
+       $y = $y + 2;
+       $salida->cantidad=$first = $name[$y];
+        $mat->cantidad= $mat->cantidad - $first = $name[$y];
+       $y = $y + 1;
+            // print_r($first = $name[$y]);
+       $salida->destino=$first = $name[$y];
+       $y = $y + 1;
+            // print_r($first = $name[$y]);
+       $salida->entrego=$request->get('entrego');
+       $salida->recibio=$request->get('recibio');
+       $salida->tipo_movimiento=$first = $name[$y];
+       $y = $y + 1;
+            // print_r($first = $name[$y]);
+       $salida->fecha=$first = $name[$y];
+       $salida->estado="Activo";
+       $y = $y + 1;
+    
+       $mat->update();
+       $salida->update();
+       $num = 1;
+       $y = 0;
+
+   }
+           return redirect('almacen/salidas/material');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -178,28 +225,32 @@ class salidaalmacenmaterialController extends Controller
     public function destroy($id)
     {
       $material=salidaalmacenmaterial::findOrFail($id);
-       $material->delete();
+       $material->estado="Inactivo";
        return Redirect::to('/almacen/salidas/material');   
 
         //
     }
 
-    public function excel()
-    {        
+
+
+       public function excel()
+   {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('salidaalmacenmaterial', function($excel) {
+        Excel::create('salidasalmacenmaterial', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = salidaalmacenmaterial::join('almacenmateriales','almacenmateriales.id', '=', 'salidasalmacenmaterial.id_material')
-            ->select('salidasalmacenmaterial.id', 'almacenmateriales.nombre', 'salidasalmacenmaterial.cantidad', 'salidasalmacenmaterial.destino', 'salidasalmacenmaterial.entrego','salidasalmacenmaterial.recibio','salidasalmacenmaterial.tipo_movimiento','salidasalmacenmaterial.fecha')
+            $salidas = salidaalmacenmaterial::where('salidasalmacenmaterial.estado','=','Activo')->join('almacenmateriales','almacenmateriales.id', '=', 'salidasalmacenmaterial.id_material')
+            ->join('empleados as e', 'salidasalmacenmaterial.entrego', '=', 'e.id')
+            ->join('empleados as emp', 'salidasalmacenmaterial.recibio', '=', 'emp.id')
+            ->select('salidasalmacenmaterial.id', 'almacenmateriales.nombre', 'salidasalmacenmaterial.cantidad','almacenmateriales.medida','almacenmateriales.ubicacion', 'salidasalmacenmaterial.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasalmacenmaterial.tipo_movimiento','salidasalmacenmaterial.fecha')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Salida','Material','Cantidad' ,'Destino','Entrego','Recibio','Tipo de Movimiento','Fecha']);
+            $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Ubicación','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');
     }
-}
+} 

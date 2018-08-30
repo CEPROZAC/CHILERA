@@ -68,16 +68,16 @@
               <tr class="gradeA">
                 <td>{{$entradas->id}} </td>
                 <td>{{$entradas->fecha}} </td>
-                <td>{{$entradas->provedor}} </td>
+                <td>{{$entradas->prov}} </td>
                 <td>{{$entradas->nota_venta}} </td>
                 <td>{{$entradas->nombremat}} </td>
-                <td>{{$entradas->cantidad}} </td>
+                <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
                 <td>${{$entradas->p_unitario}} </td>
                 <td>${{$entradas->iva}} </td>
                 <td>${{$entradas->importe}} </td>
                 <td>${{$entradas->total}} </td>
                 <td>${{$entradas->moneda}} </td>
-                <td>{{$entradas->comprador}} </td>
+                <td>{{$entradas->emp}} </td>
                 <td>  <a href="{{URL::action('EntradaAlmacenController@edit',$entradas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                 </td>
                 <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>

@@ -39,7 +39,7 @@ class EntradaAlmacenController extends Controller
      ->join('empresas_ceprozac as e', 'entradaalmacenmateriales.comprador', '=', 'e.id')
      ->join('provedor_materiales as prov', 'entradaalmacenmateriales.provedor', '=', 'prov.id')
 
-     ->select('entradaalmacenmateriales.*','a.nombre as nombremat','entradaalmacenmateriales.*','a.medida','e.nombre as emp','prov.nombre as prov')->get();
+     ->select('entradaalmacenmateriales.*','a.nombre as nombremat','entradaalmacenmateriales.*','a.medida as medida','e.nombre as emp','prov.nombre as prov')->get();
         // print_r($salida);
      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
 
@@ -267,7 +267,7 @@ return Redirect::to('almacen/entradas/materiales');
 
       for ($x=0; $x < $cuenta  ; $x++) {
       $elimina = entradaalmacen::findOrFail($entradas[$x]->id);
-      $decrementa=almacenmateriales::findOrFail($elimina->id_material);
+      $decrementa=almacenmaterial::findOrFail($elimina->id_material);
       $decrementa->cantidad=$decrementa->cantidad- $elimina->cantidad;
       $decrementa->update();
       $elimina->delete();
@@ -318,7 +318,7 @@ return Redirect::to('almacen/entradas/materiales');
         $num = $num + 1;
         //
     }
-   return redirect('/almacen/entradas/empaque');
+   return redirect('/almacen/entradas/materiales');
         //
     }
 
@@ -331,25 +331,30 @@ return Redirect::to('almacen/entradas/materiales');
     public function destroy($id)
     {
        $material=entradaalmacen::findOrFail($id);
-       $material->delete();
+       $material->estado="Inactivo";
+       $material->update();
        return Redirect::to('/almacen/entradas/materiales');
         //
     }
 
-    public function excel()
-    {        
+
+     public function excel()
+ {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('entradaalmacenmaterial', function($excel) {
+        Excel::create('entradaalmacenmateriales', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = EntradaAlmacen::join('almacenmateriales','almacenmateriales.id', '=', 'entradaalmacenmateriales.id_material')->join('empleados','empleados.id', '=', 'entradaalmacenmateriales.entregado')->join('empleados as emp_rec','empleados.id', '=', 'entradaalmacenmateriales.recibe_alm')
-            ->select('entradaalmacenmateriales.id', 'almacenmateriales.nombre', 'entradaalmacenmateriales.cantidad', 'entradaalmacenmateriales.provedor', 'entradaalmacenmateriales.nota_venta','entradaalmacenmateriales.p_unitario','entradaalmacenmateriales.iva','entradaalmacenmateriales.total','entradaalmacenmateriales.comprador','entradaalmacenmateriales.fecha','empleados.nombre as empnom','emp_rec.nombre as rec_alma','entradaalmacenmateriales.observacionesc')
+            $salidas = EntradaAlmacen::where('entradaalmacenmateriales.estado','=','Activo')->join('almacenmateriales','almacenmateriales.id', '=', 'entradaalmacenmateriales.id_material')->join('empleados as emp1', 'entradaalmacenmateriales.entregado', '=', 'emp1.id')
+            ->join('empleados as emp2', 'entradaalmacenmateriales.recibe_alm', '=', 'emp2.id')
+            ->join('empresas_ceprozac as e', 'entradaalmacenmateriales.comprador', '=', 'e.id')
+            ->join('provedor_materiales as prov', 'entradaalmacenmateriales.provedor', '=', 'prov.id')
+            ->select('entradaalmacenmateriales.id', 'almacenmateriales.nombre', 'entradaalmacenmateriales.cantidad','almacenmateriales.medida','prov.nombre as prov', 'entradaalmacenmateriales.nota_venta','entradaalmacenmateriales.p_unitario','entradaalmacenmateriales.iva','entradaalmacenmateriales.total','entradaalmacenmateriales.moneda','e.nombre as emp','entradaalmacenmateriales.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradaalmacenmateriales.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N°Compra','Material','Cantidad' ,'Proveedor','Nota de Venta','Precio Unitario','IVA','Subtotal','Comprador','Fecha de Compra',"Entregado a","Recibe en Almacén CEPROZAC",'Observaciónes de la Compra']);
+            $sheet->row(1,['N°Compra','Material','Cantidad','Medida' ,'Proveedor','Numero de Nota ó Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

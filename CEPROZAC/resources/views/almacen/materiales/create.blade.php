@@ -119,7 +119,7 @@
       <div class="form-group">
     <label class="col-sm-3 control-label">Unidad de Medida: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <select name="medida" value="{{Input::old('medida')}}">
+      <select name="medida" id="medida" value="{{Input::old('medida')}}">
         @if(Input::old('medida')=="Kilogramos")
         <option value='Kilogramos' selected>Kilogramos
         </option>
