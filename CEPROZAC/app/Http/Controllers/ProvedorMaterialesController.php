@@ -61,21 +61,24 @@ class ProvedorMaterialesController extends Controller
         if ($formulario->ajax()){
           return response()->json(["valid" => true], 200);
         }
-        else{
-          $provedor= new ProvedorMateriales;
-          $provedor->nombre=$formulario->get('nombre');
-          $provedor->rfc=$formulario->get('rfc');
-          $provedor->direccion=$formulario->get('direccion');
-          $provedor->telefono=$formulario->get('telefono');
-          $provedor->email=$formulario->get('email');
+        else{ 
 
-          $provedor->estado='Activo';
-          $provedor->save();
-          return Redirect::to('materiales/provedores')
-          ->with('message', 'Proveedor Registrado Correctamente');
-        }
-      }
-    }
+
+      $provedor= new ProvedorMateriales;
+      $provedor->nombre=$formulario->get('nombre');
+      $provedor->rfc=$formulario->get('rfc');
+      $provedor->direccion=$formulario->get('direccion');
+      $provedor->telefono=$formulario->get('telefono');
+      $provedor->email=$formulario->get('email');
+       $provedor->tipo=$formulario->get('codigo2');
+      
+
+      $provedor->estado='Activo';
+      $provedor->save();
+      return Redirect::to('materiales/provedores')->with('message', 'Proveedor Registrado Correctamente');
+    } 
+  }
+}
 
     /**
      * Display the specified resource.
@@ -119,6 +122,7 @@ class ProvedorMaterialesController extends Controller
       $provedor->direccion=$request->get('direccion');
       $provedor->telefono=$request->get('telefono');
       $provedor->email=$request->get('email');
+             $provedor->tipo=$request->get('codigo2');
 
       $provedor->estado='Activo';
       $provedor->update();
@@ -186,27 +190,27 @@ class ProvedorMaterialesController extends Controller
       }
 
       public function validarRFC($rfc)
-{
+      {
 
-    $provedor= ProvedorMateriales::
-    select('id','rfc','nombre', 'estado')
-    ->where('rfc','=',$rfc)
-    ->get();
+        $provedor= ProvedorMateriales::
+        select('id','rfc','nombre', 'estado')
+        ->where('rfc','=',$rfc)
+        ->get();
 
-    return response()->json(
-      $provedor->toArray());
+        return response()->json(
+          $provedor->toArray());
 
-}
+      }
 
 
 
-public function activar(Request $request)
-{ 
-    $id =  $request->get('idProvedor');
-    $provedor=ProvedorMateriales::findOrFail($id);
-    $provedor->estado="Activo";
-    $provedor->update();
-    return Redirect::to('materiales/provedores');
-}
+      public function activar(Request $request)
+      { 
+        $id =  $request->get('idProvedor');
+        $provedor=ProvedorMateriales::findOrFail($id);
+        $provedor->estado="Activo";
+        $provedor->update();
+        return Redirect::to('materiales/provedores');
+      }
 
     }

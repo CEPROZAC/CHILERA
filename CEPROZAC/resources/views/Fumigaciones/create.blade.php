@@ -114,7 +114,7 @@
  <div class="col-sm-6">
   <select name="entrego_qui" id="entrego_qui"  class="form-control select" required>
     @foreach($empleado as $empleados)
-    <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
+    <option value=" {{$empleados->id}}">
      {{$empleados->nombre}} {{$empleados->apellidos}} 
    </option>
    @endforeach
@@ -122,6 +122,14 @@
  <div class="help-block with-errors"></div>
 </div>
 </div><!--/form-group-->
+
+<div class="form-group">
+  <label class="col-sm-3 control-label">Plaga que Combate: <strog class="theme_color"></strog></label>
+  <div class="col-sm-6">
+
+    <input name="plaga" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese la Plaga que Combate este Agroquimico"/>
+  </div>
+</div>
 
 <div class="form-group">
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>

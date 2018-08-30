@@ -79,7 +79,7 @@
  <div class="form-group">
               <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
- <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validarmateriales();"  placeholder="Ingrese el Codigo de Barras" onkeypress=" return soloNumeros(event);" required value="{{Input::old('codigo')}}"/><br>
+ <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validarmateriales();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
  <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
   <span id="errorCodigo" style="color:#FF0000;"></span>
 </div>
@@ -102,12 +102,61 @@
       </div>
     </div>
 
+         <div class="form-group">
+      <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
+      </div>
+    </div>
+
     <div class="form-group">
       <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
         <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
       </div>    
     </div>  
+
+      <div class="form-group">
+    <label class="col-sm-3 control-label">Unidad de Medida: <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+      <select name="medida" value="{{Input::old('medida')}}">
+        @if(Input::old('medida')=="Kilogramos")
+        <option value='Kilogramos' selected>Kilogramos
+        </option>
+        <option value="Toneladas">Toneladas</option>
+        <option value="Lote">Lote</option>
+        <option value="Libre">Libre</option>
+        <option value="Unidades">Unidades</option>
+        @elseif(Input::old('medida')=="Toneladas")
+        <option value='Toneladas' selected>Toneladas
+        </option>
+        <option value="Lote">Lote</option>
+        <option value="Libre">Libre</option>
+        <option value="Unidades">Unidades</option>
+        <option value='Kilogramos'>Kilogramos</option>
+        @elseif(Input::old('Lote')=="Lote")
+        <option value='Toneladas'>Toneladas</option>
+        <option value="Lote" selected>Lote</option>
+        <option value="Libre">Libre</option>
+        <option value="Unidades">Unidades</option>
+        <option value='Kilogramos'>Kilogramos</option>
+        @elseif(Input::old('Libre')=="Libre")
+        <option value='Toneladas'>Toneladas</option>
+        <option value="Lote">Lote</option>
+        <option value="Libre" selected>Libre</option>
+        <option value="Unidades">Unidades</option>
+        <option value='Kilogramos'>Kilogramos</option>
+        @else
+        <option value='Toneladas'>Toneladas</option>
+        <option value="Lote">Lote</option>
+        <option value="Libre" >Libre</option>
+        <option value="Unidades" selected>Unidades</option>
+        <option value='Kilogramos'>Kilogramos</option>
+        @endif
+      </select>
+      
+    </div>
+  </div>
 
                              <div class="form-group">
               <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>

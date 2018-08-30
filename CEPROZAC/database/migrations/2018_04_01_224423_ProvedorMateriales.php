@@ -20,6 +20,7 @@ class ProvedorMateriales extends Migration
             $table->string('telefono')->nullable();
             $table->string('email')->nullable();
             $table->string('estado');
+            $table->string('tipo')->nullable();
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@ use Illuminate\Support\Collection as Collection;
 
 
 class salidasempaquescontroller extends Controller
-{
+{ 
     /**
 
      * Display a listing of the resource.
@@ -30,10 +30,11 @@ class salidasempaquescontroller extends Controller
      */
     public function index()
     {
-                $salida= DB::table('salidasempaques')
+                $salida= DB::table('salidasempaques')->where('salidasempaques.estado','=','Activo')
         ->join('almacenempaque as s', 'salidasempaques.id_material', '=', 's.id')
-        ->select('salidasempaques.*','s.nombre','salidasempaques.*','s.medida')
-        ->where('salidasempaques.estado','=','Activo')->get();
+        ->join('empleados as e', 'salidasempaques.entrego', '=', 'e.id')
+        ->join('empleados as emp', 'salidasempaques.recibio', '=', 'emp.id')
+        ->select('salidasempaques.*','s.nombre','salidasempaques.*','s.medida','e.nombre as emp1','e.apellidos as ap1','emp.nombre as emp2','emp.apellidos as ap2')->get();
         // print_r($salida);
         return view('almacen.empaque.salidas.index', ['salida' => $salida]);
         //
@@ -102,13 +103,8 @@ class salidasempaquescontroller extends Controller
             // print_r($first = $name[$y]);
             $material->destino=$first = $name[$y];
             $y = $y + 1;
-            // print_r($first = $name[$y]);
-            $material->entrego=$first = $name[$y];
-            $y = $y + 1;
-             //print_r($first = $name[$y]);
-            $material->recibio=$first = $name[$y];
-            $y = $y + 1;
-             //print_r($first = $name[$y]);
+            $material->entrego=$request->get('entrego');
+            $material->recibio=$request->get('recibio');
             $material->tipo_movimiento=$first = $name[$y];
             $y = $y + 1;
             // print_r($first = $name[$y]);
@@ -142,6 +138,11 @@ class salidasempaquescontroller extends Controller
      */
     public function edit($id)
     {
+                $salida = salidasempaques::findOrFail($id);
+        $material = almacenempaque::findOrFail($salida->id_material);
+        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+        $materiales=DB::table('almacenempaque')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+        return view("almacen.empaque.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales]);
         //
     }
 
@@ -154,9 +155,50 @@ class salidasempaquescontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
 
+      $salida = salidasempaques::findOrFail($id);
+      $mat = almacenempaque::findOrFail($salida->id_material);
+      $mat->cantidad= $mat->cantidad + $salida->cantidad;
+      $mat->update();
+
+      $limite = $request->get('total');
+      $num = 1;
+      $y = 0;
+
+      if ($limite == 1){
+         $mat = almacenempaque::findOrFail($salida->id_material);
+       $producto = $request->get('codigo2');
+       $first = head($producto);
+       $name = explode(",",$first);
+            //$first = $name[0];
+             //$first = $name[1];
+
+       $salida->id_material=$first = $name[$y];
+       $y = $y + 2;
+       $salida->cantidad=$first = $name[$y];
+        $mat->cantidad= $mat->cantidad - $first = $name[$y];
+       $y = $y + 1;
+            // print_r($first = $name[$y]);
+       $salida->destino=$first = $name[$y];
+       $y = $y + 1;
+            // print_r($first = $name[$y]);
+       $salida->entrego=$request->get('entrego');
+       $salida->recibio=$request->get('recibio');
+       $salida->tipo_movimiento=$first = $name[$y];
+       $y = $y + 1;
+            // print_r($first = $name[$y]);
+       $salida->fecha=$first = $name[$y];
+       $salida->estado="Activo";
+       $y = $y + 1;
+    
+       $mat->update();
+       $salida->update();
+       $num = 1;
+       $y = 0;
+
+   }
+           return redirect('almacen/salidas/empaque');
+}
     /**
      * Remove the specified resource from storage.
      *
@@ -173,8 +215,8 @@ class salidasempaquescontroller extends Controller
         //
     }
 
-        public function excel()
-    {        
+   public function excel()
+   {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
@@ -182,11 +224,13 @@ class salidasempaquescontroller extends Controller
         Excel::create('salidasempaques', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = salidasempaques::join('almacenempaque','almacenempaque.id', '=', 'salidasempaques.id_material')
-            ->select('salidasempaques.id', 'almacenempaque.nombre', 'salidasempaques.cantidad', 'salidasempaques.destino', 'salidasempaques.entrego','salidasempaques.recibio','salidasempaques.tipo_movimiento','salidasempaques.fecha')
+            $salidas = salidasempaques::where('salidasempaques.estado','=','Activo')->join('almacenempaque','almacenempaque.id', '=', 'salidasempaques.id_material')
+            ->join('empleados as e', 'salidasempaques.entrego', '=', 'e.id')
+            ->join('empleados as emp', 'salidasempaques.recibio', '=', 'emp.id')
+            ->select('salidasempaques.id', 'almacenempaque.nombre', 'salidasempaques.cantidad','almacenempaque.medida', 'salidasempaques.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasempaques.tipo_movimiento','salidasempaques.fecha')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Salida','Material de Empaque','Cantidad' ,'Destino','Entrego','Recibio','Tipo de Movimiento','Fecha']);
+            $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

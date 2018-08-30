@@ -13,12 +13,12 @@
   </div>
 </div>
 
-                           <div class="text-success" id='result'>
-          @if(Session::has('message'))
-          {{Session::get('message')}}
-          @endif
-        </div>
-        
+<div class="text-success" id='result'>
+  @if(Session::has('message'))
+  {{Session::get('message')}}
+  @endif
+</div>
+
 <div class="container clear_both padding_fix">
   <div class="row">
     <div class="col-md-12">
@@ -40,71 +40,78 @@
 
 
 
-                  </div>
+                 </div>
 
 
-                </b>
-              </div>
-            </div>
-          </div>
-        </div>
+               </b>
+             </div>
+           </div>
+         </div>
+       </div>
 
-        <div class="porlets-content">
-          <div class="table-responsive">
-            <table  class="display table table-bordered table-striped" id="dynamic-table">
-              <thead>
-                <tr>
-                  <th>N°Salida </th>
-                   <th>Nombre de Material</th>
-                    <th>Cantidad </th>
-                    <th>Destino </th>
-                   <th>Entrego </th>
-                  <th>Recibio</th>
-                  <th>Tipo de Movimiento</th>  
-                  <th>Fecha de Salida</th>  
-                  <td><center><b>Borrar</b></center></td>                            
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($salida  as $salidas)
-                <tr class="gradeA">
-                  <td>{{$salidas->id}} </td>
-                  <td>{{$salidas->nombre}} </td>
-                   <td>{{$salidas->cantidad}} {{$salidas->medida}}</td>
-                   <td>{{$salidas->destino}} </td>
-                   <td>{{$salidas->entrego}} </td>
-                   <td>{{$salidas->recibio}} </td>
-                   <td>{{$salidas->tipo_movimiento}} </td>
-                    <td>{{$salidas->fecha}} </td>
-                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$salidas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-                  </td>
-                </td>
-                </td>
-
-              </tr>
-              @include('almacen.limpieza.salidas.modal')
-              
-            
-                 @endforeach
-            </tbody>
-            <tfoot>
+       <div class="porlets-content">
+        <div class="table-responsive">
+          <table  class="display table table-bordered table-striped" id="dynamic-table">
+            <thead>
               <tr>
-                  <th>N°Salida </th>
-                   <th>Nombre de Material</th>
-                    <th>Cantidad </th>
-                    <th>Destino </th>
-                   <th>Entrego </th>
-                  <th>Recibio</th>
-                  <th>Tipo de Movimiento</th>  
-                    <th>Fecha de Salida</th>
-                  <td><center><b>Editar</b></center></td>   
-             </tr>
-           </tfoot>
-         </table>
-       </div><!--/table-responsive-->
-     </div><!--/porlets-content-->
-   </div><!--/block-web-->
- </div><!--/col-md-12-->
+                <th>N°Salida </th>
+                <th>Nombre de Material</th>
+                <th>Cantidad </th>
+                <th>Destino </th>
+                <th>Entrego </th>
+                <th>Recibio</th>
+                <th>Tipo de Movimiento</th>  
+                <th>Fecha de Salida</th> 
+                <td><center><b>Editar</b></center></td>   
+                <td><center><b>Borrar</b></center></td>                            
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($salida  as $salidas)
+              <tr class="gradeA">
+                <td>{{$salidas->id}} </td>
+                <td>{{$salidas->nombre}} </td>
+                <td>{{$salidas->cantidad}} {{$salidas->medida}}</td>
+                <td>{{$salidas->destino}} </td>
+                <td>  {{$salidas->emp1}} {{$salidas->ap1}}</td>
+                <td> {{$salidas->emp2}} {{$salidas->ap2}}</td>
+                <td>{{$salidas->tipo_movimiento}} </td>
+                <td>{{$salidas->fecha}} </td>
+                <td> 
+                  <center>
+                  <a href="{{URL::action('SalidasAlmacenLimpiezaController@edit',$salidas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                  </center>
+                </td>
+                <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$salidas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                </td>
+              </td>
+            </td>
+
+          </tr>
+          @include('almacen.limpieza.salidas.modal')
+
+
+          @endforeach
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>N°Salida </th>
+            <th>Nombre de Material</th>
+            <th>Cantidad </th>
+            <th>Destino </th>
+            <th>Entrego </th>
+            <th>Recibio</th>
+            <th>Tipo de Movimiento</th>  
+            <th>Fecha de Salida</th>
+            <td><center><b>Editar</b></center></td>   
+            <td><center><b>Borrar</b></center></td> 
+          </tr>
+        </tfoot>
+      </table>
+    </div><!--/table-responsive-->
+  </div><!--/porlets-content-->
+</div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

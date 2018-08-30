@@ -50,7 +50,7 @@ class almacenlimpiezaController extends Controller
      */
     public function create()
     {
-      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Limpieza%')->get();
       return view('almacen.limpieza.create',['provedor' => $provedor]);
         //
   }
@@ -139,7 +139,7 @@ public function invoice($id){
      */
     public function edit($id)
     {
-       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Limpieza%')->get();
        return view("almacen.limpieza.edit",["material"=>almacenlimpieza::findOrFail($id)],['provedor' => $provedor]);
         //
    }
@@ -235,7 +235,7 @@ public function invoice($id){
         $material=almacenlimpieza::findOrFail($id);
         $prov=$material->provedor;
         $prove=provedormateriales::findOrFail($prov);
-        $nom_provedor=$prove->nombre;
+        $nom_provedor=$prove->id;
       
       $material2= new entradasalmacenlimpieza;
       $material2->id_material=$id;
@@ -254,6 +254,7 @@ public function invoice($id){
       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
        $material2->moneda=$formulario->get('moneda');
+        $material2->estado="Activo";
       $material2->save();
       return Redirect::to('almacenes/limpieza');
       

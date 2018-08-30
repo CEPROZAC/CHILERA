@@ -58,7 +58,7 @@
                     <th>Total de Compra </th>
                      <th>Tipo de Moneda </th>
                   <th>Comprador</th>
-                  
+                  <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>                            
                 </tr>
               </thead>
@@ -67,7 +67,7 @@
                 <tr class="gradeA">
                   <td>{{$entradas->id}} </td>
                   <td>{{$entradas->fecha}} </td>
-                   <td>{{$entradas->provedor}} </td>
+                   <td>{{$entradas->prov}} </td>
                    <td>{{$entradas->factura}} </td>
                    <td>{{$entradas->nombremat}} </td>
                    <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
@@ -76,7 +76,9 @@
                     <td>${{$entradas->importe}} </td>
                     <td>${{$entradas->total}} </td>
                      <td>${{$entradas->moneda}} </td>
-                     <td>{{$entradas->comprador}} </td>
+                     <td>{{$entradas->emp}} </td>
+                      <td>  <a href="{{URL::action('EntradasAlmacenLimpiezaController@edit',$entradas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
                 </td>
@@ -102,7 +104,7 @@
                     <th>Total de Compra </th>
                      <th>Tipo de Moneda </th>
                   <th>Comprador</th>
-                  
+                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>    
              </tr>
            </tfoot>

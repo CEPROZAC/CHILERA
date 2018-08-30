@@ -55,11 +55,12 @@
             <div class="col-sm-6">
               <select name="entrego" id="entrego"  class="form-control select" value="entrego" data-live-search="true" required >  
                 @foreach($empleado as $emp)
-                <option value="{{$emp->nombre}} {{$emp->apellidos}} ">
+                <option value="{{$emp->nombre}} {{$emp->apellidos}}">
                  {{$emp->nombre}} {{$emp->apellidos}} 
                </option>
                @endforeach              
              </select>
+                  <span id="errorrecibe" style="color:#FF0000;"></span>  
              <div class="help-block with-errors"></div>
            </div>
          </div>
@@ -122,7 +123,7 @@
                 <label for="material">Material </label>
                 <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
                   @foreach($material as $mat)
-                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->ubicacion}}">
                    {{$mat->nombre}}
                  </option>
                  @endforeach              
@@ -152,6 +153,13 @@
         </div>    
       </div>  
 
+      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="form-group"> 
+  <label for="iva">Ubicación Actual</label>
+  <input name="ubicacion" id="ubicacion"  type="text" class="form-control" placeholder="Ubicacion" readonly="" />
+</div>    
+</div>  
+
       
     </div>
     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
@@ -169,7 +177,7 @@
       <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
         <thead style="background-color:#A9D0F5">
           <th>Opciones</th>
-          <th>N°Articulo<th>
+          <th>N°Articulo</th>
           <th>Articulo</th>
           <th>Cantidad</th>
           <th>Destino</th>
@@ -259,7 +267,7 @@ function teclas(event) {
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "5",
+      limite = "6",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
@@ -267,6 +275,7 @@ function teclas(event) {
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
+      ubicacionact=arregloDeSubCadenas[5];
       tecla=(document.all) ? event.keyCode : event.which;
              if (codigo == x){
               swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
@@ -281,6 +290,7 @@ function teclas(event) {
    document.getElementById("descripcion").value=descripcion;
    
     document.getElementById("scantidad").max=stock;
+         document.getElementById("ubicacion").max=ubicacionact;
     break;
   }
 
@@ -301,15 +311,17 @@ return false;
     var select2 = document.getElementById('id_materialk');
     var selectedOption2 = select2.selectedIndex;
     var cantidadtotal = select2.value;
-    limite = "5",
+    limite = "6",
     separador = "_",
     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
     stock=arregloDeSubCadenas[0];
     descripcion=arregloDeSubCadenas[1];
+    ubicacionact=arregloDeSubCadenas[5];
     document.getElementById("pcantidad").value=stock;
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
     document.getElementById("scantidad").max=stock;
+     document.getElementById("ubicacion").value=ubicacionact;
      document.getElementById("codigo").select();
   }
 
@@ -321,11 +333,12 @@ return false;
      // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
-   limite = "5",
+   limite = "6",
    separador = "_",
    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
    stock=arregloDeSubCadenas[0];
    descripcion=arregloDeSubCadenas[1];
+      ubicacionact=arregloDeSubCadenas[5];
    // id_materiales=arregloDeSubCadenas[3];
 
   // console.log(arregloDeSubCadenas); 
@@ -333,6 +346,7 @@ return false;
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
   document.getElementById("scantidad").max=stock;
+   document.getElementById("ubicacion").value=ubicacionact;
 
 
 
@@ -345,15 +359,17 @@ return false;
           if (z != ""){
             var selectedOption2 = select2.selectedIndex;
             var cantidadtotal = select2.value;
-            limite = "5",
+            limite = "6",
             separador = "_",
             arregloDeSubCadenas = cantidadtotal.split(separador, limite);
             stock=arregloDeSubCadenas[0];
             descripcion=arregloDeSubCadenas[1];
+               ubicacionact=arregloDeSubCadenas[5];
             document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
             document.getElementById("scantidad").value = "1";
             document.getElementById("scantidad").max=stock;
+               document.getElementById("ubicacion").value=ubicacionact;
           }
 
         }
@@ -385,6 +401,8 @@ function llenado(){
 
   if(fechav !== "" && recibiov !== "" &&entregadov !=="" && destinov!=="" && materialv!=="" &&salidav!==""){
    if (salidav > 0){
+    if (recibiov != entregadov){
+       document.getElementById("errorrecibe").innerHTML = "";
 
       var select2=document.getElementById('id_materialk');
   var cantidadtotal2 = select2.value;
@@ -467,13 +485,16 @@ function llenado(){
     document.getElementById("total").value=id2;
     
   }
+}}else{
+   document.getElementById("errorrecibe").innerHTML = "El Empleado que Entrega el Producto, No puede ser el mismo que lo Recibe";
+
 }
 }else{
   swal("Alerta!", "La Cantidad de Salida no Puede Ser Menor de 0!", "error");
 }}else{
    swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
 }
-}    
+}   
 
 function eliminarFila(value) {
 

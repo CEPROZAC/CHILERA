@@ -27,7 +27,7 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                   <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.salidas.agroquimicos.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén </a>
+                   <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.salidas.agroquimicos.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Salida de Almacén</a>
 
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.agroquimicos.salidas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
@@ -59,6 +59,7 @@
                   <th>Recibio</th>
                   <th>Tipo de Movimiento</th>  
                   <th>Fecha de Salida</th>  
+                  <td><center><b>Editar</b></center></td>   
                   <td><center><b>Borrar</b></center></td>                            
                 </tr>
               </thead>
@@ -69,10 +70,15 @@
                   <td>{{$salidas->nombre}} </td>
                    <td>{{$salidas->cantidad}} {{$salidas->medida}}</td>
                    <td>{{$salidas->destino}} </td>
-                   <td>{{$salidas->entrego}} </td>
-                   <td>{{$salidas->recibio}} </td>
+                   <td>  {{$salidas->emp1}} {{$salidas->ap1}}</td>
+                   <td> {{$salidas->emp2}} {{$salidas->ap2}}</td>
                    <td>{{$salidas->tipo_movimiento}} </td>
                     <td>{{$salidas->fecha}} </td>
+                                                           <td> 
+                  <center>
+                    <a href="{{URL::action('SalidasAgroquimicosController@edit',$salidas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                    </center>
+                  </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$salidas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
                 </td>
@@ -94,7 +100,8 @@
                   <th>Recibio</th>
                   <th>Tipo de Movimiento</th>  
                     <th>Fecha de Salida</th>
-                  <td><center><b>Editar</b></center></td>   
+                  <td><center><b>Editar</b></center></td>  
+                    <td><center><b>Borrar</b></center></td>  
              </tr>
            </tfoot>
          </table>

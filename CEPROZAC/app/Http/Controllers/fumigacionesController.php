@@ -44,6 +44,7 @@ class fumigacionesController extends Controller
        ->join('empleados as a', 'fumigaciones.id_fumigador', '=', 'a.id')
        ->join('productos as p', 'fumigaciones.id_producto', '=', 'p.id')
        ->join('almacengeneral as alm', 'fumigaciones.id_almacen', '=', 'alm.id')
+       //->join('salidasagroquimicos as sal', 'fumigaciones.id_salida', '=', 'sal.id')
        ->select('fumigaciones.*','a.nombre as nomfum', 'a.apellidos as apellidos', 'p.nombre as produnom','alm.nombre as almnom')->get();
        return view('fumigaciones.index', ['fumigaciones' => $fumigaciones]);
 
@@ -132,17 +133,17 @@ class fumigacionesController extends Controller
          $salida->cantidad = $cantidadagro;
          $salida->destino = "Fumigacion de Producto: ".$fumigacion->destino." ".$request->get('fechai');
          $salida->recibio = $request->get('nombre_fum');
-         $salida->entrego = $request->get('entrego_qui');
+         $salida->entrego = $request->get('entrego_qui'); 
          $salida->tipo_movimiento ="Fumigacion de Materia Prima";
          $salida->fecha=$request->get('fechai');
          $salida->save();
          $y= $y + 1;
          $num = $num + 1;
-     }
-       $ultimo = salidasagroquimicos::orderBy('id', 'desc')->first()->id;
+                $ultimo = salidasagroquimicos::orderBy('id', 'desc')->first()->id;
      $fumigacion->id_salida=$ultimo;
 
      $fumigacion->save();
+     }
 
      return Redirect::to('fumigaciones');
         //
@@ -193,6 +194,11 @@ class fumigacionesController extends Controller
     public function update(Request $request, $id)
     {
             $fumigacion = fumigaciones::findOrFail($id);
+            ///resta el stock actual al almacen de agroquimicos
+            
+ 
+            /////
+            //actualiza el nuevo stock
 
  $num = 1;
  $y = 0;
@@ -214,15 +220,20 @@ class fumigacionesController extends Controller
  $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDP";
 
  $valida=$request->get('edit');
-
+ 
  if ($valida == 1){
  while ($num <= $limite) {
      $producto = $request->get('codigo2');
      $first = head($producto);
      $name = explode(",",$first); 
       $salida = salidasagroquimicos::findOrFail($fumigacion->id_salida);
+      $materialaux = almacenagroquimicos::findOrFail($salida->id_material);
+      $materialaux->cantidad= $materialaux->cantidad + $salida->cantidad;
+      $materialaux->update();
+
      $idagro = $first = $name[$y];
      $salida->id_material = $idagro;
+     $materialnuevo = almacenagroquimicos::findOrFail($salida->id_material);
      $y= $y+1;
      $agro = $agro." ".$first = $name[$y];
      $y= $y + 1;
@@ -230,12 +241,17 @@ class fumigacionesController extends Controller
      $y= $y + 1;
      $cantidadagro = $name[$y];
      $salida->cantidad = $cantidadagro;
+     $materialnuevo->cantidad= $materialnuevo->cantidad - $salida->cantidad;
+    
      $salida->destino = "Fumigacion de Producto: ".$fumigacion->destino." ".$request->get('fechai');
      $salida->recibio = $request->get('nombre_fum');
      $salida->entrego = $request->get('entrego_qui');
      $salida->tipo_movimiento ="Fumigacion de Materia Prima";
      $salida->fecha=$request->get('fechai');
-     $salida->save();
+     $salida->update();
+     $materialnuevo->update();
+     
+
      $y= $y + 1;
      $num = $num + 1;
  }}else{

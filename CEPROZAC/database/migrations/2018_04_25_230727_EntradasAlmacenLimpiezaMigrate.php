@@ -14,7 +14,8 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
     {
         Schema::create('entradasalmacenlimpieza', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('provedor');
+            $table->integer('provedor')->unsigned();
+            $table->foreign('provedor')->references('id')->on('provedor_materiales');
             $table->date('fecha');
             $table->integer('factura');
             $table->integer('id_material')->unsigned();
@@ -24,7 +25,8 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
             $table->double('importe');
             $table->double('iva');
             $table->double('total');
-             $table->string('comprador');
+            $table->integer('comprador')->unsigned();
+            $table->foreign('comprador')->references('id')->on('empresas_ceprozac');
              $table->string('moneda');
 
             $table->integer('entregado')->unsigned();
@@ -32,6 +34,7 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
               $table->integer('recibe_alm')->unsigned();
             $table->foreign('recibe_alm')->references('id')->on('empleados');
             $table->string('observacionesc')->nullable();
+            $table->string('estado')->nullable();
             $table->timestamps();
 
         });

@@ -25,7 +25,7 @@ use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
 class almacenempaquecontroller extends Controller
-{
+{ 
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +51,7 @@ class almacenempaquecontroller extends Controller
      */
     public function create()
     {
-         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Empaque%')->get();
          $empaque= DB::table('forma_empaques')->where('estado','Activo')->get();
         return view('almacen.empaque.create',['provedor' => $provedor,'empaque'=>$empaque]);
         //
@@ -140,7 +140,7 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
      */
     public function edit($id)
     {
-               $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+               $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Empaque%')->get();
        return view("almacen.empaque.edit",["material"=>almacenempaque::findOrFail($id)],['provedor' => $provedor]);
         //
     }
@@ -235,7 +235,7 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
         $material=almacenempaque::findOrFail($id);
         $prov=$material->provedor;
         $prove=provedormateriales::findOrFail($prov);
-        $nom_provedor=$prove->nombre;
+        $nom_provedor=$prove->id;
 
       $material2= new entradasempaques;
       $material2->id_material=$id;
@@ -256,6 +256,7 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
        $material2->moneda=$formulario->get('moneda');
+        $material2->estado="Activo";
       $material2->save();
 
 

@@ -47,7 +47,7 @@ class almacenmaterialController extends Controller
      */
     public function create()
     {
-     $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+     $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Refacciones%')->get();
      $empleado = DB::table('empleados')->where('estado','Activo')->get();
      return view('almacen.materiales.create', ['provedor' => $provedor, 'empleado' => $empleado]); 
         //
@@ -83,6 +83,7 @@ class almacenmaterialController extends Controller
         $material->cantidad=$formulario->get('cantidad');
         $material->codigo=$formulario->get('codigo');
           $material->stock_minimo=$formulario->get('stock_min');
+                    $material->ubicacion=$formulario->get('ubicacion');
         $material->estado='Activo';
 
         $material->save();
@@ -139,7 +140,7 @@ public function invoice($id){
      */
     public function edit($id)
     {
-      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Refacciones%')->get();
       return view("almacen.materiales.edit",["material"=>almacenmaterial::findOrFail($id)],["provedor"=> $provedor]);
         //
   }
@@ -166,6 +167,7 @@ public function invoice($id){
         $material->cantidad=$request->get('cantidad');
         $material->codigo=$request->get('codigo');
           $material->stock_minimo=$request->get('stock_min');
+          $material->ubicacion=$formulario->get('ubicacion');
         $material->estado='Activo';
         $material->update();
         return Redirect::to('almacen/materiales');

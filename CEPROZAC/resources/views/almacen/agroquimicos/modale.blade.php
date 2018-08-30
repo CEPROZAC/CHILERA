@@ -40,7 +40,7 @@
           <div class="col-sm-8">
             <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
               @foreach($empresas as $emp)
-              <option value="{{$emp->nombre}}">
+              <option value="{{$emp->id}}">
                {{$emp->nombre}} 
              </option>
              @endforeach              
@@ -92,7 +92,7 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">N° Factura: <strog class="theme_color">*</strog></label>
         <div class="col-sm-8">
-          <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
+          <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Número de Factura"/>
            <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
         </div>
       </div>
@@ -115,14 +115,14 @@
    <div class="form-group"> 
      <label class="col-sm-3 control-label">% IVA  <strog class="theme_color">*</strog></label>
       <div class="col-sm-8">
-    <input name="iva" id="iva" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+    <input name="iva" id="iva" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
   </div>    
   </div>
 <br> <br>
   <div class="form-group"> 
      <label class="col-sm-3 control-label">% IEPS </label>
      <div class="col-sm-8">
-    <input name="ieps" id="ieps" value="1" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
+    <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
   </div>    
 </div>  
 

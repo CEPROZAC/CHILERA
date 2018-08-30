@@ -56,7 +56,7 @@ class almacenagroquimicosController extends Controller
      */
     public function create()
     {
-        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Agroquimicos%')->get();
         return view('almacen.agroquimicos.create',['provedor' => $provedor]);
 
         //
@@ -147,8 +147,13 @@ class almacenagroquimicosController extends Controller
      */
     public function edit($id)
     {
+<<<<<<< HEAD
      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
      return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
+=======
+       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Agroquimicos%')->get();
+       return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
+>>>>>>> aefce6e9546684b0922a9660e146a0568a454ed9
         //
  }
 
@@ -238,6 +243,7 @@ class almacenagroquimicosController extends Controller
             return response()->json(["valid" => true], 200);
         }
         else{
+<<<<<<< HEAD
             $material=almacenagroquimicos::findOrFail($id);
             $prov=$material->provedor;
             $prove=provedormateriales::findOrFail($prov);
@@ -271,6 +277,41 @@ class almacenagroquimicosController extends Controller
             return Redirect::to('almacenes/agroquimicos');
         }
     }
+=======
+        $material=almacenagroquimicos::findOrFail($id);
+        $prov=$material->provedor;
+
+      
+      $material2= new entradasagroquimicos;
+      $material2->id_material=$id;
+      $material2->cantidad=$formulario->get('cantidades');
+      $material2->provedor=$prov;
+                      $material2->entregado=$formulario->get('entregado_a');
+        $material2->recibe_alm=$formulario->get('recibe_alm');
+         $material2->observacionesc=$formulario->get('observaciones');
+
+      $material2->comprador=$formulario->get('recibio');
+      $material2->factura=$formulario->get('factura');
+      $material2->fecha=$formulario->get('fecha2');
+      $material2->p_unitario=$formulario->get('preciou');
+       $ivaaux=$formulario->get('iva') * .010;
+       $iesaux=$formulario->get('ieps') * .010; 
+       $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+       $iesptotal = $material2->p_unitario *  $material2->cantidad * $iesaux;
+       $material2->iva=$ivatotal;
+       $material2->ieps=$iesptotal;
+
+      $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
+      $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
+      $material2->moneda=$formulario->get('moneda');
+      $material2->estado="Activo";
+      $material2->save();
+
+
+      return Redirect::to('almacenes/agroquimicos');
+  }
+}
+>>>>>>> aefce6e9546684b0922a9660e146a0568a454ed9
 }
 
 public function validarcodigo($codigo)

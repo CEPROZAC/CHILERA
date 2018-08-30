@@ -18,10 +18,13 @@ class SalidasAlmacenLimpiezaMigrate extends Migration
             $table->foreign('id_material')->references('id')->on('almacenlimpieza');
             $table->integer('cantidad');
             $table->string('destino');
-            $table->string('entrego');
-            $table->string('recibio');
+            $table->integer('entrego')->unsigned();
+            $table->foreign('entrego')->references('id')->on('empleados');
+            $table->integer('recibio')->unsigned();
+            $table->foreign('recibio')->references('id')->on('empleados');
             $table->string('tipo_movimiento');
             $table->date('fecha');
+             $table->string('estado')->nullable();
             $table->timestamps();    
         });
         DB::unprepared('

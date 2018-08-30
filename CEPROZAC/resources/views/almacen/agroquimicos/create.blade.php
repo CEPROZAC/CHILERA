@@ -122,6 +122,8 @@
           <option value="Litros">Litros</option>
           <option value="Metros">Metros</option>
           <option value="Unidades">Unidades</option>
+          <option value="Pastilla">Pastilla</option>
+          <option value="Perdigon">Perdigon</option>
           @elseif(Input::old('medida')=="Toneladas")
           <option value='Toneladas' selected>Toneladas
           </option>
@@ -129,24 +131,49 @@
           <option value="Metros">Metros</option>
           <option value="Unidades">Unidades</option>
           <option value='Kilogramos'>Kilogramos</option>
+          <option value="Pastilla">Pastilla</option>
+          <option value="Perdigon">Perdigon</option>
           @elseif(Input::old('medida')=="Litros")
           <option value='Toneladas'>Toneladas</option>
           <option value="Litros" selected>Litros</option>
           <option value="Metros">Metros</option>
           <option value="Unidades">Unidades</option>
           <option value='Kilogramos'>Kilogramos</option>
+          <option value="Pastilla">Pastilla</option>
+          <option value="Perdigon">Perdigon</option>
           @elseif(Input::old('medida')=="Metros")
           <option value='Toneladas'>Toneladas</option>
           <option value="Litros">Litros</option>
           <option value="Metros" selected>Metros</option>
           <option value="Unidades">Unidades</option>
           <option value='Kilogramos'>Kilogramos</option>
-          @else
+          <option value="Pastilla">Pastilla</option>
+          <option value="Perdigon">Perdigon</option>
+          @elseif(Input::old('Unidades')=="Unidades")
           <option value='Toneladas'>Toneladas</option>
           <option value="Litros">Litros</option>
           <option value="Metros" >Metros</option>
           <option value="Unidades" selected>Unidades</option>
           <option value='Kilogramos'>Kilogramos</option>
+          <option value="Pastilla">Pastilla</option>
+          <option value="Perdigon">Perdigon</option>
+          @elseif(Input::old('Pastilla')=="Pastilla")
+          <option value='Toneladas'>Toneladas</option>
+          <option value="Litros">Litros</option>
+          <option value="Metros" >Metros</option>
+          <option value="Unidades">Unidades</option>
+          <option value='Kilogramos'>Kilogramos</option>
+          <option value="Pastilla" selected>Pastilla</option>
+          <option value="Perdigon">Perdigon</option>
+          @else
+          <option value='Toneladas'>Toneladas</option>
+          <option value="Litros">Litros</option>
+          <option value="Metros" >Metros</option>
+          <option value="Unidades">Unidades</option>
+          <option value='Kilogramos'>Kilogramos</option>
+          <option value="Pastilla" >Pastilla</option>
+          <option value="Perdigon" selected>Perdigon</option>
+
           @endif
         </select>
         

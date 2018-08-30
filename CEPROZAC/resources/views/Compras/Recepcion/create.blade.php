@@ -577,7 +577,7 @@
  <div class="col-sm-6">
   <select name="entrego_qui" id="entrego_qui"  class="form-control select" >
     @foreach($empleado as $empleados)
-    <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
+    <option value=" {{$empleados->id}}">
      {{$empleados->nombre}} {{$empleados->apellidos}} 
    </option>
    @endforeach
@@ -585,6 +585,13 @@
  <div class="help-block with-errors"></div>
 </div>
 </div><!--/form-group-->
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Plaga que Combate : <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+      <input name="plaga" id="plaga" type="text"  onchange="mayus(this);"  class="form-control"  />
+    </div>
+  </div>
 
 <div class="form-group">
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
@@ -621,7 +628,7 @@
    <span id="erroragro" style="color:#FF0000;"></span>
  <div class="help-block with-errors"></div>
 </div>
-<button id="agregar_agro" class="btn btn-sm btn-danger"  style="margin-right: 10px;"  onclick="agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</button>
+<button id="agregar_agro" class="btn btn-sm btn-danger"  style="margin-right: 10px;"  onclick="return agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</button>
 </div><!--/form-group-->
 
 
@@ -695,13 +702,13 @@
   <div class="col-sm-6">
     <select name="status" id="status" value="{{Input::old('status')}}" >
       @if(Input::old('status')=="Proceso")
-      <option value='Proceso' selected>En Proceso
+      <option value='En Proceso' selected>En Proceso
       </option>
       <option value="Pendiente">Pendiente</option>
       @else
       <option value='Pendiente' selected>Pendiente
       </option>
-      <option value="Proceso">En Proceso</option>
+      <option value="En Proceso">En Proceso</option>
       @endif
     </select>
 
@@ -818,17 +825,17 @@
         for (var i = 0; i < tamaño_libre; i++){
           arreglolibre.push(libres[i]);
         }
-        var valor = 0;
-        for (var cuenta = 1; cuenta <= tamaño_libre ; cuenta++) {
+        var valor = 1;
+        for (var cuenta = 1; cuenta <= capacidad ; cuenta++) {
          var table = document.getElementById("myTable");
          var med = medida;
          var row = table.insertRow(0);
          var cell1 = row.insertCell(0);
          var cell2 = row.insertCell(1);
-         cell1.innerHTML = med+" N° "+libres[valor];
-         var agregaHTML = "<input type=button value=Libre class=agrega id="+libres[(valor)]+">";
+         cell1.innerHTML = med+" N° "+valor;
+         var agregaHTML = "<input type=button value=Libre class=agrega id="+(valor)+">";
          cell2.innerHTML = agregaHTML;
-         document.getElementById(""+libres[valor]).style.color = "#00ff00";
+         document.getElementById(""+valor).style.color = "#00ff00";
          valor++;
 
          cell2.addEventListener("click", function(event) {
@@ -848,14 +855,17 @@
                 arregloespacio.splice(i,1);
               }
             }
+            eliminateDuplicates(arregloocupado);
+
 
             document.getElementById(""+aux).value = "Libre";
             document.getElementById(""+aux).style.color = "#00ff00";
             arreglolibre.push(arr);
             arregloocupado.sortNumbers();
             arreglolibre.sortNumbers();
-            document.getElementById('libre').value=arreglolibre;
-            document.getElementById('ocupado').value=arregloocupado;
+              eliminateDuplicates2(arreglolibre);
+           // document.getElementById('libre').value=arreglolibre;
+          //  document.getElementById('ocupado').value=arregloocupado;
             document.getElementById('asignado').value=arregloespacio;
             tamaño_libre = arreglolibre.length;
             document.getElementById('totallibre').value=tamaño_libre;
@@ -867,6 +877,7 @@
                 arreglolibre.splice(i, 1);
               }
             }
+             eliminateDuplicates2(arreglolibre);
 
             document.getElementById(""+aux).value = "Ocupado";
             document.getElementById(""+aux).style.color = "#ff0000";
@@ -875,8 +886,9 @@
             arregloespacio.sortNumbers();
             arregloocupado.sortNumbers();
             arreglolibre.sortNumbers();
-            document.getElementById('ocupado').value=arregloocupado;
-            document.getElementById('libre').value=arreglolibre;
+             eliminateDuplicates(arregloocupado);
+           // document.getElementById('ocupado').value=arregloocupado;
+           // document.getElementById('libre').value=arreglolibre;
             document.getElementById('asignado').value=arregloespacio;
             tamaño_libre = arreglolibre.length;
             document.getElementById('totallibre').value=tamaño_libre;
@@ -937,8 +949,44 @@
 
 
  });
+
+  function eliminateDuplicates(arr) {
+ var i,
+     len=arr.length,
+     out=[],
+     obj={};
+
+ for (i=0;i<len;i++) {
+    obj[arr[i]]=0;
+ }
+ for (i in obj) {
+    out.push(i);
+ }
+ document.getElementById('ocupado').value=out;
+ return out;
+}
+
+  function eliminateDuplicates2(arr) {
+ var i,
+     len=arr.length,
+     out=[],
+     obj={};
+
+ for (i=0;i<len;i++) {
+    obj[arr[i]]=0;
+ }
+ for (i in obj) {
+    out.push(i);
+ }
+ document.getElementById('libre').value=out;
+ return out;
+}
+
+
   var uno = 1;
   var uno2 = 1;
+
+
   function agroquimico(){
     var select2=document.getElementById('quimicos');
     var cantidadtotal2 = select2.value;
@@ -1008,7 +1056,8 @@
     document.getElementById("total").value=id2;
     limpiar();
   }
-}}
+}return false;
+}
 
 var q = 1;
 function transporte(){
@@ -1205,7 +1254,7 @@ function limpiar(){
 
 
 function save() {
-  if (document.getElementById('programar').value == si){
+  if (document.getElementById('programar').value == "si"){
     if (document.getElementById('total').value > 0){
  var z = 1
  var arreglo = [];
@@ -1338,6 +1387,7 @@ function buscar5(){
   document.getElementById('quimicos').required = true;
   document.getElementById('scantidad').required = true;
     document.getElementById('status').required = true;
+    document.getElementById('plaga').required = true;
 
 
         document.getElementById('inicio').readOnly = false;
@@ -1351,6 +1401,7 @@ function buscar5(){
     document.getElementById('status').readOnly = false;
     document.getElementById('agregar_agro').disabled = false;
       document.getElementById('observacionesf').readOnly = false; 
+         document.getElementById('plaga').readOnly = false; 
 
 
 
@@ -1369,6 +1420,7 @@ function buscar6(){
   document.getElementById('quimicos').required = false;
   document.getElementById('scantidad').required = false;
     document.getElementById('status').required = false;
+     document.getElementById('plaga').required = false;
 
         document.getElementById('inicio').readOnly = true;
   document.getElementById('fechai').readOnly = true;
@@ -1382,6 +1434,7 @@ function buscar6(){
        document.getElementById('agregar_agro').disabled = true;
      document.getElementById('observacionesf').readOnly = true;
         document.getElementById('status').value = "Pendiente";
+              document.getElementById('plaga').readOnly = true; 
 
 
 }

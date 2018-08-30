@@ -21,11 +21,11 @@ class EntradasAlmacengeneral extends Migration
             $table->string('origen');
             $table->date('fecha');
             $table->string('kg_entrada');
+            $table->string('medida');
             $table->integer('id_producto')->unsigned();
             $table->foreign('id_producto')->references('id')->on('productos');
             $table->integer('id_provedor')->unsigned()->nullable();
             $table->foreign('id_provedor')->references('id')->on('provedores');
-
             $table->integer('entrego')->unsigned();
             $table->foreign('entrego')->references('id')->on('empleados');
             $table->integer('recibe_alm')->unsigned();

@@ -13,7 +13,7 @@
       <li><a style="color: #808080" href="{{url('/almacenes/agroquimicos')}}">Inicio</a></li>
       <li><a style="color: #808080" href="{{url('/almacenes/agroquimicos')}}">Entradas de Almacén Agroquímicos</a></li>
     </ol>
-  </div>
+  </div> 
 </div>
 <div class="container clear_both padding_fix">
   <div class="row">
@@ -61,9 +61,9 @@
          <div class="form-group">
           <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="prov" id="prov" value="prov"  class="form-control select" required>  
+            <select name="prov" id="prov" value="prov"  class="form-control select2" required>  
               @foreach($provedor as $emp)
-              <option value="{{$emp->nombre}}">
+              <option value="{{$emp->id}}">
                {{$emp->nombre}} 
              </option>
              @endforeach              
@@ -75,9 +75,9 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
+          <select name="recibio" id="recibio" value="recibio"  class="form-control select2" required>  
             @foreach($empresas as $emp)
-            <option value="{{$emp->nombre}}">
+            <option value="{{$emp->id}}">
              {{$emp->nombre}} 
            </option>
            @endforeach              
@@ -126,7 +126,7 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
-    <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control" onkeypress=" return soloNumeros(event);"  value="" placeholder="Ingrese el Número de Factura"/>
+    <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Número de Factura"/>
      <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
   </div>
 </div>
@@ -214,14 +214,14 @@
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
     <label for="iva">% IVA </label>
-    <input name="iva" id="iva" value="16" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+    <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
   </div>    
 </div> 
 
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
     <label for="ieps">% IEPS </label>
-    <input name="ieps" id="ieps" value="1" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
+    <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
   </div>    
 </div>  
 
@@ -252,8 +252,6 @@
         <th>N°Articulo</th>
         <th>Articulo</th>
         <th>Cantidad de Entrada</th>
-        <th>Proveedor</th>
-        <th>Comprador</th>
         <th>N° Factura</th>
         <th>Fecha de Compra</th>
         <th>Precio Unitario</th>
@@ -275,8 +273,6 @@
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
       </tfoot>
       <tbody>
 
@@ -287,7 +283,7 @@
     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
       <div class="form-group"> 
         <label  for="subtotal">Total </label>
-        <input name="subtotal" id="subtotal" type="number"  class="form-control"  readonly/>
+        <input name="subtotal" id="subtotal" type="number" value="0"  maxlength="5" class="form-control"  readonly/>
       </div>    
     </div>
 
@@ -516,8 +512,7 @@ function llenado(){
     var cell9 = row.insertCell(8);
     var cell10 = row.insertCell(9);
     var cell11 = row.insertCell(10);
-    var cell12 = row.insertCell(11);
-    var cell13 = row.insertCell(12);
+
 
     var fechas = document.getElementById("fecha");
     var var3 = fechas.value;
@@ -544,24 +539,22 @@ function llenado(){
     cell2.innerHTML = id;
     cell3.innerHTML = nombre;
     cell4.innerHTML = cantidaden;
-    cell5.innerHTML = proved;
-    cell6.innerHTML = recibe;
-    cell7.innerHTML = notas;
-    cell8.innerHTML = var3;
-    cell9.innerHTML = precio;
-    cell10.innerHTML = ivatotal;
-    cell11.innerHTML = iepstotal;
-    cell12.innerHTML = precio * cantidaden + ivatotal + iepstotal;
-    cell13.innerHTML = tipo_moneda;
+    cell5.innerHTML = notas;
+    cell6.innerHTML = var3;
+    cell7.innerHTML = precio;
+    cell8.innerHTML = ivatotal;
+    cell9.innerHTML = iepstotal;
+    cell10.innerHTML = precio * cantidaden + ivatotal + iepstotal;
+    cell11.innerHTML = tipo_moneda;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
     cargar();
     document.getElementById("total").value=id2;
     var sub = precio * cantidaden + ivatotal + iepstotal;
-    subtota = subtota + sub;
-    var d = subtota;
-    document.getElementById("subtotal").value=d;
+    var auxsuma= document.getElementById("subtotal").value;
+    var sumatodo = parseFloat(sub) + parseFloat(auxsuma);
+    document.getElementById("subtotal").value=sumatodo;
   }else{
    // swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
     document.getElementById("errorCantidad").innerHTML = "La Cantidad de Entrada debe ser Mayor de 0";
@@ -578,8 +571,7 @@ function llenado(){
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
-  var cantidadanueva=document.getElementById("detalles").rows[value].cells[11].innerHTML;
-  //alert(cantidadanueva);
+  var cantidadanueva=document.getElementById("detalles").rows[value].cells[9].innerHTML;
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows
@@ -682,14 +674,6 @@ function save() {
        arreglo.push(table.rows[r].cells[c].innerHTML);
        z ++;
 
-     }else if(z == 10){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 11){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
      }else{
       arreglo.push(table.rows[r].cells[c].innerHTML);
       document.getElementById("codigo2").value=arreglo;
@@ -699,8 +683,9 @@ function save() {
 
   }
 }
-var tam = arreglo.length / 12;
-document.getElementById("total").value=tam;
+  var menos =document.getElementById("detalles").rows
+  var r = menos.length;
+  document.getElementById("total").value= r - 2;
 }else{
   //alert('No hay Elementos Agregados, Para Poder Guardar');
   swal("Alerta!", "No hay Elementos Agregados, Para Poder Guardar!", "error");

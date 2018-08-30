@@ -4,15 +4,14 @@
   <div class="pull-left page_title theme_color">
 
     <h1>Inicio</h1>
-    <h2 class="">Almacén de Empaque</h2>
+    <h2 class="">Almacén de Empaques</h2>
 
-    
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Inicio</a></li>
-      <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Salidas de Almacén de Empaque</a></li>
+      <li><a style="color: #808080" href="{{url('almacen/salidas/empaque')}}">Inicio</a></li>
+      <li><a style="color: #808080" href="{{url('almacen/salidas/empaque')}}">Salidas de Almacén de Empaques</a></li>
     </ol>
   </div>
 </div>
@@ -55,11 +54,12 @@
             <div class="col-sm-6">
               <select name="entrego" id="entrego"  class="form-control select" value="entrego" data-live-search="true" required >  
                 @foreach($empleado as $emp)
-                <option value="{{$emp->nombre}} {{$emp->apellidos}} ">
+                <option value="{{$emp->id}} ">
                  {{$emp->nombre}} {{$emp->apellidos}} 
                </option>
                @endforeach              
              </select>
+             <span id="errorentrego" style="color:#FF0000;"></span>
              <div class="help-block with-errors"></div>
            </div>
          </div>
@@ -70,7 +70,7 @@
           <div class="col-sm-6">
             <select name="recibio" id="recibio" value="recibio"  class="form-control select" required>  
               @foreach($empleado as $emp)
-              <option value="{{$emp->nombre}} {{$emp->apellidos}}">
+              <option value="{{$emp->id}}">
                {{$emp->nombre}} {{$emp->apellidos}} 
              </option>
              @endforeach              
@@ -89,7 +89,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"   value="" placeholder="Ingrese el Destino del Material"/>
+          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Destino del Material"/>
         </div>
       </div>
 
@@ -105,7 +105,7 @@
        <div class="form-group">
         <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input  id="codigo" value="" name="codigo" type="text" onkeypress="return teclas(event);" maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+          <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
         </div>
       </div>
     </div>
@@ -135,6 +135,7 @@
              <div class="form-group"> 
               <label for="scantidad">Cantidad de Salida </label>
               <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+              <span id="errorCantidad" style="color:#FF0000;"></span>
             </div>    
           </div>  
 
@@ -173,15 +174,11 @@
           <th>Articulo</th>
           <th>Cantidad</th>
           <th>Destino</th>
-          <th>Entrego</th>
-          <th>Recibio</th>
           <th>Tipo de Movimiento</th>
           <th>Fecha</th>
 
         </thead>
         <tfoot>
-          <th></th>
-          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -221,7 +218,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="{{url('almacen/salidas/empaque')}}"  class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/salidas/empaque')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -317,7 +314,7 @@ return false;
   select.addEventListener('change',
     function(){
       var selectedOption = this.options[select.selectedIndex];
-     // alert(selectedOption.value);
+    // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
    limite = "5",
@@ -384,6 +381,9 @@ function llenado(){
 
   if(fechav !== "" && recibiov !== "" &&entregadov !=="" && destinov!=="" && materialv!=="" &&salidav!==""){
    if (salidav > 0){
+     document.getElementById("errorCantidad").innerHTML = "";
+    if (parseInt(entregadov) != parseInt(recibiov)){
+       document.getElementById("errorentrego").innerHTML = "";
 
 
     var select2=document.getElementById('id_materialk');
@@ -401,7 +401,8 @@ function llenado(){
     var comprueba = recorre(x)
 
     if (comprueba == 1){
-       swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+      swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+
 
     }else{
       if (y > z) {
@@ -429,14 +430,9 @@ function llenado(){
     var cell5 = row.insertCell(4);
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
-    var cell8 = row.insertCell(7);
-    var cell9 = row.insertCell(8);
 
-    var entrega =  document.getElementById("entrego");
-    var nom1 = entrega.value;
 
-    var recibe = document.getElementById("recibio");
-    var nom2 = recibe.value;
+
 
     var fechas = document.getElementById("fecha");
     var var3 = fechas.value;
@@ -455,10 +451,8 @@ function llenado(){
     cell3.innerHTML = nombre;
     cell4.innerHTML = cantidadt;
     cell5.innerHTML = dest;
-    cell6.innerHTML = nom1;
-    cell7.innerHTML = nom2;
-    cell8.innerHTML = movt;
-    cell9.innerHTML = var3;
+    cell6.innerHTML = movt;
+    cell7.innerHTML = var3;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
@@ -469,9 +463,13 @@ function llenado(){
   }
 }
 }else{
-  swal("Alerta!", "La Cantidad de Salida no Puede Ser Menor de 0!", "error");
+ document.getElementById("errorentrego").innerHTML = "El Empleado que entrega el Material no puede ser el mismo que lo Recibe";
+
 }}else{
- swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
+      document.getElementById("errorCantidad").innerHTML = "La Cantidad de Salida debe ser Mayor de 0";
+}}else{
+
+  swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
 }
 }    
 
@@ -579,20 +577,9 @@ function save() {
      //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
        //  alert(table.rows[r].cells[c].innerHTML);
        arreglo.push(table.rows[r].cells[c].innerHTML);
-//alert(arreglo);
 z ++;
-}else if (z == 6){
- //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
- arreglo.push(table.rows[r].cells[c].innerHTML);
- z ++;
-
-}else if(z == 7){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-        arreglo.push(table.rows[r].cells[c].innerHTML);
-        z ++;
-
-      }else{
+}
+      else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
        arreglo.push(table.rows[r].cells[c].innerHTML);
        document.getElementById("codigo2").value=arreglo;
@@ -602,9 +589,11 @@ z ++;
 
    }
  }
- var tam = arreglo.length / 8;
- document.getElementById("total").value=tam;
+  var menos =document.getElementById("detalles").rows
+  var r = menos.length;
+  document.getElementById("total").value= r - 2;
 }else{
+
   swal("Alerta!", "No hay Elementos Agregados a la Tabla, Para Poder Guardar!", "error");
   return false;
 
@@ -633,12 +622,12 @@ function recorre(valor) {
     else if(z == 2){
          //alert(z)
        //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-   //    alert(table.rows[r].cells[c].innerHTML);
+     //  alert(table.rows[r].cells[c].innerHTML);
        z ++;
        
 
      }else if(z == 3){
-   //   alert(table.rows[r].cells[c].innerHTML);
+      ///alert(table.rows[r].cells[c].innerHTML);
       z ++;
     }else if(z == 4){
 
@@ -647,7 +636,7 @@ function recorre(valor) {
    } else if (z == 5){
        //  alert(z)
      //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-  //   alert(table.rows[r].cells[c].innerHTML);
+     //alert(table.rows[r].cells[c].innerHTML);
 
 //alert(arreglo);
 z ++;
@@ -659,12 +648,12 @@ z ++;
 }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-       // alert(table.rows[r].cells[c].innerHTML);
+   //     alert(table.rows[r].cells[c].innerHTML);
         z ++;
 
       }else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-      // alert(table.rows[r].cells[c].innerHTML);
+     //  alert(table.rows[r].cells[c].innerHTML);
        z = 1;
 
      }

@@ -14,37 +14,40 @@ class EntradasAgroquimicosMigration extends Migration
     {
         Schema::create('entradasagroquimicos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('provedor');
+            $table->integer('provedor')->unsigned();
+            $table->foreign('provedor')->references('id')->on('provedor_materiales');
             $table->date('fecha');
-            $table->integer('factura');
+            $table->string('factura');
             $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenagroquimicos');
             $table->integer('cantidad');
             $table->double('p_unitario');
             $table->double('importe');
-                        $table->double('iva');
+            $table->double('iva');
             $table->double('ieps');
             $table->double('total');
-             $table->string('comprador');
-             $table->string('moneda');
+            $table->integer('comprador')->unsigned();
+            $table->foreign('comprador')->references('id')->on('empresas_ceprozac');
+            $table->string('moneda');
             $table->integer('entregado')->unsigned();
             $table->foreign('entregado')->references('id')->on('empleados');
-              $table->integer('recibe_alm')->unsigned();
+            $table->integer('recibe_alm')->unsigned();
             $table->foreign('recibe_alm')->references('id')->on('empleados');
             $table->string('observacionesc')->nullable();
+            $table->string('estado')->nullable();
             $table->timestamps();
 
         });
-         DB::unprepared('
-        
-        CREATE TRIGGER inserta_entrada2 AFTER INSERT ON entradasagroquimicos
-        FOR EACH ROW BEGIN
-                UPDATE almacenagroquimicos SET cantidad=cantidad+NEW.cantidad
-                WHERE almacenagroquimicos.id=NEW.id_material;
+        DB::unprepared('
+            
+            CREATE TRIGGER inserta_entrada2 AFTER INSERT ON entradasagroquimicos
+            FOR EACH ROW BEGIN
+            UPDATE almacenagroquimicos SET cantidad=cantidad+NEW.cantidad
+            WHERE almacenagroquimicos.id=NEW.id_material;
 
-        END
+            END
 
-        ');
+            ');
     }
 
     /**

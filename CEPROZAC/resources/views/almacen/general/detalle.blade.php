@@ -39,10 +39,8 @@
 							<thead>
 								<tr>                 
 									<th>N° Espacio </th>
-									<th>Capacidad </th>
 									<th>Lote Actual</th>
 									<th>Espacio Ocupado</th>
-									<th>Espacio Libre </th>
 									<th>Producto </th>
 									<th>Provedor </th>
 									<th>Observaciónes </th>
@@ -54,13 +52,11 @@
 							<tbody>
 								@foreach($almacen  as $almacenes)
 								<tr class="gradeX">
-
+ 
 									<td>{{$almacenes->num_espacio}} </td>
 									
-									<td>{{$almacenes->capacidad}} {{$almacenes->medida}} </td>   
 									<td>{{$almacenes->nombre_lote}} </td>         
-									<td>{{$almacenes->total_ocupado}} {{$almacenes->medida}}</td>
-									<td>{{$almacenes->total_libre}} {{$almacenes->medida}}</td>
+									<td>{{$almacenes->ocupado}} {{$almacenes->medida}}</td>
 									<td>{{$almacenes->nomprod}} </td>
 									<td>{{$almacenes->nombreprov}} </td>
 									<td>{{$almacenes->descripcion}} </td>
@@ -81,17 +77,15 @@
 					<tfoot>
 						<tr>                              
 
-							<th>N° Espacio </th>
-							<th>Capacidad </th>
-							<th>Lote Actual</th>
-							<th>Espacio Ocupado</th>
-							<th>Espacio Libre </th>
-							<th>Producto </th>
-							<th>Provedor </th>
-							<th>Observaciónes </th>
-							<th>Estado Actual </th>
-							<td><center><b>Editar</b></center></td>
-							<td><center><b>Borrar</b></center></td>  
+									<th>N° Espacio </th>
+									<th>Lote Actual</th>
+									<th>Espacio Ocupado</th>
+									<th>Producto </th>
+									<th>Provedor </th>
+									<th>Observaciónes </th>
+									<th>Estado Actual </th>
+									<td><center><b>Editar</b></center></td>
+									<td><center><b>Borrar</b></center></td>     
 
 						</tr>
 					</tfoot>

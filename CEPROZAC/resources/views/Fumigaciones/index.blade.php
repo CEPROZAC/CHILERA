@@ -87,6 +87,7 @@
 										<th style="display:none;" >Producto</th>
 										<th style="display:none;" >Fumigador</th> 
 										<td><center><b>Estado</b></center></td>
+										<th style="display:none;">Plaga que Combate</th> 
 										<td><center><b>Observaciones</b></center></td>
 
 
@@ -117,6 +118,7 @@
 											<th style="display:none;" >{{$fumiga->produnom}} </td>
 											<th style="display:none;" >{{$fumiga->nomfum}} {{$fumiga->apellidos}} </td>
 											<td style="background-color: #C2FFC4;">{{$fumiga->status}} </td>
+											<th style="display:none;" >{{$fumiga->plaga_combate}} </td>
 											<td style="background-color: #C2FFC4;">{{$fumiga->observaciones}} </td>
 
 											<td style="background-color: #C2FFC4;">  <a href="{{URL::action('fumigacionesController@edit',$fumiga->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
@@ -152,7 +154,9 @@
 														<th style="display:none;" >{{$fumiga->almnom}} </td>
 															<th style="display:none;" >{{$fumiga->produnom}} </td>
 																<th style="display:none;" >{{$fumiga->nomfum}} {{$fumiga->apellidos}} </td>
+
 																	<td style="background-color: #FFE4E1;">{{$fumiga->status}} </td>
+																	<th style="display:none;" >{{$fumiga->plaga_combate}} </td>
 																	<?php
 																	$fecha1= new DateTime($fumiga->fechaf);
 																	$fecha2= new DateTime($hoy);
@@ -213,6 +217,7 @@
 																		<th style="display:none;" >{{$fumiga->produnom}} </td>
 																			<th style="display:none;" >{{$fumiga->nomfum}} {{$fumiga->apellidos}} </td>
 																				<td style="background-color: #FDFFC2;">{{$fumiga->status}} </td>
+																				<th style="display:none;" >{{$fumiga->plaga_combate}} </td>
 																				<td style="background-color: #FDFFC2;">La Fumigacion Termina en {{$dias}}, {{$horas}} y {{$minutos}}  </td>
 
 																				<td style="background-color: #FDFFC2;">  <a href="{{URL::action('fumigacionesController@edit',$fumiga->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
@@ -247,6 +252,7 @@
 															<th style="display:none;" >{{$fumiga->produnom}} </td>
 																<th style="display:none;" >{{$fumiga->nomfum}} {{$fumiga->apellidos}} </td>
 																	<td style="background-color: #FFE4E1;">{{$fumiga->status}} </td>
+																	<th style="display:none;" >{{$fumiga->plaga_combate}} </td>
 
 																	<td style="background-color: #FFE4E1;">Fumigacion Pendiente  , Favor de Realizarla Lo antes posible</td>
 
@@ -283,6 +289,7 @@
 																			<th style="display:none;" >Producto</th>
 																			<th style="display:none;" >Fumigador</th> 
 																			<td><center><b>Estado</b></center></td>
+																			<th style="display:none;" >Plaga que Combate</th> 
 																			<td><center><b>Observaciones</b></center></td>
 
 
