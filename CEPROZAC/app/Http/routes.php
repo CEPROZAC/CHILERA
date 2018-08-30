@@ -291,5 +291,19 @@ Route::get('verfumigacion/{id}', array('as'=> '/verfumigacion','uses'=>'fumigaci
 Route::get('pdffumigacion/{id}', array('as'=> '/pdffumigacion','uses'=>'fumigacionesController@invoice'));
 Route::get('registrarfumigacion/{id}', array('as'=> '/registrarfumigacion','uses'=>'fumigacionesController@registrar'));
 Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compras.recepcion.excel');
+
+
+
 /////////////
 
+/*
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+*/

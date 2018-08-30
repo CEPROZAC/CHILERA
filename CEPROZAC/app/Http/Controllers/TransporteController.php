@@ -15,6 +15,11 @@ use Carbon\Carbon;
 
 class TransporteController extends Controller
 {
+
+ public function __construct()
+ {
+    $this->middleware('guest', ['except' => 'getLogout']);
+}
     /**
      * Display a listing of the resource.
      *
@@ -231,18 +236,18 @@ class TransporteController extends Controller
 
     public function calcularFecha($fechaFin){
 
-       $date = Carbon::now();
-       $date->format('Y-m-d');
+     $date = Carbon::now();
+     $date->format('Y-m-d');
 
-       $dia=substr($fechaFin,0,2);
-       $mes=substr($fechaFin, 3,2);
-       $ano=substr($fechaFin, 6,7);
+     $dia=substr($fechaFin,0,2);
+     $mes=substr($fechaFin, 3,2);
+     $ano=substr($fechaFin, 6,7);
      // $fecha =$ano."-".$mes."-".$;
-       $dt = Carbon::createMidnightDate($ano, $mes, $dia);
-       return $date->diffInDays($dt,false);                        
+     $dt = Carbon::createMidnightDate($ano, $mes, $dia);
+     return $date->diffInDays($dt,false);                        
 
 
-   }
+ }
 
 
 }

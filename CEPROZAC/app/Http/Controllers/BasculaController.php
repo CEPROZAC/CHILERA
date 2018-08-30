@@ -15,6 +15,11 @@ use PDF;
 
 class BasculaController extends Controller
 {
+
+ public function __construct()
+ {
+    $this->middleware('guest', ['except' => 'getLogout']);
+}
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +27,9 @@ class BasculaController extends Controller
      */
     public function index()
     {
-       $basculas= DB::table('basculas')->where('estado','Activo')->get();
-       return view('Bascula.basculas.index',['basculas' => $basculas]);
-   }
+     $basculas= DB::table('basculas')->where('estado','Activo')->get();
+     return view('Bascula.basculas.index',['basculas' => $basculas]);
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -109,22 +114,22 @@ class BasculaController extends Controller
     public function excel()
     {        
         Excel::create('Basculas', function($excel) {
-        $excel->sheet('Excel sheet', function($sheet) {
+            $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
 
-            $precioBascula =Bascula::select('nombreBascula', 'observacionesBascula')
-            ->where('estado', 'Activo')
-            ->get();       
+                $precioBascula =Bascula::select('nombreBascula', 'observacionesBascula')
+                ->where('estado', 'Activo')
+                ->get();       
 
 
-            $sheet->fromArray($precioBascula);
-            $sheet->row(1,['Nombre Bascula','Observaciones Bascula']);
+                $sheet->fromArray($precioBascula);
+                $sheet->row(1,['Nombre Bascula','Observaciones Bascula']);
 
-            $sheet->setOrientation('landscape');
-        });
-    })->export('xls');
+                $sheet->setOrientation('landscape');
+            });
+        })->export('xls');
 
-      
-  }
+        
+    }
 
 }

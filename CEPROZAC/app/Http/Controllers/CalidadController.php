@@ -15,6 +15,9 @@ use Validator;
 
 class CalidadController extends Controller
 {
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +26,9 @@ class CalidadController extends Controller
     public function index()
     {
         //
-       $calidades= DB::table('calidad')->where('estado','Activo')->get();
-       return view('Productos.calidad.index',['calidades' => $calidades]);
-   }
+     $calidades= DB::table('calidad')->where('estado','Activo')->get();
+     return view('Productos.calidad.index',['calidades' => $calidades]);
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -103,15 +106,15 @@ class CalidadController extends Controller
      */
     public function destroy($id)
     {
-     $calidad=Calidad::findOrFail($id);
-     $calidad->estado="Inactivo";
-     $calidad->update();
-     return Redirect::to('calidad');
- }
+       $calidad=Calidad::findOrFail($id);
+       $calidad->estado="Inactivo";
+       $calidad->update();
+       return Redirect::to('calidad');
+   }
 
 
- public function excel()
- {        
+   public function excel()
+   {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
