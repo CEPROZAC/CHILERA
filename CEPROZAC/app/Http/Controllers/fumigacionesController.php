@@ -205,19 +205,6 @@ class fumigacionesController extends Controller
  $limite = $request->get('total');
  $agro = "";
 
- $fumigacion->horai=$request->get('inicio');
- $fumigacion->fechai=$request->get('fechai');
- $fumigacion->fechaf=$request->get('fechaf');
- $fumigacion->horaf=$request->get('final');
-
-
-
- $fumigacion->id_fumigador=$request->get('fumigador');
- $fumigacion->cantidad_aplicada=$request->get('scantidad');
- $fumigacion->status=$request->get('status');
- $fumigacion->observaciones=$request->get('observacionesf');
- $fumigacion->estado="Activo";
- $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDP";
 
  $valida=$request->get('edit');
  
@@ -244,7 +231,7 @@ class fumigacionesController extends Controller
      $materialnuevo->cantidad= $materialnuevo->cantidad - $salida->cantidad;
     
      $salida->destino = "Fumigacion de Producto: ".$fumigacion->destino." ".$request->get('fechai');
-     $salida->recibio = $request->get('nombre_fum');
+     $salida->recibio = $request->get('fumigador');
      $salida->entrego = $request->get('entrego_qui');
      $salida->tipo_movimiento ="Fumigacion de Materia Prima";
      $salida->fecha=$request->get('fechai');
@@ -256,6 +243,14 @@ class fumigacionesController extends Controller
      $num = $num + 1;
  }}else{
      while ($num <= $limite) {
+        if ($fumigacion->cantidad_aplicada > 0){
+                  $salida = salidasagroquimicos::findOrFail($fumigacion->id_salida);
+      $materialaux = almacenagroquimicos::findOrFail($salida->id_material);
+      $materialaux->cantidad= $materialaux->cantidad + $salida->cantidad;
+      $materialaux->update();
+
+
+        }
      $producto = $request->get('codigo2');
      $first = head($producto);
      $name = explode(",",$first); 
@@ -270,7 +265,7 @@ class fumigacionesController extends Controller
      $cantidadagro = $name[$y];
      $salida->cantidad = $cantidadagro;
      $salida->destino = "Fumigacion de Producto: ".$fumigacion->destino." ".$request->get('fechai');
-     $salida->recibio = $request->get('nombre_fum');
+     $salida->recibio = $request->get('fumigador');
      $salida->entrego = $request->get('entrego_qui');
      $salida->tipo_movimiento ="Fumigacion de Materia Prima";
      $salida->fecha=$request->get('fechai');
@@ -282,6 +277,19 @@ class fumigacionesController extends Controller
      $fumigacion->id_salida=$ultimo;
  }
  $fumigacion->agroquimicos=$agro;
+  $fumigacion->horai=$request->get('inicio');
+ $fumigacion->fechai=$request->get('fechai');
+ $fumigacion->fechaf=$request->get('fechaf');
+ $fumigacion->horaf=$request->get('final');
+
+
+
+ $fumigacion->id_fumigador=$request->get('fumigador');
+ $fumigacion->cantidad_aplicada=$request->get('scantidad');
+ $fumigacion->status=$request->get('status');
+ $fumigacion->observaciones=$request->get('observacionesf');
+ $fumigacion->estado="Activo";
+ $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDP";
 
  $fumigacion->update();
 

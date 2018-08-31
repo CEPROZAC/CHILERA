@@ -117,7 +117,7 @@ if($fumigacionstatus == "En Proceso"){
       $fumigacion->destino=$request->get('codificacion');
       $fumigacion->plaga_combate=$request->get('plaga');
            $almacenid = $request->get('almacen');
-     $divide=explode("_", $almacenid);
+     $divide=explode("_", $almacenid); 
      $fumigacion->id_almacen=$divide[0];  
       $fumigacion->id_producto=$request->get('producto');
 
@@ -126,7 +126,7 @@ if($fumigacionstatus == "En Proceso"){
       $fumigacion->status=$request->get('status');
       $fumigacion->observaciones=$request->get('observacionesf');
       $fumigacion->estado="Activo";
-      $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDMP";
+      $fumigacion->codigo= $fumigacion->destino."-".$fumigacion->fechai."-FDMP";
       ////salida de almacen
        $producto = $request->get('codigo2');
        $first = head($producto);
@@ -147,6 +147,7 @@ if($fumigacionstatus == "En Proceso"){
        $salida->entrego = $request->get('entrego_qui');
        $salida->tipo_movimiento ="Fumigacion de Materia Prima";
        $salida->fecha=$request->get('fechai');
+       $salida->estado="Activo";
 $salida->save();
        $y= $y + 1;
        $num = $num + 1;

@@ -133,9 +133,9 @@
 
                  
                 @if($salida->entrego == $nom)
-                <option value="{{$empleados->nombre}} {{$empleados->apellidos}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
+                <option value="{{$empleados->id}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
                 @else
-                <option value="{{$empleados->nombre}} {{$empleados->apellidos}}">
+                <option value="{{$empleados->id}}">
                  {{$empleados->nombre}} {{$empleados->apellidos}}
                </option>
                 @endif

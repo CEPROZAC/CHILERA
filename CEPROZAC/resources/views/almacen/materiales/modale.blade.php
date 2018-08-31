@@ -139,6 +139,11 @@
             </div>
             </div>
 
+              <div class="form-group">
+    <div class="col-sm-6">
+      <input  id="nota" name="nota" type="hidden"   class="form-control" />
+    </div>
+  </div>
        
     </div>
             <br> <br>
@@ -184,6 +189,7 @@
           swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
         return false;
       }
+            document.getElementById('nota').value = y;
 return true;
 
     }else{
