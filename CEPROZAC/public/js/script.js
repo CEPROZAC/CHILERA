@@ -1114,3 +1114,9 @@ function  validarprovmat(){
     }
 
 
+
+
+  function calcularClave(){
+
+
+  }

@@ -57,7 +57,7 @@
             <tbody>
               @foreach($provedores  as $provedores)
               <tr class="gradeA">
-                <td>{{$provedores->nombre}} </td>
+                <td>{{$provedores->nombre}} {{$provedores->apellidos}} </td>
                 <td>{{$provedores->telefono}} </td>
                 <td>{{$provedores->direccion}}</td>
                 <td>{{$provedores->email}}</td>

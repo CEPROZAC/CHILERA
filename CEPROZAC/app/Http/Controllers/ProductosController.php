@@ -33,7 +33,11 @@ class ProductosController extends Controller
         ->join('forma_empaques as e', 'productos.idFormatoEmpaque', '=', 'e.id')
         ->select('productos.*','c.nombre as nomCalidad','e.formaEmpaque')
         ->where('productos.estado','Activo')->get();
-        return view('Productos.productos.index', ['producto' => $producto]);
+
+        $provedores = DB::table('provedores')
+        ->select('provedores.*')
+        ->where('provedores.estado','Activo')->get();
+        return view('Productos.productos.index', ['producto' => $producto,'provedores'=> $provedores]);
     }
 
     /**
@@ -46,6 +50,7 @@ class ProductosController extends Controller
         $calidades=DB::table('calidad')->where('estado','=','Activo')->get();
         $empaques=DB::table('forma_empaques')->where('estado','=','Activo')->get();
         $proveedor=DB::table('provedores')->where('estado','=','Activo')->get();
+
         return view("Productos.productos.create",["proveedor"=>$proveedor,"calidades"=>$calidades,"empaques"=>$empaques]);
     }
 
@@ -58,13 +63,32 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         $producto= new Producto;
+        $producto->idProvedor =$request->get("idProvedor"); 
+        $provedor =Provedor::findOrFail($request->get("idProvedor"));
+        $apellido = $provedor->apellidos;
+        $nombre = $provedor->nombre;
+        $silaboNombre= substr($nombre, 0,2);
+        $apellido=substr($apellido, 0, 2); 
+
+
+        echo $silaboNombre.$apellido;
         $producto->nombre=$request->get('nombre');
 
+        $partesNombre  = $request->get('nombre');;
+        $porciones = explode(" ", $partesNombre);
+        echo $porciones[0]; // porción1
+        echo $porciones[1]; // porción2
+
+
+
+
+       /* $producto->nombre=$request->get('nombre');
         $producto->calidad=$request->get('calidad');
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
         $producto->idFormatoEmpaque=$request->get('idFormatoEmpaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
-        
+        $producto->clave_del_Producto="ere44";
+        $producto->idProvedor =$request->get("idProvedor"); 
         if(Input::hasFile('imagen'))
         {
             $file=$request->file('imagen');//si pasa la condicion almacena la imagen
@@ -73,7 +97,7 @@ class ProductosController extends Controller
         } 
         $producto->estado='Activo';
         $producto->save();
-        return Redirect::to('productos');
+        return Redirect::to('productos'); */
     }
 
 

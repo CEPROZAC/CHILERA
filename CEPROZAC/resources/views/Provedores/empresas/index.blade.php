@@ -66,7 +66,7 @@
                   <td style="display:none;">{{$empresas->telefono}}</td>
                   <td style="display:none;">{{$empresas->email}}</td>
                   <td style="display:none;">{{$empresas->nombreRegimen}}</td>
-                  <td>{{$empresas->nombreProvedor}} </td>
+                  <td>{{$empresas->nombreProvedor}} {{$empresas->apellidosProvedor}} </td>
 
                   <td> 
                     <center>

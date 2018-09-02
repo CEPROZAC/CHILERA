@@ -24,7 +24,7 @@ class EmpresaController extends Controller
       $empresas= DB::table('empresas')
       ->join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
       ->join('regimen_fiscal as r', 'empresas.idRegimenFiscal', '=', 'r.id')
-      ->select('empresas.*','p.nombre as nombreProvedor',
+      ->select('empresas.*','p.nombre as nombreProvedor', 'p.apellidos as apellidosProvedor',
         'r.nombre as nombreRegimen')
       ->where('empresas.estado','Activo')->get();
       return view('Provedores.empresas.index', ['empresas' => $empresas]);

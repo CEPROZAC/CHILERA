@@ -12,17 +12,18 @@ class CreateProvedoresTable extends Migration
      */
     public function up()
     {
-          Schema::create('provedores', function (Blueprint $table) {
+      Schema::create('provedores', function (Blueprint $table) {
 
-            $table->increments('id');
-            $table->string('nombre');
-            $table->string('direccion');
-            $table->string('telefono');
-            $table->string('email');
-            $table->string('estado');
-            $table->timestamps();
-        });
-    }
+        $table->increments('id');
+        $table->string('nombre');
+        $table->string('apellidos');
+        $table->string('direccion');
+        $table->string('telefono');
+        $table->string('email');
+        $table->string('estado');
+        $table->timestamps();
+    });
+  }
 
     /**
      * Reverse the migrations.

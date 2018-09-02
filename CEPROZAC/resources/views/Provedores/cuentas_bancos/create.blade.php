@@ -8,7 +8,7 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">Cuentas Bancarias de {{$empresass->nombre}}}</h2>
+    <h2 class="">Cuentas Bancarias de {{$empresas->nombre}}}</h2>
   </div>
 
 </div>

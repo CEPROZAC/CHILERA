@@ -1,5 +1,0 @@
-suites:
-    main:
-        namespace: CEPROZAC
-        psr4_prefix: CEPROZAC
-        src_path: app

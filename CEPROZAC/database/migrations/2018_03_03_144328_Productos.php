@@ -22,7 +22,11 @@ class Productos extends Migration
             $table->foreign('idFormatoEmpaque')->references('id')->on('forma_empaques');
             $table->string('porcentaje_Humedad');
             $table->string('imagen');
+            $table->string('clave_del_Producto');
+            $table->integer('idProvedor')->unsigned();
+            $table->foreign('idProvedor')->references('id')->on('provedores');
             $table->string('estado');
+
             $table->timestamps();
         });
     }

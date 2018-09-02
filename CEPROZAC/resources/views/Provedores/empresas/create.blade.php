@@ -99,7 +99,7 @@
               <select name="provedor_id" class="form-control" required>  
                 @foreach($provedores as $provedor)
                 <option value="{{$provedor->id}}">
-                 {{$provedor->nombre}}
+                 {{$provedor->nombre}} {{$provedor->apellidos}}
                </option>
                @endforeach              
              </select>

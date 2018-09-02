@@ -66,8 +66,10 @@ class ProvedorController extends Controller
     public function store(Request $request)
     {
         $provedor= new Provedor;
+        
         $provedor->nombre=$request->get('nombre');
         //echo $request->get('nombre');
+        $provedor->apellidos=$request->get('apellidos');
 
         $provedor->direccion=$request->get('direccion');
         $provedor->telefono=$request->get('telefono');
@@ -98,8 +100,8 @@ class ProvedorController extends Controller
     public function edit($id)
     {
 
-       return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
-   }
+     return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
+ }
 
     /**
      * Update the specified resource in storage.
@@ -113,6 +115,7 @@ class ProvedorController extends Controller
         //$categoria=Categoria::findOrFail($id);
         $provedor=Provedor::findOrFail($id);
         $provedor->nombre=$request->get('nombre');
+        $provedor->apellidos=$request->get('apellidos');
         //echo $request->get('nombre');
 
         $provedor->direccion=$request->get('direccion');
@@ -145,7 +148,7 @@ class ProvedorController extends Controller
         $empresas= DB::table('empresas')
         ->join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
         ->join('regimen_fiscal as r', 'empresas.idRegimenFiscal', '=', 'r.id')
-        ->select('empresas.*','p.nombre as nombreProvedor', 'r.nombre as nomRegimen')
+        ->select('empresas.*','p.nombre as nombreProvedor', 'p.apellidos as apellidosProvedor', 'r.nombre as nomRegimen')
         ->where('empresas.estado','Activo')
         ->where('empresas.provedor_id','=',$id)
         ->get();
@@ -161,7 +164,7 @@ class ProvedorController extends Controller
             $excel->sheet('Excel sheet', function($sheet) use($id) {
 
                 $mantenimiento = Empresa::join('provedores as p', 'empresas.provedor_id', '=', 'p.id')
-             
+
                 ->join('regimen_fiscal','empresas.idRegimenFiscal','=','regimen_fiscal.id')
                 ->select('empresas.nombre','empresas.rfc','regimen_fiscal.nombre as nomRegimen','empresas.telefono','empresas.direccion','empresas.email')
                 ->where('empresas.estado','Activo')
@@ -193,7 +196,7 @@ class ProvedorController extends Controller
     }
 
 
-         
+
     public function activar(Request $request)
     { 
         $id =  $request->get('idProvedor');

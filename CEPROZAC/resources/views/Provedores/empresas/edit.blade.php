@@ -106,11 +106,11 @@
                 @foreach($provedores as $provedor)
                 @if($provedor->id==$empresas->provedor_id)
                 <option value="{{$provedor->id}}" selected>
-                 {{$provedor->nombre}}
+                 {{$provedor->nombre}} {{$provedor->apellidos}}
                </option>
                @else
                <option value="{{$provedor->id}}">
-                 {{$provedor->nombre}}
+                 {{$provedor->nombre}} {{$provedor->apellidos}}
                  @endif
                  @endforeach              
                </select>

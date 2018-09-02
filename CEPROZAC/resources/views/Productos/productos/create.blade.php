@@ -33,6 +33,15 @@
         <div class="porlets-content">
           <form action="{{route('productos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Clave del producto: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="nombre" type="text"  disabled  class="form-control" required value="" placeholder="Clave del producto" />
+              </div>
+            </div>
+
+
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
@@ -93,42 +102,49 @@
         </div>
       </div>
 
+      <div class="form-group">
+       <label class="col-sm-3 control-label">Proveedores: <strog class="theme_color">*</strog></label>
+       <div class="col-sm-6">
+        <select name="idProvedor" class="form-control" required  onchange="myFunction(this)">
+         @foreach($proveedor as $provedor)
 
+         <option value="{{$provedor->id}}">
+      
+           {{$provedor->nombre}} {{$provedor->apellidos}}
 
-      <div class="form-group ">
-        <label class="col-sm-3 control-label">Imagen</label>
-        <div class="col-sm-6">
-         <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
-       </div>
+         </option>
+         @endforeach
+       </select>
+       <div class="help-block with-errors"></div>
      </div>
+   </div><!--/form-group-->
 
 
 
-     <div class="form-group">
-      <div class="col-sm-offset-7 col-sm-5">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
-      </div>
-    </div><!--/form-group-->
+   <div class="form-group ">
+    <label class="col-sm-3 control-label">Imagen</label>
+    <div class="col-sm-6">
+     <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
+   </div>
+ </div>
 
 
-  </form>
+ 
+
+
+
+ <div class="form-group">
+  <div class="col-sm-offset-7 col-sm-5">
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{{url('/productos')}}" class="btn btn-default"> Cancelar</a>
+  </div>
+</div><!--/form-group-->
+
+
+</form>
 </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
-
 @endsection
-<!--
-  Schema::create('productos', function (Blueprint $table) {
-        $table->increments('id');
-        $table->string('nombre');
-        $table->string('descripcion');
-        $table->string('calidad');
-        $table->string('unidad_de_Medida');
-        $table->string('formato_de_Empaque');
-        $table->string('porcentaje_Humedad');
-        $table->string('proveedor');
-        $table->string('estado');
-        $table->timestamps();-->

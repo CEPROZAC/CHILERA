@@ -20,7 +20,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-7">
               <div class="actions"> </div>
-              <h4 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>LISTA DE EMPRESAS DE: {{$provedor->nombre}}</strong></h4>
+              <h4 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>LISTA DE EMPRESAS DE: {{$provedor->nombre}} {{$provedor->apellidos}}</strong></h4>
             </div>
             <div class="btn-group pull-right">
               <b>
@@ -28,7 +28,9 @@
                 <div class="btn-group" style="margin-right: 10px;">
                   <a class="btn btn-sm btn-success tooltips" href="{{URL::action('EmpresaController@create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Proveedor"> <i class="fa fa-plus"></i> Registrar </a>
 
-                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ProvedorController@descargarEmpresas',[$provedor->id,$provedor->nombre])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                  <!--{{$nombre= $provedor->nombre." ". $provedor->apellidos}}-->
+
+                  <a class="btn btn-sm btn-warning tooltips" href="{{URL::action('ProvedorController@descargarEmpresas',[$provedor->id,$nombre])}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
                   <a class="btn btn-sm btn-danger tooltips" href="/empresas" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
