@@ -248,7 +248,7 @@ public function invoice($id){
       $material2->factura=$formulario->get('factura'.$id);
       $material2->fecha=$formulario->get('fecha2'.$id);
       $material2->p_unitario=$formulario->get('preciou'.$id);
-      $ivaaux=$formulario->get('iva'$id) * .010;
+      $ivaaux=$formulario->get('iva'.$id) * .010;
       $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
        $material2->iva=$ivatotal;
       $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
