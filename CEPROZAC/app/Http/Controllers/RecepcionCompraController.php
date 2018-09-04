@@ -23,6 +23,7 @@ use CEPROZAC\recepcioncompra;
 use CEPROZAC\formaempaque;
 use CEPROZAC\entradas_almacengeneral;
 use CEPROZAC\espacios_almacen;
+use CEPROZAC\lote;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
@@ -100,6 +101,26 @@ class RecepcionCompraController extends Controller
      */
     public function store(Request $request)
     {
+
+           $lote = new lote;
+     $lote->id_producto =$request->get('producto');
+     $lote->id_calidad =$request->get('calidad'); 
+     $lote->id_provedor=$request->get('provedor');
+     $lote->nombre_lote=$request->get('codificacion');
+     $lote->cantidad_act=$request->get('recibidos');
+     $lote->medida="Kilogramos";
+      $lote->fecha_entrada= $request->get('fecha');
+                 $almacenid = $request->get('almacen');
+     $divide=explode("_", $almacenid); 
+    $lote->id_almacen=$divide[0]; 
+      $lote->num_espacio=$request->get('asignado');
+         $lote->observaciones=$request->get('observacionesc');
+           $lote->humedad=$request->get('humedad');
+            $lote->id_empaque=$request->get('empaque');
+             $lote->estado="Activo";
+             $lote->save();
+
+
  $fumigacionstatus=$request->get('status');
 ///si la fumigacion esta en proceso
 if($fumigacionstatus == "En Proceso"){ 
@@ -182,6 +203,7 @@ $salida->save();
 
      $ultimo = fumigaciones::orderBy('id', 'desc')->first()->id;
      $material= new recepcioncompra;
+    $ultimolote = lote::orderBy('id', 'desc')->first();
      $material->nombre=$request->get('codificacion');
      $material->fecha_compra=$request->get('fecha');
      $material->id_provedor=$request->get('provedor');
@@ -216,6 +238,13 @@ $salida->save();
      $material->observacionesu=$request->get('observacionesu');
      $material->id_fumigacion=$ultimo;
      $material->codigo=$ultimo.$material->ticket."RDC";
+      if ($fumigacionstatus == "En Proceso"){
+               $ultimolote->ultima_fumigacion=$request->get('fechai');
+               $ultimolote->num_fumigaciones=1;
+          }
+     $ultimolote->num_fumigaciones="0";
+     $ultimolote->id_fumigacion = $ultimo;
+     $ultimolote->update();
      $material->save();
 
 
@@ -236,6 +265,7 @@ $salida->save();
        $entrada = new entradas_almacengeneral;
        $entrada->id_almacen = $divide[0];
        $entrada->id_espacio = $first = $name[$aux];
+       $entrada->id_lote = $ultimolote->id;
        $idalm = $divide[0];
        $idesp = $first = $name[$aux];
        //$espacio=espacios_almacen::where('id_almacen', $divide[0])->findOrFail($entrada->id_espacio);
@@ -277,6 +307,10 @@ $entrada->save();
        $num = $num + 1;
 
      }
+           
+        
+
+
 
 
 

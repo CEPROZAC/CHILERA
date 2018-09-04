@@ -31,6 +31,10 @@ class SalidasAlmacengeneral extends Migration
             $table->foreign('recibe_alm')->references('id')->on('empleados');
             $table->string('observacionesc')->nullable();
 
+                                            $table->integer('id_lote')->nullable()->unsigned();
+            $table->foreign('id_lote')->references('id')->on('lote');
+             $table->string('estado')->nullable();
+
             $table->timestamps();
         });
 

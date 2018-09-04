@@ -34,6 +34,8 @@ class Fumigaciones extends Migration
             $table->string('estado')->nullable();
              $table->string('codigo')->nullable();
               $table->string('plaga_combate')->nullable();
+
+
             $table->timestamps();
         });
     }
