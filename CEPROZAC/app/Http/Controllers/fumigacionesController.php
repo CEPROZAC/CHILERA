@@ -18,6 +18,8 @@ use CEPROZAC\fumigaciones;
 use CEPROZAC\AlmacenGeneral;
 use CEPROZAC\almacenagroquimicos;
 use CEPROZAC\salidasagroquimicos;
+use CEPROZAC\lote;
+
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
@@ -70,7 +72,7 @@ class fumigacionesController extends Controller
       $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
       $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
       $almacenagroquimicos=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->orwhere('cantidad','>','0')->get();
-      $espacio=DB::table('espacios_almacen')->where('nombre_lote','<>','')->join('almacengeneral as alm', 'espacios_almacen.id_almacen', '=', 'alm.id') ->select('espacios_almacen.*','alm.nombre as almnom')->get();
+      $espacio=DB::table('lote')->where('nombre_lote','<>','')->join('almacengeneral as alm', 'lote.id_almacen', '=', 'alm.id') ->select('lote.*','alm.nombre as almnom')->get();
 
       if (empty($almacenagroquimicos) or empty($empleado) or empty($empresas) or empty($provedores) or empty($productos)  or empty($servicio)  or empty($empaque) ){
          return Redirect::to('fumigaciones');
@@ -143,6 +145,7 @@ class fumigacionesController extends Controller
      $fumigacion->id_salida=$ultimo;
 
      $fumigacion->save();
+
      }
 
      return Redirect::to('fumigaciones');
@@ -292,7 +295,11 @@ class fumigacionesController extends Controller
  $fumigacion->codigo= $fumigacion->destino.$fumigacion->fechai."FDP";
 
  $fumigacion->update();
-
+ $loteid=DB::table('lote')->where('id_fumigacion','=' ,$id)->first()->id;
+ $lot = lote::findOrFail($loteid);
+ $lot->num_fumigaciones =$lot->num_fumigaciones + 1;
+ $lot->ultima_fumigacion=$request->get('fechai');
+ $lot->update();
  return Redirect::to('fumigaciones');
         //
     }

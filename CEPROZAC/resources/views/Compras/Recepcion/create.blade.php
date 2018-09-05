@@ -81,7 +81,7 @@
                           <select name="provedor"  id="provedor" class="form-control select2" required>  
                             @foreach($provedores as $empresa)
                             <option value="{{$empresa->id}}">
-                             {{$empresa->nombre}}
+                             {{$empresa->nombre}} {{$empresa->apellidos}}
                            </option>
                            @endforeach              
                          </select>

@@ -12,6 +12,7 @@ use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\espacios_almacen;
+use CEPROZAC\lote;
 
 
 use DB;
@@ -178,13 +179,33 @@ $num = $num + 1;
  /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
   $almacen2 = almacengeneral::findOrFail($id);
 
-      $almacen= DB::table('espacios_almacen')->where('id_almacen', '=', $id)
-      ->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')
-      ->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')
-      ->select('espacios_almacen.*','prov.nombre as nombreprov','prod.nombre as nomprod')->get();
+      $almacen= DB::table('lote')->where('id_almacen', '=', $id)
+      ->join( 'provedores as prov', 'lote.id_provedor','=','prov.id')
+      ->join('productos as prod' ,'lote.id_producto','=','prod.id')
+       ->join('calidad as cal' ,'lote.id_calidad','=','cal.id')
+       ->join('forma_empaques as emp' ,'lote.id_empaque','=','emp.id')
+      ->select('lote.*','prov.nombre as nombreprov','prod.nombre as nomprod','prov.apellidos as apellidos','cal.nombre as calidadnombre','emp.formaEmpaque as empnombre','lote.id as loteid')->get();
 
 
       return view("almacen.general.detalle",["almacen"=>$almacen,"almacen2"=>$almacen2]);
+    }
+
+
+            public function movimientos($id)
+    {
+ /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
+  //$lote = lote::findOrFail($id);
+
+      $almacen= DB::table('lote')->where('lote.id', '=', $id)
+      ->join( 'provedores as prov', 'lote.id_provedor','=','prov.id')
+      ->join('productos as prod' ,'lote.id_producto','=','prod.id')
+       ->join('calidad as cal' ,'lote.id_calidad','=','cal.id')
+       ->join('forma_empaques as emp' ,'lote.id_empaque','=','emp.id')
+       ->join('almacengeneral as alma' ,'lote.id_almacen','=','alma.id')
+      ->select('lote.*','prov.nombre as nombreprov','prod.nombre as nomprod','prov.apellidos as apellidos','cal.nombre as calidadnombre','emp.formaEmpaque as empnombre','lote.id as loteid','alma.nombre as almanombre')->first();
+
+
+     return view("almacen.general.movimientos",["almacen"=>$almacen]);
     }
 
 }
