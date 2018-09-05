@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FormaEmpaquesTableSeeder::class);
         $this->call(EmpresasCEPROZACTableSeeder::class);
         $this->call(CalidadTableSeeder::class);
+        $this->call(EmpleadosTableSeeder::class);
         Model::reguard();
     }
 }

@@ -102,5 +102,12 @@ class RegimenFiscalTableSeeder extends Seeder
 
 
 
+            DB::table('regimen_fiscal')->insert([
+            'nombre' => 'General de Ley Personas Morales', 
+            'estado'=>'Activo',]);
+
+
+
+
     }
 }

@@ -53,7 +53,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Calidad<strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="calidad" class="form-control" required>
+                <select name="calidad" id="selectCalidad" class="form-control" required onchange="calcularCalidad();">
                  @foreach($calidades as $calidades)
                  <option value="{{$calidades->id}}">
                   {{$calidades->nombre}}
@@ -105,7 +105,7 @@
       <div class="form-group">
        <label class="col-sm-3 control-label">Proveedores: <strog class="theme_color">*</strog></label>
        <div class="col-sm-6">
-        <select name="idProvedor" class="form-control" required  onchange="myFunction(this)">
+        <select name="idProvedor" class="form-control" required  >
          @foreach($proveedor as $provedor)
 
          <option value="{{$provedor->id}}">
@@ -127,6 +127,8 @@
      <input  name="imagen" type="file"  accept=".jpg, .jpeg, .png" >
    </div>
  </div>
+
+ <input hidden name="calidad" id="calidad">
 
 
  

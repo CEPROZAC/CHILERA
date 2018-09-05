@@ -795,7 +795,6 @@ function  validarSSN(){
   var ssnOculta =document.getElementById('SSNOculto').value;
   var route = "http://localhost:8000/validarCURP/"+numero_Seguro_Social;
 
-  console.log("entre");
   $.get(route,function(res){
 
 
@@ -1116,7 +1115,15 @@ function  validarprovmat(){
 
 
 
-  function calcularClave(){
+    function calcularCalidad(){
+     var select = document.getElementById("selectCalidad");
+     var options=document.getElementsByTagName("option");
+     var idRol= select.value;
+
+     var x = select.options[select.selectedIndex].text;
 
 
-  }
+
+    document.getElementById("calidad").value = x;
+
+   }

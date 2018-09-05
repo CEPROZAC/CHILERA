@@ -67,17 +67,18 @@ class ProductosController extends Controller
         $provedor =Provedor::findOrFail($request->get("idProvedor"));
         $apellido = $provedor->apellidos;
         $nombre = $provedor->nombre;
-        $silaboNombre= substr($nombre, 0,2);
-        $apellido=substr($apellido, 0, 2); 
+        $silaboNombre = $this->calcularSilaboNombre($nombre,$apellido);
+        
 
 
-        echo $silaboNombre.$apellido;
-        $producto->nombre=$request->get('nombre');
 
-        $partesNombre  = $request->get('nombre');;
-        $porciones = explode(" ", $partesNombre);
-        echo $porciones[0]; // porción1
-        echo $porciones[1]; // porción2
+       // echo $silaboNombre.$apellido;
+        $silaboProducto= $this->calcularSilaboProducto($request->get("nombre"));
+        echo $silaboProducto;
+
+
+
+
 
 
 
@@ -101,7 +102,50 @@ class ProductosController extends Controller
     }
 
 
+    public  function calcularSilaboProducto($nombreProducto){
+      $porciones = explode(" ", $nombreProducto);
 
+
+
+
+      if(sizeof($porciones)==1){
+        $silaboProducto= substr($nombreProducto, 0, 4); 
+
+
+    } elseif (sizeof($porciones)==2) {
+
+
+        $silaba1=substr( $porciones[0],0,2);
+        $silaba2= substr( $porciones[1],0,2);
+        $silaboProducto =$silaba1 .$silaba2;
+
+    } else {
+
+        $variable2= $porciones[0].$porciones[1].$porciones[2];
+        $silabo = explode("DE", $variable2);
+
+        $silaba1=substr( $silabo[0],0,2);
+        $silaba2= substr( $silabo[1],0,2);
+
+        $silaboProducto =$silaba1.$silaba2;
+
+    }
+
+  return $silaboProducto; // porción1
+
+}
+
+
+
+public function calcularSilaboNombre($nombre,$apellido){
+
+
+   $silaboNombre= substr($nombre, 0,2);
+   $apellido=substr($apellido, 0, 2); 
+   $silabo= $silaboNombre . $apellido;
+
+   return  $silabo;
+}
 
     /**
      * Display the specified resource.
