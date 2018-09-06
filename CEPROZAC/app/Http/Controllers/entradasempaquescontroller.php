@@ -276,6 +276,7 @@ class entradasempaquescontroller extends Controller
             ->join('empresas_ceprozac as e', 'entradasempaques.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasempaques.provedor', '=', 'prov.id')
             ->select('entradasempaques.id', 'almacenempaque.nombre', 'entradasempaques.cantidad','almacenempaque.medida','prov.nombre as prov', 'entradasempaques.factura','entradasempaques.p_unitario','entradasempaques.iva','entradasempaques.total','entradasempaques.moneda','e.nombre as emp','entradasempaques.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradasempaques.observacionesc')
+            ->where('entradasempaques.estado', 'Activo')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N°Compra','Material','Cantidad','Medida' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);

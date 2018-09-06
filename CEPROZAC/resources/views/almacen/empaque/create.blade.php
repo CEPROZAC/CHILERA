@@ -56,11 +56,18 @@
            </div>
          </div><!--/form-group-->
 
-
          <div class="form-group">
+         <label class="col-sm-3 control-label">El Empaque Cuenta Con Proveedor: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-3">
+            <input type="radio" name="registrado" id="registrado" onchange="buscar1()" value="si"> Si<br>
+            <input type="radio" name="registrado" id="registrado" onchange="buscar2()" value="no"> No<br>
+          </div>
+        </div><!--/form-group-->
+
+        <div class="form-group">
           <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <select name="provedor_name" class="form-control" value="{{Input::old('provedor_name')}}" required>  
+            <select name="provedor_name" id="provedor_name" class="form-control" value="{{Input::old('provedor_name')}}" >  
               @foreach($provedor as $provedores)
               <option value="{{$provedores->id}}">
                {{$provedores->nombre}}
@@ -70,7 +77,7 @@
            <div class="help-block with-errors"></div>
            <div class="text-danger" id='error_prov'>{{$errors->formulario->first('provedor_name')}}</div>
          </div>
-       </div><!--/form-group-->
+       </div><!--/form-group--> 
 
 
 
@@ -208,6 +215,22 @@ document.getElementById("segundo").value=aleatorio;
   document.getElementById("segundo").disabled=true;
   document.getElementById("segundo").value = "";
 }
+}
+
+function buscar1(){
+  document.getElementById('registrado').value="no";
+  document.getElementById('provedor_name').style.display = 'block';
+   document.getElementById('provedor_name').disabled= false;
+  //document.getElementById('transportediv').style.display = 'none';
+
+}
+function buscar2(){
+
+
+  document.getElementById('registrado').value="si";
+ // document.getElementById('transportediv').style.display = 'block';
+  document.getElementById('provedor_name').style.display = 'none';
+  document.getElementById('provedor_name').disable= true;
 }
 </script>
 </head>

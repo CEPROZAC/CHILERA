@@ -234,6 +234,7 @@ return redirect('almacen/salidas/agroquimicos');
             ->join('empleados as e', 'salidasagroquimicos.entrego', '=', 'e.id')
             ->join('empleados as emp', 'salidasagroquimicos.recibio', '=', 'emp.id')
             ->select('salidasagroquimicos.id', 'almacenagroquimicos.nombre', 'salidasagroquimicos.cantidad','almacenagroquimicos.medida', 'salidasagroquimicos.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasagroquimicos.tipo_movimiento','salidasagroquimicos.fecha')
+            ->where('salidasagroquimicos.estado', 'Activo')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);

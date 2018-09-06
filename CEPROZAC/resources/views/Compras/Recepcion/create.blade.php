@@ -1,5 +1,12 @@
 @extends('layouts.principal')
 @section('contenido')
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  </head>
 <style type="text/css">
   .lbldetalle{
     color:#2196F3;
@@ -10,7 +17,6 @@
     margin-top: 30px;
   }
 </style>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Recepción de Compra</h1>
@@ -441,14 +447,14 @@
   <div class="form-group">
     <label class="col-sm-3 control-label">Espacio Ocupado: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="ocupado" id="ocupado" type="text"   onchange="mayus(this);"  class="form-control" required value="" readonly/>
+      <input name="ocupado" id="ocupado" type="text"   onchange="mayus(this);"  class="form-control"  value="" readonly/>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-3 control-label">Espacio Libre: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="libre" id="libre" type="text"   onchange="mayus(this);"  class="form-control" required value="" readonly/>
+      <input name="libre" id="libre" type="text"   onchange="mayus(this);"  class="form-control"  value="" readonly/>
     </div>
   </div>
 

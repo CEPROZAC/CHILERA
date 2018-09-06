@@ -34,8 +34,6 @@ class almacenempaquecontroller extends Controller
     public function index()
     {
              $material = DB::table('almacenempaque')
-     ->join('provedor_materiales as p', 'almacenempaque.provedor', '=', 'p.id')
-     ->select('almacenempaque.*','p.nombre as provedor')
      ->where('almacenempaque.estado','Activo')->get();
      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
      $empleado = DB::table('empleados')->where('estado','Activo')->get();
