@@ -346,7 +346,6 @@ return $pdf->stream('invoice');
             ->join('empresas_ceprozac as e', 'entradasalmacenlimpieza.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasalmacenlimpieza.provedor', '=', 'prov.id')
             ->select('entradasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'entradasalmacenlimpieza.cantidad','almacenlimpieza.medida','prov.nombre as prov', 'entradasalmacenlimpieza.factura','entradasalmacenlimpieza.p_unitario','entradasalmacenlimpieza.iva','entradasalmacenlimpieza.total','entradasalmacenlimpieza.moneda','e.nombre as emp','entradasalmacenlimpieza.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradasalmacenlimpieza.observacionesc')
-            ->where('entradasalmacenlimpieza.estado', 'Activo')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N°Compra','Material','Cantidad','Medida' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);

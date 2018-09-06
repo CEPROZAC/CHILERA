@@ -246,7 +246,6 @@ class salidaalmacenmaterialController extends Controller
             ->join('empleados as e', 'salidasalmacenmaterial.entrego', '=', 'e.id')
             ->join('empleados as emp', 'salidasalmacenmaterial.recibio', '=', 'emp.id')
             ->select('salidasalmacenmaterial.id', 'almacenmateriales.nombre', 'salidasalmacenmaterial.cantidad','almacenmateriales.medida','almacenmateriales.ubicacion', 'salidasalmacenmaterial.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasalmacenmaterial.tipo_movimiento','salidasalmacenmaterial.fecha')
-            ->where('salidasalmacenmaterial.estado', 'Activo')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Ubicación','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);

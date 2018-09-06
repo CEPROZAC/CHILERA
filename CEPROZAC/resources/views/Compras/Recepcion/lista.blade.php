@@ -28,8 +28,8 @@
                 <div class="btn-group" style="margin-right: 10px;">
                   <a class="btn btn-sm btn-success tooltips" href="{{URL::action('RecepcionCompraController@create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Compra  "> <i class="fa fa-plus"></i> Registrar </a>
 
-                  <a class="btn btn-sm btn-danger tooltips" href="{{url('/compras/recepcion')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
- 
+                  <a class="btn btn-sm btn-danger tooltips" href="/compras/recepcion" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
+
                    <a class="btn btn-sm btn btn-info" href="{{URL::action('RecepcionCompraController@invoice',$compra->id)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Etiquetas</a>
 
                 </div> 
