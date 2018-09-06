@@ -56,6 +56,7 @@
                 <select name="calidad" id="selectCalidad" class="form-control" required onchange="calcularCalidad();">
                  @foreach($calidades as $calidades)
                  <option value="{{$calidades->id}}">
+               
                   {{$calidades->nombre}}
                 </option>
                 @endforeach

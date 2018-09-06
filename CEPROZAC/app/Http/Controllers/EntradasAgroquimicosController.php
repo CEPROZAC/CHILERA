@@ -360,7 +360,6 @@ return $pdf->stream('invoice');
             ->join('empresas_ceprozac as e', 'entradasagroquimicos.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasagroquimicos.provedor', '=', 'prov.id')
             ->select('entradasagroquimicos.id', 'almacenagroquimicos.nombre', 'entradasagroquimicos.cantidad','almacenagroquimicos.medida','prov.nombre as prov', 'entradasagroquimicos.factura','entradasagroquimicos.p_unitario','entradasagroquimicos.iva','entradasagroquimicos.ieps','entradasagroquimicos.total','entradasagroquimicos.moneda','e.nombre as emp','entradasagroquimicos.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradasagroquimicos.observacionesc')
-            ->where('entradasagroquimicos.estado', 'Activo')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N°Compra','Material','Cantidad','Medida' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','IEPS','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);

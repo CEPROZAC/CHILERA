@@ -67,18 +67,17 @@ class ProductosController extends Controller
         $provedor =Provedor::findOrFail($request->get("idProvedor"));
         $apellido = $provedor->apellidos;
         $nombre = $provedor->nombre;
-        $silaboNombre = $this->calcularSilaboNombre($nombre,$apellido);
+      //  $silaboNombre = $this->calcularSilaboNombre($nombre,$apellido);
         
-        $silaboProducto= $this->calcularSilaboProducto($request->get("nombre"));
-
+       // $silaboProducto= $this->calcularSilaboProducto($request->get("nombre"));
 
         $producto->clave_del_Producto="XXXXXX";
         $producto->nombre=$request->get('nombre');
-        $producto->calidad=$request->get('calidad');
+        $producto->calidad=1;
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
         $producto->idFormatoEmpaque=$request->get('idFormatoEmpaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
-        $producto->clave_del_Producto="ere44";
+       // $producto->clave_del_Producto="ere44";
         $producto->idProvedor =$request->get("idProvedor"); 
         if(Input::hasFile('imagen'))
         {
