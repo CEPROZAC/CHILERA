@@ -39,17 +39,17 @@
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required  placeholder="Ingrese nombre de proveedor" maxlength="80" parsley-rangelength="[1,70]"      >
+                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required  placeholder="Ingrese nombre de proveedor" id="nombre" maxlength="80" parsley-rangelength="[1,70]"      >
                 <span id="errorNombre" style="color:#FF0000;"></span>
 
               </div>
             </div>
 
             <div class="form-group">
-            <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="apellidos" type="text"  onchange="mayus(this);validarProvedor();"  class="form-control" onkeypress=" return soloLetras(event);" required  id="nombre" placeholder="Ingrese nombre de proveedor" maxlength="80" parsley-rangelength="[1,70]"      >
+                <input name="apellidos" type="text"  onchange="mayus(this);validarProvedor();"  class="form-control" onkeypress=" return soloLetras(event);" required  id="apellidos" placeholder="Ingrese nombre de proveedor" maxlength="80" parsley-rangelength="[1,70]"      >
                 <span id="errorNombre" style="color:#FF0000;"></span>
 
               </div>

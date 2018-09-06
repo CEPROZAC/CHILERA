@@ -69,21 +69,11 @@ class ProductosController extends Controller
         $nombre = $provedor->nombre;
         $silaboNombre = $this->calcularSilaboNombre($nombre,$apellido);
         
-
-
-
-       // echo $silaboNombre.$apellido;
         $silaboProducto= $this->calcularSilaboProducto($request->get("nombre"));
-        echo $silaboProducto;
 
 
-
-
-
-
-
-
-       /* $producto->nombre=$request->get('nombre');
+        $producto->clave_del_Producto="XXXXXX";
+        $producto->nombre=$request->get('nombre');
         $producto->calidad=$request->get('calidad');
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
         $producto->idFormatoEmpaque=$request->get('idFormatoEmpaque');
@@ -98,7 +88,7 @@ class ProductosController extends Controller
         } 
         $producto->estado='Activo';
         $producto->save();
-        return Redirect::to('productos'); */
+        return Redirect::to('productos'); 
     }
 
 
