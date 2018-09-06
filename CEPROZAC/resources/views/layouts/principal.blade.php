@@ -163,8 +163,6 @@
 
 
 
-
-
                @if(str_contains(Route::getCurrentRoute()->getName(),'clientes'))
                <li class="left_nav_active theme_border"> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> Clientes<span class="plus"><i class="fa fa-plus"></i></span> </a>
 
@@ -185,159 +183,200 @@
 
 
 
-
-
-
-                
-
-
-
                 @if(str_contains(Route::getCurrentRoute()->getName(),['productos','calidad','empaques']))
                 <li class="left_nav_active theme_border"> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Productos <span class="plus"><i class="fa fa-plus"></i></span></a>
                   <ul class="opened" style="display: block;">
                     @else
-                    <li><a href="javascript:void(0);"><i class="fa fa-tasks">Productos</i><span class="plus"><i class="fa-plus"></i></span></a> 
+                    <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Productos<span class="plus"><i class="fa fa-plus"></i></span> </a>
                       <ul>
                         @endif
-                        <li> <a href="{{url('productos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Productos</b> </a> </li>
-                        <li> <a href="{{url('calidad')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Calidad</b> </a> </li>
-                        <li> <a href="{{url('empaques')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empaques</b> </a> </li>
-                      </ul>
-                    </li>
+                        <li> <a href="{{url('productos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
+                          @if(Route::getCurrentRoute()->getName()=="productos.index") 
+                          <b class="theme_color">Productos</b> </a>
+                          @else
+                          <b >Productos</b></a>
+
+                          @endif
+                        </li>
+
+
+                        <li> <a href="{{url('calidad')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
+                          @if(Route::getCurrentRoute()->getName()=="calidad.index") 
+                          <b class="theme_color">Calidad</b> </a> 
+                          @else
+                          <b>Calidad</b> </a> 
+                          @endif
+                        </li>
+
+                        <li> <a href="{{url('empaques')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
+                         @if(Route::getCurrentRoute()->getName()=="empaques.index")
+                         <b class="theme_color">Empaques</b> </a> 
+                         @else
+                         <b>Empaques</b> </a> 
+                         @endif
+                       </li>
+                     </ul>
+                   </li>
+
+                   @if(str_contains(Route::getCurrentRoute()->getName(),['empleados','rol','contratos']))
+                   <li class="left_nav_active theme_border"> <a href="javascript:void(0);"> <i class="fa fa-users"></i> Recursos Humanos <span class="plus"><i class="fa fa-plus"></i></span></a>
+                    <ul class="opened" style="display: block;">
+                      @else
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Recursos Humanos<span class="plus"><i class="fa fa-plus"></i></span> </a>
+                        <ul>
+                          @endif
+                          <li> <a href="{{url('empleados')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
+                            @if(Route::getCurrentRoute()->getName()=="empleados.index")
+                            <b class="theme_color">Empleados</b></a>
+                            @else
+                            <b >Empleados</b></a>
+                            @endif
+
+                          </li>
+
+
+                          <li> <a href="{{url('rol')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
+                            @if(Route::getCurrentRoute()->getName()=="roles.index")
+                            <b class="theme_color">Roles Empleados</b> </a> 
+                            @else
+                            <b>Roles Empleados</b> </a> 
+                            @endif
+                          </li>
+
+                          <li> <a href="{{url('contratos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
+                           @if(Route::getCurrentRoute()->getName()=="contratos.index")
+                           <b class="theme_color">Contratos</b> </a> </li>
+                           @else
+                           <b>Contratos</b> </a> </li>
+                           @endif
+                         </ul>
+                       </li>
+
+
+
+                       <li> <a href="javascript:void(0);"> <i class="fa fa-truck icon"></i> Transporte <span class="plus"><i class="fa fa-plus"></i></span> </a>
+                        <ul>
+                          <li> <a href="{{url('transportes')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Vehículos</b> </a> </li>
+                          <li> <a href="{{url('mantenimiento')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Mantenimientos</b> </a> </li>
+
+
+                        </ul>
+                      </li>
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Empresas <span class="plus"><i class="fa fa-plus"></i></span> </a>
+                        <ul>
+                          <li> <a href="{{url('empresasCEPROZAC')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empresas</b> </a> </li>
+                        </ul>
+                      </li>
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
+                        <ul>
+                          <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Agroquímicos</b> </a> </li>
+                          <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Limpieza</b> </a> </li>
+                          <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materiales</b> </a> </li>
 
 
 
 
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-users"></i> Recursos Humanos <span class="plus"><i class="fa fa-plus"></i></span></a>
-                      <ul>
-                        <li> <a href="{{url('empleados')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empleados</b> </a> </li>
-                        <li> <a href="{{url('rol')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Roles Empleados</b> </a> </li>
-                        <li> <a href="{{url('contratos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Contratos</b> </a> </li>
-                      </ul>
-                    </li>
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-truck icon"></i> Transporte <span class="plus"><i class="fa fa-plus"></i></span> </a>
-                      <ul>
-                        <li> <a href="{{url('transportes')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Vehículos</b> </a> </li>
-                        <li> <a href="{{url('mantenimiento')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Mantenimientos</b> </a> </li>
-
-
-                      </ul>
-                    </li>
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Empresas <span class="plus"><i class="fa fa-plus"></i></span> </a>
-                      <ul>
-                        <li> <a href="{{url('empresasCEPROZAC')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empresas</b> </a> </li>
-                      </ul>
-                    </li>
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Almacénes <span class="plus"><i class="fa fa-plus"></i></span></a>
-                      <ul>
-                        <li> <a href="{{url('almacenes/agroquimicos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Agroquímicos</b> </a> </li>
-                        <li> <a href="{{url('almacenes/limpieza')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Limpieza</b> </a> </li>
-                        <li> <a href="{{url('almacen/materiales')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materiales</b> </a> </li>
+                          <li> <a href="{{url('almacenes/empaque')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empaque</b> </a> </li>
+                          <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Generales</b> </a> </li>
 
 
 
 
-                        <li> <a href="{{url('almacenes/empaque')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Empaque</b> </a> </li>
-                        <li> <a href="{{url('almacen/general')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Generales</b> </a> </li>
+                        </ul>
+                      </li>
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Basculas <span class="plus"><i class="fa fa-plus"></i></span></a>
+                        <ul>
+                          <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
+                          <li> <a href="{{url('precioBasculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Precio Pesaje</b> </a> </li>
+                          <li> <a href="{{url('serviciosBascula')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Servicio de Bascula</b> </a> </li>
+
+                        </ul>
+                      </li>
 
 
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Bitacoras <span class="plus"><i class="fa fa-plus"></i></span></a>
+                        <ul>
+                          <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
+
+                        </ul>
+                      </li>
+
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Compras <span class="plus"><i class="fa fa-plus"></i></span> </a>
+                        <ul>
+                          <li> <a href="{{url('compras/recepcion/')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materia Prima</b> </a> </li>
+                        </ul>
+                      </li>
+
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Fumigaciones <span class="plus"><i class="fa fa-plus"></i></span> </a>
+                        <ul>
+                          <li> <a href="{{url('fumigaciones')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Fumigaciones</b> </a> </li>
+                        </ul>
+                      </li>
 
 
-                      </ul>
-                    </li>
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Basculas <span class="plus"><i class="fa fa-plus"></i></span></a>
-                      <ul>
-                        <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
-                        <li> <a href="{{url('precioBasculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Precio Pesaje</b> </a> </li>
-                        <li> <a href="{{url('serviciosBascula')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Servicio de Bascula</b> </a> </li>
-
-                      </ul>
-                    </li>
-
-
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Bitacoras <span class="plus"><i class="fa fa-plus"></i></span></a>
-                      <ul>
-                        <li> <a href="{{url('basculas')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Basculas</b> </a> </li>
-
-                      </ul>
-                    </li>
-
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Compras <span class="plus"><i class="fa fa-plus"></i></span> </a>
-                      <ul>
-                        <li> <a href="{{url('compras/recepcion/')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Materia Prima</b> </a> </li>
-                      </ul>
-                    </li>
-
-                    <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Fumigaciones <span class="plus"><i class="fa fa-plus"></i></span> </a>
-                      <ul>
-                        <li> <a href="{{url('fumigaciones')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Fumigaciones</b> </a> </li>
-                      </ul>
-                    </li>
-
-
-                  </ul>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <!--\\\\\\\left_nav end \\\\\\-->
-              <div class="contentpanel">
+                <!--\\\\\\\left_nav end \\\\\\-->
+                <div class="contentpanel">
 
-                @yield('contenido')
+                  @yield('contenido')
 
-                <div class="row col-md-6 col-md-offset-3"  style="height: 1000px;" >
+                  <div class="row col-md-6 col-md-offset-3"  style="height: 1000px;" >
 
+                  </div>
+
+                  <!--\\\\\\\ container  end \\\\\\-->
                 </div>
 
-                <!--\\\\\\\ container  end \\\\\\-->
+
+
+                <!--\\\\\\\ content panel end \\\\\\-->
               </div>
-
-
-
-              <!--\\\\\\\ content panel end \\\\\\-->
+              <!--\\\\\\\ inner end\\\\\\-->
             </div>
-            <!--\\\\\\\ inner end\\\\\\-->
-          </div>
 
-          {!!Html::script('js/jquery-2.1.0.js')!!}
-          {!!Html::script('js/script.js')!!}
-          {!!Html::script('js/moment.min.js')!!}
-          {!!Html::script('js/jquery-2.1.0.js')!!}
-          {!!Html::script('js/bootstrap.min.js')!!}
-          {!!Html::script('js/common-script.js')!!}
-          {!!Html::script('js/jquery.slimscroll.min.js')!!}
-          {!!Html::script('plugins/toggle-switch/toggles.min.js')!!} 
-          {!!Html::script('plugins/checkbox/zepto.js')!!}
-          {!!Html::script('plugins/checkbox/icheck.js')!!}
-          {!!Html::script('js/icheck-init.js')!!}
-          {!!Html::script('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')!!} 
-          {!!Html::script('plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')!!} 
-          {!!Html::script('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')!!} 
-          {!!Html::script('plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')!!} 
-          {!!Html::script('js/form-components.js')!!} 
-          {!!Html::script('plugins/input-mask/jquery.inputmask.min.js')!!} 
-          {!!Html::script('plugins/input-mask/demo-mask.js')!!} 
-          {!!Html::script('plugins/bootstrap-fileupload/bootstrap-fileupload.min.js')!!} 
-          {!!Html::script('plugins/dropzone/dropzone.min.js')!!} 
-          {!!Html::script('plugins/ckeditor/ckeditor.js')!!}
-          {!!Html::script('js/jPushMenu.js')!!} 
-          {!!Html::script('plugins/validation/parsley.min.js')!!}
-          {!!Html::script('plugins/data-tables/jquery.dataTables.js')!!}
-          {!!Html::script('plugins/data-tables/DT_bootstrap.js')!!}
-          {!!Html::script('plugins/data-tables/dynamic_table_init.js')!!}
-          {!!Html::script('plugins/edit-table/edit-table.js')!!}
-          {!!Html::script('plugins/file-uploader/js/vendor/jquery.ui.widget.js')!!}
-          {!!Html::script('plugins/file-uploader/js/jquery.iframe-transport.js')!!}
-          {!!Html::script('plugins/file-uploader/js/jquery.fileupload.js')!!}
-          {!!Html::script('plugins/validation/parsley.min.js')!!}
-          {!!Html::script('plugins/select2/dist/js/select2.full.min.js')!!}
-          <!-- Include SmartWizard JavaScript source -->
-          {!!Html::script('plugins/wizard/js/jquery.smartWizard.js')!!}
-          <!-- Include jQuery Validator plugin -->
-          {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js')!!}
+            {!!Html::script('js/jquery-2.1.0.js')!!}
+            {!!Html::script('js/script.js')!!}
+            {!!Html::script('js/moment.min.js')!!}
+            {!!Html::script('js/jquery-2.1.0.js')!!}
+            {!!Html::script('js/bootstrap.min.js')!!}
+            {!!Html::script('js/common-script.js')!!}
+            {!!Html::script('js/jquery.slimscroll.min.js')!!}
+            {!!Html::script('plugins/toggle-switch/toggles.min.js')!!} 
+            {!!Html::script('plugins/checkbox/zepto.js')!!}
+            {!!Html::script('plugins/checkbox/icheck.js')!!}
+            {!!Html::script('js/icheck-init.js')!!}
+            {!!Html::script('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')!!} 
+            {!!Html::script('plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')!!} 
+            {!!Html::script('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')!!} 
+            {!!Html::script('plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')!!} 
+            {!!Html::script('js/form-components.js')!!} 
+            {!!Html::script('plugins/input-mask/jquery.inputmask.min.js')!!} 
+            {!!Html::script('plugins/input-mask/demo-mask.js')!!} 
+            {!!Html::script('plugins/bootstrap-fileupload/bootstrap-fileupload.min.js')!!} 
+            {!!Html::script('plugins/dropzone/dropzone.min.js')!!} 
+            {!!Html::script('plugins/ckeditor/ckeditor.js')!!}
+            {!!Html::script('js/jPushMenu.js')!!} 
+            {!!Html::script('plugins/validation/parsley.min.js')!!}
+            {!!Html::script('plugins/data-tables/jquery.dataTables.js')!!}
+            {!!Html::script('plugins/data-tables/DT_bootstrap.js')!!}
+            {!!Html::script('plugins/data-tables/dynamic_table_init.js')!!}
+            {!!Html::script('plugins/edit-table/edit-table.js')!!}
+            {!!Html::script('plugins/file-uploader/js/vendor/jquery.ui.widget.js')!!}
+            {!!Html::script('plugins/file-uploader/js/jquery.iframe-transport.js')!!}
+            {!!Html::script('plugins/file-uploader/js/jquery.fileupload.js')!!}
+            {!!Html::script('plugins/validation/parsley.min.js')!!}
+            {!!Html::script('plugins/select2/dist/js/select2.full.min.js')!!}
+            <!-- Include SmartWizard JavaScript source -->
+            {!!Html::script('plugins/wizard/js/jquery.smartWizard.js')!!}
+            <!-- Include jQuery Validator plugin -->
+            {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js')!!}
 
 
-          {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js')!!}
-          <script type="text/javascript">
-           $(document).on('ready', function()  {
+            {!!Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js')!!}
+            <script type="text/javascript">
+             $(document).on('ready', function()  {
 
           //Initialize Select2 Elements
           $('.select2').select2()

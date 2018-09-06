@@ -109,7 +109,7 @@
          @foreach($proveedor as $provedor)
 
          <option value="{{$provedor->id}}">
-      
+          
            {{$provedor->nombre}} {{$provedor->apellidos}}
 
          </option>
@@ -128,7 +128,7 @@
    </div>
  </div>
 
- <input hidden name="calidad" id="calidad">
+ <input hidden name="nombrecalidad" id="calidad">
 
 
  

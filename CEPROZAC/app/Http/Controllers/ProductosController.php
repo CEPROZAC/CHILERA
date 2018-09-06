@@ -78,7 +78,7 @@ class ProductosController extends Controller
         $producto->unidad_de_Medida=$request->get('unidad_de_Medida');
         $producto->idFormatoEmpaque=$request->get('idFormatoEmpaque');
         $producto->porcentaje_Humedad=$request->get('porcentaje_Humedad');
-        $producto->clave_del_Producto="ere44";
+  
         $producto->idProvedor =$request->get("idProvedor"); 
         if(Input::hasFile('imagen'))
         {
