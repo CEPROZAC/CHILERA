@@ -352,6 +352,7 @@ return Redirect::to('almacen/entradas/materiales');
             ->join('empresas_ceprozac as e', 'entradaalmacenmateriales.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradaalmacenmateriales.provedor', '=', 'prov.id')
             ->select('entradaalmacenmateriales.id', 'almacenmateriales.nombre', 'entradaalmacenmateriales.cantidad','almacenmateriales.medida','prov.nombre as prov', 'entradaalmacenmateriales.nota_venta','entradaalmacenmateriales.p_unitario','entradaalmacenmateriales.iva','entradaalmacenmateriales.total','entradaalmacenmateriales.moneda','e.nombre as emp','entradaalmacenmateriales.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradaalmacenmateriales.observacionesc')
+            ->where('entradaalmacenmateriales.estado', 'Activo')
             ->get();       
             $sheet->fromArray($salidas);
             $sheet->row(1,['N°Compra','Material','Cantidad','Medida' ,'Proveedor','Numero de Nota ó Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);
