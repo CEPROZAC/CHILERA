@@ -86,7 +86,16 @@ table, th, td {
                 <tr class="gradeA">
                   <td style="background-color: #FFE4E1;">{{$materiales->id}} </td>
                   <td style="background-color: #FFE4E1;">{{$materiales->nombre}} </td>
-                  <td style="background-color: #FFE4E1;">{{$materiales->provedor}} </td>
+                  @foreach ($provedor as $prove)
+                  @if ($materiales->provedor == $prove->id)
+
+                  <td style="background-color: #FFE4E1;">{{$prove->nombre}} </td>
+                  @endif
+                  @endforeach
+                    @if($materiales->provedor == "")
+                   <td style="background-color: #FFE4E1;">No Existe Proveedor Asignado   </td>
+
+                   @endif
                                                       @if (($materiales->codigo)!="")
                   <td style="background-color: #FFE4E1;"><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
                     <div style="text-align:center;" >
@@ -124,7 +133,16 @@ table, th, td {
                               <tr class="gradeA">
                   <td>{{$materiales->id}} </td>
                   <td>{{$materiales->nombre}} </td>
-                  <td>{{$materiales->provedor}} </td>
+                                    @foreach ($provedor as $prove)
+                  @if ($materiales->provedor == $prove->id)
+
+                  <td>{{$prove->nombre}} </td>
+                  @endif
+                  @endforeach
+                    @if($materiales->provedor == "")
+                   <td>No Existe Proveedor Asignado   </td>
+
+                   @endif
                                                       @if (($materiales->codigo)!="")
                   <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
                     <div style="text-align:center;" >

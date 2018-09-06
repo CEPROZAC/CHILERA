@@ -108,7 +108,7 @@
  <div class="help-block with-errors"></div>
 </div>
 </div><!--/form-group-->
-
+ 
 <div class="form-group">
  <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
  <div class="col-sm-6">
