@@ -45,7 +45,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Bancos: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6"> 
-              <input name="nombre" id="nombre" type="text"  onchange="mayus(this);" onblur="validarBanco();" class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$bancos->nombre}}" placeholder="Ingrese nombre de el Banco"/>
+              <input name="nombre" id="nombre" type="text"  onchange="mayus(this);quitarEspacios(this);" onblur="validarBanco();" class="form-control" maxlength="30" parsley-rangelength="[1,50]"  required value="{{$bancos->nombre}}" placeholder="Ingrese nombre de el Banco"/>
               <span id="errorNombre" style="color:#FF0000;"></span>
             </div>
           </div>

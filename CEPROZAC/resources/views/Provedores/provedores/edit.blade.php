@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{url('provedores', [$provedores->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate onsubmit="return validarFormularioProvedor()">
+          <form action="{{url('provedores', [$provedores->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate >
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT" />
 
@@ -40,7 +40,7 @@
               <input name="nombreOculto" id="oculto" value="{{$provedores->nombre}}" hidden  />
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"   onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->nombre}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
+                <input name="nombre" type="text"   onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->nombre}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
                 <span id="errorNombre" style="color:#FF0000;"></span>
               </div>
             </div>
@@ -49,7 +49,7 @@
               <input name="apellidoOculto" id="oculto" value="{{$provedores->apellidos}}" hidden  />
               <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="apellidos" type="text" id="nombre"  onchange="mayus(this);" onblur="validarProvedor();"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->apellidos}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
+                <input name="apellidos" type="text" id="apellidos"  onchange="mayus(this); quitarEspacios(this);" onblur="validarProvedor();"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->apellidos}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
                 <span id="errorNombre" style="color:#FF0000;"></span>
               </div>
             </div>
@@ -66,7 +66,7 @@
               <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{ $provedores->direccion}}" splaceholder="Ingrese Direccion de la empresa" maxlength="150" parsley-rangelength="[1,150]" />
+                <input name="direccion" type="text"  onchange="mayus(this);quitarEspacios(this);"  class="form-control" required value="{{ $provedores->direccion}}" splaceholder="Ingrese Direccion de la empresa" maxlength="150" parsley-rangelength="[1,150]" />
               </div>
             </div>
 

@@ -72,7 +72,7 @@
                           <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                            <input name="nombre" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->nombre}}" placeholder="Ingrese nombre de el Empleado"/>
+                            <input name="nombre" type="text"  maxlength="35" onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->nombre}}" placeholder="Ingrese nombre de el Empleado"/>
                           </div>
                         </div>
 
@@ -80,7 +80,7 @@
                           <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                            <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->apellidos}}" placeholder="Ingrese nombre de el Cliente"/>
+                            <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->apellidos}}" placeholder="Ingrese nombre de el Cliente"/>
                           </div>
                         </div>
                         <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  value="{{$empleado->fecha_Nacimiento}}" />
@@ -101,7 +101,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Domicilio: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
-                            <input type="text" onchange="mayus(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask"  value="{{$empleado->domicilio}}" >
+                            <input type="text" onchange="mayus(this);quitarEspacios(this);" name="domicilio" placeholder="Ingrese el domicilio" name="domicilio" required class="form-control mask"  value="{{$empleado->domicilio}}" >
                           </div>
                         </div>
 
@@ -128,7 +128,7 @@
                           <label class="col-sm-3 control-label">Fecha Ingreso: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                            <input name="fecha_Ingreso" value="{{$empleado->fecha_Ingreso}}" required type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+                            <input name="fecha_Ingreso" value="{{$empleado->fecha_Ingreso}}" required type="text" class="form-control mask" data-inputmask="'alias': 'date'" parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
                           </div>
                         </div>
 
@@ -136,7 +136,7 @@
                           <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                            <input type="text" name="fecha_Alta_Seguro"   value="{{$empleado->fecha_Alta_Seguro}}" required class="form-control mask" data-inputmask="'alias': 'date'">
+                            <input type="text" name="fecha_Alta_Seguro"   value="{{$empleado->fecha_Alta_Seguro}}" required class="form-control mask" data-inputmask="'alias': 'date'" parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
                           </div>
                         </div>
 
@@ -192,7 +192,7 @@
                       <label class="col-sm-3 control-label">Fecha Inicio: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
 
-                        <input name="fechaInicio" value="{{$contrato->fechaInicio}}"  id="fechaInicio"   type="text" required class="form-control mask" data-inputmask="'alias': 'date'">
+                        <input name="fechaInicio" value="{{$contrato->fechaInicio}}"  id="fechaInicio"   type="text" required class="form-control mask" data-inputmask="'alias': 'date'" parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
                       </div>
                     </div>
 
@@ -200,7 +200,7 @@
                       <label class="col-sm-3 control-label">Fecha Fin: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-6">
 
-                        <input name="fechaFin" id="fechaFin"  value="{{$contrato->fechaFin}}"  type="text" onblur="validarFecha2();validarFechas();" required class="form-control mask" data-inputmask="'alias': 'date'">
+                        <input name="fechaFin" id="fechaFin"  value="{{$contrato->fechaFin}}"  type="text" onblur="validarFecha2();validarFechas();" required class="form-control mask" data-inputmask="'alias': 'date'" parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
                       </div>
                     </div>
                     <input type="hidden" name="duracionContrato" id="duracionContrato" value="{{$contrato->duracionContrato}}" />    

@@ -40,7 +40,7 @@
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="nombre_Unidad" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$vehiculo->nombre_Unidad}}" placeholder="Ingrese numero de serie de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
+                <input name="nombre_Unidad" type="text"  onchange="mayus(this);quitarEspacios(this);"  class="form-control" required value="{{$vehiculo->nombre_Unidad}}" placeholder="Ingrese numero de serie de Vehículo" maxlength="35" parsley-rangelength="[1,35]"/>
 
               </div>
             </div>
@@ -80,7 +80,7 @@
               <label class="col-sm-3 control-label">Vigencia Seguro: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="vigencia_Seguro" value ="{{$vehiculo->vigencia_Seguro}}" type="text" class="form-control mask" data-inputmask="'alias': 'date'">
+                <input name="vigencia_Seguro" value ="{{$vehiculo->vigencia_Seguro}}" type="text" class="form-control mask" data-inputmask="'alias': 'date'"  parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
               </div>
             </div>
 

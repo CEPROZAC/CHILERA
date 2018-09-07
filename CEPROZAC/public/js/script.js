@@ -334,9 +334,28 @@ function doSearch()
     function  validarProvedor(){
 
      var nombre =document.getElementById('nombre').value;
-     var oculto =document.getElementById('oculto').value;
+     var apellidos =document.getElementById('apellidos').value;
+     var ocultoNombre =document.getElementById('ocultoNombre').value;
+     var ocultoApellidos = document.getElementById('ocultoApellidos').value;
+     var oculto = ocultoNombre +ocultoApellidos;
 
-     var route = "http://localhost:8000/validarProvedor/"+nombre;
+
+
+     nombre = nombre.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
+
+     alert(nombre);
+
+     
+     apellidos = apellidos.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
+
+     alert(apellidos);
+
+
+
+
+     var route = "http://localhost:8000/validarProvedor/"+nombre + "/" +apellidos;
+
+
 
      $.get(route,function(res){
       if(res.length > 0  &&  res[0].estado =="Inactivo"){
@@ -346,13 +365,17 @@ function doSearch()
        $("#modal-reactivar").modal();
 
      } 
-     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].nombre != oculto )  {
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && (res[0].nombre +" " +res[0].apellidos) != oculto )  {
+
+
 
       document.getElementById("errorNombre").innerHTML = "El proveedor intenta registrar ya existe en el sistema";
       document.getElementById('submit').disabled=true;
 
     }
     else {
+
+      alert("entre en else");
       document.getElementById("errorNombre").innerHTML = "";
       document.getElementById('submit').disabled=false;
 
@@ -1124,6 +1147,13 @@ function  validarprovmat(){
 
 
 
-    document.getElementById("calidad").value = x;
+     document.getElementById("calidad").value = x;
 
    }
+
+
+   function quitarEspacios(e) {
+    e.value = e.value.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
+  }
+
+

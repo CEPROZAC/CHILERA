@@ -39,14 +39,14 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"  onchange="mayus(this);"  class="form-control" maxlength="200" parsley-rangelength="[1,200]"  required value="{{$empresas->nombre}}" placeholder="Ingrese nombre de la empresa"/>
+                <input name="nombre" type="text"  onchange="mayus(this);quitarEspacios(this);"  class="form-control" maxlength="200" parsley-rangelength="[1,200]"  required value="{{$empresas->nombre}}" placeholder="Ingrese nombre de la empresa"/>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="rfc" type="text"  onchange="mayus(this);" onblur="validarEmpresa();" class="form-control" maxlength="13" id="RFC" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="{{$empresas->rfc}}" placeholder="Ingrese RFC de la empresa"/>
+                <input name="rfc" type="text"  onchange="mayus(this);quitarEspacios(this);" onblur="validarEmpresa();" class="form-control" maxlength="13" id="RFC" type="text" required parsley-regexp="([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"   required parsley-rangelength="[12,13]"  onkeyup="mayus(this);"   required value="{{$empresas->rfc}}" placeholder="Ingrese RFC de la empresa"/>
 
                 <span id="errorRFC" style="color:#FF0000;"></span>
               </div>
@@ -86,7 +86,7 @@
             <label class="col-sm-3 control-label">Direccion: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
 
-              <input name="direccion" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$empresas->direccion}}" placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
+              <input name="direccion" type="text"  onchange="mayus(this);quitarEspacios(this);"  class="form-control" required value="{{$empresas->direccion}}" placeholder="Ingrese Direccion de la empresa" maxlength="200" parsley-rangelength="[1,200]"/>
             </div>
           </div>
 

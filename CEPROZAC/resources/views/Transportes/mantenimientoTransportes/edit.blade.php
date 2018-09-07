@@ -60,7 +60,7 @@
           <label class="col-sm-3 control-label">Concepto: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
 
-            <input name="concepto" value="{{$mantenimiento->concepto}}" type="text"  onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese concepto de el Mantenimiento" maxlength="35" parsley-rangelength="[1,35]"/>
+            <input name="concepto" value="{{$mantenimiento->concepto}}" type="text"  onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese concepto de el Mantenimiento" maxlength="35" parsley-rangelength="[1,35]"/>
 
           </div>
         </div>
@@ -68,7 +68,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Descripción</label>
           <div class="col-sm-6">
-            <textarea name= "descripcion"  onchange="mayus(this);"  class="form-control" maxlength="300" rows="3" resize="none" placeholder="Ejemplo: Cambio de puntas de inyección d‑ Revisión de candelas de precalentamiento..">{{$mantenimiento->descripcion}}</textarea>
+            <textarea name= "descripcion"  onchange="mayus(this);quitarEspacios(this);"  class="form-control" maxlength="300" rows="3" resize="none" placeholder="Ejemplo: Cambio de puntas de inyección d‑ Revisión de candelas de precalentamiento..">{{$mantenimiento->descripcion}}</textarea>
           </div>
         </div>
 
@@ -76,7 +76,7 @@
           <label class="col-sm-3 control-label">Fecha: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
 
-           <input name="fecha" type="text" placeholder="dd-mm-aaaa" value="{{$mantenimiento->fecha}}" data-mask="00-00-0000" class="form-control mask" >
+           <input name="fecha" type="text" placeholder="dd-mm-aaaa" value="{{$mantenimiento->fecha}}" data-mask="00-00-0000" class="form-control mask" parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
          </div>
        </div>
 

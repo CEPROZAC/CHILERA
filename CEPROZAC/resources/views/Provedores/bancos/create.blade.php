@@ -43,7 +43,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Bancos: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6"> 
-                <input name="nombre" type="text"  onchange="mayus(this);validarBanco();"  class="form-control" maxlength="30" parsley-rangelength="[1,50]" id="nombre"  required value="" placeholder="Ingrese nombre de el Banco"/>
+                <input name="nombre" type="text"  onchange="mayus(this);validarBanco();quitarEspacios(this);"  class="form-control" maxlength="30" parsley-rangelength="[1,50]" id="nombre"  required value="" placeholder="Ingrese nombre de el Banco"/>
 
                 <span id="errorNombre" style="color:#FF0000;"></span>
               </div>

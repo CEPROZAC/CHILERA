@@ -225,7 +225,7 @@ Route::get('validarPlacas/{placas}', 'TransporteController@validarPlacas');
 
 //Validacion de Provedores
 
-Route::get('validarProvedor/{nombre}', 'ProvedorController@validarNombre');
+Route::get('validarProvedor/{nombre}/{apellidos}', 'ProvedorController@validarNombre');
 
 Route::post("activarProvedor", "ProvedorController@activar");
 

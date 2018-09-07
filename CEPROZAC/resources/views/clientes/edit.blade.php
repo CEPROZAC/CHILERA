@@ -36,10 +36,10 @@
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
 
-             <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"  maxlength="30" onchange="mayus(this);"  class="form-control"  value="{{$clientes->nombre}}"  onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
+                <input name="nombre" type="text"  maxlength="30" onchange="mayus(this);quitarEspacios(this);"  class="form-control"  value="{{$clientes->nombre}}"  onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el Cliente"/>
               </div>
             </div>
 
@@ -51,109 +51,109 @@
               </div>
             </div>
 
-    <div class="form-group">
+            <div class="form-group">
               <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
-               <div class="col-sm-6">
-                 <select name="fiscal" value="">
+              <div class="col-sm-6">
+               <select name="fiscal" value="">
                  @if($clientes->fiscal=="Fisica")
                  <option value='Fisica' selected>Fisica</option>
                  <option value="Moral">Moral</option>
                  @else
                  <option value='Moral' selected>Moral</option>
-                   <option value="Fisica">Fisica</option>
+                 <option value="Fisica">Fisica</option>
                  @endif
-                 </select>
-                 
-               </div>
+               </select>
+               
              </div>
+           </div>
 
 
 
-                   <div class="form-group">
-              <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="telefono" type="text" placeholder="Ingrese el número de teléfono del cliente"  value="{{ $clientes->telefono}}"  class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
-              </div>
+           <div class="form-group">
+            <label class="col-sm-3 control-label">Telefono: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <input name="telefono" type="text" placeholder="Ingrese el número de teléfono del cliente"  value="{{ $clientes->telefono}}"  class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
             </div>
-
-
-
-                        <div class="form-group">
-              <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-
-                <input name="email" name="email" value="{{ $clientes->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
-
-              </div>
-            </div>
-
-             <div class="form-group">
-              <label class="col-sm-3 control-label">Dirección de Facturación: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="direccion_fact" type="text"  maxlength="40" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="{{ $clientes->direccion_fact}}" placeholder="Ingrese la Direccion Fiscal del Cliente"/>
-              </div>
-            </div>
-
-                          <div class="form-group">
-              <label class="col-sm-3 control-label">Dirección de Entrega de Embarques: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="direccion_entr" type="text"  maxlength="40" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="{{ $clientes->direccion_entr}}" placeholder="Ingrese la Direccion de Entrega de Embarque del Cliente"/>
-              </div>
-            </div>
-
-
-             <div class="form-group">
-              <label class="col-sm-3 control-label">Asignación de Volumen de Venta por Año: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-2">
-                <input name="cantidad_venta" value="{{ $clientes->cantidad_venta}}" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
-               </div>      
-           
-<div class="form-group">
-                           <div class="col-sm-2">
-                <select name="volumen_venta" value="">
-                @if($clientes->volumen_venta=="Kilogramos")
-                 <option value='Kilogramos' selected>Kilogramos
-                 </option>
-                 <option value="Toneladas">Toneladas</option>
-                 @else
-                 <option value='Toneladas' selected>Toneladas
-                 </option>
-                   <option value="Kilogramos">Kilogramos</option>
-                 @endif
-                 </select>
-       
-                 </div>   
-                 </div>
-                 </div>  
-
-
-
-
-            <div class="form-row">    
-        <label class="col-sm-3 control-label">Nuevo Saldo Del Cliente: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-2">
-    <div class="input-group">
-     <div class="input-group-addon">$</div>
-
-    
-         <input name="saldocliente" maxlength="9" type="number" value="1000.00" value="{{ $clientes->saldocliente}}" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
-    </div>
-        </div>
-        </div>
-<!--/form-group-->
+          </div>
 
 
 
           <div class="form-group">
-            <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <a href="/clientes" class="btn btn-default"> Cancelar</a>
+            <label class="col-sm-3 control-label">Email: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+
+              <input name="email" name="email" value="{{ $clientes->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
+
             </div>
-          </div><!--/form-group-->
-        </form>
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Dirección de Facturación: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <input name="direccion_fact" type="text"  maxlength="40" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="{{ $clientes->direccion_fact}}" placeholder="Ingrese la Direccion Fiscal del Cliente"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Dirección de Entrega de Embarques: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <input name="direccion_entr" type="text"  maxlength="40" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);"  value="{{ $clientes->direccion_entr}}" placeholder="Ingrese la Direccion de Entrega de Embarque del Cliente"/>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Asignación de Volumen de Venta por Año: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-2">
+              <input name="cantidad_venta" value="{{ $clientes->cantidad_venta}}" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
+            </div>      
+            
+            <div class="form-group">
+             <div class="col-sm-2">
+              <select name="volumen_venta" value="">
+                @if($clientes->volumen_venta=="Kilogramos")
+                <option value='Kilogramos' selected>Kilogramos
+                </option>
+                <option value="Toneladas">Toneladas</option>
+                @else
+                <option value='Toneladas' selected>Toneladas
+                </option>
+                <option value="Kilogramos">Kilogramos</option>
+                @endif
+              </select>
+              
+            </div>   
+          </div>
+        </div>  
+
+
+
+
+        <div class="form-row">    
+          <label class="col-sm-3 control-label">Nuevo Saldo Del Cliente: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-2">
+            <div class="input-group">
+             <div class="input-group-addon">$</div>
+
+             
+             <input name="saldocliente" maxlength="9" type="number" value="1000.00" value="{{ $clientes->saldocliente}}" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+           </div>
+         </div>
+       </div>
+       <!--/form-group-->
+
+
+
+       <div class="form-group">
+        <div class="col-sm-offset-7 col-sm-5">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <a href="/clientes" class="btn btn-default"> Cancelar</a>
+        </div>
+      </div><!--/form-group-->
+    </form>
+  </div><!--/porlets-content-->
+</div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 </html> 

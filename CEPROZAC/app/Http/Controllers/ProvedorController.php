@@ -100,8 +100,8 @@ class ProvedorController extends Controller
     public function edit($id)
     {
 
-     return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
- }
+       return view("Provedores.provedores.edit",["provedores"=>Provedor::findOrFail($id)]);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -182,12 +182,13 @@ class ProvedorController extends Controller
 
 
 
-    public function validarNombre($nombre)
+    public function validarNombre($nombre, $apellidos)
     {
 
         $provedor= Provedor::
-        select('id','nombre','direccion', 'estado')
+        select('id','nombre','apellidos','direccion', 'estado')
         ->where('nombre','=',$nombre)
+        ->where('apellidos','=', $apellidos)
         ->get();
 
         return response()->json(
