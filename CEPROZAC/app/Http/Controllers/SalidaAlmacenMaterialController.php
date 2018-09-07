@@ -226,6 +226,10 @@ class salidaalmacenmaterialController extends Controller
     {
       $material=salidaalmacenmaterial::findOrFail($id);
        $material->estado="Inactivo";
+      $mat = AlmacenMaterial::findOrFail($material->id_material);
+      $mat->cantidad= $mat->cantidad + $material->cantidad;
+      $mat->update();
+       $material->update();
        return Redirect::to('/almacen/salidas/material');   
 
         //

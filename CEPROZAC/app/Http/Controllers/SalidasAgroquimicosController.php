@@ -215,6 +215,10 @@ return redirect('almacen/salidas/agroquimicos');
     {
        $material=salidasagroquimicos::findOrFail($id);
        $material->estado="Inactivo";
+      $mat = almacenagroquimicos::findOrFail($material->id_material);
+      $mat->cantidad= $mat->cantidad + $material->cantidad;
+      $mat->update();
+
        $material->update();
        return Redirect::to('/almacen/salidas/agroquimicos');   
 
@@ -230,7 +234,7 @@ return redirect('almacen/salidas/agroquimicos');
         Excel::create('salidasagroquimicos', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = salidasagroquimicos::join('almacenagroquimicos','almacenagroquimicos.id', '=', 'salidasagroquimicos.id_material')
+            $salidas = salidasagroquimicos::where('salidasagroquimicos.estado','=','Activo')->join('almacenagroquimicos','almacenagroquimicos.id', '=', 'salidasagroquimicos.id_material')
             ->join('empleados as e', 'salidasagroquimicos.entrego', '=', 'e.id')
             ->join('empleados as emp', 'salidasagroquimicos.recibio', '=', 'emp.id')
             ->select('salidasagroquimicos.id', 'almacenagroquimicos.nombre', 'salidasagroquimicos.cantidad','almacenagroquimicos.medida', 'salidasagroquimicos.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasagroquimicos.tipo_movimiento','salidasagroquimicos.fecha')

@@ -441,14 +441,14 @@
   <div class="form-group">
     <label class="col-sm-3 control-label">Espacio Ocupado: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="ocupado" id="ocupado" type="text"   onchange="mayus(this);"  class="form-control" required value="" readonly/>
+      <input name="ocupado" id="ocupado" type="text"   onchange="mayus(this);"  class="form-control"  value="" readonly/>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-3 control-label">Espacio Libre: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="libre" id="libre" type="text"   onchange="mayus(this);"  class="form-control" required value="" readonly/>
+      <input name="libre" id="libre" type="text"   onchange="mayus(this);"  class="form-control"  value="" readonly/>
     </div>
   </div>
 

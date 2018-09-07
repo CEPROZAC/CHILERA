@@ -35,6 +35,7 @@ class Lote extends Migration
         $table->integer('id_empaque')->unsigned();
         $table->foreign('id_empaque')->references('id')->on('forma_empaques');
         $table->string('humedad')->nullable();
+          $table->string('codigo')->nullable();
         $table->string('estado')->nullable();
           $table->timestamps();
             //

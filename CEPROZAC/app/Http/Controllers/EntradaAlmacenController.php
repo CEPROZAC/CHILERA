@@ -332,6 +332,9 @@ return Redirect::to('almacen/entradas/materiales');
     {
        $material=entradaalmacen::findOrFail($id);
        $material->estado="Inactivo";
+       $decrementa=almacenmaterial::findOrFail($material->id_material);
+      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+      $decrementa->update();
        $material->update();
        return Redirect::to('/almacen/entradas/materiales');
         //

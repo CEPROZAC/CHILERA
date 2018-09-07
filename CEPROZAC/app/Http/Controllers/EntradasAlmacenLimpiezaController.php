@@ -326,6 +326,9 @@ return $pdf->stream('invoice');
     {
      $material=entradasalmacenlimpieza::findOrFail($id);
      $material->estado="Inactivo";
+     $decrementa=almacenlimpieza::findOrFail($material->id_material);
+      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+      $decrementa->update();
      $material->update();
      return Redirect::to('/almacen/entradas/limpieza');   
         //
@@ -341,7 +344,7 @@ return $pdf->stream('invoice');
         Excel::create('entradasalmacenlimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = entradasalmacenlimpieza::where('almacenlimpieza.estado','=','Activo')->join('almacenlimpieza','almacenlimpieza.id', '=', 'entradasalmacenlimpieza.id_material')->join('empleados as emp1', 'entradasalmacenlimpieza.entregado', '=', 'emp1.id')
+            $salidas = entradasalmacenlimpieza::where('entradasalmacenlimpieza.estado','=','Activo')->join('almacenlimpieza','almacenlimpieza.id', '=', 'entradasalmacenlimpieza.id_material')->join('empleados as emp1', 'entradasalmacenlimpieza.entregado', '=', 'emp1.id')
             ->join('empleados as emp2', 'entradasalmacenlimpieza.recibe_alm', '=', 'emp2.id')
             ->join('empresas_ceprozac as e', 'entradasalmacenlimpieza.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasalmacenlimpieza.provedor', '=', 'prov.id')

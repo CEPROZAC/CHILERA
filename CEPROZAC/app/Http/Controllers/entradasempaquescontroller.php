@@ -271,7 +271,7 @@ class entradasempaquescontroller extends Controller
         Excel::create('entradasempaques', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = entradasempaques::where('almacenempaque.estado','=','Activo')->join('almacenempaque','almacenempaque.id', '=', 'entradasempaques.id_material')->join('empleados as emp1', 'entradasempaques.entregado', '=', 'emp1.id')
+            $salidas = entradasempaques::where('entradasempaques.estado','=','Activo')->join('almacenempaque','almacenempaque.id', '=', 'entradasempaques.id_material')->join('empleados as emp1', 'entradasempaques.entregado', '=', 'emp1.id')
             ->join('empleados as emp2', 'entradasempaques.recibe_alm', '=', 'emp2.id')
             ->join('empresas_ceprozac as e', 'entradasempaques.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasempaques.provedor', '=', 'prov.id')
@@ -293,6 +293,9 @@ class entradasempaquescontroller extends Controller
     {
         $material=entradasempaques::findOrFail($id);
         $material->estado="Inactivo";
+         $decrementa=almacenempaque::findOrFail($material->id_material);
+      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+      $decrementa->update();
         $material->update();
         return Redirect::to('/almacen/entradas/empaque');   
         //

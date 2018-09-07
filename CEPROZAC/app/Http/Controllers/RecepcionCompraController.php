@@ -118,6 +118,7 @@ class RecepcionCompraController extends Controller
            $lote->humedad=$request->get('humedad');
             $lote->id_empaque=$request->get('empaque');
              $lote->estado="Activo";
+             $lote->codigo =$lote->id_producto.$lote->id_calidad. $lote->id_provedor.$lote->cantidad_act.$lote->nombre_lote.$lote->fecha_entrada;
              $lote->save();
 
 
@@ -378,10 +379,48 @@ $entrada->save();
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+ public function edit($id)
     {
 
-      return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
+      $compra = RecepcionCompra::findOrFail($id);
+      $id_provedor= $compra->id_provedor;
+      $recibe= $compra->recibe;
+      $entregado= $compra->entregado;
+      $producto=$compra->id_producto;
+      $calidad=$compra->id_calidad;
+      $id_empaque=$compra->id_empaque;
+      $id_bascula=$compra->id_bascula;
+      $peso=$compra->peso;
+      $ubicacion_act=$compra->ubicacion_act;
+      $id_fumigacion=$compra->id_fumigacion;
+
+
+      $provedor=Provedor::findOrFail($id_provedor);
+      $emp_recibe=EmpresasCeprozac::findOrFail($recibe);
+      $entrega=empleado::findOrFail($entregado);
+      $produ=producto::findOrFail($producto);
+      $cali=calidad::findOrFail($calidad);
+      $empaque=formaempaque::findOrFail($id_empaque);
+      $bascula=bascula::findOrFail($id_bascula);
+      $pesaje=empleado::findOrFail($peso);
+      $ubicacion=almacengeneral::findOrFail($ubicacion_act);
+      $fumigacion=fumigaciones::findOrFail($id_fumigacion);
+      $id_fumigador=$fumigacion->id_fumigador;
+      $fumigador=empleado::findOrFail($id_fumigador);
+
+        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+      $provedores=DB::table('provedores')->where('estado','=' ,'Activo')->get();
+      $productos=DB::table('productos')->where('estado','=' ,'Activo')->get();
+      $transportes=DB::table('transportes')->where('estado','=' ,'Activo')->get();
+      $servicio=DB::table('basculas')->where('estado','=' ,'Activo')->get();
+      $empaque=DB::table('forma_empaques')->where('estado','=' ,'Activo')->get();
+      $calidad=DB::table('calidad')->where('estado','=' ,'Activo')->get();
+      $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
+      $almacenagroquimicos=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->orwhere('cantidad','>','0')->get();
+
+
+      return view("Compras.Recepcion.edit",["compra"=>$compra,"provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador],["provedores"=>$provedores,"productos"=>$productos,"transportes"=>$transportes,"servicio"=>$servicio,"empleado"=>$empleado,"empaque"=>$empaque,"calidad"=>$calidad,"almacengeneral"=>$almacengeneral,"almacenagroquimicos"=>$almacenagroquimicos,"empresas"=>$empresas]);
         //
     }
 
