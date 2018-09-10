@@ -126,8 +126,16 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Número de Factura: <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
-    <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Número de Factura"/>
+    <input name="factura" id="factura" value="{{Input::old('factura')}}" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese el Número de Factura"/>
      <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('factura')}}</div>
+     <?php
+      $x = $errors->formulario->first('factura');
+      $y =Input::old('factura');
+     ?>
+{{$y}}
+     @if ( $x != "")
+<a class="btn btn-primary btn-sm" href="{{ route('almacen.entradas.agroquimicos.show')}}"  style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Modificar Factura"> <i class="fa fa-edit"></i> Modificar Factura </a>
+     @endif
   </div>
 </div>
 

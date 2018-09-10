@@ -227,8 +227,11 @@ return $pdf->stream('invoice');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(entradasagroquimicosRequest $formulario)
     {
+      $x=$formulario->get('recibio');
+      print_r($x);
+        // return redirect('/almacen/entradas/agroquimicos');
         //
     }
 
@@ -369,6 +372,15 @@ return $pdf->stream('invoice');
             $sheet->setOrientation('landscape');
         });
       })->export('xls');
+    }
+
+        public function buscar(Request $request)
+    {
+       $factura=$request->get('factura');
+       $nombre=$request->get('entregado_a');
+      print_r($factura);
+      print_r($nombre);
+        //
     }
 }
 
