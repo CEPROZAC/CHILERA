@@ -110,6 +110,7 @@ Route::get('movimientos/{id}', array('as'=> '/movimientos','uses'=>'AlmacenGener
 //entradas
 Route::get('verentradas/{id}', array('as'=> '/verentradas','uses'=>'entradas_almacengeneralController@verEntradas'));
 Route::resource('almacen/general/entradas','entradas_almacengeneralController');
+Route::resource('almacen/general/salidas','salidas_almacengeneral'); 
 
 ////
 

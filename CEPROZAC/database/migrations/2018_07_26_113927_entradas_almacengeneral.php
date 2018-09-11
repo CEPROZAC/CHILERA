@@ -16,8 +16,6 @@ class EntradasAlmacengeneral extends Migration
             $table->increments('id');
             $table->integer('id_almacen')->unsigned();
             $table->foreign('id_almacen')->references('id')->on('almacengeneral');
-            $table->integer('id_espacio')->unsigned();
-            $table->foreign('id_espacio')->references('id')->on('espacios_almacen');
             $table->string('origen');
             $table->date('fecha');
             $table->string('kg_entrada');

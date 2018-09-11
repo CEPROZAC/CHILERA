@@ -238,7 +238,7 @@ $salida->save();
      $material->espacio_asignado=$request->get('asignado');
      $material->observacionesu=$request->get('observacionesu');
      $material->id_fumigacion=$ultimo;
-     $material->codigo=$ultimo.$material->ticket."RDC";
+     $material->codigo=$lote->id_producto.$lote->id_calidad. $lote->id_provedor.$lote->cantidad_act.$lote->nombre_lote.$lote->fecha_entrada;
       if ($fumigacionstatus == "En Proceso"){
                $ultimolote->ultima_fumigacion=$request->get('fechai');
                $ultimolote->num_fumigaciones=1;
@@ -265,7 +265,7 @@ $salida->save();
        $name = explode(",",$first); 
        $entrada = new entradas_almacengeneral;
        $entrada->id_almacen = $divide[0];
-       $entrada->id_espacio = $first = $name[$aux];
+       //$entrada->id_espacio = $first = $name[$aux]; se elimino este campo
        $entrada->id_lote = $ultimolote->id;
        $idalm = $divide[0];
        $idesp = $first = $name[$aux];
@@ -309,12 +309,6 @@ $entrada->save();
 
      }
            
-        
-
-
-
-
-
      $ultimoid = recepcioncompra::orderBy('id', 'desc')->first()->id;
     //  $compra= DB::table('recepcioncompra')->orderby('created_at','DESC')->take(1)->get();
 
@@ -346,10 +340,6 @@ $entrada->save();
 
      return view("Compras.Recepcion.lista",["provedor"=>$provedor,"emp_recibe"=>$emp_recibe,"entrega"=>$entrega,"produ"=>$produ,"cali"=>$cali,"empaque"=>$empaque,"bascula"=>$bascula,"pesaje"=>$pesaje,"ubicacion"=>$ubicacion,"fumigacion"=>$fumigacion,"compra"=>$compra,"fumigador"=>$fumigador]);
 
-
-
-
-        //
    }
 
    public function invoice($id){ 
