@@ -123,12 +123,20 @@
   </div>
 </div>
 
+
 <div class="form-group">
   <label class="col-sm-3 control-label">Número de Nota ó Factura: <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
-    <input name="factura" id="factura" value="" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Número de Factura"/>
+    <input name="factura" id="factura" value="{{Input::old('factura')}}" type="text"  maxlength="10" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Número de Factura"/>
      <div class="text-danger" id='error_fac'>{{$errors->formulario->first('factura')}}</div>
-  </div>
+      <?php
+      $x = $errors->formulario->first('factura');
+      $y =Input::old('factura');
+     ?>
+     @if ( $x != "")
+<a class="btn btn-primary btn-sm" href="{{URL::action('EntradasAlmacenLimpiezaController@show',$y)}}"  style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Modificar Factura"> <i class="fa fa-edit"></i> Modificar Factura </a>
+     @endif
+  </div> 
 </div>
 
 
@@ -470,6 +478,12 @@ function llenado(){
     document.getElementById("errorprecio").innerHTML = "";
         if (entradav > 0){
            document.getElementById("errorCantidad").innerHTML = "";
+
+      var comprueba = recorre(tipo_moneda)
+      if (comprueba == 1){
+      swal("Alerta!", "El Tipo de Cambio, No puede ser Diferente del Previamente Insertado!", "error");
+      return false;
+       }
        
     var select=document.getElementById('id_materialk');
     var cantidadtotal = select.value;
@@ -542,6 +556,47 @@ function llenado(){
     swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
     //alert("Faltan campos Por llenar Favor de Verificar");
   }
+}
+
+function recorre(valor) {
+ var z = 1
+ var arreglo = [];
+ var table = document.getElementById('detalles');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+    z++;
+    }
+    else if(z == 2){
+       z ++;       
+     }else if(z == 3){
+      z ++;
+    }else if(z == 4){
+
+     z ++;
+   } else if (z == 5){
+z ++;
+}else if (z == 6){
+ z ++;
+
+}else if(z == 7){
+        z ++;
+      }else if(z == 8){
+        z ++;
+      }else if(z == 9){   
+      var j = table.rows[r].cells[c].innerHTML
+      if (valor != j ){
+        var r = 1;
+        return(r);
+        z ++;
+      }else{
+      return false;
+      }
+      }else{
+       z = 1;
+     }
+   }
+ }
 }  
 
 

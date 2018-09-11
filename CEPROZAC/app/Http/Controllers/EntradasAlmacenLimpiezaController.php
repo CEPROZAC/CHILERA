@@ -218,6 +218,20 @@ return $pdf->stream('invoice');
      */
     public function show($id)
     {
+             $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$id)->get();
+             $entrada = entradasalmacenlimpieza::findOrFail($entradas[0]->id);
+     $fac=$entrada->factura;
+     $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+     $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$fac)
+     ->join('almacenlimpieza as a', 'entradasalmacenlimpieza.id_material', '=', 'a.id')
+     ->select('entradasalmacenlimpieza.*','a.nombre as nombremat','a.id as idagro')->get();
+
+
+     $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+        // 
+     return view('almacen.limpieza.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
         //
     }
 

@@ -223,6 +223,20 @@ return Redirect::to('almacen/entradas/materiales');
      */
     public function show($id)
     {
+       $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$id)->get();
+       $entrada = entradaalmacen::findOrFail($entradas[0]->id);
+       $fac=$entrada->nota_venta;
+       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+       $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)
+       ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+       ->select('entradaalmacenmateriales.*','a.nombre as nombremat','a.id as idagro')->get();
+
+
+       $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+        // 
+       return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
         //
     }
 
