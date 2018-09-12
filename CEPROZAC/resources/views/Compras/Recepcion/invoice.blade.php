@@ -34,7 +34,7 @@
       <thead> 
       <tr>
 
-      <td> <?php $var=$item->id.$item->nombre; echo DNS1D::getBarcodeHTML("$item->codigo", "C128",2,30);?>
+      <td> <?php $var=$item->id.$item->nombre; echo DNS1D::getBarcodeHTML("$item->codigo", "C128",1,40);?>
     <div style="text-align:center;">
     <font size=12 class="codigo ">{{$item->codigo}}
      </font>

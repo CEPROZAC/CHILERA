@@ -163,6 +163,21 @@ class entradasempaquescontroller extends Controller
      */
     public function show($id)
     {
+       $entradas2=DB::table('entradasempaques')->where('factura','=',$id)->get();
+       $entrada = entradasempaques::findOrFail($entradas2[0]->id);
+       $fac=$entrada->factura;
+       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+       $entradas=DB::table('entradasempaques')->where('factura','=',$fac)
+       ->join('almacenempaque as a', 'entradasempaques.id_material', '=', 'a.id')
+       ->select('entradasempaques.*','a.nombre as nombremat','a.id as idagro')->get();
+
+
+       $material=DB::table('almacenempaque')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+        // 
+       return view('almacen.empaque.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+        //
         //
     }
 
@@ -271,7 +286,7 @@ class entradasempaquescontroller extends Controller
         Excel::create('entradasempaques', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = entradasempaques::where('almacenempaque.estado','=','Activo')->join('almacenempaque','almacenempaque.id', '=', 'entradasempaques.id_material')->join('empleados as emp1', 'entradasempaques.entregado', '=', 'emp1.id')
+            $salidas = entradasempaques::where('entradasempaques.estado','=','Activo')->join('almacenempaque','almacenempaque.id', '=', 'entradasempaques.id_material')->join('empleados as emp1', 'entradasempaques.entregado', '=', 'emp1.id')
             ->join('empleados as emp2', 'entradasempaques.recibe_alm', '=', 'emp2.id')
             ->join('empresas_ceprozac as e', 'entradasempaques.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasempaques.provedor', '=', 'prov.id')
@@ -293,6 +308,9 @@ class entradasempaquescontroller extends Controller
     {
         $material=entradasempaques::findOrFail($id);
         $material->estado="Inactivo";
+         $decrementa=almacenempaque::findOrFail($material->id_material);
+      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+      $decrementa->update();
         $material->update();
         return Redirect::to('/almacen/entradas/empaque');   
         //

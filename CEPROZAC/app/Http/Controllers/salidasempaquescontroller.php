@@ -209,6 +209,9 @@ class salidasempaquescontroller extends Controller
     {
                $material=salidasempaques::findOrFail($id);
        $material->estado="Inactivo";
+      $mat = almacenempaque::findOrFail($material->id_material);
+      $mat->cantidad= $mat->cantidad + $material->cantidad;
+      $mat->update();
        $material->update();
        return Redirect::to('/almacen/salidas/empaque');   
 

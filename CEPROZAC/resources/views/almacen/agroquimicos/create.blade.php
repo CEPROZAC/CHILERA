@@ -81,7 +81,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-           <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validaragroquimicos();"  placeholder="Ingrese el Codigo de Barras" onkeypress=" return soloNumeros(event);" required value="{{Input::old('codigo')}}"/><br>
+           <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validaragroquimicos();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
            <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
            <span id="errorCodigo" style="color:#FF0000;"></span>
          </div>
@@ -124,6 +124,7 @@
           <option value="Unidades">Unidades</option>
           <option value="Pastilla">Pastilla</option>
           <option value="Perdigon">Perdigon</option>
+           <option value="Bulto" >Bulto</option>
           @elseif(Input::old('medida')=="Toneladas")
           <option value='Toneladas' selected>Toneladas
           </option>
@@ -133,6 +134,7 @@
           <option value='Kilogramos'>Kilogramos</option>
           <option value="Pastilla">Pastilla</option>
           <option value="Perdigon">Perdigon</option>
+           <option value="Bulto" >Bulto</option>
           @elseif(Input::old('medida')=="Litros")
           <option value='Toneladas'>Toneladas</option>
           <option value="Litros" selected>Litros</option>
@@ -141,6 +143,7 @@
           <option value='Kilogramos'>Kilogramos</option>
           <option value="Pastilla">Pastilla</option>
           <option value="Perdigon">Perdigon</option>
+           <option value="Bulto" >Bulto</option>
           @elseif(Input::old('medida')=="Metros")
           <option value='Toneladas'>Toneladas</option>
           <option value="Litros">Litros</option>
@@ -149,6 +152,7 @@
           <option value='Kilogramos'>Kilogramos</option>
           <option value="Pastilla">Pastilla</option>
           <option value="Perdigon">Perdigon</option>
+           <option value="Bulto" >Bulto</option>
           @elseif(Input::old('Unidades')=="Unidades")
           <option value='Toneladas'>Toneladas</option>
           <option value="Litros">Litros</option>
@@ -157,6 +161,7 @@
           <option value='Kilogramos'>Kilogramos</option>
           <option value="Pastilla">Pastilla</option>
           <option value="Perdigon">Perdigon</option>
+           <option value="Bulto" >Bulto</option>
           @elseif(Input::old('Pastilla')=="Pastilla")
           <option value='Toneladas'>Toneladas</option>
           <option value="Litros">Litros</option>
@@ -164,6 +169,15 @@
           <option value="Unidades">Unidades</option>
           <option value='Kilogramos'>Kilogramos</option>
           <option value="Pastilla" selected>Pastilla</option>
+          <option value="Perdigon">Perdigon</option>
+           <option value="Bulto" >Bulto</option>
+                    @elseif(Input::old('Bulto')=="Bulto")
+          <option value='Toneladas'>Toneladas</option>
+          <option value="Litros">Litros</option>
+          <option value="Metros" >Metros</option>
+          <option value="Unidades">Unidades</option>
+          <option value='Kilogramos'>Kilogramos</option>
+          <option value="Bulto" selected>Bulto</option>
           <option value="Perdigon">Perdigon</option>
           @else
           <option value='Toneladas'>Toneladas</option>
@@ -173,6 +187,7 @@
           <option value='Kilogramos'>Kilogramos</option>
           <option value="Pastilla" >Pastilla</option>
           <option value="Perdigon" selected>Perdigon</option>
+          <option value="Bulto" >Bulto</option>
 
           @endif
         </select>

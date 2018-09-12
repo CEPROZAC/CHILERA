@@ -18,7 +18,7 @@
   <div class="pull-right">
     <ol class="breadcrumb">
       <li><a href="?c=Inicio">Inicio</a></li>
-      <li><a href="?c=Beneficiario">Recepción de Compra</a></li>
+      <li><a href="?c=Beneficiario">Editar Recepción de Compra</a></li>
       <li class="active"></li>
     </ol>
   </div>
@@ -55,22 +55,20 @@
                   <li><a href="#step-1">Recepción de Compra</a></li>
                   <li><a href="#step-2">Muestreo de Materia Prima</a></li>
                   <li><a href="#step-3">Pesaje</a></li>
-                  <li><a href="#step-4">Área de Recepción</a></li>
-                  <li><a href="#step-5">Fumigación</a></li>
                 </ul>
                 <div>
                   <div id="step-1" class="">
                     <div class="user-profile-content">
 
                       <div id="form-step-0" role="form" data-toggle="validator">
-                        <h3 class="h3titulo">Informacion de la Compra</h3>
+                        <h3 class="h3titulo">Editar :Informacion de la Compra {{$compra->nombre}}</h3>
 
                         <input  name="fecha_compra" type="hidden" id="fecha_compra"  />
                         <div class="form-group">
                           <label class="col-sm-3 control-label">Fecha de Compra: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                           <input type="date" name="fecha" id="fecha" value="" required class="form-control mask" >
+                           <input type="date" name="fecha" id="fecha" value="{{$compra->fecha_compra}}" required class="form-control mask" >
                          </div>
                        </div>
 
@@ -79,14 +77,17 @@
                         <div class="col-sm-6">
                           <select name="provedor"  id="provedor" class="form-control select2" required>  
                             @foreach($provedores as $empresa)
-                            <option value="{{$empresa->id}}">
-                             {{$empresa->nombre}}
-                           </option>
+                            @if ($compra->id_provedor == $empresa->id)
+                            <option value="{{$empresa->id}}">{{$empresa->nombre}} {{$empresa->apellidos}}</option>
+                            @else
+                             <option value="{{$empresa->id}}">{{$empresa->nombre}} {{$empresa->apellidos}}</option>
+                            @endif
                            @endforeach              
                          </select>
                          <div class="help-block with-errors"></div>
                        </div>
                      </div><!--/form-group-->
+
                      <div class="form-group">
                       <label class="col-sm-3 control-label">Transporte Registrado en la Empresa: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-3">
@@ -155,9 +156,11 @@
                     <div class="col-sm-6">
                       <select name="empresa"  class="form-control select2" required>  
                         @foreach($empresas as $em)
-                        <option value="{{$em->id}}">
-                         {{$em->nombre}}
-                       </option>
+                        @if ($compra->recibe == $em->id)
+                        <option value="{{$em->id}}" selected>{{$em->nombre}}</option>
+                        @else
+                        <option value="{{$em->id}}">{{$em->nombre}}</option>
+                        @endif
                        @endforeach              
                      </select>
                      <div class="help-block with-errors"></div>
@@ -169,9 +172,12 @@
                   <div class="col-sm-6">
                     <select name="recibe_em"  class="form-control select2" required>  
                       @foreach($empleado as $em)
-                      <option value="{{$em->id}}">
-                       {{$em->nombre}}
-                     </option>
+                      @if ($compra->entregado == $em->id)
+                      <option value="{{$em->id}}" selected>{{$em->nombre}} {{$em->apellidos}}</option>
+                     @else
+                     <option value="{{$em->id}}">{{$em->nombre}} {{$em->apellidos}}</option>
+                     @endif
+
                      @endforeach              
                    </select>
                    <div class="help-block with-errors"></div>
@@ -183,7 +189,7 @@
               <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
               <div class="col-sm-6">
 
-                <input name="observacionesc" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra"/>
+                <input name="observacionesc" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="{{$compra->observacionesc}}" placeholder="Ingrese Observaciónes de la Compra"/>
               </div>
             </div>
 
@@ -192,7 +198,7 @@
               <div class="col-sm-6">
                 <div class="input-group">
                  <div class="input-group-addon">$</div>
-                 <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" required placeholder="Ingrese el Precio de la Compra"  value="" onkeypress=" return soloNumeros(event);"/>
+                 <input  name="precio" id="precio" maxlength="9" type="text"  min="0" max='9999999' class="form-control" required placeholder="Ingrese el Precio de la Compra"  value="{{$compra->total_compra}}" onkeypress=" return soloNumeros(event);"/>
                </div>
              </div>
            </div>
@@ -213,16 +219,18 @@
      <div id="step-2" class="">
       <div class="user-profile-content">
         <div id="form-step-1" role="form" data-toggle="validator">
-          <h3 class="h3titulo">Materia Prima</h3>
+          <h3 class="h3titulo">Editar: Materia Prima</h3>
 
           <div class="form-group">
             <label class="col-sm-3 control-label">Nombre de la Materia Prima: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
               <select name="producto" id="producto" class="form-control select" required>  
                 @foreach($productos as $pro)
-                <option value="{{$pro->id}}">
-                 {{$pro->nombre}}
-               </option>
+                @if($compra->id_producto == $pro->id)
+                <option value="{{$pro->id}}" selected>{{$pro->nombre}}</option>
+                @else
+                <option value="{{$pro->id}}" >{{$pro->nombre}}</option>
+                @endif
                @endforeach              
              </select>
              <div class="help-block with-errors"></div>
@@ -234,9 +242,11 @@
           <div class="col-sm-6">
             <select name="calidad"  id ="calidad" class="form-control select" required onclick="codifica()">  
               @foreach($calidad as $cal)
-              <option value="{{$cal->id}}">
-               {{$cal->nombre}}
-             </option>
+              @if ($compra->id_calidad == $cal->id)
+              <option value="{{$cal->id}}" selected>{{$cal->nombre}}</option>
+              @else
+              <option value="{{$cal->id}}">{{$cal->nombre}}</option>
+              @endif
              @endforeach              
            </select>
            <div class="help-block with-errors"></div>
@@ -248,9 +258,11 @@
         <div class="col-sm-6">
           <select name="empaque"  class="form-control select" required>  
             @foreach($empaque as $em)
-            <option value="{{$em->id}}">
-             {{$em->formaEmpaque}}
-           </option>
+            @if ($compra->id_empaque == $em->id)
+            <option value="{{$em->id}}" selected>{{$em->formaEmpaque}}</option>
+            @else
+            <option value="{{$em->id}}">{{$em->formaEmpaque}}</option>
+            @endif
            @endforeach              
          </select>
          <div class="help-block with-errors"></div>
@@ -260,21 +272,21 @@
      <div class="form-group ">
       <label class="col-sm-3 control-label">Porcentaje de humedad<strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input parsley-type="number"  type="text" maxlength="3" required name="humedad" id="humedad"  class="form-control"  onkeypress=" return soloNumeros(event);">
+        <input parsley-type="number"  value="{{$compra->humedad}}" type="text" maxlength="3" required name="humedad" id="humedad"  class="form-control"  onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
     <div class="form-group ">
       <label class="col-sm-3 control-label">Número de Pacas<strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input parsley-type="number" type="text" maxlength="6" required  name="num_pacas" id="num_pacas"   class="form-control" onKeyUp="raiz()"  onkeypress=" return soloNumeros(event);">
+        <input parsley-type="number" type="text" value="{{$compra->pacas}}" maxlength="6" required  name="num_pacas" id="num_pacas"   class="form-control" onKeyUp="raiz()"  onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
     <div class="form-group ">
       <label class="col-sm-3 control-label">Número de Pacas a Revisar<strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input parsley-type="number" type="number" required maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
+        <input parsley-type="number" value="{{$compra->pacas_rev}}"  type="number" required maxlength="6" name="pacas_rev" id="pacas_rev"   class="form-control"  readonly onkeypress=" return soloNumeros(event);">
       </div>
     </div>
 
@@ -282,7 +294,7 @@
               <label class="col-sm-3 control-label">Codificación de Lote: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
 
-                <input name="codificacion" id="codificacion" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra" required/>
+                <input name="codificacion" id="codificacion" value="{{$compra->nombre}}" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Compra" required/>
               </div>
             </div>
 
@@ -291,7 +303,7 @@
       <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
       <div class="col-sm-6">
 
-        <input name="observacionesm" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Muestreo"/>
+        <input name="observacionesm" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="{{$compra->observacionesm}}" placeholder="Ingrese Observaciónes del Muestreo"/>
       </div>
     </div>
 
@@ -305,7 +317,7 @@
 <div id="step-3" class="">
   <div class="user-profile-content">
     <div id="form-step-2" role="form" data-toggle="validator">
-      <h3 class="h3titulo">Datos de Pesaje</h3>
+      <h3 class="h3titulo">Editar: Datos de Pesaje</h3>
 
 
       <div class="form-group">
@@ -313,9 +325,12 @@
        <div class="col-sm-6">
         <select name="bascula"  class="form-control select" required>
           @foreach($servicio as $bascula)
-          <option value="{{$bascula->id}}">
-           {{$bascula->nombreBascula}} 
-         </option>
+          @if ($compra->id_bascula == $bascula->id)
+          <option value="{{$bascula->id}}" selected>{{$bascula->nombreBascula}} </option>
+          @else
+          <option value="{{$bascula->id}}" >{{$bascula->nombreBascula}} </option>
+          @endif
+
          @endforeach
        </select>
        <div class="help-block with-errors"></div>
@@ -325,28 +340,28 @@
    <div class="form-group">
     <label class="col-sm-3 control-label">Ticket: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="numeroticket" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese numero de Ticket" />
+      <input name="numeroticket" type="text"  onchange="mayus(this);"  class="form-control" required value="{{$compra->ticket}}" placeholder="Ingrese numero de Ticket" />
     </div>
   </div>
 
   <div class="form-group ">
     <label class="col-sm-3 control-label">KG Enviados<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="enviados" id="enviados"  class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Enviados"  onKeyUp="calcula()" onkeypress="return soloNumeros(event);">
+      <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="enviados" id="enviados"  value="{{$compra->kg_enviados}}" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Enviados"  onKeyUp="calcula()" onkeypress="return soloNumeros(event);">
     </div>
   </div>
 
   <div class="form-group ">
     <label class="col-sm-3 control-label">KG Recibidos<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="recibidos"  onKeyUp="calcula()"  id ="recibidos" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Recibidos" onkeypress=" return soloNumeros(event);">
+      <input parsley-type="number" type="text" maxlength="5" required parsley-range="[0, 10000]" name="recibidos"  onKeyUp="calcula()"  id ="recibidos" class="form-control mask"  placeholder="Ingrese el numero de Kilogramos Recibidos" value="{{$compra->kg_recibidos}}" onkeypress=" return soloNumeros(event);">
     </div>
   </div>
 
   <div class="form-group ">
     <label class="col-sm-3 control-label">Diferencia<strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia" required  readonly  id="diferencia" class="form-control mask";>
+      <input parsley-type="number" type="text" maxlength="5" parsley-range="[0, 10000]" name="diferencia" required  readonly  value="{{$compra->diferencia}}" id="diferencia" class="form-control mask";>
     </div>
   </div>
 
@@ -354,7 +369,7 @@
     <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
     <div class="col-sm-6">
 
-      <input name="observacionesb" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes del Pesaje"/>
+      <input name="observacionesb" type="text"   maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="{{$compra->observacionesb}}" placeholder="Ingrese Observaciónes del Pesaje"/>
     </div>
   </div>   
 
@@ -363,309 +378,22 @@
                   <div class="col-sm-6">
                     <select name="pesaje"  class="form-control select" required>  
                       @foreach($empleado as $em)
-                      <option value="{{$em->id}}">
-                       {{$em->nombre}}
-                     </option>
+                      @if ($compra->peso == $em->id)
+                      <option value="{{$em->id}}" selected>{{$em->nombre}} {{$em->apellidos}}</option>
+                      @else
+                      <option value="{{$em->id}}">{{$em->nombre}} {{$em->apellidos}}</option>
+                      @endif
                      @endforeach              
                    </select>
                    <div class="help-block with-errors"></div>
                  </div>
                </div><!--/form-group-->
 
-</div><!--validator-->
-</div><!--user-profile-content-->
-</div><!--step-3-->
-
-
-<div id="step-4" class="">
-  <div class="user-profile-content">
-    <div id="form-step-3" role="form" >
-      <h3 class="h3titulo">Enviar Materia Prima a Área de Recepción</h3>
-      <br>
-
-      <div class="form-group">
-       <label class="col-sm-3 control-label">Ubicación a Enviar: <strog class="theme_color">*</strog></label>
-       <div class="col-sm-6">
-        <select name="almacen" id="almacen"  class="form-control select" onKeyUp="cargar()" required>
-          @foreach($almacengeneral as $almacen)
-          <option value="{{$almacen->id}}_{{$almacen->capacidad}}_{{$almacen->medida}}_{{$almacen->total_ocupado}}_{{$almacen->total_libre}}_{{$almacen->esp_ocupado}}_{{$almacen->esp_libre}}_{{$almacen->descripcion}}">
-           {{$almacen->nombre}} 
-         </option>
-         @endforeach
-       </select>
-       <div class="help-block with-errors"></div>
-     </div>
-   </div><!--/form-group-->
-
-   <div class="form-group">
-    <label class="col-sm-3 control-label">Descripción : <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <input name="descripcion" id="descripcion" type="text"  onchange="mayus(this);"  class="form-control"  value="" readonly />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Capacidad de Almacenamiento: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <input name="capacidad" id="capacidad" type="text"   onchange="mayus(this);"  class="form-control"  value=""  readonly/>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Espacio Ocupado: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <input name="ocupado" id="ocupado" type="text"   onchange="mayus(this);"  class="form-control" required value="" readonly/>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Espacio Libre: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <input name="libre" id="libre" type="text"   onchange="mayus(this);"  class="form-control" required value="" readonly/>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Espacio Asignado: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <input name="asignado" id="asignado" type="text"   onchange="mayus(this);"  class="form-control" required  readonly/>
-    </div>
-  </div>
-
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Seleccione el Espacio a Donde se Enviará la Materia Prima: <strog class="theme_color"></strog></label>
-    <div class="col-sm-6">
-      <div class="form-group"> 
-        <table id="myTable" name="myTable" value=""  class="table table-striped table-bordered table-condensed table-hover" >
-          <thead style="background-color:#A9D0F5">
-
-          </thead>
-          <tr>
-          </tr>
-        </table>
-        <br>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Observaciónes : <strog class="theme_color"></strog></label>
-    <div class="col-sm-6">
-      <input name="observacionesu" id="observacionesu" type="text"  onchange="mayus(this);"  class="form-control"  value=""  />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-6">
-      <input  id="totallibre" value="" name="totallibre" type="hidden"  maxlength="50"  class="form-control"  />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-6">
-      <input  id="totalocupado" value="" name="totalocupado" type="hidden"  maxlength="50"  class="form-control" />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-6">
-      <input  id="espacio" value="" name="espacio" type="hidden"  maxlength="50"  class="form-control" />
-    </div>
-  </div>
-
-
-
-
-</div><!--validator-->
-</div><!--user-profile-content-->
-</div><!--step-2-->
-
-<div id="step-5" class="">
-  <div class="user-profile-content">
-    <div id="form-step-4" role="form" >
-      <h3 class="h3titulo">Programar Fumigación</h3>
-      <br>
-
-      <div class="form-group">
-       <label class="col-sm-3 control-label">Hora de Inicio de La Fumigación: <strog class="theme_color">*</strog></label>
-       <div class="col-sm-6">
-        <input id="inicio" name="inicio" type="time" required>
-        <div class="help-block with-errors"></div>
-      </div>
-    </div><!--/form-group-->
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Fecha de Inicio: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-
-       <input type="date" name="fechai" id="fechai" value="" class="form-control mask" required>
-     </div>
-   </div>
-
-   <div class="form-group">
-    <label class="col-sm-3 control-label">Fecha de Termino: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-
-     <input type="date" name="fechaf" id="fechaf" value="" class="form-control mask" required >
-   </div>
- </div>
-
- <div class="form-group">
-   <label class="col-sm-3 control-label">Hora de Termino de La Fumigación: <strog class="theme_color">*</strog></label>
-   <div class="col-sm-6">
-    <input id="final" name="final" type="time" required>
-    <div class="help-block with-errors"></div>
-  </div>
-</div><!--/form-group-->
-
-<div class="form-group">
- <label class="col-sm-3 control-label">Fumigador: <strog class="theme_color">*</strog></label>
- <div class="col-sm-6">
-  <select name="fumigador" id="fumigador"  class="form-control select" required>
-    @foreach($empleado as $empleados)
-    <option value="{{$empleados->id}}}">
-     {{$empleados->nombre}} {{$empleados->apellidos}} 
-   </option>
-   @endforeach
- </select>
- <div class="help-block with-errors"></div>
-</div>
-</div><!--/form-group-->
-
-<div class="form-group">
- <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
- <div class="col-sm-6">
-  <select name="entrego_qui" id="entrego_qui"  class="form-control select" required>
-    @foreach($empleado as $empleados)
-    <option value=" {{$empleados->nombre}} {{$empleados->apellidos}}">
-     {{$empleados->nombre}} {{$empleados->apellidos}} 
-   </option>
-   @endforeach
- </select>
- <div class="help-block with-errors"></div>
-</div>
-</div><!--/form-group-->
-
-<div class="form-group">
-  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
-  <div class="col-sm-6">
-
-    <input name="observacionesf" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" onkeypress=" return soloLetras(event);" value="" placeholder="Ingrese Observaciónes de la Fumigación"/>
-  </div>
-</div>
-
-
-
-<div class="col-lg-4 col-lg-offset-4">
- <div class="form-group">
-  <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
-  <div class="col-sm-6">
-    <input  id="codigo" value="" name="codigo" type="text" onKeyUp="codigos()"  maxlength="13"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
-  </div>
-</div>
-</div>
-
-<div class="form-group">
-</div>
-
-<div class="form-group">
- <label class="col-sm-3 control-label">Agroquímicos a Aplicar: <strog class="theme_color">*</strog></label>
- <div class="col-sm-6">
-  <select name="quimicos" id="quimicos"  class="form-control select" required>
-    @foreach($almacenagroquimicos as $quimico)
-    <option value="{{$quimico->id}}_{{$quimico->nombre}}_{{$quimico->codigo}}_{{$quimico->descripcion}}_{{$quimico->cantidad}}_{{$quimico->medida}}">
-     {{$quimico->nombre}} 
-   </option>
-   @endforeach
- </select>
- <div class="help-block with-errors"></div>
-</div>
-<a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
-</div><!--/form-group-->
 
 
 
 
 
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
- <div class="form-group"> 
-  <label for="scantidad">Cantidad Aplicada <strog class="theme_color">*</strog></label>
-  <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
-</div>    
-</div>  
-
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
- <div class="form-group"> 
-  <label for="pcantidad">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-  <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
-</div>    
-</div>  
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
- <div class="form-group"> 
-  <label for="amedida">Medida </label>
-  <input name="amedida" id="amedida" value="" type="text" disabled class="form-control" />
-</div>
-</div>  
-
-<div class="col-sm-4">
- <div class="form-group"> 
-  <label for="descripciona">Descripción </label>
-  <input name="descripciona" id="descripciona" disabled class="form-control" />
-</div>    
-</div> 
-
-<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-  <div class="form-group"> 
-    <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
-      <thead style="background-color:#A9D0F5">
-        <th>Opciones</th>
-        <th>Id</th>
-        <th>Nombre de Agroquimico</th>
-        <th>Descripcion</th>
-        <th>Cantidad Aplicada</th>
-
-      </thead>
-      <tfoot>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tfoot>
-      <tbody>
-
-      </tbody>
-
-    </table>
-
-    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-     <div class="form-group"> 
-      <label for="total">Total de Elementos </label>
-      <input name="total" id="total" type="number"  class="form-control"  readonly/>
-    </div>    
-  </div>  
-</div>
-</div>
-
-
-<div class="form-group">
-  <label class="col-sm-3 control-label">Estado de la Fumigacion: <strog class="theme_color">*</strog></label>
-  <div class="col-sm-6">
-    <select name="status" value="{{Input::old('status')}}" required>
-      @if(Input::old('status')=="Proceso")
-      <option value='Proceso' selected>En Proceso
-      </option>
-      <option value="Realizada">Realizada</option>
-      @else
-      <option value='Realizada' selected>Realizada
-      </option>
-      <option value="Proceso">En Proceso</option>
-      @endif
-    </select>
-
-  </div>
-</div>
 
 <div class="form-group">
   <div class="col-sm-6">
@@ -717,255 +445,34 @@
       );
   }
   window.onload=function() {
-     //stock agroquimicos
-     var select2 = document.getElementById('quimicos');
-     var selectedOption2 = select2.selectedIndex;
-     var cantidadtotal = select2.value;
-     limite = "6",
-     separador = "_",
-     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-     var ida =arregloDeSubCadenas[0];
-     var nombrea =arregloDeSubCadenas[1];
-     var codigoa = arregloDeSubCadenas[2];
-     var descripciona = arregloDeSubCadenas[3];
-     var cantidada = arregloDeSubCadenas[4];
-     var medidaa = arregloDeSubCadenas[5];
-     document.getElementById("pcantidad").value=cantidada ;
-     document.getElementById("descripciona").value=descripciona;
-     document.getElementById("amedida").value=medidaa;
-     document.getElementById("scantidad").value = "1";
-    //  <option value="{{$quimico->id}}}_{{$quimico->nombre}}_{{$quimico->codigo}}_{{$quimico->descripcion}}_{{$quimico->cantidad}}_{{$quimico->medida}}">
-
-
-    var select2 = document.getElementById('almacen');
-    var z = select2.value;
-    if (z != ""){
-      var selectedOption2 = select2.selectedIndex;
-      var cantidadtotal = select2.value;
-      limite = "8",
-      separador = "_",
-      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      capacidad=arregloDeSubCadenas[1];
-      medida = arregloDeSubCadenas[2];
-      ocupado=arregloDeSubCadenas[5];
-      libre=arregloDeSubCadenas[6];
-      descripcion=arregloDeSubCadenas[7];
-      document.getElementById("capacidad").value=capacidad ;
-      document.getElementById("ocupado").value=ocupado;
-      document.getElementById("libre").value =libre;
-      document.getElementById("descripcion").value =descripcion;
-
-    }
-    var arreglolibre2 = [];
-    var arregloocupado2 = [];
-    var arreglolibre = [];
-    var arregloocupado = [];
-    var arregloespacio= [] ;
-
-
-    arregloocupado2= document.getElementById("ocupado").value;
-    arreglolibre2= document.getElementById("libre").value;
-    var tamaño_libre;
-    var libres = arreglolibre2.split(",");
-    tamaño_libre = libres.length;
-    var tamaño_ocupado;
-    var ocupado = arregloocupado2.split(",");
-    tamaño_ocupado = ocupado.length;
-
-    if (arregloocupado2.length >0){
-      for (var x = 0; x < tamaño_ocupado; x++){
-        arregloocupado.push(ocupado[x]);
-      }}
-      if (arreglolibre2.length > 0){
-        for (var i = 0; i < tamaño_libre; i++){
-          arreglolibre.push(libres[i]);
-        }
-
-        var valor = 0;
-        for (var cuenta = 1; cuenta <= tamaño_libre ; cuenta++) {
-         var table = document.getElementById("myTable");
-         var med = medida;
-         var row = table.insertRow(0);
-         var cell1 = row.insertCell(0);
-         var cell2 = row.insertCell(1);
-         cell1.innerHTML = med+" N° "+libres[valor];
-         var agregaHTML = "<input type=button value=Libre class=agrega id="+libres[(valor)]+">";
-         cell2.innerHTML = agregaHTML;
-         document.getElementById(""+libres[valor]).style.color = "#00ff00";
-         valor++;
-
-         cell2.addEventListener("click", function(event) {
-          var currentId = event.target.id;
-          var z =  document.getElementById('capacidad').value;
-          var aux = event.target.id;
-          var calcula = document.getElementById(""+aux).value;
-          var arr = document.getElementById(""+aux).id;
-
-
-          if (calcula == "Ocupado") {
-            for (var i = 0; i < arregloocupado.length; i++) {
-              if (arr == arregloocupado[i]) {
-                arregloocupado.splice(i, 1);
-              }
-              if (arr == arregloespacio[i]){
-                arregloespacio.splice(i,1);
-              }
-            }
-
-            document.getElementById(""+aux).value = "Libre";
-            document.getElementById(""+aux).style.color = "#00ff00";
-            arreglolibre.push(arr);
-            arregloocupado.sortNumbers();
-            arreglolibre.sortNumbers();
-            document.getElementById('libre').value=arreglolibre;
-            document.getElementById('ocupado').value=arregloocupado;
-            document.getElementById('asignado').value=arregloespacio;
-            tamaño_libre = arreglolibre.length;
-            document.getElementById('totallibre').value=tamaño_libre;
-            tamaño_ocupado = arregloocupado.length;
-            document.getElementById('totalocupado').value=tamaño_ocupado;
-          }else{
-            for (var i = 0; i < arreglolibre.length; i++) {
-              if (arr == arreglolibre[i]) {
-                arreglolibre.splice(i, 1);
-              }
-            }
-
-            document.getElementById(""+aux).value = "Ocupado";
-            document.getElementById(""+aux).style.color = "#ff0000";
-            arregloocupado.push(arr);
-            arregloespacio.push(arr);
-            arregloespacio.sortNumbers();
-            arregloocupado.sortNumbers();
-            arreglolibre.sortNumbers();
-            document.getElementById('ocupado').value=arregloocupado;
-            document.getElementById('libre').value=arreglolibre;
-            document.getElementById('asignado').value=arregloespacio;
-            tamaño_libre = arreglolibre.length;
-            document.getElementById('totallibre').value=tamaño_libre;
-            tamaño_ocupado = arregloocupado.length;
-            document.getElementById('totalocupado').value=tamaño_ocupado;
-          }
-        })
-       }
-     }
-   }
-
-   var select = document.getElementById('almacen');
-  //alert(select);
-  select.addEventListener('change',
-    function(){
-      var selectedOption = this.options[select.selectedIndex];
-     // alert(selectedOption.value);
-   //   console.log(selectedOption.value + ': ' + selectedOption.text);
-   var cantidadtotal = selectedOption.value;
-   limite = "8",
-   separador = "_",
-   arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-   capacidad=arregloDeSubCadenas[1];
-   medida = arregloDeSubCadenas[2];
-   ocupado=arregloDeSubCadenas[5];
-   libre=arregloDeSubCadenas[6];
-   descripcion=arregloDeSubCadenas[7];
-   document.getElementById("capacidad").value=capacidad;
-   document.getElementById("ocupado").value=ocupado;
-   document.getElementById("libre").value =libre;
-   document.getElementById("descripcion").value =descripcion;
-   document.getElementById("asignado").value ="";
-   generar();
- });
-
-  var select = document.getElementById('quimicos');
-  //alert(select);
-  select.addEventListener('change',
-    function(){
-      var selectedOption = this.options[select.selectedIndex];
-     // alert(selectedOption.value);
-   //   console.log(selectedOption.value + ': ' + selectedOption.text);
-   var cantidadtotal = selectedOption.value;
-   limite = "6",
-   separador = "_",
-   arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-   var ida =arregloDeSubCadenas[0];
-   var nombrea =arregloDeSubCadenas[1];
-   var codigoa = arregloDeSubCadenas[2];
-   var descripciona = arregloDeSubCadenas[3];
-   var cantidada = arregloDeSubCadenas[4];
-   var medidaa = arregloDeSubCadenas[5];
-   document.getElementById("pcantidad").value=cantidada ;
-   document.getElementById("descripciona").value=descripciona;
-   document.getElementById("amedida").value=medidaa;
-   document.getElementById("scantidad").value = "1";
-
-
-
- });
-  var uno = 1;
-   var uno2 = 1;
-  function agroquimico(){
-    var select2=document.getElementById('quimicos');
-  var cantidadtotal2 = select2.value;
-  limite2 = "5",
-  separador2 = "_",
-  arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
-  x=arregloDeSubCadenas2[0];
-
-
-  var valida = document.getElementById("scantidad").value;
-  var valida2 = document.getElementById("pcantidad").value;
-  var y = parseInt(valida);
-  var z = parseInt(valida2);
-  var comprueba = recorre(x)
-  if (comprueba == 1){
-      alert("Este Material Ya se ha Insertado en la Tabla");
-
-  }else{
-    if (y > z) {
-    alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
-
-  }else if(y < 1){
-    alert("El Stock de Salida no Puede Ser Menor de 1");
-
-  }else{
-
-    var select=document.getElementById('quimicos');
-    var cantidadtotal = select.value;
-    limite = "6",
-    separador = "_",
+    var num = {{$compra->num_transportes}};
+    var cantidadtotal =  "{{$compra->transporte}}";
+    limite = "10",
+    separador = ",",
     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-    var id2= uno2++;
-    var ida =arregloDeSubCadenas[0];
-    var nombrea =arregloDeSubCadenas[1];
-    var codigoa = arregloDeSubCadenas[2];
-    var descripciona = arregloDeSubCadenas[3];
-    var cantidada = arregloDeSubCadenas[4];
-    var medidaa = arregloDeSubCadenas[5];
-    var tabla = document.getElementById("detalles");
-    //tabla.setAttribute("id", id2);
+     var tabla = document.getElementById("transportes");
+     y=0;
+    for (var i =1 ; i <= num; i++) {
     var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
+      var cell3 = row.insertCell(2);
+     cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminartrans(this.parentNode.parentNode.rowIndex);">';
+    cell2.innerHTML = arregloDeSubCadenas[y];
+    y= y++;
+    cell3.innerHTML = arregloDeSubCadenas[y];
+    y= y++;
 
-    var scantidadx = document.getElementById("scantidad");
-    var cantidaden = scantidadx.value;
+    }
 
-    cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
-    cell2.innerHTML = ida;
-    cell3.innerHTML = nombrea;
-    cell4.innerHTML = descripciona;
-    cell5.innerHTML = cantidaden;
+   }
 
-    var x = document.getElementById("quimicos");
-    //x.remove(x.selectedIndex);
-    document.getElementById("total").value=id2;
-    limpiar();
-  }
-}}
+
 
 var q = 1;
+  var uno = 1;
+  var uno2 = 1;
+
  function transporte(){
    var valida = document.getElementById("transporte_num");
    if (valida.value < q) {
@@ -1018,75 +525,8 @@ function eliminartrans(value) {
   q=q-1;
 }
 
-
-function recorre(valor) {
- var z = 1
- var arreglo = [];
- var table = document.getElementById('detalles');
- for (var r = 1, n = table.rows.length-1; r < n; r++) {
-  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-   if (z == 1){
-        //alert(z)
-       // document.getElementById("id_materialk").id=z;
-      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-      var j = table.rows[r].cells[c].innerHTML
-      if (valor == j ){
-        var r = 1;
-        z=1;
-        return(r);
-      }
-             z ++;
-     }
-
-     else if(z == 2){
-         //alert(z)
-       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-       z ++;
-       
-
-     }else if(z == 3){
-        z ++;
-      }else if(z == 4){
-
-       z ++;
-     } else if (z == 5){
-       //  alert(z)
-     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-         //alert(table.rows[r].cells[c].innerHTML);
-
-//alert(arreglo);
-z ++;
-}else if (z == 6){
- //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
- // alert(table.rows[r].cells[c].innerHTML);
- z ++;
-
-}else if(z == 7){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-           //alert(table.rows[r].cells[c].innerHTML);
-         z ++;
-
-       }else{
-       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-          //alert(table.rows[r].cells[c].innerHTML);
-        z = 1;
-
-      }
-
-    }
-  }
-}   
-
-function eliminarFila(value) {
-
-  document.getElementById("detalles").deleteRow(value);
-  var id2= uno2--;
-  var menos =document.getElementById("detalles").rows
-  var r = menos.length;
-  document.getElementById("total").value= r - 2;
-  limpiar();
-}   
+  
+   
 
 function calcula(){
   var var1 =document.getElementById('enviados').value;
@@ -1100,47 +540,6 @@ function calcula(){
   }
 }
 
-function codigos(){
-
-  var cuenta = document.getElementById('codigo');
-  var x = cuenta.value;
-  var z = x.length
-  if (z == 12  ) {
-    var busca = z;
-    //  alert ("12 entro");
-    var y = document.getElementById("quimicos").length;
-    //  alert(y);
-    var i= 0;
-    while(i < y){
-      var e = document.getElementById("quimicos");
-      var value = e.options[e.selectedIndex=i].value;
-      var text = e.options[e.selectedIndex=i].text;
-      var cantidadtotal = value;
-      limite = "6",
-      separador = "_",
-      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      var ida =arregloDeSubCadenas[0];
-      var nombrea =arregloDeSubCadenas[1];
-      var codigoa = arregloDeSubCadenas[2];
-      var descripciona = arregloDeSubCadenas[3];
-      var cantidada = arregloDeSubCadenas[4];
-      var medidaa = arregloDeSubCadenas[5];
-
-      if (codigoa == x){
-       document.getElementById('quimicos').selectedIndex = i;
-       document.getElementById("pcantidad").value=cantidada;
-       document.getElementById("descripciona").value=descripciona;
-       document.getElementById("scantidad").value = "1";
-       break;
-     }
-     i++;
-   }
- }
-
-}
-function limpiar(){
-  document.getElementById("scantidad").value="1";
-}
 
 
 function save() {
@@ -1165,40 +564,6 @@ function save() {
   }
 }
 
-
- var x = 1
- var arreglo2 = [];
- var table2 = document.getElementById('detalles');
- for (var r = 1, n = table2.rows.length-1; r < n; r++) {
-  for (var c = 1, m = table2.rows[r].cells.length; c < m; c++) {
-   if (x == 1){
-        //alert(z)
-       // document.getElementById("id_materialk").id=z;
-      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-      arreglo2.push(table2.rows[r].cells[c].innerHTML);
-     x ++;
-   }else if (x== 2){
-      arreglo2.push(table2.rows[r].cells[c].innerHTML);
-     x ++;
-
-    }else if (x == 3){
-            arreglo2.push(table2.rows[r].cells[c].innerHTML);
-     x ++;
-
-    }else {
-            arreglo2.push(table2.rows[r].cells[c].innerHTML);
-      document.getElementById("codigo2").value=arreglo2;
-      x = 1;
-
-    }
-
-  }
-}
-  var tam = arreglo2.length / 4;
-  document.getElementById("total").value=tam;
-  var auxy = document.getElementById('fumigador');
-var nombx = auxy.options[auxy.selectedIndex].text;
-document.getElementById('nombre_fum').value=nombx;
 }
 
 
@@ -1276,139 +641,6 @@ document.getElementById('codificacion').value=nombrecod;
 }
 
 
-
-
-
-
-function generar(){
- document.getElementById('espacio').value = "";
- var arregloespacio= [] ;
- var cantidad = document.getElementById('capacidad').value;
- if (cantidad > 0){
-  for (var i = 1; cantidad >= i ; i++) {
-    var menos =document.getElementById("myTable").rows.length-1
-    if (menos > 0) {
-      var suma = 1;
-      for (var l = 1; l <= menos; l++){        
-        document.getElementById("myTable").deleteRow(0);
-        suma++;
-      }
-
-    }
-
-  }
-  var select2 = document.getElementById('almacen');
-  var z = select2.value;
-  if (z != ""){
-    var selectedOption2 = select2.selectedIndex;
-    var cantidadtotal = select2.value;
-    limite = "8",
-    separador = "_",
-    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-    capacidad=arregloDeSubCadenas[1];
-    medida = arregloDeSubCadenas[2];
-    ocupado=arregloDeSubCadenas[5];
-    libre=arregloDeSubCadenas[6];
-    descripcion=arregloDeSubCadenas[7];
-
-  }
-  var arreglolibre2 = [];
-  var arregloocupado2 = [];
-  var arreglolibre = [];
-  var arregloocupado = [];
-
-
-  arregloocupado2= document.getElementById("ocupado").value;
-  arreglolibre2= document.getElementById("libre").value;
-  var tamaño_libre;
-  var libres = arreglolibre2.split(",");
-  tamaño_libre = libres.length;
-  var tamaño_ocupado;
-  var ocupado = arregloocupado2.split(",");
-  tamaño_ocupado = ocupado.length;
-
-
- // alert(tamaño_libre);
-  //alert(libres[1]);
-  if (arregloocupado2.length >0){
-    for (var x = 0; x < tamaño_ocupado; x++){
-      arregloocupado.push(ocupado[x]);
-    }}
-    if (arreglolibre2.length > 0){
-      for (var i = 0; i < tamaño_libre; i++){
-        arreglolibre.push(libres[i]);
-      }
-      var valor = 0;
-      for (var cuenta = 1; cuenta <= tamaño_libre ; cuenta++) {
-       var table = document.getElementById("myTable");
-       var med = medida;
-       var row = table.insertRow(0);
-       var cell1 = row.insertCell(0);
-       var cell2 = row.insertCell(1);
-       cell1.innerHTML = med+" N° "+libres[valor];
-       var agregaHTML = "<input type=button value=Libre class=agrega id="+libres[(valor)]+">";
-       cell2.innerHTML = agregaHTML;
-       document.getElementById(""+libres[valor]).style.color = "#00ff00";
-       valor++;
-
-       cell2.addEventListener("click", function(event) {
-        var currentId = event.target.id;
-        var z =  document.getElementById('capacidad').value;
-        var aux = event.target.id;
-        var calcula = document.getElementById(""+aux).value;
-        var arr = document.getElementById(""+aux).id;
-
-
-        if (calcula == "Ocupado") {
-          for (var i = 0; i < arregloocupado.length; i++) {
-            if (arr == arregloocupado[i]) {
-              arregloocupado.splice(i, 1);
-            }
-            if (arr == arregloespacio[i]){
-              arregloespacio.splice(i,1);
-            }
-          }
-
-          document.getElementById(""+aux).value = "Libre";
-          document.getElementById(""+aux).style.color = "#00ff00";
-          arreglolibre.push(arr);
-          arregloocupado.sortNumbers();
-          arreglolibre.sortNumbers();
-          arregloespacio.sortNumbers();
-          document.getElementById('libre').value=arreglolibre;
-          document.getElementById('ocupado').value=arregloocupado;
-          document.getElementById('espacio').value=arregloespacio;
-          tamaño_libre = arreglolibre.length;
-          document.getElementById('totallibre').value=tamaño_libre;
-          tamaño_ocupado = arregloocupado.length;
-          document.getElementById('totalocupado').value=tamaño_ocupado;
-        }else{
-          for (var i = 0; i < arreglolibre.length; i++) {
-            if (arr == arreglolibre[i]) {
-              arreglolibre.splice(i, 1);
-            }
-          }
-
-          document.getElementById(""+aux).value = "Ocupado";
-          document.getElementById(""+aux).style.color = "#ff0000";
-          arregloocupado.push(arr);
-          arregloocupado.sortNumbers();
-          arreglolibre.sortNumbers();
-          arregloespacio.push(arr);
-          arregloespacio.sortNumbers();
-          document.getElementById('ocupado').value=arregloocupado;
-          document.getElementById('libre').value=arreglolibre;
-          tamaño_libre = arreglolibre.length;
-          document.getElementById('totallibre').value=tamaño_libre;
-          tamaño_ocupado = arregloocupado.length;
-          document.getElementById('totalocupado').value=tamaño_ocupado;
-          document.getElementById('espacio').value=arregloespacio;
-        }
-      })
-     }
-   }
- }
-}
 
 
 

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-
+use CEPROZAC\salidas_almacengeneral;
+use CEPROZAC\entradas_almacengeneral;
+use CEPROZAC\AlmacenAgroquimicos;
 class salidas_almacengeneral extends Controller
 {
     /**
@@ -37,6 +39,30 @@ class salidas_almacengeneral extends Controller
      */
     public function store(Request $request)
     {
+      $material= new salidas_almacengeneral;
+        $almacen = $request->get('codigo2');
+        $first = head($almacen);
+         $name = explode("_",$first);
+     $material->id_almacen=$request->get('almacenid');
+      $material->espacio_asignado=$request->get('espacio');
+      $material->destino=$first = $name[0];
+       $material->fecha=$request->get('fecha');
+       $material->kg_salida=$request->get('scantidad');
+       $material->id_producto=$request->get('id_producto');
+        $material->id_provedor=$request->get('id_provedor');
+          $material->entrego=$request->get('entregado_a');
+          $material->recibe_alm=$request->get('recibe');
+          $material->observacionesc=$request->get('observaciones');
+          $material->id_lote=$request->get('id_lote');
+          $material->estado="Activo";
+          $material->save();
+
+          $lote = lote::findOrFail($request->get('id_lote'));
+          $lote->cantidad_act=$lote->cantidad_act - $request->get('scantidad');
+          $lote->update();
+
+          
+
         //
     }
 

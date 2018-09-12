@@ -80,6 +80,7 @@
                  <th>Fumigación </th>  
                  <th>Ver &nbsp; &nbsp;</th>
                   <th>Imprimir Etiquetas&nbsp; &nbsp;</th>
+                    <td><center><b>Editar</b></center></td>  
                  <td><center><b>Borrar</b></center></td>                            
                </tr>
              </thead>
@@ -119,6 +120,9 @@
        <a href="{{URL::action('RecepcionCompraController@verInformacion',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
 
                                <td><a href="{{URL::action('RecepcionCompraController@invoice',$compras->id)}}" target="_blank" class="btn btn-primary btn-sm" role="button"><i class="fa fa-print"></i></a>     </td>
+
+                                <td>  <a href="{{URL::action('RecepcionCompraController@edit',$compras->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                      </td>
 
                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$compras->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                  </td>
@@ -160,6 +164,7 @@
                  <th>Fumigación </th>  
                  <th>Ver &nbsp; &nbsp;</th>
                                    <th>Imprimir Etiquetas &nbsp; &nbsp;</th>
+                                   <td><center><b>Editar</b></center></td> 
                  <td><center><b>Borrar</b></center></td>    
 
              </tr>

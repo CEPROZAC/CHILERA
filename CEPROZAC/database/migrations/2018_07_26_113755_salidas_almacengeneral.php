@@ -16,9 +16,10 @@ class SalidasAlmacengeneral extends Migration
             $table->increments('id');
             $table->integer('id_almacen')->unsigned();
             $table->foreign('id_almacen')->references('id')->on('almacengeneral');
-            $table->integer('id_espacio')->unsigned();
-            $table->foreign('id_espacio')->references('id')->on('espacios_almacen');
-            $table->double('destino');
+            $table->string('espacio_asignado');
+
+            $table->integer('destino')->unsigned();
+            $table->foreign('destino')->references('id')->on('almacengeneral');
             $table->date('fecha');
             $table->string('kg_salida');
             $table->integer('id_producto')->unsigned();

@@ -218,6 +218,20 @@ return $pdf->stream('invoice');
      */
     public function show($id)
     {
+             $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$id)->get();
+             $entrada = entradasalmacenlimpieza::findOrFail($entradas[0]->id);
+     $fac=$entrada->factura;
+     $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+     $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$fac)
+     ->join('almacenlimpieza as a', 'entradasalmacenlimpieza.id_material', '=', 'a.id')
+     ->select('entradasalmacenlimpieza.*','a.nombre as nombremat','a.id as idagro')->get();
+
+
+     $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+        // 
+     return view('almacen.limpieza.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
         //
     }
 
@@ -326,6 +340,9 @@ return $pdf->stream('invoice');
     {
      $material=entradasalmacenlimpieza::findOrFail($id);
      $material->estado="Inactivo";
+     $decrementa=almacenlimpieza::findOrFail($material->id_material);
+      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+      $decrementa->update();
      $material->update();
      return Redirect::to('/almacen/entradas/limpieza');   
         //
@@ -341,7 +358,7 @@ return $pdf->stream('invoice');
         Excel::create('entradasalmacenlimpieza', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $salidas = entradasalmacenlimpieza::where('almacenlimpieza.estado','=','Activo')->join('almacenlimpieza','almacenlimpieza.id', '=', 'entradasalmacenlimpieza.id_material')->join('empleados as emp1', 'entradasalmacenlimpieza.entregado', '=', 'emp1.id')
+            $salidas = entradasalmacenlimpieza::where('entradasalmacenlimpieza.estado','=','Activo')->join('almacenlimpieza','almacenlimpieza.id', '=', 'entradasalmacenlimpieza.id_material')->join('empleados as emp1', 'entradasalmacenlimpieza.entregado', '=', 'emp1.id')
             ->join('empleados as emp2', 'entradasalmacenlimpieza.recibe_alm', '=', 'emp2.id')
             ->join('empresas_ceprozac as e', 'entradasalmacenlimpieza.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasalmacenlimpieza.provedor', '=', 'prov.id')

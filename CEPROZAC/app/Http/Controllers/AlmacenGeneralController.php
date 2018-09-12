@@ -157,7 +157,7 @@ $num = $num + 1;
       $almacen->update();
       return Redirect::to('almacen/general');
         //
-  }
+  } 
 
     /**
      * Remove the specified resource from storage.
@@ -195,8 +195,10 @@ $num = $num + 1;
     {
  /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
   //$lote = lote::findOrFail($id);
+        $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
+        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
-      $almacen= DB::table('lote')->where('lote.id', '=', $id)
+      $almacen= DB::table('lote')->where('lote.id', '=', $id)->where('cantidad_act','>','0')
       ->join( 'provedores as prov', 'lote.id_provedor','=','prov.id')
       ->join('productos as prod' ,'lote.id_producto','=','prod.id')
        ->join('calidad as cal' ,'lote.id_calidad','=','cal.id')
@@ -205,7 +207,7 @@ $num = $num + 1;
       ->select('lote.*','prov.nombre as nombreprov','prod.nombre as nomprod','prov.apellidos as apellidos','cal.nombre as calidadnombre','emp.formaEmpaque as empnombre','lote.id as loteid','alma.nombre as almanombre')->first();
 
 
-     return view("almacen.general.movimientos",["almacen"=>$almacen]);
+     return view("almacen.general.movimientos",["almacen"=>$almacen,"almacengeneral"=>$almacengeneral,"empleado"=>$empleado]);
     }
 
 }

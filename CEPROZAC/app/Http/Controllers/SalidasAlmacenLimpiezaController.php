@@ -212,6 +212,9 @@ class salidasalmacenlimpiezaController extends Controller
     {
      $material=salidasalmacenlimpieza::findOrFail($id);
      $material->estado="Inactivo";
+      $mat = almacenlimpieza::findOrFail($material->id_material);
+      $mat->cantidad= $mat->cantidad + $material->cantidad;
+      $mat->update();
      $material->update();
      return Redirect::to('/almacen/salidas/limpieza');
         //
