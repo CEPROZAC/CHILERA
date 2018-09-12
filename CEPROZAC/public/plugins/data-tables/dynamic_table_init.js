@@ -150,8 +150,10 @@ function fnFormatDetails2 ( oTable, nTr )
     sOut += '<tr><td><strong>Nombre:</strong></td><td>'+aData[1]+' </td></tr>';
     sOut += '<tr><td><strong>RFC:</strong></td><td>'+aData[2]+' </td></tr>';
     sOut += '<tr><td><strong>Regimen Fiscal:</strong></td><td>'+aData[3]+' </td></tr>';
+    sOut += '<tr><td><strong>Contacto:</strong></td><td>'+aData[11]+' </td></tr>';
     sOut += '<tr><td><strong>Telefono:</strong></td><td>'+aData[4]+' </td></tr>';
     sOut += '<tr><td><strong>Correo:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>Codigo Postal:</strong></td><td>'+aData[10]+' </td></tr>';
     sOut += '<tr><td><strong>Direccion de Facturación:</strong></td><td>'+aData[6]+' </td></tr>';
     sOut += '<tr><td><strong>Direccion de Entrega de Embarques:</strong></td><td>'+aData[7]+' </td></tr>';
     sOut += '<tr><td><strong>Asignación de Volumen de Venta por Año:</strong></td><td>'+aData[8]+' </td></tr>';
@@ -519,7 +521,7 @@ function fnFormatDetails7 ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Compra</strong></td><td> </td></tr>';
+    sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Compra</strong></td><td> </td></tr>';
     sOut += '<tr><td><strong>N° Recepción:</strong></td><td>'+aData[1]+' </td></tr>';
     sOut += '<tr><td><strong>Nombre de Recepción:</strong></td><td>'+aData[2]+' </td></tr>';
     sOut += '<tr><td><strong>Fecha de Compra:</strong></td><td>'+aData[3]+' </td></tr>';
@@ -530,7 +532,7 @@ function fnFormatDetails7 ( oTable, nTr )
     sOut += '<tr><td><strong>Recibio Compra:</strong></td><td>'+aData[8]+' </td></tr>';
     sOut += '<tr><td><strong>Observaciones de Compra:</strong></td><td>'+aData[9]+' </td></tr>';
     sOut += '<tr><td><strong>Total de Compra:</strong></td><td>'+aData[10]+' </td></tr>';
-     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Muestreo de Materia Prima</strong></td><td> </td></tr>';
+    sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Muestreo de Materia Prima</strong></td><td> </td></tr>';
     sOut += '<tr><td><strong>Producto:</strong></td><td>'+aData[11]+' </td></tr>';
     sOut += '<tr><td><strong>Calidad:</strong></td><td>'+aData[12]+' </td></tr>';
     sOut += '<tr><td><strong>Empaque:</strong></td><td>'+aData[13]+' </td></tr>';
@@ -538,20 +540,20 @@ function fnFormatDetails7 ( oTable, nTr )
     sOut += '<tr><td><strong>Pacas:</strong></td><td>'+aData[15]+' </td></tr>';
     sOut += '<tr><td><strong>Pacas a Revisar:</strong></td><td>'+aData[16]+' </td></tr>';
     sOut += '<tr><td><strong>Observaciones de Muestreo:</strong></td><td>'+aData[17]+' </td></tr>';
-     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Pesaje</strong></td><td> </td></tr>';
+    sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Pesaje</strong></td><td> </td></tr>';
     sOut += '<tr><td><strong>Bascula:</strong></td><td>'+aData[18]+' </td></tr>';
     sOut += '<tr><td><strong>Ticket:</strong></td><td>'+aData[19]+' </td></tr>';
     sOut += '<tr><td><strong>Realizo Pesaje:</strong></td><td>'+aData[20]+' </td></tr>';
 
     sOut += '<tr><td><strong>KG Recibidos:</strong></td><td>'+aData[21]+' </td></tr>';
     sOut += '<tr><td><strong>KG Enviados:</strong></td><td>'+aData[22]+' </td></tr>';
-        sOut += '<tr><td><strong>Diferencia:</strong></td><td>'+aData[23]+' </td></tr>';
-            sOut += '<tr><td><strong>Observaciones Pesaje:</strong></td><td>'+aData[24]+' </td></tr>';
-             sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Ubicación</strong></td><td> </td></tr>';
+    sOut += '<tr><td><strong>Diferencia:</strong></td><td>'+aData[23]+' </td></tr>';
+    sOut += '<tr><td><strong>Observaciones Pesaje:</strong></td><td>'+aData[24]+' </td></tr>';
+    sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Ubicación</strong></td><td> </td></tr>';
     sOut += '<tr><td><strong>Enviado a Ubicación:</strong></td><td>'+aData[25]+' </td></tr>';
-        sOut += '<tr><td><strong>Espacio Asignado:</strong></td><td>'+aData[26]+' </td></tr>';
-                sOut += '<tr><td><strong>Observaciónes de Ubicación:</strong></td><td>'+aData[27]+' </td></tr>';
-                 sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Fumigación</strong></td><td> </td></tr>';
+    sOut += '<tr><td><strong>Espacio Asignado:</strong></td><td>'+aData[26]+' </td></tr>';
+    sOut += '<tr><td><strong>Observaciónes de Ubicación:</strong></td><td>'+aData[27]+' </td></tr>';
+    sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de Fumigación</strong></td><td> </td></tr>';
     sOut += '<tr><td><strong>Fumigación N°:</strong></td><td>'+aData[28]+' </td></tr>';
     
 
@@ -616,29 +618,29 @@ $(document).ready(function() {
 
 function fnFormatDetails8 ( oTable, nTr )
 {
-     var aData = oTable.fnGetData( nTr );
-    var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-     sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de la Fumigación</strong></td><td> </td></tr>';
+   var aData = oTable.fnGetData( nTr );
+   var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+   sOut += '<tr><td>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;<strong>Informacion de la Fumigación</strong></td><td> </td></tr>';
 
-    sOut += '<tr><td><strong>N° Fumigación:</strong></td><td>'+aData[1]+' </td></tr>';
-    sOut += '<tr><td><strong>Fecha de Inicio:</strong></td><td>'+aData[2]+' </td></tr>';
-    sOut += '<tr><td><strong>Hora Inicial:</strong></td><td>'+aData[3]+' </td></tr>';
-    sOut += '<tr><td><strong>Fecha de Termino:</strong></td><td>'+aData[4]+' </td></tr>';
-    sOut += '<tr><td><strong>Hora de Termino:</strong></td><td>'+aData[5]+' </td></tr>';
-    sOut += '<tr><td><strong>Agroquimicos Aplicados:</strong></td><td>'+aData[6]+' </td></tr>';
-    sOut += '<tr><td><strong>Cantidad Aplicada:</strong></td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td><strong>Destino:</strong></td><td>'+aData[8]+' </td></tr>';
-    sOut += '<tr><td><strong>Almacén :</strong></td><td>'+aData[9]+' </td></tr>';
-       sOut += '<tr><td><strong>Producto :</strong></td><td>'+aData[10]+' </td></tr>';
-         sOut += '<tr><td><strong>Fumigador :</strong></td><td>'+aData[11]+' </td></tr>';
-               sOut += '<tr><td><strong>Estado :</strong></td><td>'+aData[12]+' </td></tr>';
-                  sOut += '<tr><td><strong>Plaga que Combate :</strong></td><td>'+aData[13]+' </td></tr>';
-                       sOut += '<tr><td><strong>Observaciones :</strong></td><td>'+aData[14]+' </td></tr>';
+   sOut += '<tr><td><strong>N° Fumigación:</strong></td><td>'+aData[1]+' </td></tr>';
+   sOut += '<tr><td><strong>Fecha de Inicio:</strong></td><td>'+aData[2]+' </td></tr>';
+   sOut += '<tr><td><strong>Hora Inicial:</strong></td><td>'+aData[3]+' </td></tr>';
+   sOut += '<tr><td><strong>Fecha de Termino:</strong></td><td>'+aData[4]+' </td></tr>';
+   sOut += '<tr><td><strong>Hora de Termino:</strong></td><td>'+aData[5]+' </td></tr>';
+   sOut += '<tr><td><strong>Agroquimicos Aplicados:</strong></td><td>'+aData[6]+' </td></tr>';
+   sOut += '<tr><td><strong>Cantidad Aplicada:</strong></td><td>'+aData[7]+' </td></tr>';
+   sOut += '<tr><td><strong>Destino:</strong></td><td>'+aData[8]+' </td></tr>';
+   sOut += '<tr><td><strong>Almacén :</strong></td><td>'+aData[9]+' </td></tr>';
+   sOut += '<tr><td><strong>Producto :</strong></td><td>'+aData[10]+' </td></tr>';
+   sOut += '<tr><td><strong>Fumigador :</strong></td><td>'+aData[11]+' </td></tr>';
+   sOut += '<tr><td><strong>Estado :</strong></td><td>'+aData[12]+' </td></tr>';
+   sOut += '<tr><td><strong>Plaga que Combate :</strong></td><td>'+aData[13]+' </td></tr>';
+   sOut += '<tr><td><strong>Observaciones :</strong></td><td>'+aData[14]+' </td></tr>';
 
 
-    sOut += '</table>';
+   sOut += '</table>';
 
-    return sOut;
+   return sOut;
 }
 
 $(document).ready(function() {

@@ -52,18 +52,29 @@
             </div>
 
             <div class="form-group">
+              <label class="col-sm-3 control-label">Contacto: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="contacto" type="text"   maxlength="30" onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$clientes->contacto}}" placeholder="Ingrese nombre de el contacto"/>
+                <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-               <select name="fiscal" value="">
-                 @if($clientes->fiscal=="Fisica")
-                 <option value='Fisica' selected>Fisica</option>
-                 <option value="Moral">Moral</option>
+                <select name="id_Regimen_Fiscal" >
+                 @foreach($regimenes as $regimen)
+                 @if($regimen->id == $clientes->fiscal)
+                 <option value='{{$regimen->id}}' selected>
+                   {{$regimen->nombre}}
+                 </option>   
                  @else
-                 <option value='Moral' selected>Moral</option>
-                 <option value="Fisica">Fisica</option>
+                 <option value='{{$regimen->id}}'>
+                   {{$regimen->nombre}}
+                 </option>
                  @endif
+                 @endforeach
                </select>
-               
              </div>
            </div>
 
@@ -83,6 +94,14 @@
             <div class="col-sm-6">
 
               <input name="email" name="email" value="{{ $clientes->email}}" required parsley-type="email" class="form-control mask" placeholder="Ingrese email de el cliente"/>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Codigo Postal: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+            <input name="codigo_Postal" type="text"  value="{{$clientes->codigo_Postal}}" maxlength="5" quitarEspacios(this);"  class="form-control"  required value="" placeholder="Ingrese Codigo Postal"/>
 
             </div>
           </div>
@@ -108,51 +127,35 @@
               <input name="cantidad_venta" value="{{ $clientes->cantidad_venta}}" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
             </div>      
             
-            <div class="form-group">
-             <div class="col-sm-2">
-              <select name="volumen_venta" value="">
-                @if($clientes->volumen_venta=="Kilogramos")
-                <option value='Kilogramos' selected>Kilogramos
-                </option>
-                <option value="Toneladas">Toneladas</option>
-                @else
-                <option value='Toneladas' selected>Toneladas
-                </option>
-                <option value="Kilogramos">Kilogramos</option>
-                @endif
-              </select>
-              
-            </div>   
-          </div>
-        </div>  
+          </div>  
 
 
 
 
-        <div class="form-row">    
-          <label class="col-sm-3 control-label">Nuevo Saldo Del Cliente: <strog class="theme_color">*</strog></label>
-          <div class="col-sm-2">
-            <div class="input-group">
-             <div class="input-group-addon">$</div>
+          <div class="form-row">    
+            <label class="col-sm-3 control-label">Nuevo Saldo Del Cliente: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-2">
+              <div class="input-group">
+               <div class="input-group-addon">$</div>
 
-             
-             <input name="saldocliente" maxlength="9" type="number" value="1000.00" value="{{ $clientes->saldocliente}}" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+
+               <input name="saldocliente" maxlength="9" type="number" value="1000.00" value="{{ $clientes->saldocliente}}" min="1" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
+             </div>
            </div>
          </div>
-       </div>
-       <!--/form-group-->
+         <!--/form-group-->
 
 
 
-       <div class="form-group">
-        <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <a href="/clientes" class="btn btn-default"> Cancelar</a>
-        </div>
-      </div><!--/form-group-->
-    </form>
-  </div><!--/porlets-content-->
-</div><!--/block-web-->
+         <div class="form-group">
+          <div class="col-sm-offset-7 col-sm-5">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/clientes" class="btn btn-default"> Cancelar</a>
+          </div>
+        </div><!--/form-group-->
+      </form>
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->

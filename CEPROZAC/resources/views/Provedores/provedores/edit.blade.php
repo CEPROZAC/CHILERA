@@ -37,16 +37,16 @@
             <input type="hidden" name="_method" value="PUT" />
 
             <div class="form-group">
-              <input name="nombreOculto" id="oculto" value="{{$provedores->nombre}}" hidden  />
+              <input name="nombreOculto" id="ocultoNombre" value="{{$provedores->nombre}}" hidden  />
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"   onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->nombre}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
+                <input name="nombre" type="text" id="nombre" onblur="validarProvedor();"   onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->nombre}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>
                 <span id="errorNombre" style="color:#FF0000;"></span>
               </div>
             </div>
 
             <div class="form-group">
-              <input name="apellidoOculto" id="oculto" value="{{$provedores->apellidos}}" hidden  />
+              <input name="apellidoOculto" id="ocultoApellidos" value="{{$provedores->apellidos}}" hidden  />
               <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="apellidos" type="text" id="apellidos"  onchange="mayus(this); quitarEspacios(this);" onblur="validarProvedor();"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$provedores->apellidos}}" maxlength="70" parsley-rangelength="[1,70]" placeholder="Ingrese nombre de la empresa"/>

@@ -40,6 +40,7 @@ Route::resource('empaques','FormaEmpaqueController');
 Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormulario");
 
 Route::resource('transportes','TransporteController');
+Route::resource('tractores','TractorController');
 Route::resource('cuentasEmpresasCEPROZAC','CuentasEmpresasCEPROZACController');
 
 Route::resource('contratos','ContratosController');

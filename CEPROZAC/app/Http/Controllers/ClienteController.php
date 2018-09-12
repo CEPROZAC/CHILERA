@@ -43,7 +43,10 @@ class ClienteController extends Controller
      */
     public function index()
     {
-      $cliente= DB::table('cliente')->where('estado','Activo')->get();
+      $cliente= DB::table('cliente')
+      ->join('regimen_fiscal','regimen_fiscal.id','=','cliente.id_Regimen_Fiscal')
+      ->select('cliente.*','regimen_fiscal.nombre as RegimenFiscal')
+      ->where('cliente.estado','Activo')->get();
       return view('clientes.index', ['cliente' => $cliente]);
     }
 
@@ -132,9 +135,11 @@ class ClienteController extends Controller
         $cliente= new Cliente;
         $cliente->nombre=$formulario->get('nombre');
         $cliente->rfc=$formulario->get('rfc');
-        $cliente->fiscal=$formulario->get('fiscal');
+        $cliente->id_Regimen_Fiscal=$formulario->get('id_Regimen_Fiscal');
         $cliente->telefono=$formulario->get('telefono');
         $cliente->email=$formulario->get('email');
+        $cliente->codigo_Postal=$formulario->get('codigo_Postal');
+        $cliente->contacto=$formulario->get('contacto');
         $cliente->direccion_fact=$formulario->get('direccion_fact');
         $cliente->direccion_entr=$formulario->get('direccion_entr');
         $cliente->cantidad_venta=$formulario->get('cantidad_venta');
@@ -169,7 +174,8 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-      return view("clientes.edit",["clientes"=>Cliente::findOrFail($id)]);
+      $regimenes = DB::table('regimen_fiscal')->where('estado','=','Activo')->get();
+      return view("clientes.edit",["clientes"=>Cliente::findOrFail($id), 'regimenes'=>$regimenes]);
         //
     }
 
@@ -186,9 +192,11 @@ class ClienteController extends Controller
 
       $cliente->nombre=$request->get('nombre');
       $cliente->rfc=$request->get('rfc');
-      $cliente->fiscal=$request->get('fiscal');
+      $cliente->id_Regimen_Fiscal=$request->get('id_Regimen_Fiscal');
       $cliente->telefono=$request->get('telefono');
       $cliente->email=$request->get('email');
+      $cliente->codigo_Postal=$request->get('codigo_Postal');
+      $cliente->contacto=$request->get('contacto');
       $cliente->direccion_fact=$request->get('direccion_fact');
       $cliente->direccion_entr=$request->get('direccion_entr');
       $cliente->cantidad_venta=$request->get('cantidad_venta');
@@ -224,22 +232,16 @@ class ClienteController extends Controller
         Excel::create('clientes', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-            $clientes = Cliente::select('nombre','rfc','fiscal', 'telefono', 'email', 'direccion_fact', 'direccion_entr', 'cantidad_venta','volumen_venta', 'email', 'saldocliente')
-            ->where('estado', 'Activo')
+            $clientes = Cliente::
+            join('regimen_fiscal', 'regimen_fiscal.id','=','cliente.id_Regimen_Fiscal')
+            ->select('cliente.nombre','cliente.rfc','cliente.contacto','regimen_fiscal.nombre as  RegimenFiscal', 'cliente.telefono', 'cliente.email','cliente.codigo_Postal', 'cliente.direccion_fact', 'cliente.direccion_entr', 'cantidad_venta','cliente.volumen_venta', 'cliente.email', 'cliente.saldocliente','cliente.codigo_Postal')
+            ->where('cliente.estado', 'Activo')
             ->get();       
             $sheet->fromArray($clientes);
-            $sheet->row(1,['Nombre','RFC','Regimen Fiscal' ,'Teléfono','Email','Dirección de Facturación','Dirección de Entrega de Embarque','Asignación de Cantidad de Venta por Año',' Asignación de Volumen de Venta por Año','Saldo Cliente $',]);
+            $sheet->row(1,['Nombre','RFC','Contacto', 'Regimen Fiscal' ,'Teléfono','Email','Codigo Postal','Dirección de Facturación','Dirección de Entrega de Embarque','Asignación de Cantidad de Venta por Año',' Asignación de Volumen de Venta por Año','Saldo Cliente $']);
             $sheet->setOrientation('landscape');
             
-            /*    
-            $objDrawing = new PHPExcel_Worksheet_Drawing;
-            $objDrawing->setPath(public_path('images\logoCeprozac.jpg')); //your image path
-            $objDrawing->setCoordinates('E20');
-            $objDrawing->setWorksheet($sheet);
-            $objDrawing->setResizeProportional(true);
-            $objDrawing->setWidthAndHeight(260,220);
-            $objDrawing->setOffsetX(200);
-*/
+
           });
         })->export('xls');
       }

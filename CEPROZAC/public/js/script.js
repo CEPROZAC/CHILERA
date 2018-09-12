@@ -234,7 +234,7 @@ function validarFecha2(){
 function validarFechas(){
 
 
-  alert("entre");
+
   var fecha1 =document.getElementById('fechaInicio').value;
   var fecha2= document.getElementById('fechaFin').value;
   var FechaIngreso= document.getElementById('FechaIngreso').value;
@@ -247,11 +247,11 @@ function validarFechas(){
 
   }
 
-  alert(moment('2013-02-03', 'YYYY-MM-DD').diff(moment('2013-02-06', 'YYYY-MM-DD'), 'days'));
+ // alert(moment('2013-02-03', 'YYYY-MM-DD').diff(moment('2013-02-06', 'YYYY-MM-DD'), 'days'));
 
 
-  var fechaF =   moment(fecha1).format('YYYY-DD-MM');
-  var fechaF2 =   moment(fecha2).format('YYYY-DD-MM');
+ var fechaF =   moment(fecha1).format('YYYY-DD-MM');
+ var fechaF2 =   moment(fecha2).format('YYYY-DD-MM');
 
 
 
@@ -343,12 +343,11 @@ function doSearch()
 
      nombre = nombre.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
 
-     alert(nombre);
+   
 
      
      apellidos = apellidos.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
 
-     alert(apellidos);
 
 
 
@@ -375,7 +374,7 @@ function doSearch()
     }
     else {
 
-      alert("entre en else");
+    //  alert("entre en else");
       document.getElementById("errorNombre").innerHTML = "";
       document.getElementById('submit').disabled=false;
 

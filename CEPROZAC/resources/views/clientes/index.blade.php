@@ -63,7 +63,8 @@
                   <th style="display:none;">Asignación de Volumen de Venta por Año</th>
                   
                   <th style="display:none;">saldocliente</th>
-                  
+                  <th style="display:none;">CP</th>
+                  <th style="display:none;">Contacto</th>
                   <td><center><b>Editar</b></center></td>
                   <td><center><b>Borrar</b></center></td>
                 </tr>
@@ -74,13 +75,15 @@
 
                   <td>{{$clientes->nombre}} </td>
                   <td>{{$clientes->rfc}} </td>
-                  <td style="display:none;" >{{$clientes->fiscal}} </td>              
+                  <td style="display:none;" >{{$clientes->RegimenFiscal}} </td>              
                   <td>{{$clientes->telefono}} </td>
                   <td>{{$clientes->email}}</td>
                   <td style="display:none;" >{{$clientes->direccion_fact}}</td>
                   <td style="display:none;" >{{$clientes->direccion_entr}}</td>
                   <td style="display:none;" >{{$clientes->cantidad_venta}} {{$clientes->volumen_venta}} </td>
                   <td style="display:none;" >${{$clientes-> saldocliente}}</td>
+                  <th style="display:none;">{{$clientes->codigo_Postal}}</th>
+                  <th style="display:none;">{{$clientes->contacto}}</th>
 
                   <td>  <a href="{{URL::action('ClienteController@edit',$clientes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
@@ -107,6 +110,8 @@
               <th style="display:none;">Asignación de Volumen de Venta por Año</th>
               
               <th style="display:none;">saldocliente</th>
+              <th style="display:none;">CP</th>
+              <th style="display:none;">Contacto</th>
               
               <td><center><b>Editar</b></center></td>
               <td><center><b>Borrar</b></center></td>

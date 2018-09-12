@@ -50,6 +50,7 @@
               </div>
             </div>
 
+
             <input name="rfcOculto" id="oculto"  hidden  />
             <div class="form-group">
               <label class="col-sm-3 control-label">RFC: <strog class="theme_color">*</strog></label>
@@ -60,29 +61,34 @@
               </div>
             </div>
 
-            
+
+
             <div class="form-group">
-              <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Contacto: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="fiscal" class="form-control select2"  value="{{Input::old('fiscal')}}">
-                  
-                  
-                  @foreach($regimen_fiscal as $regimen)
-                  <option value='{{$regimen->id}}'>
-                    {{$regimen->nombre}}
-                  </option>
-                  
-                  @endforeach
-                </select>
-                
+                <input name="contacto" type="text"  value="{{Input::old('contacto')}}" maxlength="30" onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="" placeholder="Ingrese nombre de el contacto"/> 
               </div>
             </div>
 
 
-            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Regimen Fiscal: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <select name="id_Regimen_Fiscal" class="form-control select2"  value="{{Input::old('fiscal')}}">
+
+                  @foreach($regimen_fiscal as $regimen)
+                  <option value='{{$regimen->id}}'>
+                    {{$regimen->nombre}}
+                  </option>
+                  @endforeach
+                </select>
+
+              </div>
+            </div>
 
 
-            
+
+
             <div class="form-group">
               <label class="col-sm-3 control-label">Telefono:</label>
               <div class="col-sm-6">
@@ -102,6 +108,17 @@
               </div>    
             </div>
 
+
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Codigo Postal: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+              <input name="codigo_Postal" type="text"  value="{{Input::old('codigo_Postal')}}" maxlength="30"   class="form-control"  required value="" placeholder="Ingrese Codigo Postal"/>
+                <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
+              </div>
+            </div>
+
+
             <div class="form-group">
               <label class="col-sm-3 control-label">Dirección de Facturación: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
@@ -109,6 +126,8 @@
                 <div class="text-danger" id='error_dreccion_fac'>{{$errors->formulario->first('direccion_fact')}}</div>
               </div>
             </div>
+
+
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Dirección de Entrega de Embarques: <strog class="theme_color">*</strog></label>
@@ -124,7 +143,7 @@
                 <input name="cantidad_venta" maxlength="9" type="text" value="{{Input::old('cantidad_venta')}}" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="200" class="form-control currency" required value="" placeholder="Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
                 <div class="text-danger" id='error_cantidad'>{{$errors->formulario->first('cantidad_venta')}}</div>
               </div>      
-              
+
               <div class="form-group">
                <div class="col-sm-2">
                  <select name="volumen_venta" value="{{Input::old('volumen_venta')}}">
@@ -138,7 +157,7 @@
                    <option value="Kilogramos">Kilogramos</option>
                    @endif
                  </select>
-                 
+
                </div>   
              </div>
            </div>
@@ -153,7 +172,7 @@
               <div class="input-group">
                <div class="input-group-addon">$</div>
 
-               
+
                <input name="saldocliente" maxlength="9" type="number" value="{{Input::old('saldocliente')}}" min="0" max='9999999' step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Saldo Inicial" onkeypress=" return soloNumeros(event);"/>
              </div>
            </div>
