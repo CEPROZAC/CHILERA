@@ -27,7 +27,7 @@ class salidasagroquimicosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
         $salida= DB::table('salidasagroquimicos')->where('salidasagroquimicos.estado','=','Activo')
         ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
@@ -51,6 +51,8 @@ class salidasagroquimicosController extends Controller
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
         $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+         $invernadero=DB::table('invernaderos')->where('estado','=' ,'Activo')->get();
+          $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
 
         $cuenta = count($material);
         
@@ -70,7 +72,7 @@ class salidasagroquimicosController extends Controller
          return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
 
      }else{
-         return view("almacen.agroquimicos.salidas.create",["material"=>$material],["empleado"=>$empleado]);
+         return view("almacen.agroquimicos.salidas.create",["material"=>$material],["empleado"=>$empleado,"invernadero"=>$invernadero,"almacenes"=>$almacenes]);
      }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
@@ -112,6 +114,7 @@ class salidasagroquimicosController extends Controller
             // print_r($first = $name[$y]);
             $material->fecha=$first = $name[$y];
             $material->estado="Activo";
+              $material->modulos_aplicados=$request->get('num_modulos');
             $y = $y + 1;
             $material->save();
             $num = $num + 1;
@@ -143,8 +146,10 @@ class salidasagroquimicosController extends Controller
         $salida = salidasagroquimicos::findOrFail($id);
         $material = almacenagroquimicos::findOrFail($salida->id_material);
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+        $invernadero=DB::table('invernaderos')->where('estado','=' ,'Activo')->get();
+        $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
         $materiales=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-        return view("almacen.agroquimicos.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales]);
+        return view("almacen.agroquimicos.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes,'invernadero'=>$invernadero]);
 
         //
     }
@@ -187,6 +192,7 @@ class salidasagroquimicosController extends Controller
             // print_r($first = $name[$y]);
        $salida->entrego=$request->get('entrego');
        $salida->recibio=$request->get('recibio');
+       $material->modulos_aplicados=$request->get('num_modulos');
        $salida->tipo_movimiento=$first = $name[$y];
        $y = $y + 1;
             // print_r($first = $name[$y]);

@@ -15,12 +15,13 @@ class AlmacenGeneralMigration extends Migration
         Schema::create('almacengeneral', function (Blueprint $table) {
            $table->increments('id');
          $table->string('nombre');
-         $table->integer('capacidad');
+         $table->integer('capacidad')->nullable();
          $table->string('medida')->nullable();
-         $table->string('total_ocupado');
-         $table->string('total_libre');
-          $table->string('esp_ocupado');
-         $table->string('esp_libre');
+         $table->string('ubicacion')->nullable();
+         $table->string('total_ocupado')->nullable();
+         $table->string('total_libre')->nullable();
+          $table->string('esp_ocupado')->nullable();
+         $table->string('esp_libre')->nullable();
          $table->string('descripcion')->nullable();
          $table->string('estado');
          $table->timestamps();

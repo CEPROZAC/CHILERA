@@ -25,10 +25,12 @@
             <div class="col-md-12">
               <div class="btn-group pull-right">
                 <b>
-
+ 
 
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.general.create')}}"style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Almacén"> <i class="fa fa-plus"></i> Registrar Almacén </a>
+
+                                        <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacengeneral.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
 
                   </div>
@@ -48,8 +50,9 @@
                   <th>Nombre </th>
                   <th>Capacidad </th>
                   <th>Descripción </th>
-                  <th>Espacio Ocupado </th>
-                  <th>Espacio Libre </th>
+                  <th>Ubicación </th>
+                  <td style="display:none;" >Espacio Ocupado </th>
+                 <td style="display:none;" >Espacio Libre </th>
                   <th style="display:none;" >Espacios Ocupados Asignados</th>
                   <th style="display:none;" >Espacios Libres Asignados</th>
                   <th style="display:none;" >Estado</th>  
@@ -65,9 +68,10 @@
                   
                   <td>{{$almacenes->nombre}} </td>
                   <td>{{$almacenes->capacidad}} {{$almacenes->medida}} </td>            
-                  <td>{{$almacenes->descripcion}} </td>
-                  <td>{{$almacenes->total_ocupado}} {{$almacenes->medida}}</td>
-                  <td>{{$almacenes->total_libre}} {{$almacenes->medida}}</td>
+                  <td>{{$almacenes->descripcion}} </td> 
+                  <td>{{$almacenes->ubicacion}} </td>
+                 <td style="display:none;" >{{$almacenes->total_ocupado}} {{$almacenes->medida}}</td>
+                 <td style="display:none;" >{{$almacenes->total_libre}} {{$almacenes->medida}}</td>
                   <td style="display:none;" >{{$almacenes->esp_ocupado}} </td>
                   <td style="display:none;" >{{$almacenes->esp_libre}}</td>
                   <td style="display:none;" >{{$almacenes->estado}}</td>
@@ -93,8 +97,9 @@
                   <th>Nombre </th>
                   <th>Capacidad </th>
                   <th>Descripción </th>
-                  <th>Espacio Ocupado </th>
-                  <th>Espacio Libre </th>
+                  <th>Ubicación </th>
+                  <td style="display:none;" >Espacio Ocupado </th>
+                  <td style="display:none;" >Espacio Libre </th>
                   <th style="display:none;" >Espacios Ocupados Asignados</th>
                   <th style="display:none;" >Espacios Libres Asignados</th>
                   <th style="display:none;" >Estado</th> 

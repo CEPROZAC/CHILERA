@@ -112,6 +112,7 @@ Route::get('movimientos/{id}', array('as'=> '/movimientos','uses'=>'AlmacenGener
 Route::get('verentradas/{id}', array('as'=> '/verentradas','uses'=>'entradas_almacengeneralController@verEntradas'));
 Route::resource('almacen/general/entradas','entradas_almacengeneralController');
 Route::resource('almacen/general/salidas','salidas_almacengeneral'); 
+Route::get('descargar-almacen-general', 'AlmacenGeneralController@excel')->name('almacengeneral.excel');
 
 ////
 
@@ -172,6 +173,13 @@ Route::get('vercompra/{id}', array('as'=> '/vercompra','uses'=>'RecepcionCompraC
 Route::get('pdfrecepcion/{id}', array('as'=> '/pdfrecepcion','uses'=>'RecepcionCompraController@invoice'));
 Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compras.recepcion.excel');
 //////////////////////////////////
+
+//////INVERNADEROS////
+Route::resource('invernaderos','invernaderoscontroller');
+Route::get('descargar-invernaderos', 'invernaderoscontroller@excel')->name('invernaderos.excel');
+
+
+//////////
 
 Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');
 
