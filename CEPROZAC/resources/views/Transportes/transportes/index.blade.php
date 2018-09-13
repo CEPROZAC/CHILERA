@@ -22,7 +22,7 @@
   </thead>
   <tbody>
     @foreach($vehiculos  as $vehiculo)
-    {{$metodo->calcularFecha($vehiculo->vigencia_Seguro) }}
+    <!--{{$metodo->calcularFecha($vehiculo->vigencia_Seguro) }}-->
     @if( $metodo->calcularFecha($vehiculo->vigencia_Seguro) <= 0 )
 
     <tr class="gradeA">
@@ -38,13 +38,13 @@
       <td style="background-color: #FFE4E1;">Contrato vencido hace {{ abs($metodo->calcularFecha($vehiculo->vigencia_Seguro))}} dias</td>
       <td style="background-color: #FFE4E1;"><center><a class="btn btn-info btn-sm" href="{{URL::action('TransporteController@verTransportes',$vehiculo->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
 
-      
+
       <td style="background-color: #FFE4E1;"> 
         <a href="{{URL::action('TransporteController@edit',$vehiculo->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
       </td>
       <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$vehiculo->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
       </td>
-      
+
     </tr>
     @else 
     <tr class="gradeA">
@@ -60,13 +60,13 @@
       <td>Contrato por vencer en {{ $metodo->calcularFecha($vehiculo->vigencia_Seguro)}} dias</td>
       <td><center><a class="btn btn-info btn-sm" href="{{URL::action('TransporteController@verTransportes',$vehiculo->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
 
-      
+
       <td> 
         <a href="{{URL::action('TransporteController@edit',$vehiculo->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
       </td>
       <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$vehiculo->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
       </td>
-      
+
     </tr>
     @endif
     @include('Transportes.transportes.modal')

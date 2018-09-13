@@ -13,27 +13,31 @@ class TransportesTableSeeder extends Seeder
     {
 
 
+
+
+
+
     	DB::table('transportes')->insert([
     		'nombre_Unidad' => 'TORTON KENWORTH', 
     		'placas' => '65AA4N',
-    		'no_Serie' =>   '3WKADE60X7YF505671' ,
+    		'no_Serie' =>   '3WKADE60X7YF505671',
     		'poliza_Seguro' => '2160120438117',
     		'vigencia_Seguro' => '19/07/2019',
     		'aseguradora' => 'INBURSA',
-    		'm3_Unidad' => '0' ,
-    		'capacidad' => '0' ,
-    		'chofer_id' => '1' ,
+    		'm3_Unidad' => '0',
+    		'capacidad' => '0',
+    		'chofer_id' => '1',
     		'estado'=>'Activo',]);
 
 
     	DB::table('transportes')->insert([
     		'nombre_Unidad' => 'TORTON MERCEDES', 
     		'placas' => 'ZB2587A',
-    		'no_Serie' =>   '3AM68532150025917' ,
-    		'poliza_Seguro' => '0650060145' ,
+    		'no_Serie' =>   '3AM68532150025917',
+    		'poliza_Seguro' => '0650060145',
     		'vigencia_Seguro' => '25/11/2018',
-    		'aseguradora' => 'QUALITAS' ,
-    		'm3_Unidad' => '0' ,
+    		'aseguradora' => 'QUALITAS',
+    		'm3_Unidad' => '0',
     		'capacidad' => '0',
     		'chofer_id' => '1',
     		'estado'=>'Activo',]);
@@ -46,11 +50,11 @@ class TransportesTableSeeder extends Seeder
     		'placas' => 'ZF31269',
     		'no_Serie' =>   '4623450-B1',
     		'poliza_Seguro' => '0000000000' ,
-    		'vigencia_Seguro' => '00/00/0000' ,
+    		'vigencia_Seguro' => '00/00/0000',
     		'aseguradora' => 'NO DEFINIDA',
     		'm3_Unidad' => '0',
     		'capacidad' => '0',
-    		'chofer_id' => '1' ,
+    		'chofer_id' => '1',
     		'estado'=>'Activo',]);
 
 
@@ -59,8 +63,8 @@ class TransportesTableSeeder extends Seeder
     		'placas' => 'ZF31273',
     		'no_Serie' =>   'AC5JPJ-64043' ,
     		'poliza_Seguro' => '0000000000',
-    		'vigencia_Seguro' => '00/00/0000' ,
-    		'aseguradora' => 'NO DEFINIDA' ,
+    		'vigencia_Seguro' => '00/00/0000',
+    		'aseguradora' => 'NO DEFINIDA',
     		'm3_Unidad' => '0',
     		'capacidad' => '0',
     		'chofer_id' => '1',
@@ -82,13 +86,13 @@ class TransportesTableSeeder extends Seeder
     	DB::table('transportes')->insert([
     		'nombre_Unidad' => 'CAMION CITY STAR', 
     		'placas' => 'AD4458A',
-    		'no_Serie' =>   'LJ11KCBC7D8045978'
-    		'poliza_Seguro' => '0650060447'
-    		'vigencia_Seguro' => '21/12/2018'
-    		'aseguradora' => 'QUALITAS'
-    		'm3_Unidad' => '0'
-    		'capacidad' => '0'
-    		'chofer_id' => '1'
+    		'no_Serie' =>   'LJ11KCBC7D8045978',
+    		'poliza_Seguro' => '0650060447',
+    		'vigencia_Seguro' => '21/12/2018',
+    		'aseguradora' => 'QUALITAS',
+    		'm3_Unidad' => '0',
+    		'capacidad' => '0',
+    		'chofer_id' => '1',
     		'estado'=>'Activo',]);
 
     	DB::table('transportes')->insert([
@@ -100,7 +104,7 @@ class TransportesTableSeeder extends Seeder
     		'aseguradora' => 'QUALITAS' ,
     		'm3_Unidad' => '0',
     		'capacidad' => '0',
-    		'chofer_id' => '1' ,
+    		'chofer_id' => '1',
     		'estado'=>'Activo',]);
 
     	DB::table('transportes')->insert([
@@ -115,29 +119,8 @@ class TransportesTableSeeder extends Seeder
     		'chofer_id' => '1' ,
     		'estado'=>'Activo',]);
 
-
-
-/*ESte numero de s seguro no venia
-    	DB::table('transportes')->insert([
-    		'nombre_Unidad' => 'CAMION 3 TONELADAS', 
-    		'placas' => 'ZB2592A',
-    		'no_Serie' =>   '' ,
-    		'poliza_Seguro' => '',
-    		'vigencia_Seguro' => ''
-    		'aseguradora' => '',
-    		'm3_Unidad' => '',
-    		'capacidad' => '',
-    		'chofer_id' => '',
-    		'estado'=>'Activo',]);
-
-*/
-
-
-
-
-
-    	}
     }
+}
 
 
 

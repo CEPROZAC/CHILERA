@@ -15,9 +15,9 @@ class ProvedorMaterialesSeeder extends Seeder
     		'nombre' => 'MARCOS GONZALEZ RODRIGUEZ', 
     		'rfc' =>  'GORM600515H70',
     		'direccion' => 'C. LUIS ECHEVERRIA N°10, COL CENTRO, ZOQUITE, GUADALUPE, ZACATECAS',
-    		'telefono' => '(492)943-0260'
-    		'email' =>  'marcos-glez1@hotmail.com'
-    		'tipo' =>   'Refacciones'
+    		'telefono' => '(492)943-0260',
+    		'email' =>  'marcos-glez1@hotmail.com',
+    		'tipo' =>   'Refacciones',
     		'estado'=>'Activo',
     		]);
 
@@ -26,9 +26,9 @@ class ProvedorMaterialesSeeder extends Seeder
     		'nombre' => 'LIZBETH MUÑOZ RAMOS', 
     		'rfc' =>  'BARA720624H9A',
     		'direccion' => 'C.ZACATECAS N°10, EL LAMPOTAL, VETAGRANDE, ZACATECAS',
-    		'telefono' => '(492)102-5786'
-    		'email' =>  'nocorreo@desconocido.com'
-    		'tipo' =>   'Refacciones'
+    		'telefono' => '(492)102-5786',
+    		'email' =>  'nocorreo@desconocido.com',
+    		'tipo' =>   'Refacciones',
     		'estado'=>'Activo',
     		]);
 
@@ -36,9 +36,9 @@ class ProvedorMaterialesSeeder extends Seeder
     		'nombre' => 'JUAN MARTIN FAJARDO FLORES', 
     		'rfc' =>  ' FAFJ900530T21',
     		'direccion' => 'C.HIDALGO N° 64, TACOALECHE, GUADALUPE, ZACATECAS',
-    		'telefono' => '(492)943-0931'
-    		'email' =>  'mfajardof_05@hotmail.com'
-    		'tipo' =>   'Refacciones'
+    		'telefono' => '(492)943-0931',
+    		'email' =>  'mfajardof_05@hotmail.com',
+    		'tipo' =>   'Refacciones',
     		'estado'=>'Activo',
     		]);
 

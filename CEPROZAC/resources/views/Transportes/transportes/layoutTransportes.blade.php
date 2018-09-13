@@ -45,7 +45,7 @@
                     <button class="btn btn-sm btn-success tooltips" data-toggle="dropdown"><i class="fa fa-plus"></i> Registrar <span class="caret"></span> </button>
                     <ul class="dropdown-menu">
                       <li> <a href="transportes/create" data-toggle="tooltip" data-placement="bottom" data-original-title="Registrar nuevo Vehículo">Transportes</a> </li>
-                      <li> <a href="#">Trailers</a> </li>
+                      <li> <a href="tractores/create"  >Trailers</a> </li>
                       <li> <a href="#">Tractores</a> </li>  
                     </ul>
                   </div> 

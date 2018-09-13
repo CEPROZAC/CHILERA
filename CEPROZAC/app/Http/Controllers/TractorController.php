@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
+use DB;
 
 class TractorController extends Controller
 {
@@ -16,7 +17,11 @@ class TractorController extends Controller
      */
     public function index()
     {
-        return  view('Transportes.tractores.index');
+
+        $vehiculos= DB::table('transporte_sencillos')
+        ->select('transporte_sencillos.*')
+        ->where('transporte_sencillos.estado','Activo')->get();
+        return  view('Transportes.tractores.index', ['vehiculos'=> $vehiculos]);
     }
 
     /**
@@ -26,7 +31,7 @@ class TractorController extends Controller
      */
     public function create()
     {
-        //
+        return view('Transportes.tractores.create');
     }
 
     /**

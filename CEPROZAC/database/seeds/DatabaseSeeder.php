@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CalidadTableSeeder::class);
         $this->call(EmpleadosTableSeeder::class);
         $this->call(ClientesTableSeeder::class);
+        $this->call(ProvedorMaterialesSeeder::class);
+        $this->call(TransportesTableSeeder::class);
         Model::reguard();
     }
 }
