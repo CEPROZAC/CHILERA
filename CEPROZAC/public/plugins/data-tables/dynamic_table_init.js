@@ -450,12 +450,13 @@ function fnFormatDetails6 ( oTable, nTr )
     sOut += '<tr><td><strong>Nombre:</strong></td><td>'+aData[1]+' </td></tr>';
     sOut += '<tr><td><strong>Capacidad:</strong></td><td>'+aData[2]+' </td></tr>';
     sOut += '<tr><td><strong>Descripción:</strong></td><td>'+aData[3]+' </td></tr>';
-    sOut += '<tr><td><strong>Total de Espacio Ocupado:</strong></td><td>'+aData[4]+' </td></tr>';
-    sOut += '<tr><td><strong>Total de Espacio Libre:</strong></td><td>'+aData[5]+' </td></tr>';
-    sOut += '<tr><td><strong>Espacios Ocupados Asignados:</strong></td><td>'+aData[6]+' </td></tr>';
-    sOut += '<tr><td><strong>Espacios Libres Asignados:</strong></td><td>'+aData[7]+' </td></tr>';
-    sOut += '<tr><td><strong>Estado:</strong></td><td>'+aData[8]+' </td></tr>';
-    sOut += '<tr><td><strong>Almacén N°:</strong></td><td>'+aData[9]+' </td></tr>';
+    sOut += '<tr><td><strong>Ubicación:</strong></td><td>'+aData[4]+' </td></tr>';
+    sOut += '<tr><td><strong>Total de Espacio Ocupado:</strong></td><td>'+aData[5]+' </td></tr>';
+    sOut += '<tr><td><strong>Total de Espacio Libre:</strong></td><td>'+aData[6]+' </td></tr>';
+    sOut += '<tr><td><strong>Espacios Ocupados Asignados:</strong></td><td>'+aData[7]+' </td></tr>';
+    sOut += '<tr><td><strong>Espacios Libres Asignados:</strong></td><td>'+aData[8]+' </td></tr>';
+    sOut += '<tr><td><strong>Estado:</strong></td><td>'+aData[9]+' </td></tr>';
+    sOut += '<tr><td><strong>Almacén N°:</strong></td><td>'+aData[10]+' </td></tr>';
 
 
     sOut += '</table>';
@@ -474,7 +475,7 @@ $(document).ready(function() {
      */
      var nCloneTh = document.createElement( 'th' );
      var nCloneTd = document.createElement( 'td' );
-     nCloneTd.innerHTML = '<img src="/plugins/advanced-datatable/images/details_open.png">'; 
+     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">'; 
      nCloneTd.className = "center";
 
      $('#hidden-table-info6 thead tr').each( function () {
@@ -504,13 +505,13 @@ $(document).ready(function() {
         if ( oTable.fnIsOpen(nTr) )
         {
             /* This row is already open - close it */
-            this.src = "/plugins/advanced-datatable/images/details_open.png";
+            this.src = "plugins/advanced-datatable/images/details_open.png";
             oTable.fnClose( nTr );
         }
         else
         {
             /* Open this row */
-            this.src = "/plugins/advanced-datatable/images/details_close.png";
+            this.src = "plugins/advanced-datatable/images/details_close.png";
             oTable.fnOpen( nTr, fnFormatDetails6(oTable, nTr), 'details' );
         }
     } );
@@ -572,7 +573,7 @@ $(document).ready(function() {
      */
      var nCloneTh = document.createElement( 'th' );
      var nCloneTd = document.createElement( 'td' );
-     nCloneTd.innerHTML = '<img src="/plugins/advanced-datatable/images/details_open.png">'; 
+     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">'; 
      nCloneTd.className = "center";
 
      $('#hidden-table-info7 thead tr').each( function () {
@@ -602,13 +603,13 @@ $(document).ready(function() {
         if ( oTable.fnIsOpen(nTr) )
         {
             /* This row is already open - close it */
-            this.src = "/plugins/advanced-datatable/images/details_open.png";
+            this.src = "plugins/advanced-datatable/images/details_open.png";
             oTable.fnClose( nTr );
         }
         else
         {
             /* Open this row */
-            this.src = "/plugins/advanced-datatable/images/details_close.png";
+            this.src = "plugins/advanced-datatable/images/details_close.png";
             oTable.fnOpen( nTr, fnFormatDetails7(oTable, nTr), 'details' );
         }
     } );
@@ -729,7 +730,7 @@ $(document).ready(function() {
      */
      var nCloneTh = document.createElement( 'th' );
      var nCloneTd = document.createElement( 'td' );
-     nCloneTd.innerHTML = '<img src="/plugins/advanced-datatable/images/details_open.png">'; 
+     nCloneTd.innerHTML = '<img src="plugins/advanced-datatable/images/details_open.png">'; 
      nCloneTd.className = "center";
 
      $('#hidden-table-info9 thead tr').each( function () {
@@ -759,13 +760,13 @@ $(document).ready(function() {
         if ( oTable.fnIsOpen(nTr) )
         {
             /* This row is already open - close it */
-            this.src = "/plugins/advanced-datatable/images/details_open.png";
+            this.src = "plugins/advanced-datatable/images/details_open.png";
             oTable.fnClose( nTr );
         }
         else
         {
             /* Open this row */
-            this.src = "/plugins/advanced-datatable/images/details_close.png";
+            this.src = "plugins/advanced-datatable/images/details_close.png";
             oTable.fnOpen( nTr, fnFormatDetails9(oTable, nTr), 'details' );
         }
     } );

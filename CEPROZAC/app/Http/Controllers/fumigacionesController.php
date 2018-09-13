@@ -138,6 +138,7 @@ class fumigacionesController extends Controller
          $salida->entrego = $request->get('entrego_qui'); 
          $salida->tipo_movimiento ="Fumigacion de Materia Prima";
          $salida->fecha=$request->get('fechai');
+         $salida->estado="Activo";
          $salida->save();
          $y= $y + 1;
          $num = $num + 1;

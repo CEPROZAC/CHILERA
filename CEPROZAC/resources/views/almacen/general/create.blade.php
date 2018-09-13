@@ -48,10 +48,18 @@
               </div>
             </div>
 
+                        <div class="form-group">
+              <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Almacén" />
+
+              </div>
+            </div>
+
                 <div class="form-group">
               <label class="col-sm-3 control-label">Tipo de Unidad: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="medida" id="medida" type="text"  value="{{Input::old('medida')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Unidad (Casillero,Cajon,M2,Etc..):" />
+                <input name="medida" id="medida" type="text"  value="Casillero"  maxlength="70"  onchange="mayus(this);"  class="form-control"  required value="" placeholder="Tipo de Unidad (Casillero,Cajon,M2,Etc..):" />
               </div>
             </div>
 

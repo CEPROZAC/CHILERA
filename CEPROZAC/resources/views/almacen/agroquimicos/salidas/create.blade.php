@@ -79,6 +79,60 @@
          </div>
        </div>
 
+                            <div class="form-group">
+                      <label class="col-sm-3 control-label">Utilizado Para: <strog class="theme_color">*</strog></label>
+                      <div class="col-sm-3">
+                        <input type="radio" name="registrado" id="registrado" onchange="buscar1()" value="si"> Invernaderos<br>
+                        <input type="radio" name="registrado" id="registrado" onchange="buscar2()" value="no"> Almacén<br>
+                      </div>
+                    </div><!--/form-group-->
+
+<div class="form-group" id="invernaderodiv" style='display:none;'>
+                       <div class="form-group">
+            <label class="col-sm-3 control-label">Invernaderos : <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="invernadero" id="invernadero"  class="form-control select" value="" data-live-search="true"  >  
+                @foreach($invernadero as $invernaderos)
+                <option value="{{$invernaderos->nombre}}_{{$invernaderos->num_modulos}}">
+                 {{$invernaderos->nombre}}
+               </option>
+               @endforeach              
+             </select>
+             <span id="errorentrego" style="color:#FF0000;"></span>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div>
+
+                                <div class="form-group">
+            <label class="col-sm-3 control-label">Módulos: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="num_modulos" id="num_modulos"  class="form-control select" value="" data-live-search="true"  >                        
+             </select>
+             <span id="errorentrego" style="color:#FF0000;"></span>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div>
+
+         </div>
+
+<div class="form-group" id="almacendiv" style='display:none;'>
+                         <div class="form-group">
+            <label class="col-sm-3 control-label">Almacenes: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="almacen_general" id="almacen_general"  class="form-control select"  data-live-search="true"  >  
+                @foreach($almacenes as $almacen)
+                <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} ">
+                 {{$almacen->nombre}} - {{$almacen->ubicacion}}
+               </option>
+               @endforeach              
+             </select>
+             <span id="errorentrego" style="color:#FF0000;"></span>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div>
+         </div>
+
+
        <div class="form-group">
         <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
         <div class="col-sm-6">
@@ -86,12 +140,6 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Destino del Material"/>
-        </div>
-      </div>
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>
@@ -375,7 +423,19 @@ function llenado(){
   var fechav = document.getElementById('fecha').value;
   var recibiov =  document.getElementById('recibio').value;
   var entregadov = document.getElementById('entrego').value;
-  var destinov = document.getElementById('destino').value;
+  if(document.getElementById('registrado').value == "no"){
+    alert("entro");
+    var aux=document.getElementById('invernadero').value;
+    limite = "2",
+    separador = "_",
+    arregloDeSubCadenas = aux.split(separador, limite);
+            inverna=arregloDeSubCadenas[0];
+   var destinov = inverna;
+
+  }else{
+  var destinov = document.getElementById('almacen_general').value;
+
+  }
   var materialv = document.getElementById('id_materialk').value;
   var salidav = document.getElementById('scantidad').value;
 
@@ -440,8 +500,6 @@ function llenado(){
     var cantidades = document.getElementById("scantidad");
     var cantidadt = cantidades.value;
 
-    var dest = document.getElementById("destino");
-    var dest = dest.value;
 
     var mov = document.getElementById("movimiento");
     var movt = mov.value;
@@ -450,7 +508,7 @@ function llenado(){
     cell2.innerHTML = id;
     cell3.innerHTML = nombre;
     cell4.innerHTML = cantidadt;
-    cell5.innerHTML = dest;
+    cell5.innerHTML = destinov;
     cell6.innerHTML = movt;
     cell7.innerHTML = var3;
 
@@ -529,7 +587,6 @@ function codigos(){
 function limpiar(){
   document.getElementById("scantidad").value="1";
   document.getElementById("movimiento").value="";
-  document.getElementById("destino").value="";
   document.getElementById("descripcion").value="";
 
 
@@ -661,6 +718,76 @@ z ++;
    }
  }
 }
+
+function buscar1(){
+    document.getElementById('registrado').value="no";
+  document.getElementById('invernaderodiv').style.display = 'block';
+  document.getElementById('almacendiv').style.display = 'none';
+  document.getElementById('almacen_general').required = true;
+    document.getElementById('invernadero').required = false;
+
+
+}
+function buscar2(){
+  
+  document.getElementById('registrado').value="si";
+  document.getElementById('almacendiv').style.display = 'block';
+  document.getElementById('invernaderodiv').style.display = 'none';
+    document.getElementById('almacen_general').required = false;
+    document.getElementById('invernadero').required = true;
+
+          var select2 = document.getElementById('invernadero');
+  var selectedOption2 = select2.selectedIndex;
+  var cantidadtotal = select2.value;
+  limite = "2",
+  separador = "_",
+  arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+  nombre=arregloDeSubCadenas[0];
+  num_modulos=arregloDeSubCadenas[1];
+
+  for (var i = 1; i <= num_modulos; i++) {
+    var x = document.getElementById('num_modulos');
+    var option = document.createElement("option");
+    option.text = i;
+    x.add(option);
+  }
+}
+
+var select = document.getElementById('invernadero');
+  select.addEventListener('change',
+
+    function(){
+        var selectedOption = this.options[select.selectedIndex];
+   //   console.log(selectedOption.value + ': ' + selectedOption.text);
+    var cantidadtotal = select.value;
+  limite = "2",
+  separador = "_",
+  arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+  nombre=arregloDeSubCadenas[0];
+  num_modulos=arregloDeSubCadenas[1];
+
+
+  for (var i = 1; i <= num_modulos; i++) {
+        for (x= i; x <= num_modulos-1; x++) {
+              var z = document.getElementById('num_modulos');
+    var option = document.createElement("option");
+          if (x == i){
+                    option.text = i;
+    z.add(option);
+          }
+     
+     var aux =x+1;
+     var str1 = "";
+     var esp = "-";
+     var res = str1.concat(i,esp ,aux);
+     option.text = res;
+      z.add(option);
+
+
+
+    }
+  }
+  });
 
 
 

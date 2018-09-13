@@ -58,6 +58,7 @@ class almacengeneralController extends Controller
         $almacen= new almacengeneral;
         $almacen->nombre=$request->get('nombre');
         $almacen->capacidad=$request->get('capacidad');
+         $almacen->ubicacion=$request->get('ubicacion');
         $almacen->medida=$request->get('medida');
         $almacen->descripcion=$request->get('descripcion');
         $almacen->estado="Activo";
@@ -149,6 +150,7 @@ $num = $num + 1;
       $almacen->capacidad=$request->get('capacidad');
       $almacen->medida=$request->get('medida');
       $almacen->descripcion=$request->get('descripcion');
+       $almacen->ubicacion=$request->get('ubicacion');
       $almacen->estado="Activo";
         $almacen->esp_ocupado=$request->get('ocupado');
         $almacen->esp_libre=$request->get('libre'); 
@@ -209,5 +211,24 @@ $num = $num + 1;
 
      return view("almacen.general.movimientos",["almacen"=>$almacen,"almacengeneral"=>$almacengeneral,"empleado"=>$empleado]);
     }
+
+
+        public function excel()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+        Excel::create('almacen_general', function($excel) {
+          $excel->sheet('Excel sheet', function($sheet) {
+            $almacen = almacengeneral::select('nombre','capacidad','medida','ubicacion','descripcion')
+            ->where('estado', 'Activo')
+            ->get();       
+            $sheet->fromArray($almacen);
+            $sheet->row(1,['Nombre','Capacidad','Unidad de Medida','Ubicación','Descripción']);
+            $sheet->setOrientation('landscape');
+          });
+        })->export('xls');
+      }
 
 }

@@ -50,6 +50,14 @@
               </div>
             </div>
 
+                                    <div class="form-group">
+              <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="ubicacion" type="text"  value="{{$almacen->ubicacion}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Almacén" />
+
+              </div>
+            </div>
+
 
     <div class="form-group">
               <label class="col-sm-3 control-label">Tipo de Capacidad (Casillero,Cajon,Espacio,m2,etc..)) : <strog class="theme_color">*</strog></label>

@@ -313,6 +313,12 @@
                         </ul>
                       </li>
 
+                                            <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Invernaderos <span class="plus"><i class="fa fa-plus"></i></span> </a>
+                        <ul>
+                          <li> <a href="{{url('invernaderos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Invernaderos</b> </a> </li>
+                        </ul>
+                      </li>
+
 
                     </ul>
                   </div>
