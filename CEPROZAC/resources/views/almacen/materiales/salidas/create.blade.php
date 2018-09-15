@@ -79,7 +79,7 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
-
+ 
        <div class="form-group">
         <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
         <div class="col-sm-6">
@@ -87,12 +87,22 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Destino del Material"/>
-        </div>
-      </div>
+
+
+                     <div class="form-group">
+          <label class="col-sm-3 control-label">Destino : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="destino" id="destino"   class="form-control select2" >  
+              @foreach($almacenes as $al)
+              <option value="{{$al->nombre}}">
+               {{$al->nombre}}
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
+
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>

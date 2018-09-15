@@ -55,6 +55,7 @@
                    <th>Nombre de Material</th>
                     <th>Cantidad </th>
                     <th>Destino </th>
+                     <th>Módulos Aplicados </th>
                    <th>Entrego </th>
                   <th>Recibio</th>
                   <th>Tipo de Movimiento</th>  
@@ -70,6 +71,11 @@
                   <td>{{$salidas->nombre}} </td>
                    <td>{{$salidas->cantidad}} {{$salidas->medida}}</td>
                    <td>{{$salidas->destino}} </td>
+                   @if($salidas->modulos_aplicados == "")
+                   <td>No hay Módulos Seleccionados </td>
+                   @else
+                   <td>{{$salidas->modulos_aplicados}} </td>
+                   @endif
                    <td>  {{$salidas->emp1}} {{$salidas->ap1}}</td>
                    <td> {{$salidas->emp2}} {{$salidas->ap2}}</td>
                    <td>{{$salidas->tipo_movimiento}} </td>
@@ -96,6 +102,7 @@
                    <th>Nombre de Material</th>
                     <th>Cantidad </th>
                     <th>Destino </th>
+                     <th>Módulos Aplicados </th>
                    <th>Entrego </th>
                   <th>Recibio</th>
                   <th>Tipo de Movimiento</th>  

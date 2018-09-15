@@ -27,7 +27,7 @@ class salidasagroquimicosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() 
+    public function index()  
     {
         $salida= DB::table('salidasagroquimicos')->where('salidasagroquimicos.estado','=','Activo')
         ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
@@ -192,7 +192,7 @@ class salidasagroquimicosController extends Controller
             // print_r($first = $name[$y]);
        $salida->entrego=$request->get('entrego');
        $salida->recibio=$request->get('recibio');
-       $material->modulos_aplicados=$request->get('num_modulos');
+       $salida->modulos_aplicados=$request->get('num_modulos');
        $salida->tipo_movimiento=$first = $name[$y];
        $y = $y + 1;
             // print_r($first = $name[$y]);
@@ -243,10 +243,10 @@ return redirect('almacen/salidas/agroquimicos');
             $salidas = salidasagroquimicos::where('salidasagroquimicos.estado','=','Activo')->join('almacenagroquimicos','almacenagroquimicos.id', '=', 'salidasagroquimicos.id_material')
             ->join('empleados as e', 'salidasagroquimicos.entrego', '=', 'e.id')
             ->join('empleados as emp', 'salidasagroquimicos.recibio', '=', 'emp.id')
-            ->select('salidasagroquimicos.id', 'almacenagroquimicos.nombre', 'salidasagroquimicos.cantidad','almacenagroquimicos.medida', 'salidasagroquimicos.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasagroquimicos.tipo_movimiento','salidasagroquimicos.fecha')
+            ->select('salidasagroquimicos.id', 'almacenagroquimicos.nombre', 'salidasagroquimicos.cantidad','almacenagroquimicos.medida', 'salidasagroquimicos.destino','salidasagroquimicos.modulos_aplicados', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasagroquimicos.tipo_movimiento','salidasagroquimicos.fecha')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
+            $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Destino','Módulos Aplicados','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');
