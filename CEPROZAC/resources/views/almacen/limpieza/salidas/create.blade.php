@@ -86,12 +86,22 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Destino: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input name="destino" id="destino" value="" type="text"  maxlength="35" onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese el Destino del Material"/>
-        </div>
-      </div>
+
+
+               <div class="form-group">
+          <label class="col-sm-3 control-label">Destino : <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+            <select name="destino" id="destino"   class="form-control select2" >  
+              @foreach($limpieza as $limp)
+              <option value="{{$limp->nombre}}">
+               {{$limp->nombre}}
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
+       </div>
+
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>

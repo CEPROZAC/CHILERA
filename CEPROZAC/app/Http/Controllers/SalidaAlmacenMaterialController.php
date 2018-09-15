@@ -62,6 +62,7 @@ class salidaalmacenmaterialController extends Controller
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
         $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+        $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
 
         $cuenta = count($material);
         
@@ -81,7 +82,7 @@ class salidaalmacenmaterialController extends Controller
      return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
       }else{
-         return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]);
+         return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado,"almacenes"=>$almacenes]);
      }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
@@ -157,8 +158,9 @@ class salidaalmacenmaterialController extends Controller
         $salida = SalidaAlmacenMaterial::findOrFail($id);
         $material = AlmacenMaterial::findOrFail($salida->id_material);
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+        $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
         $materiales=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-        return view("almacen.materiales.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales]);
+        return view("almacen.materiales.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes]);
         
         //
     }

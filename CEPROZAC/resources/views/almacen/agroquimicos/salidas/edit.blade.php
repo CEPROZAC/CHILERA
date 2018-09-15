@@ -93,11 +93,11 @@
    </div>
  </div>
 
-                            <div class="form-group">
+                        <div class="form-group">
                       <label class="col-sm-3 control-label">Utilizado Para: <strog class="theme_color">*</strog></label>
                       <div class="col-sm-3">
-                        <input type="radio" name="registrado" id="registrado" onchange="buscar1()" value="si"> Invernaderos<br>
-                        <input type="radio" name="registrado" id="registrado" onchange="buscar2()" value="no"> Almacén<br>
+                        <input type="radio" name="registrado" id="registrado" onchange="buscar2()" value="si"> Invernaderos<br>
+                        <input type="radio" name="registrado" id="registrado" onchange="buscar1()" value="no"> Almacén<br>
                       </div>
                     </div><!--/form-group-->
 
@@ -107,25 +107,30 @@
             <div class="col-sm-6">
               <select name="invernadero" id="invernadero"  class="form-control select" value="" data-live-search="true"  >  
                 @foreach($invernadero as $invernaderos)
-                <option value="{{$invernaderos->nombre}}_{{$invernaderos->num_modulos}}">
-                 {{$invernaderos->nombre}}
-               </option>
+                @if($invernaderos->nombre == $salida->destino)
+                <option value="{{$invernaderos->nombre}}_{{$invernaderos->num_modulos}}" selected> {{$invernaderos->nombre}}</option>
+                @else
+                 <option value="{{$invernaderos->nombre}}_{{$invernaderos->num_modulos}}" > {{$invernaderos->nombre}}</option>
+                 @endif
                @endforeach              
              </select>
-             <span id="errorentrego" style="color:#FF0000;"></span>
+             <span id="errormodulo" style="color:#FF0000;"></span>
              <div class="help-block with-errors"></div>
            </div>
          </div>
 
-                                <div class="form-group">
+
+
+
+<div class="form-group">
             <label class="col-sm-3 control-label">Módulos: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="num_modulos" id="num_modulos"  class="form-control select" value="" data-live-search="true"  >                        
-             </select>
-             <span id="errorentrego" style="color:#FF0000;"></span>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div>
+  <div class="col-sm-3"><div id="dataList"> </div></div>
+  <div class="col-sm-3"><div id="radioBtn"></div></div>
+   <span id="errorentrego" style="color:#FF0000;"></span>
+</div>
+</div>
+
 
          </div>
 
@@ -135,9 +140,11 @@
             <div class="col-sm-6">
               <select name="almacen_general" id="almacen_general"  class="form-control select"  data-live-search="true"  >  
                 @foreach($almacenes as $almacen)
-                <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} ">
-                 {{$almacen->nombre}} - {{$almacen->ubicacion}}
-               </option>
+                @if($almacen->nombre - $almacen->ubicacion == $salida->destino)
+                <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} " selected>{{$almacen->nombre}} - {{$almacen->ubicacion}}</option>
+                @else
+                <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} " >{{$almacen->nombre}} - {{$almacen->ubicacion}}</option>
+                @endif
                @endforeach              
              </select>
              <span id="errorentrego" style="color:#FF0000;"></span>
@@ -274,6 +281,12 @@
       </div>
     </div>
 
+            <div class="form-group">
+      <div class="col-sm-6">
+        <input  id="num_modulos"  name="num_modulos" type="hidden"  maxlength="50"  class="form-control"  placeholder=""/>
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -298,8 +311,9 @@
 </div><!--/container clear_both padding_fix-->
 </html> 
 <script type="text/javascript">
-
+  var aux = [];
 function teclas(event) {
+
     tecla=(document.all) ? event.keyCode : event.which;
    // alert(tecla);
 
@@ -364,6 +378,33 @@ return false;
 }
 
 	  window.onload=function() {
+      var d = '{{$salida->modulos_aplicados}}';
+      var x = '{{$salida->destino}}';
+
+ 
+       if(d != ""){
+        document.getElementById('registrado').checked = true;
+          document.getElementById('registrado').value="no";
+          buscar2();
+
+               limite = "6",
+     separador = ",",
+     arregloDeSubCadenas = d.split(separador, limite); 
+
+            for (var i = 0; i <= arregloDeSubCadenas.length-1; i++) {
+              var au = arregloDeSubCadenas[i];
+               aux.push(au);
+              document.getElementById(au).checked = true;
+             // alert(au);
+  }
+
+        //alert ("invernadero");
+
+       }else{
+         document.getElementById('registrado').value="si";
+          buscar1();
+
+       }
      //stock agroquimicos
      var select2 = document.getElementById('id_materialk');
      var selectedOption2 = select2.selectedIndex;
@@ -454,6 +495,13 @@ return false;
 
 
 function agregar(){
+  if (document.getElementById('num_modulos').value == ""){
+     document.getElementById("errormodulo").innerHTML = "Seleccione al menos un modulo";
+    return false;
+
+   }
+    document.getElementById("errormodulo").innerHTML = "";
+
 	      var menos =document.getElementById("detalles").rows
     var r = menos.length - 2;
 if (r == 0){
@@ -697,21 +745,30 @@ z ++;
 }
 
 function buscar1(){
-    document.getElementById('registrado').value="no";
-  document.getElementById('invernaderodiv').style.display = 'block';
-  document.getElementById('almacendiv').style.display = 'none';
-  document.getElementById('almacen_general').required = true;
-    document.getElementById('invernadero').required = false;
 
-
-}
-function buscar2(){
-  
-  document.getElementById('registrado').value="si";
+    document.getElementById('registrado').value="si";
   document.getElementById('almacendiv').style.display = 'block';
   document.getElementById('invernaderodiv').style.display = 'none';
     document.getElementById('almacen_general').required = false;
     document.getElementById('invernadero').required = true;
+      document.getElementById('almacen_general').required = true;
+    document.getElementById('invernadero').required = false;
+        document.getElementById('num_modulos').required = false;
+         document.getElementById('num_modulos').value = "";
+
+
+
+
+
+}
+function buscar2(){
+      document.getElementById('registrado').value="no";
+  document.getElementById('invernaderodiv').style.display = 'block';
+  document.getElementById('almacendiv').style.display = 'none';
+        document.getElementById('almacen_general').required = false;
+    document.getElementById('invernadero').required = true;
+    document.getElementById('num_modulos').required = true;
+
 
           var select2 = document.getElementById('invernadero');
   var selectedOption2 = select2.selectedIndex;
@@ -721,13 +778,13 @@ function buscar2(){
   arregloDeSubCadenas = cantidadtotal.split(separador, limite);
   nombre=arregloDeSubCadenas[0];
   num_modulos=arregloDeSubCadenas[1];
+  var arreglo = [];
 
   for (var i = 1; i <= num_modulos; i++) {
-    var x = document.getElementById('num_modulos');
-    var option = document.createElement("option");
-    option.text = i;
-    x.add(option);
+       arreglo.push(i);
+
   }
+    displayData(arreglo);
 }
 
 var select = document.getElementById('invernadero');
@@ -743,28 +800,44 @@ var select = document.getElementById('invernadero');
   nombre=arregloDeSubCadenas[0];
   num_modulos=arregloDeSubCadenas[1];
 
-
+var arreglo = [];
   for (var i = 1; i <= num_modulos; i++) {
-        for (x= i; x <= num_modulos-1; x++) {
-              var z = document.getElementById('num_modulos');
-    var option = document.createElement("option");
-          if (x == i){
-                    option.text = i;
-    z.add(option);
-          }
-     
-     var aux =x+1;
-     var str1 = "";
-     var esp = "-";
-     var res = str1.concat(i,esp ,aux);
-     option.text = res;
-      z.add(option);
+    arreglo.push(i);
 
-
-
-    }
   }
+  displayData(arreglo);
   });
+
+  function displayData(arreglo)
+{
+
+  var data=arreglo;
+  var output="";
+  var dataList;
+  
+  for(var i=0; i< data.length; i++)
+  {
+    dataList=data[i];
+    output+= '<input type="checkbox" onchange="cambia('+dataList+')" id='+dataList+' value='+dataList+' name='+dataList+'>'  + '   ' + dataList+'   '+'<br><br>';
+    document.getElementById("dataList").innerHTML=output;
+   // document.getElementById("radioBtn").innerHTML=output2;
+  }
+}
+
+function cambia(x){
+ var z = document.getElementById(x).checked;
+ if (z == true){
+  aux.push(x);
+
+ }else{
+  var pos = aux.indexOf(x);
+  var elementoEliminado = aux.splice(pos, 1);
+
+ }
+ document.getElementById('num_modulos').value = aux;
+ var y = document.getElementById('num_modulos').value;
+}
+
 
 </script>
 

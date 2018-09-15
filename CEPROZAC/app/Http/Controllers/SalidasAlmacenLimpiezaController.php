@@ -11,6 +11,7 @@ use CEPROZAC\salidasalmacenlimpieza;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\almacenlimpieza;
+use CEPROZAC\ubicaciones_limpieza;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,7 +36,7 @@ class salidasalmacenlimpiezaController extends Controller
         ->select('salidasalmacenlimpieza.*','s.nombre','salidasalmacenlimpieza.*','s.medida','e.nombre as emp1','e.apellidos as ap1','emp.nombre as emp2','emp.apellidos as ap2')->get();
         // print_r($salida);
         return view('almacen.limpieza.salidas.index', ['salida' => $salida]);
-        //
+        // 
 
         //
     }
@@ -51,6 +52,7 @@ class salidasalmacenlimpiezaController extends Controller
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
         $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+         $limpieza=DB::table('ubicaciones_limpieza')->where('estado','=' ,'Activo')->get();
 
         $cuenta = count($material);
         
@@ -68,7 +70,7 @@ class salidasalmacenlimpiezaController extends Controller
             return view('almacen.limpieza.salidas.index', ['salida' => $salida])->with('message', 'No Hay Empleados Registrados, Favor de Dar de Alta Empleados Para Poder Acceder a Este Modulo'); 
 
         }else{
-           return view("almacen.limpieza.salidas.create",["material"=>$material],["empleado"=>$empleado]);
+           return view("almacen.limpieza.salidas.create",["material"=>$material],["empleado"=>$empleado,"limpieza"=>$limpieza]);
        }
 
         //
@@ -143,8 +145,9 @@ class salidasalmacenlimpiezaController extends Controller
                         $salida = salidasalmacenlimpieza::findOrFail($id);
         $material = almacenlimpieza::findOrFail($salida->id_material);
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+             $limpieza=DB::table('ubicaciones_limpieza')->where('estado','=' ,'Activo')->get();
         $materiales=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-        return view("almacen.limpieza.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales]);
+        return view("almacen.limpieza.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'limpieza'=>$limpieza]);
         //
     }
 
