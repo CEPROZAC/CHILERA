@@ -16,7 +16,7 @@ class CreateTransporteSencillosTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('descripcion');
-            $table->enum('tipo', ['montacarga', 'caja']);
+            $table->enum('tipo', ['tractor', 'caja']);
             $table->string('estado');
             $table->timestamps();
         });

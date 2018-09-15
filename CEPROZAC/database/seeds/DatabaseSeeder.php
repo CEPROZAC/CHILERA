@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(InvernaderosSeeder::class);
         $this->call(AlmacengeneralSeeder::class);
 
+        $this->call(TractoresTableSeeder::class);
+
         Model::reguard();
     }
 }

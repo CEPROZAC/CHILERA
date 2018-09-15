@@ -1,10 +1,7 @@
 <?php
 
 namespace CEPROZAC\Http\Controllers;
-
-
 use Illuminate\Http\Request;
-
 use CEPROZAC\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
@@ -16,8 +13,8 @@ use Maatwebsite\Excel\Facades\Excel;
 class BancoController extends Controller
 {
 
- public function __construct()
- {
+   public function __construct()
+   {
     $this->middleware('guest', ['except' => 'getLogout']);
 }
     /**
@@ -154,7 +151,6 @@ public function edit($id)
         select('id','nombre', 'estado')
         ->where('nombre','=',$nombre)
         ->get();
-
         return response()->json(
           $bancos->toArray());
 

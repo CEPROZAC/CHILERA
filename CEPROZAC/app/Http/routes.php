@@ -35,12 +35,9 @@ Route::resource('calidad','CalidadController');
 Route::resource('basculas','BasculaController');
 Route::resource('rol','RolEmpleadoController');
 Route::resource('clientes','ClienteController');
-Route::resource('mantenimiento','MantenimientoTransporteController');
 Route::resource('empaques','FormaEmpaqueController');
 Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormulario");
 
-Route::resource('transportes','TransporteController');
-Route::resource('tractores','TractorController');
 Route::resource('cuentasEmpresasCEPROZAC','CuentasEmpresasCEPROZACController');
 
 Route::resource('contratos','ContratosController');
@@ -53,7 +50,7 @@ Route::get('descargar-provedores', 'ProvedorController@excel')->name('provedores
 Route::get('descargar-contratos', 'ContratosController@excel')->name('contratos.excel');
 Route::get('descargar-EmpresasCEPROZAC', 'EmpresasCeprozacController@excel')->name('empresasCEPROZAC.excel');
 Route::get('ver-empresas/{id}', 'ProvedorController@verEmpresas')->name('provedores.verEmpresas');
-Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
+
 Route::get('ver-cuentas/{id}', 'EmpresasCeprozacController@verCuentas')->name('empresasCEPROZAC.verCuentas');
 
 Route::get('cuentasEmpresasCEPROZAC1/{id}','CuentasEmpresasCEPROZACController@create1')->name('empresasCEPROZAC1.create1');
@@ -64,11 +61,43 @@ Route::get('ver-InformacionEmpleado/{id}', 'EmpleadoController@verInformacion')-
 Route::get('rolesEspecificos/{id}', 'ContratosController@rolesEspecificos');
 
 Route::get('ultimo', 'ContratosController@ultimo');
+/*
+Rutas de transportes
+*/
+Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
+Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
+Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
+Route::resource('mantenimiento','MantenimientoTransporteController');
+
+Route::resource('transportes','TransporteController');
+Route::get('descargarTractores/{id}', 'TractorController@excel')->name('tractores.excel');
+
+Route::get('descargar-mantenimiento', 'MantenimientoTransporteController@excel')->name('mantenimiento.excel');
+
+/////////////Rutas de Tractores
+
+Route::resource('tractores','TractorController');
+
+Route::resource('mantenimientoTractores','MantenimientoTractoresController');
+Route::get('ver-mantenimientosTractores/{id}', 'TractorController@verMantenimientos')->name('tractores.verMantenimientos');
+
+
+
+Route::get('descargar-mantenimiento-tractor', 'MantenimientoTractoresController@excel')->name('mantenimiento.excel');
+
+Route::get('descargarMantenimientosTractores/{id}/{nombre}', 'TractorController@descargarMantenimientos')->name('transportes.descargarMantenimientosTractores');
+
+
+
+
+
+/*Terminan  Las rutas de transportes*/
+
 
 
 Route::get('ver-InformacionContrato/{id}', 'ContratosController@verInformacion')->name('contratos.verInformacion');
 
-Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
+
 
 
 Route::get('descargarCuentas/{id}/{nombre}', 'CuentasEmpresasCEPROZACController@descargarCuentas')->name('empresasCEPROZAC.descargarCuentas');
@@ -89,7 +118,7 @@ Route::get('descargar-bancos', 'BancoController@excel')->name('bancos.excel');
 Route::get('descargar-servicioBasculas', 'ServicioBasculaController@excel')->name('serviciosBascula.excel');
 
 Route::get('descargar-calidad', 'CalidadController@excel')->name('productos.calidad.excel');
-Route::get('descargar-mantenimiento', 'MantenimientoTransporteController@excel')->name('mantenimiento.excel');
+
 Route::get('descargar-empaques', 'FormaEmpaqueController@excel')->name('empaques.excel');
 Route::get('descargar-provedores-mat', 'ProvedorMaterialesController@excel')->name('provedores-mat.excel');
 

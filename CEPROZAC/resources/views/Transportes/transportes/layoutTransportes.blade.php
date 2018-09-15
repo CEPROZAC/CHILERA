@@ -35,8 +35,8 @@
                      <button class="btn btn-sm btn-info tooltips" data-toggle="dropdown"><i class="fa fa-eye"></i> Ver <span class="caret"></span> </button>
                      <ul class="dropdown-menu">
                        <li> <a href="{{URL::action('TransporteController@index')}}" data-toggle="tooltip" data-placement="bottom" data-original-title="Registrar nuevo Vehículo">Transportes</a> </li>
-                       <li> <a href="{{URL::action('TractorController@index')}}">Trailers</a> </li>
-                       <li> <a href="#">Tractores</a> </li>  
+                       <li> <a href="{{URL::action('TractorController@index')}}">Tractores</a> </li>
+
                      </ul>
                    </div> 
 
@@ -45,14 +45,19 @@
                     <button class="btn btn-sm btn-success tooltips" data-toggle="dropdown"><i class="fa fa-plus"></i> Registrar <span class="caret"></span> </button>
                     <ul class="dropdown-menu">
                       <li> <a href="transportes/create" data-toggle="tooltip" data-placement="bottom" data-original-title="Registrar nuevo Vehículo">Transportes</a> </li>
-                      <li> <a href="tractores/create"  >Trailers</a> </li>
-                      <li> <a href="#">Tractores</a> </li>  
+                      <li> <a href="tractores/create"  >Tractores</a> </li>
+
                     </ul>
                   </div> 
 
-                  <a class="btn btn-sm btn-warning tooltips" href="{{ route('transportes.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" 
-                  data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                  <div class="btn-group"  style="margin-right: 10px;">
+                    <button class="btn btn-sm btn-warning tooltips" data-toggle="dropdown"><i class="fa fa-plus"></i> Descargar <span class="caret"></span> </button>
+                    <ul class="dropdown-menu">
+                      <li> <a href="{{ route('transportes.excel')}}" data-toggle="tooltip" data-placement="bottom" data-original-title="Registrar nuevo Vehículo">Transportes</a> </li>
+                      <li> <a href="{{ route('tractores.excel')}}"  >Tractores</a> </li>
 
+                    </ul>
+                  </div> 
 
                 </div>
 

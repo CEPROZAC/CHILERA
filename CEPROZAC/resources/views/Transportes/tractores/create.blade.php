@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{route('transportes.store')}}" method="post" class="form-horizontal row-border"  parsley-validate novalidate  >
+          <form action="{{route('tractores.store')}}" method="post" class="form-horizontal row-border"  parsley-validate novalidate  >
             {{csrf_field()}}
 
             <div class="form-group">

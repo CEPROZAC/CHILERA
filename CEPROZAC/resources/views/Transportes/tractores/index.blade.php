@@ -1,10 +1,7 @@
 @inject('metodo','CEPROZAC\Http\Controllers\TransporteController')
 @extends('Transportes.transportes.layoutTransportes')
 @section('tablaContenido')
-@inject('metodo','CEPROZAC\Http\Controllers\TransporteController')
-@extends('Transportes.transportes.layoutTransportes')
-@section('tablaContenido')
-<table  cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info3">
+<table  class="display table table-bordered table-striped" id="dynamic-table">
   <thead>
     <tr>
       <th >Nombre Unidad </th>
@@ -18,22 +15,31 @@
     @foreach($vehiculos  as $vehiculo)
     <tr class="gradeA">
       <td>{{$vehiculo->nombre}} </td>
-      <td>{{$vehiculo->descripcion}} </td>
-      <td><center><a class="btn btn-info btn-sm" href="{{URL::action('TransporteController@verTransportes',$vehiculo->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
       <td> 
-        <a href="{{URL::action('TransporteController@edit',$vehiculo->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+        @if($vehiculo->descripcion =="")
+        No hay informacion disponible
+        @else
+        {{$vehiculo->descripcion}}
+        @endif
+
       </td>
-      <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$vehiculo->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+      <td><center><a class="btn btn-info btn-sm" href="{{URL::action('TractorController@verMantenimientos',$vehiculo->id)}}" role="button"><i class="fa fa-sign-in"></i></a></center></td>
+      <td> 
+        <center>
+          <a href="{{URL::action('TractorController@edit',$vehiculo->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+        </center>
+      </td>
+      <td><center> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$vehiculo->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a></center>
       </td>
 
     </tr>
 
-    @include('Transportes.transportes.modal')
+    @include('Transportes.tractores.modal')
     @endforeach
   </tbody>
   <tfoot>
     <tr>
-      <th></th>
+
       <th>Nombre Unidad </th>
       <th>Descripcion </th> 
       <th><center><b>Mantenimientos</b></center></th>
@@ -44,8 +50,5 @@
 </table>
 @endsection
 
-
-
-@endsection
 
 
