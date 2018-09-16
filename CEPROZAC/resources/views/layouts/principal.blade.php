@@ -139,6 +139,14 @@
                      @endif
                    </li>
 
+                   <li> <a href="{{url('tipoProvedores')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
+                     @if(Route::getCurrentRoute()->getName()=="tipoProvedores.index")
+                     <b  class="theme_color" >Tipo Proveedores</b></a>
+                     @else
+                     <b>Tipo Proveedores</b></a> 
+                     @endif
+                   </li>
+
                    <li> <a href="{{url('bancos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i>
 
                      @if(Route::getCurrentROute()->getName()=="bancos.index")
@@ -313,7 +321,7 @@
                         </ul>
                       </li>
 
-                                            <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Invernaderos <span class="plus"><i class="fa fa-plus"></i></span> </a>
+                      <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Invernaderos <span class="plus"><i class="fa fa-plus"></i></span> </a>
                         <ul>
                           <li> <a href="{{url('invernaderos')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Invernaderos</b> </a> </li>
                         </ul>

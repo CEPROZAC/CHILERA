@@ -357,3 +357,13 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 */
+
+
+/*
+Tipo Proveedores
+*/
+///////////////////
+
+Route::resource('tipoProvedores', 'TipoProvedoresController');
+
+Route::get('descargar_Tipo_Provedores', 'TipoProvedoresController@excel')->name('tipoProvedor.excel');
