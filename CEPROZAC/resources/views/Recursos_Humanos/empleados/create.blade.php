@@ -205,10 +205,6 @@
                   </div><!--validator-->
                 </div><!--user-profile-content-->
               </div><!--step-2-->
-
-              
-
-
             </div>
           </div>  <!--smartwizard-->            
         </form>

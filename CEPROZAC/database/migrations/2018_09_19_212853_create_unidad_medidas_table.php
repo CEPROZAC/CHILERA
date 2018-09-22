@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Invernaderos extends Migration
+class CreateUnidadMedidasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,8 @@ class Invernaderos extends Migration
      */
     public function up()
     {
-        Schema::create('invernaderos', function (Blueprint $table) {
+        Schema::create('unidad_medidas', function (Blueprint $table) {
             $table->increments('id');
-             $table->string('nombre'); 
-         $table->string('ubicacion')->nullable();
-         $table->string('num_modulos')->nullable();
-         $table->string('estado');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ class Invernaderos extends Migration
      */
     public function down()
     {
-        Schema::drop('invernaderos');
+        Schema::drop('unidad_medidas');
     }
 }
