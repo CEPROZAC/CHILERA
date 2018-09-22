@@ -112,83 +112,32 @@
     </div>  
 
     <div class="form-group">
-      <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
+      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
         <select name="medida" value="{{Input::old('medida')}}">
-          @if(Input::old('medida')=="Kilogramos")
-          <option value='Kilogramos' selected>Kilogramos
+          @if(Input::old('medida')=="KILOGRAMOS")
+          <option value='KILOGRAMOS' selected>KILOGRAMOS
           </option>
-          <option value="Toneladas">Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="Metros">Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value="Pastilla">Pastilla</option>
-          <option value="Perdigon">Perdigon</option>
-           <option value="Bulto" >Bulto</option>
-          @elseif(Input::old('medida')=="Toneladas")
-          <option value='Toneladas' selected>Toneladas
-          </option>
-          <option value="Litros">Litros</option>
-          <option value="Metros">Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          <option value="Pastilla">Pastilla</option>
-          <option value="Perdigon">Perdigon</option>
-           <option value="Bulto" >Bulto</option>
-          @elseif(Input::old('medida')=="Litros")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros" selected>Litros</option>
-          <option value="Metros">Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          <option value="Pastilla">Pastilla</option>
-          <option value="Perdigon">Perdigon</option>
-           <option value="Bulto" >Bulto</option>
-          @elseif(Input::old('medida')=="Metros")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="Metros" selected>Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          <option value="Pastilla">Pastilla</option>
-          <option value="Perdigon">Perdigon</option>
-           <option value="Bulto" >Bulto</option>
-          @elseif(Input::old('Unidades')=="Unidades")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="Metros" >Metros</option>
-          <option value="Unidades" selected>Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          <option value="Pastilla">Pastilla</option>
-          <option value="Perdigon">Perdigon</option>
-           <option value="Bulto" >Bulto</option>
-          @elseif(Input::old('Pastilla')=="Pastilla")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="Metros" >Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          <option value="Pastilla" selected>Pastilla</option>
-          <option value="Perdigon">Perdigon</option>
-           <option value="Bulto" >Bulto</option>
-                    @elseif(Input::old('Bulto')=="Bulto")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="Metros" >Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          <option value="Bulto" selected>Bulto</option>
-          <option value="Perdigon">Perdigon</option>
-          @else
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="Metros" >Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          <option value="Pastilla" >Pastilla</option>
-          <option value="Perdigon" selected>Perdigon</option>
-          <option value="Bulto" >Bulto</option>
+          <option value="LITROS">LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+    
+          @elseif(Input::old('medida')=="LITROS")
+          <option value="LITROS" selected>LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+          @elseif(Input::old('medida')=="METROS")
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" selected>METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
 
+          @else
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" >METROS</option>
+          <option value="UNIDADES" selected>UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
           @endif
         </select>
         
