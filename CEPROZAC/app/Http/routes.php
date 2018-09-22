@@ -23,9 +23,11 @@ Route::resource('empleados', 'EmpleadoController');
 Route::resource('empleadoRoles', 'EmpleadoRolesController');
 Route::resource('precioBasculas', 'PrecioBasculaController');
 Route::resource('home','HomeController');
+//PROVEEDOR DE MATERIALES
 Route::resource('provedores','ProvedorController');
 Route::resource('materiales/provedores','ProvedorMaterialesController');
 Route::post("materiales/provedores/validar", "ProvedorMaterialesController@validar");
+/////////////////////
 Route::resource('productos','ProductosController');
 Route::resource('bancos','BancoController');
 Route::resource('serviciosBascula','ServicioBasculaController');
@@ -207,6 +209,10 @@ Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compra
 Route::resource('invernaderos','invernaderoscontroller');
 Route::get('descargar-invernaderos', 'invernaderoscontroller@excel')->name('invernaderos.excel');
 
+
+//UNIDADES DE MEDIDA
+Route::resource('unidades_medida','unidadesmedidacontroller');
+Route::get('descargar-unidades', 'unidadesmedidacontroller@excel')->name('unidades_medida.excel');
 
 //////////
 

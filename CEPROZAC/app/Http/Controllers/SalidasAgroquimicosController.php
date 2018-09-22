@@ -29,13 +29,13 @@ class salidasagroquimicosController extends Controller
      */
     public function index()  
     {
-        $salida= DB::table('salidasagroquimicos')->where('salidasagroquimicos.estado','=','Activo')
-        ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
-        ->join('empleados as e', 'salidasagroquimicos.entrego', '=', 'e.id')
-        ->join('empleados as emp', 'salidasagroquimicos.recibio', '=', 'emp.id')
-        ->select('salidasagroquimicos.*','s.nombre','s.medida','e.nombre as emp1','e.apellidos as ap1','emp.nombre as emp2','emp.apellidos as ap2')->get();
+      $salida= DB::table('salidasagroquimicos')->where('salidasagroquimicos.estado','=','Activo')
+      ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
+      ->join('empleados as e', 'salidasagroquimicos.entrego', '=', 'e.id')
+      ->join('empleados as emp', 'salidasagroquimicos.recibio', '=', 'emp.id')
+      ->select('salidasagroquimicos.*','s.nombre','s.medida','e.nombre as emp1','e.apellidos as ap1','emp.nombre as emp2','emp.apellidos as ap2')->get();
         // print_r($salida);
-        return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
+      return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
 
         //
     }
@@ -48,35 +48,36 @@ class salidasagroquimicosController extends Controller
     public function create()
     {
 
-        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
-        $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-         $invernadero=DB::table('invernaderos')->where('estado','=' ,'Activo')->get();
-          $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
+      $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+      $invernadero=DB::table('invernaderos')->where('estado','=' ,'Activo')->get();
+      $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get(); 
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
-        $cuenta = count($material);
-        
+      $cuenta = count($material);
 
-        if (empty($material)){
-           $salida= DB::table('salidasagroquimicos')
-           ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
-           ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
+
+      if (empty($material)){
+       $salida= DB::table('salidasagroquimicos')
+       ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
+       ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
         // print_r($salida);
-           return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]); 
+       return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]); 
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
-       }else if (empty($empleado)) {
-         $salida= DB::table('salidasagroquimicos')
-         ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
-         ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
+     }else if (empty($empleado)) {
+       $salida= DB::table('salidasagroquimicos')
+       ->join('almacenagroquimicos as s', 'salidasagroquimicos.id_material', '=', 's.id')
+       ->select('salidasagroquimicos.*','s.nombre','salidasagroquimicos.*','s.medida')->get();
         // print_r($salida);
-         return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
+       return view('almacen.agroquimicos.salidas.index', ['salida' => $salida]);
 
      }else{
-         return view("almacen.agroquimicos.salidas.create",["material"=>$material],["empleado"=>$empleado,"invernadero"=>$invernadero,"almacenes"=>$almacenes]);
+       return view("almacen.agroquimicos.salidas.create",["material"=>$material],["empleado"=>$empleado,"invernadero"=>$invernadero,"almacenes"=>$almacenes,'unidades'=>$unidades]);
      }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
- }
+   }
         //
 
     /**
@@ -88,39 +89,55 @@ class salidasagroquimicosController extends Controller
     public function store(Request $request)
     {
 
-        $num = 1;
-        $y = 0;
-        $limite = $request->get('total');
-        while ($num <= $limite) {
-            $material= new salidasagroquimicos;
-            $producto = $request->get('codigo2');
-            $first = head($producto);
-            $name = explode(",",$first);
+      $num = 1;
+      $y = 0;
+      $limite = $request->get('total');
+      while ($num <= $limite) {
+        $material= new salidasagroquimicos;
+        $producto = $request->get('codigo2');
+        $first = head($producto);
+        $name = explode(",",$first);
             //$first = $name[0];
              //$first = $name[1];
-            
-            $material->id_material=$first = $name[$y];
-            $y = $y + 2;
-            $material->cantidad=$first = $name[$y];
-            $y = $y + 1;
+
+
+        $material->id_material=$first = $name[$y];
+        $y = $y + 2;
+        $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
+        $y = $y + 1;
+        //$material->medida=$first = $name[$y];
+        $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y];
+        //$material->medidaaux=$first = $name[$y];
+        $producto2 = $yy;
+        $name2 = explode("-",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->destino=$first = $name[$y];
-            $y = $y + 1;
+        $material->destino=$first = $name[$y];
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->entrego=$request->get('entrego');
-            $material->recibio=$request->get('recibio');
-            $material->tipo_movimiento=$first = $name[$y];
-            $y = $y + 1;
+        $material->tipo_movimiento=$first = $name[$y];
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->fecha=$first = $name[$y];
-            $material->estado="Activo";
-              $material->modulos_aplicados=$request->get('num_modulos');
-            $y = $y + 1;
-            $material->save();
-            $num = $num + 1;
-            
-        }
-        return redirect('almacen/salidas/agroquimicos');
+        $material->fecha=$first = $name[$y];
+        $material->estado="Activo";
+        $material->entrego=$request->get('entrego');
+        $material->recibio=$request->get('recibio');
+        $material->modulos_aplicados=$request->get('num_modulos');
+        $y = $y + 1;
+        $material->save();
+        $num = $num + 1;
+
+      }
+     return redirect('almacen/salidas/agroquimicos');
         //
     }
 
@@ -143,13 +160,13 @@ class salidasagroquimicosController extends Controller
      */
     public function edit($id)
     { 
-        $salida = salidasagroquimicos::findOrFail($id);
-        $material = almacenagroquimicos::findOrFail($salida->id_material);
-        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-        $invernadero=DB::table('invernaderos')->where('estado','=' ,'Activo')->get();
-        $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
-        $materiales=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-        return view("almacen.agroquimicos.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes,'invernadero'=>$invernadero]);
+      $salida = salidasagroquimicos::findOrFail($id);
+      $material = almacenagroquimicos::findOrFail($salida->id_material);
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $invernadero=DB::table('invernaderos')->where('estado','=' ,'Activo')->get();
+      $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
+      $materiales=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+      return view("almacen.agroquimicos.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes,'invernadero'=>$invernadero]);
 
         //
     }
@@ -174,7 +191,7 @@ class salidasagroquimicosController extends Controller
       $y = 0;
 
       if ($limite == 1){
-         $mat = almacenagroquimicos::findOrFail($salida->id_material);
+       $mat = almacenagroquimicos::findOrFail($salida->id_material);
        $producto = $request->get('codigo2');
        $first = head($producto);
        $name = explode(",",$first);
@@ -184,7 +201,7 @@ class salidasagroquimicosController extends Controller
        $salida->id_material=$first = $name[$y];
        $y = $y + 2;
        $salida->cantidad=$first = $name[$y];
-        $mat->cantidad= $mat->cantidad - $first = $name[$y];
+       $mat->cantidad= $mat->cantidad - $first = $name[$y];
        $y = $y + 1;
             // print_r($first = $name[$y]);
        $salida->destino=$first = $name[$y];
@@ -199,17 +216,17 @@ class salidasagroquimicosController extends Controller
        $salida->fecha=$first = $name[$y];
        $salida->estado="Activo";
        $y = $y + 1;
-    
+
        $mat->update();
        $salida->update();
        $num = 1;
        $y = 0;
 
-   }
+     }
 
-return redirect('almacen/salidas/agroquimicos');
+     return redirect('almacen/salidas/agroquimicos');
         //
-}
+   }
 
     /**
      * Remove the specified resource from storage.
@@ -219,14 +236,14 @@ return redirect('almacen/salidas/agroquimicos');
      */
     public function destroy($id)
     {
-       $material=salidasagroquimicos::findOrFail($id);
-       $material->estado="Inactivo";
-      $mat = almacenagroquimicos::findOrFail($material->id_material);
-      $mat->cantidad= $mat->cantidad + $material->cantidad;
-      $mat->update();
+     $material=salidasagroquimicos::findOrFail($id);
+     $material->estado="Inactivo";
+     $mat = almacenagroquimicos::findOrFail($material->id_material);
+     $mat->cantidad= $mat->cantidad + $material->cantidad;
+     $mat->update();
 
-       $material->update();
-       return Redirect::to('/almacen/salidas/agroquimicos');   
+     $material->update();
+     return Redirect::to('/almacen/salidas/agroquimicos');   
 
         //
    }
@@ -248,7 +265,7 @@ return redirect('almacen/salidas/agroquimicos');
             $sheet->fromArray($salidas);
             $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Destino','Módulos Aplicados','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
             $sheet->setOrientation('landscape');
-        });
-      })->export('xls');
+          });
+        })->export('xls');
+      }
     }
-}
