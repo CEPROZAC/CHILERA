@@ -94,21 +94,21 @@
         </tbody>
         <tfoot>
           <tr>
-            <th>N°Compra </th>
-            <th>Fecha de Entrada</th>  
-            <th>Proveedor de Material </th>
-            <th>N°Factura </th>
-            <th>Nombre de Material</th>
-            <th>Cantidad</th>
-            <th>Total Cantidad</th>
-            <th>Precio Unitario </th>
-            <th>IVA </th>
-            <th>Subtotal </th>
-            <th>Total de Compra </th>
-            <th>Tipo de Moneda </th>
-            <th>Comprador</th>
-            <td><center><b>Editar</b></center></td>
-            <td><center><b>Borrar</b></center></td>    
+                <th>N°Compra </th>
+                <th>Fecha de Entrada</th>  
+                <th>Proveedor de Material </th>
+                <th>N°Factura </th> 
+                <th>Nombre de Material</th>
+                <th>Cantidad</th>
+                <th>Total Cantidad</th>
+                <th>Precio Unitario </th>
+                <th>IVA </th>
+                <th>Subtotal </th>
+                <th>Total de Compra </th>
+                <th>Tipo de Moneda </th>
+                <th>Comprador</th>
+                <td><center><b>Editar</b></center></td>
+                <td><center><b>Borrar</b></center></td>    
           </tr>
         </tfoot>
       </table>

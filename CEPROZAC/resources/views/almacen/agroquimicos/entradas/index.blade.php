@@ -72,7 +72,7 @@
                    <td>{{$entradas->prov}} </td>
                    <td>{{$entradas->factura}} </td>
                    <td>{{$entradas->nombremat}} </td>
-                   <td>{{$entradas->cantidadaux}}</td>
+                   <td>{{$entradas->medidaaux}}</td>
                    <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
                    <td>${{$entradas->p_unitario}} </td>
                    <td>${{$entradas->iva}} </td>
@@ -99,12 +99,13 @@
             </tbody>
             <tfoot>
               <tr>
-               <th>N°Compra </th>
+                  <th>N°Compra </th>
                   <th>Fecha de Entrada</th>  
                   <th>Proveedor de Material </th>
                   <th>N°Factura </th>
                   <th>Nombre de Material</th>
-                  <th>Cantidad Comprada</th>
+                  <th>Cantidad</th>
+                  <th>Total Cantidad</th>
                     <th>Precio Unitario </th>
                      <th>IVA </th>
                      <th>IEPS</th>
@@ -113,7 +114,7 @@
                     <th>Tipo de Moneda </th>
                   <th>Comprador</th>
                   <td><center><b>Editar</b></center></td>                    
-                  <td><center><b>Borrar</b></center></td>  
+                  <td><center><b>Borrar</b></center></td>   
              </tr>
            </tfoot>
          </table>

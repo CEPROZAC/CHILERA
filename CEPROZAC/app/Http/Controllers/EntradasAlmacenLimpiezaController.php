@@ -190,7 +190,7 @@ return $pdf->stream('invoice');
 
         $material->medida= $name2[1];
         $material->medidaaux=$concat;
-            // print_r($first = $name[$y]);
+            // print_r($first = $name[$y]); 
              //print_r($first = $name[$y]);
         $y = $y + 1;
         $material->factura=$first = $name[$y];
@@ -265,10 +265,11 @@ return $pdf->stream('invoice');
 
 
      $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Limpieza%')->get();
      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+     $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
         // 
-     return view('almacen.limpieza.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+     return view('almacen.limpieza.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
  }
 
@@ -299,7 +300,7 @@ return $pdf->stream('invoice');
       $y = 0;
       $limite = $request->get('total');
 
-      while ($num <= $limite) {
+      while ($num <= $limite) { 
         $material= new entradasalmacenlimpieza;
 
         $producto = $request->get('codigo2');
@@ -310,7 +311,18 @@ return $pdf->stream('invoice');
 
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
+        $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
+         $y = $y + 1;
+         $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y];
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
         $y = $y + 1;
         //print_r($first = $name[$y]);
         $material->factura=$first = $name[$y];
@@ -375,10 +387,10 @@ return $pdf->stream('invoice');
             ->join('empleados as emp2', 'entradasalmacenlimpieza.recibe_alm', '=', 'emp2.id')
             ->join('empresas_ceprozac as e', 'entradasalmacenlimpieza.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradasalmacenlimpieza.provedor', '=', 'prov.id')
-            ->select('entradasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'entradasalmacenlimpieza.cantidad','almacenlimpieza.medida','prov.nombre as prov', 'entradasalmacenlimpieza.factura','entradasalmacenlimpieza.p_unitario','entradasalmacenlimpieza.iva','entradasalmacenlimpieza.total','entradasalmacenlimpieza.moneda','e.nombre as emp','entradasalmacenlimpieza.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradasalmacenlimpieza.observacionesc')
+            ->select('entradasalmacenlimpieza.id', 'almacenlimpieza.nombre','entradasalmacenlimpieza.medidaaux', 'entradasalmacenlimpieza.cantidad','almacenlimpieza.medida','prov.nombre as prov', 'entradasalmacenlimpieza.factura','entradasalmacenlimpieza.p_unitario','entradasalmacenlimpieza.iva','entradasalmacenlimpieza.total','entradasalmacenlimpieza.moneda','e.nombre as emp','entradasalmacenlimpieza.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradasalmacenlimpieza.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N°Compra','Material','Cantidad','Medida' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);
+            $sheet->row(1,['N°Compra','Material','Cantidad','Cantidad Total','Medida' ,'Proveedor','Numero de Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');

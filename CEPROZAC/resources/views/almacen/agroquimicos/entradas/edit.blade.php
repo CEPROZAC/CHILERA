@@ -12,7 +12,7 @@
     <ol class="breadcrumb">
       <li><a style="color: #808080" href="{{url('/almacen/entradas/agroquimicos')}}">Inicio</a></li>
       <li><a style="color: #808080" href="{{url('/almacen/entradas/agroquimicos')}}">Entradas de Almacén Agroquímicos</a></li>
-    </ol>
+    </ol> 
   </div> 
 </div>
 <div class="container clear_both padding_fix">
@@ -425,6 +425,7 @@
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
+      medida=arregloDeSubCadenas[5];
       tecla=(document.all) ? event.keyCode : event.which;
       if (codigo == x){
         swal("Producto Encontrado:"+nombre +"!", "Stock de Entrada!", "success",{content: "input", inputType:"number",}).then((value) => {
@@ -439,7 +440,7 @@
         document.getElementById("descripcion").value=descripcion;
 
         document.getElementById("scantidad").max=stock;
-        document.getElementById("umedida").value=unidad;
+        document.getElementById("umedida").value=medida;
         break;
       }
 
@@ -594,7 +595,7 @@ function llenado(){
 
       var select=document.getElementById('id_materialk');
       var cantidadtotal = select.value;
-      limite = "5",
+      limite = "6",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       var id2= uno++;

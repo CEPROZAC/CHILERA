@@ -22,13 +22,13 @@ use \Milon\Barcode\DNS2D;
 use Illuminate\Support\Collection as Collection;
 class salidasalmacenlimpiezaController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
                 $salida= DB::table('salidasalmacenlimpieza')->where('salidasalmacenlimpieza.estado','=','Activo')
         ->join('almacenlimpieza as s', 'salidasalmacenlimpieza.id_material', '=', 's.id')
         ->join('empleados as e', 'salidasalmacenlimpieza.entrego', '=', 'e.id')
@@ -53,6 +53,8 @@ class salidasalmacenlimpiezaController extends Controller
 
         $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
          $limpieza=DB::table('ubicaciones_limpieza')->where('estado','=' ,'Activo')->get();
+          $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+
 
         $cuenta = count($material);
         
@@ -70,7 +72,7 @@ class salidasalmacenlimpiezaController extends Controller
             return view('almacen.limpieza.salidas.index', ['salida' => $salida])->with('message', 'No Hay Empleados Registrados, Favor de Dar de Alta Empleados Para Poder Acceder a Este Modulo'); 
 
         }else{
-           return view("almacen.limpieza.salidas.create",["material"=>$material],["empleado"=>$empleado,"limpieza"=>$limpieza]);
+           return view("almacen.limpieza.salidas.create",["material"=>$material],["empleado"=>$empleado,"limpieza"=>$limpieza,'unidades'=>$unidades]);
        }
 
         //
@@ -100,7 +102,22 @@ class salidasalmacenlimpiezaController extends Controller
         
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
+        $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
+         $y = $y + 1; 
+          //$material->medida=$first = $name[$y];       
+          $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y];
+        //$material->medidaaux=$first = $name[$y];
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+
         $y = $y + 1;
             // print_r($first = $name[$y]);
         $material->destino=$first = $name[$y];
@@ -111,7 +128,6 @@ class salidasalmacenlimpiezaController extends Controller
         $y = $y + 1;
             // print_r($first = $name[$y]);
         $material->fecha=$first = $name[$y];
-        $y = $y + 1;
         $material->entrego=$request->get('entrego');
         $material->recibio=$request->get('recibio');
         $material->estado="Activo";
@@ -146,8 +162,9 @@ class salidasalmacenlimpiezaController extends Controller
         $material = almacenlimpieza::findOrFail($salida->id_material);
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
              $limpieza=DB::table('ubicaciones_limpieza')->where('estado','=' ,'Activo')->get();
+             $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
         $materiales=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-        return view("almacen.limpieza.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'limpieza'=>$limpieza]);
+        return view("almacen.limpieza.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'limpieza'=>$limpieza,'unidades'=>$unidades]);
         //
     }
 
@@ -180,20 +197,33 @@ class salidasalmacenlimpiezaController extends Controller
 
        $salida->id_material=$first = $name[$y];
        $y = $y + 2;
-       $salida->cantidad=$first = $name[$y];
+       $aux =$first = $name[$y];
+       //$salida->cantidad=$first = $name[$y];
         $mat->cantidad= $mat->cantidad - $first = $name[$y];
        $y = $y + 1;
+       $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
             // print_r($first = $name[$y]);
-       $salida->destino=$first = $name[$y];
+       //$salida->destino=$first = $name[$y];
        $y = $y + 1;
+       $yy =$first = $name[$y];
+         $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $salida->cantidad=$first = $name2[0];
+        $salida->medida= $name2[1];
+        $salida->medidaaux=$concat;
             // print_r($first = $name[$y]);
-       $salida->entrego=$request->get('entrego');
-       $salida->recibio=$request->get('recibio');
+        $y = $y + 1;
+         $salida->destino=$first = $name[$y];
+          $y = $y + 1;
+
        $salida->tipo_movimiento=$first = $name[$y];
        $y = $y + 1;
             // print_r($first = $name[$y]);
        $salida->fecha=$first = $name[$y];
        $salida->estado="Activo";
+              $salida->entrego=$request->get('entrego');
+       $salida->recibio=$request->get('recibio');
        $y = $y + 1;
     
        $mat->update();

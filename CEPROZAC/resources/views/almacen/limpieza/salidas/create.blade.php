@@ -132,7 +132,7 @@
                 <label for="material">Material </label>
                 <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
                   @foreach($material as $mat)
-                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->medida}}">
                    {{$mat->nombre}}
                  </option>
                  @endforeach              
@@ -141,18 +141,19 @@
              </div>
            </div><!--/form-group-->
 
-           <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-             <div class="form-group"> 
-              <label for="scantidad">Cantidad de Salida </label>
-              <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
-              <span id="errorCantidad" style="color:#FF0000;"></span>
-            </div>    
-          </div>  
+           
 
           <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
            <div class="form-group"> 
             <label for="pcantidad">Cantidad en Almacén </label>
             <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
+          </div>    
+        </div>  
+
+        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+           <div class="form-group"> 
+            <label for="umedida">Medida </label>
+            <input name="umedida" id="umedida" value="" onchange="medida(this);"  type="text" disabled class="form-control" />
           </div>    
         </div>  
 
@@ -162,6 +163,29 @@
           <input name="descripcion" id="descripcion" disabled class="form-control" />
         </div>    
       </div>  
+
+      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+             <div class="form-group"> 
+              <label for="scantidad">Cantidad de Salida </label>
+              <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+              <span id="errorCantidad" style="color:#FF0000;"></span>
+            </div>    
+          </div>  
+
+          <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+           <div class="form-group"> 
+            <label for="medida">Medida </label>
+                <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
+                  @foreach($unidades as $unidad)
+                  <option value="{{$unidad->unidad_medida}}_{{$unidad->nombre}}_{{$unidad->cantidad}}">
+                   {{$unidad->nombre}}
+                 </option>
+                 @endforeach              
+               </select>
+                  <span id="errorMedida" style="color:#FF0000;"></span>
+               <div class="help-block with-errors"></div>
+             </div>
+           </div><!--/form-group-->
 
       
     </div>
@@ -183,12 +207,16 @@
           <th>N°Articulo</th>
           <th>Articulo</th>
           <th>Cantidad</th>
+          <th>Unidad de Medida</th>
+           <th>Equivale</th>
           <th>Destino</th>
           <th>Tipo de Movimiento</th>
           <th>Fecha</th>
 
         </thead>
         <tfoot>
+          <th></th>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -266,7 +294,7 @@ function teclas(event) {
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "5",
+      limite = "6",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
@@ -274,6 +302,7 @@ function teclas(event) {
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
+      unidad=arregloDeSubCadenas[5];
       tecla=(document.all) ? event.keyCode : event.which;
              if (codigo == x){
               swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
@@ -288,6 +317,7 @@ function teclas(event) {
    document.getElementById("descripcion").value=descripcion;
    
     document.getElementById("scantidad").max=stock;
+        document.getElementById("umedida").value=unidad;
     break;
   }
 
@@ -307,15 +337,17 @@ return false;
     var select2 = document.getElementById('id_materialk');
     var selectedOption2 = select2.selectedIndex;
     var cantidadtotal = select2.value;
-    limite = "5",
+    limite = "6",
     separador = "_",
     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
     stock=arregloDeSubCadenas[0];
     descripcion=arregloDeSubCadenas[1];
+    medida=arregloDeSubCadenas[5];
     document.getElementById("pcantidad").value=stock;
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
     document.getElementById("scantidad").max=stock;
+          document.getElementById("umedida").value=medida;
      document.getElementById("codigo").select();
   }
 
@@ -327,11 +359,12 @@ return false;
     // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
-   limite = "5",
+   limite = "6",
    separador = "_",
    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
    stock=arregloDeSubCadenas[0];
    descripcion=arregloDeSubCadenas[1];
+   medida=arregloDeSubCadenas[5];
    // id_materiales=arregloDeSubCadenas[3];
 
   // console.log(arregloDeSubCadenas); 
@@ -339,6 +372,7 @@ return false;
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
   document.getElementById("scantidad").max=stock;
+       document.getElementById("umedida").value=medida;
 
 
 
@@ -351,15 +385,17 @@ return false;
           if (z != ""){
             var selectedOption2 = select2.selectedIndex;
             var cantidadtotal = select2.value;
-            limite = "5",
+            limite = "6",
             separador = "_",
             arregloDeSubCadenas = cantidadtotal.split(separador, limite);
             stock=arregloDeSubCadenas[0];
             descripcion=arregloDeSubCadenas[1];
+               medida=arregloDeSubCadenas[5];
             document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
             document.getElementById("scantidad").value = "1";
             document.getElementById("scantidad").max=stock;
+                   document.getElementById("umedida").value=medida;
           }
 
         }
@@ -382,6 +418,22 @@ return false;
 }
 
 function llenado(){
+  var select2 = document.getElementById('medida');
+              var selectedOption2 = select2.selectedIndex;
+            var cantidadtotal = select2.value;
+            limite = "3",
+            separador = "_",
+            arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+            unidadaux = arregloDeSubCadenas[0];
+            medida=arregloDeSubCadenas[1];
+            cantidadaux=arregloDeSubCadenas[2];
+
+  if (document.getElementById('umedida').value != unidadaux){
+       document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
+    return false;
+  }
+           document.getElementById("errorMedida").innerHTML = "";
+
   var fechav = document.getElementById('fecha').value;
   var recibiov =  document.getElementById('recibio').value;
   var entregadov = document.getElementById('entrego').value;
@@ -398,7 +450,7 @@ function llenado(){
 
     var select2=document.getElementById('id_materialk');
     var cantidadtotal2 = select2.value;
-    limite2 = "5",
+    limite2 = "6",
     separador2 = "_",
     arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
     x=arregloDeSubCadenas2[3];
@@ -412,16 +464,25 @@ function llenado(){
 
     if (comprueba == 1){
       swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+return false;
 
+    }
+        var cantidades = document.getElementById("scantidad");
+    var cantidadt = cantidades.value;
 
-    }else{
-      if (y > z) {
+        var cantidadth = cantidadaux * cantidadt;
+    var u = "";
+    var medidaaux = u.concat(cantidadth," ",unidadaux);
+
+     if (cantidadth > z) {
         swal("Alerta!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
+        return false;
 
-      }else{
+      }
+
         var select=document.getElementById('id_materialk');
         var cantidadtotal = select.value;
-        limite = "5",
+        limite = "6",
         separador = "_",
         arregloDeSubCadenas = cantidadtotal.split(separador, limite);
         var id2= uno++;
@@ -440,6 +501,8 @@ function llenado(){
     var cell5 = row.insertCell(4);
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
+    var cell8 = row.insertCell(7);
+     var cell9 = row.insertCell(8);
 
 
 
@@ -460,9 +523,11 @@ function llenado(){
     cell2.innerHTML = id;
     cell3.innerHTML = nombre;
     cell4.innerHTML = cantidadt;
-    cell5.innerHTML = dest;
-    cell6.innerHTML = movt;
-    cell7.innerHTML = var3;
+        cell5.innerHTML = medida;
+     cell6.innerHTML = medidaaux;
+    cell7.innerHTML = dest;
+    cell8.innerHTML = movt;
+    cell9.innerHTML = var3;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
@@ -470,8 +535,8 @@ function llenado(){
     cargar();
     document.getElementById("total").value=id2;
     
-  }
-}
+
+
 }else{
  document.getElementById("errorentrego").innerHTML = "El Empleado que entrega el Material no puede ser el mismo que lo Recibe";
 
@@ -509,7 +574,7 @@ function codigos(){
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "5",
+      limite = "6",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
@@ -589,7 +654,19 @@ function save() {
        arreglo.push(table.rows[r].cells[c].innerHTML);
 z ++;
 }
-      else{
+ else if (z == 6){
+       //  alert(z)
+     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
+       //  alert(table.rows[r].cells[c].innerHTML);
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+z ++;
+} else if (z == 7){
+       //  alert(z)
+     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
+       //  alert(table.rows[r].cells[c].innerHTML);
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+z ++;
+}else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
        arreglo.push(table.rows[r].cells[c].innerHTML);
        document.getElementById("codigo2").value=arreglo;
@@ -656,6 +733,18 @@ z ++;
  z ++;
 
 }else if(z == 7){
+         //alert(z)
+        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
+   //     alert(table.rows[r].cells[c].innerHTML);
+        z ++;
+
+      }else if(z == 7){
+         //alert(z)
+        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
+   //     alert(table.rows[r].cells[c].innerHTML);
+        z ++;
+
+      }else if(z == 7){
          //alert(z)
         // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
    //     alert(table.rows[r].cells[c].innerHTML);
