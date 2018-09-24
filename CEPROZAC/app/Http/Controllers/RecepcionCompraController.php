@@ -267,9 +267,12 @@ $salida->save();
        $entrada->id_almacen = $divide[0];
        //$entrada->id_espacio = $first = $name[$aux]; se elimino este campo
        $entrada->id_lote = $ultimolote->id;
+       $entrada->espacio_asignado = $request->get('asignado');
        $idalm = $divide[0];
        $idesp = $first = $name[$aux];
        //$espacio=espacios_almacen::where('id_almacen', $divide[0])->findOrFail($entrada->id_espacio);
+
+
        $espacio =  new espacios_almacen;
        $espacio->num_espacio=$idesp;
        $espacio->id_almacen=$idalm;

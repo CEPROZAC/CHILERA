@@ -327,6 +327,12 @@
                         </ul>
                       </li>
 
+                                            <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Unidades de Medida <span class="plus"><i class="fa fa-plus"></i></span> </a>
+                        <ul>
+                          <li> <a href="{{url('unidades_medida')}}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Catálogo</b> </a> </li>
+                        </ul>
+                      </li>
+
 
                     </ul>
                   </div>

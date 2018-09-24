@@ -116,7 +116,7 @@
            </select>
            <div class="help-block with-errors"></div>
          </div>
-       </div>
+       </div> 
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>
@@ -147,7 +147,7 @@
                 <label for="material">Material </label>
                 <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
                   @foreach($materiales as $mat)
-                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->medida}}">
+                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->medida}}_{{$mat->medida}}">
                    {{$mat->nombre}}
                  </option>
                  @endforeach              

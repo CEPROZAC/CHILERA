@@ -17,10 +17,12 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
             $table->integer('provedor')->unsigned();
             $table->foreign('provedor')->references('id')->on('provedor_materiales');
             $table->date('fecha');
-            $table->integer('factura');
+            $table->string('factura');
             $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenlimpieza');
             $table->integer('cantidad');
+                        $table->string('medida');
+            $table->string('medidaaux');
             $table->double('p_unitario');
             $table->double('importe');
             $table->double('iva');

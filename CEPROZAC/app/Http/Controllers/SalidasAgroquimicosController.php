@@ -113,7 +113,7 @@ class salidasagroquimicosController extends Controller
         $yy =$first = $name[$y];
         //$material->medidaaux=$first = $name[$y];
         $producto2 = $yy;
-        $name2 = explode("-",$producto2);
+        $name2 = explode(" ",$producto2);
         $material->cantidad= $name2[0];
 
         $material->medida= $name2[1];
@@ -166,7 +166,9 @@ class salidasagroquimicosController extends Controller
       $invernadero=DB::table('invernaderos')->where('estado','=' ,'Activo')->get();
       $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
       $materiales=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-      return view("almacen.agroquimicos.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes,'invernadero'=>$invernadero]);
+       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+
+      return view("almacen.agroquimicos.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes,'invernadero'=>$invernadero,'unidades'=>$unidades]);
 
         //
     }
@@ -200,27 +202,40 @@ class salidasagroquimicosController extends Controller
 
        $salida->id_material=$first = $name[$y];
        $y = $y + 2;
-       $salida->cantidad=$first = $name[$y];
+       $aux =$first = $name[$y];
+       //$salida->cantidad=$first = $name[$y];
        $mat->cantidad= $mat->cantidad - $first = $name[$y];
        $y = $y + 1;
+       $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
             // print_r($first = $name[$y]);
-       $salida->destino=$first = $name[$y];
+       //$salida->destino=$first = $name[$y];
        $y = $y + 1;
-            // print_r($first = $name[$y]);
-       $salida->entrego=$request->get('entrego');
-       $salida->recibio=$request->get('recibio');
-       $salida->modulos_aplicados=$request->get('num_modulos');
-       $salida->tipo_movimiento=$first = $name[$y];
-       $y = $y + 1;
-            // print_r($first = $name[$y]);
-       $salida->fecha=$first = $name[$y];
-       $salida->estado="Activo";
+        $yy =$first = $name[$y];
+         $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $salida->cantidad=$first = $name2[0];
+        $salida->medida= $name2[1];
+        $salida->medidaaux=$concat;
+        $y = $y + 1;
+        $salida->destino=$first = $name[$y];
+        $y = $y + 1;
+        $salida->tipo_movimiento=$first = $name[$y];
+        $y = $y + 1;
+        $salida->fecha=$first = $name[$y];
+        $salida->estado="Activo";
+        $salida->entrego=$request->get('entrego');
+        $salida->recibio=$request->get('recibio');
+        $salida->modulos_aplicados=$request->get('num_modulos');
+
        $y = $y + 1;
 
        $mat->update();
        $salida->update();
        $num = 1;
        $y = 0;
+
+
 
      }
 
@@ -244,7 +259,7 @@ class salidasagroquimicosController extends Controller
 
      $material->update();
      return Redirect::to('/almacen/salidas/agroquimicos');   
-
+ 
         //
    }
 
@@ -260,10 +275,10 @@ class salidasagroquimicosController extends Controller
             $salidas = salidasagroquimicos::where('salidasagroquimicos.estado','=','Activo')->join('almacenagroquimicos','almacenagroquimicos.id', '=', 'salidasagroquimicos.id_material')
             ->join('empleados as e', 'salidasagroquimicos.entrego', '=', 'e.id')
             ->join('empleados as emp', 'salidasagroquimicos.recibio', '=', 'emp.id')
-            ->select('salidasagroquimicos.id', 'almacenagroquimicos.nombre', 'salidasagroquimicos.cantidad','almacenagroquimicos.medida', 'salidasagroquimicos.destino','salidasagroquimicos.modulos_aplicados', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasagroquimicos.tipo_movimiento','salidasagroquimicos.fecha')
+            ->select('salidasagroquimicos.id', 'almacenagroquimicos.nombre','salidasagroquimicos.medidaaux', 'salidasagroquimicos.cantidad','almacenagroquimicos.medida', 'salidasagroquimicos.destino','salidasagroquimicos.modulos_aplicados', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasagroquimicos.tipo_movimiento','salidasagroquimicos.fecha')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Destino','Módulos Aplicados','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
+            $sheet->row(1,['N° de Salida','Material','Cantidad','Cantidad Total','Unidad Medida','Destino','Módulos Aplicados','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
             $sheet->setOrientation('landscape');
           });
         })->export('xls');

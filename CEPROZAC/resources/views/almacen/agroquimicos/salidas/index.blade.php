@@ -53,7 +53,8 @@
                 <tr>
                   <th>N°Salida </th>
                    <th>Nombre de Material</th>
-                    <th>Cantidad </th>
+                   <th> Cantidad</th>
+                    <th>Cantidad Total</th>
                     <th>Destino </th>
                      <th>Módulos Aplicados </th>
                    <th>Entrego </th>
@@ -69,6 +70,7 @@
                 <tr class="gradeA">
                   <td>{{$salidas->id}} </td>
                   <td>{{$salidas->nombre}} </td>
+                  <td>{{$salidas->medidaaux}}</td>
                    <td>{{$salidas->cantidad}} {{$salidas->medida}}</td>
                    <td>{{$salidas->destino}} </td>
                    @if($salidas->modulos_aplicados == "")
@@ -101,6 +103,7 @@
                   <th>N°Salida </th>
                    <th>Nombre de Material</th>
                     <th>Cantidad </th>
+                     <th>Cantidad Total</th>
                     <th>Destino </th>
                      <th>Módulos Aplicados </th>
                    <th>Entrego </th>
