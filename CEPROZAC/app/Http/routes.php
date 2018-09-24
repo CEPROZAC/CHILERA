@@ -26,6 +26,27 @@ Route::resource('home','HomeController');
 //PROVEEDOR DE MATERIALES
 Route::resource('provedores','ProvedorController');
 Route::resource('materiales/provedores','ProvedorMaterialesController');
+
+Route::get('verTipoProvedor/{id}','ProvedorMaterialesController@listadoTipoProvedor');
+
+
+/*
+Provedor Materiales
+*/
+Route::resource('asignarTipoProvedor', 'ProvedorTipoProvedorController');
+
+
+Route::get('eliminarTipoProvedor/{id}', 'ProvedorTipoProvedorController@destroy');
+
+//////////////////
+
+
+
+
+
+
+
+
 Route::post("materiales/provedores/validar", "ProvedorMaterialesController@validar");
 /////////////////////
 Route::resource('productos','ProductosController');
@@ -217,6 +238,9 @@ Route::get('descargar-unidades', 'unidadesmedidacontroller@excel')->name('unidad
 //////////
 
 Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');
+
+
+
 
 
 

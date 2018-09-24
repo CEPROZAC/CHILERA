@@ -272,6 +272,11 @@ class ContratosController extends Controller
     }
 
 
+
+
+    
+
+
     public function pdf($id)
     {
       $contrato = Contratos::findOrFail($id);
@@ -384,7 +389,7 @@ class ContratosController extends Controller
    static function calcularPesos($sueldo)
    {
 
-     
+
     $valor = Convertidor::numtoletras($sueldo);
     return $valor;
 

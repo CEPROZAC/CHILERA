@@ -1,3 +1,4 @@
+@inject('metodo','CEPROZAC\Http\Controllers\ProvedorMaterialesController')
 @extends('layouts.principal')
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
@@ -83,84 +84,59 @@
           </div> 
 
 
+
+
+
           <div class="form-group">
-           <label class="col-sm-3 control-label">Tipo de Provedor: <strog class="theme_color">*</strog></label>
-           <div class="col-sm-3">
-             <select name="prov" id="prov" >
-               <option value='Agroquimicos' selected>Agroquimicos</option>
-               <option value="Refacciones">Refacciones</option>
-               <option value="Limpieza">Limpieza</option>
-               <option value="Empaque">Empaque</option>
-             </select>
-           </div> 
-           <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>  
-         </div> 
+           <label class="col-sm-3 control-label">Provedor: <strog class="theme_color">*</strog></label>
+           <div class="col-sm-6">
+             <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th> 
+                      Tipo Proveedores
+                    </th> 
+                    <th>Agregar Tipo</th>
+                    <th>Quitar Tipo</th>
+                  </tr>
+                </thead>
+                <tbody id="myTable">
+                  <tr>
+                    <td>
+                      <div class="col-sm-10">
+                        <select   id="tipo_provedor" class="form-control" required>  
+                          @foreach($tipoProvedores as $tipo)
+                          <option  label="{{$tipo->nombre}}" value="{{$tipo->id}}">
 
-         <div class="form-group">
-          <label class="col-sm-3 control-label"></label>
-          <div class="col-sm-6">
-           <span  id="errorprov" style="color:#FF0000;"></span> 
-         </div>
-       </div>
+                            {{$tipo->nombre}} 
+                          </option>
 
-
-
-       <div class="form-group">
-         <label class="col-sm-3 control-label">Provedor: <strog class="theme_color">*</strog></label>
-         <div class="col-sm-6">
-           <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th> 
-                    Tipo Proveedores
-                  </th> 
-                  <th>Agregar Tipo</th>
-                  <th>Quitar Tipo</th>
-                </tr>
-              </thead>
-              <tbody id="myTable">
-                <tr>
-                  <td>
-                    <div class="col-sm-10">
-                      <select   id="tipo_provedor" class="form-control" required>  
-                        @foreach($tipoProvedores as $tipo)
-                        <option  label="{{$tipo->nombre}}" value="{{$tipo->id}}">
-
-                          {{$tipo->nombre}} 
-                        </option>
-
-                        @endforeach              
-                      </select>
-                    </div>
-                  </td>
-                  <span id="errorRoles" style="color:#FF0000;"></span>
-                  <input type="hidden" name="_token" id="idEmpleado">
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                  <td colspan="2"><button type="button"  class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
-                </tr>
-              </tbody>
-            </table>
+                          @endforeach              
+                        </select>
+                      </div>
+                    </td>
+                    <span id="errorTipo" style="color:#FF0000;"></span>
+                    <input type="hidden" name="_token" id="idProvedor">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                    <td colspan="2"><button type="button" onclick="agregarTipoProvedor();"  class="btn btn-success btn-icon"> Agregar <i class="fa fa-plus"></i> </button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
 
 
-
-
-
-
-
-
-      <div class="form-group">
-        <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-          <a href="{{url('/materiales/provedores')}}" class="btn btn-default"> Cancelar</a>
-        </div>
-      </div><!--/form-group-->
-    </form>
-  </div><!--/porlets-content-->
-</div><!--/block-web-->
+        <div class="form-group">
+          <div class="col-sm-offset-7 col-sm-5">
+            <button type="submit" onclick="validarTIpoCrear();" id="submit"  class="btn btn-primary">Guardar</button>
+            <a href="{{url('/materiales/provedores')}}" class="btn btn-default"> Cancelar</a>
+          </div>
+        </div><!--/form-group-->
+      </form>
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
