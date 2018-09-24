@@ -39,7 +39,9 @@ class ProvedorMaterialesController extends Controller
      */
     public function create()
     {
-      return view('Provedores.materiales.create');
+
+      $tipoProvedores= DB::table('tipo_provedor')->where('estado','Activo')->get();
+      return view('Provedores.materiales.create',['tipoProvedores'=>$tipoProvedores]);
         //
     }
 
@@ -64,21 +66,21 @@ class ProvedorMaterialesController extends Controller
         else{ 
 
 
-      $provedor= new ProvedorMateriales;
-      $provedor->nombre=$formulario->get('nombre');
-      $provedor->rfc=$formulario->get('rfc');
-      $provedor->direccion=$formulario->get('direccion');
-      $provedor->telefono=$formulario->get('telefono');
-      $provedor->email=$formulario->get('email');
-       $provedor->tipo=$formulario->get('codigo2');
-      
+          $provedor= new ProvedorMateriales;
+          $provedor->nombre=$formulario->get('nombre');
+          $provedor->rfc=$formulario->get('rfc');
+          $provedor->direccion=$formulario->get('direccion');
+          $provedor->telefono=$formulario->get('telefono');
+          $provedor->email=$formulario->get('email');
+          $provedor->tipo=$formulario->get('codigo2');
 
-      $provedor->estado='Activo';
-      $provedor->save();
-      return Redirect::to('materiales/provedores')->with('message', 'Proveedor Registrado Correctamente');
-    } 
-  }
-}
+
+          $provedor->estado='Activo';
+          $provedor->save();
+          return Redirect::to('materiales/provedores')->with('message', 'Proveedor Registrado Correctamente');
+        } 
+      }
+    }
 
     /**
      * Display the specified resource.
@@ -122,7 +124,7 @@ class ProvedorMaterialesController extends Controller
       $provedor->direccion=$request->get('direccion');
       $provedor->telefono=$request->get('telefono');
       $provedor->email=$request->get('email');
-             $provedor->tipo=$request->get('codigo2');
+      $provedor->tipo=$request->get('codigo2');
 
       $provedor->estado='Activo';
       $provedor->update();

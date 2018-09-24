@@ -29,7 +29,12 @@ class DatabaseSeeder extends Seeder
         $this->call(LimpiezaTableSeeder::class);
 
         $this->call(TractoresTableSeeder::class);
+
+        $this->call(TipoProvedorTableSeeder::class);
+
+
         $this->call(UnidadesMedidaTableSeeder::class);        
+
         Model::reguard();
     }
 }

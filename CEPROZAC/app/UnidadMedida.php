@@ -4,8 +4,7 @@ namespace CEPROZAC;
 
 use Illuminate\Database\Eloquent\Model;
 
-class lote extends Model
+class UnidadMedida extends Model
 {
-	 protected $table ='lote';
     //
 }
