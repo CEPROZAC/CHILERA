@@ -24,7 +24,7 @@ use Illuminate\Support\Collection as Collection;
 class entradasalmacenlimpiezaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
@@ -53,6 +53,7 @@ class entradasalmacenlimpiezaController extends Controller
         $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Limpieza%')->get();
         $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+        $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
         $cuenta = count($material);
         
@@ -77,7 +78,7 @@ class entradasalmacenlimpiezaController extends Controller
 
   }
   else{
-   return view("almacen.limpieza.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas]);
+   return view("almacen.limpieza.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
 }
         //
 }
@@ -108,7 +109,7 @@ class entradasalmacenlimpiezaController extends Controller
 
           $material->nombre=$formulario->get('nombre2');
           $material->provedor=$formulario->get('provedor_id2');
-          
+
 
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
@@ -165,7 +166,7 @@ return $pdf->stream('invoice');
    //print_r($limite);
 
     while ($num <= $limite) {
-        $material= new entradasalmacenlimpieza;
+        $material= new entradasalmacenlimpieza; 
             //print_r($num);
         $producto = $formulario->get('codigo2');
         $first = head($producto);
@@ -176,10 +177,22 @@ return $pdf->stream('invoice');
         
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
+        $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
         $y = $y + 1;
+        $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y]; 
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
             // print_r($first = $name[$y]);
              //print_r($first = $name[$y]);
+        $y = $y + 1;
         $material->factura=$first = $name[$y];
         $y = $y + 1;
              //print_r($first = $name[$y]);
@@ -218,8 +231,8 @@ return $pdf->stream('invoice');
      */
     public function show($id)
     {
-             $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$id)->get();
-             $entrada = entradasalmacenlimpieza::findOrFail($entradas[0]->id);
+     $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$id)->get();
+     $entrada = entradasalmacenlimpieza::findOrFail($entradas[0]->id);
      $fac=$entrada->factura;
      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
      $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$fac)
@@ -233,7 +246,7 @@ return $pdf->stream('invoice');
         // 
      return view('almacen.limpieza.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
         //
-    }
+ }
 
     /**
      * Show the form for editing the specified resource.
@@ -268,33 +281,33 @@ return $pdf->stream('invoice');
      */
     public function update(Request $request, $id)
     {
-   $entrada = entradasalmacenlimpieza::findOrFail($id);
+       $entrada = entradasalmacenlimpieza::findOrFail($id);
        $fac=$entrada->factura;
-      $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$fac)->get();
+       $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$fac)->get();
        $cuenta = count($entradas);
 
-      for ($x=0; $x < $cuenta  ; $x++) {
-      $elimina = entradasalmacenlimpieza::findOrFail($entradas[$x]->id);
-      $decrementa=almacenlimpieza::findOrFail($elimina->id_material);
-      $decrementa->cantidad=$decrementa->cantidad- $elimina->cantidad;
-      $decrementa->update();
-      $elimina->delete();
+       for ($x=0; $x < $cuenta  ; $x++) {
+          $elimina = entradasalmacenlimpieza::findOrFail($entradas[$x]->id);
+          $decrementa=almacenlimpieza::findOrFail($elimina->id_material);
+          $decrementa->cantidad=$decrementa->cantidad- $elimina->cantidad;
+          $decrementa->update();
+          $elimina->delete();
         # code...
       }
      // $salidas->delete();
-       $num = 1;
-    $y = 0;
-    $limite = $request->get('total');
+      $num = 1;
+      $y = 0;
+      $limite = $request->get('total');
 
-    while ($num <= $limite) {
+      while ($num <= $limite) {
         $material= new entradasalmacenlimpieza;
-            
+
         $producto = $request->get('codigo2');
         $first = head($producto);
         $name = explode(",",$first);
             //$first = $name[0];
              //$first = $name[1];
-         
+
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
         $material->cantidad=$first = $name[$y];
@@ -302,10 +315,10 @@ return $pdf->stream('invoice');
         //print_r($first = $name[$y]);
         $material->factura=$first = $name[$y];
         $y = $y + 1;
-            
+
         $material->fecha=$first = $name[$y];
         $y = $y + 1;
-         
+
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
 
@@ -315,7 +328,7 @@ return $pdf->stream('invoice');
         $material->importe=$first = $name[$y];
         $y = $y + 1;
         $material->moneda=$first = $name[$y];
-     $y = $y + 1;
+        $y = $y + 1;
         $material->entregado=$request->get('entregado_a');
         $material->recibe_alm=$request->get('recibe_alm');
         $material->observacionesc=$request->get('observacionesq');
@@ -326,9 +339,9 @@ return $pdf->stream('invoice');
         $num = $num + 1;
         //
     }
-   return redirect('/almacen/entradas/limpieza');
+    return redirect('/almacen/entradas/limpieza');
         //
-    }
+}
 
     /**
      * Remove the specified resource from storage.
@@ -341,15 +354,15 @@ return $pdf->stream('invoice');
      $material=entradasalmacenlimpieza::findOrFail($id);
      $material->estado="Inactivo";
      $decrementa=almacenlimpieza::findOrFail($material->id_material);
-      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
-      $decrementa->update();
+     $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+     $decrementa->update();
      $material->update();
      return Redirect::to('/almacen/entradas/limpieza');   
         //
  }
 
 
-     public function excel()
+ public function excel()
  {        
         /**
          * toma en cuenta que para ver los mismos 

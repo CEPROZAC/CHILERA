@@ -17,6 +17,8 @@ class SalidaAlmacenMaterialMigration extends Migration
             $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenmateriales');
             $table->integer('cantidad');
+                        $table->string('medida');
+            $table->string('medidaaux');
             $table->string('destino');
             $table->integer('entrego')->unsigned();
             $table->foreign('entrego')->references('id')->on('empleados');

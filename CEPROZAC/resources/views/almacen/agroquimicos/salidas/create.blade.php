@@ -348,7 +348,7 @@ function teclas(event) {
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "5",
+      limite = "6",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
@@ -356,6 +356,7 @@ function teclas(event) {
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
+       unidad=arregloDeSubCadenas[5];
       tecla=(document.all) ? event.keyCode : event.which;
              if (codigo == x){
               swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
@@ -370,6 +371,7 @@ function teclas(event) {
    document.getElementById("descripcion").value=descripcion;
    
     document.getElementById("scantidad").max=stock;
+    document.getElementById("umedida").value=unidad;
     break;
   }
 
@@ -522,7 +524,7 @@ function llenado(){
 
     var select2=document.getElementById('id_materialk');
     var cantidadtotal2 = select2.value;
-    limite2 = "5",
+    limite2 = "6",
     separador2 = "_",
     arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
     x=arregloDeSubCadenas2[3];
@@ -544,7 +546,7 @@ function llenado(){
 
         var cantidadth = cantidadaux * cantidadt;
     var u = "";
-    var medidaaux = u.concat(cantidadth,"-",unidadaux);
+    var medidaaux = u.concat(cantidadth," ",unidadaux);
 
      if (cantidadth > z) {
         swal("Alerta!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");

@@ -51,7 +51,8 @@
                   <th>Proveedor de Material </th>
                   <th>N°Factura </th>
                   <th>Nombre de Material</th>
-                  <th>Cantidad Comprada</th>
+                  <th>Cantidad</th>
+                  <th>Total Cantidad</th>
                     <th>Precio Unitario </th>
                      <th>IVA </th>
                      <th>IEPS</th>
@@ -71,6 +72,7 @@
                    <td>{{$entradas->prov}} </td>
                    <td>{{$entradas->factura}} </td>
                    <td>{{$entradas->nombremat}} </td>
+                   <td>{{$entradas->cantidadaux}}</td>
                    <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
                    <td>${{$entradas->p_unitario}} </td>
                    <td>${{$entradas->iva}} </td>

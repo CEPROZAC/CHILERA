@@ -4,7 +4,7 @@ namespace CEPROZAC\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Input; 
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Requests\EntradasAgroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
@@ -27,7 +27,7 @@ class EntradasAgroquimicosController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function index()
     {
@@ -56,6 +56,7 @@ class EntradasAgroquimicosController extends Controller
       $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
       $cuenta = count($material);
       
@@ -86,7 +87,7 @@ class EntradasAgroquimicosController extends Controller
 
      }
      else{
-      return view("almacen.agroquimicos.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas]);
+      return view("almacen.agroquimicos.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
 
     }
         //
@@ -184,9 +185,21 @@ class EntradasAgroquimicosController extends Controller
 
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
+        $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
         $y = $y + 1;
-        //print_r($first = $name[$y]);
+        $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y]; 
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+
+        $y = $y + 1;
         $material->factura=$first = $name[$y];
         $y = $y + 1;
 
@@ -237,20 +250,21 @@ class EntradasAgroquimicosController extends Controller
      */
     public function edit($id)
     {
-     $entrada = entradasagroquimicos::findOrFail($id);
-     $fac=$entrada->factura;
-     $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-     $entradas=DB::table('entradasagroquimicos')->where('factura','=',$fac)
-     ->join('almacenagroquimicos as a', 'entradasagroquimicos.id_material', '=', 'a.id')
-     ->select('entradasagroquimicos.*','a.nombre as nombremat','a.id as idagro')->get();
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+      $entrada = entradasagroquimicos::findOrFail($id);
+      $fac=$entrada->factura;
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $entradas=DB::table('entradasagroquimicos')->where('factura','=',$fac)
+      ->join('almacenagroquimicos as a', 'entradasagroquimicos.id_material', '=', 'a.id')
+      ->select('entradasagroquimicos.*','a.nombre as nombremat','a.id as idagro')->get();
 
 
-     $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
-     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+      $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+      $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-     return view('almacen.agroquimicos.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
-   }
+      return view('almacen.agroquimicos.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -278,7 +292,7 @@ class EntradasAgroquimicosController extends Controller
       $num = 1;
       $y = 0;
       $limite = $request->get('total');
-      print_r($request->get('total'));
+      //print_r($request->get('total'));
 
       while ($num <= $limite) {
         $material= new entradasagroquimicos;
@@ -291,7 +305,19 @@ class EntradasAgroquimicosController extends Controller
 
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
+        $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
+        $y = $y + 1;
+        $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y];
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+
         $y = $y + 1;
         //print_r($first = $name[$y]);
         $material->factura=$first = $name[$y];
@@ -308,7 +334,6 @@ class EntradasAgroquimicosController extends Controller
 
         $material->ieps=$first = $name[$y];
         $y = $y + 1;
-
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
@@ -373,18 +398,18 @@ class EntradasAgroquimicosController extends Controller
       {
         $entradas=DB::table('entradasagroquimicos')->where('factura','=',$id)->get();
 
-             $entrada = entradasagroquimicos::findOrFail($entradas[0]->id);
-     $fac=$entrada->factura;
-     $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-     $entradas=DB::table('entradasagroquimicos')->where('factura','=',$fac)
-     ->join('almacenagroquimicos as a', 'entradasagroquimicos.id_material', '=', 'a.id')
-     ->select('entradasagroquimicos.*','a.nombre as nombremat','a.id as idagro')->get();
+        $entrada = entradasagroquimicos::findOrFail($entradas[0]->id);
+        $fac=$entrada->factura;
+        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+        $entradas=DB::table('entradasagroquimicos')->where('factura','=',$fac)
+        ->join('almacenagroquimicos as a', 'entradasagroquimicos.id_material', '=', 'a.id')
+        ->select('entradasagroquimicos.*','a.nombre as nombremat','a.id as idagro')->get();
 
-     $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
-     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+        $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
+        $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-     return view('almacen.agroquimicos.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+        return view('almacen.agroquimicos.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
 
 
         // return redirect('/almacen/entradas/agroquimicos');
