@@ -54,7 +54,10 @@ class EntradaAlmacenController extends Controller
     public function create()
     {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-      $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Refacciones%')->get();
+                   $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
@@ -237,6 +240,7 @@ class EntradaAlmacenController extends Controller
      */
     public function show($id)
     {
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
      $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$id)->get();
      $entrada = entradaalmacen::findOrFail($entradas[0]->id);
      $fac=$entrada->nota_venta;
@@ -247,10 +251,13 @@ class EntradaAlmacenController extends Controller
 
 
      $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+                  $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-     return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+     return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
    }
 
@@ -271,7 +278,10 @@ class EntradaAlmacenController extends Controller
 
 
      $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+                  $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
         // 

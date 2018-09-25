@@ -53,7 +53,10 @@ class EntradasAgroquimicosController extends Controller
     public function create()
     {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-      $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
+       $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
@@ -260,7 +263,10 @@ class EntradasAgroquimicosController extends Controller
 
 
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-      $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
+       $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
       return view('almacen.agroquimicos.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
@@ -397,6 +403,7 @@ class EntradasAgroquimicosController extends Controller
       public function show(entradasagroquimicosRequest $formulario,$id)
       {
         $entradas=DB::table('entradasagroquimicos')->where('factura','=',$id)->get();
+        $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
         $entrada = entradasagroquimicos::findOrFail($entradas[0]->id);
         $fac=$entrada->factura;
@@ -406,10 +413,13 @@ class EntradasAgroquimicosController extends Controller
         ->select('entradasagroquimicos.*','a.nombre as nombremat','a.id as idagro')->get();
 
         $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Agroquimicos%')->get();
+         $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
         $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-        return view('almacen.agroquimicos.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+        return view('almacen.agroquimicos.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
 
 
         // return redirect('/almacen/entradas/agroquimicos');
