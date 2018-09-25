@@ -31,7 +31,7 @@ class entradasempaquescontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() 
+    public function index()  
     {
      $entrada= DB::table('entradasempaques')->where('entradasempaques.estado','=','Activo')
      ->join('almacenempaque as a', 'entradasempaques.id_material', '=', 'a.id')
@@ -53,9 +53,13 @@ class entradasempaquescontroller extends Controller
     public function create()
     {
        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-       $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+       $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','=','4')->get();
        $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
        $material=DB::table('almacenempaque')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
        $cuenta = count($material);
 
@@ -83,7 +87,7 @@ class entradasempaquescontroller extends Controller
 
        }
        else{
-        return view("almacen.empaque.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas]);
+        return view("almacen.empaque.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
 
     }
         //
@@ -121,8 +125,20 @@ class entradasempaquescontroller extends Controller
                 $name = explode(",",$first);        
                 $material->id_material=$first = $name[$y];
                 $y = $y + 2;
-                $material->cantidad=$first = $name[$y];
+                $aux =$first = $name[$y];
+                //$material->cantidad=$first = $name[$y];
                 $y = $y + 1;
+                 $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y]; 
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+        $y = $y + 1;
             // print_r($first = $name[$y]);
                 $material->factura=$first = $name[$y];
                 $y = $y + 1;
@@ -138,7 +154,7 @@ class entradasempaquescontroller extends Controller
                 $material->importe=$first = $name[$y];
                 $y = $y + 1;
                 $material->moneda=$first = $name[$y];
-                $y = $y + 1;
+                $y = $y + 1; 
 
                 $material->estado="Activo";
                 $material->provedor=$formulario->get('prov');
@@ -163,6 +179,7 @@ class entradasempaquescontroller extends Controller
      */
     public function show($id)
     {
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
        $entradas2=DB::table('entradasempaques')->where('factura','=',$id)->get();
        $entrada = entradasempaques::findOrFail($entradas2[0]->id);
        $fac=$entrada->factura;
@@ -173,10 +190,13 @@ class entradasempaquescontroller extends Controller
 
 
        $material=DB::table('almacenempaque')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+                         $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','=','4')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-       return view('almacen.empaque.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+       return view('almacen.empaque.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
         //
     }
@@ -198,10 +218,14 @@ class entradasempaquescontroller extends Controller
 
 
        $material=DB::table('almacenempaque')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+        $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','=','4')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
         // 
-       return view('almacen.empaque.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+       return view('almacen.empaque.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
     }
 
@@ -243,9 +267,22 @@ class entradasempaquescontroller extends Controller
          
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
+               $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
         $y = $y + 1;
-        //print_r($first = $name[$y]);
+        $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
+        $y = $y + 1;
+        $yy =$first = $name[$y]; 
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+            // print_r($first = $name[$y]); 
+             //print_r($first = $name[$y]);
+        $y = $y + 1;
         $material->factura=$first = $name[$y];
         $y = $y + 1;
             

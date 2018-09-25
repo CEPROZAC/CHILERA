@@ -119,47 +119,39 @@
                </div>    
                </div>  
 
-                <div class="form-group">
-            <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="medida" value="">
-                @if(($material->medida)=="Kilogramos")
-                <option value='Kilogramos' selected>Kilogramos
-                </option>
-                <option value="Toneladas">Toneladas</option>
-                <option value="Litros">Litros</option>
-                <option value="Metros">Metros</option>
-                <option value="Unidad">Unidad</option>
-                @elseif(($material->medida)=="Toneladas")
-                <option value='Toneladas' selected>Toneladas
-                </option>
-                <option value="Litros">Litros</option>
-                <option value="Metros">Metros</option>
-                <option value="Unidad">Unidad</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                 @elseif(($material->medida)=="Litros")
-                <option value='Toneladas'>Toneladas</option>
-                <option value="Litros" selected>Litros</option>
-                <option value="Metros">Metros</option>
-                <option value="Unidad">Unidad</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                @elseif(($material->medida)=="Metros")
-                <option value='Toneladas'>Toneladas</option>
-                <option value="Litros">Litros</option>
-                <option value="Metros" selected>Metros</option>
-                <option value="Unidad">Unidad</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                @else
-                <option value='Toneladas'>Toneladas</option>
-                <option value="Litros">Litros</option>
-                <option value="Metros" >Metros</option>
-                <option value="Unidad" selected>Unidad</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                @endif
-              </select>
-              
-            </div>
-          </div>
+
+              <div class="form-group">
+      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <select name="medida" value="{{Input::old('medida')}}">
+          @if(($material->medida)=="KILOGRAMOS")
+          <option value='KILOGRAMOS' selected>KILOGRAMOS
+          </option>
+          <option value="LITROS">LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+    
+          @elseif(($material->medida)=="LITROS")
+          <option value="LITROS" selected>LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+          @elseif(($material->medida)=="METROS")
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" selected>METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+
+          @else
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" >METROS</option>
+          <option value="UNIDADES" selected>UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
+          @endif
+        </select>
+        
+      </div>
+    </div>
 
                                              <div class="form-group">
               <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>

@@ -32,7 +32,7 @@
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.materiales.entradas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
 
-
+ 
                  </div>
 
                </b>
@@ -51,7 +51,8 @@
                 <th>Proveedor de Material </th>
                 <th>N°Nota </th>
                 <th>Nombre de Material</th>
-                <th>Cantidad Comprada</th>
+                  <th>Cantidad</th>
+                  <th>Total Cantidad</th>
                 <th>Precio Unitario </th>
                 <th>IVA </th>
                 <th>Subtotal </th>
@@ -71,7 +72,8 @@
                 <td>{{$entradas->prov}} </td>
                 <td>{{$entradas->nota_venta}} </td>
                 <td>{{$entradas->nombremat}} </td>
-                <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
+                 <td>{{$entradas->medidaaux}}</td>
+                   <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
                 <td>${{$entradas->p_unitario}} </td>
                 <td>${{$entradas->iva}} </td>
                 <td>${{$entradas->importe}} </td>
@@ -98,7 +100,8 @@
             <th>Proveedor de Material </th>
             <th>N°Nota </th>
             <th>Nombre de Material</th>
-            <th>Cantidad Comprada</th>
+             <th>Cantidad</th>
+                  <th>Total Cantidad</th>
             <th>Precio Unitario </th>
             <th>IVA </th>
             <th>Subtotal </th>

@@ -22,7 +22,25 @@
                 <input name="cantidades{{$materiales->id}}" id="cantidades{{$materiales->id}}" maxlength="9" value="1" type="text" min="1" max='9999999'" class="form-control" required placeholder="Ingrese la Cantidad" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div>  
-                           <br> <br>
+                           <br> <br> 
+
+ <div class="form-group"> 
+ <label class="col-sm-3 control-label">Medida <strog class="theme_color">*</strog></label>
+  <div class="col-sm-8">
+  <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
+    @foreach($unidades as $unidad)
+    <option value="{{$unidad->unidad_medida}}_{{$unidad->nombre}}_{{$unidad->cantidad}}">
+     {{$unidad->nombre}}
+   </option>
+   @endforeach              
+ </select>
+
+ <span id="errorMedida" style="color:#FF0000;"></span>
+ <div class="help-block with-errors"></div>
+</div>
+</div><!--/form-group-->
+<br> <br>
+
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Fecha de Compra <strog class="theme_color">*</strog></label>
@@ -144,6 +162,20 @@
       <input  id="nota" name="nota" type="hidden"   class="form-control" />
     </div>
   </div>
+
+    <div class="form-group">
+    <div class="col-sm-6">
+      <input  id="umedida{{$materiales->id}}" name="umedida{{$materiales->id}}" value="{{$materiales->medida}}" type="hidden"   class="form-control" />
+    </div>
+  </div>
+
+              <div class="form-group">
+    <div class="col-sm-6">
+      <input  id="medidaaux{{$materiales->id}}" name="medidaaux{{$materiales->id}}" value="" type="hidden"   class="form-control" />
+    </div>
+  </div>
+
+
        
     </div>
             <br> <br>
@@ -172,6 +204,31 @@
 
   function save($id2)
   {
+          var select2 = document.getElementById('medida');
+  var selectedOption2 = select2.selectedIndex;
+  var cantidadtotal = select2.value;
+  limite = "3",
+  separador = "_",
+  arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+  unidadaux = arregloDeSubCadenas[0];
+  medida=arregloDeSubCadenas[1];
+  cantidadaux=arregloDeSubCadenas[2];
+
+  if (document.getElementById('umedida{{$materiales->id}}').value != unidadaux){
+   //document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
+   swal("Alerta!", "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto!", "error");
+   return false;
+ }
+    document.getElementById("errorMedida").innerHTML = "";
+
+        var cantidades = document.getElementById("cantidades{{$materiales->id}}");
+    var cantidaden = cantidades.value;
+    var cantidadth = cantidadaux * cantidaden;
+    var u = "";
+    var medidaaux = u.concat(cantidadth," ",unidadaux);
+
+    document.getElementById('medidaaux{{$materiales->id}}').value=medidaaux;
+    
 
 
 

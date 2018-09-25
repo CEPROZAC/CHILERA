@@ -50,7 +50,10 @@ class entradasalmacenlimpiezaController extends Controller
     public function create()
     {
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Limpieza%')->get();
+                      $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','3')->get();
         $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
         $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
@@ -231,6 +234,7 @@ return $pdf->stream('invoice');
      */
     public function show($id)
     {
+        $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
      $entradas=DB::table('entradasalmacenlimpieza')->where('factura','=',$id)->get();
      $entrada = entradasalmacenlimpieza::findOrFail($entradas[0]->id);
      $fac=$entrada->factura;
@@ -241,10 +245,13 @@ return $pdf->stream('invoice');
 
 
      $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
+                   $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','3')->get();
      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-     return view('almacen.limpieza.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+     return view('almacen.limpieza.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
  }
 
@@ -265,7 +272,10 @@ return $pdf->stream('invoice');
 
 
      $material=DB::table('almacenlimpieza')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-     $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Limpieza%')->get();
+                   $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','3')->get();
      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
         // 

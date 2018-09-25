@@ -56,7 +56,8 @@
               <tr>
                 <th>N°Salida </th>
                 <th>Nombre de Material</th>
-                <th>Cantidad </th>
+                <th> Cantidad</th>
+                    <th>Cantidad Total</th>
                 <th>Destino </th>
                 <th>Entrego </th>
                 <th>Recibio</th>
@@ -71,6 +72,7 @@
               <tr class="gradeA">
                 <td>{{$salidas->id}} </td>
                 <td>{{$salidas->nombre}} </td>
+                <td>{{$salidas->medidaaux}}</td>
                 <td>{{$salidas->cantidad}} {{$salidas->medida}}</td>
                 <td>{{$salidas->destino}} </td>
                 <td>  {{$salidas->emp1}} {{$salidas->ap1}}</td>
@@ -97,7 +99,8 @@
           <tr>
             <th>N°Salida </th>
             <th>Nombre de Material</th>
-            <th>Cantidad </th>
+            <th> Cantidad</th>
+                    <th>Cantidad Total</th>
             <th>Destino </th>
             <th>Entrego </th>
             <th>Recibio</th>

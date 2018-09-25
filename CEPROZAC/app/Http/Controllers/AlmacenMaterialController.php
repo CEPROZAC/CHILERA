@@ -23,7 +23,7 @@ use CEPROZAC\empresas_ceprozac;
 
 class almacenmaterialController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -37,7 +37,8 @@ class almacenmaterialController extends Controller
         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
         $empleado = DB::table('empleados')->where('estado','Activo')->get();
         $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
-        return view('almacen.materiales.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=>$empresas]);
+        $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+        return view('almacen.materiales.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=>$empresas,'unidades'=>$unidades]);
 
     }
     /**
@@ -47,7 +48,10 @@ class almacenmaterialController extends Controller
      */
     public function create()
     {
-     $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Refacciones%')->get();
+             $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
      $empleado = DB::table('empleados')->where('estado','Activo')->get();
      return view('almacen.materiales.create', ['provedor' => $provedor, 'empleado' => $empleado]); 
         //
@@ -141,7 +145,10 @@ public function invoice($id){
      */
     public function edit($id)
     {
-      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Refacciones%')->get();
+             $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
       return view("almacen.materiales.edit",["material"=>almacenmaterial::findOrFail($id)],["provedor"=> $provedor]);
         //
   }
@@ -242,6 +249,8 @@ public function invoice($id){
        $material2= new entradaalmacen;
        $material2->id_material=$id;
        $material2->cantidad=$formulario->get('cantidades'.$id);
+      $material2->medida=$formulario->get('umedida'.$id);
+       $material2->medidaaux=$formulario->get('medidaaux'.$id);
        $material2->provedor=$nom_provedor;
                              $material2->entregado=$formulario->get('entregado_a'.$id);
         $material2->recibe_alm=$formulario->get('recibe_alm'.$id);

@@ -51,7 +51,10 @@ class almacenempaquecontroller extends Controller
      */
     public function create()
     {
-         $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Empaque%')->get();
+                 $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','=','4')->get();
          $empaque= DB::table('forma_empaques')->where('estado','Activo')->get();
         return view('almacen.empaque.create',['provedor' => $provedor,'empaque'=>$empaque]);
         //
@@ -140,7 +143,10 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
      */
     public function edit($id)
     {
-               $provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Empaque%')->get();
+                       $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','4')->get();
        return view("almacen.empaque.edit",["material"=>almacenempaque::findOrFail($id)],['provedor' => $provedor]);
         //
     }

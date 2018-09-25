@@ -92,8 +92,8 @@
                   </td>              
                   <td style="background-color: #FFE4E1;">{{$materiales->descripcion}} </td>
                    <td style="background-color: #FFE4E1;">{{$materiales->ubicacion}} </td>
-                  <td style="background-color: #FFE4E1;">{{$materiales->cantidad}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
-                   <td style="background-color: #FFE4E1;">{{$materiales->stock_minimo}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
+                   <td style="background-color: #FFE4E1;">{{$materiales->stock_minimo}} {{$materiales->medida}}</td>
 
                   <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenMaterialController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>
@@ -129,9 +129,9 @@
                   </td>              
                   <td>{{$materiales->descripcion}} </td>
                   <td>{{$materiales->ubicacion}} </td>
-                  <td>{{$materiales->cantidad}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
+                  <td>{{$materiales->cantidad}} {{$materiales->medida}}<a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
 
-                <td >{{$materiales->stock_minimo}} </td>
+                <td >{{$materiales->stock_minimo}} {{$materiales->medida}}</td>
 
                   <td>  <a href="{{URL::action('AlmacenMaterialController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
                   </td>

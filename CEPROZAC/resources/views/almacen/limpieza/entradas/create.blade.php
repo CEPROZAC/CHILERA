@@ -670,7 +670,7 @@ z ++;
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
-  var cantidadanueva=document.getElementById("detalles").rows[value].cells[8].innerHTML;
+  var cantidadanueva=document.getElementById("detalles").rows[value].cells[10].innerHTML;
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows

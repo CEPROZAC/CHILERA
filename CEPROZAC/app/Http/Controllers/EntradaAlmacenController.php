@@ -44,7 +44,7 @@ class EntradaAlmacenController extends Controller
      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
 
         //
-  }
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -54,41 +54,45 @@ class EntradaAlmacenController extends Controller
     public function create()
     {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-      $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Refacciones%')->get();
+                   $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
       $cuenta = count($material);
       
 
       if (empty($material)){
-              $entrada= DB::table('entradaalmacenmateriales')
-      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
-      ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
+        $entrada= DB::table('entradaalmacenmateriales')
+        ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+        ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
         // print_r($salida);
-      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
+        return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
-                $entrada= DB::table('entradaalmacenmateriales')
-      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
-      ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
-      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]); 
+        $entrada= DB::table('entradaalmacenmateriales')
+        ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+        ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
+        return view('almacen.materiales.entradas.index', ['entrada' => $entrada]); 
 
       }else if (empty($provedor)){
-              $entrada= DB::table('entradaalmacenmateriales')
-      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
-      ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
+        $entrada= DB::table('entradaalmacenmateriales')
+        ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+        ->select('entradaalmacenmateriales.*','a.nombre as nombremat')->get();
         // print_r($salida);
-      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
+        return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
 
       }
       else{
-       return view("almacen.materiales.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas]);
-   }
+       return view("almacen.materiales.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
+     }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
         //
-}
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -100,87 +104,100 @@ class EntradaAlmacenController extends Controller
     
     public function store(EntradasMaterialesRequest $formulario)
     {
-        $cantidad = $formulario->get('cantidad2');
+      $cantidad = $formulario->get('cantidad2');
 
-        if ($cantidad > 0){
-          $validator = Validator::make(
-            $formulario->all(), 
-            $formulario->rules(),
-            $formulario->messages());
-          if ($validator->valid()){
+      if ($cantidad > 0){
+        $validator = Validator::make(
+          $formulario->all(), 
+          $formulario->rules(),
+          $formulario->messages());
+        if ($validator->valid()){
 
-            if ($formulario->ajax()){
-                return response()->json(["valid" => true], 200);
-            }
-            else{
-              $material= new almacenmaterial;
+          if ($formulario->ajax()){
+            return response()->json(["valid" => true], 200);
+          }
+          else{
+            $material= new almacenmaterial;
 
-              $material->nombre=$formulario->get('nombre2');
-              $material->provedor=$formulario->get('provedor_id2');
-              
+            $material->nombre=$formulario->get('nombre2');
+            $material->provedor=$formulario->get('provedor_id2');
+
 
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenmaterial',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
+          }
+          $material->descripcion=$formulario->get('descripcion2');
+          $material->cantidad="0";
+          $material->codigo=$formulario->get('codigo');
+          $material->estado='Activo';
+          $material->save();
         }
-        $material->descripcion=$formulario->get('descripcion2');
-        $material->cantidad="0";
-        $material->codigo=$formulario->get('codigo');
-        $material->estado='Activo';
-        $material->save();
-    }
-}
+      }
 
-$ultimo = almacenmaterial::orderBy('id', 'desc')->first()->id;
-$ex = $formulario->get('provedor_id2');
-$materiales = DB::table('provedor_materiales')
-->select('provedor_materiales.nombre')
-->where('provedor_materiales.id',$ex)->get();
+      $ultimo = almacenmaterial::orderBy('id', 'desc')->first()->id;
+      $ex = $formulario->get('provedor_id2');
+      $materiales = DB::table('provedor_materiales')
+      ->select('provedor_materiales.nombre')
+      ->where('provedor_materiales.id',$ex)->get();
 
-$provedornombre = $materiales[0]->nombre;
-$material2= new entradaalmacen;
-$material2->id_material=$ultimo;
-$material2->cantidad=$formulario->get('cantidad2');
-$material2->provedor=$provedornombre;
-$material2->comprador=$formulario->get('recibio2');
-                $material2->entregado=$formulario->get('entregado_a');
-        $material2->recibe_alm=$formulario->get('recibe_alm');
-         $material2->observacionesc=$formulario->get('observaciones');
-          $material2->estado="Activo";
+      $provedornombre = $materiales[0]->nombre;
+      $material2= new entradaalmacen;
+      $material2->id_material=$ultimo;
+      $material2->cantidad=$formulario->get('cantidad2');
+      $material2->provedor=$provedornombre;
+      $material2->comprador=$formulario->get('recibio2');
+      $material2->entregado=$formulario->get('entregado_a');
+      $material2->recibe_alm=$formulario->get('recibe_alm');
+      $material2->observacionesc=$formulario->get('observaciones');
+      $material2->estado="Activo";
 
-$material2->nota_venta=$formulario->get('nota2') . "-".$formulario->get('fecha2') ;
-$material2->fecha=$formulario->get('fecha2');
-$material2->p_unitario=$formulario->get('preciou2');
-$material2->total= $material2->p_unitario *  $material2->cantidad;
-$material2->importe= $material2->p_unitario *  $material2->cantidad;
-$material2->save();
-return Redirect::to('almacen/entradas/materiales');
+      $material2->nota_venta=$formulario->get('nota2') . "-".$formulario->get('fecha2') ;
+      $material2->fecha=$formulario->get('fecha2');
+      $material2->p_unitario=$formulario->get('preciou2');
+      $material2->total= $material2->p_unitario *  $material2->cantidad;
+      $material2->importe= $material2->p_unitario *  $material2->cantidad;
+      $material2->save();
+      return Redirect::to('almacen/entradas/materiales');
 
 
            // print_r($cantidad);
-}else{
-    $num = 1;
-    $y = 0;
-    $limite = $formulario->get('total');
+    }else{
+      $num = 1;
+      $y = 0;
+      $limite = $formulario->get('total');
    //print_r($limite);
 
-    while ($num <= $limite) {
+      while ($num <= $limite) {
         $material= new entradaalmacen;
             //print_r($num);
         $producto = $formulario->get('codigo2');
         $first = head($producto);
         $name = explode(",",$first);
             //print_r($producto);
-            //$first = $name[0];
+            //$first = $name[0]; 
              //$first = $name[1];
         
         $material->id_material=$first = $name[$y];
         $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
+        $aux =$first = $name[$y];
+        //$material->cantidad=$first = $name[$y];
+        $y = $y + 1;
+        $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
         $y = $y + 1;
             // print_r($first = $name[$y]);
              //print_r($first = $name[$y]);
+        $yy =$first = $name[$y]; 
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+
+        $y = $y + 1;
         $material->nota_venta=$first = $name[$y];
         $y = $y + 1;
              //print_r($first = $name[$y]);
@@ -196,24 +213,24 @@ return Redirect::to('almacen/entradas/materiales');
         $y = $y + 1;
         $material->moneda=$first = $name[$y];
         $y = $y + 1;
-          $material->estado="Activo";
-                $material->provedor=$formulario->get('prov');
-                $material->comprador=$formulario->get('recibio');
+        $material->estado="Activo";
+        $material->provedor=$formulario->get('prov');
+        $material->comprador=$formulario->get('recibio');
         $material->entregado=$formulario->get('entregado_a');
         $material->recibe_alm=$formulario->get('recibe_alm');
         $material->observacionesc=$formulario->get('observacionesm');
         $material->save();
         $num = $num + 1;
 
-    }
-    return redirect('/almacen/entradas/materiales');
+      }
+      return redirect('/almacen/entradas/materiales');
 
-    
-    
-    
+
+
+
         //
-}
-}
+    }
+  }
 
     /**
      * Display the specified resource.
@@ -223,22 +240,26 @@ return Redirect::to('almacen/entradas/materiales');
      */
     public function show($id)
     {
-       $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$id)->get();
-       $entrada = entradaalmacen::findOrFail($entradas[0]->id);
-       $fac=$entrada->nota_venta;
-       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-       $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)
-       ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
-       ->select('entradaalmacenmateriales.*','a.nombre as nombremat','a.id as idagro')->get();
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+     $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$id)->get();
+     $entrada = entradaalmacen::findOrFail($entradas[0]->id);
+     $fac=$entrada->nota_venta;
+     $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+     $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)
+     ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+     ->select('entradaalmacenmateriales.*','a.nombre as nombremat','a.id as idagro')->get();
 
 
-       $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
-      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+     $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+                  $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-       return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+     return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
-    }
+   }
 
     /**
      * Show the form for editing the specified resource.
@@ -248,22 +269,26 @@ return Redirect::to('almacen/entradas/materiales');
      */
     public function edit($id)
     {
-                     $entrada = entradaalmacen::findOrFail($id);
-       $fac=$entrada->nota_venta;
-       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-       $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)
-       ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
-       ->select('entradaalmacenmateriales.*','a.nombre as nombremat','a.id as idagro')->get();
+     $entrada = entradaalmacen::findOrFail($id);
+     $fac=$entrada->nota_venta;
+     $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+     $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)
+     ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+     ->select('entradaalmacenmateriales.*','a.nombre as nombremat','a.id as idagro')->get();
 
 
-       $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-        $provedor=DB::table('provedor_materiales')->where('estado','=' ,'Activo')->where('tipo','like','%Empaque%')->get();
-      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+     $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
+                  $provedor = DB::table('provedores_tipo_provedor')
+        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('p.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+     $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
         // 
-       return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas]);
+     return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
         //
-    }
+   }
 
     /**
      * Update the specified resource in storage.
@@ -273,68 +298,80 @@ return Redirect::to('almacen/entradas/materiales');
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-     {
-   $entrada = entradaalmacen::findOrFail($id);
-       $fac=$entrada->nota_venta;
-      $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)->get();
-       $cuenta = count($entradas);
+    {
+     $entrada = entradaalmacen::findOrFail($id);
+     $fac=$entrada->nota_venta;
+     $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)->get();
+     $cuenta = count($entradas);
 
-      for ($x=0; $x < $cuenta  ; $x++) {
+     for ($x=0; $x < $cuenta  ; $x++) {
       $elimina = entradaalmacen::findOrFail($entradas[$x]->id);
       $decrementa=almacenmaterial::findOrFail($elimina->id_material);
       $decrementa->cantidad=$decrementa->cantidad- $elimina->cantidad;
       $decrementa->update();
       $elimina->delete();
         # code...
-      }
+    }
      // $salidas->delete();
-       $num = 1;
+    $num = 1;
     $y = 0;
     $limite = $request->get('total');
 
     while ($num <= $limite) {
-        $material= new entradaalmacen;
-            
-        $producto = $request->get('codigo2');
-        $first = head($producto);
-        $name = explode(",",$first);
+      $material= new entradaalmacen;
+
+      $producto = $request->get('codigo2');
+      $first = head($producto);
+      $name = explode(",",$first);
             //$first = $name[0];
              //$first = $name[1];
-         
-        $material->id_material=$first = $name[$y];
-        $y = $y + 2;
-        $material->cantidad=$first = $name[$y];
-        $y = $y + 1;
-        //print_r($first = $name[$y]);
-        $material->nota_venta=$first = $name[$y];
-        $y = $y + 1;
-            
-        $material->fecha=$first = $name[$y];
-        $y = $y + 1;
-         
-        $material->p_unitario=$first = $name[$y];
-        $y = $y + 1;
 
-        $material->iva=$first = $name[$y];
-        $y = $y + 1;         
-        $material->total=$first = $name[$y];
-        $material->importe=$first = $name[$y];
-        $y = $y + 1;
-        $material->moneda=$first = $name[$y];
-     $y = $y + 1;
-        $material->entregado=$request->get('entregado_a');
-        $material->recibe_alm=$request->get('recibe_alm');
-        $material->observacionesc=$request->get('observacionesq');
-        $material->provedor=$request->get('prov');
-        $material->comprador=$request->get('recibio');
-        $material->estado="Activo";
-        $material->save();
-        $num = $num + 1;
+      $material->id_material=$first = $name[$y];
+      $y = $y + 2;
+      $aux =$first = $name[$y];
+      //$material->cantidad=$first = $name[$y];
+      $y = $y + 1;
+      $aux2 =$first = $name[$y];
+      $concat = $aux." ".$aux2;
+      $y = $y + 1;
+      $yy =$first = $name[$y]; 
+      $producto2 = $yy;
+      $name2 = explode(" ",$producto2);
+      $material->cantidad= $name2[0];
+
+      $material->medida= $name2[1];
+      $material->medidaaux=$concat;
+      $y = $y + 1;
+        //print_r($first = $name[$y]);
+      $material->nota_venta=$first = $name[$y];
+      $y = $y + 1;
+
+      $material->fecha=$first = $name[$y];
+      $y = $y + 1;
+
+      $material->p_unitario=$first = $name[$y];
+      $y = $y + 1;
+
+      $material->iva=$first = $name[$y];
+      $y = $y + 1;         
+      $material->total=$first = $name[$y];
+      $material->importe=$first = $name[$y];
+      $y = $y + 1;
+      $material->moneda=$first = $name[$y];
+      $y = $y + 1;
+      $material->entregado=$request->get('entregado_a');
+      $material->recibe_alm=$request->get('recibe_alm');
+      $material->observacionesc=$request->get('observacionesq');
+      $material->provedor=$request->get('prov');
+      $material->comprador=$request->get('recibio');
+      $material->estado="Activo";
+      $material->save();
+      $num = $num + 1;
         //
     }
-   return redirect('/almacen/entradas/materiales');
+    return redirect('/almacen/entradas/materiales');
         //
-    }
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -344,19 +381,19 @@ return Redirect::to('almacen/entradas/materiales');
      */
     public function destroy($id)
     {
-       $material=entradaalmacen::findOrFail($id);
-       $material->estado="Inactivo";
-       $decrementa=almacenmaterial::findOrFail($material->id_material);
-      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
-      $decrementa->update();
-       $material->update();
-       return Redirect::to('/almacen/entradas/materiales');
+     $material=entradaalmacen::findOrFail($id);
+     $material->estado="Inactivo";
+     $decrementa=almacenmaterial::findOrFail($material->id_material);
+     $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+     $decrementa->update();
+     $material->update();
+     return Redirect::to('/almacen/entradas/materiales');
         //
-    }
+   }
 
 
-     public function excel()
- {        
+   public function excel()
+   {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
@@ -368,12 +405,12 @@ return Redirect::to('almacen/entradas/materiales');
             ->join('empleados as emp2', 'entradaalmacenmateriales.recibe_alm', '=', 'emp2.id')
             ->join('empresas_ceprozac as e', 'entradaalmacenmateriales.comprador', '=', 'e.id')
             ->join('provedor_materiales as prov', 'entradaalmacenmateriales.provedor', '=', 'prov.id')
-            ->select('entradaalmacenmateriales.id', 'almacenmateriales.nombre', 'entradaalmacenmateriales.cantidad','almacenmateriales.medida','prov.nombre as prov', 'entradaalmacenmateriales.nota_venta','entradaalmacenmateriales.p_unitario','entradaalmacenmateriales.iva','entradaalmacenmateriales.total','entradaalmacenmateriales.moneda','e.nombre as emp','entradaalmacenmateriales.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradaalmacenmateriales.observacionesc')
+            ->select('entradaalmacenmateriales.id', 'almacenmateriales.nombre','entradaalmacenmateriales.medidaaux', 'entradaalmacenmateriales.cantidad','almacenmateriales.medida','prov.nombre as prov', 'entradaalmacenmateriales.nota_venta','entradaalmacenmateriales.p_unitario','entradaalmacenmateriales.iva','entradaalmacenmateriales.total','entradaalmacenmateriales.moneda','e.nombre as emp','entradaalmacenmateriales.fecha','emp1.nombre as empnom','emp1.apellidos as empapellidos','emp2.nombre as rec_alma','emp2.apellidos as apellidosrec','entradaalmacenmateriales.observacionesc')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N°Compra','Material','Cantidad','Medida' ,'Proveedor','Numero de Nota ó Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);
+            $sheet->row(1,['N°Compra','Material','Cantidad','Cantidad Total','Medida' ,'Proveedor','Numero de Nota ó Factura','Precio Unitario','IVA','Subtotal','Tipo de Moneda','Comprador','Fecha de Compra',"Entrego","Apellidos","Recibe en Almacén CEPROZAC","Apellidos",'Observaciónes de la Compra']);
             $sheet->setOrientation('landscape');
-        });
-      })->export('xls');
+          });
+        })->export('xls');
+      }
     }
-}

@@ -33,14 +33,14 @@ class salidaalmacenmaterialController extends Controller
      */
     public function index(Request $request)
     {
-        
-                $salida= DB::table('salidasalmacenmaterial')->where('salidasalmacenmaterial.estado','=','Activo')
-        ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
-        ->join('empleados as e', 'salidasalmacenmaterial.entrego', '=', 'e.id')
-        ->join('empleados as emp', 'salidasalmacenmaterial.recibio', '=', 'emp.id')
-        ->select('salidasalmacenmaterial.*','s.nombre','salidasalmacenmaterial.*','s.medida','e.nombre as emp1','e.apellidos as ap1','emp.nombre as emp2','emp.apellidos as ap2')->get();
+
+      $salida= DB::table('salidasalmacenmaterial')->where('salidasalmacenmaterial.estado','=','Activo')
+      ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+      ->join('empleados as e', 'salidasalmacenmaterial.entrego', '=', 'e.id')
+      ->join('empleados as emp', 'salidasalmacenmaterial.recibio', '=', 'emp.id')
+      ->select('salidasalmacenmaterial.*','s.nombre','salidasalmacenmaterial.*','s.medida','e.nombre as emp1','e.apellidos as ap1','emp.nombre as emp2','emp.apellidos as ap2')->get();
         // print_r($salida);
-        return view('almacen.materiales.salidas.index', ['salida' => $salida]);
+      return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
 
 
@@ -49,7 +49,7 @@ class salidaalmacenmaterialController extends Controller
 
 
         //
- }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -59,34 +59,35 @@ class salidaalmacenmaterialController extends Controller
     public function create()
     {
 
-        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
-        $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-        $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
+      $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+      $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
-        $cuenta = count($material);
-        
+      $cuenta = count($material); 
 
-        if (empty($material)){
-               $salida= DB::table('salidasalmacenmaterial')
-     ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
-     ->select('salidasalmacenmaterial.*','s.nombre')->get();
+
+      if (empty($material)){
+       $salida= DB::table('salidasalmacenmaterial')
+       ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+       ->select('salidasalmacenmaterial.*','s.nombre')->get();
         // print_r($salida);
-     return view('almacen.materiales.salidas.index', ['salida' => $salida]);
+       return view('almacen.materiales.salidas.index', ['salida' => $salida]);
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
-      }else if (empty($empleado)) {
-             $salida= DB::table('salidasalmacenmaterial')
-     ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
-     ->select('salidasalmacenmaterial.*','s.nombre')->get();
+     }else if (empty($empleado)) {
+       $salida= DB::table('salidasalmacenmaterial')
+       ->join('almacenmateriales as s', 'salidasalmacenmaterial.id_material', '=', 's.id')
+       ->select('salidasalmacenmaterial.*','s.nombre')->get();
         // print_r($salida);
-     return view('almacen.materiales.salidas.index', ['salida' => $salida]);
+       return view('almacen.materiales.salidas.index', ['salida' => $salida]);
 
-      }else{
-         return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado,"almacenes"=>$almacenes]);
+     }else{
+       return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado,"almacenes"=>$almacenes,'unidades'=>$unidades]);
      }
         //return view("almacen.materiales.salidas.create",["material"=>$material],["empleado"=>$empleado]); 
         //
- }
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -97,42 +98,55 @@ class salidaalmacenmaterialController extends Controller
     public function store(Request $request)
     {
 
-        $num = 1;
-        $y = 0;
-        $limite = $request->get('total');
+      $num = 1;
+      $y = 0;
+      $limite = $request->get('total');
    //print_r($limite);
 
-        while ($num <= $limite) {
-            $material= new salidaalmacenmaterial;
+      while ($num <= $limite) {
+        $material= new salidaalmacenmaterial;
             //print_r($num);
-            $producto = $request->get('codigo2');
-            $first = head($producto);
-            $name = explode(",",$first);
+        $producto = $request->get('codigo2');
+        $first = head($producto);
+        $name = explode(",",$first);
             //$first = $name[0];
-             //$first = $name[1];
-            
-            $material->id_material=$first = $name[$y];
-            $y = $y + 2;
-            $material->cantidad=$first = $name[$y];
-            $y = $y + 1;
+             //$first = $name[1]; 
+
+        $material->id_material=$first = $name[$y];
+        $y = $y + 2;
+        $aux =$first = $name[$y];
+            //$material->cantidad=$first = $name[$y];
+        $y = $y + 1;
+        $aux2 =$first = $name[$y];
+        $concat = $aux." ".$aux2;
             // print_r($first = $name[$y]);
-            $material->destino=$first = $name[$y];
-            $y = $y + 1;
+        $y = $y + 1;
+        $yy =$first = $name[$y]; 
+        $producto2 = $yy;
+        $name2 = explode(" ",$producto2);
+        $material->cantidad= $name2[0];
+
+        $material->medida= $name2[1];
+        $material->medidaaux=$concat;
+
+        $y = $y + 1;
+        $material->destino=$first = $name[$y];
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->entrego=$request->get('entrego');
-            $material->recibio=$request->get('recibio');
-             $material->estado="Activo";
+        $material->entrego=$request->get('entrego');
+        $material->recibio=$request->get('recibio');
+        $material->estado="Activo";
              //print_r($first = $name[$y]);
-            $material->tipo_movimiento=$first = $name[$y];
-            $y = $y + 1;
+        $material->tipo_movimiento=$first = $name[$y];
+        $y = $y + 1;
             // print_r($first = $name[$y]);
-            $material->fecha=$first = $name[$y];
-            $y = $y + 1;
-            $material->save();
-            $num = $num + 1;
-            
-        }
-        return redirect('almacen/salidas/material');
+        $material->fecha=$first = $name[$y];
+        $y = $y + 1;
+        $material->save();
+        $num = $num + 1;
+
+      }
+      return redirect('almacen/salidas/material');
     }
 
     /**
@@ -155,13 +169,14 @@ class salidaalmacenmaterialController extends Controller
     public function edit($id)
     { 
 
-        $salida = SalidaAlmacenMaterial::findOrFail($id);
-        $material = AlmacenMaterial::findOrFail($salida->id_material);
-        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-        $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
-        $materiales=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
-        return view("almacen.materiales.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes]);
-        
+      $salida = SalidaAlmacenMaterial::findOrFail($id);
+      $material = AlmacenMaterial::findOrFail($salida->id_material);
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
+      $materiales=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+      return view("almacen.materiales.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes,'unidades'=>$unidades]);
+
         //
     }
 
@@ -173,7 +188,7 @@ class salidaalmacenmaterialController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
- {
+    {
       $salida = SalidaAlmacenMaterial::findOrFail($id);
       $mat = AlmacenMaterial::findOrFail($salida->id_material);
       $mat->cantidad= $mat->cantidad + $salida->cantidad;
@@ -184,7 +199,7 @@ class salidaalmacenmaterialController extends Controller
       $y = 0;
 
       if ($limite == 1){
-         $mat = AlmacenMaterial::findOrFail($salida->id_material);
+       $mat = AlmacenMaterial::findOrFail($salida->id_material);
        $producto = $request->get('codigo2');
        $first = head($producto);
        $name = explode(",",$first);
@@ -193,30 +208,41 @@ class salidaalmacenmaterialController extends Controller
 
        $salida->id_material=$first = $name[$y];
        $y = $y + 2;
-       $salida->cantidad=$first = $name[$y];
-        $mat->cantidad= $mat->cantidad - $first = $name[$y];
+       $aux =$first = $name[$y];
+       //$salida->cantidad=$first = $name[$y];
+       $mat->cantidad= $mat->cantidad - $first = $name[$y];
+       $y = $y + 1;
+       $aux2 =$first = $name[$y];
+       $concat = $aux." ".$aux2;
+       $y = $y + 1;
+       $yy =$first = $name[$y]; 
+       $producto2 = $yy;
+       $name2 = explode(" ",$producto2);
+       $salida->cantidad= $name2[0];
+       $salida->medida= $name2[1];
+       $salida->medidaaux=$concat;
        $y = $y + 1;
             // print_r($first = $name[$y]);
        $salida->destino=$first = $name[$y];
        $y = $y + 1;
             // print_r($first = $name[$y]);
-       $salida->entrego=$request->get('entrego');
-       $salida->recibio=$request->get('recibio');
        $salida->tipo_movimiento=$first = $name[$y];
        $y = $y + 1;
             // print_r($first = $name[$y]);
        $salida->fecha=$first = $name[$y];
+       $salida->entrego=$request->get('entrego');
+       $salida->recibio=$request->get('recibio');
        $salida->estado="Activo";
        $y = $y + 1;
-    
+
        $mat->update();
        $salida->update();
        $num = 1;
        $y = 0;
 
+     }
+     return redirect('almacen/salidas/material');
    }
-           return redirect('almacen/salidas/material');
-}
 
     /**
      * Remove the specified resource from storage.
@@ -227,20 +253,20 @@ class salidaalmacenmaterialController extends Controller
     public function destroy($id)
     {
       $material=salidaalmacenmaterial::findOrFail($id);
-       $material->estado="Inactivo";
+      $material->estado="Inactivo";
       $mat = AlmacenMaterial::findOrFail($material->id_material);
       $mat->cantidad= $mat->cantidad + $material->cantidad;
       $mat->update();
-       $material->update();
-       return Redirect::to('/almacen/salidas/material');   
+      $material->update();
+      return Redirect::to('/almacen/salidas/material');   
 
         //
     }
 
 
 
-       public function excel()
-   {        
+    public function excel()
+    {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
@@ -251,12 +277,12 @@ class salidaalmacenmaterialController extends Controller
             $salidas = salidaalmacenmaterial::where('salidasalmacenmaterial.estado','=','Activo')->join('almacenmateriales','almacenmateriales.id', '=', 'salidasalmacenmaterial.id_material')
             ->join('empleados as e', 'salidasalmacenmaterial.entrego', '=', 'e.id')
             ->join('empleados as emp', 'salidasalmacenmaterial.recibio', '=', 'emp.id')
-            ->select('salidasalmacenmaterial.id', 'almacenmateriales.nombre', 'salidasalmacenmaterial.cantidad','almacenmateriales.medida','almacenmateriales.ubicacion', 'salidasalmacenmaterial.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasalmacenmaterial.tipo_movimiento','salidasalmacenmaterial.fecha')
+            ->select('salidasalmacenmaterial.id', 'almacenmateriales.nombre','salidasalmacenmaterial.medidaaux', 'salidasalmacenmaterial.cantidad','almacenmateriales.medida','almacenmateriales.ubicacion', 'salidasalmacenmaterial.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasalmacenmaterial.tipo_movimiento','salidasalmacenmaterial.fecha')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Ubicación','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
+            $sheet->row(1,['N° de Salida','Material','Cantidad','Cantidad Total','Medida','Ubicación','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
             $sheet->setOrientation('landscape');
-        });
-      })->export('xls');
-    }
-} 
+          });
+        })->export('xls');
+      }
+    } 
