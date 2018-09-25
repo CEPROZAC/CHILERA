@@ -450,7 +450,7 @@ function llenado(){
 
     var select2=document.getElementById('id_materialk');
     var cantidadtotal2 = select2.value;
-    limite2 = "6",
+    limite2 = "7",
     separador2 = "_",
     arregloDeSubCadenas2 = cantidadtotal2.split(separador2, limite2);
     x=arregloDeSubCadenas2[3];

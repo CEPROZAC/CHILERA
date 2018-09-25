@@ -34,7 +34,7 @@
               </div>
             </div>    
           </div>
-        </div>
+        </div> 
 
         <div class="porlets-content">
 
@@ -466,9 +466,9 @@ window.onload=function() {
   document.getElementById("total").value= r - 1;
 
   for (var i = 1 ; i <= r-1; i++) {
-   cantidadnueva=document.getElementById("detalles").rows[i].cells[8].innerHTML;
-   var x=  parseInt(document.getElementById('subtotal').value);
-   document.getElementById('subtotal').value = parseInt(cantidadnueva) + x;
+   cantidadnueva=document.getElementById("detalles").rows[i].cells[10].innerHTML;
+   var x=  parseFloat(document.getElementById('subtotal').value);
+   document.getElementById('subtotal').value = parseFloat(cantidadnueva) + x;
 
  }
 
@@ -656,7 +656,7 @@ function llenado(){
     document.getElementById("total").value= r - 1;
     var sub = precio * cantidaden + ivatotal ;
     var auxsuma= document.getElementById("subtotal").value;
-    var sumatodo = parseInt(sub) + parseInt(auxsuma);
+    var sumatodo = parseFloat(sub) + parseFloat(auxsuma);
     document.getElementById("subtotal").value=sumatodo;
   }else{
    // swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
@@ -680,7 +680,7 @@ function eliminarFila(value) {
   var r = menos.length;
   document.getElementById("total").value= r - 1;
   var sub= document.getElementById("subtotal").value;
-  document.getElementById("subtotal").value= parseInt(sub) - parseInt(cantidadanueva);
+  document.getElementById("subtotal").value= parseFloat(sub) - parseFloat(cantidadanueva);
   limpiar();
 }
 

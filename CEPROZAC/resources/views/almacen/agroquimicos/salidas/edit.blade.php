@@ -14,7 +14,7 @@
       <li><a style="color: #808080" href="{{url('almacen/salidas/agroquimicos')}}">Salidas de Almacén de Agroquímicos</a></li>
     </ol>
   </div>
-</div>
+</div>  
 <div class="container clear_both padding_fix">
   <div class="row">
     <div class="col-md-12">

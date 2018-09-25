@@ -266,10 +266,10 @@ class salidasalmacenlimpiezaController extends Controller
             $salidas = salidasalmacenlimpieza::where('salidasalmacenlimpieza.estado','=','Activo')->join('almacenlimpieza','almacenlimpieza.id', '=', 'salidasalmacenlimpieza.id_material')
             ->join('empleados as e', 'salidasalmacenlimpieza.entrego', '=', 'e.id')
             ->join('empleados as emp', 'salidasalmacenlimpieza.recibio', '=', 'emp.id')
-            ->select('salidasalmacenlimpieza.id', 'almacenlimpieza.nombre', 'salidasalmacenlimpieza.cantidad','almacenlimpieza.medida', 'salidasalmacenlimpieza.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasalmacenlimpieza.tipo_movimiento','salidasalmacenlimpieza.fecha')
+            ->select('salidasalmacenlimpieza.id', 'almacenlimpieza.nombre','salidasalmacenlimpieza.medidaaux', 'salidasalmacenlimpieza.cantidad','almacenlimpieza.medida', 'salidasalmacenlimpieza.destino', 'e.nombre as empnom','e.apellidos as ape1','emp.nombre as empmom2','emp.apellidos as ape2','salidasalmacenlimpieza.tipo_movimiento','salidasalmacenlimpieza.fecha')
             ->get();       
             $sheet->fromArray($salidas);
-            $sheet->row(1,['N° de Salida','Material','Cantidad','Medida','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
+            $sheet->row(1,['N° de Salida','Material','Cantidad','Cantidad Total','Medida','Destino','Entrego','Apellidos','Recibio','Apellidos','Tipo de Movimiento','Fecha']);
             $sheet->setOrientation('landscape');
         });
       })->export('xls');
