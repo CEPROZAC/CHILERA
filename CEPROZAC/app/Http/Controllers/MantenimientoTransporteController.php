@@ -95,6 +95,33 @@ class MantenimientoTransporteController extends Controller
 
     }
 
+
+
+    public function  crearMantenimientoEspecifico($id)
+    {
+       $operadores= DB::table('empleados')
+       ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+       ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+       ->select('empleados.id','empleados.nombre','empleados.apellidos')
+       ->where('rol_empleados.rol_Empleado','OPERADOR DE TRÁILER')
+       ->where('empleados.estado','Activo')->get();
+
+
+       $encargados_mantenimiento= DB::table('empleados')
+       ->join('empleado_roles as er','er.idEmpleado','=','empleados.id')
+       ->join('rol_empleados','er.idRol','=','rol_empleados.id')
+       ->select('empleados.id','empleados.nombre','empleados.apellidos')
+       ->where('rol_empleados.rol_Empleado','MANTENIMIENTO')
+       ->where('empleados.estado','Activo')->get();
+
+
+       $transportes= DB::table('transportes')->where('estado','Activo')->get();
+       $transporteEspecifico=Transporte::findOrFail($id);
+
+       return view('Transportes.mantenimientoTransportes.createMantenimientoEspecifico',['operadores'=>$operadores,'encargados_mantenimiento'=>$encargados_mantenimiento, 'transportes'=>$transportes,'transporteEspecifico'=>$transporteEspecifico]);
+
+   }
+
     /**
      * Show the form for editing the specified resource.
      *

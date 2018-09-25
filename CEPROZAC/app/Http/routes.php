@@ -83,10 +83,17 @@ Route::get('ver-InformacionEmpleado/{id}', 'EmpleadoController@verInformacion')-
 
 Route::get('rolesEspecificos/{id}', 'ContratosController@rolesEspecificos');
 
+
+
+
+
 Route::get('ultimo', 'ContratosController@ultimo');
 /*
 Rutas de transportes
 */
+Route::get('crearMantenimientoEspecifico/{id}', 'MantenimientoTransporteController@crearMantenimientoEspecifico');
+
+
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
 Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
@@ -96,6 +103,8 @@ Route::resource('transportes','TransporteController');
 Route::get('descargarTractores/{id}', 'TractorController@excel')->name('tractores.excel');
 
 Route::get('descargar-mantenimiento', 'MantenimientoTransporteController@excel')->name('mantenimiento.excel');
+
+
 
 /////////////Rutas de Tractores
 
