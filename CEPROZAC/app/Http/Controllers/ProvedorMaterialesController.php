@@ -169,7 +169,7 @@ class ProvedorMaterialesController extends Controller
 
      $idProvedorPK=$provedor->id;
 
-     $arrayProvedores=($this-> listadoTipoProvedor($idProvedorPK))->toArray();
+
 
      $idTipoProvedor= $request->get('idProvedor');
      $cont = 0;
