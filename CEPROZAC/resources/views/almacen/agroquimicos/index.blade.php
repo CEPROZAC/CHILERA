@@ -72,6 +72,7 @@
                    <th>Descripción </th>
                    <th>Cantidad en Almacén</th>
                    <th>Stock Minimo</th> 
+                    <th>Ver Producto</th> 
                    <td><center><b>Editar</b></center></td>
                    <td><center><b>Borrar</b></center></td>                            
                  </tr>
@@ -106,6 +107,8 @@
                   <td style="background-color: #FFE4E1;">{{$materiales->descripcion}} </td>
                   <td style="background-color: #FFE4E1;">{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
                   <td style="background-color: #FFE4E1;">{{$materiales->stock_minimo}} {{$materiales->medida}}</td>
+                    <td style="background-color: #FFE4E1;">
+       <a href="{{URL::action('AlmacenAgroquimicosController@verInformacion',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
 
                   
 
@@ -144,6 +147,8 @@
               <td>{{$materiales->descripcion}} </td>
               <td>{{$materiales->cantidad}} {{$materiales->medida}} <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
               <td>{{$materiales->stock_minimo}} {{$materiales->medida}}</td>
+                 <td >
+       <a href="{{URL::action('AlmacenAgroquimicosController@verInformacion',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
               
 
               <td>  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
@@ -170,6 +175,7 @@
           <th>Descripción </th>
           <th>Cantidad en Almacén</th>
           <th>Stock Minimo</th>
+           <th>Ver Producto</th>
           <td><center><b>Editar</b></center></td>
           <td><center><b>Borrar</b></center></td>      
         </tr>

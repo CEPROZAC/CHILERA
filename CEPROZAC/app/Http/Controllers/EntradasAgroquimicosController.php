@@ -13,6 +13,8 @@ use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\empresas_ceprozac;
+use CEPROZAC\cantidad_unidades_agro;
+use CEPROZAC\unidadesmedida;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -55,7 +57,7 @@ class EntradasAgroquimicosController extends Controller
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
        $provedor = DB::table('provedores_tipo_provedor')
         ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-     ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+     ->select('p.*','p.nombre as nombre')
      ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
@@ -179,6 +181,7 @@ class EntradasAgroquimicosController extends Controller
 
       while ($num <= $limite) {
         $material= new entradasagroquimicos;
+         $unidad = new cantidad_unidades_agro;
             //print_r($num);
         $producto = $formulario->get('codigo2');
         $first = head($producto);
@@ -187,11 +190,15 @@ class EntradasAgroquimicosController extends Controller
              //$first = $name[1];
 
         $material->id_material=$first = $name[$y];
+        $unidad->idProducto=$first = $name[$y];
         $y = $y + 2;
         $aux =$first = $name[$y];
+        $unidad->cantidad=$first = $name[$y];
         //$material->cantidad=$first = $name[$y];
         $y = $y + 1;
         $aux2 =$first = $name[$y];
+        $medida2= unidadesmedida::where('nombre','=',$aux2)->first()->id;
+        $unidad->idMedida=$medida2;
         $concat = $aux." ".$aux2;
         $y = $y + 1;
         $yy =$first = $name[$y]; 
@@ -229,10 +236,18 @@ class EntradasAgroquimicosController extends Controller
         $material->provedor=$formulario->get('prov');
         $material->comprador=$formulario->get('recibio');
         $material->estado="Activo";
+        $unidad->estado="Activo";
         $material->save();
+        $unidad->save();
         $num = $num + 1;
         //
       }
+
+         
+
+        
+        
+        
       return redirect('/almacen/entradas/agroquimicos');
     }
   }
@@ -265,7 +280,7 @@ class EntradasAgroquimicosController extends Controller
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
        $provedor = DB::table('provedores_tipo_provedor')
         ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-     ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+     ->select('p.*','p.nombre as nombre')
      ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
@@ -281,6 +296,8 @@ class EntradasAgroquimicosController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+      
       $entrada = entradasagroquimicos::findOrFail($id);
       $fac=$entrada->factura;
       $entradas=DB::table('entradasagroquimicos')->where('factura','=',$fac)->get();
@@ -290,10 +307,34 @@ class EntradasAgroquimicosController extends Controller
         $elimina = entradasagroquimicos::findOrFail($entradas[$x]->id);
         $decrementa=almacenagroquimicos::findOrFail($elimina->id_material);
         $decrementa->cantidad=$decrementa->cantidad- $elimina->cantidad;
+        $v= [$elimina->medidaaux];
+        $first = head($v);
+        $name = explode(" ",$first);
+        $z = count($name);
+        $a="";
+        for ($i=0; $i < $z; $i++) { 
+          if ($i == 1) {
+             $a=$name[$i];             
+            # code...
+          }else if($i > 1) {
+            $a=$a." ".$name[$i];
+          }else{
+            $r=$name[0];
+          }
+          # code...
+        }
+//print_r($e[0]);
+         $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
+        $unidadaux=cantidad_unidades_agro::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
+         $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
+         $unidad->cantidad=$unidad->cantiad - $r;
         $decrementa->update();
         $elimina->delete();
+        $unidad->update();
         # code...
       }
+
+
      // $salidas->delete();
       $num = 1;
       $y = 0;
@@ -302,6 +343,8 @@ class EntradasAgroquimicosController extends Controller
 
       while ($num <= $limite) {
         $material= new entradasagroquimicos;
+        $unidad = new cantidad_unidades_agro;
+
 
         $producto = $request->get('codigo2');
         $first = head($producto);
@@ -310,11 +353,15 @@ class EntradasAgroquimicosController extends Controller
              //$first = $name[1];
 
         $material->id_material=$first = $name[$y];
+        $unidad->idProducto=$first = $name[$y];
         $y = $y + 2;
         $aux =$first = $name[$y];
+         $unidad->cantidad=$first = $name[$y];
         //$material->cantidad=$first = $name[$y];
         $y = $y + 1;
         $aux2 =$first = $name[$y];
+        $medida2= unidadesmedida::where('nombre','=',$aux2)->first()->id;
+        $unidad->idMedida=$medida2;
         $concat = $aux." ".$aux2;
         $y = $y + 1;
         $yy =$first = $name[$y];
@@ -351,6 +398,8 @@ class EntradasAgroquimicosController extends Controller
         $material->provedor=$request->get('prov');
         $material->comprador=$request->get('recibio');
         $material->estado="Activo";
+         $unidad->estado="Activo";
+         $unidad->save();
         $material->save();
         $num = $num + 1;
         //
@@ -415,7 +464,7 @@ class EntradasAgroquimicosController extends Controller
         $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
          $provedor = DB::table('provedores_tipo_provedor')
         ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-     ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+     ->select('p.*','p.nombre as nombre')
      ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
         $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 

@@ -324,7 +324,7 @@
         <td>{{$entradas2->cantidad}}</td>
         <td>{{$entradas2->medida}}</td>
         <td>{{$entradas2->medidaaux}}</td>
-        <td>{{$entradas2->factura}} </td>
+        <td>{{$entradas2->factura}}</td>
         <td>{{$entradas2->fecha}}</td>
         <td>{{$entradas2->p_unitario}}</td>
         <td>{{$entradas2->iva}}</td>

@@ -201,6 +201,7 @@ Route::resource('almacen/entradas/agroquimicos','EntradasAgroquimicosController'
 Route::get('descargar-entradas-agro', 'EntradasAgroquimicosController@excel')->name('almacen.agroquimicos.entradas.excel');
 Route::get('pdfagroquimicos/{id}', array('as'=> '/pdfagroquimicos','uses'=>'AlmacenAgroquimicosController@invoice'));
 Route::get('descargar-agroquímicos', 'AlmacenAgroquimicosController@excel')->name('almacen.agroquimicos.excel');
+Route::get('verproducto/{id}', array('as'=> '/verproducto','uses'=>'AlmacenAgroquimicosController@verInformacion'));
 
 /////////ALMACEN DE LIMPIEZA
 Route::resource('almacenes/limpieza','AlmacenLimpiezaController');	

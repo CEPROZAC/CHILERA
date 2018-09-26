@@ -13,6 +13,8 @@ use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAgroquimicos; 
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\empresas_ceprozac;
+use CEPROZAC\cantidad_unidades_agro;
+use CEPROZAC\unidadesmedida;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,7 +36,7 @@ class almacenagroquimicosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
      $material = DB::table('almacenagroquimicos')
      ->join('provedor_materiales as p', 'almacenagroquimicos.provedor', '=', 'p.id')
@@ -89,9 +91,17 @@ class almacenagroquimicosController extends Controller
         $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
 
-
+       $aux=$request->get('medida');
        $material->save();
-        $material= DB::table('almacenagroquimicos')->orderby('created_at','DESC')->take(1)->get();
+        $materialid= almacenagroquimicos::orderBy('id', 'desc')->first()->id;
+        //$medida2= DB::table('unidadesmedida')->where('nombre','=',$aux)->take(1)->get();
+         $medida2= unidadesmedida::where('nombre','=',$aux)->first()->id;
+        $unidad = new cantidad_unidades_agro;
+        $unidad->idProducto=$materialid;
+        $unidad->idMedida=$medida2;
+        $unidad->cantidad=$request->get('cantidad');
+        $unidad->estado="Activo";
+        $unidad->save();
 
          return Redirect::to('detalle/agroquimicos');
 
@@ -168,6 +178,10 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
     public function update(Request $request, $id)
     {
      $material=almacenagroquimicos::findOrFail($id);
+     $medidaaux=$request->get('medida');
+    $medida2= unidadesmedida::where('nombre','=',$material->medida)->first()->id;
+    $unidadaux=cantidad_unidades_agro::where('idProducto','=',$id)->where('idMedida','=',$medida2)->first()->id;
+
      $material->nombre=$request->get('nombre');
      
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
@@ -183,6 +197,17 @@ return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$p
           $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
         $material->update();
+
+
+        $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
+        $medidaaux=$request->get('medida');
+        $medida2= unidadesmedida::where('nombre','=',$medidaaux)->first()->id;
+
+        $unidad->idMedida=$medida2;
+        $unidad->cantidad=$request->get('cantidad');
+        $unidad->estado="Activo";
+        $unidad->update();
+
         return Redirect::to('almacenes/agroquimicos');
         //
     }
@@ -305,6 +330,20 @@ public function activar(Request $request)
     $quimico->update();
     return Redirect::to('almacenes/agroquimicos');
 }
+
+        public function verInformacion($id)
+    {
+ /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
+ // $cantidad = cantidad_unidades_agro::findOrFail($id);
+
+      $cantidad= DB::table('cantidad_unidades_agro')->where('idProducto', '=', $id)->where('cantidad_unidades_agro.cantidad','>=','0')
+       ->join('unidadesmedida as u' ,'cantidad_unidades_agro.idMedida','=','u.id')
+       ->join('almacenagroquimicos as alm' ,'cantidad_unidades_agro.idProducto','=','alm.id')
+      ->select('cantidad_unidades_agro.*','alm.nombre as nombreprodu','u.nombre as unidadnombre')->get();
+
+
+      return view("almacen.agroquimicos.ver",["cantidad"=>$cantidad]);
+    }
         //
 }
 
