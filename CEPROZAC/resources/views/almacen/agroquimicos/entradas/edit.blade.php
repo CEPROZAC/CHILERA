@@ -206,7 +206,7 @@
        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
          <div class="form-group"> 
           <label for="pcantidad">Cantidad en Almacén </label>
-          <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
+          <input name="pcantidad" id="pcantidad" value="" step="any" type="number" disabled class="form-control" />
         </div>    
       </div>  
 
@@ -228,7 +228,7 @@
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
     <label for="scantidad">Cantidad de Entrada </label>
-    <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+    <input name="scantidad" id="scantidad" type="number" step="any"  max="999999" min="0.1" value="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="6"  />
     <span id="errorCantidad" style="color:#FF0000;"></span>
   </div>    
 </div>  

@@ -19,8 +19,8 @@ class AlmacenAgroquimicos extends Migration
          $table->string('codigo')->nullable();
          $table->string('imagen')->nullable();
          $table->string('descripcion')->nullable();
-         $table->integer('cantidad');
-         $table->integer('stock_minimo')->nullable();
+         $table->double('cantidad');
+         $table->double('stock_minimo')->nullable();
          $table->string('medida');
          $table->string('estado');
          $table->timestamps();

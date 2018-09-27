@@ -118,7 +118,7 @@
     <div class="form-group">
       <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input name="cantidad" value="{{$material->cantidad }}" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+        <input name="cantidad" value="{{$material->cantidad }}" maxlength="9" type="number" step="any"  max="999999" min="0.1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" /> 
       </div>    
     </div>  
 

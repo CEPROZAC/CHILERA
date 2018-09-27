@@ -16,7 +16,7 @@ class SalidasAgroquimicosMigration extends Migration
             $table->increments('id');
              $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenagroquimicos');
-            $table->integer('cantidad');
+            $table->double('cantidad');
              $table->string('medida');
               $table->string('medidaaux');
             $table->string('destino');

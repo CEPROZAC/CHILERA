@@ -20,8 +20,8 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
             $table->string('factura');
             $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenlimpieza');
-            $table->integer('cantidad');
-                        $table->string('medida');
+            $table->double('cantidad');
+            $table->string('medida');
             $table->string('medidaaux');
             $table->double('p_unitario');
             $table->double('importe');
@@ -29,11 +29,11 @@ class EntradasAlmacenLimpiezaMigrate extends Migration
             $table->double('total');
             $table->integer('comprador')->unsigned();
             $table->foreign('comprador')->references('id')->on('empresas_ceprozac');
-             $table->string('moneda');
+            $table->string('moneda');
 
             $table->integer('entregado')->unsigned();
             $table->foreign('entregado')->references('id')->on('empleados');
-              $table->integer('recibe_alm')->unsigned();
+            $table->integer('recibe_alm')->unsigned();
             $table->foreign('recibe_alm')->references('id')->on('empleados');
             $table->string('observacionesc')->nullable();
             $table->string('estado')->nullable();

@@ -15,7 +15,7 @@ class Unidadesmedidamigration extends Migration
         Schema::create('unidadesmedida', function (Blueprint $table) {
         $table->increments('id');
         $table->string('nombre'); 
-        $table->integer('cantidad')->nullable();
+        $table->double('cantidad')->nullable();
         $table->string('unidad_medida')->nullable();
         $table->string('estado');
             $table->timestamps();
