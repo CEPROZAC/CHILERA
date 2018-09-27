@@ -109,12 +109,28 @@
               </div>
             </div>
 
-         <div class="form-group">
-      <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
-      </div>
-    </div>
+
+
+                              <div class="form-group">
+            <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="ubicacion" class="form-control select2"  required>  
+                @foreach($almacen as $almacenes)
+                @if($almacenes->id == $material->ubicacion)
+                <option value="{{$almacenes->id}}" selected>{{$almacenes->nombre}}</option>
+                @else
+                <option value="{{$almacenes->id}}">
+                 {{$almacenes->nombre}}
+               </option>
+                @endif
+                
+               
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
 
 
                <div class="form-group">

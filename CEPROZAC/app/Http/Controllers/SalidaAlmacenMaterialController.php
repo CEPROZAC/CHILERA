@@ -61,7 +61,8 @@ class salidaalmacenmaterialController extends Controller
 
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
-      $material=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+           $material=DB::table('almacenmateriales')->join('almacengeneral as alma','almacenmateriales.ubicacion', '=', 'alma.id')
+    ->select('almacenmateriales.*','alma.nombre as ubicacion')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
       $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
@@ -173,7 +174,8 @@ class salidaalmacenmaterialController extends Controller
       $material = AlmacenMaterial::findOrFail($salida->id_material);
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
       $almacenes=DB::table('almacengeneral')->where('estado','=' ,'Activo')->get();
-      $materiales=DB::table('almacenmateriales')->where('estado','=' ,'Activo')->where('cantidad','>','0')->get();
+           $materiales=DB::table('almacenmateriales')->join('almacengeneral as alma','almacenmateriales.ubicacion', '=', 'alma.id')
+    ->select('almacenmateriales.*','alma.nombre as ubicacion')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
       return view("almacen.materiales.salidas.edit",["salida"=>$salida,"empleado"=>$empleado,"material"=>$material,'materiales'=>$materiales,'almacenes'=>$almacenes,'unidades'=>$unidades]);
 

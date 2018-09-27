@@ -266,7 +266,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="{{url('/almacen/salidas/empaque')}}" class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/materiales')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -710,9 +710,6 @@ function recorre(valor) {
  for (var r = 1, n = table.rows.length-1; r < n; r++) {
   for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
    if (z == 1){
-        //alert(z)
-       // document.getElementById("id_materialk").id=z;
-      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
       var j = table.rows[r].cells[c].innerHTML
       if (valor == j ){
         var r = 1;
@@ -722,52 +719,29 @@ function recorre(valor) {
     }
 
     else if(z == 2){
-         //alert(z)
-       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-     //  alert(table.rows[r].cells[c].innerHTML);
+
      z ++;
 
 
    }else if(z == 3){
-      ///alert(table.rows[r].cells[c].innerHTML);
       z ++;
     }else if(z == 4){
-
-   //  alert(table.rows[r].cells[c].innerHTML);
    z ++;
  } else if (z == 5){
-       //  alert(z)
-     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-     //alert(table.rows[r].cells[c].innerHTML);
-
-//alert(arreglo);
 z ++;
 }else if (z == 6){
- //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
- //alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-   //     alert(table.rows[r].cells[c].innerHTML);
    z ++;
 
  }else if(z == 8){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-   //     alert(table.rows[r].cells[c].innerHTML);
    z ++;
 
  }else if(z == 9){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-   //     alert(table.rows[r].cells[c].innerHTML);
    z ++;
 
  }else{
-       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-     //  alert(table.rows[r].cells[c].innerHTML);
      z = 1;
 
    }

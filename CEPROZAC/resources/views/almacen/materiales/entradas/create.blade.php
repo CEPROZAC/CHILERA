@@ -172,7 +172,7 @@
             <label for="material">Material </label>
             <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
               @foreach($material as $mat)
-              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->ubicacion}}_{{$mat->medida}}">
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->ubicacion2}}_{{$mat->medida}}">
                {{$mat->nombre}}
              </option>
              @endforeach              
@@ -350,7 +350,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a  href="{{url('/almacen/entradas/empaque')}}" class="btn btn-default"> Cancelar</a>
+    <a  href="{{url('/almacen/entradas/materiales')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -468,6 +468,7 @@
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
    document.getElementById("umedida").value=medida;
+   document.getElementById("ubicacion").value=ubicacionact;
 
 
 
@@ -525,7 +526,7 @@ function llenado(){
   arregloDeSubCadenas = cantidadtotal.split(separador, limite);
   unidadaux = arregloDeSubCadenas[0];
   medida=arregloDeSubCadenas[1];
-  cantidadaux=arregloDeSubCadenas[2];
+  cantidadaux=arregloDeSubCadenas[2]; 
 
   if (document.getElementById('umedida').value != unidadaux){
    document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
@@ -566,9 +567,16 @@ function llenado(){
     codigo=arregloDeSubCadenas[2];
     id=arregloDeSubCadenas[3];
     nombre=arregloDeSubCadenas[4];
+
+       var comprueba = recorre2(id)
+       if (comprueba == 1){
+        swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+        return false;
+      }
+
     var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
-    var row = tabla.insertRow(id2);
+    var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
@@ -679,6 +687,57 @@ z ++;
    }
  }
 }   
+
+function recorre2(valor) {
+ var z = 1
+ var arreglo = [];
+ var table = document.getElementById('detalles');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+      var j = table.rows[r].cells[c].innerHTML
+      if (valor == j ){
+        var r = 1;
+        return(r);
+        z ++;
+      }else{
+       z ++;
+      }
+    }
+    else if(z == 2){
+     z ++;
+   }else if(z == 3){
+      z ++;
+    }else if(z == 4){
+   z ++;
+ } else if (z == 5){
+z ++;
+}else if (z == 6){
+ z ++;
+
+}else if(z == 7){
+   z ++;
+
+ }else if(z == 8){
+   z ++;
+
+ }else if(z == 9){
+   z ++;
+
+ }else if(z == 10){
+   z ++;
+
+ }else if(z == 11){
+   z ++;
+
+ }else{
+     z = 1;
+
+   }
+
+ }
+}
+}
 
 
 function eliminarFila(value) {
