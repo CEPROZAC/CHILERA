@@ -108,6 +108,10 @@ class unidadesmedidacontroller extends Controller
      */
     public function destroy($id)
     {
+         $unidad = unidadesmedida::findOrFail($id);
+                 $unidad->estado="Inactivo";
+        $unidad->update();
+         return Redirect::to('unidades_medida');
         //
     }
 

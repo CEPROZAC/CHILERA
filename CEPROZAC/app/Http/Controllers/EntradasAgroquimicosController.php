@@ -200,9 +200,7 @@ class EntradasAgroquimicosController extends Controller
         $aux2 =$first = $name[$y];
         $medida2= unidadesmedida::where('nombre','=',$aux2)->first()->id;
         ///si ya exixste//
-        $comprueba= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->get();
-        $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$medida2)->get();
-        $x=count($comprueba);
+        $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
         $r=count($comprueba2);
         if ($r > 0){
           $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
@@ -381,9 +379,11 @@ class EntradasAgroquimicosController extends Controller
       $aux2 =$first = $name[$y];
       $medida2= unidadesmedida::where('nombre','=',$aux2)->first()->id;
 
-             $comprueba= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->get();
-        $x=count($comprueba);
-        if ($x > 0){
+      //si ya existe//
+
+        $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
+        $r=count($comprueba2);
+        if ($r > 0){
           $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
           $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
           $unidad2->cantidad=$unidad2->cantidad + $aux;
@@ -440,7 +440,7 @@ class EntradasAgroquimicosController extends Controller
      $num = $num + 1;
         //
    }
-   //return redirect('/almacen/entradas/agroquimicos');
+   return redirect('/almacen/entradas/agroquimicos');
         //
  }
 
@@ -456,8 +456,33 @@ class EntradasAgroquimicosController extends Controller
      $material->estado="Inactivo";
      $decrementa=almacenagroquimicos::findOrFail($material->id_material);
      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+
+     $v= [$material->medidaaux];
+        $first = head($v);
+        $name = explode(" ",$first);
+        $z = count($name);
+        $a="";
+        for ($i=0; $i < $z; $i++) { 
+          if ($i == 1) {
+           $a=$name[$i];             
+            # code...
+         }else if($i > 1) {
+          $a=$a." ".$name[$i];
+        }else{
+          $r=$name[0];
+        }
+          # code...
+      }
+//print_r($e[0]);
+      $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
+      $unidadaux=cantidad_unidades_agro::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
+      $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
+      $unidad->cantidad=$unidad->cantidad - $r;
+      $unidad->update();
      $decrementa->update();
      $material->update();
+
+
      return Redirect::to('/almacen/entradas/agroquimicos');   
         //
    }
