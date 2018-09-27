@@ -42,7 +42,8 @@ class almacenempaquecontroller extends Controller
      $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
      $empleado = DB::table('empleados')->where('estado','Activo')->get();
      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
-     return view('almacen.empaque.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas]);
+     $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+     return view('almacen.empaque.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
         //
     }
 
@@ -96,7 +97,7 @@ class almacenempaquecontroller extends Controller
         $material->stock_minimo=$formulario->get('stock_min');
         $material->estado='Activo';
 
-
+         $aux=$formulario->get('medida');
         $material->save();
         $materialid= almacenempaque::orderBy('id', 'desc')->first()->id;
         //$medida2= DB::table('unidadesmedida')->where('nombre','=',$aux)->take(1)->get();
@@ -104,7 +105,7 @@ class almacenempaquecontroller extends Controller
         $unidad = new cantidad_unidades_emp;
         $unidad->idProducto=$materialid;
         $unidad->idMedida=$medida2;
-        $unidad->cantidad=$request->get('cantidad');
+        $unidad->cantidad=$formulario->get('cantidad');
         $unidad->estado="Activo";
         $unidad->save();
          return Redirect::to('detalle/empaque');
@@ -173,6 +174,9 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
     {
          $material=almacenempaque::findOrFail($id);
      $material->nombre=$request->get('nombre');
+          $medidaaux=$request->get('medida');
+    $medida2= unidadesmedida::where('nombre','=',$material->medida)->first()->id;
+    $unidadaux=cantidad_unidades_emp::where('idProducto','=',$id)->where('idMedida','=',$medida2)->first()->id;
      
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
@@ -187,6 +191,15 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
           $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
         $material->update();
+
+           $unidad=cantidad_unidades_emp::findOrFail($unidadaux);
+        $medidaaux=$request->get('medida');
+        $medida2= unidadesmedida::where('nombre','=',$medidaaux)->first()->id;
+        $unidad->idMedida=$medida2;
+        $unidad->cantidad=$request->get('cantidad');
+        $unidad->estado="Activo";
+        $unidad->update();
+
         return Redirect::to('almacenes/empaque');
         //
     }
@@ -256,7 +269,10 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
 
       $material2= new entradasempaques;
       $material2->id_material=$id;
-      $material2->cantidad=$formulario->get('cantidades'.$id);
+            $material2->cantidad=$formulario->get('cantidades'.$id);
+      $material2->medida=$formulario->get('umedida'.$id);
+       $material2->medidaaux=$formulario->get('medidaaux'.$id);
+
      $material2->provedor=$nom_provedor;
                       $material2->entregado=$formulario->get('entregado_a'.$id);
         $material2->recibe_alm=$formulario->get('recibe_alm'.$id);
@@ -274,7 +290,7 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
       $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
        $material2->moneda=$formulario->get('moneda'.$id);
         $material2->estado="Activo";
-      $material2->save();
+      $material2->save(); 
 
 
       return Redirect::to('almacenes/empaque');

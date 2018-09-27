@@ -23,7 +23,7 @@
                 
                </div>    
                </div>
-                           <br> <br>
+                           <br> <br> 
 
  <div class="form-group"> 
  <label class="col-sm-3 control-label">Medida <strog class="theme_color">*</strog></label>
