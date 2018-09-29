@@ -29,7 +29,7 @@
               </div>
             </div>    
           </div>
-        </div>
+        </div> 
         <div class="porlets-content">
          <div class="text-success" id='result'>
           @if(Session::has('message'))
@@ -102,61 +102,62 @@
       </div>
     </div>
 
-         <div class="form-group">
-      <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
-      </div>
-    </div>
+
+
+              <div class="form-group">
+            <label class="col-sm-3 control-label"> Ubicación: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="ubicacion" id="ubicacion" class="form-control"  value="{{Input::old('ubicacion')}}" required>  
+                @foreach($almacen as $almacenes)
+                <option value="{{$almacenes->id}}">
+                 {{$almacenes->nombre}}
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
 
     <div class="form-group">
       <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+        <input name="cantidad"  value="{{Input::old('cantidad')}}" type="number" step="any"  max="999999" min="0.1"  data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
       </div>    
     </div>  
 
-      <div class="form-group">
-    <label class="col-sm-3 control-label">Unidad de Medida: <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <select name="medida" id="medida" value="{{Input::old('medida')}}">
-        @if(Input::old('medida')=="Kilogramos")
-        <option value='Kilogramos' selected>Kilogramos
-        </option>
-        <option value="Toneladas">Toneladas</option>
-        <option value="Lote">Lote</option>
-        <option value="Libre">Libre</option>
-        <option value="Unidades">Unidades</option>
-        @elseif(Input::old('medida')=="Toneladas")
-        <option value='Toneladas' selected>Toneladas
-        </option>
-        <option value="Lote">Lote</option>
-        <option value="Libre">Libre</option>
-        <option value="Unidades">Unidades</option>
-        <option value='Kilogramos'>Kilogramos</option>
-        @elseif(Input::old('Lote')=="Lote")
-        <option value='Toneladas'>Toneladas</option>
-        <option value="Lote" selected>Lote</option>
-        <option value="Libre">Libre</option>
-        <option value="Unidades">Unidades</option>
-        <option value='Kilogramos'>Kilogramos</option>
-        @elseif(Input::old('Libre')=="Libre")
-        <option value='Toneladas'>Toneladas</option>
-        <option value="Lote">Lote</option>
-        <option value="Libre" selected>Libre</option>
-        <option value="Unidades">Unidades</option>
-        <option value='Kilogramos'>Kilogramos</option>
-        @else
-        <option value='Toneladas'>Toneladas</option>
-        <option value="Lote">Lote</option>
-        <option value="Libre" >Libre</option>
-        <option value="Unidades" selected>Unidades</option>
-        <option value='Kilogramos'>Kilogramos</option>
-        @endif
-      </select>
-      
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <select name="medida" value="{{Input::old('medida')}}">
+          @if(Input::old('medida')=="KILOGRAMOS")
+          <option value='KILOGRAMOS' selected>KILOGRAMOS
+          </option>
+          <option value="LITROS">LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+    
+          @elseif(Input::old('medida')=="LITROS")
+          <option value="LITROS" selected>LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+          @elseif(Input::old('medida')=="METROS")
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" selected>METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+
+          @else
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" >METROS</option>
+          <option value="UNIDADES" selected>UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
+          @endif
+        </select>
+        
+      </div>
     </div>
-  </div>
 
                              <div class="form-group">
               <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>

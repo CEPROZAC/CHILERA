@@ -249,7 +249,7 @@
                  </div>
                  <div class="form-group">
                   <div class="col-sm-offset-7 col-sm-5">
-                  <button type="submit" onclick="validarRolesCrear();" class="btn btn-primary" id="submit">Guardar</button>
+                    <button type="submit" onclick="validarTIpoCrear();" class="btn btn-primary" id="submit">Guardar</button>
                     <a href="/contratos" class="btn btn-default"> Cancelar</a>
                   </div>
                 </div><!--/form-group--> 

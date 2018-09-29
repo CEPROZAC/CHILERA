@@ -105,63 +105,41 @@
     <div class="form-group">
       <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+        <input name="cantidad" value="{{Input::old('cantidad')}}" type="number" step="any"  max="999999" min="0.1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
       </div>    
     </div>  
 
+   
     <div class="form-group">
-      <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
+      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
         <select name="medida" value="{{Input::old('medida')}}">
-          @if(Input::old('medida')=="Kilogramos")
-          <option value='Kilogramos' selected>Kilogramos
+          @if(Input::old('medida')=="KILOGRAMOS")
+          <option value='KILOGRAMOS' selected>KILOGRAMOS
           </option>
-          <option value="Toneladas">Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="1/2Litros">1/2 Litros</option>
-          <option value="Metros">Metros</option>
-          <option value="Unidades">Unidades</option>
-          @elseif(Input::old('medida')=="Toneladas")
-          <option value='Toneladas' selected>Toneladas
-          </option>
-          <option value="Litros">Litros</option>
-          <option value="Metros">Metros</option>
-          <option value="1/2Litros">1/2 Litros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          @elseif(Input::old('medida')=="Litros")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros" selected>Litros</option>
-          <option value="1/2Litros">1/2 Litros</option>
-          <option value="Metros">Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          @elseif(Input::old('medida')=="Metros")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="1/2Litros">1/2 Litros</option>
-          <option value="Metros" selected>Metros</option>
-          <option value="Unidades">Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-          @elseif(Input::old('medida')=="1/2Litros")
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="1/2Litros" selected>1/2 Litros</option>
-          <option value="Metros" >Metros</option>
-          <option value="Unidades" >Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
+          <option value="LITROS">LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+    
+          @elseif(Input::old('medida')=="LITROS")
+          <option value="LITROS" selected>LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+          @elseif(Input::old('medida')=="METROS")
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" selected>METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+
           @else
-          <option value='Toneladas'>Toneladas</option>
-          <option value="Litros">Litros</option>
-          <option value="1/2Litros">1/2 Litros</option>
-          <option value="Metros" >Metros</option>
-
-          <option value="Unidades" selected>Unidades</option>
-          <option value='Kilogramos'>Kilogramos</option>
-
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" >METROS</option>
+          <option value="UNIDADES" selected>UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
           @endif
         </select>
-
+        
       </div>
     </div>
 

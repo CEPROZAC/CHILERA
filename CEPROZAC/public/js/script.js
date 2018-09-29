@@ -1160,6 +1160,8 @@ function  validarprovmat(){
 
   function agregarTipoProvedor() {
 
+
+
     var select = document.getElementById("tipo_provedor");
     var options=document.getElementsByTagName("option");
     var idProvedor= select.value;
@@ -1168,7 +1170,7 @@ function  validarprovmat(){
 
 
     if(!validarProvedorDuplicadosCrear(x)){
-      document.getElementById("errorRoles").innerHTML = "";
+      document.getElementById("errorTipo").innerHTML = "";
       var fila="<tr><td style=\"display:none;\"><input name=\"idProvedor[]\" value=\""+idProvedor+"\">"
       +"</td><td colspan=\"2\">"+x+"</td>"
       +""+
@@ -1180,7 +1182,7 @@ function  validarprovmat(){
       document.getElementById("myTable").appendChild(btn);
       validarTIpoCrear();
     } else {
-      document.getElementById("errorRoles").innerHTML = "El tipo de Empleado que intentas ingresar ya pertenece al empleado";
+      document.getElementById("errorTipo").innerHTML = "El tipo de proveedor  que intentas ingresar ya pertenece al proveedor";
     }
 
   }
@@ -1189,14 +1191,17 @@ function  validarprovmat(){
   function validarProvedorDuplicadosCrear(tipoProvedor){
 
 
+
        var filas = $("#myTable").find("tr"); //devulve las filas del body de tu tabla segun el ejemplo que brindaste
+
        var resultado = false;
+
        for(i=1; i<filas.length; i++)
        { 
        var celdas = $(filas[i]).find("td"); //devolverá las celdas de una fila
        //valor = $($(celdas[1]).children("input")[0]).val();
-       tipo_Agregar = $(celdas[0]).text();
-
+       tipo_Agregar = $(celdas[1]).text();
+       
        if(tipo_Agregar== tipoProvedor){
         resultado =true;
         break;
@@ -1215,11 +1220,63 @@ function  validarprovmat(){
 
         if (filas.length <=1 ){
          document.getElementById('submit').disabled=true;
-         document.getElementById("errorRoles").innerHTML = "No se  a registrado un tipo a Proveedor";
+         document.getElementById("errorTipo").innerHTML = "No se  a registrado un tipo a Proveedor";
        } else {
 
          document.getElementById('submit').disabled=false;
-         document.getElementById("errorRoles").innerHTML = "";
+         document.getElementById("errorTipo").innerHTML = "";
        }
 
      }
+
+
+
+
+
+     function agregarTipoProvedor1() {
+
+
+
+      var select = document.getElementById("tipo_provedor");
+      var options=document.getElementsByTagName("option");
+      var idProvedor= select.value;
+
+      var x = select.options[select.selectedIndex].text;
+
+
+      if(!validarProvedorDuplicadosCrear(x)){
+        document.getElementById("errorTipo").innerHTML = "";
+        var fila="<tr><td style=\"display:none;\"><input name=\"idProvedor[]\" value=\""+idProvedor+"\">"
+        +"</td><td colspan=\"2\">"+x+"</td>"
+        +""+
+        "<td>"+
+        " <button type=\"button\"  onclick=\"eliminarTipo(this);myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\"> Quitar<i class=\"fa fa-times\"></i> </button>"
+        +"</td>";
+        var btn = document.createElement("TR");
+        btn.innerHTML=fila;
+        document.getElementById("myTable").appendChild(btn);
+        validarTIpoCrear();
+      } else {
+        document.getElementById("errorTipo").innerHTML = "El tipo de proveedor  que intentas ingresar ya pertenece al proveedor";
+      }
+
+    }
+
+
+
+
+    function eliminarTipo(btn) {
+
+      var route = "http://localhost:8000/eliminarTipoProvedor/"+btn.value+"";
+      var token = $("#token").val();
+
+      $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'get',
+        dataType: 'json',
+        success: function(){
+          $("#msj-success").fadeIn();
+        }
+      });
+    }

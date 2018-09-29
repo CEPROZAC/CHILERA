@@ -20,7 +20,9 @@ class Entradasempaques extends Migration
             $table->string('factura');
             $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenempaque');
-            $table->integer('cantidad');
+            $table->double('cantidad');
+                        $table->string('medida');
+            $table->string('medidaaux');
             $table->double('p_unitario');
             $table->double('importe');
             $table->double('iva');

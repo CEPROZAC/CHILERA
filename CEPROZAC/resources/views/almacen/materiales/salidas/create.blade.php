@@ -79,7 +79,7 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
- 
+
        <div class="form-group">
         <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
         <div class="col-sm-6">
@@ -89,116 +89,141 @@
 
 
 
-                     <div class="form-group">
-          <label class="col-sm-3 control-label">Destino : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="destino" id="destino"   class="form-control select2" >  
-              @foreach($almacenes as $al)
-              <option value="{{$al->nombre}}">
-               {{$al->nombre}}
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
-         </div>
-       </div>
-
-
       <div class="form-group">
-        <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>
+        <label class="col-sm-3 control-label">Destino : <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-
-         <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
+          <select name="destino" id="destino"   class="form-control select2" >  
+            @foreach($almacenes as $al)
+            <option value="{{$al->nombre}}">
+             {{$al->nombre}}
+           </option>
+           @endforeach              
+         </select>
+         <div class="help-block with-errors"></div>
        </div>
      </div>
 
 
-         <div class="col-lg-4 col-lg-offset-4">
-       <div class="form-group">
-        <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
-        </div>
+     <div class="form-group">
+      <label class="col-sm-3 control-label">Fecha de Salida: <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+
+       <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
+     </div>
+   </div>
+
+
+   <div class="col-lg-4 col-lg-offset-4">
+     <div class="form-group">
+      <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
       </div>
     </div>
+  </div>
 
 
-    <div class="container clear_both padding_fix">
-      <div class="block-web">
-       <div class="row">
-        <div class="panel panel-primary"> 
+  <div class="container clear_both padding_fix">
+    <div class="block-web">
+     <div class="row">
+      <div class="panel panel-primary"> 
 
-          <div class="panel-body">
-            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-              <div class="form-group"> 
-                <label for="material">Material </label>
-                <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
-                  @foreach($material as $mat)
-                  <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->ubicacion}}">
-                   {{$mat->nombre}}
-                 </option>
-                 @endforeach              
-               </select>
-               <div class="help-block with-errors"></div>
-             </div>
-           </div><!--/form-group-->
+        <div class="panel-body">
+          <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+            <div class="form-group"> 
+              <label for="material">Material </label>
+              <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
+                @foreach($material as $mat)
+                <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->ubicacion}}_{{$mat->medida}}">
+                 {{$mat->nombre}}
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
 
-           <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-             <div class="form-group"> 
-              <label for="scantidad">Cantidad de Salida </label>
-              <input name="scantidad" id="scantidad" type="number" value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
-              <span id="errorCantidad" style="color:#FF0000;"></span>
-            </div>    
-          </div>  
 
-          <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
            <div class="form-group"> 
             <label for="pcantidad">Cantidad en Almacén </label>
-            <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
+            <input name="pcantidad" id="pcantidad" value="" step="any"  type="number" disabled class="form-control" />
           </div>    
         </div>  
 
-        <div class="col-sm-4">
+        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
          <div class="form-group"> 
-          <label for="descripcion">Descripción </label>
-          <input name="descripcion" id="descripcion" disabled class="form-control" />
+          <label for="umedida">Medida </label>
+          <input name="umedida" id="umedida" value="" onchange="medida(this);"  type="text" disabled class="form-control" />
         </div>    
-      </div>  
-
+      </div> 
 
       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
        <div class="form-group"> 
-        <label for="ubicacion">Ubicación Actual</label>
-        <input name="ubicacion" id="ubicacion"  type="text" class="form-control" placeholder="Ubicacion" readonly="" />
+        <label for="descripcion">Descripción </label>
+        <input name="descripcion" id="descripcion" disabled class="form-control" />
       </div>    
     </div>  
 
 
-  </div>
+    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+     <div class="form-group"> 
+      <label for="ubicacion">Ubicación Actual</label>
+      <input name="ubicacion" id="ubicacion"  type="text" class="form-control" placeholder="Ubicacion" readonly="" />
+    </div>    
+  </div>  
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-    <div class="form-group"> 
-      <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
-    </div>
+   <div class="form-group"> 
+    <label for="scantidad">Cantidad de Salida </label>
+    <input name="scantidad" id="scantidad" type="number" step="any"  value="1" max="{{$mat->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+    <span id="errorCantidad" style="color:#FF0000;"></span>
+  </div>    
+</div>  
+
+<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="form-group"> 
+  <label for="medida">Medida </label>
+  <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
+    @foreach($unidades as $unidad)
+    <option value="{{$unidad->unidad_medida}}_{{$unidad->nombre}}_{{$unidad->cantidad}}">
+     {{$unidad->nombre}}
+   </option>
+   @endforeach              
+ </select>
+ <span id="errorMedida" style="color:#FF0000;"></span>
+ <div class="help-block with-errors"></div>
+</div>
+</div><!--/form-group-->
+
+
+</div>
+<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+  <div class="form-group"> 
+    <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
   </div>
+</div>
 
 </div>
 
 
 
 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-    <div class="form-group"> 
-      <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
-        <thead style="background-color:#A9D0F5">
-          <th>Opciones</th>
-          <th>N°Articulo</th>
-          <th>Articulo</th>
-          <th>Cantidad</th>
-          <th>Destino</th>
-          <th>Tipo de Movimiento</th>
-          <th>Fecha</th>
+  <div class="form-group"> 
+    <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
+      <thead style="background-color:#A9D0F5">
+        <th>Opciones</th>
+        <th>N°Articulo</th>
+        <th>Articulo</th>
+        <th>Cantidad</th>
+        <th>Unidad de Medida</th>
+        <th>Equivale</th>
+        <th>Destino</th>
+        <th>Tipo de Movimiento</th>
+        <th>Fecha</th>
 
-        </thead>
-        <tfoot>
+      </thead>
+      <tfoot>
+                <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -206,11 +231,13 @@
           <th></th>
           <th></th>
           <th></th>
-        </tfoot>
-        <tbody>
+          <th></th>
 
-        </tbody>
-      </table>
+      </tfoot>
+      <tbody>
+
+      </tbody>
+    </table>
 
 
     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
@@ -239,7 +266,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="{{url('/almacen/salidas/empaque')}}" class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/materiales')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -274,7 +301,7 @@
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "6",
+      limite = "7",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
@@ -283,6 +310,7 @@
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
       ubicacionact=arregloDeSubCadenas[5];
+      unidad=arregloDeSubCadenas[6];
       tecla=(document.all) ? event.keyCode : event.which;
       if (codigo == x){
         swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
@@ -298,6 +326,7 @@
 
         document.getElementById("scantidad").max=stock;
         document.getElementById("ubicacion").max=ubicacionact;
+              document.getElementById("umedida").value=unidad;
         break;
       }
 
@@ -317,17 +346,19 @@ window.onload=function() {
   var select2 = document.getElementById('id_materialk');
   var selectedOption2 = select2.selectedIndex;
   var cantidadtotal = select2.value;
-  limite = "6",
+  limite = "7",
   separador = "_",
   arregloDeSubCadenas = cantidadtotal.split(separador, limite);
   stock=arregloDeSubCadenas[0];
   descripcion=arregloDeSubCadenas[1];
   ubicacionact=arregloDeSubCadenas[5];
+  medida=arregloDeSubCadenas[6];
   document.getElementById("pcantidad").value=stock;
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
   document.getElementById("scantidad").max=stock;
   document.getElementById("ubicacion").value=ubicacionact;
+  document.getElementById("umedida").value=medida;
   document.getElementById("codigo").select();
 }
 
@@ -339,12 +370,13 @@ var select = document.getElementById('id_materialk');
     // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
-   limite = "6",
+   limite = "7",
    separador = "_",
    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
    stock=arregloDeSubCadenas[0];
    descripcion=arregloDeSubCadenas[1];
    ubicacionact=arregloDeSubCadenas[5];
+     medida=arregloDeSubCadenas[6];
    // id_materiales=arregloDeSubCadenas[3];
 
   // console.log(arregloDeSubCadenas); 
@@ -353,6 +385,7 @@ var select = document.getElementById('id_materialk');
   document.getElementById("scantidad").value = "1";
   document.getElementById("scantidad").max=stock;
   document.getElementById("ubicacion").value=ubicacionact;
+    document.getElementById("umedida").value=medida;
 
 
 
@@ -365,17 +398,20 @@ var select = document.getElementById('id_materialk');
           if (z != ""){
             var selectedOption2 = select2.selectedIndex;
             var cantidadtotal = select2.value;
-            limite = "6",
+            limite = "7",
             separador = "_",
             arregloDeSubCadenas = cantidadtotal.split(separador, limite);
             stock=arregloDeSubCadenas[0];
             descripcion=arregloDeSubCadenas[1];
             ubicacionact=arregloDeSubCadenas[5];
+                 medida=arregloDeSubCadenas[6];
+
             document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
             document.getElementById("scantidad").value = "1";
             document.getElementById("ubicacion").value=ubicacionact;
             document.getElementById("scantidad").max=stock;
+               document.getElementById("umedida").value=medida;
           }
 
         }
@@ -398,6 +434,22 @@ var select = document.getElementById('id_materialk');
 }
 
 function llenado(){
+    var select2 = document.getElementById('medida');
+              var selectedOption2 = select2.selectedIndex;
+            var cantidadtotal = select2.value;
+            limite = "3",
+            separador = "_",
+            arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+            unidadaux = arregloDeSubCadenas[0];
+            medida=arregloDeSubCadenas[1];
+            cantidadaux=arregloDeSubCadenas[2];
+
+  if (document.getElementById('umedida').value != unidadaux){
+       document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
+    return false;
+  }
+           document.getElementById("errorMedida").innerHTML = "";
+
   var fechav = document.getElementById('fecha').value;
   var recibiov =  document.getElementById('recibio').value;
   var entregadov = document.getElementById('entrego').value;
@@ -428,16 +480,26 @@ function llenado(){
 
        if (comprueba == 1){
         swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+        return false;
+      }
 
+      var cantidades = document.getElementById("scantidad");
+    var cantidadt = cantidades.value;
 
-      }else{
-        if (y > z) {
-          swal("Alerta!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
+        var cantidadth = cantidadaux * cantidadt;
+    var u = "";
+    var medidaaux = u.concat(cantidadth," ",unidadaux);
 
-        }else{
+     if (cantidadth > z) {
+        swal("Alerta!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
+        return false;
+
+      }
+
+        
           var select=document.getElementById('id_materialk');
           var cantidadtotal = select.value;
-          limite = "5",
+          limite = "6",
           separador = "_",
           arregloDeSubCadenas = cantidadtotal.split(separador, limite);
           var id2= uno++;
@@ -456,6 +518,8 @@ function llenado(){
     var cell5 = row.insertCell(4);
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+    var cell9 = row.insertCell(8);
 
 
 
@@ -475,19 +539,19 @@ function llenado(){
     cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
     cell2.innerHTML = id;
     cell3.innerHTML = nombre;
-    cell4.innerHTML = cantidadt;
-    cell5.innerHTML = dest;
-    cell6.innerHTML = movt;
-    cell7.innerHTML = var3;
+     cell4.innerHTML = cantidadt;
+        cell5.innerHTML = medida;
+     cell6.innerHTML = medidaaux;
+    cell7.innerHTML = dest;
+    cell8.innerHTML = movt;
+    cell9.innerHTML = var3;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
     limpiar();
     cargar();
     document.getElementById("total").value=id2;
-    
-  }
-}
+
 }else{
  document.getElementById("errorentrego").innerHTML = "El Empleado que entrega el Material no puede ser el mismo que lo Recibe";
 
@@ -604,6 +668,18 @@ function save() {
        //  alert(table.rows[r].cells[c].innerHTML);
        arreglo.push(table.rows[r].cells[c].innerHTML);
        z ++;
+     }else if (z == 6){
+       //  alert(z)
+     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
+       //  alert(table.rows[r].cells[c].innerHTML);
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+       z ++;
+     }else if (z == 7){
+       //  alert(z)
+     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
+       //  alert(table.rows[r].cells[c].innerHTML);
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+       z ++;
      }
      else{
        // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
@@ -634,9 +710,6 @@ function recorre(valor) {
  for (var r = 1, n = table.rows.length-1; r < n; r++) {
   for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
    if (z == 1){
-        //alert(z)
-       // document.getElementById("id_materialk").id=z;
-      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
       var j = table.rows[r].cells[c].innerHTML
       if (valor == j ){
         var r = 1;
@@ -646,40 +719,29 @@ function recorre(valor) {
     }
 
     else if(z == 2){
-         //alert(z)
-       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-     //  alert(table.rows[r].cells[c].innerHTML);
+
      z ++;
 
 
    }else if(z == 3){
-      ///alert(table.rows[r].cells[c].innerHTML);
       z ++;
     }else if(z == 4){
-
-   //  alert(table.rows[r].cells[c].innerHTML);
    z ++;
  } else if (z == 5){
-       //  alert(z)
-     //  document.getElementById("entrego").value=table.rows[r].cells[c].innerHTML;
-     //alert(table.rows[r].cells[c].innerHTML);
-
-//alert(arreglo);
 z ++;
 }else if (z == 6){
- //document.getElementById("recibio").value=table.rows[r].cells[c].innerHTML;
- //alert(table.rows[r].cells[c].innerHTML);
  z ++;
 
 }else if(z == 7){
-         //alert(z)
-        // document.getElementById("movimiento").value=table.rows[r].cells[c].innerHTML;
-   //     alert(table.rows[r].cells[c].innerHTML);
+   z ++;
+
+ }else if(z == 8){
+   z ++;
+
+ }else if(z == 9){
    z ++;
 
  }else{
-       // document.getElementById("fecha").value=table.rows[r].cells[c].innerHTML;
-     //  alert(table.rows[r].cells[c].innerHTML);
      z = 1;
 
    }

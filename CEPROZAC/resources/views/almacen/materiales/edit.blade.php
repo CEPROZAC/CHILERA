@@ -21,7 +21,7 @@
             <div class="col-sm-8">
               <div class="actions"><h3></h3> </div>
               <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Material: {{ $material->nombre}}</strong></h2> 
-            </div>
+            </div> 
             <div class="col-md-4">
               <div class="btn-group pull-right">
                 <div class="actions"> 
@@ -109,12 +109,28 @@
               </div>
             </div>
 
-         <div class="form-group">
-      <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
-      </div>
-    </div>
+
+
+                              <div class="form-group">
+            <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="ubicacion" class="form-control select2"  required>  
+                @foreach($almacen as $almacenes)
+                @if($almacenes->id == $material->ubicacion)
+                <option value="{{$almacenes->id}}" selected>{{$almacenes->nombre}}</option>
+                @else
+                <option value="{{$almacenes->id}}">
+                 {{$almacenes->nombre}}
+               </option>
+                @endif
+                
+               
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
 
 
                <div class="form-group">
@@ -124,52 +140,43 @@
                </div>    
                </div>  
 
-                   <div class="form-group">
-            <label class="col-sm-3 control-label">Medida de Salida: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="medida" value="">
-                @if(($material->medida)=="Kilogramos")
-                <option value='Kilogramos' selected>Kilogramos
-                </option>
-                <option value="Toneladas">Toneladas</option>
-                <option value="Lote">Lote</option>
-                <option value="Libre">Libre</option>
-                <option value="Unidades">Unidades</option>
-                @elseif(($material->medida)=="Toneladas")
-                <option value='Toneladas' selected>Toneladas
-                </option>
-                <option value="Lote">Lote</option>
-                <option value="Libre">Libre</option>
-                <option value="Unidades">Unidades</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                 @elseif(($material->medida)=="Lote")
-                <option value='Toneladas'>Toneladas</option>
-                <option value="Lote" selected>Lote</option>
-                <option value="Libre">Libre</option>
-                <option value="Unidades">Unidades</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                @elseif(($material->medida)=="Libre")
-                <option value='Toneladas'>Toneladas</option>
-                <option value="Lote">Lote</option>
-                <option value="Libre" selected>Libre</option>
-                <option value="Unidades">Unidades</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                @else
-                <option value='Toneladas'>Toneladas</option>
-                <option value="Lote">Lote</option>
-                <option value="Libre" >Libre</option>
-                <option value="Unidades" selected>Unidades</option>
-                <option value='Kilogramos'>Kilogramos</option>
-                @endif
-              </select>
-              
-            </div>
-          </div>
+              <div class="form-group">
+      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <select name="medida" value="{{Input::old('medida')}}">
+          @if(($material->medida)=="KILOGRAMOS")
+          <option value='KILOGRAMOS' selected>KILOGRAMOS
+          </option>
+          <option value="LITROS">LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+    
+          @elseif(($material->medida)=="LITROS")
+          <option value="LITROS" selected>LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+          @elseif(($material->medida)=="METROS")
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" selected>METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+
+          @else
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" >METROS</option>
+          <option value="UNIDADES" selected>UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
+          @endif
+        </select>
+        
+      </div>
+    </div>
 
                                                   <div class="form-group">
               <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_minimo }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+                <input name="stock_min" type="number" step="any"  max="999999" min="0.1"  value="{{$material->stock_minimo }}" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div> 
        

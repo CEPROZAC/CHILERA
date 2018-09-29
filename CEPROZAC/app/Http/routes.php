@@ -26,6 +26,27 @@ Route::resource('home','HomeController');
 //PROVEEDOR DE MATERIALES
 Route::resource('provedores','ProvedorController');
 Route::resource('materiales/provedores','ProvedorMaterialesController');
+
+Route::get('verTipoProvedor/{id}','ProvedorMaterialesController@listadoTipoProvedor');
+
+
+/*
+Provedor Materiales
+*/
+Route::resource('asignarTipoProvedor', 'ProvedorTipoProvedorController');
+
+
+Route::get('eliminarTipoProvedor/{id}', 'ProvedorTipoProvedorController@destroy');
+
+//////////////////
+
+
+
+
+
+
+
+
 Route::post("materiales/provedores/validar", "ProvedorMaterialesController@validar");
 /////////////////////
 Route::resource('productos','ProductosController');
@@ -62,10 +83,17 @@ Route::get('ver-InformacionEmpleado/{id}', 'EmpleadoController@verInformacion')-
 
 Route::get('rolesEspecificos/{id}', 'ContratosController@rolesEspecificos');
 
+
+
+
+
 Route::get('ultimo', 'ContratosController@ultimo');
 /*
 Rutas de transportes
 */
+Route::get('crearMantenimientoEspecifico/{id}', 'MantenimientoTransporteController@crearMantenimientoEspecifico');
+
+
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
 Route::get('descargarMantenimientos/{id}/{nombre}', 'TransporteController@descargarMantenimientos')->name('transportes.descargarMantenimientos');
 Route::get('ver-transportes/{id}', 'TransporteController@verTransportes')->name('transportes.verTransportes');
@@ -75,6 +103,8 @@ Route::resource('transportes','TransporteController');
 Route::get('descargarTractores/{id}', 'TractorController@excel')->name('tractores.excel');
 
 Route::get('descargar-mantenimiento', 'MantenimientoTransporteController@excel')->name('mantenimiento.excel');
+
+
 
 /////////////Rutas de Tractores
 
@@ -171,6 +201,7 @@ Route::resource('almacen/entradas/agroquimicos','EntradasAgroquimicosController'
 Route::get('descargar-entradas-agro', 'EntradasAgroquimicosController@excel')->name('almacen.agroquimicos.entradas.excel');
 Route::get('pdfagroquimicos/{id}', array('as'=> '/pdfagroquimicos','uses'=>'AlmacenAgroquimicosController@invoice'));
 Route::get('descargar-agroquímicos', 'AlmacenAgroquimicosController@excel')->name('almacen.agroquimicos.excel');
+Route::get('verproducto/{id}', array('as'=> '/verproducto','uses'=>'AlmacenAgroquimicosController@verInformacion'));
 
 /////////ALMACEN DE LIMPIEZA
 Route::resource('almacenes/limpieza','AlmacenLimpiezaController');	
@@ -217,6 +248,9 @@ Route::get('descargar-unidades', 'unidadesmedidacontroller@excel')->name('unidad
 //////////
 
 Route::get('descargarLiquidacion/{id}', 'ContratosController@liquidacion');
+
+
+
 
 
 

@@ -20,7 +20,9 @@ class EntradasAgroquimicosMigration extends Migration
             $table->string('factura');
             $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenagroquimicos');
-            $table->integer('cantidad');
+            $table->double('cantidad');
+            $table->string('medida');
+            $table->string('medidaaux');
             $table->double('p_unitario');
             $table->double('importe');
             $table->double('iva');
@@ -34,7 +36,7 @@ class EntradasAgroquimicosMigration extends Migration
             $table->integer('recibe_alm')->unsigned();
             $table->foreign('recibe_alm')->references('id')->on('empleados');
             $table->string('observacionesc')->nullable();
-            $table->string('estado')->nullable();
+            $table->string('estado')->nullable(); 
             $table->timestamps();
 
         });

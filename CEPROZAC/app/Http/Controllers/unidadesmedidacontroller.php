@@ -26,7 +26,7 @@ class unidadesmedidacontroller extends Controller
       return view('unidades_medida.index', ['unidades' => $unidades]);
         //
         //
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +37,7 @@ class unidadesmedidacontroller extends Controller
     {
           return view('unidades_medida.create');
         //
-    }
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -90,6 +90,13 @@ class unidadesmedidacontroller extends Controller
      */
     public function update(Request $request, $id)
     {
+          $unidad = unidadesmedida::findOrFail($id);
+        $unidad->nombre=$request->get('nombre');
+        $unidad->cantidad=$request->get('cantidad');
+        $unidad->unidad_medida=$request->get('medida');
+        $unidad->estado="Activo";
+        $unidad->update();
+         return Redirect::to('unidades_medida');
         //
     }
 
@@ -101,6 +108,10 @@ class unidadesmedidacontroller extends Controller
      */
     public function destroy($id)
     {
+         $unidad = unidadesmedida::findOrFail($id);
+                 $unidad->estado="Inactivo";
+        $unidad->update();
+         return Redirect::to('unidades_medida');
         //
     }
 
@@ -110,13 +121,13 @@ class unidadesmedidacontroller extends Controller
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
-        Excel::create('invernaderos', function($excel) {
+        Excel::create('unidadesmedida', function($excel) {
           $excel->sheet('Excel sheet', function($sheet) {
-            $invernadero = invernaderos::select('nombre','ubicacion','num_modulos')
+            $unidadesmedida = unidadesmedida::select('nombre','cantidad','unidad_medida')
             ->where('estado', 'Activo')
             ->get();       
-            $sheet->fromArray($invernadero);
-            $sheet->row(1,['Nombre del Invernadero','Ubicación','Número de Módulos']);
+            $sheet->fromArray($unidadesmedida);
+            $sheet->row(1,['Nombre','Cantidad Equivalente','Unidad de Medida']);
             $sheet->setOrientation('landscape');
           });
         })->export('xls');

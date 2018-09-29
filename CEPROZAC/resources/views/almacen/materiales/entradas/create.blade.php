@@ -24,7 +24,7 @@
             <div class="col-sm-8">
               <div class="actions"> </div>
               <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Entrada de Refacciones/Materiales</strong></h2>
-            </div>
+            </div> 
 
             <div class="col-md-4">
 
@@ -138,6 +138,16 @@
   </div>
 </div>
 
+<div class="form-group"> 
+  <label class="col-sm-3 control-label">% IVA<strog class="theme_color">* </strog></label>
+  <div class="col-sm-3">
+    <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+  </div>     
+</div>
+
+<br> </br>
+
+
 
 <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.materiales.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" target="_blank" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Nuevo Material </a>
 
@@ -162,7 +172,7 @@
             <label for="material">Material </label>
             <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
               @foreach($material as $mat)
-              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->ubicacion}}">
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->ubicacion2}}_{{$mat->medida}}">
                {{$mat->nombre}}
              </option>
              @endforeach              
@@ -170,28 +180,58 @@
            <div class="help-block with-errors"></div>
          </div>
        </div><!--/form-group-->
-
-       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-         <div class="form-group"> 
-          <label for="scantidad">Cantidad de Entrada </label>
-          <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
-          <span id="errorCantidad" style="color:#FF0000;"></span>
-        </div>    
-      </div>  
+ 
 
       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
        <div class="form-group"> 
         <label for="pcantidad">Cantidad en Almacén </label>
-        <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
+        <input name="pcantidad" id="pcantidad" value="" type="number" step="any"  disabled class="form-control" />
       </div>    
     </div>  
 
-    <div class="col-sm-4">
+              <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+       <div class="form-group"> 
+        <label for="umedida">Medida </label>
+        <input name="umedida" id="umedida" value="" onchange="medida(this);"  type="text" disabled class="form-control" />
+      </div>    
+    </div>
+
+      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
      <div class="form-group"> 
       <label for="descripcion">Descripción </label>
       <input name="descripcion" id="descripcion" disabled class="form-control" />
     </div>    
   </div>  
+
+  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="form-group"> 
+  <label for="iva">Ubicación Actual</label>
+  <input name="ubicacion" id="ubicacion"  type="text" class="form-control" placeholder="Ubicacion" readonly="" />
+</div>    
+</div>   
+
+  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+   <div class="form-group"> 
+    <label for="scantidad">Cantidad de Entrada </label>
+    <input name="scantidad" id="scantidad" type="number" step="any"  max="999999" min="0.1" value="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="6"  />
+    <span id="errorCantidad" style="color:#FF0000;"></span>
+  </div>    
+</div> 
+
+            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="form-group"> 
+  <label for="medida">Medida </label>
+  <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
+    @foreach($unidades as $unidad)
+    <option value="{{$unidad->unidad_medida}}_{{$unidad->nombre}}_{{$unidad->cantidad}}">
+     {{$unidad->nombre}}
+   </option>
+   @endforeach              
+ </select>
+ <span id="errorMedida" style="color:#FF0000;"></span>
+ <div class="help-block with-errors"></div>
+</div>
+</div><!--/form-group-->
 
 
               <div class="col-lg-2">
@@ -222,19 +262,9 @@
 </div> 
 
 
-  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-   <div class="form-group"> 
-    <label for="iva">% IVA </label>
-    <input name="iva" id="iva" value="16" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
-  </div>    
-</div>    
 
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
- <div class="form-group"> 
-  <label for="iva">Ubicación Actual</label>
-  <input name="ubicacion" id="ubicacion"  type="text" class="form-control" placeholder="Ubicacion" readonly="" />
-</div>    
-</div>   
+
+
 </div>
 
 
@@ -254,7 +284,9 @@
         <th>Opciones</th>
         <th>N°Articulo</th>
         <th>Articulo</th>
-        <th>Cantidad de Entrada</th>
+        <th>Cantidad</th>
+        <th>Unidad de Medida</th>
+          <th>Equivale</th>
         <th>N° Factura</th>
         <th>Fecha de Compra</th>
         <th>Precio Unitario</th>
@@ -273,6 +305,8 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
+                <th></th>
         <th></th>
       </tfoot>
       <tbody>
@@ -316,7 +350,7 @@
 <div class="form-group">
   <div class="col-sm-offset-7 col-sm-5">
     <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a  href="{{url('/almacen/entradas/empaque')}}" class="btn btn-default"> Cancelar</a>
+    <a  href="{{url('/almacen/entradas/materiales')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 </form>
@@ -354,7 +388,7 @@
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "6",
+      limite = "7",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
@@ -363,6 +397,7 @@
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
         ubicacionact=arregloDeSubCadenas[5];
+        unidad=arregloDeSubCadenas[6];
       tecla=(document.all) ? event.keyCode : event.which;
       if (codigo == x){
         swal("Producto Encontrado:"+nombre +"!", "Stock de Entrada!", "success",{content: "input", inputType:"number",}).then((value) => {
@@ -378,6 +413,7 @@
 
         document.getElementById("scantidad").max=stock;
                document.getElementById("ubicacion").value=ubicacionact;
+                       document.getElementById("umedida").value=unidad;
         break;
       }
 
@@ -395,16 +431,18 @@
     var select2 = document.getElementById('id_materialk');
     var selectedOption2 = select2.selectedIndex;
     var cantidadtotal = select2.value;
-    limite = "6",
+    limite = "7",
     separador = "_",
     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
     stock=arregloDeSubCadenas[0];
     descripcion=arregloDeSubCadenas[1];
     ubicacionact=arregloDeSubCadenas[5];
+      medida=arregloDeSubCadenas[6];
     document.getElementById("pcantidad").value=stock;
     document.getElementById("descripcion").value=descripcion;
     document.getElementById("scantidad").value = "1";
       document.getElementById("ubicacion").value=ubicacionact;
+      document.getElementById("umedida").value=medida;
      document.getElementById("codigo").select();
   }
 
@@ -416,18 +454,21 @@
      // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
-   limite = "5",
+   limite = "7",
    separador = "_",
    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
    stock=arregloDeSubCadenas[0];
    descripcion=arregloDeSubCadenas[1];
      ubicacionact=arregloDeSubCadenas[5];
+       medida=arregloDeSubCadenas[6];
    // id_materiales=arregloDeSubCadenas[3];
 
   // console.log(arregloDeSubCadenas); 
   document.getElementById("pcantidad").value=stock;
   document.getElementById("descripcion").value=descripcion;
   document.getElementById("scantidad").value = "1";
+   document.getElementById("umedida").value=medida;
+   document.getElementById("ubicacion").value=ubicacionact;
 
 
 
@@ -440,15 +481,18 @@
           if (z != ""){
             var selectedOption2 = select2.selectedIndex;
             var cantidadtotal = select2.value;
-            limite = "5",
+            limite = "7",
             separador = "_",
             arregloDeSubCadenas = cantidadtotal.split(separador, limite);
             stock=arregloDeSubCadenas[0];
             descripcion=arregloDeSubCadenas[1];
+            ubicacionact=arregloDeSubCadenas[5];
+             medida=arregloDeSubCadenas[6];
             document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
             document.getElementById("scantidad").value = "1";
               document.getElementById("ubicacion").value=ubicacionact;
+                 document.getElementById("umedida").value=medida;
           }
 
         }
@@ -474,6 +518,22 @@
 }
 
 function llenado(){
+      var select2 = document.getElementById('medida');
+  var selectedOption2 = select2.selectedIndex;
+  var cantidadtotal = select2.value;
+  limite = "3",
+  separador = "_",
+  arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+  unidadaux = arregloDeSubCadenas[0];
+  medida=arregloDeSubCadenas[1];
+  cantidadaux=arregloDeSubCadenas[2]; 
+
+  if (document.getElementById('umedida').value != unidadaux){
+   document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
+   return false;
+ }
+ document.getElementById("errorMedida").innerHTML = "";
+
   var fechav = document.getElementById('fecha').value;
   var provedorv =  document.getElementById('prov').value;
   var empresav =  document.getElementById('recibio').value;
@@ -507,9 +567,16 @@ function llenado(){
     codigo=arregloDeSubCadenas[2];
     id=arregloDeSubCadenas[3];
     nombre=arregloDeSubCadenas[4];
+
+       var comprueba = recorre2(id)
+       if (comprueba == 1){
+        swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+        return false;
+      }
+
     var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
-    var row = tabla.insertRow(id2);
+    var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
@@ -520,6 +587,8 @@ function llenado(){
     var cell8 = row.insertCell(7);
     var cell9 = row.insertCell(8);
     var cell10 = row.insertCell(9);
+     var cell11 = row.insertCell(10);
+    var cell12 = row.insertCell(11);
 
     var fechas = document.getElementById("fecha");
     var var3 = fechas.value;
@@ -528,8 +597,11 @@ function llenado(){
     var notax = document.getElementById("nota");
     var notas = notax.value;
 
-    var scantidadx = document.getElementById("scantidad");
-    var cantidaden = scantidadx.value;
+    var cantidades = document.getElementById("scantidad");
+    var cantidaden = cantidades.value;
+    var cantidadth = cantidadaux * cantidaden;
+    var u = "";
+    var medidaaux = u.concat(cantidadth," ",unidadaux);
 
     var preciox = document.getElementById("preciou");
     var precio = preciox.value;
@@ -538,13 +610,15 @@ function llenado(){
     cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
     cell2.innerHTML = id;
     cell3.innerHTML = nombre;
-    cell4.innerHTML = cantidaden;
-    cell5.innerHTML = notas;
-    cell6.innerHTML = var3;
-    cell7.innerHTML = precio;
-    cell8.innerHTML = ivatotal;
-    cell9.innerHTML = precio * cantidaden + ivatotal ;
-    cell10.innerHTML = tipo_moneda;
+   cell4.innerHTML = cantidaden;
+    cell5.innerHTML = medida;
+    cell6.innerHTML = medidaaux;
+    cell7.innerHTML = notas;
+    cell8.innerHTML = var3;
+    cell9.innerHTML = precio;
+    cell10.innerHTML = ivatotal;
+    cell11.innerHTML = precio * cantidaden + ivatotal ;
+    cell12.innerHTML = tipo_moneda;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
@@ -583,18 +657,22 @@ function recorre(valor) {
      }else if(z == 3){
       z ++;
     }else if(z == 4){
+      z ++;
+    }else if(z == 5){
+      z ++;
+    }else if(z == 6){
 
      z ++;
-   } else if (z == 5){
+   } else if (z == 7){
 z ++;
-}else if (z == 6){
+}else if (z == 8){
  z ++;
 
-}else if(z == 7){
+}else if(z == 9){
         z ++;
-      }else if(z == 8){
+      }else if(z == 10){
         z ++;
-      }else if(z == 9){   
+      }else if(z == 11){   
       var j = table.rows[r].cells[c].innerHTML
       if (valor != j ){
         var r = 1;
@@ -610,18 +688,69 @@ z ++;
  }
 }   
 
+function recorre2(valor) {
+ var z = 1
+ var arreglo = [];
+ var table = document.getElementById('detalles');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+      var j = table.rows[r].cells[c].innerHTML
+      if (valor == j ){
+        var r = 1;
+        return(r);
+        z ++;
+      }else{
+       z ++;
+      }
+    }
+    else if(z == 2){
+     z ++;
+   }else if(z == 3){
+      z ++;
+    }else if(z == 4){
+   z ++;
+ } else if (z == 5){
+z ++;
+}else if (z == 6){
+ z ++;
+
+}else if(z == 7){
+   z ++;
+
+ }else if(z == 8){
+   z ++;
+
+ }else if(z == 9){
+   z ++;
+
+ }else if(z == 10){
+   z ++;
+
+ }else if(z == 11){
+   z ++;
+
+ }else{
+     z = 1;
+
+   }
+
+ }
+}
+}
+
 
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
-  var cantidadanueva=document.getElementById("detalles").rows[value].cells[8].innerHTML;
+  var cantidadanueva=document.getElementById("detalles").rows[value].cells[10].innerHTML;
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows
   var r = menos.length;
   document.getElementById("total").value= r - 2;
   var sub= document.getElementById("subtotal").value;
-  document.getElementById("subtotal").value= sub - cantidadanueva;
+  document.getElementById("subtotal").value= parseFloat(sub) - parseFloat(cantidadanueva);
   limpiar();
 }
 
@@ -710,6 +839,14 @@ function save() {
        z ++;
 
      }else if(z == 8){
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+       z ++;
+
+     }else if(z == 9){
+       arreglo.push(table.rows[r].cells[c].innerHTML);
+       z ++;
+
+     }else if(z == 10){
        arreglo.push(table.rows[r].cells[c].innerHTML);
        z ++;
 

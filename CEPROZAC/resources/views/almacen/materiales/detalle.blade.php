@@ -56,7 +56,7 @@
 
 
                  <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
-                 <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicacion}}</p>
+                 <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicaciones2}}</p>
                  <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}}  </p>
                  <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}}   </p>
                  <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
