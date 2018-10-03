@@ -147,6 +147,10 @@ return [
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
+        /**
+     * Third Party Service Providers...
+     */
+        Bican\Roles\RolesServiceProvider::class,
 
 
 

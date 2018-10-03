@@ -16,7 +16,7 @@ class Salidasempaques extends Migration
             $table->increments('id');
              $table->integer('id_material')->unsigned();
             $table->foreign('id_material')->references('id')->on('almacenempaque');
-            $table->integer('cantidad');
+            $table->double('cantidad');
             $table->string('destino');
             $table->integer('entrego')->unsigned();
             $table->foreign('entrego')->references('id')->on('empleados');

@@ -19,11 +19,12 @@ class AlmacenMaterialMigration extends Migration
             $table->string('codigo')->nullable();
             $table->string('imagen')->nullable();
             $table->string('descripcion')->nullable();
-            $table->integer('cantidad');
+            $table->double('cantidad');
             $table->string('medida')->nullable();
             $table->string('estado');
-             $table->integer('stock_minimo')->nullable();
-                $table->string('ubicacion')->nullable();
+            $table->double('stock_minimo')->nullable();
+            $table->integer('ubicacion')->unsigned();
+            $table->foreign('ubicacion')->references('id')->on('almacengeneral');
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class CantidadUnidadesEmp extends Migration
                         $table->integer('idProducto')->unsigned();
             $table->foreign('idProducto')->references('id')->on('almacenempaque');
             $table->integer('idMedida')->unsigned();
-            $table->foreign('idMedida')->references('id')->on('unidadesmedida');
+            $table->foreign('idMedida')->references('id')->on('unidades_medidas');
             $table->double('cantidad')->nullable();
              $table->string('estado');
             $table->timestamps();

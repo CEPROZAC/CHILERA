@@ -131,17 +131,17 @@
                         </div>
 
                         <div class="form-group">
-                          <label class="col-sm-3 control-label">Fecha Alta seguro: <strog class="theme_color">*</strog></label>
+                          <label class="col-sm-3 control-label">Fecha Alta seguro:</label>
                           <div class="col-sm-6">
 
-                           <input type="text" name="fecha_Alta_Seguro" required class="form-control mask" data-inputmask="'alias': 'date'" parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
+                           <input type="text" name="fecha_Alta_Seguro"  class="form-control mask" data-inputmask="'alias': 'date'" parsley-regexp="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
                          </div>
                        </div>
                        <input type="text" name="ssnOculto" id="SSNOculto" hidden>
                        <div class="form-group">
-                        <label class="col-sm-3 control-label">SSN<strog class="theme_color">*</strog></label>
+                        <label class="col-sm-3 control-label">SSN: </label>
                         <div class="col-sm-6 ">
-                          <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" onblur="validarSSN();" required type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'"/>
+                          <input type="text" name="numero_Seguro_Social" id="numero_Seguro_Social" onblur="validarSSN();"  type="numero_Seguro_Social" class="form-control mask" data-inputmask="'mask':'999-99-9999'"/>
                           <span id="errorSSN" style="color:#FF0000;"></span>
                         </div>
                       </div>

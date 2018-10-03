@@ -38,7 +38,7 @@ class almacenlimpiezaController extends Controller
       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
       $empleado = DB::table('empleados')->where('estado','Activo')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
-      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+      $unidades= DB::table('unidades_medidas')->where('estado','Activo')->get();
       return view('almacen.limpieza.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,'empresas'=> $empresas,'unidades'=>$unidades]);
 
       

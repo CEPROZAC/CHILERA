@@ -11,7 +11,8 @@
         "maatwebsite/excel": "~2.1.0",
         "milon/barcode": "^5.3",
         "arielcr/numero-a-letras": "dev-master",
-        "nesbot/carbon": "^1.29"
+        "nesbot/carbon": "^1.29",
+        "bican/roles": "2.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

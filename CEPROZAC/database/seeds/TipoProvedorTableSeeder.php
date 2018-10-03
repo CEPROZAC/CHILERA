@@ -33,5 +33,25 @@ class TipoProvedorTableSeeder extends Seeder
     		'estado'=>'Activo',]);
 
 
+
+        DB::table('provedores_tipo_provedor')->insert([
+            'idProvedorMaterial' => '1', 
+            'idTipoProvedor' => '1',
+            ]);
+
+
+
+        DB::table('provedores_tipo_provedor')->insert([
+            'idProvedorMaterial' => '2', 
+            'idTipoProvedor' => '1',
+            ]);
+
+
+        DB::table('provedores_tipo_provedor')->insert([
+            'idProvedorMaterial' => '3', 
+            'idTipoProvedor' => '1',
+            ]);
+
+
     }
 }

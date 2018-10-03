@@ -45,46 +45,46 @@
                 </div>
                 <div class="porlets-content" style="display: block;">
                  <p align="justify"><strong>Codigo de Barras:</strong> {{$mat->codigo}}</p>
-                                    @if (($mat->codigo)!="")
-                  <td><?php echo DNS1D::getBarcodeHTML("$mat->codigo", "C128");?>
-                    <div style="text-align:center;">              
+                 @if (($mat->codigo)!="")
+                 <td><?php echo DNS1D::getBarcodeHTML("$mat->codigo", "C128");?>
+                  <div style="text-align:center;">              
                   </div>
-                  </td>
-                  @else
-                    <td>Codigo de Barras No Generado </td>
-                    @endif
+                </td>
+                @else
+                <td>Codigo de Barras No Generado </td>
+                @endif
 
 
-                 <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
-                 <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicacion}}</p>
-                 <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}}  </p>
-                 <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}}   </p>
-                 <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
-                   <td>
+                <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
+                <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicacion}}</p>
+                <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}}  </p>
+                <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}}   </p>
+                <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
+                <td>
                   @if (($mat->imagen)!="")
-                      <img src="{{asset('imagenes/almacenmateriales/'.$mat->imagen)}}" alt="{{$mat->nombre}}" height="100px" width="100px" class="img-thumbnail">
-                        @else
+                  <img src="{{asset('imagenes/almacenmateriales/'.$mat->imagen)}}" alt="{{$mat->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                  @else
                   No Hay Imagen Disponible
                   @endif
-                    </td> 
-                 </div>
-               </div>
-             </section>
-             @if (($mat->codigo)!="")
-                        <a class="btn btn-sm btn btn-info" href="{{URL::action('AlmacenMaterialController@invoice',$mat->id)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Codigo de Barras</a>
-                         @endif
-           </div>
-           @endforeach
+                </td> 
+              </div>
+            </div>
+          </section>
+          @if (($mat->codigo)!="")
+          <a class="btn btn-sm btn btn-info" href="{{URL::action('AlmacenMaterialController@invoice',$mat->id)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Codigo de Barras</a>
+          @endif
+        </div>
+        @endforeach
 
 
 
 
-         </div><!--/porlets-content-->
-       </div><!--/block-web-->
-     </div><!--/col-md-12-->
-   </div><!--/row-->
- </div>
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
+</div><!--/row-->
+</div>
 
 
 
- @endsection
+@endsection

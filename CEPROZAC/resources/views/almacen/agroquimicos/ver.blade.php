@@ -25,12 +25,12 @@
             <div class="col-md-12">
               <div class="btn-group pull-right">
                 <b>
- 
+                 
 
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.general.create')}}"style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Almacén"> <i class="fa fa-plus"></i> Registrar Almacén </a>
 
-                                        <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacengeneral.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacengeneral.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
 
                   </div>
@@ -43,41 +43,41 @@
         <div class="porlets-content">
           <div class="table-responsive">
            <table  class="display table table-bordered table-striped" id="dynamic-table">
-              <thead>
-                <tr>
+            <thead>
+              <tr>
 
-                  
-                  <th>Nombre del Producto</th>
-                  <th>Cantidad </th>
-                  <th>Unidad </th>                       
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($cantidad  as $cantidades)
-                <tr class="gradeX">
-                  
-                  <td>{{$cantidades->nombreprodu}} </td>
-                  <td>{{$cantidades->cantidad}} </td>            
-                  <td>{{$cantidades->unidadnombre}} </td> 
-       
- 
+                
+                <th>Nombre del Producto</th>
+                <th>Cantidad </th>
+                <th>Unidad </th>                       
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($cantidad  as $cantidades)
+              <tr class="gradeX">
+                
+                <td>{{$cantidades->nombreprodu}} </td>
+                <td>{{$cantidades->cantidad}} </td>            
+                <td>{{$cantidades->unidadnombre}} </td> 
+                
+                
 
-            </tr>
-            @endforeach
-          </tbody>
-          <tfoot>
-            <tr>                               
-                  <th>Nombre del Producto</th>
-                  <th>Cantidad </th>
-                  <th>Unidad </th>
+              </tr>
+              @endforeach
+            </tbody>
+            <tfoot>
+              <tr>                               
+                <th>Nombre del Producto</th>
+                <th>Cantidad </th>
+                <th>Unidad </th>
 
-            </tr>
-          </tfoot>
-        </table>
-      </div><!--/table-responsive-->
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
-</div><!--/col-md-12-->
+              </tr>
+            </tfoot>
+          </table>
+        </div><!--/table-responsive-->
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

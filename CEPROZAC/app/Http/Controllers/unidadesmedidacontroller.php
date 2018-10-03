@@ -7,7 +7,7 @@ use CEPROZAC\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use CEPROZAC\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-use CEPROZAC\unidadesmedida;
+use CEPROZAC\Unidades_medida;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator; 
@@ -21,12 +21,12 @@ class unidadesmedidacontroller extends Controller
      */
     public function index()
     {
-                      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+      $unidades= DB::table('unidades_medidas')->where('estado','Activo')->get();
 
       return view('unidades_medida.index', ['unidades' => $unidades]);
         //
         //
-    }
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -35,9 +35,9 @@ class unidadesmedidacontroller extends Controller
      */
     public function create()
     {
-          return view('unidades_medida.create');
+      return view('unidades_medida.create');
         //
-    }
+  }
 
     /**
      * Store a newly created resource in storage.
@@ -47,13 +47,13 @@ class unidadesmedidacontroller extends Controller
      */
     public function store(Request $request)
     { 
-                $unidad = new unidadesmedida;
+        $unidad = new Unidades_medida;
         $unidad->nombre=$request->get('nombre');
         $unidad->cantidad=$request->get('cantidad');
         $unidad->unidad_medida=$request->get('medida');
         $unidad->estado="Activo";
         $unidad->save();
-         return Redirect::to('unidades_medida');
+        return Redirect::to('unidades_medida');
         //
     }
 
@@ -76,7 +76,7 @@ class unidadesmedidacontroller extends Controller
      */
     public function edit($id)
     {
-                $unidades = unidadesmedida::findOrFail($id);
+        $unidades = Unidades_medida::findOrFail($id);
         return view('unidades_medida.edit', ['unidades' => $unidades]);
         //
     }
@@ -104,7 +104,7 @@ class unidadesmedidacontroller extends Controller
         //
     }
 
-            public function excel()
+    public function excel()
     {        
         /**
          * toma en cuenta que para ver los mismos 
@@ -118,7 +118,7 @@ class unidadesmedidacontroller extends Controller
             $sheet->fromArray($invernadero);
             $sheet->row(1,['Nombre del Invernadero','Ubicación','Número de Módulos']);
             $sheet->setOrientation('landscape');
-          });
-        })->export('xls');
-      }
+        });
+      })->export('xls');
+    }
 }

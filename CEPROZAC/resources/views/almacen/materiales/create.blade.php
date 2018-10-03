@@ -49,126 +49,82 @@
           </div>
 
 
+
+
           <div class="form-group">
-            <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+            <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="provedor_id" class="form-control"  value="{{Input::old('provedor_id')}}" required>  
-                @foreach($provedor as $provedores)
-                <option value="{{$provedores->id}}">
-                 {{$provedores->nombre}}
-               </option>
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
+              <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
+              <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
 
+              <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
 
-         <div class="form-group">
-          <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
-            <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
-
-            <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
-
+            </div>
           </div>
-        </div>
 
-<input name="nombreOculto" id="oculto"  hidden  />
- <div class="form-group">
-              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
- <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validarmateriales();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
- <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
-  <span id="errorCodigo" style="color:#FF0000;"></span>
-</div>
-</div>
+          <input name="nombreOculto" id="oculto"  hidden  />
+          <div class="form-group">
+            <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+             <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validarmateriales();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
+             <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+             <span id="errorCodigo" style="color:#FF0000;"></span>
+           </div>
+         </div>
 
-       <div class="form-group ">
-        <label class="col-sm-3 control-label">Imagen</label>
-        <div class="col-sm-6">
-         <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
+         <div class="form-group ">
+          <label class="col-sm-3 control-label">Imagen</label>
+          <div class="col-sm-6">
+           <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
+         </div>
        </div>
-     </div>
-     
 
 
 
-     <div class="form-group">
-      <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+
+       <div class="form-group">
+        <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+        </div>
       </div>
-    </div>
 
-         <div class="form-group">
-      <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
-      </div>    
-    </div>  
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <select name="medida" value="{{Input::old('medida')}}">
-          @if(Input::old('medida')=="KILOGRAMOS")
-          <option value='KILOGRAMOS' selected>KILOGRAMOS
-          </option>
-          <option value="LITROS">LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-    
-          @elseif(Input::old('medida')=="LITROS")
-          <option value="LITROS" selected>LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-          @elseif(Input::old('medida')=="METROS")
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" selected>METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-
-          @else
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" >METROS</option>
-          <option value="UNIDADES" selected>UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
-          @endif
-        </select>
-        
-      </div>
-    </div>
-
-                             <div class="form-group">
-              <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-                <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
-               </div>    
-               </div> 
+      <div class="form-group">
+        <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+        </div>    
+      </div>  
 
 
-    
 
-    <div class="form-group">
-      <div class="col-sm-offset-7 col-sm-5">
-        <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{url('/almacen/materiales')}}" class="btn btn-default"> Cancelar</a>
-      </div>
-    </div><!--/form-group-->
+      <div class="form-group">
+        <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+        </div>    
+      </div> 
 
 
-  </form>
-</div><!--/porlets-content-->
+
+
+      <div class="form-group">
+        <div class="col-sm-offset-7 col-sm-5">
+          <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
+          <a href="{{url('/almacen/materiales')}}" class="btn btn-default"> Cancelar</a>
+        </div>
+      </div><!--/form-group-->
+
+
+    </form>
+  </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->

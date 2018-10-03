@@ -49,38 +49,36 @@
             </div>
           </div>
 
+          
+
+
           <div class="form-group">
-            <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+            <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="provedor_name" class="form-control" value="{{Input::old('provedor_name')}}" required>  
-                @foreach($provedor as $provedores)
-                <option value="{{$provedores->id}}">
-                 {{$provedores->nombre}}
-               </option>
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-             <div class="text-danger" id='error_prov'>{{$errors->formulario->first('provedor_name')}}</div>
+              <div class="radio">
+                <label>
+                  <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                 <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico 
+               </label>
+             </div>
+             <div class="radio">
+              <label>
+               <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
+             </label>
            </div>
-         </div><!--/form-group-->
+         </div>
+       </div>
 
 
 
-         <div class="form-group">
-          <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
-            <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
-
-            <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
-
-          </div>
-        </div>
-
-        <input name="nombreOculto" id="oculto"  hidden  />
-        <div class="form-group">
-          <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
+       <input name="nombreOculto" id="oculto"  hidden  />
+       <div class="form-group">
+         <label class="col-sm-3 control-label"></label>
+         <div class="col-sm-6">
            <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validaragroquimicos();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
            <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
            <span id="errorCodigo" style="color:#FF0000;"></span>
@@ -93,7 +91,7 @@
          <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
        </div>
      </div>
-     
+
 
 
 
@@ -104,43 +102,42 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
-      </div>    
-    </div>  
 
     <div class="form-group">
       <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <select name="medida" value="{{Input::old('medida')}}">
-          @if(Input::old('medida')=="KILOGRAMOS")
-          <option value='KILOGRAMOS' selected>KILOGRAMOS
+      <div class="col-sm-3">
+        <div class="input-group" >
+          <div class="input-group-addon" >Completas</div>
+          <input name="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
+          @foreach($unidades  as $unidad)
+          <option value='{{$unidad->id}}'>
+            {{$unidad->nombre}} {{$unidad->cantidad}} {{$unidad->unidad_medida}}
           </option>
-          <option value="LITROS">LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-    
-          @elseif(Input::old('medida')=="LITROS")
-          <option value="LITROS" selected>LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-          @elseif(Input::old('medida')=="METROS")
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" selected>METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+          @endforeach
 
-          @else
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" >METROS</option>
-          <option value="UNIDADES" selected>UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
-          @endif
         </select>
-        
+      </div>
+    </div>
+
+
+    <div class="form-group">    
+      <label class="col-sm-3 control-label">Unidades Incompletas: <strog class="theme_color">*</strog></label>
+
+      <div class="col-sm-3">
+        <div class="input-group" >
+          <div class="input-group-addon" id="unidadCentral">Kilogramos</div>
+          <input id="Medida" name="unidadCentral"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group" >
+          <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+          <input  name="unidadDeMedida"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+        </div>
       </div>
     </div>
 
@@ -150,9 +147,6 @@
         <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
       </div>    
     </div> 
-
-
-    
 
     <div class="form-group">
       <div class="col-sm-offset-7 col-sm-5">
@@ -192,5 +186,54 @@ document.getElementById("segundo").value=aleatorio;
   document.getElementById("segundo").value = "";
 }
 }
+
+
+
+
+function obtenerSelect() {
+
+  var select = document.getElementById("medida");
+  var options=document.getElementsByTagName("option");
+  var idProvedor= select.value;
+
+  var x = select.options[select.selectedIndex].text;
+
+
+
+  if(x.indexOf("LITROS") >=0){
+
+   document.getElementById('unidadCentral').innerHTML='Litros';  
+   document.getElementById('unidadDeMedida').innerHTML='Mililitros';  
+
+   $("#unidadCentral").show();
+   $("#Medida").show();
+ } else if(x.indexOf("METROS") >=0){
+  document.getElementById('unidadCentral').innerHTML='Metros';  
+  document.getElementById('unidadDeMedida').innerHTML='Centimetros';  
+
+  $("#unidadCentral").show();
+  $("#Medida").show();
+
+}  else if(x.indexOf("KILOGRAMOS") >= 0) {
+
+  document.getElementById('unidadCentral').innerHTML='Kilogramos';  
+  document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+  $("#unidadCentral").show();
+  $("#Medida").show();
+
+} else if (x.indexOf("UNIDADES") >=0) {
+  $("#unidadCentral").hide();
+  $("#Medida").hide();
+  document.getElementById('unidadDeMedida').innerHTML='UNIDADES';  
+
+  $("#unidadCentral").show();
+  $("#Medida").show();
+
+} 
+
+}
+
+
 </script>
-</head>
+

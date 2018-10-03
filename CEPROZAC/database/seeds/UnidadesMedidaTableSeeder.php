@@ -11,30 +11,28 @@ class UnidadesMedidaTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('unidadesmedida')->insert([
-            'nombre' => 'KILOGRAMOS',
-            'cantidad' => '1',
+
+
+
+        DB::table('unidades_medidas')->insert([
+            'nombre' => 'COSTAL',
+            'cantidad' => '5',
             'unidad_medida' => 'KILOGRAMOS', 
             'estado'=>'Activo',
             ]);
-        DB::table('unidadesmedida')->insert([
-            'nombre' => 'LITROS',
-            'cantidad' => '1',
+        DB::table('unidades_medidas')->insert([
+            'nombre' => 'GALON',
+            'cantidad' => '3',
             'unidad_medida' => 'LITROS', 
             'estado'=>'Activo',
             ]);
-        DB::table('unidadesmedida')->insert([
-            'nombre' => 'METROS',
-            'cantidad' => '1',
+        DB::table('unidades_medidas')->insert([
+            'nombre' => 'MALLA',
+            'cantidad' => '5',
             'unidad_medida' => 'METROS', 
             'estado'=>'Activo',
             ]);
-        DB::table('unidadesmedida')->insert([
-            'nombre' => 'UNIDADES',
-            'cantidad' => '1',
-            'unidad_medida' => 'UNIDADES', 
-            'estado'=>'Activo',
-            ]);
+
         //
     }
 }
