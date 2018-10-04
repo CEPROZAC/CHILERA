@@ -140,7 +140,10 @@
       <div class="col-sm-6">
         <select name="almacen_general" id="almacen_general"  class="form-control select"  data-live-search="true"  >  
           @foreach($almacenes as $almacen)
-          @if($almacen->nombre - $almacen->ubicacion == $salida->destino)
+          <?php
+          $x = $almacen->nombre." - ".$almacen->ubicacion;
+          ?>
+          @if($x == $salida->destino)
           <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} " selected>{{$almacen->nombre}} - {{$almacen->ubicacion}}</option>
           @else
           <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} " >{{$almacen->nombre}} - {{$almacen->ubicacion}}</option>

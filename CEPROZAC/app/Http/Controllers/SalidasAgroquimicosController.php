@@ -19,7 +19,7 @@ use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
-use Illuminate\Support\Collection as Collection; 
+use Illuminate\Support\Collection as Collection;  
 
 
 class salidasagroquimicosController extends Controller
@@ -96,6 +96,7 @@ class salidasagroquimicosController extends Controller
       $limite = $request->get('total');
       while ($num <= $limite) {
         $material= new salidasagroquimicos;
+        $unidad = new cantidad_unidades_agro;
 
         $producto = $request->get('codigo2');
         $first = head($producto);
@@ -105,9 +106,11 @@ class salidasagroquimicosController extends Controller
 
 
         $material->id_material=$first = $name[$y];
+        $unidad->idProducto=$first = $name[$y];
         $prod=$first = $name[$y];
         $y = $y + 2;
         $aux =$first = $name[$y];
+        $unidad->cantidad=$first = $name[$y];
         //$material->cantidad=$first = $name[$y];
         $y = $y + 1;
         //$material->medida=$first = $name[$y];
@@ -116,11 +119,15 @@ class salidasagroquimicosController extends Controller
                 ///si ya exixste//
         $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
         $r=count($comprueba2);
+        $unidad->estado="Activo";
+        $unidad->idMedida=$medida2;
         if ($r > 0){
           $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
           $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
           $unidad2->cantidad=$unidad2->cantidad - $aux;
           $unidad2->update();
+        }else{
+          //$unidad->save();
         }
 
         /////
@@ -215,7 +222,7 @@ class salidasagroquimicosController extends Controller
           $a=$a." ".$name[$i];
         }else{
           $r=$name[0];
-        }
+        } 
           # code...
       }
 //print_r($e[0]);
@@ -231,6 +238,7 @@ class salidasagroquimicosController extends Controller
       $y = 0;
 
       if ($limite == 1){
+              $unidad = new cantidad_unidades_agro;
        $mat = almacenagroquimicos::findOrFail($salida->id_material);
        $producto = $request->get('codigo2');
        $first = head($producto);
@@ -240,8 +248,10 @@ class salidasagroquimicosController extends Controller
 
        $salida->id_material=$first = $name[$y];
         $prod=$first = $name[$y];
+          $unidad->idProducto=$first = $name[$y];
        $y = $y + 2;
        $aux =$first = $name[$y];
+        $unidad->cantidad=$first = $name[$y];
        //$salida->cantidad=$first = $name[$y];
        $mat->cantidad= $mat->cantidad - $first = $name[$y];
        $y = $y + 1;
@@ -250,12 +260,17 @@ class salidasagroquimicosController extends Controller
                 ///si ya exixste//
         $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
         $r=count($comprueba2);
+        $unidad->estado="Activo";
+        $unidad->idMedida=$medida2;
         if ($r > 0){
           $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
           $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
           $unidad2->cantidad=$unidad2->cantidad - $aux;
           $unidad2->update();
+        }else{
+          //$unidad->save();
         }
+
 
        $concat = $aux." ".$aux2;
             // print_r($first = $name[$y]);

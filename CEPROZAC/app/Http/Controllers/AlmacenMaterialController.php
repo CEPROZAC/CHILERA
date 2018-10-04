@@ -12,6 +12,10 @@ use CEPROZAC\Empleado;
 use CEPROZAC\almacenmaterial;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\AlmacenGeneral;
+
+use CEPROZAC\cantidad_unidades_mate;
+use CEPROZAC\unidadesmedida;
+
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
@@ -93,8 +97,20 @@ class almacenmaterialController extends Controller
         $material->ubicacion=$formulario->get('ubicacion');
         $material->estado='Activo';
         $material->medida=$formulario->get('medida');
-
+        $aux=$formulario->get('medida');
         $material->save();
+
+          $materialid= almacenmaterial::orderBy('id', 'desc')->first()->id;
+        //$medida2= DB::table('unidadesmedida')->where('nombre','=',$aux)->take(1)->get();
+         $medida2= unidadesmedida::where('nombre','=',$aux)->first()->id;
+        $unidad = new cantidad_unidades_mate;
+        $unidad->idProducto=$materialid;
+        $unidad->idMedida=$medida2;
+        $unidad->cantidad=$formulario->get('cantidad');
+        $unidad->estado="Activo";
+        $unidad->save(); 
+
+
         $material= DB::table('almacenmateriales')->orderby('created_at','DESC')->take(1)->get();
         return Redirect::to('detalle/materiales');
 
@@ -171,6 +187,8 @@ public function invoice($id){
      $material=almacenmaterial::findOrFail($id);
      $material->nombre=$request->get('nombre');
      $material->provedor=$request->get('provedor_name');
+     $medida2= unidadesmedida::where('nombre','=',$material->medida)->first()->id;
+    $unidadaux=cantidad_unidades_mate::where('idProducto','=',$id)->where('idMedida','=',$medida2)->first()->id;
      
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
@@ -183,7 +201,17 @@ public function invoice($id){
         $material->stock_minimo=$request->get('stock_min');
         $material->ubicacion=$request->get('ubicacion');
         $material->estado='Activo';
-        $material->update();
+        $material->update();    
+
+        $unidad=cantidad_unidades_mate::findOrFail($unidadaux);
+        $medidaaux=$request->get('medida');
+        $medida2= unidadesmedida::where('nombre','=',$medidaaux)->first()->id;
+
+        $unidad->idMedida=$medida2;
+        $unidad->cantidad=$request->get('cantidad');
+        $unidad->estado="Activo";
+        $unidad->update();
+          
         return Redirect::to('almacen/materiales');
         //
     }
