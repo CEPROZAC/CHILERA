@@ -32,7 +32,7 @@ class EntradaAlmacenController extends Controller
      * @return \Illuminate\Http\Response
  
      */ 
-    public function index()
+    public function index() 
     {
      $entrada= DB::table('entradaalmacenmateriales')->where('entradaalmacenmateriales.estado','=','Activo')
      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
@@ -54,13 +54,13 @@ class EntradaAlmacenController extends Controller
     public function create()
     {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-                   $provedor = DB::table('provedores_tipo_provedor')
-        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-     ->select('p.*','p.nombre as nombre')
-     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
+      $provedor = DB::table('provedores_tipo_provedor')
+      ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+      ->select('p.*','p.nombre as nombre')
+      ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenmateriales')->join('almacengeneral as alma','almacenmateriales.ubicacion', '=', 'alma.id')
-    ->select('almacenmateriales.*','alma.nombre as ubicacion2')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
+      ->select('almacenmateriales.*','alma.nombre as ubicacion2')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
       $cuenta = count($material);
@@ -202,8 +202,6 @@ class EntradaAlmacenController extends Controller
         $material->nota_venta=$first = $name[$y];
         $y = $y + 1;
              //print_r($first = $name[$y]);
-        $material->fecha=$first = $name[$y];
-        $y = $y + 1;
             // print_r($first = $name[$y]);
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
@@ -212,14 +210,14 @@ class EntradaAlmacenController extends Controller
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
-        $material->moneda=$first = $name[$y];
-        $y = $y + 1;
         $material->estado="Activo";
         $material->provedor=$formulario->get('prov');
         $material->comprador=$formulario->get('recibio');
         $material->entregado=$formulario->get('entregado_a');
         $material->recibe_alm=$formulario->get('recibe_alm');
         $material->observacionesc=$formulario->get('observacionesm');
+        $material->fecha=$formulario->get('fecha');
+        $material->moneda=$formulario->get('moneda');
         $material->save();
         $num = $num + 1;
 
@@ -242,26 +240,26 @@ class EntradaAlmacenController extends Controller
     public function show($id)
     {
       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
-     $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$id)->get();
-     $entrada = entradaalmacen::findOrFail($entradas[0]->id);
-     $fac=$entrada->nota_venta;
-     $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-     $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)
-     ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
-     ->select('entradaalmacenmateriales.*','a.nombre as nombremat','a.id as idagro')->get();
+      $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$id)->get();
+      $entrada = entradaalmacen::findOrFail($entradas[0]->id);
+      $fac=$entrada->nota_venta;
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $entradas=DB::table('entradaalmacenmateriales')->where('nota_venta','=',$fac)
+      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
+      ->select('entradaalmacenmateriales.*','a.nombre as nombremat','a.id as idagro')->get();
 
 
-     $material=DB::table('almacenmateriales')->join('almacengeneral as alma','almacenmateriales.ubicacion', '=', 'alma.id')
-    ->select('almacenmateriales.*','alma.nombre as ubicacion')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
-                  $provedor = DB::table('provedores_tipo_provedor')
-        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-     ->select('p.*','p.nombre as nombre')
-     ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
-     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+      $material=DB::table('almacenmateriales')->join('almacengeneral as alma','almacenmateriales.ubicacion', '=', 'alma.id')
+      ->select('almacenmateriales.*','alma.nombre as ubicacion')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
+      $provedor = DB::table('provedores_tipo_provedor')
+      ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+      ->select('p.*','p.nombre as nombre')
+      ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
         // 
-     return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
+      return view('almacen.materiales.entradas.edit', ['entrada' => $entrada,'empleado' => $empleado,'entradas'=> $entradas,'material'=>$material,'provedor'=>$provedor,'empresas'=>$empresas,'unidades'=>$unidades]);
         //
-   }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -280,9 +278,9 @@ class EntradaAlmacenController extends Controller
 
 
      $material=DB::table('almacenmateriales')->join('almacengeneral as alma','almacenmateriales.ubicacion', '=', 'alma.id')
-    ->select('almacenmateriales.*','alma.nombre as ubicacion')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
-                  $provedor = DB::table('provedores_tipo_provedor')
-        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('almacenmateriales.*','alma.nombre as ubicacion')->where('almacenmateriales.estado','=' ,'Activo')->where('almacenmateriales.cantidad','>=','0')->get();
+     $provedor = DB::table('provedores_tipo_provedor')
+     ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
      ->select('p.*','p.nombre as nombre')
      ->where('provedores_tipo_provedor.idTipoProvedor','1')->get();
      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
@@ -348,10 +346,6 @@ class EntradaAlmacenController extends Controller
         //print_r($first = $name[$y]);
       $material->nota_venta=$first = $name[$y];
       $y = $y + 1;
-
-      $material->fecha=$first = $name[$y];
-      $y = $y + 1;
-
       $material->p_unitario=$first = $name[$y];
       $y = $y + 1;
 
@@ -360,14 +354,14 @@ class EntradaAlmacenController extends Controller
       $material->total=$first = $name[$y];
       $material->importe=$first = $name[$y];
       $y = $y + 1;
-      $material->moneda=$first = $name[$y];
-      $y = $y + 1;
       $material->entregado=$request->get('entregado_a');
       $material->recibe_alm=$request->get('recibe_alm');
       $material->observacionesc=$request->get('observacionesq');
       $material->provedor=$request->get('prov');
       $material->comprador=$request->get('recibio');
       $material->estado="Activo";
+      $material->fecha=$request->get('fecha');
+      $material->moneda=$request->get('moneda');
       $material->save();
       $num = $num + 1;
         //

@@ -149,6 +149,24 @@
   </div> 
 </div>
 
+<div class="form-group">
+ <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
+ <div class="col-sm-3">
+  <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+    @if(Input::old('moneda')=="Peso MXM")
+    <option value='Peso MXN' selected>Peso MXN
+    </option>
+    <option value="Dolar USD">Dolar USD</option>
+    @else
+    <option value='Dolar USD' selected>Dolar USD
+    </option>
+    <option value="Peso MXN">Peso MXN</option>
+    @endif
+  </select>          
+</div>
+</div>
+
+
 <br> </br>
 
 
@@ -169,10 +187,10 @@
 <div class="container clear_both padding_fix">
   <div class="block-web">
    <div class="row">
-    <div class="panel panel-primary"> 
+   <div class="panel panel-success" >  
 
       <div class="panel-body">
-        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+        <div class="col-sm-3">
           <div class="form-group"> 
             <label for="material">Material </label>
             <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
@@ -187,14 +205,14 @@
        </div><!--/form-group--> 
 
 
-       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+       <div class="col-sm-3">
          <div class="form-group"> 
           <label for="pcantidad">Cantidad en Almacén </label>
           <input name="pcantidad" id="pcantidad" value="" type="number" step="any"  disabled class="form-control" />
         </div>    
       </div> 
 
-      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+      <div class="col-sm-3">
        <div class="form-group"> 
         <label for="umedida">Medida </label>
         <input name="umedida" id="umedida" value="" onchange="medida(this);"  type="text" disabled class="form-control" />
@@ -202,14 +220,14 @@
     </div>  
 
 
-    <div class="col-sm-4">
+    <div class="col-sm-3">
      <div class="form-group"> 
       <label for="descripcion">Descripción </label>
       <input name="descripcion" id="descripcion" disabled class="form-control" />
     </div>    
   </div>  
 
-  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+  <div class="col-sm-3">
    <div class="form-group"> 
     <label for="scantidad">Cantidad de Entrada </label>
     <input name="scantidad" id="scantidad" type="number" step="any"  max="999999" min="0.1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
@@ -217,7 +235,7 @@
   </div>    
 </div>  
 
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+<div class="col-sm-3">
  <div class="form-group"> 
   <label for="medida">Medida </label>
   <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
@@ -232,24 +250,9 @@
 </div>
 </div><!--/form-group-->
 
-<div class="col-lg-2">
-  <div class="form-group">
-    <label>Tipo de Moneda: <strog class="theme_color">*</strog></label>
-    <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
-      @if(Input::old('moneda')=="Peso MXM")
-      <option value='Peso MXN' selected>Peso MXN
-      </option>
-      <option value="Dolar USD">Dolar USD</option>
-      @else
-      <option value='Dolar USD' selected>Dolar USD
-      </option>
-      <option value="Peso MXN">Peso MXN</option>
-      @endif
-    </select>          
-  </div>
-</div>
 
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+
+<div class="col-sm-3">
  <div class="form-group"> 
   <label for="preciou">$ Precio Unitario </label>
   <input name="preciou" id="preciou" value="0" type="number" class="form-control" />
@@ -261,13 +264,7 @@
 
 
 
-
-
-</div>
-
-
-
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+<div class="col-sm-3">
   <div class="form-group"> 
     <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
   </div>
@@ -277,73 +274,62 @@
 
 @include('almacen.agroquimicos.entradas.modale')
 
-<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+<div class="form-group"  class="table-responsive"> 
+  <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
+    <thead style="background-color:#A9D0F5">
+      <th>Opciones</th>
+      <th>N°Articulo</th>
+      <th>Articulo</th>
+      <th>Cantidad </th>
+      <th>Unidad de Medida</th>
+      <th>Equivale</th>
+      <th>N° Factura</th>
+      <th>Precio Unitario</th>
+      <th>IVA</th>
+      <th>IEPS</th>
+      <th>Subtotal</th>
+
+    </thead>
+    <tfoot>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+   </tfoot>
+ </table>
+
+
+ <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
   <div class="form-group"> 
-    <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
-      <thead style="background-color:#A9D0F5">
-        <th>Opciones</th>
-        <th>N°Articulo</th>
-        <th>Articulo</th>
-        <th>Cantidad </th>
-        <th>Unidad de Medida</th>
-        <th>Equivale</th>
-        <th>N° Factura</th>
-        <th>Fecha de Compra</th>
-        <th>Precio Unitario</th>
-        <th>IVA</th>
-        <th>IEPS</th>
-        <th>Subtotal</th>
-        <th>Moneda</th>
+    <label  for="subtotal">Total </label>
+    <input name="subtotal" id="subtotal" type="number" value="0"  maxlength="5" class="form-control"  readonly/>
+  </div>    
+</div>
 
-      </thead>
-      <tfoot>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tfoot>
-      <tbody>
-
-      </tbody>
-
-    </table>
-
-    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-      <div class="form-group"> 
-        <label  for="subtotal">Total </label>
-        <input name="subtotal" id="subtotal" type="number" value="0"  maxlength="5" class="form-control"  readonly/>
-      </div>    
-    </div>
-
-    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-     <div class="form-group"> 
-      <label for="total">Total de Elementos </label>
-      <input name="total" id="total" type="number"  class="form-control"  readonly/>
-    </div>    
-  </div>  
+<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="form-group"> 
+  <label for="total">Total de Elementos </label>
+  <input name="total" id="total" type="number"  class="form-control"  readonly/>
+</div>    
+</div>  
 
 
 
-  <div class="form-group">
-    <div class="col-sm-6">
-      <input  id="codigo2" value="" name="codigo2[]" type="hidden"   class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
-    </div>
+<div class="form-group">
+  <div class="col-sm-6">
+    <input  id="codigo2" value="" name="codigo2[]" type="hidden"   class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
   </div>
-
 </div>
 
 </div>
-
-
+</div>
 </div>
 
 
@@ -355,6 +341,9 @@
     <a href="{{url('/almacen/entradas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
+
+</div>
+
 </form>
 </div><!--/porlets-content-->
 </div><!--/block-web-->
@@ -528,9 +517,9 @@ function llenado(){
    document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
    return false;
  }
-    document.getElementById("errorMedida").innerHTML = "";
+ document.getElementById("errorMedida").innerHTML = "";
 
- var fechav = document.getElementById('fecha').value;
+
  var provedorv =  document.getElementById('prov').value;
  var empresav =  document.getElementById('recibio').value;
  var entregadov = document.getElementById('entregado_a').value;
@@ -540,18 +529,13 @@ function llenado(){
  var preciou = document.getElementById('preciou').value;
  var ivax = document.getElementById('iva').value * .010;
  var iepsx = document.getElementById('ieps').value  * .010;
- var tipo_moneda = document.getElementById('moneda').value ;
- if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
+ if(provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
    if (preciou > 0){
      document.getElementById("errorprecio").innerHTML = "";
      if (entradav > 0){
       document.getElementById("errorCantidad").innerHTML = "";
 
-      var comprueba = recorre(tipo_moneda)
-      if (comprueba == 1){
-        swal("Alerta!", "El Tipo de Cambio, No puede ser Diferente del Previamente Insertado!", "error");
-        return false;
-      }
+
 
 
       
@@ -567,8 +551,8 @@ function llenado(){
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
-       var comprueba = recorre2(id)
-       if (comprueba == 1){
+      var comprueba = recorre2(id)
+      if (comprueba == 1){
         swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
         return false;
       }
@@ -587,12 +571,10 @@ function llenado(){
     var cell9 = row.insertCell(8);
     var cell10 = row.insertCell(9);
     var cell11 = row.insertCell(10);
-    var cell12 = row.insertCell(11);
-    var cell13 = row.insertCell(12);
 
 
-    var fechas = document.getElementById("fecha");
-    var var3 = fechas.value;
+
+
     //alert(var3);
     var prove = document.getElementById("prov");
     var proved = prove.value;
@@ -625,19 +607,17 @@ function llenado(){
     cell5.innerHTML = medida;
     cell6.innerHTML = medidaaux;
     cell7.innerHTML = notas;
-    cell8.innerHTML = var3;
-    cell9.innerHTML = precio;
-    cell10.innerHTML = ivatotal;
-    cell11.innerHTML = iepstotal;
-    cell12.innerHTML = precio * cantidaden + ivatotal + iepstotal;
-    cell13.innerHTML = tipo_moneda;
+    cell8.innerHTML = precio;
+    cell9.innerHTML = ivatotal;
+    cell10.innerHTML = iepstotal;
+    cell11.innerHTML = precio * cantidaden + ivatotal + iepstotal;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
     cargar();
     var menos =document.getElementById("detalles").rows
-  var r = menos.length;
-  document.getElementById("total").value= r - 2;
+    var r = menos.length;
+    document.getElementById("total").value= r - 2;
 
     var sub = precio * cantidaden + ivatotal + iepstotal;
     var auxsuma= document.getElementById("subtotal").value;
@@ -656,52 +636,7 @@ function llenado(){
   }
 }  
 
-function recorre(valor) {
- var z = 1
- var arreglo = [];
- var table = document.getElementById('detalles');
- for (var r = 1, n = table.rows.length-1; r < n; r++) {
-  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-   if (z == 1){
-    z++;
-  }
-  else if(z == 2){
-   z ++;       
- }else if(z == 3){
-  z ++;
-}else if(z == 4){
 
- z ++;
-} else if (z == 5){
-  z ++;
-}else if (z == 6){
- z ++;
-
-}else if(z == 7){
-  z ++;
-}else if(z == 8){
-  z ++;
-}else if(z == 9){
-  z ++;
-}else if(z == 10){
-  z ++;
-}else if(z == 11){
-  z ++;
-}else if(z == 12){
- var j = table.rows[r].cells[c].innerHTML
- if (valor != j ){
-  var r = 1;
-  return(r);
-  z ++;
-}else{
-  return false;
-}
-}else{
- z = 1;
-}
-}
-}
-}
 
 function recorre2(valor) {
  var z = 1
@@ -710,50 +645,44 @@ function recorre2(valor) {
  for (var r = 1, n = table.rows.length-1; r < n; r++) {
   for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
    if (z == 1){
-      var j = table.rows[r].cells[c].innerHTML;
+    var j = table.rows[r].cells[c].innerHTML;
 
-      if (valor == j ){             
-        var r = 1;
-        return(r);
-      }else{
-       z ++;
-      }
-    }
-    else if(z == 2){
+    if (valor == j ){             
+      var r = 1;
+      return(r);
+    }else{
      z ++;
-   }else if(z == 3){
-      z ++;
-    }else if(z == 4){
+   }
+ }
+ else if(z == 2){
    z ++;
- } else if (z == 5){
-z ++;
+ }else if(z == 3){
+  z ++;
+}else if(z == 4){
+ z ++;
+} else if (z == 5){
+  z ++;
 }else if (z == 6){
  z ++;
 
 }else if(z == 7){
-   z ++;
+ z ++;
 
- }else if(z == 8){
-   z ++;
+}else if(z == 8){
+ z ++;
 
- }else if(z == 9){
-   z ++;
+}else if(z == 9){
+ z ++;
 
- }else if(z == 10){
-   z ++;
+}else if(z == 10){
+ z ++;
 
- }else if(z == 11){
-   z ++;
+}else{
+ z = 1;
 
- }else if(z == 12){
-   z ++;
+}
 
- }else{
-     z = 1;
-
-   }
-
- }
+}
 }
 }
 
@@ -771,46 +700,6 @@ function eliminarFila(value) {
   limpiar();
 }
 
-function codigos(){
-  var cuenta = document.getElementById('codigo');
-  var x = cuenta.value;
-  var z = x.length
-  if (z == 12  ) {
-    var busca = z;
-    //  alert ("12 entro");
-    var y = document.getElementById("id_materialk").length;
-    //  alert(y);
-    var i= 0;
-    while(i < y){
-      var e = document.getElementById("id_materialk");
-      var value = e.options[e.selectedIndex=i].value;
-      var text = e.options[e.selectedIndex=i].text;
-      var cantidadtotal = value;
-      limite = "5",
-      separador = "_",
-      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      stock=arregloDeSubCadenas[0];
-      descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
-
-      if (codigo == x){
-    //alert(i);
-    document.getElementById('id_materialk').selectedIndex = i;
-    document.getElementById("pcantidad").value=stock;
-    document.getElementById("descripcion").value=descripcion;
-    document.getElementById("scantidad").value = "1";
-    break;
-  }else{
-    alert('Codigo de Barras No Encontado');
-    break;
-  }
-  i++;
-}
-}
-
-}
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
@@ -825,60 +714,46 @@ function save() {
    for (var r = 1, n = table.rows.length-1; r < n; r++) {
     for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
      if (z == 1){
-        //alert(z)
-       // document.getElementById("id_materialk").id=z;
-      // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
       arreglo.push(table.rows[r].cells[c].innerHTML);
-     //  alert(table.rows[r].cells[c].innerHTML);
-     z ++;
-   }
-
-   else if(z == 2){
-         //alert(z)
-       //  document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     }else if(z == 3){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     }else if(z == 4){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     } else if (z == 5){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-     }else if (z == 6){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 7){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 8){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 9){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 10){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 11){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else{
-      arreglo.push(table.rows[r].cells[c].innerHTML);
-      document.getElementById("codigo2").value=arreglo;
-      z = 1;
-
+      z ++;
     }
 
+    else if(z == 2){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+   }else if(z == 3){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+   }else if(z == 4){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+   } else if (z == 5){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+   }else if (z == 6){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+
+   }else if(z == 7){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+
+   }else if(z == 8){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+
+   }else if(z == 9){
+     arreglo.push(table.rows[r].cells[c].innerHTML);
+     z ++;
+
+   }else{
+    arreglo.push(table.rows[r].cells[c].innerHTML);
+    document.getElementById("codigo2").value=arreglo;
+    z = 1;
+
   }
+
+}
 }
 var menos =document.getElementById("detalles").rows
 var r = menos.length;

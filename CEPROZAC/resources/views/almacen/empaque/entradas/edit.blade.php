@@ -160,6 +160,27 @@
   <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
 </div>    
 </div> 
+
+
+
+      <div class="form-group">
+  <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-3">
+      <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+        @if($entrada->moneda =="Peso MXM")
+        <option value='Peso MXN' selected>Peso MXN
+        </option>
+        <option value="Dolar USD">Dolar USD</option>
+        @else
+        <option value='Dolar USD' selected>Dolar USD
+        </option>
+        <option value="Peso MXN">Peso MXN</option>
+        @endif
+      </select>          
+    </div>
+  </div>
+
+
 <br> </br>
 
 <a class="btn btn-sm btn-success tooltips" href="{{ route('almacenes.agroquimicos.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" target="_blank" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Nuevo Material </a>
@@ -177,10 +198,10 @@
 <div class="container clear_both padding_fix">
   <div class="block-web">
    <div class="row">
-    <div class="panel panel-primary"> 
+    <div class="panel panel-success" > 
 
       <div class="panel-body">
-        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+        <div class="col-sm-3">
           <div class="form-group"> 
             <label for="material">Material </label>
             <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
@@ -196,27 +217,28 @@
 
 
 
-      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                <div class="col-sm-3">
        <div class="form-group"> 
         <label for="pcantidad">Cantidad en Almacén </label>
         <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
       </div>    
     </div>  
-          <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+
+                    <div class="col-sm-3">
        <div class="form-group"> 
         <label for="umedida">Medida </label>
         <input name="umedida" id="umedida" value="" onchange="medida(this);"  type="text" disabled class="form-control" />
       </div>    
     </div> 
 
-    <div class="col-sm-4">
+             <div class="col-sm-3">
      <div class="form-group"> 
       <label for="descripcion">Descripción </label>
       <input name="descripcion" id="descripcion" disabled class="form-control" />
     </div>    
   </div>  
 
-  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+           <div class="col-sm-3">
    <div class="form-group"> 
     <label for="scantidad">Cantidad de Entrada </label>
     <input name="scantidad" id="scantidad" type="number" step="any"  max="999999" min="0.1" value="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="6"  />
@@ -224,7 +246,7 @@
   </div>    
 </div> 
 
-      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+               <div class="col-sm-3">
  <div class="form-group"> 
   <label for="medida">Medida </label>
   <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
@@ -240,24 +262,8 @@
 </div><!--/form-group-->
 
 
-  <div class="col-lg-2">
-    <div class="form-group">
-      <label>Tipo de Moneda: <strog class="theme_color">*</strog></label>
-      <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
-        @if(Input::old('moneda')=="Peso MXM")
-        <option value='Peso MXN' selected>Peso MXN
-        </option>
-        <option value="Dolar USD">Dolar USD</option>
-        @else
-        <option value='Dolar USD' selected>Dolar USD
-        </option>
-        <option value="Peso MXN">Peso MXN</option>
-        @endif
-      </select>          
-    </div>
-  </div>
 
-  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+          <div class="col-sm-3">
    <div class="form-group"> 
     <label for="preciou">$ Precio Unitario </label>
     <input name="preciou" id="preciou" value="0" type="number" class="form-control" />
@@ -278,7 +284,7 @@
 
 
 
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+          <div class="col-sm-3">
   <div class="form-group"> 
     <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
   </div>
@@ -287,9 +293,8 @@
 </div>
 
 
-<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-  <div class="form-group"> 
-    <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
+  <div class="form-group"  class="table-responsive"> 
+    <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
       <thead style="background-color:#A9D0F5">
         <th>Opciones</th>
         <th>N°Articulo</th>
@@ -298,11 +303,9 @@
         <th>Unidad de Medida</th>
         <th>Equivale</th>
         <th>N° Factura</th>
-        <th>Fecha de Compra</th>
         <th>Precio Unitario</th>
         <th>IVA</th>
         <th>Subtotal</th>
-        <th>Moneda</th>
 
       </thead>
       <tfoot>
@@ -315,11 +318,9 @@
         <td>{{$entradas2->medida}}</td>
         <td>{{$entradas2->medidaaux}}</td>
         <td>{{$entradas2->factura}} </td>
-        <td>{{$entradas2->fecha}}</td>
         <td>{{$entradas2->p_unitario}} </td>
         <td>{{$entradas2->iva}} </td>
         <td>{{$entradas2->importe}} </td>
-        <td>{{$entradas2->moneda}}</td>
       </td>
     </td>
 
@@ -465,7 +466,7 @@ window.onload=function() {
   document.getElementById("total").value= r - 1;
 
   for (var i = 1 ; i <= r-1; i++) {
-   cantidadnueva=document.getElementById("detalles").rows[i].cells[10].innerHTML;
+   cantidadnueva=document.getElementById("detalles").rows[i].cells[9].innerHTML;
    var x=  parseInt(document.getElementById('subtotal').value);
    document.getElementById('subtotal').value = parseInt(cantidadnueva) + x;
 
@@ -557,7 +558,6 @@ function llenado(){
  }
  document.getElementById("errorMedida").innerHTML = "";
 
-  var fechav = document.getElementById('fecha').value;
   var provedorv =  document.getElementById('prov').value;
   var empresav =  document.getElementById('recibio').value;
   var entregadov = document.getElementById('entregado_a').value;
@@ -566,18 +566,13 @@ function llenado(){
   var entradav = document.getElementById('scantidad').value;
   var preciou = document.getElementById('preciou').value;
   var ivax = document.getElementById('iva').value * .010;
-  var tipo_moneda = document.getElementById('moneda').value ;
-  if(fechav !== "" && provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
+  if(provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
    if (preciou > 0){
      document.getElementById("errorprecio").innerHTML = "";
      if (entradav > 0){
       document.getElementById("errorCantidad").innerHTML = "";
 
-            var comprueba = recorre(tipo_moneda)
-      if (comprueba == 1){
-        swal("Alerta!", "El Tipo de Cambio, No puede ser Diferente del Previamente Insertado!", "error");
-        return false;
-      }
+
 
       
 
@@ -612,12 +607,9 @@ function llenado(){
     var cell8 = row.insertCell(7);
     var cell9 = row.insertCell(8);
     var cell10 = row.insertCell(9);
-        var cell11 = row.insertCell(10);
-    var cell12 = row.insertCell(11);
 
 
-    var fechas = document.getElementById("fecha");
-    var var3 = fechas.value;
+
     //alert(var3);
     var prove = document.getElementById("prov");
     var proved = prove.value;
@@ -646,11 +638,9 @@ function llenado(){
     cell5.innerHTML = medida;
     cell6.innerHTML = medidaaux;
     cell7.innerHTML = notas;
-    cell8.innerHTML = var3;
-    cell9.innerHTML = precio;
-    cell10.innerHTML = ivatotal;
-    cell11.innerHTML = precio * cantidaden + ivatotal ;
-    cell12.innerHTML = tipo_moneda;
+    cell8.innerHTML = precio;
+    cell9.innerHTML = ivatotal;
+    cell10.innerHTML = precio * cantidaden + ivatotal ;
 
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
@@ -688,46 +678,7 @@ function eliminarFila(value) {
   limpiar();
 }
 
-function codigos(){
-  var cuenta = document.getElementById('codigo');
-  var x = cuenta.value;
-  var z = x.length
-  if (z == 12  ) {
-    var busca = z;
-    //  alert ("12 entro");
-    var y = document.getElementById("id_materialk").length;
-    //  alert(y);
-    var i= 0;
-    while(i < y){
-      var e = document.getElementById("id_materialk");
-      var value = e.options[e.selectedIndex=i].value;
-      var text = e.options[e.selectedIndex=i].text;
-      var cantidadtotal = value;
-      limite = "5",
-      separador = "_",
-      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      stock=arregloDeSubCadenas[0];
-      descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
 
-      if (codigo == x){
-    //alert(i);
-    document.getElementById('id_materialk').selectedIndex = i;
-    document.getElementById("pcantidad").value=stock;
-    document.getElementById("descripcion").value=descripcion;
-    document.getElementById("scantidad").value = "1";
-    break;
-  }else{
-    alert('Codigo de Barras No Encontado');
-    break;
-  }
-  i++;
-}
-}
-
-}
 
 function limpiar(){
   document.getElementById("scantidad").value="1";
@@ -776,14 +727,6 @@ function save() {
        arreglo.push(table.rows[r].cells[c].innerHTML);
        z ++;
 
-     }else if(z == 9){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 10){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
      }else{
       arreglo.push(table.rows[r].cells[c].innerHTML);
       document.getElementById("codigo2").value=arreglo;
@@ -803,58 +746,7 @@ document.getElementById("total").value= r - 1;
 
 }}
 
-function recorre(valor) {
- var z = 1
- var arreglo = [];
- var table = document.getElementById('detalles');
- for (var r = 1, n = table.rows.length; r < n; r++) {
-  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
-   if (z == 1){
-       z ++;
-  }
-
-  else if(z == 2){
-   z ++;
-
-
- }else if(z == 3){
-  z ++;
-}else if(z == 4){
- z ++;
-} else if (z == 5){
-  z ++;
-}else if (z == 6){
- z ++;
-
-}else if(z == 7){
- z ++;
-
-}else if(z == 8){
- z ++;
-
-}else if(z == 9){
- z ++;
-
-}else if(z == 10){
- z ++;
-
-}else if(z == 11){
-     var j = table.rows[r].cells[c].innerHTML;
-    if (valor != j ){
-      var r = 1;
-      return(r);
-      z ++;
-    }
- z ++;
-
-}else{
- z = 1;
-
-}
-
-}
-}
-}   
+   
 
 function recorre2(valor) {
  var z = 1
@@ -890,12 +782,6 @@ z ++;
    z ++;
 
  }else if(z == 9){
-   z ++;
-
- }else if(z == 10){
-   z ++;
-
- }else if(z == 11){
    z ++;
 
  }else{
