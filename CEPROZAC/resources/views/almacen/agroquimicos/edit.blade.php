@@ -42,141 +42,85 @@
               </div>
             </div>
 
+
+
+
             <div class="form-group">
-              <label class="col-sm-3 control-label"> Proveedor: <strog class="theme_color">*</strog></label>
+              <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <select name="provedor_name" class="form-control select2"  required>  
-                  @foreach($provedor as $provedores)
+                <input type="radio" value="1" name="habilitarDeshabilitar" id="1" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
+                <input type="radio" value="2" name="habilitarDeshabilitar" id="2" onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
 
-                  @if($provedores->id == $material->provedor)
-                  <option value="{{$provedores->id}}" selected>{{$provedores->nombre}}</option>
-                  @else
-                  <option value="{{$provedores->id}}">
-                   {{$provedores->nombre}}
-                 </option>
-                 @endif
+                <input type="radio" value="3" name="habilitarDeshabilitar"  id="3" onchange="habilitar(this.value);"> Ninguno
 
+              </div>
+            </div>
 
-                 @endforeach              
-               </select>
-               <div class="help-block with-errors"></div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+               <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
              </div>
-           </div><!--/form-group-->
-
-
-
-
+           </div>
 
            <div class="form-group">
-            <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <input type="radio" value="1" name="habilitarDeshabilitar" id="1" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
-              <input type="radio" value="2" name="habilitarDeshabilitar" id="2" onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
+            <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6" id="muestra_codigo">
 
-              <input type="radio" value="3" name="habilitarDeshabilitar"  id="3" onchange="habilitar(this.value);"> Ninguno
+             <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "C128",3,33);?></td>
+           </div>    
+         </div>  
 
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-             <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
-           </div>
+
+
+         <input type="text" hidden name="imagen " value="{{$material->imagen}}">
+
+         <div class="form-group ">
+          <label class="col-sm-3 control-label">Imagen</label>
+          <div class="col-sm-6">
+           <input  type="file" hidden name="imagen"  value="{{$material->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
+           @if (($material->imagen)!="")
+           <img src="{{asset('imagenes/almacenagroquimicos/'.$material->imagen)}}" height="100px" width="100px">
+           @endif
          </div>
-
-         <div class="form-group">
-          <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6" id="muestra_codigo">
-
-           <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "C128",3,33);?></td>
-         </div>    
-       </div>  
-
-
-
-
-       <input type="text" hidden name="imagen " value="{{$material->imagen}}">
-
-       <div class="form-group ">
-        <label class="col-sm-3 control-label">Imagen</label>
-        <div class="col-sm-6">
-         <input  type="file" hidden name="imagen"  value="{{$material->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
-         @if (($material->imagen)!="")
-         <img src="{{asset('imagenes/almacenagroquimicos/'.$material->imagen)}}" height="100px" width="100px">
-         @endif
        </div>
-     </div>
 
-     <div class="form-group">
-      <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="descripcion" value="{{$material->descripcion}}" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+       <div class="form-group">
+        <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="descripcion" value="{{$material->descripcion}}" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="cantidad" value="{{$material->cantidad }}" maxlength="9" type="number" value="1" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
-      </div>    
-    </div>  
-
-              <div class="form-group">
-      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <select name="medida" value="{{Input::old('medida')}}">
-          @if(($material->medida)=="KILOGRAMOS")
-          <option value='KILOGRAMOS' selected>KILOGRAMOS
-          </option>
-          <option value="LITROS">LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-    
-          @elseif(($material->medida)=="LITROS")
-          <option value="LITROS" selected>LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-          @elseif(($material->medida)=="METROS")
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" selected>METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-
-          @else
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" >METROS</option>
-          <option value="UNIDADES" selected>UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
-          @endif
-        </select>
-        
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_minimo }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
-      </div>    
-    </div> 
+      <div class="form-group">
+        <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="cantidad" value="{{$material->cantidad }}" maxlength="9" type="number" step="any"  max="999999" min="0.1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" /> 
+        </div>    
+      </div>  
 
 
 
+      <div class="form-group">
+        <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+          <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_minimo }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+        </div>    
+      </div> 
 
 
 
-    <div class="form-group">
-      <div class="col-sm-offset-7 col-sm-5">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{url('/almacenes/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
-      </div>
-    </div><!--/form-group-->
+      <div class="form-group">
+        <div class="col-sm-offset-7 col-sm-5">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <a href="{{url('/almacenes/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+        </div>
+      </div><!--/form-group-->
 
 
-  </form>
-</div><!--/porlets-content-->
+    </form>
+  </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->

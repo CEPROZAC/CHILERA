@@ -39,8 +39,29 @@
                  <span id="errorMedida" style="color:#FF0000;"></span>
                  <div class="help-block with-errors"></div>
                </div>
+<<<<<<< HEAD
              </div><!--/form-group-->
              <br> <br>
+=======
+                           <br> <br> 
+
+ <div class="form-group"> 
+ <label class="col-sm-3 control-label">Medida <strog class="theme_color">*</strog></label>
+  <div class="col-sm-8">
+  <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
+    @foreach($unidades as $unidad)
+    <option value="{{$unidad->unidad_medida}}_{{$unidad->nombre}}_{{$unidad->cantidad}}">
+     {{$unidad->nombre}}
+   </option>
+   @endforeach              
+ </select>
+
+ <span id="errorMedida" style="color:#FF0000;"></span>
+ <div class="help-block with-errors"></div>
+</div>
+</div><!--/form-group-->
+<br> <br>
+>>>>>>> d3d3c8de7d37cce1681f947cfbc718167259f896
 
 
 

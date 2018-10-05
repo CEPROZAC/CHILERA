@@ -140,7 +140,10 @@
       <div class="col-sm-6">
         <select name="almacen_general" id="almacen_general"  class="form-control select"  data-live-search="true"  >  
           @foreach($almacenes as $almacen)
-          @if($almacen->nombre - $almacen->ubicacion == $salida->destino)
+          <?php
+          $x = $almacen->nombre." - ".$almacen->ubicacion;
+          ?>
+          @if($x == $salida->destino)
           <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} " selected>{{$almacen->nombre}} - {{$almacen->ubicacion}}</option>
           @else
           <option value="{{$almacen->nombre}} - {{$almacen->ubicacion}} " >{{$almacen->nombre}} - {{$almacen->ubicacion}}</option>
@@ -205,7 +208,7 @@
        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
          <div class="form-group"> 
           <label for="pcantidad">Cantidad en Almacén </label>
-          <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
+          <input name="pcantidad" id="pcantidad" value="" step="any"  type="number" disabled class="form-control" />
         </div>    
       </div> 
       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
@@ -225,7 +228,7 @@
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
     <label for="scantidad">Cantidad de Salida </label>
-    <input name="scantidad" id="scantidad" type="number" value="1" max="{{$salida->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+    <input name="scantidad" id="scantidad" step="any"  type="number" value="1" max="{{$salida->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
     <span id="errorCantidad" style="color:#FF0000;"></span>
   </div>    
 </div>  

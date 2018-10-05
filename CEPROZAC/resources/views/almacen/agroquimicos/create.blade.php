@@ -114,8 +114,8 @@
       <div class="col-sm-5">
         <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
           @foreach($unidades  as $unidad)
-          <option value='{{$unidad->id}}'>
-            {{$unidad->nombre}} {{$unidad->cantidad}} {{$unidad->unidad_medida}}
+          <option value='{{$unidad-> idContenedorUnidadMedida}}'>
+            {{$unidad->nombre}} {{$unidad->cantidad}} {{$unidad->nombreUnidadMedida}}
           </option>
           @endforeach
 

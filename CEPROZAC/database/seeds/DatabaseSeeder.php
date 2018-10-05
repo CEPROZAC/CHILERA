@@ -31,9 +31,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TractoresTableSeeder::class);
 
         $this->call(TipoProvedorTableSeeder::class);
+        $this->call(NombreUnidadMedidaTableSeeder::class);  
 
-
-        $this->call(UnidadesMedidaTableSeeder::class);        
+        $this->call(UnidadesMedidaTableSeeder::class);     
+        
 
         Model::reguard();
     }

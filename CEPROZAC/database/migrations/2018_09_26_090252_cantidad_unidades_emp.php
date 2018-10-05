@@ -14,12 +14,12 @@ class CantidadUnidadesEmp extends Migration
     {
         Schema::create('cantidad_unidades_emp', function (Blueprint $table) {
             $table->increments('id');
-                        $table->integer('idProducto')->unsigned();
+            $table->integer('idProducto')->unsigned();
             $table->foreign('idProducto')->references('id')->on('almacenempaque');
             $table->integer('idMedida')->unsigned();
             $table->foreign('idMedida')->references('id')->on('unidades_medidas');
             $table->double('cantidad')->nullable();
-             $table->string('estado');
+            $table->string('estado');
             $table->timestamps();
         });
     }

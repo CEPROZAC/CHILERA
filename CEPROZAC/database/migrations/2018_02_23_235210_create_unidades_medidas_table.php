@@ -16,8 +16,12 @@ class CreateUnidadesMedidasTable extends Migration
          $table->increments('id');
          $table->string('nombre'); 
          $table->double('cantidad')->nullable();
-         $table->string('unidad_medida')->nullable();
+         $table->integer('idUnidadMedida')->unsigned();
+         $table->foreign('idUnidadMedida')->references('id')->on('nombre_unidades_medidas');
          $table->string('estado');
+
+
+
          $table->timestamps();
      });
     }

@@ -15,6 +15,8 @@ use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\almacenempaque;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\empresas_ceprozac;
+use CEPROZAC\cantidad_unidades_emp;
+use CEPROZAC\unidadesmedida;
 
 
 use DB;
@@ -32,7 +34,7 @@ class entradasempaquescontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()  
-    {
+    { 
      $entrada= DB::table('entradasempaques')->where('entradasempaques.estado','=','Activo')
      ->join('almacenempaque as a', 'entradasempaques.id_material', '=', 'a.id')
      ->join('empresas_ceprozac as e', 'entradasempaques.comprador', '=', 'e.id')
@@ -119,16 +121,36 @@ class entradasempaquescontroller extends Controller
 
             while ($num <= $limite) {
                 $material= new entradasempaques;
+                $unidad = new cantidad_unidades_emp;
             //print_r($num);
                 $producto = $formulario->get('codigo2');
                 $first = head($producto);
                 $name = explode(",",$first);        
                 $material->id_material=$first = $name[$y];
+                $prod=$first = $name[$y];
+        $unidad->idProducto=$first = $name[$y];
+
                 $y = $y + 2;
                 $aux =$first = $name[$y];
+                $unidad->cantidad=$first = $name[$y];
                 //$material->cantidad=$first = $name[$y];
                 $y = $y + 1;
                  $aux2 =$first = $name[$y];
+                  $medida2= unidadesmedida::where('nombre','=',$aux2)->first()->id;
+                   $unidad->estado="Activo";
+                   $unidad->idMedida=$medida2;
+        ///si ya exixste//
+        $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
+        $r=count($comprueba2);
+        if ($r > 0){
+          $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
+          $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
+          $unidad2->cantidad=$unidad2->cantidad + $aux;
+          $unidad2->update();
+        }else{
+          $unidad->save();
+        }
+
         $concat = $aux." ".$aux2;
         $y = $y + 1;
         $yy =$first = $name[$y]; 
@@ -247,8 +269,30 @@ class entradasempaquescontroller extends Controller
       $elimina = entradasempaques::findOrFail($entradas[$x]->id);
       $decrementa=almacenempaque::findOrFail($elimina->id_material);
       $decrementa->cantidad=$decrementa->cantidad- $elimina->cantidad;
+       $v= [$elimina->medidaaux];
+        $first = head($v);
+        $name = explode(" ",$first);
+        $z = count($name);
+        $a="";
+        for ($i=0; $i < $z; $i++) { 
+          if ($i == 1) {
+           $a=$name[$i];             
+            # code...
+         }else if($i > 1) {
+          $a=$a." ".$name[$i];
+        }else{
+          $r=$name[0];
+        }
+          # code...
+      }
+//print_r($e[0]);
+      $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
+      $unidadaux=cantidad_unidades_emp::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
+      $unidad=cantidad_unidades_emp::findOrFail($unidadaux);
+      $unidad->cantidad=$unidad->cantidad - $r;
       $decrementa->update();
       $elimina->delete();
+            $unidad->update();
         # code...
       }
      // $salidas->delete();
@@ -258,6 +302,7 @@ class entradasempaquescontroller extends Controller
 
     while ($num <= $limite) {
         $material= new entradasempaques;
+        $unidad = new cantidad_unidades_emp;
             
         $producto = $request->get('codigo2');
         $first = head($producto);
@@ -266,11 +311,32 @@ class entradasempaquescontroller extends Controller
              //$first = $name[1];
          
         $material->id_material=$first = $name[$y];
+        $prod=$first = $name[$y];
+      $unidad->idProducto=$first = $name[$y];
         $y = $y + 2;
                $aux =$first = $name[$y];
+               $aux =$first = $name[$y];
+      $unidad->cantidad=$first = $name[$y];
         //$material->cantidad=$first = $name[$y];
         $y = $y + 1;
         $aux2 =$first = $name[$y];
+         $medida2= unidadesmedida::where('nombre','=',$aux2)->first()->id;
+          $unidad->estado="Activo";
+        $unidad->idMedida=$medida2;
+
+      //si ya existe//
+
+        $comprueba2= DB::table('cantidad_unidades_emp')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
+        $r=count($comprueba2);
+        if ($r > 0){
+          $unidadaux=cantidad_unidades_emp::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
+          $unidad2=cantidad_unidades_emp::findOrFail($unidadaux);
+          $unidad2->cantidad=$unidad2->cantidad + $aux;
+        $unidad2->update();
+        }else{
+          $unidad->save();
+        }
+
         $concat = $aux." ".$aux2;
         $y = $y + 1;
         $yy =$first = $name[$y]; 
@@ -347,6 +413,30 @@ class entradasempaquescontroller extends Controller
         $material->estado="Inactivo";
          $decrementa=almacenempaque::findOrFail($material->id_material);
       $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
+
+         $v= [$material->medidaaux];
+        $first = head($v);
+        $name = explode(" ",$first);
+        $z = count($name);
+        $a="";
+        for ($i=0; $i < $z; $i++) { 
+          if ($i == 1) {
+           $a=$name[$i];             
+            # code...
+         }else if($i > 1) {
+          $a=$a." ".$name[$i];
+        }else{
+          $r=$name[0];
+        }
+          # code...
+      }
+//print_r($e[0]);
+      $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
+      $unidadaux=cantidad_unidades_emp::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
+      $unidad=cantidad_unidades_emp::findOrFail($unidadaux);
+      $unidad->cantidad=$unidad->cantidad - $r;
+      $unidad->update();
+      
       $decrementa->update();
         $material->update();
         return Redirect::to('/almacen/entradas/empaque');   

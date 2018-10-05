@@ -190,7 +190,7 @@
        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
          <div class="form-group"> 
           <label for="pcantidad">Cantidad en Almacén </label>
-          <input name="pcantidad" id="pcantidad" value="" type="number" disabled class="form-control" />
+          <input name="pcantidad" id="pcantidad" value="" type="number" step="any"  disabled class="form-control" />
         </div>    
       </div> 
 
@@ -212,7 +212,7 @@
   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
    <div class="form-group"> 
     <label for="scantidad">Cantidad de Entrada </label>
-    <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
+    <input name="scantidad" id="scantidad" type="number" step="any"  max="999999" min="0.1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
     <span id="errorCantidad" style="color:#FF0000;"></span>
   </div>    
 </div>  
@@ -567,9 +567,15 @@ function llenado(){
       codigo=arregloDeSubCadenas[2];
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
+       var comprueba = recorre2(id)
+       if (comprueba == 1){
+        swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+        return false;
+      }
+
       var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
-    var row = tabla.insertRow(id2);
+    var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
@@ -629,7 +635,10 @@ function llenado(){
     var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
     cargar();
-    document.getElementById("total").value=id2;
+    var menos =document.getElementById("detalles").rows
+  var r = menos.length;
+  document.getElementById("total").value= r - 2;
+
     var sub = precio * cantidaden + ivatotal + iepstotal;
     var auxsuma= document.getElementById("subtotal").value;
     var sumatodo = parseFloat(sub) + parseFloat(auxsuma);
@@ -691,6 +700,60 @@ function recorre(valor) {
  z = 1;
 }
 }
+}
+}
+
+function recorre2(valor) {
+ var z = 1
+ var arreglo = [];
+ var table = document.getElementById('detalles');
+ for (var r = 1, n = table.rows.length-1; r < n; r++) {
+  for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
+   if (z == 1){
+      var j = table.rows[r].cells[c].innerHTML;
+
+      if (valor == j ){             
+        var r = 1;
+        return(r);
+      }else{
+       z ++;
+      }
+    }
+    else if(z == 2){
+     z ++;
+   }else if(z == 3){
+      z ++;
+    }else if(z == 4){
+   z ++;
+ } else if (z == 5){
+z ++;
+}else if (z == 6){
+ z ++;
+
+}else if(z == 7){
+   z ++;
+
+ }else if(z == 8){
+   z ++;
+
+ }else if(z == 9){
+   z ++;
+
+ }else if(z == 10){
+   z ++;
+
+ }else if(z == 11){
+   z ++;
+
+ }else if(z == 12){
+   z ++;
+
+ }else{
+     z = 1;
+
+   }
+
+ }
 }
 }
 

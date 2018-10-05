@@ -35,16 +35,17 @@ class almacenempaquecontroller extends Controller
      */
     public function index()
     {
-             $material = DB::table('almacenempaque')
-     ->join('provedor_materiales as p', 'almacenempaque.provedor', '=', 'p.id')
-     ->select('almacenempaque.*','p.nombre as provedor')
-     ->where('almacenempaque.estado','Activo')->get();
-     $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
-     $empleado = DB::table('empleados')->where('estado','Activo')->get();
-     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
-     return view('almacen.empaque.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas]);
+       $material = DB::table('almacenempaque')
+       ->join('provedor_materiales as p', 'almacenempaque.provedor', '=', 'p.id')
+       ->select('almacenempaque.*','p.nombre as provedor')
+       ->where('almacenempaque.estado','Activo')->get();
+       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+       $empleado = DB::table('empleados')->where('estado','Activo')->get();
+       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+       return view('almacen.empaque.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
         //
-    }
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -53,14 +54,14 @@ class almacenempaquecontroller extends Controller
      */
     public function create()
     {
-                 $provedor = DB::table('provedores_tipo_provedor')
-        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-     ->select('p.*','p.nombre as nombre')
-     ->where('provedores_tipo_provedor.idTipoProvedor','=','4')->get();
-         $empaque= DB::table('forma_empaques')->where('estado','Activo')->get();
-        return view('almacen.empaque.create',['provedor' => $provedor,'empaque'=>$empaque]);
+       $provedor = DB::table('provedores_tipo_provedor')
+       ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+       ->select('p.*','p.nombre as nombre')
+       ->where('provedores_tipo_provedor.idTipoProvedor','=','4')->get();
+       $empaque= DB::table('forma_empaques')->where('estado','Activo')->get();
+       return view('almacen.empaque.create',['provedor' => $provedor,'empaque'=>$empaque]);
         //
-    }
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -70,11 +71,11 @@ class almacenempaquecontroller extends Controller
      */
     public function store(almacenempaquerequest $formulario)
     {
-         $validator = Validator::make(
+       $validator = Validator::make(
         $formulario->all(), 
         $formulario->rules(),
         $formulario->messages());
-      if ($validator->valid()){
+       if ($validator->valid()){
 
         if ($formulario->ajax()){
             return response()->json(["valid" => true], 200);
@@ -96,34 +97,34 @@ class almacenempaquecontroller extends Controller
         $material->stock_minimo=$formulario->get('stock_min');
         $material->estado='Activo';
 
-
+        $aux=$formulario->get('medida');
         $material->save();
         $materialid= almacenempaque::orderBy('id', 'desc')->first()->id;
         //$medida2= DB::table('unidadesmedida')->where('nombre','=',$aux)->take(1)->get();
-         $medida2= unidadesmedida::where('nombre','=',$aux)->first()->id;
+        $medida2= unidadesmedida::where('nombre','=',$aux)->first()->id;
         $unidad = new cantidad_unidades_emp;
         $unidad->idProducto=$materialid;
         $unidad->idMedida=$medida2;
-        $unidad->cantidad=$request->get('cantidad');
+        $unidad->cantidad=$formulario->get('cantidad');
         $unidad->estado="Activo";
         $unidad->save();
-         return Redirect::to('detalle/empaque');
+        return Redirect::to('detalle/empaque');
 
     }
   }        //
         //
-    }
+}
 
-    public function detalle(){ 
-$material= DB::table('almacenempaque')->orderby('created_at','DESC')->take(1)->get();
-$provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+public function detalle(){ 
+    $material= DB::table('almacenempaque')->orderby('created_at','DESC')->take(1)->get();
+    $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
 
-return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$provedor]);
+    return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$provedor]);
 
 }
 
 
-    public function invoice($id){ 
+public function invoice($id){ 
     $material= DB::table('almacenempaque')->where('id',$id)->get();
          //$material   = AlmacenMaterial:: findOrFail($id);
     $date = date('Y-m-d');
@@ -154,13 +155,13 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
      */
     public function edit($id)
     {
-                       $provedor = DB::table('provedores_tipo_provedor')
-        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     $provedor = DB::table('provedores_tipo_provedor')
+     ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
      ->select('p.*','p.nombre as nombre')
      ->where('provedores_tipo_provedor.idTipoProvedor','4')->get();
-       return view("almacen.empaque.edit",["material"=>almacenempaque::findOrFail($id)],['provedor' => $provedor]);
+     return view("almacen.empaque.edit",["material"=>almacenempaque::findOrFail($id)],['provedor' => $provedor]);
         //
-    }
+ }
 
     /**
      * Update the specified resource in storage.
@@ -171,9 +172,12 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
      */
     public function update(Request $request, $id)
     {
-         $material=almacenempaque::findOrFail($id);
-     $material->nombre=$request->get('nombre');
-     
+       $material=almacenempaque::findOrFail($id);
+       $material->nombre=$request->get('nombre');
+       $medidaaux=$request->get('medida');
+       $medida2= unidadesmedida::where('nombre','=',$material->medida)->first()->id;
+       $unidadaux=cantidad_unidades_emp::where('idProducto','=',$id)->where('idMedida','=',$medida2)->first()->id;
+       
        if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenempaque',$file->getClientOriginalName());//lo movemos a esta ruta
@@ -184,9 +188,18 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
         $material->medida=$request->get('medida');
         $material->codigo=$request->get('codigo');
         $material->provedor=$request->get('provedor_name');
-          $material->stock_minimo=$request->get('stock_min');
+        $material->stock_minimo=$request->get('stock_min');
         $material->estado='Activo';
         $material->update();
+
+        $unidad=cantidad_unidades_emp::findOrFail($unidadaux);
+        $medidaaux=$request->get('medida');
+        $medida2= unidadesmedida::where('nombre','=',$medidaaux)->first()->id;
+        $unidad->idMedida=$medida2;
+        $unidad->cantidad=$request->get('cantidad');
+        $unidad->estado="Activo";
+        $unidad->update();
+
         return Redirect::to('almacenes/empaque');
         //
     }
@@ -199,14 +212,14 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
      */
     public function destroy($id)
     {
-              $material=almacenempaque::findOrFail($id);
+      $material=almacenempaque::findOrFail($id);
       $material->estado='Inactivo';
       $material->save();
       return Redirect::to('almacenes/empaque');
         //
-    }
+  }
 
-      public function excel()
+  public function excel()
   {        
         /**
          * toma en cuenta que para ver los mismos 
@@ -236,53 +249,56 @@ return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$proved
       })->export('xls');
     }
 
-        public function stock(modalentradaemp $formulario, $id)
+    public function stock(modalentradaemp $formulario, $id)
     {
-                 $validator = Validator::make(
+       $validator = Validator::make(
         $formulario->all(), 
         $formulario->rules(),
         $formulario->messages());
-      if ($validator->valid()){
+       if ($validator->valid()){
 
         if ($formulario->ajax()){
             return response()->json(["valid" => true], 200);
         }
         else{
 
-        $material=almacenempaque::findOrFail($id);
-        $prov=$material->provedor;
-        $prove=provedormateriales::findOrFail($prov);
-        $nom_provedor=$prove->id;
+            $material=almacenempaque::findOrFail($id);
+            $prov=$material->provedor;
+            $prove=provedormateriales::findOrFail($prov);
+            $nom_provedor=$prove->id;
 
-      $material2= new entradasempaques;
-      $material2->id_material=$id;
-      $material2->cantidad=$formulario->get('cantidades'.$id);
-     $material2->provedor=$nom_provedor;
-                      $material2->entregado=$formulario->get('entregado_a'.$id);
-        $material2->recibe_alm=$formulario->get('recibe_alm'.$id);
-         $material2->observacionesc=$formulario->get('observaciones'.$id);
+            $material2= new entradasempaques;
+            $material2->id_material=$id;
+            $material2->cantidad=$formulario->get('cantidades'.$id);
+            $material2->medida=$formulario->get('umedida'.$id);
+            $material2->medidaaux=$formulario->get('medidaaux'.$id);
 
-      $material2->comprador=$formulario->get('recibio'.$id);
-      $material2->factura=$formulario->get('factura'.$id);
-      $material2->fecha=$formulario->get('fecha2'.$id);
-      $material2->p_unitario=$formulario->get('preciou'.$id);
-        $ivaaux=$formulario->get('iva'.$id) * .010;
-       $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
-       $material2->iva=$ivatotal;
+            $material2->provedor=$nom_provedor;
+            $material2->entregado=$formulario->get('entregado_a'.$id);
+            $material2->recibe_alm=$formulario->get('recibe_alm'.$id);
+            $material2->observacionesc=$formulario->get('observaciones'.$id);
 
-      $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
-      $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
-       $material2->moneda=$formulario->get('moneda'.$id);
-        $material2->estado="Activo";
-      $material2->save();
+            $material2->comprador=$formulario->get('recibio'.$id);
+            $material2->factura=$formulario->get('factura'.$id);
+            $material2->fecha=$formulario->get('fecha2'.$id);
+            $material2->p_unitario=$formulario->get('preciou'.$id);
+            $ivaaux=$formulario->get('iva'.$id) * .010;
+            $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+            $material2->iva=$ivatotal;
+
+            $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+            $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal;
+            $material2->moneda=$formulario->get('moneda'.$id);
+            $material2->estado="Activo";
+            $material2->save(); 
 
 
-      return Redirect::to('almacenes/empaque');
-  }
+            return Redirect::to('almacenes/empaque');
+        }
+    }
 }
-}
 
-   public function validarcodigo($codigo)
+public function validarcodigo($codigo)
 {
 
     $quimico= almacenempaque::

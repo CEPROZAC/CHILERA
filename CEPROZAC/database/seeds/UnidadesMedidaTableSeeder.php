@@ -17,19 +17,19 @@ class UnidadesMedidaTableSeeder extends Seeder
         DB::table('unidades_medidas')->insert([
             'nombre' => 'COSTAL',
             'cantidad' => '5',
-            'unidad_medida' => 'KILOGRAMOS', 
+            'idUnidadMedida' => '1', 
             'estado'=>'Activo',
             ]);
         DB::table('unidades_medidas')->insert([
             'nombre' => 'GALON',
             'cantidad' => '3',
-            'unidad_medida' => 'LITROS', 
+            'idUnidadMedida' => '3', 
             'estado'=>'Activo',
             ]);
         DB::table('unidades_medidas')->insert([
             'nombre' => 'MALLA',
             'cantidad' => '5',
-            'unidad_medida' => 'METROS', 
+            'idUnidadMedida' => '6', 
             'estado'=>'Activo',
             ]);
 

@@ -55,12 +55,21 @@
                 @endif
 
 
+<<<<<<< HEAD
                 <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
                 <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicacion}}</p>
                 <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}}  </p>
                 <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}}   </p>
                 <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
                 <td>
+=======
+                 <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
+                 <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicaciones2}}</p>
+                 <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}}  </p>
+                 <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}}   </p>
+                 <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
+                   <td>
+>>>>>>> d3d3c8de7d37cce1681f947cfbc718167259f896
                   @if (($mat->imagen)!="")
                   <img src="{{asset('imagenes/almacenmateriales/'.$mat->imagen)}}" alt="{{$mat->nombre}}" height="100px" width="100px" class="img-thumbnail">
                   @else

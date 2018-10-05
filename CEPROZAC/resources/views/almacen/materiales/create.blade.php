@@ -82,6 +82,7 @@
 
 
 
+<<<<<<< HEAD
        <div class="form-group">
         <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
@@ -94,6 +95,62 @@
         <div class="col-sm-6">
           <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
         </div>
+=======
+
+
+              <div class="form-group">
+            <label class="col-sm-3 control-label"> Ubicación: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="ubicacion" id="ubicacion" class="form-control"  value="{{Input::old('ubicacion')}}" required>  
+                @foreach($almacen as $almacenes)
+                <option value="{{$almacenes->id}}">
+                 {{$almacenes->nombre}}
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
+
+    <div class="form-group">
+      <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <input name="cantidad"  value="{{Input::old('cantidad')}}" type="number" step="any"  max="999999" min="0.1"  data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
+      </div>    
+    </div>  
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <select name="medida" value="{{Input::old('medida')}}">
+          @if(Input::old('medida')=="KILOGRAMOS")
+          <option value='KILOGRAMOS' selected>KILOGRAMOS
+          </option>
+          <option value="LITROS">LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+    
+          @elseif(Input::old('medida')=="LITROS")
+          <option value="LITROS" selected>LITROS</option>
+          <option value="METROS">METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+          @elseif(Input::old('medida')=="METROS")
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" selected>METROS</option>
+          <option value="UNIDADES">UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>
+
+          @else
+          <option value="LITROS">LITROS</option>
+          <option value="METROS" >METROS</option>
+          <option value="UNIDADES" selected>UNIDADES</option>
+          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
+          @endif
+        </select>
+        
+>>>>>>> d3d3c8de7d37cce1681f947cfbc718167259f896
       </div>
 
       <div class="form-group">

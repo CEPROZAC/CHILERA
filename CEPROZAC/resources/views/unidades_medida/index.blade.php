@@ -59,7 +59,7 @@
               <tr class="gradeA">
                 <td>{{$unidad->nombre}} </td>
                 <td>{{$unidad->cantidad}} </td>
-                <td>{{$unidad->unidad_medida}} </td>
+                <td>{{$unidad->nombreUnidadMedida}} </td>
 
 
                 <td> 

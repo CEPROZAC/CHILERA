@@ -109,12 +109,28 @@
               </div>
             </div>
 
-         <div class="form-group">
-      <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="ubicacion" type="text"  value="{{Input::old('ubicacion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese la Ubicación del Material" />
-      </div>
-    </div>
+
+
+                              <div class="form-group">
+            <label class="col-sm-3 control-label">Ubicación: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+              <select name="ubicacion" class="form-control select2"  required>  
+                @foreach($almacen as $almacenes)
+                @if($almacenes->id == $material->ubicacion)
+                <option value="{{$almacenes->id}}" selected>{{$almacenes->nombre}}</option>
+                @else
+                <option value="{{$almacenes->id}}">
+                 {{$almacenes->nombre}}
+               </option>
+                @endif
+                
+               
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
+
 
 
                <div class="form-group">
@@ -160,7 +176,7 @@
                                                   <div class="form-group">
               <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_minimo }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+                <input name="stock_min" type="number" step="any"  max="999999" min="0.1"  value="{{$material->stock_minimo }}" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
                </div>    
                </div> 
        

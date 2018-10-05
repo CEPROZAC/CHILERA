@@ -21,12 +21,17 @@ class unidadesmedidacontroller extends Controller
      */
     public function index()
     {
-      $unidades= DB::table('unidades_medidas')->where('estado','Activo')->get();
+      $unidades= DB::table('unidades_medidas')
+      ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida','=','nombre_unidades_medidas.id')
+      ->select('unidades_medidas.*', 'nombre_unidades_medidas.*')
+      ->where('estado','Activo')->get();
 
       return view('unidades_medida.index', ['unidades' => $unidades]);
         //
         //
-  }
+
+  } 
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,10 +40,14 @@ class unidadesmedidacontroller extends Controller
      */
     public function create()
     {
-      return view('unidades_medida.create');
-        //
-  }
 
+        $nombreUnidadesMedida =DB::table('nombre_unidades_medidas')->get();
+
+        return view('unidades_medida.create',['nombreUnidadesMedida'=>$nombreUnidadesMedida]);
+        //
+
+
+    } 
     /**
      * Store a newly created resource in storage.
      *
@@ -50,23 +59,14 @@ class unidadesmedidacontroller extends Controller
         $unidad = new Unidades_medida;
         $unidad->nombre=$request->get('nombre');
         $unidad->cantidad=$request->get('cantidad');
-        $unidad->unidad_medida=$request->get('medida');
+        $unidad->idUnidadMedida=$request->get('medida');
         $unidad->estado="Activo";
         $unidad->save();
         return Redirect::to('unidades_medida');
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -76,10 +76,12 @@ class unidadesmedidacontroller extends Controller
      */
     public function edit($id)
     {
-        $unidades = Unidades_medida::findOrFail($id);
-        return view('unidades_medida.edit', ['unidades' => $unidades]);
+
+     $nombreUnidadesMedida =DB::table('nombre_unidades_medidas')->get();
+     $unidades = Unidades_medida::findOrFail($id);
+     return view('unidades_medida.edit', ['unidades' => $unidades, 'nombreUnidadesMedida'=>$nombreUnidadesMedida]);
         //
-    }
+ }
 
     /**
      * Update the specified resource in storage.
@@ -90,8 +92,15 @@ class unidadesmedidacontroller extends Controller
      */
     public function update(Request $request, $id)
     {
+      $unidad = Unidades_medida::findOrFail($id);
+      $unidad->nombre=$request->get('nombre');
+      $unidad->cantidad=$request->get('cantidad');
+      $unidad->idUnidadMedida=$request->get('medida');
+      $unidad->estado="Activo";
+      $unidad->update();
+      return Redirect::to('unidades_medida');
         //
-    }
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -101,24 +110,27 @@ class unidadesmedidacontroller extends Controller
      */
     public function destroy($id)
     {
+       $unidad = Unidades_medida::findOrFail($id);
+       $unidad->estado="Inactivo";
+       $unidad->update();
+       return Redirect::to('unidades_medida');
         //
-    }
+   }
 
-    public function excel()
-    {        
-        /**
-         * toma en cuenta que para ver los mismos 
-         * datos debemos hacer la misma consulta
-        **/
-        Excel::create('invernaderos', function($excel) {
-          $excel->sheet('Excel sheet', function($sheet) {
-            $invernadero = invernaderos::select('nombre','ubicacion','num_modulos')
-            ->where('estado', 'Activo')
-            ->get();       
-            $sheet->fromArray($invernadero);
-            $sheet->row(1,['Nombre del Invernadero','Ubicación','Número de Módulos']);
-            $sheet->setOrientation('landscape');
-        });
-      })->export('xls');
-    }
+   public function excel()
+   {        
+
+    Excel::create('unidadesmedida', function($excel) {
+      $excel->sheet('Excel sheet', function($sheet) {
+        $unidadesmedida = Unidades_medida::
+        join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=','nombre_unidades_medidas.id')
+        ->select('nombre','cantidad','nombreUnidadMedida')
+        ->where('estado', 'Activo')
+        ->get();       
+        $sheet->fromArray($unidadesmedida);
+        $sheet->row(1,['Nombre','Cantidad Equivalente','Unidad de Medida']);
+        $sheet->setOrientation('landscape');
+    });
+  })->export('xls');
+}
 }

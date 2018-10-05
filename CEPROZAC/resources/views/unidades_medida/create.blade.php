@@ -50,60 +50,33 @@
             </div>
           </div>
 
-                    <div class="form-group">
+          <div class="form-group">
             <label class="col-sm-3 control-label">Cantidad Equivalente: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
 
-              <input name="cantidad" type="number"  onchange="mayus(this);"  max="99" min="1" value="{{Input::old('cantidad')}}" class="form-control" required  placeholder="Ingrese el Número de Equivalencia" maxlength="2" />
+              <input name="cantidad" type="number" step="any"  max="999999" min="0.1" value="{{Input::old('cantidad')}}" class="form-control" required  placeholder="Ingrese el Número de Equivalencia" maxlength="6" />
               <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
 
             </div>
           </div>
 
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <select name="medida" value="{{Input::old('medida')}}">
-          @if(Input::old('medida')=="KILOGRAMOS")
-          <option value='KILOGRAMOS' selected>KILOGRAMOS
-          </option>
-          <option value="LITROS">LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-    
-          @elseif(Input::old('medida')=="LITROS")
-          <option value="LITROS" selected>LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-          @elseif(Input::old('medida')=="METROS")
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" selected>METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-
-          @else
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" >METROS</option>
-          <option value="UNIDADES" selected>UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
-          @endif
-        </select>
-        
-      </div>
-    </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Unidad De Medida: <strog class="theme_color">*</strog></label>
+            <div class="col-sm-6">
+             <select name="medida" class="form-control" required>
+               @foreach($nombreUnidadesMedida as $nombre)
+               <option value="{{$nombre->id}}">
+                 {{$nombre->nombreUnidadMedida}} 
+               </option>
+               @endforeach
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div><!--/form-group-->
 
 
-
-
-
-
-
-    
-
-        
-        <div class="form-group">
+         <div class="form-group">
           <div class="col-sm-offset-7 col-sm-5">
             <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
             <a href="{{url('/unidades_medida')}}" class="btn btn-default"> Cancelar</a>

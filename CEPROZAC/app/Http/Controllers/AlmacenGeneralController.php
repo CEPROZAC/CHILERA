@@ -30,11 +30,11 @@ class almacengeneralController extends Controller
      */
     public function index()
     {
-     $almacen = DB::table('almacengeneral')->where('estado','Activo')->get();
-     return view('almacen.general.index', ['almacen' => $almacen]);
+       $almacen = DB::table('almacengeneral')->where('estado','Activo')->get();
+       return view('almacen.general.index', ['almacen' => $almacen]);
 
         //
- }
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -58,59 +58,59 @@ class almacengeneralController extends Controller
         $almacen= new almacengeneral;
         $almacen->nombre=$request->get('nombre');
         $almacen->capacidad=$request->get('capacidad');
-         $almacen->ubicacion=$request->get('ubicacion');
+        $almacen->ubicacion=$request->get('ubicacion');
         $almacen->medida=$request->get('medida');
         $almacen->descripcion=$request->get('descripcion');
         $almacen->estado="Activo";
         $almacen->esp_ocupado=$request->get('ocupado');
         $almacen->esp_libre=$request->get('libre'); 
-         $almacen->total_ocupado=$request->get('totalocupado');
-          $almacen->total_libre=$request->get('totallibre');
+        $almacen->total_ocupado=$request->get('totalocupado');
+        $almacen->total_libre=$request->get('totallibre');
         $almacen->save();
-            $ultimo = almacengeneral::orderBy('id', 'desc')->first()->id;
+        $ultimo = almacengeneral::orderBy('id', 'desc')->first()->id;
 
-$num = 1;
-    $y = 0;
-    $limite =  $almacen->total_libre;
+        $num = 1;
+        $y = 0;
+        $limite =  $almacen->total_libre;
 
-    while ($num <= $limite) {
-        $espacio= new espacios_almacen;
+        while ($num <= $limite) {
+            $espacio= new espacios_almacen;
             //print_r($num);
-        $producto = [$almacen->esp_libre];
-        $first = head($producto);
-        $name = explode(",",$first);
-$espacio->num_espacio=$first = $name[$y];
-$espacio->id_almacen=$ultimo;
-$espacio->estado="Libre";
-$espacio->save();
-$y = $y + 1;
-$num = $num + 1;
+            $producto = [$almacen->esp_libre];
+            $first = head($producto);
+            $name = explode(",",$first);
+            $espacio->num_espacio=$first = $name[$y];
+            $espacio->id_almacen=$ultimo;
+            $espacio->estado="Libre";
+            $espacio->save();
+            $y = $y + 1;
+            $num = $num + 1;
        //
         //
-    }
+        }
 
-    $num = 1;
-    $y = 0;
-    $limite =  $almacen->total_ocupado;
+        $num = 1;
+        $y = 0;
+        $limite =  $almacen->total_ocupado;
 
-    while ($num <= $limite) {
-        $espacio= new espacios_almacen;
+        while ($num <= $limite) {
+            $espacio= new espacios_almacen;
             //print_r($num);
-        $producto = [$almacen->esp_ocupado];
-        $first = head($producto);
-        $name = explode(",",$first);
-$espacio->num_espacio=$first = $name[$y];
-$espacio->id_almacen=$ultimo;
-$espacio->estado="Ocupado";
-$espacio->save();
-$y = $y + 1;
-$num = $num + 1;
+            $producto = [$almacen->esp_ocupado];
+            $first = head($producto);
+            $name = explode(",",$first);
+            $espacio->num_espacio=$first = $name[$y];
+            $espacio->id_almacen=$ultimo;
+            $espacio->estado="Ocupado";
+            $espacio->save();
+            $y = $y + 1;
+            $num = $num + 1;
        //
         //
-    }
+        }
 
-    return Redirect::to('almacen/general');
-}
+        return Redirect::to('almacen/general');
+    }
 
     /**
      * Display the specified resource.
@@ -131,10 +131,10 @@ $num = $num + 1;
      */
     public function edit($id)
     {
-     $almacen= DB::table('almacengeneral')->where('estado','Activo')->get();
-     return view("almacen.general.edit",["almacen"=>almacengeneral::findOrFail($id)],['almacen' => $almacen]);
+       $almacen= DB::table('almacengeneral')->where('estado','Activo')->get();
+       return view("almacen.general.edit",["almacen"=>almacengeneral::findOrFail($id)],['almacen' => $almacen]);
         //
- }
+   }
 
     /**
      * Update the specified resource in storage.
@@ -150,12 +150,12 @@ $num = $num + 1;
       $almacen->capacidad=$request->get('capacidad');
       $almacen->medida=$request->get('medida');
       $almacen->descripcion=$request->get('descripcion');
-       $almacen->ubicacion=$request->get('ubicacion');
+      $almacen->ubicacion=$request->get('ubicacion');
       $almacen->estado="Activo";
-        $almacen->esp_ocupado=$request->get('ocupado');
-        $almacen->esp_libre=$request->get('libre'); 
-         $almacen->total_ocupado=$request->get('totalocupado');
-          $almacen->total_libre=$request->get('totallibre');
+      $almacen->esp_ocupado=$request->get('ocupado');
+      $almacen->esp_libre=$request->get('libre'); 
+      $almacen->total_ocupado=$request->get('totalocupado');
+      $almacen->total_libre=$request->get('totallibre');
       $almacen->update();
       return Redirect::to('almacen/general');
         //
@@ -176,45 +176,45 @@ $num = $num + 1;
         //
     }
 
-        public function verInformacion($id)
+    public function verInformacion($id)
     {
- /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
-  $almacen2 = almacengeneral::findOrFail($id);
+       /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
+       $almacen2 = almacengeneral::findOrFail($id);
 
-      $almacen= DB::table('lote')->where('id_almacen', '=', $id)
-      ->join( 'provedores as prov', 'lote.id_provedor','=','prov.id')
-      ->join('productos as prod' ,'lote.id_producto','=','prod.id')
+       $almacen= DB::table('lote')->where('id_almacen', '=', $id)
+       ->join( 'provedores as prov', 'lote.id_provedor','=','prov.id')
+       ->join('productos as prod' ,'lote.id_producto','=','prod.id')
        ->join('calidad as cal' ,'lote.id_calidad','=','cal.id')
        ->join('forma_empaques as emp' ,'lote.id_empaque','=','emp.id')
-      ->select('lote.*','prov.nombre as nombreprov','prod.nombre as nomprod','prov.apellidos as apellidos','cal.nombre as calidadnombre','emp.formaEmpaque as empnombre','lote.id as loteid')->get();
+       ->select('lote.*','prov.nombre as nombreprov','prod.nombre as nomprod','prov.apellidos as apellidos','cal.nombre as calidadnombre','emp.formaEmpaque as empnombre','lote.id as loteid')->get();
 
 
-      return view("almacen.general.detalle",["almacen"=>$almacen,"almacen2"=>$almacen2]);
-    }
+       return view("almacen.general.detalle",["almacen"=>$almacen,"almacen2"=>$almacen2]);
+   }
 
 
-            public function movimientos($id)
-    {
- /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
+   public function movimientos($id)
+   {
+       /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
   //$lote = lote::findOrFail($id);
-        $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
-        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+       $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
+       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 
-      $almacen= DB::table('lote')->where('lote.id', '=', $id)->where('cantidad_act','>','0')
-      ->join( 'provedores as prov', 'lote.id_provedor','=','prov.id')
-      ->join('productos as prod' ,'lote.id_producto','=','prod.id')
+       $almacen= DB::table('lote')->where('lote.id', '=', $id)->where('cantidad_act','>','0')
+       ->join( 'provedores as prov', 'lote.id_provedor','=','prov.id')
+       ->join('productos as prod' ,'lote.id_producto','=','prod.id')
        ->join('calidad as cal' ,'lote.id_calidad','=','cal.id')
        ->join('forma_empaques as emp' ,'lote.id_empaque','=','emp.id')
        ->join('almacengeneral as alma' ,'lote.id_almacen','=','alma.id')
-      ->select('lote.*','prov.nombre as nombreprov','prod.nombre as nomprod','prov.apellidos as apellidos','cal.nombre as calidadnombre','emp.formaEmpaque as empnombre','lote.id as loteid','alma.nombre as almanombre')->first();
+       ->select('lote.*','prov.nombre as nombreprov','prod.nombre as nomprod','prov.apellidos as apellidos','cal.nombre as calidadnombre','emp.formaEmpaque as empnombre','lote.id as loteid','alma.nombre as almanombre')->first();
 
 
-     return view("almacen.general.movimientos",["almacen"=>$almacen,"almacengeneral"=>$almacengeneral,"empleado"=>$empleado]);
-    }
+       return view("almacen.general.movimientos",["almacen"=>$almacen,"almacengeneral"=>$almacengeneral,"empleado"=>$empleado]);
+   }
 
 
-        public function excel()
-    {        
+   public function excel()
+   {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
@@ -227,8 +227,8 @@ $num = $num + 1;
             $sheet->fromArray($almacen);
             $sheet->row(1,['Nombre','Capacidad','Unidad de Medida','Ubicación','Descripción']);
             $sheet->setOrientation('landscape');
-          });
-        })->export('xls');
-      }
+        });
+      })->export('xls');
+    }
 
 }

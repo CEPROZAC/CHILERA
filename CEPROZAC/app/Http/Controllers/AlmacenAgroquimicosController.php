@@ -31,7 +31,7 @@ class almacenagroquimicosController extends Controller
 {
  public function __construct()
  {
-    $this->middleware('guest', ['except' => 'getLogout']);
+  $this->middleware('guest', ['except' => 'getLogout']);
 }
     /**
      * Display a listing of the resource.
@@ -40,19 +40,21 @@ class almacenagroquimicosController extends Controller
      */
     public function index() 
     {
-       $material = DB::table('almacenagroquimicos')
-       ->join('unidades_medidas', 'almacenagroquimicos.idUnidadMedida', '=','unidades_medidas.id')
-       ->select('almacenagroquimicos.*', 'unidades_medidas.nombre as nombreUnidadMedida', 
-        'unidades_medidas.cantidad as cantidadUnidadMedida', 'unidades_medidas.unidad_medida')
-       ->where('almacenagroquimicos.estado','=','Activo')
-       ->get();
+     $material = DB::table('almacenagroquimicos')
+     ->join('unidades_medidas', 'almacenagroquimicos.idUnidadMedida', '=','unidades_medidas.id')
+     ->select('unidades_medidas.id')
+     ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+     ->select('almacenagroquimicos.*', 'unidades_medidas.nombre as nombreUnidadMedida', 
+      'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+     ->where('almacenagroquimicos.estado','=','Activo')
+     ->get();
 
 
-       $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
-       $empleado = DB::table('empleados')->where('estado','Activo')->get();
-       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
-       $unidades= DB::table('unidades_medidas')->where('estado','Activo')->get();
-       return view('almacen.agroquimicos.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
+     $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+     $empleado = DB::table('empleados')->where('estado','Activo')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+     $unidades= DB::table('unidades_medidas')->where('estado','Activo')->get();
+     return view('almacen.agroquimicos.index', ['material' => $material,'provedor' => $provedor, 'empleado' => $empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
 
    }
 
@@ -70,22 +72,24 @@ class almacenagroquimicosController extends Controller
 
      if($diferenciadorUnidadMedida == "KILOGRAMOS")
      {
-        $cantidadUnidadesCompletas= floor($cantidadAlmacen /1000 / $capacidadUnidadMedida);
+      $cantidadUnidadesCompletas= floor($cantidadAlmacen /1000 / $capacidadUnidadMedida);
 
-        return $cantidadUnidadesCompletas;
+      return $cantidadUnidadesCompletas;
     }
-    elseif($diferenciadorUnidadMedida =="LITROS")  
+    elseif($diferenciadorUnidadMedida == "LITROS")  
     {
-        $cantidadUnidadesCompletas= floor($cantidadAlmacen /1000 / $capacidadUnidadMedida);
+      $cantidadUnidadesCompletas= floor($cantidadAlmacen /1000 / $capacidadUnidadMedida);
+      return $cantidadUnidadesCompletas;
+
     } 
     elseif($diferenciadorUnidadMedida =="UNIDADES")
     {
-       return $cantidadUnidadesCompletas=$cantidadAlmacen; 
+     return $cantidadUnidadesCompletas=$cantidadAlmacen; 
    }
 
    elseif($diferenciadorUnidadMedida =="METROS") {
     return  $cantidadAlmacen;
-}
+  }
 }
 
 
@@ -95,38 +99,38 @@ class almacenagroquimicosController extends Controller
 public function calcularCantidadUnidadCentral($id){
 
 
-   $material=almacenagroquimicos::findOrFail($id);
-   $idUnidadMedida = $material->idUnidadMedida;
-   $unidad_medida  =Unidades_medida::findOrFail($idUnidadMedida);
-   $cantidadAlmacen=$material->cantidad;
-   $diferenciadorUnidadMedida= $unidad_medida->unidad_medida;
-   $capacidadUnidadMedida= $unidad_medida->cantidad;
+ $material=almacenagroquimicos::findOrFail($id);
+ $idUnidadMedida = $material->idUnidadMedida;
+ $unidad_medida  =Unidades_medida::findOrFail($idUnidadMedida);
+ $cantidadAlmacen=$material->cantidad;
+ $diferenciadorUnidadMedida= $unidad_medida->unidad_medida;
+ $capacidadUnidadMedida= $unidad_medida->cantidad;
 
-   if($diferenciadorUnidadMedida == "KILOGRAMOS")
-   {
+ if($diferenciadorUnidadMedida == "KILOGRAMOS")
+ {
 
 
-    $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
+  $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
 
-    $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000);
+  $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000);
 
-    return $cantidadUnidadCentral;
+  return $cantidadUnidadCentral;
 }
 elseif($diferenciadorUnidadMedida =="LITROS")  
 {
 
-    $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
-    $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000);
+  $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
+  $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000);
 
-    return $cantidadUnidadCentral;
+  return $cantidadUnidadCentral;
 } 
 elseif($diferenciadorUnidadMedida =="UNIDADES")
 {
-   return $cantidadUnidadesCompletas=$cantidadAlmacen; 
+ return $cantidadUnidadesCompletas=$cantidadAlmacen; 
 }
 
 elseif($diferenciadorUnidadMedida =="METROS") {
-    return  $cantidadAlmacen;
+  return  $cantidadAlmacen;
 }
 
 
@@ -134,36 +138,37 @@ elseif($diferenciadorUnidadMedida =="METROS") {
 public function calcularCantidadUnidadInferior($id){
 
 
-   $material=almacenagroquimicos::findOrFail($id);
-   $idUnidadMedida = $material->idUnidadMedida;
-   $unidad_medida  =Unidades_medida::findOrFail($idUnidadMedida);
-   $cantidadAlmacen=$material->cantidad;
-   $diferenciadorUnidadMedida= $unidad_medida->unidad_medida;
-   $capacidadUnidadMedida= $unidad_medida->cantidad;
+ $material=almacenagroquimicos::findOrFail($id);
+ $idUnidadMedida = $material->idUnidadMedida;
+ $unidad_medida  =Unidades_medida::findOrFail($idUnidadMedida);
+ $cantidadAlmacen=$material->cantidad;
+ $diferenciadorUnidadMedida= $unidad_medida->unidad_medida;
+ $capacidadUnidadMedida= $unidad_medida->cantidad;
 
-   if($diferenciadorUnidadMedida == "KILOGRAMOS")
-   {
+ if($diferenciadorUnidadMedida == "KILOGRAMOS")
+ {
 
-     $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
-     $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000) *1000;
-     $cantidadUnidadInferior =$cantidadAlmacen -($cantidadUnidadesCompletas+$cantidadUnidadCentral);
+   $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
+   $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000) *1000;
+   $cantidadUnidadInferior =$cantidadAlmacen -($cantidadUnidadesCompletas+$cantidadUnidadCentral);
 
-     return $cantidadUnidadInferior;
+   return $cantidadUnidadInferior;
  }
  elseif($diferenciadorUnidadMedida =="LITROS")  
  {
-    
-     $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
-     $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000) *1000;
-     $cantidadUnidadInferior =$cantidadAlmacen -($cantidadUnidadesCompletas+$cantidadUnidadCentral);
+
+   $cantidadUnidadesCompletas= ((floor($cantidadAlmacen /1000 / $capacidadUnidadMedida))*$capacidadUnidadMedida)*1000;
+   $cantidadUnidadCentral =floor( ($cantidadAlmacen - $cantidadUnidadesCompletas)/1000) *1000;
+   $cantidadUnidadInferior =$cantidadAlmacen -($cantidadUnidadesCompletas+$cantidadUnidadCentral);
+   return $cantidadUnidadInferior;
  } 
  elseif($diferenciadorUnidadMedida =="UNIDADES")
  {
    return $cantidadUnidadesCompletas=$cantidadAlmacen; 
-}
+ }
 
-elseif($diferenciadorUnidadMedida =="METROS") {
-    return  $cantidadAlmacen;
+ elseif($diferenciadorUnidadMedida =="METROS") {
+  return  $cantidadAlmacen;
 }
 
 
@@ -184,21 +189,20 @@ public function labelUnidadMedidaMinima($id){
   if($diferenciadorUnidadMedida == "KILOGRAMOS")
   {
 
-
-     return "GRAMOS";
+   return "GRAMOS";
  }
  elseif($diferenciadorUnidadMedida =="LITROS")  
  {
 
    return "MILILITROS";
-} 
-elseif($diferenciadorUnidadMedida =="UNIDADES")
-{
+ } 
+ elseif($diferenciadorUnidadMedida =="UNIDADES")
+ {
    return "UNIDADES"; 
-}
+ }
 
-elseif($diferenciadorUnidadMedida =="METROS") {
-    return  "CENTIMETROS";
+ elseif($diferenciadorUnidadMedida =="METROS") {
+  return  "CENTIMETROS";
 }
 
 }
@@ -218,17 +222,28 @@ elseif($diferenciadorUnidadMedida =="METROS") {
      */
     public function create()
     {
-        $provedor = DB::table('provedores_tipo_provedor')
-        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-        ->select('provedores_tipo_provedor.*','p.nombre as nombre')
-        ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
+      $provedor = DB::table('provedores_tipo_provedor')
+      ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+      ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+      ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
 
 
-        $unidades  = DB::table('unidades_medidas')
-        ->where('estado', '=', 'Activo')
-        ->get();
+
+      $unidades  = DB::table('unidades_medidas')
+      ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+      ->select('unidades_medidas.id as idContenedorUnidadMedida','unidades_medidas.nombre','unidades_medidas.cantidad', 'unidades_medidas.idUnidadMedida', 'nombre_unidades_medidas.*')
+      ->where('estado', '=', 'Activo')
+      ->get();
         //$provedor= DB::table('provedor_materiales')->where('estado','Activo')->where('tipo','like','%Agroquimicos%')->get(); 
-        return view('almacen.agroquimicos.create',['provedor' => $provedor,'unidades'=>$unidades]);
+      return view('almacen.agroquimicos.create',['provedor' => $provedor,'unidades'=>$unidades]);
+
+
+
+
+
+
+
+      return view('almacen.agroquimicos.create',['provedor' => $provedor,'unidades'=>$unidades]);
 
         //
     }
@@ -241,8 +256,8 @@ elseif($diferenciadorUnidadMedida =="METROS") {
      */
     public function store(request $request)
     {
-      $unidades=Unidades_medida::findOrFail($request->get("idUnidadMedida"));
-      $unidadDeMedida=$unidades->unidad_medida;
+      $unidades=$this->propiedadesUnidadMedida($request->get("idUnidadMedida"));
+      $unidadDeMedida=$unidades->nombreUnidadMedida;
       $capacidadUnidadMedida= $unidades->cantidad;
       $totalUnidadesCompletas= $capacidadUnidadMedida* $unidadesCompletas = $request->get('unidadesCompletas');
       $unidadCentral = $request->get('unidadCentral');
@@ -257,49 +272,48 @@ elseif($diferenciadorUnidadMedida =="METROS") {
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenagroquimicos',$file->getClientOriginalName());//lo movemos a esta ruta                        
             $material->imagen=$file->getClientOriginalName();
-        }
-        $material->descripcion=$request->get('descripcion');
-        $material->cantidad=$cantidadAlmacen;
-        $material->idUnidadMedida=$request->get('idUnidadMedida');
-        $material->codigo=$request->get('codigo');
-        $material->stock_minimo=$stockMinimo;
-        $material->estado='Activo';
+          }
+          $material->descripcion=$request->get('descripcion');
+          $material->cantidad=$cantidadAlmacen;
+          $material->idUnidadMedida=$request->get('idUnidadMedida');
+          $material->codigo=$request->get('codigo');
+          $material->stock_minimo=$stockMinimo;
+          $material->estado='Activo';
 
-        $aux=$request->get('medida');
-        $material->save();
+          $aux=$request->get('medida');
+          $material->save();
 
         //$medida2= DB::table('unidadesmedida')->where('nombre','=',$aux)->take(1)->get();
 
-        
 
 
-        return Redirect::to('detalle/agroquimicos');
+
+          return Redirect::to('detalle/agroquimicos');
 
 
-    }
-         //
-        //
+        }
 
 
-    public function invoice($id){ 
-        $material= DB::table('almacenagroquimicos')->where('id',$id)->get();
+
+        public function invoice($id){ 
+          $material= DB::table('almacenagroquimicos')->where('id',$id)->get();
          //$material   = AlmacenMaterial:: findOrFail($id);
-        $date = date('Y-m-d');
-        $invoice = "2222";
+          $date = date('Y-m-d');
+          $invoice = "2222";
        // print_r($materiales);    
-        $view =  \View::make('almacen.agroquimicos.invoice', compact('date', 'invoice','material'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
-    }
+          $view =  \View::make('almacen.agroquimicos.invoice', compact('date', 'invoice','material'))->render();
+          $pdf = \App::make('dompdf.wrapper');
+          $pdf->loadHTML($view);
+          return $pdf->stream('invoice');
+        }
 
-    public function detalle(){ 
-        $material= DB::table('almacenagroquimicos')->orderby('created_at','DESC')->take(1)->get();
-        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+        public function detalle(){ 
+          $material= DB::table('almacenagroquimicos')->orderby('created_at','DESC')->take(1)->get();
+          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
 
-        return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$provedor]);
+          return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$provedor]);
 
-    }
+        }
 
 
     /**
@@ -310,11 +324,11 @@ elseif($diferenciadorUnidadMedida =="METROS") {
      */
     public function edit($id)
     {
-       $provedor = DB::table('provedores_tipo_provedor')
-       ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-       ->select('provedores_tipo_provedor.*','p.nombre as nombre')
-       ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
-       return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
+     $provedor = DB::table('provedores_tipo_provedor')
+     ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+     ->select('provedores_tipo_provedor.*','p.nombre as nombre')
+     ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
+     return view("almacen.agroquimicos.edit",["material"=>almacenagroquimicos::findOrFail($id)],['provedor' => $provedor]);
         //
    }
 
@@ -338,29 +352,29 @@ elseif($diferenciadorUnidadMedida =="METROS") {
             $file=Input::file('imagen');//si pasa la condicion almacena la imagen
             $file->move(public_path().'/imagenes/almacenagroquimicos',$file->getClientOriginalName());//lo movemos a esta ruta
             $material->imagen=$file->getClientOriginalName();           
-        }   
-        $material->descripcion=$request->get('descripcion');
-        $material->cantidad=$request->get('cantidad');
-        $material->medida=$request->get('medida');
-        $material->codigo=$request->get('codigo');
-        $material->provedor=$request->get('provedor_name');
-        $material->stock_minimo=$request->get('stock_min');
-        $material->estado='Activo';
-        $material->update();
+          }   
+          $material->descripcion=$request->get('descripcion');
+          $material->cantidad=$request->get('cantidad');
+          $material->medida=$request->get('medida');
+          $material->codigo=$request->get('codigo');
+          $material->provedor=$request->get('provedor_name');
+          $material->stock_minimo=$request->get('stock_min');
+          $material->estado='Activo';
+          $material->update();
 
 
-        $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
-        $medidaaux=$request->get('medida');
-        $medida2= Unidades_medida::where('nombre','=',$medidaaux)->first()->id;
+          $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
+          $medidaaux=$request->get('medida');
+          $medida2= Unidades_medida::where('nombre','=',$medidaaux)->first()->id;
 
-        $unidad->idMedida=$medida2;
-        $unidad->cantidad=$request->get('cantidad');
-        $unidad->estado="Activo";
-        $unidad->update();
+          $unidad->idMedida=$medida2;
+          $unidad->cantidad=$request->get('cantidad');
+          $unidad->estado="Activo";
+          $unidad->update();
 
-        return Redirect::to('almacenes/agroquimicos');
+          return Redirect::to('almacenes/agroquimicos');
         //
-    }
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -375,10 +389,10 @@ elseif($diferenciadorUnidadMedida =="METROS") {
       $material->save();
       return Redirect::to('almacenes/agroquimicos');
         //
-  }
+    }
 
-  public function excel()
-  {        
+    public function excel()
+    {        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
@@ -403,112 +417,112 @@ elseif($diferenciadorUnidadMedida =="METROS") {
             $objDrawing->setWidthAndHeight(260,220);
             $objDrawing->setOffsetX(200);
 */
-        });
-      })->export('xls');
-    }
+          });
+        })->export('xls');
+      }
 
-    public function stock(modalentradaagro $formulario, $id) 
-    {
-     $validator = Validator::make(
+      public function stock(modalentradaagro $formulario, $id) 
+      {
+       $validator = Validator::make(
         $formulario->all(), 
         $formulario->rules(),
         $formulario->messages());
-     if ($validator->valid()){
+       if ($validator->valid()){
 
         if ($formulario->ajax()){
-            return response()->json(["valid" => true], 200);
+          return response()->json(["valid" => true], 200);
         }
         else{
-            $material=almacenagroquimicos::findOrFail($id);
-            $prov=$material->provedor;
+          $material=almacenagroquimicos::findOrFail($id);
+          $prov=$material->provedor;
 
-            
-            $material2= new entradasagroquimicos;
-            $material2->id_material=$id;
-            $material2->cantidad=$formulario->get('cantidades'.$id);
-            $material2->medida=$formulario->get('umedida'.$id);
-            $material2->medidaaux=$formulario->get('medidaaux'.$id);
 
-            $material2->provedor=$prov;
-            $material2->entregado=$formulario->get('entregado_a'.$id);
-            $material2->recibe_alm=$formulario->get('recibe_alm'.$id);
-            $material2->observacionesc=$formulario->get('observaciones'.$id); 
+          $material2= new entradasagroquimicos;
+          $material2->id_material=$id;
+          $material2->cantidad=$formulario->get('cantidades'.$id);
+          $material2->medida=$formulario->get('umedida'.$id);
+          $material2->medidaaux=$formulario->get('medidaaux'.$id);
 
-            $material2->comprador=$formulario->get('recibio'.$id);
-            $material2->factura=$formulario->get('factura'.$id);
-            $material2->fecha=$formulario->get('fecha2'.$id);
-            $material2->p_unitario=$formulario->get('preciou'.$id);
-            $ivaaux=$formulario->get('iva'.$id) * .010;
-            $iesaux=$formulario->get('ieps'.$id) * .010; 
-            $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
-            $iesptotal = $material2->p_unitario *  $material2->cantidad * $iesaux;
-            $material2->iva=$ivatotal;
-            $material2->ieps=$iesptotal;
+          $material2->provedor=$prov;
+          $material2->entregado=$formulario->get('entregado_a'.$id);
+          $material2->recibe_alm=$formulario->get('recibe_alm'.$id);
+          $material2->observacionesc=$formulario->get('observaciones'.$id); 
 
-            $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
-            $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
-            $material2->moneda=$formulario->get('moneda'.$id);
-            $material2->estado="Activo";
-            $material2->save();
+          $material2->comprador=$formulario->get('recibio'.$id);
+          $material2->factura=$formulario->get('factura'.$id);
+          $material2->fecha=$formulario->get('fecha2'.$id);
+          $material2->p_unitario=$formulario->get('preciou'.$id);
+          $ivaaux=$formulario->get('iva'.$id) * .010;
+          $iesaux=$formulario->get('ieps'.$id) * .010; 
+          $ivatotal = $material2->p_unitario *  $material2->cantidad * $ivaaux;
+          $iesptotal = $material2->p_unitario *  $material2->cantidad * $iesaux;
+          $material2->iva=$ivatotal;
+          $material2->ieps=$iesptotal;
 
-            
-            return Redirect::to('almacenes/agroquimicos');
+          $material2->total= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
+          $material2->importe= $material2->p_unitario *  $material2->cantidad + $ivatotal + $iesptotal;
+          $material2->moneda=$formulario->get('moneda'.$id);
+          $material2->estado="Activo";
+          $material2->save();
+
+
+          return Redirect::to('almacenes/agroquimicos');
         }
+      }
     }
-}
 
 
 
-public function calcularEquivalencia($unidadDeMedida,$unidadesCompletas,$unidadCentral,$unidadesMedida){
+    public function calcularEquivalencia($unidadDeMedida,$unidadesCompletas,$unidadCentral,$unidadesMedida){
 
-    if($unidadDeMedida == "LITROS"){
+      if($unidadDeMedida == "LITROS"){
         $total=$unidadesCompletas*1000+ $unidadCentral * 1000 +$unidadesMedida  ;
         return $total;
+      }
+
+      elseif ($unidadDeMedida =="KILOGRAMOS") {
+
+       $total=$unidadesCompletas*1000+ $unidadCentral * 1000 +$unidadesMedida  ;
+       return $total;
+     }
+
+     elseif ($unidadDeMedida=="METROS") {
+       $total=$unidadesCompletas*100+ $unidadCentral * 100 +$unidadesMedida  ;
+       return $total;
+     }
+     elseif($unidadDeMedida=="UNIDADES"){
+      $total = $unidadesCompletas*$cantidad ;
+      return $total;
+    }
+
+  }
+
+
+  public  function calcularStockMinimoReal($unidadDeMedida,$stock){
+    if($unidadDeMedida == "LITROS"){
+      $total=$stock*1000 ;
+      return $total;
     }
 
     elseif ($unidadDeMedida =="KILOGRAMOS") {
 
-     $total=$unidadesCompletas*1000+ $unidadCentral * 1000 +$unidadesMedida  ;
-     return $total;
- }
+      $total=$stock*1000;
+      return $total;
+    }
 
- elseif ($unidadDeMedida=="METROS") {
-     $total=$unidadesCompletas*100+ $unidadCentral * 100 +$unidadesMedida  ;
-     return $total;
- }
- elseif($unidadDeMedida=="UNIDADES"){
-    $total = $unidadesCompletas*$cantidad ;
-    return $total;
-}
+    elseif ($unidadDeMedida=="METROS") {
+      $total=$stock*100 ;
+      return $total;
+    }
+    elseif($unidadDeMedida=="UNIDADES"){
+      $total = $stock*$cantidad ;
+      return $total;
+    }
 
-}
+  }
 
-
-public  function calcularStockMinimoReal($unidadDeMedida,$stock){
-  if($unidadDeMedida == "LITROS"){
-    $total=$stock*1000 ;
-    return $total;
-}
-
-elseif ($unidadDeMedida =="KILOGRAMOS") {
-
-    $total=$stock*1000;
-    return $total;
-}
-
-elseif ($unidadDeMedida=="METROS") {
-    $total=$stock*100 ;
-    return $total;
-}
-elseif($unidadDeMedida=="UNIDADES"){
-    $total = $stock*$cantidad ;
-    return $total;
-}
-
-}
-
-public function validarcodigo($codigo)
-{
+  public function validarcodigo($codigo)
+  {
 
     $quimico= almacenagroquimicos::
     select('id','codigo','nombre', 'estado')
@@ -518,41 +532,41 @@ public function validarcodigo($codigo)
     return response()->json(
       $quimico->toArray());
 
-}
+  }
 
 
 
-public function convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$stock){
+  public function convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$stock){
    if($unidadDeMedida == "LITROS"){
     $total=$stock/1000 ;
     return $total;
-}
+  }
 
-elseif ($unidadDeMedida =="KILOGRAMOS") {
+  elseif ($unidadDeMedida =="KILOGRAMOS") {
 
     $total=$stock/1000;
     return $total;
-}
+  }
 
-elseif ($unidadDeMedida=="METROS") {
+  elseif ($unidadDeMedida=="METROS") {
     $total=$stock/100 ;
     return $total;
-}
-elseif($unidadDeMedida=="UNIDADES"){
+  }
+  elseif($unidadDeMedida=="UNIDADES"){
     $total = $stock*$cantidad ;
     return $total;
-}   
+  }   
 }
 
 
 
 public function activar(Request $request)
 { 
-    $id =  $request->get('idAgro');
-    $quimico=almacenagroquimicos::findOrFail($id);
-    $quimico->estado="Activo";
-    $quimico->update();
-    return Redirect::to('almacenes/agroquimicos');
+  $id =  $request->get('idAgro');
+  $quimico=almacenagroquimicos::findOrFail($id);
+  $quimico->estado="Activo";
+  $quimico->update();
+  return Redirect::to('almacenes/agroquimicos');
 }
 
 public function verInformacion($id)
@@ -568,6 +582,19 @@ public function verInformacion($id)
 
  return view("almacen.agroquimicos.ver",["cantidad"=>$cantidad]);
 }
-        //
+
+
+public function  propiedadesUnidadMedida($id){
+  $unidades  = DB::table('unidades_medidas')
+  ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+  ->select('unidades_medidas.*', 'nombre_unidades_medidas.*')
+  ->where('estado', '=', 'Activo')
+  ->where('unidades_medidas.id','=', $id)
+  ->get();
+
+  return $unidades;
+}
+
+
 }
 
