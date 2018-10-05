@@ -1,5 +1,6 @@
 @extends('layouts.principal')
 @section('contenido')
+
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Proveedores</h1>
