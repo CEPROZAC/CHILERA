@@ -225,9 +225,6 @@ class EntradasAgroquimicosController extends Controller
         $material->factura=$first = $name[$y];
         $y = $y + 1;
 
-        $material->fecha=$first = $name[$y];
-        $y = $y + 1;
-
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
 
@@ -240,33 +237,33 @@ class EntradasAgroquimicosController extends Controller
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
-        $material->moneda=$first = $name[$y];
-        $y = $y + 1;
         $material->entregado=$formulario->get('entregado_a');
         $material->recibe_alm=$formulario->get('recibe_alm');
         $material->observacionesc=$formulario->get('observacionesq');
         $material->provedor=$formulario->get('prov');
         $material->comprador=$formulario->get('recibio');
+        $material->fecha=$formulario->get('fecha');
+        $material->moneda=$formulario->get('moneda');
         $material->estado="Activo";
         $unidad->estado="Activo";
         $material->save();
-             if ($r > 0){
-       $unidad2->update();
-     }else{
-       $unidad->save();
-     }
-        $num = $num + 1;
+        if ($r > 0){
+         $unidad2->update();
+       }else{
+         $unidad->save();
+       }
+       $num = $num + 1;
         //
-      }
+     }
 
 
 
 
 
 
-      return redirect('/almacen/entradas/agroquimicos');
-    }
-  }
+     return redirect('/almacen/entradas/agroquimicos');
+   }
+ }
 
     /**
      * Display the specified resource.
@@ -381,14 +378,14 @@ class EntradasAgroquimicosController extends Controller
 
       //si ya existe//
 
-        $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
-        $r=count($comprueba2);
-        if ($r > 0){
-          $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
-          $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
-          $unidad2->cantidad=$unidad2->cantidad + $aux;
-        }
- 
+      $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
+      $r=count($comprueba2);
+      if ($r > 0){
+        $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
+        $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
+        $unidad2->cantidad=$unidad2->cantidad + $aux;
+      }
+      
 
       $unidad->idMedida=$medida2;
       $concat = $aux." ".$aux2;
@@ -399,38 +396,36 @@ class EntradasAgroquimicosController extends Controller
       $material->cantidad= $name2[0];
 
 
-     $material->medida= $name2[1];
-     $material->medidaaux=$concat;
+      $material->medida= $name2[1];
+      $material->medidaaux=$concat;
 
-     $y = $y + 1;
+      $y = $y + 1;
         //print_r($first = $name[$y]);
-     $material->factura=$first = $name[$y];
-     $y = $y + 1;
+      $material->factura=$first = $name[$y];
+      $y = $y + 1;
 
-     $material->fecha=$first = $name[$y];
-     $y = $y + 1;
 
-     $material->p_unitario=$first = $name[$y];
-     $y = $y + 1;
+      $material->p_unitario=$first = $name[$y];
+      $y = $y + 1;
 
-     $material->iva=$first = $name[$y];
-     $y = $y + 1;
+      $material->iva=$first = $name[$y];
+      $y = $y + 1;
 
-     $material->ieps=$first = $name[$y];
-     $y = $y + 1;
-     $material->total=$first = $name[$y];
-     $material->importe=$first = $name[$y];
-     $y = $y + 1;
-     $material->moneda=$first = $name[$y];
-     $y = $y + 1;
-     $material->entregado=$request->get('entregado_a');
-     $material->recibe_alm=$request->get('recibe_alm');
-     $material->observacionesc=$request->get('observacionesq');
-     $material->provedor=$request->get('prov');
-     $material->comprador=$request->get('recibio');
-     $material->estado="Activo";
-     $unidad->estado="Activo";
-     if ($x > 0){
+      $material->ieps=$first = $name[$y];
+      $y = $y + 1;
+      $material->total=$first = $name[$y];
+      $material->importe=$first = $name[$y];
+      $y = $y + 1;
+      $material->entregado=$request->get('entregado_a');
+      $material->recibe_alm=$request->get('recibe_alm');
+      $material->observacionesc=$request->get('observacionesq');
+      $material->provedor=$request->get('prov');
+      $material->comprador=$request->get('recibio');
+      $material->fecha=$request->get('fecha');
+      $material->moneda=$request->get('moneda');
+      $material->estado="Activo";
+      $unidad->estado="Activo";
+      if ($x > 0){
        $unidad2->update();
      }else{
        $unidad->save();
@@ -458,37 +453,37 @@ class EntradasAgroquimicosController extends Controller
      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
 
      $v= [$material->medidaaux];
-        $first = head($v);
-        $name = explode(" ",$first);
-        $z = count($name);
-        $a="";
-        for ($i=0; $i < $z; $i++) { 
-          if ($i == 1) {
-           $a=$name[$i];             
+     $first = head($v);
+     $name = explode(" ",$first);
+     $z = count($name);
+     $a="";
+     for ($i=0; $i < $z; $i++) { 
+      if ($i == 1) {
+       $a=$name[$i];             
             # code...
-         }else if($i > 1) {
-          $a=$a." ".$name[$i];
-        }else{
-          $r=$name[0];
-        }
+     }else if($i > 1) {
+      $a=$a." ".$name[$i];
+    }else{
+      $r=$name[0];
+    }
           # code...
-      }
+  }
 //print_r($e[0]);
-      $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
-      $unidadaux=cantidad_unidades_agro::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
-      $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
-      $unidad->cantidad=$unidad->cantidad - $r;
-      $unidad->update();
-     $decrementa->update();
-     $material->update();
+  $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
+  $unidadaux=cantidad_unidades_agro::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
+  $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
+  $unidad->cantidad=$unidad->cantidad - $r;
+  $unidad->update();
+  $decrementa->update();
+  $material->update();
 
 
-     return Redirect::to('/almacen/entradas/agroquimicos');   
+  return Redirect::to('/almacen/entradas/agroquimicos');   
         //
-   }
+}
 
-   public function excel()
-   {        
+public function excel()
+{        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta

@@ -187,10 +187,10 @@
 <div class="container clear_both padding_fix">
   <div class="block-web">
    <div class="row">
-    <div class="panel panel-primary"> 
+   <div class="panel panel-success" >   
 
       <div class="panel-body">
-        <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+        <div class="col-sm-3">
           <div class="form-group"> 
             <label for="material">Material </label>
             <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
@@ -205,27 +205,28 @@
        </div><!--/form-group-->
 
 
-       <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+       <div class="col-sm-3">
          <div class="form-group"> 
           <label for="pcantidad">Cantidad en Almacén </label>
           <input name="pcantidad" id="pcantidad" value="" step="any"  type="number" disabled class="form-control" />
         </div>    
       </div> 
-      <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+
+       <div class="col-sm-3">
        <div class="form-group"> 
         <label for="amedida">Medida </label>
         <input name="amedida" id="amedida" value="" type="text" disabled class="form-control" />
       </div>
     </div>   
 
-    <div class="col-sm-4">
+     <div class="col-sm-3">
      <div class="form-group"> 
       <label for="descripcion">Descripción </label>
       <input name="descripcion" id="descripcion" disabled class="form-control" />
     </div>    
   </div>  
 
-  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+   <div class="col-sm-3">
    <div class="form-group"> 
     <label for="scantidad">Cantidad de Salida </label>
     <input name="scantidad" id="scantidad" step="any"  type="number" value="1" max="{{$salida->cantidad}}" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
@@ -234,7 +235,7 @@
 </div>  
 
 
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="col-sm-3">
  <div class="form-group"> 
   <label for="medida">Medida </label>
   <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
@@ -251,7 +252,7 @@
 
 
 </div>
-<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="col-sm-3">
   <div class="form-group"> 
     <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
   </div>
@@ -261,9 +262,8 @@
 
 
 
-<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-  <div class="form-group"> 
-    <table id="detalles" name="detalles[]" value="" class="table table-striped table-bordered table-condensed table-hover">
+<div class="form-group"  class="table-responsive"> 
+  <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
       <thead style="background-color:#A9D0F5">
         <th>Opciones</th>
         <th>N°Articulo</th>
@@ -277,15 +277,15 @@
 
       </thead>
       <tfoot>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
+     <td style="display:none;"></td>
       </tfoot>
       <tbody>
 

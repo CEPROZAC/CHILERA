@@ -165,8 +165,6 @@ class entradasempaquescontroller extends Controller
                 $material->factura=$first = $name[$y];
                 $y = $y + 1;
              //print_r($first = $name[$y]);
-                $material->fecha=$first = $name[$y];
-                $y = $y + 1;
             // print_r($first = $name[$y]);
                 $material->p_unitario=$first = $name[$y];
                 $y = $y + 1;
@@ -175,15 +173,14 @@ class entradasempaquescontroller extends Controller
                 $material->total=$first = $name[$y];
                 $material->importe=$first = $name[$y];
                 $y = $y + 1;
-                $material->moneda=$first = $name[$y];
-                $y = $y + 1; 
-
                 $material->estado="Activo";
                 $material->provedor=$formulario->get('prov');
                 $material->comprador=$formulario->get('recibio');
                 $material->entregado=$formulario->get('entregado_a');
                 $material->recibe_alm=$formulario->get('recibe_alm');
                 $material->observacionesc=$formulario->get('observacionese');
+                $material->fecha=$formulario->get('fecha');
+                $material->moneda=$formulario->get('moneda');
                 $material->save();
                 $num = $num + 1;
             }}
