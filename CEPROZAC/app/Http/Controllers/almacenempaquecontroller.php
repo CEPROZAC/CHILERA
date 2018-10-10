@@ -96,12 +96,17 @@ class almacenempaquecontroller extends Controller
         $material->provedor=$formulario->get('provedor_name');
         $material->stock_minimo=$formulario->get('stock_min');
         $material->estado='Activo';
+        $aux=$formulario->get('medida');
 
         $aux=$formulario->get('medida');
         $material->save();
         $materialid= almacenempaque::orderBy('id', 'desc')->first()->id;
         //$medida2= DB::table('unidadesmedida')->where('nombre','=',$aux)->take(1)->get();
+<<<<<<< HEAD
         $medida2= unidadesmedida::where('nombre','=',$aux)->first()->id;
+=======
+         $medida2= unidadesmedida::where('nombre','=',$aux)->first()->id; 
+>>>>>>> a49fb5c103b05916f389285927eb7fb743810a53
         $unidad = new cantidad_unidades_emp;
         $unidad->idProducto=$materialid;
         $unidad->idMedida=$medida2;

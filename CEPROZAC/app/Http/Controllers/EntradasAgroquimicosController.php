@@ -33,13 +33,34 @@ class EntradasAgroquimicosController extends Controller
      */
     public function index()
     {
-     $entrada= DB::table('entradasagroquimicos')->where('entradasagroquimicos.estado','=','Activo')
-     ->join('almacenagroquimicos as a', 'entradasagroquimicos.id_material', '=', 'a.id')
-     ->join('empresas_ceprozac as e', 'entradasagroquimicos.comprador', '=', 'e.id')
-     ->join('provedor_materiales as prov', 'entradasagroquimicos.provedor', '=', 'prov.id')
+      $entrada= DB::table('entradasagroquimicos')
+     ->join('provedor_materiales','entradasagroquimicos.provedor','=', 'provedor_materiales.id')
+     ->join('empresas_ceprozac', 'entradasagroquimicos.comprador','=', 'empresas_ceprozac.id')
+     ->join('empleados as empEntrega', 'entradasagroquimicos.entregado','=', 'empEntrega.id')
+     ->join('empleados as empRecibe', 'entradasagroquimicos.recibe_alm','=', 'empRecibe.id')
+     ->select('entradasagroquimicos.id as idEntradaAgroquimicos', 'entradasagroquimicos.fecha',
+      'entradasagroquimicos.factura', 'entradasagroquimicos.moneda', 'entradasagroquimicos.observacionesc',
+      'entradasagroquimicos.estado as estadoEntrada','empEntrega.nombre as nombreEmpleadoEntrega',
+      'empEntrega.apellidos as apellidosEmpleadoEntrega', 'empRecibe.nombre as nombreEmpleadoRecibe', 
+      'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
+     ->get();
 
-     ->select('entradasagroquimicos.*','a.nombre as nombremat','entradasagroquimicos.*','a.medida','e.nombre as emp','prov.nombre as prov')->get();
+
+
+     /*
+     ->join('entradasagroquimicos', 'detalles_entradas_agroquimicos.idEntradaAgroquimicos', '=', 'entradasagroquimicos.id')
+     ->select('detalles_entradas_agroquimicos.*', 'entradasagroquimicos.*')
+     ->join('provedores_materiales')
+     ->join('almacenagroquimicos', 'detalles_entradas_agroquimicos.id_material','=','almacenagroquimicos.id' )
+
+     ->join('provedor_materiales', 'entradasagroquimicos.provedor', '=', 'provedor_materiales.id')
+     ->select('detalles_entradas_agroquimicos.*','entradasagroquimicos.*', 'almacenagroquimicos.*'
+      , 'provedor_materiales.*')
+     ->where('entradasagroquimicos.estado','=','Activo')
+     ->get();
         // print_r($salida);
+
+        */
      return view('almacen.agroquimicos.entradas.index', ['entrada' => $entrada]);
 
 
@@ -61,7 +82,7 @@ class EntradasAgroquimicosController extends Controller
       ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
       $material=DB::table('almacenagroquimicos')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-      $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
+      
 
       $cuenta = count($material);
       
@@ -92,7 +113,7 @@ class EntradasAgroquimicosController extends Controller
 
      }
      else{
-      return view("almacen.agroquimicos.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
+      return view("almacen.agroquimicos.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas]);
 
     }
         //
@@ -106,6 +127,11 @@ class EntradasAgroquimicosController extends Controller
      */
     public function store(entradasagroquimicosRequest $formulario)
     {
+
+
+
+
+    /*
      $cantidad = $formulario->get('cantidad2');
 
 
@@ -225,9 +251,6 @@ class EntradasAgroquimicosController extends Controller
         $material->factura=$first = $name[$y];
         $y = $y + 1;
 
-        $material->fecha=$first = $name[$y];
-        $y = $y + 1;
-
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
 
@@ -240,33 +263,30 @@ class EntradasAgroquimicosController extends Controller
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
-        $material->moneda=$first = $name[$y];
-        $y = $y + 1;
         $material->entregado=$formulario->get('entregado_a');
         $material->recibe_alm=$formulario->get('recibe_alm');
         $material->observacionesc=$formulario->get('observacionesq');
         $material->provedor=$formulario->get('prov');
         $material->comprador=$formulario->get('recibio');
+        $material->fecha=$formulario->get('fecha');
+        $material->moneda=$formulario->get('moneda');
         $material->estado="Activo";
         $unidad->estado="Activo";
         $material->save();
-             if ($r > 0){
-       $unidad2->update();
-     }else{
-       $unidad->save();
-     }
-        $num = $num + 1;
+        if ($r > 0){
+         $unidad2->update();
+       }else{
+         $unidad->save();
+       }
+       $num = $num + 1;
         //
-      }
+     }
 
+     return redirect('/almacen/entradas/agroquimicos');
+   }
 
-
-
-
-
-      return redirect('/almacen/entradas/agroquimicos');
-    }
-  }
+   */
+ }
 
     /**
      * Display the specified resource.
@@ -381,14 +401,14 @@ class EntradasAgroquimicosController extends Controller
 
       //si ya existe//
 
-        $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
-        $r=count($comprueba2);
-        if ($r > 0){
-          $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
-          $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
-          $unidad2->cantidad=$unidad2->cantidad + $aux;
-        }
- 
+      $comprueba2= DB::table('cantidad_unidades_agro')->where('idMedida','=',$medida2)->where('idProducto','=',$prod)->get();
+      $r=count($comprueba2);
+      if ($r > 0){
+        $unidadaux=cantidad_unidades_agro::where('idProducto','=',$prod)->where('idMedida','=',$medida2)->first()->id;
+        $unidad2=cantidad_unidades_agro::findOrFail($unidadaux);
+        $unidad2->cantidad=$unidad2->cantidad + $aux;
+      }
+      
 
       $unidad->idMedida=$medida2;
       $concat = $aux." ".$aux2;
@@ -399,38 +419,36 @@ class EntradasAgroquimicosController extends Controller
       $material->cantidad= $name2[0];
 
 
-     $material->medida= $name2[1];
-     $material->medidaaux=$concat;
+      $material->medida= $name2[1];
+      $material->medidaaux=$concat;
 
-     $y = $y + 1;
+      $y = $y + 1;
         //print_r($first = $name[$y]);
-     $material->factura=$first = $name[$y];
-     $y = $y + 1;
+      $material->factura=$first = $name[$y];
+      $y = $y + 1;
 
-     $material->fecha=$first = $name[$y];
-     $y = $y + 1;
 
-     $material->p_unitario=$first = $name[$y];
-     $y = $y + 1;
+      $material->p_unitario=$first = $name[$y];
+      $y = $y + 1;
 
-     $material->iva=$first = $name[$y];
-     $y = $y + 1;
+      $material->iva=$first = $name[$y];
+      $y = $y + 1;
 
-     $material->ieps=$first = $name[$y];
-     $y = $y + 1;
-     $material->total=$first = $name[$y];
-     $material->importe=$first = $name[$y];
-     $y = $y + 1;
-     $material->moneda=$first = $name[$y];
-     $y = $y + 1;
-     $material->entregado=$request->get('entregado_a');
-     $material->recibe_alm=$request->get('recibe_alm');
-     $material->observacionesc=$request->get('observacionesq');
-     $material->provedor=$request->get('prov');
-     $material->comprador=$request->get('recibio');
-     $material->estado="Activo";
-     $unidad->estado="Activo";
-     if ($x > 0){
+      $material->ieps=$first = $name[$y];
+      $y = $y + 1;
+      $material->total=$first = $name[$y];
+      $material->importe=$first = $name[$y];
+      $y = $y + 1;
+      $material->entregado=$request->get('entregado_a');
+      $material->recibe_alm=$request->get('recibe_alm');
+      $material->observacionesc=$request->get('observacionesq');
+      $material->provedor=$request->get('prov');
+      $material->comprador=$request->get('recibio');
+      $material->fecha=$request->get('fecha');
+      $material->moneda=$request->get('moneda');
+      $material->estado="Activo";
+      $unidad->estado="Activo";
+      if ($x > 0){
        $unidad2->update();
      }else{
        $unidad->save();
@@ -458,37 +476,37 @@ class EntradasAgroquimicosController extends Controller
      $decrementa->cantidad=$decrementa->cantidad- $material->cantidad;
 
      $v= [$material->medidaaux];
-        $first = head($v);
-        $name = explode(" ",$first);
-        $z = count($name);
-        $a="";
-        for ($i=0; $i < $z; $i++) { 
-          if ($i == 1) {
-           $a=$name[$i];             
+     $first = head($v);
+     $name = explode(" ",$first);
+     $z = count($name);
+     $a="";
+     for ($i=0; $i < $z; $i++) { 
+      if ($i == 1) {
+       $a=$name[$i];             
             # code...
-         }else if($i > 1) {
-          $a=$a." ".$name[$i];
-        }else{
-          $r=$name[0];
-        }
+     }else if($i > 1) {
+      $a=$a." ".$name[$i];
+    }else{
+      $r=$name[0];
+    }
           # code...
-      }
+  }
 //print_r($e[0]);
-      $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
-      $unidadaux=cantidad_unidades_agro::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
-      $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
-      $unidad->cantidad=$unidad->cantidad - $r;
-      $unidad->update();
-     $decrementa->update();
-     $material->update();
+  $medida2= unidadesmedida::where('nombre','=',$a)->first()->id;
+  $unidadaux=cantidad_unidades_agro::where('idProducto','=',$decrementa->id)->where('idMedida','=',$medida2)->first()->id;
+  $unidad=cantidad_unidades_agro::findOrFail($unidadaux);
+  $unidad->cantidad=$unidad->cantidad - $r;
+  $unidad->update();
+  $decrementa->update();
+  $material->update();
 
 
-     return Redirect::to('/almacen/entradas/agroquimicos');   
+  return Redirect::to('/almacen/entradas/agroquimicos');   
         //
-   }
+}
 
-   public function excel()
-   {        
+public function excel()
+{        
         /**
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta

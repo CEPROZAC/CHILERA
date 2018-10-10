@@ -4,7 +4,7 @@
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
     <h2 class="">Fumigaciones</h2>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
@@ -37,117 +37,117 @@
           {{Session::get('message')}}
           @endif
         </div>  
-          <form action="{{url('fumigaciones', [$fumigaciones->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
-            {{csrf_field()}}
-            <input type="hidden" name="_method" value="PUT">
+        <form action="{{url('fumigaciones', [$fumigaciones->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+          {{csrf_field()}}
+          <input type="hidden" name="_method" value="PUT">
 
 
-<div class="form-group">
-  <label class="col-sm-3 control-label">Nombre de Lote: <strog class="theme_color"></strog></label>
-  <div class="col-sm-6">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Nombre de Lote: <strog class="theme_color"></strog></label>
+            <div class="col-sm-6">
 
-    <input name="lote" type="text"  value="{{$fumigaciones->destino}}" maxlength="200" onchange="mayus(this);"  class="form-control" placeholder="Ingrese El Lote de la Fumigación" readonly="" />
-  </div>
-</div>
+              <input name="lote" type="text"  value="{{$fumigaciones->destino}}" maxlength="200" onchange="mayus(this);"  class="form-control" placeholder="Ingrese El Lote de la Fumigación" readonly="" />
+            </div>
+          </div>
 
-<div class="form-group">
-  <label class="col-sm-3 control-label">Ubicación Actual: <strog class="theme_color"></strog></label>
-  <div class="col-sm-6">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Ubicación Actual: <strog class="theme_color"></strog></label>
+            <div class="col-sm-6">
 
-    <input name="lote" type="text"  value="{{$ubicacion->nombre}}" maxlength="200" onchange="mayus(this);"  class="form-control" placeholder="Ingrese El Lote de la Fumigación" readonly="" />
-  </div>
-</div>
+              <input name="lote" type="text"  value="{{$ubicacion->nombre}}" maxlength="200" onchange="mayus(this);"  class="form-control" placeholder="Ingrese El Lote de la Fumigación" readonly="" />
+            </div>
+          </div>
 
 
-      <div class="form-group">
-       <label class="col-sm-3 control-label">Hora de Inicio de La Fumigación: <strog class="theme_color">*</strog></label>
+          <div class="form-group">
+           <label class="col-sm-3 control-label">Hora de Inicio de La Fumigación: <strog class="theme_color">*</strog></label>
+           <div class="col-sm-6">
+            <input id="inicio" name="inicio" value="{{$fumigaciones->horai}}" type="time" required>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div><!--/form-group-->
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Fecha de Inicio: <strog class="theme_color">*</strog></label>
+          <div class="col-sm-6">
+
+           <input type="date" name="fechai" id="fechai"  value="{{$fumigaciones->fechai}}" class="form-control mask" required>
+         </div>
+       </div>
+
+       <div class="form-group">
+        <label class="col-sm-3 control-label">Fecha de Termino: <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6">
+
+         <input type="date" name="fechaf" id="fechaf" value="{{$fumigaciones->fechaf}}" class="form-control mask" required >
+       </div>
+     </div>
+
+     <div class="form-group">
+       <label class="col-sm-3 control-label">Hora de Termino de La Fumigación: <strog class="theme_color">*</strog></label>
        <div class="col-sm-6">
-        <input id="inicio" name="inicio" value="{{$fumigaciones->horai}}" type="time" required>
+        <input id="final" name="final" value="{{$fumigaciones->horaf}}" type="time" required>
         <div class="help-block with-errors"></div>
       </div>
     </div><!--/form-group-->
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Fecha de Inicio: <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
 
-       <input type="date" name="fechai" id="fechai"  value="{{$fumigaciones->fechai}}" class="form-control mask" required>
+
+
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label"> Fumigador: <strog class="theme_color">*</strog></label>
+      <div class="col-sm-6">
+        <select name="fumigador"  id="fumigador" class="form-control select2"  required>  
+          @foreach($empleado as $empleados)
+
+          @if($empleados->id == $fumigaciones->id_fumigador)
+          <option value="{{$empleados->id}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
+          @else
+          <option value="{{$empleados->id}}">
+           {{$empleados->nombre}} {{$empleados->apellidos}} 
+         </option>
+         @endif
+         
+         
+         @endforeach              
+       </select>
+       <div class="help-block with-errors"></div>
      </div>
-   </div>
+   </div><!--/form-group-->
+
+
+
+
 
    <div class="form-group">
-    <label class="col-sm-3 control-label">Fecha de Termino: <strog class="theme_color">*</strog></label>
+    <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
+      <select name="entrego_qui"  id="entrego_qui" class="form-control select2"  required>  
+        @foreach($empleado as $empleados)
+        <?php
+        $nom = $empleados->nombre." ".$empleados->apellidos;
+        
+        
+        ?>
 
-     <input type="date" name="fechaf" id="fechaf" value="{{$fumigaciones->fechaf}}" class="form-control mask" required >
+        
+        @if($salida->entrego == $nom)
+        <option value="{{$empleados->id}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
+        @else
+        <option value="{{$empleados->id}}">
+         {{$empleados->nombre}} {{$empleados->apellidos}}
+       </option>
+       @endif
+       
+       
+       @endforeach              
+     </select>
+     <div class="help-block with-errors"></div>
    </div>
- </div>
+ </div><!--/form-group-->
 
  <div class="form-group">
-   <label class="col-sm-3 control-label">Hora de Termino de La Fumigación: <strog class="theme_color">*</strog></label>
-   <div class="col-sm-6">
-    <input id="final" name="final" value="{{$fumigaciones->horaf}}" type="time" required>
-    <div class="help-block with-errors"></div>
-  </div>
-</div><!--/form-group-->
-
-
-
-
-
-                          <div class="form-group">
-            <label class="col-sm-3 control-label"> Fumigador: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="fumigador"  id="fumigador" class="form-control select2"  required>  
-                @foreach($empleado as $empleados)
-
-                @if($empleados->id == $fumigaciones->id_fumigador)
-                <option value="{{$empleados->id}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
-                @else
-                <option value="{{$empleados->id}}">
-                 {{$empleados->nombre}} {{$empleados->apellidos}} 
-               </option>
-                @endif
-                
-               
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
-
-
-
-
-                          <div class="form-group">
-            <label class="col-sm-3 control-label">Entrego Agroquimicos de Almacén: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-              <select name="entrego_qui"  id="entrego_qui" class="form-control select2"  required>  
-                @foreach($empleado as $empleados)
-                 <?php
-												$nom = $empleados->nombre." ".$empleados->apellidos;
-												
-												
-												?>
-
-                 
-                @if($salida->entrego == $nom)
-                <option value="{{$empleados->id}}" selected>{{$empleados->nombre}} {{$empleados->apellidos}} </option>
-                @else
-                <option value="{{$empleados->id}}">
-                 {{$empleados->nombre}} {{$empleados->apellidos}}
-               </option>
-                @endif
-                
-               
-               @endforeach              
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
-<div class="form-group">
   <label class="col-sm-3 control-label">Plaga que Combate: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
@@ -167,14 +167,14 @@
 
 
 
-     <div class="col-lg-4 col-lg-offset-4">
-       <div class="form-group">
-        <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
-        </div>
-      </div>
-    </div>
+<div class="col-lg-4 col-lg-offset-4">
+ <div class="form-group">
+  <label class="col-sm-6 control-label">Buscar Codigo de Barras: <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
+    <input  id="codigo" value="" onkeypress="return teclas(event);" name="codigo" type="text"  maxlength="35"  class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
+  </div>
+</div>
+</div>
 
 <div class="form-group">
 </div>
@@ -189,7 +189,7 @@
    </option>
    @endforeach
  </select>
-   <span id="erroragro" style="color:#FF0000;"></span>
+ <span id="erroragro" style="color:#FF0000;"></span>
  <div class="help-block with-errors"></div>
 </div>
 <a class="btn btn-sm btn-danger"   style="margin-right: 10px;"  onclick="agroquimico();" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar Agroquimico"> <i class="fa fa-plus"></i>Agregar</a>
@@ -204,7 +204,7 @@
   <label for="scantidad">Cantidad Aplicada <strog class="theme_color">*</strog></label>
   <input name="scantidad" id="scantidad" type="number" value="1" max="1000000" min="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
 </div>    
-  <span id="errorcantidad" style="color:#FF0000;"></span>
+<span id="errorcantidad" style="color:#FF0000;"></span>
 </div>  
 
 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
@@ -310,7 +310,7 @@
 
 
 
-  </form>
+</form>
 </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
@@ -322,14 +322,14 @@
 
 <script type="text/javascript">
 
-function teclas(event) {
+  function teclas(event) {
     tecla=(document.all) ? event.keyCode : event.which;
    // alert(tecla);
 
-    var cuenta = document.getElementById('codigo');
-  var x = cuenta.value;
-  var z = x.length
-  if (tecla == 13  ) {
+   var cuenta = document.getElementById('codigo');
+   var x = cuenta.value;
+   var z = x.length
+   if (tecla == 13  ) {
     var busca = z;
     //  alert ("12 entro");
     var y = document.getElementById("quimicos").length;
@@ -338,10 +338,10 @@ function teclas(event) {
     while(i <= y){
 
 
-        if (i == y){
-    swal("Producto No Encontrado!", "Verifique el Codigo de Barras!", "error");
-    break;
-  }
+      if (i == y){
+        swal("Producto No Encontrado!", "Verifique el Codigo de Barras!", "error");
+        break;
+      }
 
       var e = document.getElementById("quimicos");
       var value = e.options[e.selectedIndex=i].value;
@@ -356,41 +356,41 @@ function teclas(event) {
       id=arregloDeSubCadenas[3];
       nombre=arregloDeSubCadenas[4];
       tecla=(document.all) ? event.keyCode : event.which;
-             if (codigo == x){
-              swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
-                var aux =`${value}`;
+      if (codigo == x){
+        swal("Producto Encontrado:"+nombre +"!", "Stock de Salida!", "success",{content: "input", inputType:"number",}).then((value) => {
+          var aux =`${value}`;
 
-                 document.getElementById("scantidad").value = aux;
+          document.getElementById("scantidad").value = aux;
   //swal(aux);
 });
-   
-    document.getElementById('quimicos').selectedIndex = i;
-    document.getElementById("pcantidad").value=stock;
-   document.getElementById("descripcion").value=descripcion;
-   
-    document.getElementById("scantidad").max=stock;
-    break;
+        
+        document.getElementById('quimicos').selectedIndex = i;
+        document.getElementById("pcantidad").value=stock;
+        document.getElementById("descripcion").value=descripcion;
+        
+        document.getElementById("scantidad").max=stock;
+        break;
+      }
+
+      i++;
+    }
+
+
+    return false;
   }
-
-  i++;
-}
-
-
-return false;
-}
 
  //return false;
-    
+ 
 }
 
-  Array.prototype.sortNumbers = function(){
-    return this.sort(
-      function(a,b){
-        return a - b
-      }
-      );
-  }
-  window.onload=function() {
+Array.prototype.sortNumbers = function(){
+  return this.sort(
+    function(a,b){
+      return a - b
+    }
+    );
+}
+window.onload=function() {
      //stock agroquimicos
      var select2 = document.getElementById('quimicos');
      var selectedOption2 = select2.selectedIndex;
@@ -408,9 +408,9 @@ return false;
      document.getElementById("descripciona").value=descripciona;
      document.getElementById("amedida").value=medidaa;
      document.getElementById("scantidad").value = "1";
-       document.getElementById("codigo").select();
+     document.getElementById("codigo").select();
 
-        var tabla = document.getElementById("detalles");
+     var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
     var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
@@ -434,10 +434,10 @@ return false;
     document.getElementById("total").value=xrow;
     limpiar();
 
-   }
+  }
     //  <option value="{{$quimico->id}}}_{{$quimico->nombre}}_{{$quimico->codigo}}_{{$quimico->descripcion}}_{{$quimico->cantidad}}_{{$quimico->medida}}">
 
-      var select = document.getElementById('quimicos');
+    var select = document.getElementById('quimicos');
   //alert(select);
   select.addEventListener('change',
     function(){
@@ -463,7 +463,7 @@ return false;
 
  });
 
-   var uno = 1;
+  var uno = 1;
   var uno2 = 1;
   function agroquimico(){
     var select2=document.getElementById('quimicos');
@@ -482,36 +482,36 @@ return false;
     if (comprueba == 1){
       //alert("Este Material Ya se ha Insertado en la Tabla");
      // swal("Duplicado!", "Este Material Ya se ha Insertado en la Tabla!", "info");
-       document.getElementById("erroragro").innerHTML = "Este Material Ya se ha Insertado en la Tabla";
+     document.getElementById("erroragro").innerHTML = "Este Material Ya se ha Insertado en la Tabla";
 
-    }else{
-      if (y > z) {
+   }else{
+    if (y > z) {
        // swal("Error!", "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén!", "error");
        // alert("El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén");
        document.getElementById("errorcantidad").innerHTML = "El Stock de Salida no Puede Ser Mayor que la Cantidad Actual en Almacén";
 
-      }else if(y < 1){
-        document.getElementById("errorcantidad").innerHTML = "El Stock de Salida no Puede Ser Menor de 1";
+     }else if(y < 1){
+      document.getElementById("errorcantidad").innerHTML = "El Stock de Salida no Puede Ser Menor de 1";
      //   swal("Error!", "El Stock de Salida no Puede Ser Menor de 1 !", "error");
        // alert("El Stock de Salida no Puede Ser Menor de 1");
 
-      }else{
-        document.getElementById("erroragro").innerHTML =""
-        document.getElementById("errorcantidad").innerHTML =""
+     }else{
+      document.getElementById("erroragro").innerHTML =""
+      document.getElementById("errorcantidad").innerHTML =""
 
-        var select=document.getElementById('quimicos');
-        var cantidadtotal = select.value;
-        limite = "6",
-        separador = "_",
-        arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-        var id2= uno2++;
-        var ida =arregloDeSubCadenas[0];
-        var nombrea =arregloDeSubCadenas[1];
-        var codigoa = arregloDeSubCadenas[2];
-        var descripciona = arregloDeSubCadenas[3];
-        var cantidada = arregloDeSubCadenas[4];
-        var medidaa = arregloDeSubCadenas[5];
-        var tabla = document.getElementById("detalles");
+      var select=document.getElementById('quimicos');
+      var cantidadtotal = select.value;
+      limite = "6",
+      separador = "_",
+      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+      var id2= uno2++;
+      var ida =arregloDeSubCadenas[0];
+      var nombrea =arregloDeSubCadenas[1];
+      var codigoa = arregloDeSubCadenas[2];
+      var descripciona = arregloDeSubCadenas[3];
+      var cantidada = arregloDeSubCadenas[4];
+      var medidaa = arregloDeSubCadenas[5];
+      var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
     var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
@@ -531,7 +531,7 @@ return false;
 
     var x = document.getElementById("quimicos");
     //x.remove(x.selectedIndex);
-        var xrow = tabla.rows.length-2;
+    var xrow = tabla.rows.length-2;
     document.getElementById("total").value=xrow;
     limpiar();
   }
@@ -651,13 +651,13 @@ function limpiar(){
 
 function save() {
   var t = document.getElementById("total").value;
-      if (t > 0){
-var x = 1
-var arreglo2 = [];
-var table2 = document.getElementById('detalles');
-for (var r = 1, n = table2.rows.length-1; r < n; r++) {
-  for (var c = 1, m = table2.rows[r].cells.length; c < m; c++) {
-   if (x == 1){
+  if (t > 0){
+    var x = 1
+    var arreglo2 = [];
+    var table2 = document.getElementById('detalles');
+    for (var r = 1, n = table2.rows.length-1; r < n; r++) {
+      for (var c = 1, m = table2.rows[r].cells.length; c < m; c++) {
+       if (x == 1){
         //alert(z)
        // document.getElementById("id_materialk").id=z;
       // document.getElementById("id_materialk").value=table.rows[r].cells[c].innerHTML;
@@ -688,11 +688,11 @@ var nombx = auxy.options[auxy.selectedIndex].text;
 document.getElementById('nombre_fum').value=nombx;
 }else{
  // alert('No hay Elementos Agregados, Para Poder Guardar');
-  swal("Error!","No hay Elementos Agregados en la Tabla de Fumigaciones, Para Poder Guardar", "error");
-  return false;
+ swal("Error!","No hay Elementos Agregados en la Tabla de Fumigaciones, Para Poder Guardar", "error");
+ return false;
 
 }
 }
-    </script>
+</script>
 
 @endsection

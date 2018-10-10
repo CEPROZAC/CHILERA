@@ -36,7 +36,7 @@ class EntradaAlmacenController extends Controller
      * @return \Illuminate\Http\Response
  
      */ 
-    public function index()
+    public function index() 
     {
      $entrada= DB::table('entradaalmacenmateriales')->where('entradaalmacenmateriales.estado','=','Activo')
      ->join('almacenmateriales as a', 'entradaalmacenmateriales.id_material', '=', 'a.id')
@@ -230,8 +230,6 @@ class EntradaAlmacenController extends Controller
         $material->nota_venta=$first = $name[$y];
         $y = $y + 1;
              //print_r($first = $name[$y]);
-        $material->fecha=$first = $name[$y];
-        $y = $y + 1;
             // print_r($first = $name[$y]);
         $material->p_unitario=$first = $name[$y];
         $y = $y + 1;
@@ -240,14 +238,14 @@ class EntradaAlmacenController extends Controller
         $material->total=$first = $name[$y];
         $material->importe=$first = $name[$y];
         $y = $y + 1;
-        $material->moneda=$first = $name[$y];
-        $y = $y + 1;
         $material->estado="Activo";
         $material->provedor=$formulario->get('prov');
         $material->comprador=$formulario->get('recibio');
         $material->entregado=$formulario->get('entregado_a');
         $material->recibe_alm=$formulario->get('recibe_alm');
         $material->observacionesc=$formulario->get('observacionesm');
+        $material->fecha=$formulario->get('fecha');
+        $material->moneda=$formulario->get('moneda');
         $material->save();
         $num = $num + 1;
 
@@ -415,6 +413,7 @@ class EntradaAlmacenController extends Controller
     $material->medidaaux=$concat;
     $y = $y + 1;
         //print_r($first = $name[$y]);
+<<<<<<< HEAD
     $material->nota_venta=$first = $name[$y];
     $y = $y + 1;
 
@@ -439,6 +438,31 @@ class EntradaAlmacenController extends Controller
     $material->estado="Activo";
     $material->save();
     $num = $num + 1;
+=======
+      $material->nota_venta=$first = $name[$y];
+      $y = $y + 1;
+      $material->p_unitario=$first = $name[$y];
+      $y = $y + 1;
+
+      $material->iva=$first = $name[$y];
+      $y = $y + 1;         
+      $material->total=$first = $name[$y];
+      $material->importe=$first = $name[$y];
+      $y = $y + 1;
+      $material->entregado=$request->get('entregado_a');
+      $material->recibe_alm=$request->get('recibe_alm');
+      $material->observacionesc=$request->get('observacionesq');
+      $material->provedor=$request->get('prov');
+      $material->comprador=$request->get('recibio');
+      $material->estado="Activo";
+      $material->fecha=$request->get('fecha');
+      $material->moneda=$request->get('moneda');
+      $material->save();
+      $num = $num + 1;
+        //
+    }
+    return redirect('/almacen/entradas/materiales');
+>>>>>>> a49fb5c103b05916f389285927eb7fb743810a53
         //
   }
   return redirect('/almacen/entradas/materiales');

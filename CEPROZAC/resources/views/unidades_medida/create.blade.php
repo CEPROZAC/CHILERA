@@ -54,7 +54,7 @@
             <label class="col-sm-3 control-label">Cantidad Equivalente: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
 
-              <input name="cantidad" type="number" step="any"  max="999999" min="0.1" value="{{Input::old('cantidad')}}" class="form-control" required  placeholder="Ingrese el Número de Equivalencia" maxlength="6" />
+              <input name="cantidad" type="number" step="any"  max="999999" min="0.0000001" value="{{Input::old('cantidad')}}" class="form-control" required  placeholder="Ingrese el Número de Equivalencia" maxlength="6" />
               <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
 
             </div>

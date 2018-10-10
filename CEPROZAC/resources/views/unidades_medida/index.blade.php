@@ -64,12 +64,12 @@
 
                 <td> 
                   <center>
-                    <a href="{{URL::action('unidadesmedidacontroller@edit',$unidad->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                    <a href="{{URL::action('unidadesmedidacontroller@edit',$unidad->idUnidadMedida)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                   </center>
                 </td>
                 <td>
                   <center>
-                   <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$unidad->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a></center>
+                   <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$unidad->idUnidadMedida}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a></center>
                  </td>
                </td>
              </tr>

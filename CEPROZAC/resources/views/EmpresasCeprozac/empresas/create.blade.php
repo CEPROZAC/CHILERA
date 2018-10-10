@@ -62,7 +62,7 @@
               <div class="col-sm-6">
                <select name="idRegimenFiscal" class="form-control select2" required> 
                  <option value="">
-                   Selecione Regimen Fiscal
+                   Seleccione Regimen Fiscal
                  </option> 
                  @foreach($regimenFiscal as $regimen)
                  <option value="{{$regimen->id}}">

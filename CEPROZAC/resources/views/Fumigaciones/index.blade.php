@@ -39,7 +39,6 @@
 								<div class="actions"> </div>
 
 								<h2 class="content-header " id="demo" style="margin-top: -5px;">&nbsp;&nbsp;</h2>
-
 								
 							</div>
 

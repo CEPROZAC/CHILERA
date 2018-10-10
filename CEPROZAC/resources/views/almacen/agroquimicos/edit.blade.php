@@ -1,3 +1,4 @@
+@inject('metodo','CEPROZAC\Http\Controllers\AlmacenAgroquimicosController')
 @extends('layouts.principal')
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
@@ -44,83 +45,165 @@
 
 
 
-
             <div class="form-group">
               <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input type="radio" value="1" name="habilitarDeshabilitar" id="1" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
-                <input type="radio" value="2" name="habilitarDeshabilitar" id="2" onchange="habilitar(this.value);">Nuevo Codigo de Barras Automatico
-
-                <input type="radio" value="3" name="habilitarDeshabilitar"  id="3" onchange="habilitar(this.value);"> Ninguno
-
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-               <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
+                <div class="radio">
+                  <label>
+                    <input type="radio" value="1" name="habilitarDeshabilitar" id="1" onchange="habilitar(this.value);" checked> Edite Codigo de Barras 
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                   <input type="radio" value="2" name="habilitarDeshabilitar" id="2" onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico 
+                 </label>
+               </div>
+               <div class="radio">
+                <label>
+                 <input type="radio" value="3" name="habilitarDeshabilitar"  id="3" onchange="habilitar(this.value);"> Ninguno
+               </label>
              </div>
            </div>
-
-           <div class="form-group">
-            <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6" id="muestra_codigo">
-
-             <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "C128",3,33);?></td>
-           </div>    
-         </div>  
+         </div>
 
 
 
 
-         <input type="text" hidden name="imagen " value="{{$material->imagen}}">
 
-         <div class="form-group ">
-          <label class="col-sm-3 control-label">Imagen</label>
+
+         <div class="form-group">
+          <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-           <input  type="file" hidden name="imagen"  value="{{$material->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
-           @if (($material->imagen)!="")
-           <img src="{{asset('imagenes/almacenagroquimicos/'.$material->imagen)}}" height="100px" width="100px">
-           @endif
+           <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
          </div>
        </div>
 
        <div class="form-group">
-        <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input name="descripcion" value="{{$material->descripcion}}" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
-        </div>
+        <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
+        <div class="col-sm-6" id="muestra_codigo">
+
+         <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "C128",3,33);?></td>
+       </div>    
+     </div>  
+
+
+
+
+     <input type="text" hidden name="imagen " value="{{$material->imagen}}">
+
+     <div class="form-group ">
+      <label class="col-sm-3 control-label">Imagen</label>
+      <div class="col-sm-6">
+       <input  type="file" hidden name="imagen"  value="{{$material->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
+       @if (($material->imagen)!="")
+       <img src="{{asset('imagenes/almacenagroquimicos/'.$material->imagen)}}" height="100px" width="100px">
+       @endif
+     </div>
+   </div>
+
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+      <input name="descripcion" value="{{$material->descripcion}}" type="text"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+    <div class="col-sm-3">
+      <div class="input-group" >
+        <div class="input-group-addon" >Completas</div>
+        <input name="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="{{$unidadesCompletas}}" placeholder="3" onkeypress=" return soloNumeros(event);"/>
       </div>
+    </div>
+    <div class="col-sm-5">
+      <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
+        @foreach($unidadesMedidas  as $unidad)
+        @if($material->idUnidadMedida == $unidad->idContenedorUnidadMedida)
+        <option value='{{$unidad-> idContenedorUnidadMedida}}' selected>
+         {{$unidad->nombre}} {{$unidad->cantidad}}  {{$unidad->nombreUnidadMedida}}
+       </option>
+       @else
+       <option value='{{$unidad-> idContenedorUnidadMedida}}' >
+         {{$unidad->nombre}} {{$unidad->cantidad}}  {{$unidad->nombreUnidadMedida}}
+       </option>
 
-      <div class="form-group">
-        <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input name="cantidad" value="{{$material->cantidad }}" maxlength="9" type="number" step="any"  max="999999" min="0.1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" /> 
-        </div>    
-      </div>  
+       @endif
 
-
-
-      <div class="form-group">
-        <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <input name="stock_min" maxlength="9" type="number" value="{{$material->stock_minimo }}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
-        </div>    
-      </div> 
-
-
-
-      <div class="form-group">
-        <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <a href="{{url('/almacenes/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
-        </div>
-      </div><!--/form-group-->
+       @endforeach
+     </select>
+   </div>
+ </div>
 
 
-    </form>
-  </div><!--/porlets-content-->
+
+ @if($unidad_medida=="LITROS" ||  $unidad_medida=="KILOGRAMOS" || $unidad_medida=="METROS" )
+
+
+ <div class="form-group">    
+  <label class="col-sm-3 control-label">Unidades Incompletas: <strog class="theme_color">*</strog></label>
+
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadCentral">Kilogramos</div>
+      <input id="Medida" name="unidadCentral"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
+      required value="{{$unidadCentral}}" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+      <input  name="unidadDeMedida" value="{{$unidadInferior}}" parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+</div>
+
+@else
+
+<div class="form-group">    
+  <label class="col-sm-3 control-label">Unidades Incompletas: <strog class="theme_color">*</strog></label>
+
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadCentral">Kilogramos</div>
+      <input id="Medida" name="unidadCentral"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
+      required value="{{$unidadInferior}}"  placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+      <input  name="unidadDeMedida"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+</div>
+
+
+@endif
+
+
+<div class="form-group">
+  <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
+    <input name="stock_min" maxlength="9" type="number"
+     value="{{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($unidad_medida,$material->stock_minimo)}}" 
+     min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+  </div>    
+</div> 
+
+
+
+<div class="form-group">
+  <div class="col-sm-offset-7 col-sm-5">
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{{url('/almacenes/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+  </div>
+</div><!--/form-group-->
+
+
+</form>
+</div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
@@ -129,18 +212,80 @@
 <script>
  window.onload=function() {
 
-  var cod = document.getElementById('segundo').value;
-  if (cod > 0){
-    document.getElementById('1').checked;
+
+   var select = document.getElementById("medida");
+   var options=document.getElementsByTagName("option");
+   var idProvedor= select.value;
+
+   var x = select.options[select.selectedIndex].text;
+   var unidadesDeMedida = x.split(" ");
 
 
-  }else{
+//MILILITROS
 
-    document.getElementById('3').checked=true;
-    document.getElementById("segundo").disabled=true;
-    document.getElementById("segundo").value = "";
+//myArr.includes( 'donna' ) 
+ if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
 
-  }
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+} else if( unidadesDeMedida.includes("CENTIMETROS")) {  //CENTIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("LITROS")){  //LITROS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+
+ document.getElementById('unidadCentral').innerHTML='Litros';  
+ document.getElementById('unidadDeMedida').innerHTML='Mililitros';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+} else if( unidadesDeMedida.includes("METROS")){  //METROS
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+ document.getElementById('unidadCentral').innerHTML='Metros';  
+ document.getElementById('unidadDeMedida').innerHTML='Centimetros';  
+
+
+ $("#Medida").show();
+
+}  else if( unidadesDeMedida.includes("KILOGRAMOS")) {  //KILOGRAMOS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+ document.getElementById('unidadCentral').innerHTML='Kilogramos';  
+ document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+
+} else if ( unidadesDeMedida.includes("UNIDADES")) {  //UNIDADES
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  $("#Medida").show();
+
+}
 }
 
 function habilitar(value)
@@ -162,6 +307,83 @@ document.getElementById("segundo").value=aleatorio;
   document.getElementById("segundo").disabled=true;
   document.getElementById("segundo").value = "";
 }
+}
+function obtenerSelect() {
+
+  var select = document.getElementById("medida");
+  var options=document.getElementsByTagName("option");
+  var idProvedor= select.value;
+
+  var x = select.options[select.selectedIndex].text;
+  var unidadesDeMedida = x.split(" ");
+
+
+//MILILITROS
+
+//myArr.includes( 'donna' ) 
+ if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+} else if( unidadesDeMedida.includes("CENTIMETROS")) {  //CENTIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("LITROS")){  //LITROS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+
+ document.getElementById('unidadCentral').innerHTML='Litros';  
+ document.getElementById('unidadDeMedida').innerHTML='Mililitros';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+} else if( unidadesDeMedida.includes("METROS")){  //METROS
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+ document.getElementById('unidadCentral').innerHTML='Metros';  
+ document.getElementById('unidadDeMedida').innerHTML='Centimetros';  
+
+
+ $("#Medida").show();
+
+}  else if( unidadesDeMedida.includes("KILOGRAMOS")) {  //KILOGRAMOS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+ document.getElementById('unidadCentral').innerHTML='Kilogramos';  
+ document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+
+} else if ( unidadesDeMedida.includes("UNIDADES")) {  //UNIDADES
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  $("#Medida").show();
+
+} 
+
 }
 
 

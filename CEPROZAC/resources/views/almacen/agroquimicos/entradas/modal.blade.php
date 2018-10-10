@@ -1,4 +1,4 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$entradas->id}}">
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$entradas->idEntradaAgroquimicos}}">
   <div class="modal-dialog">
     <div class="modal-content panel default blue_border horizontal_border_1">
       <div class="modal-body"> 
@@ -16,12 +16,12 @@
     </div>
     <div class="modal-footer" style="margin-top: -10px;">
       <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
-        <form action="{{url('almacen/entradas/agroquimicos', [$entradas->id])}}" method="POST"> 
+      <form action="{{url('almacen/entradas/agroquimicos', [$entradas->idEntradaAgroquimicos])}}" method="POST"> 
          <input type="hidden" name="_method" value="DELETE">
          <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
          <button type="submit" class="btn btn-primary">Eliminar</button>
-         </form>
+       </form>
      </div>
    </div>
  </div><!--/modal-content--> 

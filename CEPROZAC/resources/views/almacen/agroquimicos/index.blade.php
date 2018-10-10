@@ -63,14 +63,18 @@
               <table  class="display table table-bordered table-striped" id="dynamic-table">
                 <thead>
                   <tr>
-                   <th>N° </th>
+
                    <th>Nombre </th>
 
                    <th>Codigo de Barras </th>
                    <th>Imagen </th>
                    <th>Descripción </th>
-                   <th>Cantidad en Almacén</th>
+                   <th>Cantidad en Almacén &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                   </th>
                    <th>Stock Minimo</th> 
+                   <th>Agregar Stock</th>
 
                    <td><center><b>Editar</b></center></td>
                    <td><center><b>Borrar</b></center></td>                            
@@ -81,7 +85,8 @@
                 
                 @if( $materiales->cantidad < $materiales->stock_minimo )
                 <tr class="gradeA">
-                  <td style="background-color: #FFE4E1;">{{$materiales->id}} </td>
+
+
                   <td style="background-color: #FFE4E1;">{{$materiales->nombre}} </td>
 
                   @if (($materiales->codigo)!="")
@@ -89,7 +94,9 @@
                     <div style="text-align:center;" >
                       {{$materiales->codigo}}
                     </div>
-                    <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
+                    <center>
+                      <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->idAgroquimico)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
+                    </center>
                   </td>
                   @else
                   <td style="background-color: #FFE4E1;">Codigo de Barras No Generado </td>
@@ -98,6 +105,7 @@
 
                   <td style="background-color: #FFE4E1;">
                     @if (($materiales->imagen)!="")
+
                     <img src="{{asset('imagenes/almacenagroquimicos/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
                     @else
                     No Hay Imagen Disponible
@@ -106,106 +114,165 @@
                   <td style="background-color: #FFE4E1;">{{$materiales->descripcion}} </td>
                   <td style="background-color: #FFE4E1;">
 
+                    <ul>
+                      @if($materiales->unidad_medida== "KILOGRAMOS" || $materiales->unidad_medida== "LITROS" || $materiales->unidad_medida== "METROS" )
+                      <li>
+
+                        {{$metodo->calcularCantidadAlmacen($materiales->idAgroquimico)}} 
+                        {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+
+                      </li>
+                      <li>
+
+                        {{$metodo->calcularCantidadUnidadCentral($materiales->idAgroquimico)}}  {{$materiales->unidad_medida}} 
+                      </li>
+                      <li>
+                        {{$metodo->  calcularCantidadUnidadInferior($materiales->idAgroquimico)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idAgroquimico)}}  
+                      </li>
+                      @else
+                      <li>
+                        {{$metodo->calcularCantidadAlmacen($materiales->idAgroquimico)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+                      </li>
+                      <li>
+                        {{$metodo->  calcularCantidadUnidadInferior($materiales->idAgroquimico)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idAgroquimico)}}  
+
+                      </li>
+                      @endif
+                    </ul>
+
+
+
+                  </td>
+                  <td style="background-color: #FFE4E1;">
+                    <center>
+
+                     {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
+                   </center>
+
                    
-                    {{$metodo->calcularCantidadAlmacen($materiales->id)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}}  Con
+                 </td>
 
-
-                    {{$metodo->calcularCantidadUnidadCentral($materiales->id)}}  {{$materiales->unidad_medida}} 
-
-                    Y
-                    {{$metodo->  calcularCantidadUnidadInferior($materiales->id)}}      {{$metodo->labelUnidadMedidaMinima($materiales->id)}}  
-
-
-
-
-                    <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
-                    <td style="background-color: #FFE4E1;">    {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
-
-
-                    </td>
-
-
-
-
-                    <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-                    </td>
-                    <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->id}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-                    </td>
-                  </td>
+                 <td style="background-color: #FFE4E1;">   
+                   <center>
+                    <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idAgroquimico}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
+                  </center>
                 </td>
 
-              </tr>
+                <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->idAgroquimico)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                </td>
+                <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idAgroquimico}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                </td>
+              </td>
+            </td>
+
+          </tr>
+          @else
+          <tr class="gradeA">
+
+            <td>
+
+              {{$materiales->nombre}} 
+
+            </td>
+
+            @if (($materiales->codigo)!="")
+            <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
+              <div style="text-align:center;" >
+                {{$materiales->codigo}}
+              </div>
+              <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->idAgroquimico)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
+            </td>
+            @else
+            <td>Codigo de Barras No Generado </td>
+
+            @endif
+
+            <td>
+              @if (($materiales->imagen)!="")
+              <img src="{{asset('imagenes/almacenagroquimicos/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
               @else
-              <tr class="gradeA">
-                <td>{{$materiales->id}} </td>
-                <td>{{$materiales->nombre}} </td>
-
-                @if (($materiales->codigo)!="")
-                <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
-                  <div style="text-align:center;" >
-                    {{$materiales->codigo}}
-                  </div>
-                  <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->id)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
-                </td>
-                @else
-                <td>Codigo de Barras No Generado </td>
-
-                @endif
-
-                <td>
-                  @if (($materiales->imagen)!="")
-                  <img src="{{asset('imagenes/almacenagroquimicos/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
-                  @else
-                  No Hay Imagen Disponible
-                  @endif
-                </td>              
-                <td>{{$materiales->descripcion}} </td>
-                <td> 
-
-                  {{$metodo->calcularCantidadAlmacen($materiales->id)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}}  Con
-
-
-                  {{$metodo->calcularCantidadUnidadCentral($materiales->id)}}  {{$materiales->unidad_medida}} 
-
-                  Y
-                  {{$metodo->  calcularCantidadUnidadInferior($materiales->id)}}      {{$metodo->labelUnidadMedidaMinima($materiales->id)}}  
-
-                  <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a> </td>
-                  <td> 
-
-                    {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} </td>
-
-                    <td>  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-                    </td>
-                    <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->id}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-                    </td>
-                  </td>
-                </td>
-
-              </tr>
+              No Hay Imagen Disponible
               @endif
-              @include('almacen.agroquimicos.modal')
-              @endforeach
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>N° </th>
-                <th>Nombre </th>
-                <th>Codigo de Barras </th>
-                <th>Imagen </th>
-                <th>Descripción </th>
-                <th>Cantidad en Almacén</th>
-                <th>Stock Minimo</th>
+            </td>              
+            <td>{{$materiales->descripcion}} </td>
+            <td> 
 
-                <td><center><b>Editar</b></center></td>
-                <td><center><b>Borrar</b></center></td>      
-              </tr>
-            </tfoot>
-          </table>
-        </div><!--/table-responsive-->
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
+             <ul>
+              @if($materiales->unidad_medida== "KILOGRAMOS" || $materiales->unidad_medida== "LITROS" || $materiales->unidad_medida== "METROS" )
+              <li>
+
+                {{$metodo->calcularCantidadAlmacen($materiales->idAgroquimico)}} 
+                {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+
+              </li>
+              <li>
+
+                {{$metodo->calcularCantidadUnidadCentral($materiales->idAgroquimico)}}  {{$materiales->unidad_medida}} 
+              </li>
+              <li>
+                {{$metodo->  calcularCantidadUnidadInferior($materiales->idAgroquimico)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idAgroquimico)}}  
+              </li>
+              @else
+              <li>
+                {{$metodo->calcularCantidadAlmacen($materiales->idAgroquimico)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+              </li>
+              <li>
+                {{$metodo->  calcularCantidadUnidadInferior($materiales->idAgroquimico)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idAgroquimico)}}  
+
+              </li>
+              @endif
+            </ul>
+
+            <td>
+
+              <center>
+               {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
+             </center>
+
+           </td>
+
+           <td >  
+             <center>
+              <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idAgroquimico}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
+            </center>
+
+          </td>
+
+
+
+          <td>  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->idAgroquimico)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+          </td>
+          <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idAgroquimico}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+          </td>
+        </td>
+      </td>
+
+    </tr>
+    @endif
+    @include('almacen.agroquimicos.modal')
+    @include('almacen.agroquimicos.modale')
+    @endforeach
+  </tbody>
+  <tfoot>
+    <tr>
+
+      <th>Nombre </th>
+      <th>Codigo de Barras </th>
+      <th>Imagen </th>
+      <th>Descripción </th>
+      <th>Cantidad en Almacén</th>
+      <th>Stock Minimo</th>
+      <th>Agregar Stock</th>
+
+      <td><center><b>Editar</b></center></td>
+      <td><center><b>Borrar</b></center></td>      
+    </tr>
+  </tfoot>
+</table>
+</div><!--/table-responsive-->
+</div><!--/porlets-content-->
+</div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

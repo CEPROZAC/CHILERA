@@ -63,13 +63,12 @@
             </div>
 
 
-
             <div class="form-group">
               <label class="col-sm-3 control-label">Unidad De Medida: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                <select name="medida" class="form-control" required>
                  @foreach($nombreUnidadesMedida as $nombre)
-                 @if($unidades->idUnidadMedia==$nombre->id)
+                 @if($unidades->idUnidadMedida==$nombre->id)
                  <option value="{{$nombre->id}}" selected>
                    {{$nombre->nombreUnidadMedida}} 
                  </option>
@@ -82,10 +81,6 @@
                <div class="help-block with-errors"></div>
              </div>
            </div><!--/form-group-->
-
-
-
-
 
 
 

@@ -13,7 +13,7 @@ class NombreUnidadMedidaTableSeeder extends Seeder
     {
 
     	DB::table('nombre_unidades_medidas')->insert([
-    		'nombreUnidadMedida' => 'KILOGRAMO',
+    		'nombreUnidadMedida' => 'KILOGRAMOS',
     		]);
 
 

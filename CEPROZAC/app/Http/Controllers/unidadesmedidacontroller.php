@@ -23,14 +23,14 @@ class unidadesmedidacontroller extends Controller
     {
       $unidades= DB::table('unidades_medidas')
       ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida','=','nombre_unidades_medidas.id')
-      ->select('unidades_medidas.*', 'nombre_unidades_medidas.*')
-      ->where('estado','Activo')->get();
+      ->select('unidades_medidas.nombre','unidades_medidas.cantidad', 'unidades_medidas.id as idUnidadMedida', 'nombre_unidades_medidas.*')
+      ->where('unidades_medidas.estado','Activo')->get();
 
       return view('unidades_medida.index', ['unidades' => $unidades]);
-        //
+
         //
 
-  } 
+    } 
 
 
     /**
@@ -41,9 +41,10 @@ class unidadesmedidacontroller extends Controller
     public function create()
     {
 
-        $nombreUnidadesMedida =DB::table('nombre_unidades_medidas')->get();
+      $nombreUnidadesMedida =DB::table('nombre_unidades_medidas')->get();
 
-        return view('unidades_medida.create',['nombreUnidadesMedida'=>$nombreUnidadesMedida]);
+
+      return view('unidades_medida.create',['nombreUnidadesMedida'=>$nombreUnidadesMedida]);
         //
 
 
@@ -56,13 +57,13 @@ class unidadesmedidacontroller extends Controller
      */
     public function store(Request $request)
     { 
-        $unidad = new Unidades_medida;
-        $unidad->nombre=$request->get('nombre');
-        $unidad->cantidad=$request->get('cantidad');
-        $unidad->idUnidadMedida=$request->get('medida');
-        $unidad->estado="Activo";
-        $unidad->save();
-        return Redirect::to('unidades_medida');
+      $unidad = new Unidades_medida;
+      $unidad->nombre=$request->get('nombre');
+      $unidad->cantidad=$request->get('cantidad');
+      $unidad->idUnidadMedida=$request->get('medida');
+      $unidad->estado="Activo";
+      $unidad->save();
+      return Redirect::to('unidades_medida');
         //
     }
 
@@ -76,12 +77,15 @@ class unidadesmedidacontroller extends Controller
      */
     public function edit($id)
     {
+      $nombreUnidadesMedida =DB::table('nombre_unidades_medidas')->get();
 
-     $nombreUnidadesMedida =DB::table('nombre_unidades_medidas')->get();
-     $unidades = Unidades_medida::findOrFail($id);
-     return view('unidades_medida.edit', ['unidades' => $unidades, 'nombreUnidadesMedida'=>$nombreUnidadesMedida]);
-        //
- }
+      $unidades = Unidades_medida::findOrFail($id);
+
+
+
+
+      return view('unidades_medida.edit', ['nombreUnidadesMedida'=>$nombreUnidadesMedida,'unidades' => $unidades]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -100,7 +104,7 @@ class unidadesmedidacontroller extends Controller
       $unidad->update();
       return Redirect::to('unidades_medida');
         //
-  }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -110,10 +114,10 @@ class unidadesmedidacontroller extends Controller
      */
     public function destroy($id)
     {
-       $unidad = Unidades_medida::findOrFail($id);
-       $unidad->estado="Inactivo";
-       $unidad->update();
-       return Redirect::to('unidades_medida');
+     $unidad = Unidades_medida::findOrFail($id);
+     $unidad->estado="Inactivo";
+     $unidad->update();
+     return Redirect::to('unidades_medida');
         //
    }
 
@@ -130,7 +134,7 @@ class unidadesmedidacontroller extends Controller
         $sheet->fromArray($unidadesmedida);
         $sheet->row(1,['Nombre','Cantidad Equivalente','Unidad de Medida']);
         $sheet->setOrientation('landscape');
-    });
-  })->export('xls');
-}
+      });
+    })->export('xls');
+  }
 }
