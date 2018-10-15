@@ -12,7 +12,7 @@ class CreateClienteTable extends Migration
      */
     public function up()
     {
-     Schema::create('cliente', function (Blueprint $table) {
+       Schema::create('cliente', function (Blueprint $table) {
         $table->increments('id');
         $table->string('nombre');
         $table->string('rfc')->unique()->required();
@@ -30,7 +30,7 @@ class CreateClienteTable extends Migration
         $table->string('estado');
         $table->timestamps(); //
     });
- }
+   }
 
     /**
      * Reverse the migrations.

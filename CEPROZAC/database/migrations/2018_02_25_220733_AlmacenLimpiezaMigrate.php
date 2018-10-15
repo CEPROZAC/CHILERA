@@ -11,19 +11,27 @@ class AlmacenLimpiezaMigrate extends Migration
     public function up()
     {
         Schema::create('almacenlimpieza', function (Blueprint $table) {
-         $table->increments('id');
-         $table->string('nombre');
-         $table->string('provedor')->nullable();
-         $table->string('codigo')->nullable();
-         $table->string('imagen')->nullable();
-         $table->string('descripcion')->nullable();
-         $table->double('cantidad');
-         $table->string('medida');
-         $table->string('estado');
-          $table->double('stock_minimo')->nullable();
+       $table->increments('id');
+        $table->string('nombre');
+        $table->string('codigo')->nullable();
+        $table->string('imagen')->nullable();
+        $table->string('descripcion')->nullable();
+        $table->integer('cantidad');
+        $table->integer('stock_minimo')->nullable();
+        $table->integer('idUnidadMedida')->unsigned();
+        $table->foreign('idUnidadMedida')->references('id')->on('unidades_medidas');
+        $table->string('estado');
          $table->timestamps();
      });
     }
+
+
+
+
+
+
+
+
     /**
      * Reverse the migrations.
      *

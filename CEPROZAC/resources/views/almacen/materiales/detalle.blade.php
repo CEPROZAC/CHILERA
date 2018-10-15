@@ -1,3 +1,4 @@
+@inject('metodo','CEPROZAC\Http\Controllers\AlmacenMaterialController')
 @extends('layouts.principal')
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
@@ -34,7 +35,6 @@
         </div>
         <div class="porlets-content container clear_both padding_fix">
 
-
           @foreach($material as $mat)
           <div class="col-lg-6">
             <section class="panel green_border horizontal_border_2">
@@ -53,44 +53,60 @@
                 @else
                 <td>Codigo de Barras No Generado </td>
                 @endif
-
-
-<<<<<<< HEAD
                 <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
-                <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicacion}}</p>
-                <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}}  </p>
-                <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}}   </p>
-                <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
-                <td>
-=======
-                 <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
-                 <p align="justify"><strong>Ubicación Actual:</strong> {{$mat->ubicaciones2}}</p>
-                 <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}}  </p>
-                 <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}}   </p>
-                 <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
-                   <td>
->>>>>>> d3d3c8de7d37cce1681f947cfbc718167259f896
-                  @if (($mat->imagen)!="")
-                  <img src="{{asset('imagenes/almacenmateriales/'.$mat->imagen)}}" alt="{{$mat->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                <p align="justify"><strong>Cantidad en Almacén:</strong> <ul>
+                @if($mat->unidad_medida== "KILOGRAMOS" || $mat->unidad_medida== "LITROS" || $mat->unidad_medida== "METROS" )
+                  <li>
+
+                  {{$metodo->calcularCantidadAlmacen($mat->idMaterial)}} 
+                  {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
+
+                  </li>
+                  <li>
+
+                  {{$metodo->calcularCantidadUnidadCentral($mat->idMaterial)}}  {{$mat->unidad_medida}} 
+                  </li>
+                  <li>
+                  {{$metodo->  calcularCantidadUnidadInferior($mat->idMaterial)}}      {{$metodo->labelUnidadMedidaMinima($mat->idMaterial)}}  
+                  </li>
                   @else
-                  No Hay Imagen Disponible
+                  <li>
+                  {{$metodo->calcularCantidadAlmacen($mat->idMaterial)}}  {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
+                  </li>
+                  <li>
+                  {{$metodo->  calcularCantidadUnidadInferior($mat->idMaterial)}}      {{$metodo->labelUnidadMedidaMinima($mat->idMaterial)}}  
+
+                  </li>
                   @endif
-                </td> 
-              </div>
+                </ul>
+              </p>
+              <p align="justify"><strong>Stock Minimo:</strong>   
+                {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($mat->unidad_medida,$mat->stock_minimo)}} 
+                {{$mat->unidad_medida}}  
+              </p>
+              <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
+              <td>
+                @if (($mat->imagen)!="")
+                <img src="{{asset('imagenes/almacenMaterial/'.$mat->imagen)}}" alt="{{$mat->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                @else
+                No Hay Imagen Disponible
+                @endif
+              </td> 
             </div>
-          </section>
-          @if (($mat->codigo)!="")
-          <a class="btn btn-sm btn btn-info" href="{{URL::action('AlmacenMaterialController@invoice',$mat->id)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Codigo de Barras</a>
-          @endif
-        </div>
-        @endforeach
+          </div>
+        </section>
+        @if (($mat->codigo)!="")
+        <a class="btn btn-sm btn btn-info" href="{{URL::action('AlmacenMaterialController@invoice',$mat->idMaterial)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Codigo de Barras</a>
+        @endif
+      </div>
+      @endforeach
 
 
 
 
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

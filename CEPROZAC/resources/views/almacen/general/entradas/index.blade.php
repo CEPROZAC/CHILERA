@@ -33,79 +33,79 @@
 
 
 
-                  </div>
+                 </div>
 
-                </b>
-              </div>
-            </div>
-          </div>
-        </div>
+               </b>
+             </div>
+           </div>
+         </div>
+       </div>
 
-        <div class="porlets-content">
-          <div class="table-responsive">
-            <table  class="display table table-bordered table-striped" id="dynamic-table">
-              <thead>
-                <tr>
-                  <th>N° Entrada </th>
-                  <th>Fecha de Entrada</th>  
-                  <th>Nombre de Lote </th>
-                  <th>Producto </th>
-                  <th>Calidad</th>
-                  <th>Empaque</th>
-                    <th>Cantidad de Entrada</th>
-                     <th>Origen </th>
-
-                  <td><center><b>Editar</b></center></td>                    
-                  <td><center><b>Borrar</b></center></td>                            
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($almacen  as $entradas)
-                <tr class="gradeA">
-                  <td>{{$entradas->id}} </td>
-                  <td>{{$entradas->fecha}} </td>
-                   <td>{{$entradas->nombre_lote}} </td>
-                   <td>{{$entradas->nombreprodu}} </td>
-                   <td>{{$entradas->calinombre}} </td>
-                   <td>{{$entradas->empnombre}}</td>
-                   <td>{{$entradas->kg_entrada}} {{$entradas->medida}} </td>
-                   <td>{{$entradas->origen}} </td>
-
-                                       <td> 
-                  <center>
-                    <a href="{{URL::action('entradas_almacengeneralController@edit',$entradas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
-                    </center>
-                  </td>
-                  <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-                  </td>
-                </td>
-                </td>
-
-              </tr>
-              @include('almacen.agroquimicos.entradas.modal')
-              
-            
-                 @endforeach
-            </tbody>
-            <tfoot>
+       <div class="porlets-content">
+        <div class="table-responsive">
+          <table  class="display table table-bordered table-striped" id="dynamic-table">
+            <thead>
               <tr>
-                  <th>N° Entrada </th>
-                  <th>Fecha de Entrada</th>  
-                  <th>Nombre de Lote </th>
-                  <th>Producto </th>
-                  <th>Calidad</th>
-                  <th>Empaque</th>
-                    <th>Cantidad de Entrada</th>
-                     <th>Origen </th>
-                  <td><center><b>Editar</b></center></td>                    
-                  <td><center><b>Borrar</b></center></td>  
-             </tr>
-           </tfoot>
-         </table>
-       </div><!--/table-responsive-->
-     </div><!--/porlets-content-->
-   </div><!--/block-web-->
- </div><!--/col-md-12-->
+                <th>N° Entrada </th>
+                <th>Fecha de Entrada</th>  
+                <th>Nombre de Lote </th>
+                <th>Producto </th>
+                <th>Calidad</th>
+                <th>Empaque</th>
+                <th>Cantidad de Entrada</th>
+                <th>Origen </th>
+
+                <td><center><b>Editar</b></center></td>                    
+                <td><center><b>Borrar</b></center></td>                            
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($almacen  as $entradas)
+              <tr class="gradeA">
+                <td>{{$entradas->id}} </td>
+                <td>{{$entradas->fecha}} </td>
+                <td>{{$entradas->nombre_lote}} </td>
+                <td>{{$entradas->nombreprodu}} </td>
+                <td>{{$entradas->calinombre}} </td>
+                <td>{{$entradas->empnombre}}</td>
+                <td>{{$entradas->kg_entrada}} {{$entradas->medida}} </td>
+                <td>{{$entradas->origen}} </td>
+
+                <td> 
+                  <center>
+                    <a href="{{URL::action('Entradas_AlmacenGeneralController@edit',$entradas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                  </center>
+                </td>
+                <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                </td>
+              </td>
+            </td>
+
+          </tr>
+          @include('almacen.agroquimicos.entradas.modal')
+
+
+          @endforeach
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>N° Entrada </th>
+            <th>Fecha de Entrada</th>  
+            <th>Nombre de Lote </th>
+            <th>Producto </th>
+            <th>Calidad</th>
+            <th>Empaque</th>
+            <th>Cantidad de Entrada</th>
+            <th>Origen </th>
+            <td><center><b>Editar</b></center></td>                    
+            <td><center><b>Borrar</b></center></td>  
+          </tr>
+        </tfoot>
+      </table>
+    </div><!--/table-responsive-->
+  </div><!--/porlets-content-->
+</div><!--/block-web-->
+</div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

@@ -31,9 +31,7 @@
                     <a class="btn btn-sm btn-success tooltips" href="contratos/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Empleado"> <i class="fa fa-plus"></i> Registrar </a>
 
                     <a class="btn btn-sm btn-warning tooltips" href="{{route('contratos.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
-
                   </div>
-
                 </b>
               </div>
             </div>
@@ -149,23 +147,17 @@
     <th >Descargar</th>
     <td><center><b>Editar</b></center></td>
     <td><center><b>Borrar</b></center></td> 
-
   </tr>
 </tfoot>
 </table>
-
 </div><!--/table-responsive-->
-
-
 </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 
-
 <script>
-
   $('.minimize').click(function(e){
     var h = $(this).parents(".header");
     var c = h.next('.porlets-content');
@@ -192,10 +184,6 @@
     e.preventDefault();
   });
 
-
-
 </script>
-
-
 
 @endsection

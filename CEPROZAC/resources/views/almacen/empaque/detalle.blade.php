@@ -1,3 +1,4 @@
+@inject('metodo','CEPROZAC\Http\Controllers\AlmacenEmpaqueController')
 @extends('layouts.principal')
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
@@ -41,48 +42,77 @@
               <div class="block-web">
                 <div class="header">
 
-                  <h3>Producto: {{$mat->nombre}}</h3>
+                  <h3>Producto: </h3>
                 </div>
                 <div class="porlets-content" style="display: block;">
                  <p align="justify"><strong>Codigo de Barras:</strong> {{$mat->codigo}}</p>
-                                    @if (($mat->codigo)!="")
-                  <td><?php echo DNS1D::getBarcodeHTML("$mat->codigo", "C128");?>
-                    <div style="text-align:center;">              
+                 @if (($mat->codigo)!="")
+                 <td><?php echo DNS1D::getBarcodeHTML("$mat->codigo", "C128");?>
+                  <div style="text-align:center;">              
                   </div>
-                  </td>
+                </td>
+                @else
+                <td>Codigo de Barras No Generado </td>
+                @endif
+
+                <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
+                <p align="justify"><strong>Cantidad en Almacén:</strong> 
+
+                  @if($mat->unidad_medida== "KILOGRAMOS" || $mat->unidad_medida== "LITROS" || $mat->unidad_medida== "METROS" )
+                  <li>
+
+                    {{$metodo->calcularCantidadAlmacen($mat->idEmpaque)}} 
+                    {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
+
+                  </li>
+                  <li>
+
+                    {{$metodo->calcularCantidadUnidadCentral($mat->idEmpaque)}}  {{$mat->unidad_medida}} 
+                  </li>
+                  <li>
+                    {{$metodo->  calcularCantidadUnidadInferior($mat->idEmpaque)}}      {{$metodo->labelUnidadMedidaMinima($mat->idEmpaque)}}  
+                  </li>
                   @else
-                    <td>Codigo de Barras No Generado </td>
-                    @endif
+                  <li>
+                    {{$metodo->calcularCantidadAlmacen($mat->idEmpaque)}}  {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
+                  </li>
+                  <li>
+                    {{$metodo->  calcularCantidadUnidadInferior($mat->idEmpaque)}}      {{$metodo->labelUnidadMedidaMinima($mat->idEmpaque)}}  
 
-                 <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
-                 <p align="justify"><strong>Cantidad en Almacén:</strong> {{$mat->cantidad}} {{$mat->medida}} </p>
-                 <p align="justify"><strong>Stock Minimo:</strong> {{$mat->stock_minimo}} {{$mat->medida}}  </p>
-                 <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
-                   <td>
-                  @if (($mat->imagen)!="")
-                      <img src="{{asset('imagenes/almacenempaque/'.$mat->imagen)}}" alt="{{$mat->nombre}}" height="100px" width="100px" class="img-thumbnail">
-                        @else
-                  No Hay Imagen Disponible
+                  </li>
                   @endif
-                    </td> 
-                 </div>
-               </div>
-             </section>
-              @if (($mat->codigo)!="")
-                        <a class="btn btn-sm btn btn-info" href="{{URL::action('almacenempaquecontroller@invoice',$mat->id)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Codigo de Barras</a>
-                         @endif
-           </div>
-           @endforeach
+                </ul>
+
+
+
+              </p>
+              <p align="justify"><strong>Stock Minimo:</strong>      {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($mat->unidad_medida,$mat->stock_minimo)}} {{$mat->unidad_medida}}   </p>
+              <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
+              <td>
+                @if (($mat->imagen)!="")
+                <img src="{{asset('imagenes/almacenempaque/'.$mat->imagen)}}"  height="100px" width="100px" class="img-thumbnail">
+                @else
+                No Hay Imagen Disponible
+                @endif
+              </td> 
+            </div>
+          </div>
+        </section>
+        @if (($mat->codigo)!="")
+        <a class="btn btn-sm btn btn-info" href="{{URL::action('AlmacenEmpaqueController@invoice',$mat->idEmpaque)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Codigo de Barras</a>
+        @endif
+      </div>
+      @endforeach
 
 
 
 
-         </div><!--/porlets-content-->
-       </div><!--/block-web-->
-     </div><!--/col-md-12-->
-   </div><!--/row-->
- </div>
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
+</div><!--/col-md-12-->
+</div><!--/row-->
+</div>
 
 
 
- @endsection
+@endsection

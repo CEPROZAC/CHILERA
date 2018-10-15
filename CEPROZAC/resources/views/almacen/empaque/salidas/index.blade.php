@@ -70,8 +70,8 @@
                 <td>{{$salidas->nombre}} </td>
                 <td>{{$salidas->cantidad}} {{$salidas->medida}}</td>
                 <td>{{$salidas->destino}} </td>
-                   <td>  {{$salidas->emp1}} {{$salidas->ap1}}</td>
-                   <td> {{$salidas->emp2}} {{$salidas->ap2}}</td>
+                <td>  {{$salidas->emp1}} {{$salidas->ap1}}</td>
+                <td> {{$salidas->emp2}} {{$salidas->ap2}}</td>
                 <td>{{$salidas->tipo_movimiento}} </td>
                 <td>{{$salidas->fecha}} </td>
                 <td> 

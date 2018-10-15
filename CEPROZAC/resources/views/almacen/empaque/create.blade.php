@@ -7,7 +7,7 @@
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-      <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Inicio</a></li>
+    <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Inicio</a></li>
       <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Almacén de Empaques</a></li>
     </ol>
   </div>
@@ -20,7 +20,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Nuevo Empaque</strong></h2>
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Nuevo Producto</strong></h2>
             </div>
             <div class="col-md-4">
               <div class="btn-group pull-right">
@@ -39,14 +39,12 @@
         <form action="{{route('almacenes.empaque.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
           {{csrf_field()}}
 
-
-
           <div class="form-group">
             <label class="col-sm-3 control-label"> Nombre del Empaque: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <select name="nombre" class="form-control" value="{{Input::old('nombre')}}" required>  
+              <select name="idEmpaque" class="form-control" value="{{Input::old('nombre')}}" required>  
                 @foreach($empaque as $empaques)
-                <option value="{{$empaques->formaEmpaque}}">
+                <option value="{{$empaques->id}}">
                  {{$empaques->formaEmpaque}}
                </option>
                @endforeach              
@@ -56,120 +54,117 @@
            </div>
          </div><!--/form-group-->
 
-
-
-
          <div class="form-group">
           <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-            <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
-            <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico
-
-            <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
-
-          </div>
-        </div>
-
-        <input name="nombreOculto" id="oculto"  hidden  />
-        <div class="form-group">
-          <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-           <input type="text" name="codigo" id="segundo"  maxlength="35"  onchange="validarempaque();"  class="form-control" placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
-           <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
-           <span id="errorCodigo" style="color:#FF0000;"></span>
+            <div class="radio">
+              <label>
+                <input type="radio" value="1" name="habilitarDeshabilitar" onchange="habilitar(this.value);" checked> Ingrese Codigo de Barras 
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+               <input type="radio" value="2" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> GenerarCodigo de Barras Automatico 
+             </label>
+           </div>
+           <div class="radio">
+            <label>
+             <input type="radio" value="3" name="habilitarDeshabilitar"  onchange="habilitar(this.value);"> Ninguno
+           </label>
          </div>
        </div>
+     </div>
 
-       <div class="form-group ">
-        <label class="col-sm-3 control-label">Imagen</label>
-        <div class="col-sm-6">
-         <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
+     <input name="nombreOculto" id="oculto"  hidden  />
+     <div class="form-group">
+       <label class="col-sm-3 control-label"></label>
+       <div class="col-sm-6">
+         <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validaragroquimicos();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
+         <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+         <span id="errorCodigo" style="color:#FF0000;"></span>
        </div>
      </div>
-     
 
-
-
-     <div class="form-group">
-      <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
+     <div class="form-group ">
+      <label class="col-sm-3 control-label">Imagen</label>
       <div class="col-sm-6">
-        <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
-      </div>
-    </div>
+       <input  name="imagen" type="file"  value="{{Input::old('imagen')}}" accept=".jpg, .jpeg, .png" >
+     </div>
+   </div>
 
-<<<<<<< HEAD
-    <div class="form-group">
-      <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="cantidad" maxlength="9" type="number" value="{{Input::old('cantidad')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
-      </div>    
-    </div>  
-=======
-  <div class="form-group">
-    <label  class="col-sm-3 control-label">Cantidad en Almacén <strog class="theme_color">*</strog></label>
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <input name="cantidad" type="number" step="any"  max="999999" min="0.1"  value="{{Input::old('cantidad')}}" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad en Almacén" onkeypress=" return soloNumeros(event);" />
-    </div>    
-  </div>  
->>>>>>> d3d3c8de7d37cce1681f947cfbc718167259f896
+      <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+    </div>
+  </div>
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <select name="medida" value="{{Input::old('medida')}}">
-          @if(Input::old('medida')=="KILOGRAMOS")
-          <option value='KILOGRAMOS' selected>KILOGRAMOS
-          </option>
-          <option value="LITROS">LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          
-          @elseif(Input::old('medida')=="LITROS")
-          <option value="LITROS" selected>LITROS</option>
-          <option value="METROS">METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
-          @elseif(Input::old('medida')=="METROS")
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" selected>METROS</option>
-          <option value="UNIDADES">UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>
 
-          @else
-          <option value="LITROS">LITROS</option>
-          <option value="METROS" >METROS</option>
-          <option value="UNIDADES" selected>UNIDADES</option>
-          <option value='KILOGRAMOS'>KILOGRAMOS</option>   
-          @endif
-        </select>
-        
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+    <div class="col-sm-3">
+      <div class="input-group" >
+        <div class="input-group-addon" >Completas</div>
+        <input name="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
       </div>
     </div>
-    <div class="form-group">
-      <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}" min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
-      </div>    
-    </div> 
+    <div class="col-sm-5">
+      <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
+        @foreach($unidades  as $unidad)
+        <option value='{{$unidad-> idContenedorUnidadMedida}}'>
+          {{$unidad->nombre}} {{$unidad->cantidad}} {{$unidad->nombreUnidadMedida}}
+        </option>
+        @endforeach
+      </select>
+    </div>
+  </div>
 
 
-    
+  <div class="form-group">    
+    <label class="col-sm-3 control-label">Unidades Incompletas: <strog class="theme_color">*</strog></label>
 
-    <div class="form-group">
-      <div class="col-sm-offset-7 col-sm-5">
-        <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{url('/almacenes/empaque')}}" class="btn btn-default"> Cancelar</a>
+    <div class="col-sm-3">
+      <div class="input-group" >
+        <div class="input-group-addon" id="unidadCentral">Kilogramos</div>
+        <input id="Medida" name="unidadCentral"  
+        data-number-to-fixed="2"  class="form-control currency" 
+        required  placeholder="3" onkeypress="return soloNumeros(event);"
+        max="{{$unidad->cantidad}}"
+        />
       </div>
-    </div><!--/form-group-->
+    </div>
+    <div class="col-sm-3">
+      <div class="input-group" >
+        <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+        <input  name="unidadDeMedida"  max="1000"   class="form-control currency"   id="unidadMinima" placeholder="3"
 
 
-  </form>
+        onkeypress=" return soloNumeros(event);"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
+    <div class="col-sm-6">
+      <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}"  step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+    </div>    
+  </div> 
+
+  <div class="form-group">
+    <div class="col-sm-offset-7 col-sm-5">
+      <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{url('/almacenes/empaque')}}" class="btn btn-default"> Cancelar</a>
+    </div>
+  </div><!--/form-group-->
+
+</form>
 </div><!--/porlets-content-->
 </div><!--/block-web-->
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
-@include('almacen.empaque.modalreactivar')
+@include('almacen.agroquimicos.modalreactivar')
 @endsection
 
 <script>
@@ -193,5 +188,88 @@ document.getElementById("segundo").value=aleatorio;
   document.getElementById("segundo").value = "";
 }
 }
+
+
+
+
+function obtenerSelect() {
+
+  var select = document.getElementById("medida");
+  var options=document.getElementsByTagName("option");
+  var idProvedor= select.value;
+
+  var x = select.options[select.selectedIndex].text;
+  var unidadesDeMedida = x.split(" ");
+
+
+//MILILITROS
+
+//myArr.includes( 'donna' ) 
+ if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+} else if( unidadesDeMedida.includes("CENTIMETROS")) {  //CENTIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("LITROS")){  //LITROS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+
+ document.getElementById('unidadCentral').innerHTML='Litros';  
+ document.getElementById('unidadDeMedida').innerHTML='Mililitros';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+} else if( unidadesDeMedida.includes("METROS")){  //METROS
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+ document.getElementById('unidadCentral').innerHTML='Metros';  
+ document.getElementById('unidadDeMedida').innerHTML='Centimetros';  
+
+
+ $("#Medida").show();
+
+}  else if( unidadesDeMedida.includes("KILOGRAMOS")) {  //KILOGRAMOS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+ document.getElementById('unidadCentral').innerHTML='Kilogramos';  
+ document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+
+} else if ( unidadesDeMedida.includes("UNIDADES")) {  //UNIDADES
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  $("#Medida").show();
+
+} 
+
+}
+
+
 </script>
-</head>
+

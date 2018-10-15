@@ -10,7 +10,7 @@ use CEPROZAC\Http\Requests\EntradasMaterialesRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradaAlmacen;
 use CEPROZAC\Empleado;
-use CEPROZAC\almacenmaterial;
+use CEPROZAC\AlmacenMaterial;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\empresas_ceprozac;
 

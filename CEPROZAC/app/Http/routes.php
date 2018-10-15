@@ -170,8 +170,8 @@ Route::resource('almacen/general','AlmacenGeneralController');
 Route::get('veralmacen/{id}', array('as'=> '/veralmacen','uses'=>'AlmacenGeneralController@verInformacion'));
 Route::get('movimientos/{id}', array('as'=> '/movimientos','uses'=>'AlmacenGeneralController@movimientos'));
 //entradas
-Route::get('verentradas/{id}', array('as'=> '/verentradas','uses'=>'entradas_almacengeneralController@verEntradas'));
-Route::resource('almacen/general/entradas','entradas_almacengeneralController');
+Route::get('verentradas/{id}', array('as'=> '/verentradas','uses'=>'Entradas_AlmacenGeneralController@verEntradas'));
+Route::resource('almacen/general/entradas','Entradas_AlmacenGeneralController');
 Route::resource('almacen/general/salidas','salidas_almacengeneral'); 
 Route::get('descargar-almacen-general', 'AlmacenGeneralController@excel')->name('almacengeneral.excel');
 
@@ -182,6 +182,7 @@ Route::resource('almacen/materiales','AlmacenMaterialController');
 Route::resource('almacen/materiales/stock', 'AlmacenMaterialController@stock');
 Route::resource('detalle/materiales', 'AlmacenMaterialController@detalle');
 Route::resource('almacen/salidas/material','SalidaAlmacenMaterialController');	
+Route::get('verDetallesArticuloAlmacenMaterial/{id}','AlmacenMaterialController@verDetallesArticuloMaterial');
 Route::get('descargar-salidas', 'SalidaAlmacenMaterialController@excel')->name('almacen.materiales.salidas.excel');
 Route::resource('almacen/entradas/materiales','EntradaAlmacenController');	
 Route::get('descargar-entradas', 'EntradaAlmacenController@excel')->name('almacen.materiales.entradas.excel');
@@ -206,7 +207,7 @@ Route::get('verproducto/{id}', array('as'=> '/verproducto','uses'=>'AlmacenAgroq
 /////////ALMACEN DE LIMPIEZA
 Route::resource('almacenes/limpieza','AlmacenLimpiezaController');	
 Route::resource('almacenes/limpieza/stock', 'AlmacenLimpiezaController@stock');
-Route::resource('detalle/limpieza', 'almacenlimpiezaController@detalle');
+Route::resource('detalle/limpieza', 'AlmacenLimpiezaController@detalle');
 Route::resource('almacen/salidas/limpieza','SalidasAlmacenLimpiezaController');	
 Route::get('descargar-salidas-limpieza', 'SalidasAlmacenLimpiezaController@excel')->name('almacen.limpieza.salidas.excel');
 Route::resource('almacen/entradas/limpieza','EntradasAlmacenLimpiezaController');	
@@ -215,15 +216,15 @@ Route::get('pdflimpieza/{id}', array('as'=> '/pdflimpieza','uses'=>'AlmacenLimpi
 Route::get('descargar-limpieza', 'AlmacenLimpiezaController@excel')->name('almacen.limpieza.excel');
 
 ////ALMACEN DE EMPAQUES
-Route::resource('almacenes/empaque','almacenempaquecontroller');	
-Route::resource('almacenes/empaque/stock', 'almacenempaquecontroller@stock');
-Route::resource('detalle/empaque', 'almacenempaquecontroller@detalle');
+Route::resource('almacenes/empaque','AlmacenEmpaqueController');	
+Route::resource('almacenes/empaque/stock', 'AlmacenEmpaqueController@stock');
+Route::resource('detalle/empaque', 'AlmacenEmpaqueController@detalle');
 Route::resource('almacen/salidas/empaque','salidasempaquescontroller');	
 Route::get('descargar-salidas-empaque', 'salidasempaquescontroller@excel')->name('almacen.empaque.salidas.excel');
 Route::resource('almacen/entradas/empaque','entradasempaquescontroller');	
 Route::get('descargar-entradas-empaque', 'entradasempaquescontroller@excel')->name('almacen.empaque.entradas.excel');
-Route::get('pdfempaque/{id}', array('as'=> '/pdflimpieza','uses'=>'almacenempaquecontroller@invoice'));
-Route::get('descargar-empaquesalm', 'almacenempaquecontroller@excel')->name('almacen.empaque.excel');
+Route::get('pdfempaque/{id}', array('as'=> '/pdflimpieza','uses'=>'AlmacenEmpaqueController@invoice'));
+Route::get('descargar-empaquesalm', 'AlmacenEmpaqueController@excel')->name('almacen.empaque.excel');
 
 /////////
 
@@ -368,8 +369,8 @@ Route::post('activarlimpieza', 'AlmacenLimpiezaController@activar');
 ///////////
 //validacion agroquimicos
 
-Route::get('validarempaque/{codigo}', 'almacenempaquecontroller@validarcodigo');
-Route::post('activarempaque', 'almacenempaquecontroller@activar');
+Route::get('validarempaque/{codigo}', 'AlmacenEmpaqueController@validarcodigo');
+Route::post('activarempaque', 'AlmacenEmpaqueController@activar');
 ///////////
 //AQUI TERMINA VALIDACIONES
 

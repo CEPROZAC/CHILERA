@@ -6,22 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
-
-use CEPROZAC\almacengeneral;
+use CEPROZAC\AlmacenGeneral;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\espacios_almacen;
 use CEPROZAC\lote;
-
-
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
-class almacengeneralController extends Controller
+class AlmacenGeneralController extends Controller
 {
     /**
      * Display a listing of the resource.

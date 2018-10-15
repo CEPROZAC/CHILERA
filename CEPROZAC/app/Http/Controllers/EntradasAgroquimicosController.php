@@ -128,10 +128,6 @@ class EntradasAgroquimicosController extends Controller
     public function store(entradasagroquimicosRequest $formulario)
     {
 
-
-
-
-    /*
      $cantidad = $formulario->get('cantidad2');
 
 
@@ -285,7 +281,7 @@ class EntradasAgroquimicosController extends Controller
      return redirect('/almacen/entradas/agroquimicos');
    }
 
-   */
+   
  }
 
     /**

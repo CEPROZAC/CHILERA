@@ -25,12 +25,12 @@
             <div class="col-md-12">
               <div class="btn-group pull-right">
                 <b>
- 
+                 
 
                   <div class="btn-group" style="margin-right: 10px;">
                     <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.general.create')}}"style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Almacén"> <i class="fa fa-plus"></i> Registrar Almacén </a>
 
-                                        <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacengeneral.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
+                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacengeneral.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
 
 
                   </div>
@@ -43,15 +43,15 @@
         <div class="porlets-content">
           <div class="table-responsive">
            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered " id="hidden-table-info6">
-              <thead>
-                <tr>
+            <thead>
+              <tr>
 
-                  
-                  <th>Nombre </th>
-                  <th>Capacidad </th>
-                  <th>Descripción </th>
-                  <th>Ubicación </th>
-                  <td style="display:none;" >Espacio Ocupado </th>
+                
+                <th>Nombre </th>
+                <th>Capacidad </th>
+                <th>Descripción </th>
+                <th>Ubicación </th>
+                <td style="display:none;" >Espacio Ocupado </th>
                  <td style="display:none;" >Espacio Libre </th>
                   <th style="display:none;" >Espacios Ocupados Asignados</th>
                   <th style="display:none;" >Espacios Libres Asignados</th>
@@ -70,8 +70,8 @@
                   <td>{{$almacenes->capacidad}} {{$almacenes->medida}} </td>            
                   <td>{{$almacenes->descripcion}} </td> 
                   <td>{{$almacenes->ubicacion}} </td>
-                 <td style="display:none;" >{{$almacenes->total_ocupado}} {{$almacenes->medida}}</td>
-                 <td style="display:none;" >{{$almacenes->total_libre}} {{$almacenes->medida}}</td>
+                  <td style="display:none;" >{{$almacenes->total_ocupado}} {{$almacenes->medida}}</td>
+                  <td style="display:none;" >{{$almacenes->total_libre}} {{$almacenes->medida}}</td>
                   <td style="display:none;" >{{$almacenes->esp_ocupado}} </td>
                   <td style="display:none;" >{{$almacenes->esp_libre}}</td>
                   <td style="display:none;" >{{$almacenes->estado}}</td>
@@ -81,25 +81,25 @@
                   </td>
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$almacenes->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
-                                    <td >
-       <a href="{{URL::action('AlmacenGeneralController@verInformacion',$almacenes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
-       
-                </td>
-              </td>
+                  <td >
+                   <a href="{{URL::action('AlmacenGeneralController@verInformacion',$almacenes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
+                   
+                 </td>
+               </td>
 
-            </tr>
-            @include('almacen.general.modal')
-            @endforeach
-          </tbody>
-          <tfoot>
+             </tr>
+             @include('almacen.general.modal')
+             @endforeach
+           </tbody>
+           <tfoot>
             <tr>
-            <th></th>                                 
-                  <th>Nombre </th>
-                  <th>Capacidad </th>
-                  <th>Descripción </th>
-                  <th>Ubicación </th>
-                  <td style="display:none;" >Espacio Ocupado </th>
-                  <td style="display:none;" >Espacio Libre </th>
+              <th></th>                                 
+              <th>Nombre </th>
+              <th>Capacidad </th>
+              <th>Descripción </th>
+              <th>Ubicación </th>
+              <td style="display:none;" >Espacio Ocupado </th>
+                <td style="display:none;" >Espacio Libre </th>
                   <th style="display:none;" >Espacios Ocupados Asignados</th>
                   <th style="display:none;" >Espacios Libres Asignados</th>
                   <th style="display:none;" >Estado</th> 
@@ -108,14 +108,14 @@
                   <td><center><b>Borrar</b></center></td>  
                   <th>Ver &nbsp; &nbsp;</th>
 
-            </tr>
-          </tfoot>
-        </table>
-      </div><!--/table-responsive-->
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
-</div><!--/col-md-12-->
-</div><!--/row-->
+                </tr>
+              </tfoot>
+            </table>
+          </div><!--/table-responsive-->
+        </div><!--/porlets-content-->
+      </div><!--/block-web-->
+    </div><!--/col-md-12-->
+  </div><!--/row-->
 </div>
 
 

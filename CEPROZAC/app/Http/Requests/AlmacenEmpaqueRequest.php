@@ -4,7 +4,7 @@ namespace CEPROZAC\Http\Requests;
 
 use CEPROZAC\Http\Requests\Request;
 
-class almacenempaquerequest extends Request
+class AlmacenEmpaqueRequest extends Request
 {
       protected $redirect = "almacenes/empaque/create";
     /**

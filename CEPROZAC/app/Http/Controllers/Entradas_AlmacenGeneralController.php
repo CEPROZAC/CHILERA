@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
-use CEPROZAC\almacengeneral;
+use CEPROZAC\AlmacenGeneral;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
@@ -23,7 +23,7 @@ use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 
 
-class entradas_almacengeneralController extends Controller
+class Entradas_AlmacenGeneralController extends Controller
 {
     /**
      * Display a listing of the resource.

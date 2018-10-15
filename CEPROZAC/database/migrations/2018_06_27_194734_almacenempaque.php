@@ -12,19 +12,20 @@ class Almacenempaque extends Migration
      */
     public function up()
     {
-        Schema::create('almacenempaque', function (Blueprint $table) {
-                     $table->increments('id');
-         $table->string('nombre');
-         $table->string('provedor')->nullable();
-         $table->string('codigo')->nullable();
-         $table->string('imagen')->nullable();
-         $table->string('descripcion')->nullable();
-         $table->double('cantidad');
-         $table->double('stock_minimo')->nullable();
-         $table->string('medida');
-         $table->string('estado');
-         $table->timestamps();
-        });
+      Schema::create('almacenempaque', function (Blueprint $table) {
+       $table->increments('id');
+       $table->integer('idFormaEmpaque')->unsigned();
+       $table->foreign('idFormaEmpaque')->references('id')->on('forma_empaques');
+       $table->string('codigo')->nullable();
+       $table->string('imagen')->nullable();
+       $table->string('descripcion')->nullable();
+       $table->integer('cantidad');
+       $table->integer('stock_minimo')->nullable();
+       $table->integer('idUnidadMedida')->unsigned();
+       $table->foreign('idUnidadMedida')->references('id')->on('unidades_medidas');
+       $table->string('estado');
+       $table->timestamps();
+     });
     }
 
     /**
@@ -34,6 +35,6 @@ class Almacenempaque extends Migration
      */
     public function down()
     {
-        Schema::drop('almacenempaque');
+      Schema::drop('almacenempaque');
     }
-}
+  }
