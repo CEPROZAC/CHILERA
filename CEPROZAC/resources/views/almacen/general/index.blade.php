@@ -41,7 +41,7 @@
         </div>
 
         <div class="porlets-content">
-          <div class="table-responsive">
+          <div class="table-responsive" style="overflow-x:auto;">
            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered " id="hidden-table-info6">
             <thead>
               <tr>
@@ -82,7 +82,7 @@
                   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$almacenes->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                   </td>
                   <td >
-                   <a href="{{URL::action('AlmacenGeneralController@verInformacion',$almacenes->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
+                   <a href="{{URL::action('AlmacenGeneralController@verInformacion',$almacenes->id)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>    </td>
                    
                  </td>
                </td>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\empresa;
+use CEPROZAC\Empresa;
 use CEPROZAC\Producto;
 use CEPROZAC\Provedor;
 use DB;

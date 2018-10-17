@@ -41,7 +41,7 @@
       </div>
 
       <div class="porlets-content">
-        <div class="table-responsive">
+        <div class="table-responsive" style="overflow-x:auto;">
           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
               <tr>
@@ -64,7 +64,7 @@
 
                 <td> 
                   <center>
-                    <a href="{{URL::action('unidadesmedidacontroller@edit',$unidad->idUnidadMedida)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                    <a href="{{URL::action('UnidadesMedidaController@edit',$unidad->idUnidadMedida)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                   </center>
                 </td>
                 <td>

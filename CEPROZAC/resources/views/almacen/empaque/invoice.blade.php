@@ -18,7 +18,7 @@
         <tbody>
           <tr>
             @foreach ($material as $item)
-    <td class="nombre">{{ $item->nombre }}<br /></td>
+    <td class="nombre">{{ $item->formaEmpaque }}<br /></td>
      <td> <?php echo DNS1D::getBarcodeHTML("$item->codigo", "C128",2,40);?>
     <div style="text-align:center;">
     <font size=18 class="codigo	">{{$item->codigo}} 

@@ -8,7 +8,7 @@
               <h3 class="content-header theme_color">&nbsp;Eliminar Material</h3>
             </div>
             <div class="porlets-content" style="margin-bottom: -50px;">
-              <h4>¿Esta segúro que desea eliminar este producto de Almacén de Agroquímicos?</h4>
+              <h4>¿Esta segúro que desea eliminar este producto de Almacén de Empaques?</h4>
             </div><!--/porlets-content--> 
           </div><!--/block-web--> 
         </div>
@@ -16,7 +16,7 @@
     </div>
     <div class="modal-footer" style="margin-top: -10px;">
       <div class="row col-md-5 col-md-offset-7" style="margin-top: -5px;">
-        <form action="{{url('almacenes/agroquimicos', [$materiales->idEmpaque])}}" method="POST"> 
+        <form action="{{url('almacenes/empaque', [$materiales->idEmpaque])}}" method="POST"> 
          <input type="hidden" name="_method" value="DELETE">
          <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

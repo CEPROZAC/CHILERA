@@ -41,7 +41,7 @@
       </div>
 
       <div class="porlets-content">
-        <div class="table-responsive">
+        <div class="table-responsive" style="overflow-x:auto;">
           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
               <tr>

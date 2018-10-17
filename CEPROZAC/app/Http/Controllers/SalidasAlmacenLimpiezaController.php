@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\salidasalmacenlimpieza;
+use CEPROZAC\SalidasAlmacenLimpieza;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
-use CEPROZAC\almacenlimpieza;
-use CEPROZAC\ubicaciones_limpieza;
-use CEPROZAC\cantidad_unidades_limp;
-use CEPROZAC\unidadesmedida; 
+use CEPROZAC\AlmacenLimpieza;
+use CEPROZAC\Ubicaciones_Limpieza;
+use CEPROZAC\Cantidad_Unidades_Limp;
+use CEPROZAC\UnidadesMedida; 
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,7 +22,7 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 use Illuminate\Support\Collection as Collection;
-class salidasalmacenlimpiezaController extends Controller
+class SalidasAlmacenLimpiezaController extends Controller
 {
     /** 
      * Display a listing of the resource.

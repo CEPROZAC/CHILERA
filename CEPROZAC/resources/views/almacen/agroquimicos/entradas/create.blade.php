@@ -87,10 +87,10 @@
      <div class="form-group">
       <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <select name="entregado_a" id="entregado_a" value=""  class="form-control select2" required>  
-          @foreach($empleado as $emp)
-          <option value="{{$emp->id}}">
-           {{$emp->nombre}} {{$emp->apellidos}} 
+        <select name="entrega"   class="form-control select2" required>  
+          @foreach($empleado as $emp1)
+          <option value="{{$emp1->id}}">
+           {{$emp1->nombre}} {{$emp1->apellidos}} 
          </option>
          @endforeach              
        </select>
@@ -102,10 +102,10 @@
    <div class="form-group">
     <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select2" required>  
-        @foreach($empleado as $emp)
-        <option value="{{$emp->id}}">
-         {{$emp->nombre}} {{$emp->apellidos}} 
+      <select name="recibe" class="form-control select2" required>  
+        @foreach($empleado as $emp2)
+        <option value="{{$emp2->id}}">
+         {{$emp2->nombre}} {{$emp2->apellidos}}
        </option>
        @endforeach              
      </select>
@@ -136,16 +136,6 @@
   </div>
 </div>
 
-<div class="form-group"> 
-  <label class="col-sm-3 control-label">% IVA<strog class="theme_color">* </strog></label>
-  <div class="col-sm-3">
-    <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
-  </div>    
-  <label class="col-sm-1 control-label">% IEPS<strog class="theme_color">* </strog></label>
-  <div class="col-sm-3">
-    <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
-  </div> 
-</div>
 
 <div class="form-group">
  <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
@@ -194,7 +184,7 @@
             <label for="material">Material </label>
             <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
               @foreach($material as $mat)
-              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}">
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->idUnidadMedida}}_{{$mat->nombreUnidad}}_{{$mat->NombreUnidadP}}_{{$mat->cantidadMedida}}">
                {{$mat->nombre}}
              </option>
              @endforeach              
@@ -205,28 +195,15 @@
 
 
 
+
        <div class="col-sm-3">
-         <div class="form-group"> 
-          <label for="umedida">Medida </label>
-          <input name="umedida" id="umedida" value="" onchange="medida(this);"  type="text" disabled class="form-control" />
-        </div>    
-      </div>  
-
-
-      <div class="col-sm-3">
         <div class="form-group"> 
           <label for="descripcion">Descripción </label>
           <input name="descripcion" id="descripcion" disabled class="form-control" />
         </div>    
-      </div>  
+      </div>   
 
-      <div class="col-sm-3">
-        <div class="form-group"> 
-          <label for="scantidad">Cantidad de Entrada </label>
-          <input name="scantidad" id="scantidad" type="number" step="any"  max="999999" min="0.1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="5"  />
-          <span id="errorCantidad" style="color:#FF0000;"></span>
-        </div>    
-      </div> 
+
 
 
 
@@ -239,48 +216,100 @@
         <span id="errorprecio" style="color:#FF0000;"></span>
       </div>    
     </div>    
-
-
-
-
-
-    <div class="col-sm-3">
-      <div class="form-group"> 
-        <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
-      </div>
-    </div>
+          <div class="col-sm-1">
+       <div class="form-group"> 
+        <label for="preciou">% IVA </label>
+         <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+        <span id="errorprecio" style="color:#FF0000;"></span>
+      </div>    
+    </div>   
+              <div class="col-sm-1">
+       <div class="form-group"> 
+        <label for="preciou">% IEPS </label>
+       <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
+        <span id="errorprecio" style="color:#FF0000;"></span>
+      </div>    
+    </div>   
 
 
 
   </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+    <div class="col-sm-3">
+      <div class="input-group" >
+        <div class="input-group-addon" >Completas</div>
+        <input name="unidadesCompletas" id="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+                <span id="errorUnidad" style="color:#FF0000;"></span>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <input id="unidadAux" name="unidadAux"  value="Medida" class="form-control currency" readonly="" />
+    </div>
+  </div>
+</div>
 
-  @include('almacen.agroquimicos.entradas.modale')
+<div class="form-group">    
+  <label class="col-sm-3 control-label">Unidades Incompletas: <strog class="theme_color">*</strog></label>
 
-  <div class="form-group"  class="table-responsive"> 
-    <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
-      <thead style="background-color:#A9D0F5">
-        <th>Opciones</th>
-        <th>Articulo</th>
-        <th>Cantidad </th>
-        <th>Precio Unitario</th>
-        <th>IVA</th>
-        <th>IEPS</th>
-        <th>Subtotal</th>
-
-      </thead>
-      <tfoot>
-       <td style="display:none;"></td>
-       <td style="display:none;"></td>
-       <td style="display:none;"></td>
-       <td style="display:none;"></td>
-       <td style="display:none;"></td>
-       <td style="display:none;"></td>
-       <td style="display:none;"></td>
-     </tfoot>
-   </table>
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadCentral">KILOGRAMOS</div>
+      <input id="Medida" name="unidadCentral"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+      <input  name="unidadDeMedida"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+</div>
 
 
-   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+
+
+
+
+<div class="col-sm-3">
+  <div class="form-group"> 
+    <button type="button" id="btn_add" onclick="agregar();" class="btn btn-primary">Agregar</button>
+  </div>
+</div>
+
+
+
+
+@include('almacen.agroquimicos.entradas.modale')
+
+<div class="form-group"  class="table-responsive"> 
+  <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
+    <thead style="background-color:#A9D0F5">
+      <th>Opciones</th>
+      <th>N°</th>
+      <th>Articulo</th>
+      <th>Cantidad </th>
+      <th>Total</th>
+      <th>Precio Unitario</th>
+      <th>IVA</th>
+      <th>IEPS</th>
+      <th>Subtotal</th>
+    </thead>
+    <tfoot>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+      <td style="display:none;"></td>
+    </tfoot>
+  </table>
+
+
+  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
     <div class="form-group"> 
       <label  for="subtotal">Total </label>
       <input name="subtotal" id="subtotal" type="number" value="0"  maxlength="5" class="form-control"  readonly/>
@@ -302,7 +331,6 @@
   </div>
 </div>
 
-</div>
 </div>
 </div>
 
@@ -353,30 +381,29 @@
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "6",
+      limite = "8",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
       descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
-      unidad=arregloDeSubCadenas[5];
+            codigo=arregloDeSubCadenas[2];
+        nombre=arregloDeSubCadenas[4];
+      medida=arregloDeSubCadenas[5];
+      nombreUnidad=arregloDeSubCadenas[6];
+      UnidadP=arregloDeSubCadenas[7];
       tecla=(document.all) ? event.keyCode : event.which;
       if (codigo == x){
         swal("Producto Encontrado:"+nombre +"!", "Stock de Entrada!", "success",{content: "input", inputType:"number",}).then((value) => {
           var aux =`${value}`;
 
-          document.getElementById("scantidad").value = aux;
+          document.getElementById("unidadesCompletas").value = aux;
   //swal(aux);
 });
 
         document.getElementById('id_materialk').selectedIndex = i;
-        document.getElementById("pcantidad").value=stock;
         document.getElementById("descripcion").value=descripcion;
-
-        document.getElementById("scantidad").max=stock;
-        document.getElementById("umedida").value=unidad;
+        document.getElementById("unidadAux").value=nombreUnidad;
+        obtenerSelect(UnidadP);
         break;
       }
 
@@ -396,17 +423,20 @@ window.onload=function() {
   var select2 = document.getElementById('id_materialk');
   var selectedOption2 = select2.selectedIndex;
   var cantidadtotal = select2.value;
-  limite = "6",
+  limite = "8",
   separador = "_",
   arregloDeSubCadenas = cantidadtotal.split(separador, limite);
   stock=arregloDeSubCadenas[0];
   descripcion=arregloDeSubCadenas[1];
   medida=arregloDeSubCadenas[5];
-  document.getElementById("pcantidad").value=stock;
-  document.getElementById("descripcion").value=descripcion;
-  document.getElementById("scantidad").value = "1";
-  document.getElementById("umedida").value=medida;
-  document.getElementById("codigo").select();
+  nombreUnidad=arregloDeSubCadenas[6];
+  UnidadP=arregloDeSubCadenas[7];
+ // document.getElementById("pcantidad").value=stock;
+ document.getElementById("descripcion").value=descripcion;
+ document.getElementById("unidadAux").value=nombreUnidad;
+ document.getElementById("codigo").select();
+  // <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->idUnidadMedida}}">
+  obtenerSelect(UnidadP);
 }
 
 var select = document.getElementById('id_materialk');
@@ -417,20 +447,21 @@ var select = document.getElementById('id_materialk');
      // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
-   limite = "6",
+   limite = "8",
    separador = "_",
    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
    stock=arregloDeSubCadenas[0];
    descripcion=arregloDeSubCadenas[1];
    medida=arregloDeSubCadenas[5];
+   nombreUnidad=arregloDeSubCadenas[6];
+   UnidadP=arregloDeSubCadenas[7];
    // id_materiales=arregloDeSubCadenas[3];
 
   // console.log(arregloDeSubCadenas); 
-  document.getElementById("pcantidad").value=stock;
-  document.getElementById("descripcion").value=descripcion;
-  document.getElementById("scantidad").value = "1";
-  document.getElementById("umedida").value=medida;
-
+ // document.getElementById("pcantidad").value=stock;
+ document.getElementById("descripcion").value=descripcion;
+ document.getElementById("unidadAux").value=nombreUnidad;
+ obtenerSelect(UnidadP);
 
 
 });
@@ -448,10 +479,8 @@ var select = document.getElementById('id_materialk');
             stock=arregloDeSubCadenas[0];
             descripcion=arregloDeSubCadenas[1];
             medida=arregloDeSubCadenas[5];
-            document.getElementById("pcantidad").value=stock;
+            //document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
-            document.getElementById("scantidad").value = "1";
-            document.getElementById("umedida").value=medida;
           }
 
         }
@@ -477,8 +506,18 @@ var select = document.getElementById('id_materialk');
 }
 
 function llenado(){
-  var select2 = document.getElementById('medida');
-  var selectedOption2 = select2.selectedIndex;
+  var x = document.getElementById('unidadesCompletas').value;
+  var y =document.getElementById('Medida').value;
+  var z =document.getElementById('unidadMinima').value;
+
+    if(x == "" && y == ""    && z == ""){
+   document.getElementById("errorUnidad").innerHTML = "La Cantidad de Entrada debe ser Mayor de 0";
+   return false;
+
+ }
+    document.getElementById("errorUnidad").innerHTML = "";
+
+  var select2 = document.getElementById('id_materialk');
   var cantidadtotal = select2.value;
   limite = "3",
   separador = "_",
@@ -487,51 +526,40 @@ function llenado(){
   medida=arregloDeSubCadenas[1];
   cantidadaux=arregloDeSubCadenas[2];
 
-  if (document.getElementById('umedida').value != unidadaux){
-   document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
-   return false;
- }
- document.getElementById("errorMedida").innerHTML = "";
 
 
- var provedorv =  document.getElementById('prov').value;
- var empresav =  document.getElementById('recibio').value;
- var entregadov = document.getElementById('entregado_a').value;
- var recibev = document.getElementById('recibe_alm').value;
- var notav = document.getElementById('factura').value;
- var entradav = document.getElementById('scantidad').value;
- var preciou = document.getElementById('preciou').value;
- var ivax = document.getElementById('iva').value * .010;
- var iepsx = document.getElementById('ieps').value  * .010;
- if(provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
+  var notav = document.getElementById('factura').value;
+  var preciou = document.getElementById('preciou').value;
+  var ivax = document.getElementById('iva').value * .010;
+  var iepsx = document.getElementById('ieps').value  * .010;
+  if(notav!=="" && preciou!=="" && ivax !== ""){
    if (preciou > 0){
      document.getElementById("errorprecio").innerHTML = "";
-     if (entradav > 0){
-      document.getElementById("errorCantidad").innerHTML = "";
 
 
 
+     var select=document.getElementById('id_materialk');
+     var cantidadtotal = select.value;
+     limite = "9",
+     separador = "_",
+     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+     var id2= uno++;
+     cantidad=arregloDeSubCadenas[0];
+     descripcion=arregloDeSubCadenas[1];
+     codigo=arregloDeSubCadenas[2];
+     id=arregloDeSubCadenas[3];
+     nombre=arregloDeSubCadenas[4];
+     UnidadP=arregloDeSubCadenas[7];
+     CantidadP=arregloDeSubCadenas[8];
 
-      
 
-      var select=document.getElementById('id_materialk');
-      var cantidadtotal = select.value;
-      limite = "6",
-      separador = "_",
-      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      var id2= uno++;
-      cantidad=arregloDeSubCadenas[0];
-      descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
-      var comprueba = recorre2(id)
-      if (comprueba == 1){
-        swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
-        return false;
-      }
+     var comprueba = recorre2(id)
+     if (comprueba == 1){
+      swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+      return false;
+    }
 
-      var tabla = document.getElementById("detalles");
+    var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
     var row = tabla.insertRow(1);
     var cell1 = row.insertCell(0);
@@ -543,8 +571,6 @@ function llenado(){
     var cell7 = row.insertCell(6);
     var cell8 = row.insertCell(7);
     var cell9 = row.insertCell(8);
-    var cell10 = row.insertCell(9);
-    var cell11 = row.insertCell(10);
 
 
 
@@ -561,32 +587,71 @@ function llenado(){
 
 
 
-    var cantidades = document.getElementById("scantidad");
+    var cantidades = document.getElementById("unidadesCompletas");
     var cantidaden = cantidades.value;
     var cantidadth = cantidadaux * cantidaden;
     var u = "";
     var medidaaux = u.concat(cantidadth," ",unidadaux);
 
 
+    if (UnidadP == "KILOGRAMOS" || UnidadP == "LITROS"  || UnidadP == "METROS"){
+      var x = document.getElementById('unidadesCompletas').value;
+      var y = document.getElementById('Medida').value;
+      var z = document.getElementById('unidadMinima').value;
+      x= (x * CantidadP)*1000;
+      y= y*1000;
+      if(x > 0 && y > 0 &&  z > 0){        
+        var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>"+"<br/>"+"<li>"+document.getElementById('Medida').value .concat(" "+document.getElementById('unidadCentral').innerHTML)+"</li>"+"<br/>" +"<li>"+document.getElementById('unidadMinima').value.concat(" "+document.getElementById('unidadDeMedida').innerHTML)+"</li>";
+        var cantidad_completa= parseInt(x) + parseInt(y) + parseInt(z);
 
-    var preciox = document.getElementById("preciou");
-    var precio = preciox.value;
+      }else if(x > 0 && y > 0 && z <= 0){
+        var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>"+"<br/>"+"<li>"+document.getElementById('Medida').value .concat(" "+document.getElementById('unidadCentral').innerHTML)+"</li>";
+        var cantidad_completa = parseInt(x) + parseInt(y);
+      }else if (x > 0 && y <= 0 && z <= 0){
+        var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>";
+        var cantidad_completa= x;
 
-    var ivatotal = cantidaden * precio * ivax;
-    var iepstotal = cantidaden * precio * iepsx;
-    cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
-    cell2.innerHTML = id;
-    cell3.innerHTML = nombre;
-    cell4.innerHTML = cantidaden;
-    cell5.innerHTML = medida;
-    cell6.innerHTML = medidaaux;
-    cell7.innerHTML = notas;
-    cell8.innerHTML = precio;
-    cell9.innerHTML = ivatotal;
-    cell10.innerHTML = iepstotal;
-    cell11.innerHTML = precio * cantidaden + ivatotal + iepstotal;
+      }
 
-    var x = document.getElementById("id_materialk");
+
+    }else {
+      var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>";
+      var cantidad_completa= document.getElementById('unidadesCompletas').value;
+
+    }
+
+    if (UnidadP == "KILOGRAMOS"){
+      var numbreUnidadAux="GRAMOS"; 
+    }else if(UnidadP == "LITROS"){
+      var   numbreUnidadAux="MILILITROS"; 
+   }else if(UnidadP == "METROS"){
+     var numbreUnidadAux="CENTIMETROS"
+
+   }else{
+    var  numbreUnidadAux="UNIDADES"
+  }
+
+
+
+
+
+  var preciox = document.getElementById("preciou");
+  var precio = preciox.value;
+
+  var ivatotal = cantidaden * precio * ivax;
+  var iepstotal = cantidaden * precio * iepsx;
+  cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
+  cell2.innerHTML = id;
+  cell3.innerHTML = nombre;
+  cell4.innerHTML =  cantidad_Total;
+  cell5.innerHTML = cantidad_completa + " " +numbreUnidadAux;
+  cell6.innerHTML = precio;
+  cell7.innerHTML = ivatotal;
+  cell8.innerHTML = iepstotal;
+  cell9.innerHTML = precio * cantidaden + ivatotal + iepstotal;
+
+
+        var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
     cargar();
     var menos =document.getElementById("detalles").rows
@@ -598,9 +663,6 @@ function llenado(){
     var sumatodo = parseFloat(sub) + parseFloat(auxsuma);
     document.getElementById("subtotal").value=sumatodo;
   }else{
-   // swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
-   document.getElementById("errorCantidad").innerHTML = "La Cantidad de Entrada debe ser Mayor de 0";
- }}else{
     //alert('El precio Unitario no Puede Ser Menor de 0');
    // swal("Alerta!", "El precio Unitario no Puede Ser Menor de 0!", "error");
    document.getElementById("errorprecio").innerHTML = "El precio Unitario no Puede Ser Menor de 0";
@@ -608,6 +670,7 @@ function llenado(){
   swal("Alerta!", "Faltan campos Por llenar Favor de Verificar!", "error");
     //alert("Faltan campos Por llenar Favor de Verificar");
   }
+  limpiar();
 }  
 
 
@@ -645,12 +708,6 @@ function recorre2(valor) {
 }else if(z == 8){
  z ++;
 
-}else if(z == 9){
- z ++;
-
-}else if(z == 10){
- z ++;
-
 }else{
  z = 1;
 
@@ -663,7 +720,7 @@ function recorre2(valor) {
 function eliminarFila(value) {
 
   var fila =  console.log(value + "entro");
-  var cantidadanueva=document.getElementById("detalles").rows[value].cells[11].innerHTML;
+  var cantidadanueva=document.getElementById("detalles").rows[value].cells[8].innerHTML;
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows
@@ -676,9 +733,14 @@ function eliminarFila(value) {
 
 
 function limpiar(){
-  document.getElementById("scantidad").value="1";
-  document.getElementById("factura").value="";
-  document.getElementById("preciou").value="";
+ // document.getElementById("scantidad").value="1";
+ //document.getElementById("factura").value="";
+ document.getElementById("preciou").value="";
+ document.getElementById("unidadCentral").value="";
+ document.getElementById("unidadMinima").value="";
+ document.getElementById("unidadesCompletas").value="";
+
+
 }
 function save() {
  if (document.getElementById('total').value > 0){
@@ -712,14 +774,6 @@ function save() {
      arreglo.push(table.rows[r].cells[c].innerHTML);
      z ++;
 
-   }else if(z == 8){
-     arreglo.push(table.rows[r].cells[c].innerHTML);
-     z ++;
-
-   }else if(z == 9){
-     arreglo.push(table.rows[r].cells[c].innerHTML);
-     z ++;
-
    }else{
     arreglo.push(table.rows[r].cells[c].innerHTML);
     document.getElementById("codigo2").value=arreglo;
@@ -738,6 +792,75 @@ document.getElementById("total").value= r - 2;
   return false;
 
 }}
+
+function obtenerSelect(valor) {
+ //MILILITROS
+
+//myArr.includes( 'donna' ) 
+ if(valor == "MILILITROS"){  //MILILITROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  $("#Medida").show();
+
+
+} else if(valor =="GRAMOS"){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+} else if(valor == "CENTIMETROS" ) {  //CENTIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  $("#Medida").show();
+
+
+} else if(valor == "LITROS" ){  //LITROS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+
+ document.getElementById('unidadCentral').innerHTML='LITROS';  
+ document.getElementById('unidadDeMedida').innerHTML='MILILITROS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+} else if(valor == "METROS"){  //METROS
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+ document.getElementById('unidadCentral').innerHTML='METROS';  
+ document.getElementById('unidadDeMedida').innerHTML='CENTIMETROS';  
+
+
+ $("#Medida").show();
+
+}  else if(valor == "KILOGRAMOS") {  //KILOGRAMOS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+ document.getElementById('unidadCentral').innerHTML='KILOGRAMOS';  
+ document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+
+} else if (valor == "UNIDADES") {  //UNIDADES
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  $("#Medida").show();
+
+} 
+
+}
 
 </script>
 

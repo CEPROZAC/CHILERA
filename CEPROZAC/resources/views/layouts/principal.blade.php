@@ -458,7 +458,7 @@ b:hover{
 
                                                                     @yield('contenido')
 
-                                                                    <div class="row col-md-6 col-md-offset-3"  style="height: 1000px;" >
+                                                                    <div class="row col-md-6 col-md-offset-3"  style="height: 2000px;" >
 
                                                                     </div>
 

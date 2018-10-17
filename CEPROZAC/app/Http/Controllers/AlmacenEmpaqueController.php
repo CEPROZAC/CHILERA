@@ -152,9 +152,49 @@ class AlmacenEmpaqueController extends Controller
           return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$provedor]);
         }
 
+        public function detalleEditar(){ 
+
+          $material = DB::table('almacenempaque')
+          ->join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
+          ->select('almacenempaque.*', 'forma_empaques.*')
+          ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
+          ->select('unidades_medidas.id')
+          ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+          ->select('almacenempaque.id as idEmpaque',
+            'almacenempaque.codigo','almacenempaque.imagen','almacenempaque.descripcion', 
+            'almacenempaque.cantidad', 'almacenempaque.stock_minimo','almacenempaque.idUnidadMedida', 
+            'unidades_medidas.nombre as nombreUnidadMedida','forma_empaques.formaEmpaque',
+            'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida'
+            ,'almacenempaque.created_at')
+          ->where('almacenempaque.estado','=','Activo')
+          ->orderby('almacenempaque.updated_at','DESC')
+          ->take(1)->get();
+
+          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+          return view('almacen.empaque.detalle',["material"=>$material,"provedor"=>$provedor]);
+        }
+
+
 
         public function invoice($id){ 
-          $material= DB::table('almacenempaque')->where('id',$id)->get();
+          $material = DB::table('almacenempaque')
+          ->join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
+          ->select('almacenempaque.*', 'forma_empaques.*')
+          ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
+          ->select('unidades_medidas.id')
+          ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+          ->select('almacenempaque.id as idEmpaque',
+            'almacenempaque.codigo','almacenempaque.imagen','almacenempaque.descripcion', 
+            'almacenempaque.cantidad', 'almacenempaque.stock_minimo','almacenempaque.idUnidadMedida', 
+            'unidades_medidas.nombre as nombreUnidadMedida','forma_empaques.formaEmpaque',
+            'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida'
+            ,'almacenempaque.created_at')
+          ->where('almacenempaque.estado','=','Activo')
+          ->where('almacenempaque.id', '=', $id)
+          ->get();
+
+
+
          //$material   = AlmacenMaterial:: findOrFail($id);
           $date = date('Y-m-d');
           $invoice = "2222";
@@ -253,7 +293,7 @@ class AlmacenEmpaqueController extends Controller
           $material->stock_minimo=$stockMinimo;
           $material->estado='Activo';
           $material->update();
-          return Redirect::to('detalle/empaque');
+          return Redirect::to('detalleEditar/empaques');
         }
 
     /**
@@ -264,7 +304,7 @@ class AlmacenEmpaqueController extends Controller
      */
     public function destroy($id)
     {
-      $material=almacenempaque::findOrFail($id);
+      $material=AlmacenEmpaque::findOrFail($id);
       $material->estado='Inactivo';
       $material->save();
       return Redirect::to('almacenes/empaque');
@@ -281,11 +321,12 @@ class AlmacenEmpaqueController extends Controller
           $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
             $material = almacenempaque::join('provedor_materiales','provedor_materiales.id', '=', 'almacenempaque.provedor')
-            ->select('almacenempaque.id','almacenempaque.nombre','provedor_materiales.nombre as nom','almacenempaque.descripcion','almacenempaque.cantidad','almacenempaque.medida')
+            ->select('almacenempaque.*')
             ->where('almacenempaque.estado', 'Activo')
-            ->get();          
-            $sheet->fromArray($material);
-            $sheet->row(1,['ID','Nombre de Empaque','Proveedor','Descripción' ,'Cantidad','Medida']);
+            ->get();       
+            $array = array("foo", "bar", "hello", "world");   
+            $sheet->fromArray($array);
+            $sheet->row(1,['D']);
             $sheet->setOrientation('landscape');
 
 

@@ -1,3 +1,4 @@
+@inject('metodo','CEPROZAC\Http\Controllers\EntradasAgroquimicosController')
 @extends('layouts.principal')
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
@@ -18,12 +19,12 @@
 <div class="container clear_both padding_fix">
   <div class="row">
     <div class="col-md-12">
-      <div class="block-web">
+      <div class="block-web"> 
         <div class="header">
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Entrada de Agroquímico Factura N°:{{$entrada->factura}}</strong></h2>
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Entrada de Agroquímico Factura N°: {{$entrada->factura}}</strong></h2>
             </div>
 
             <div class="col-md-4">
@@ -101,7 +102,7 @@
      <div class="form-group">
       <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
       <div class="col-sm-6">
-        <select name="entregado_a" id="entregado_a" value=""  class="form-control select2" required>  
+        <select name="entrega" id="entrega" class="form-control select2" required>  
 
          @foreach($empleado as $emp)
 
@@ -122,7 +123,7 @@
    <div class="form-group">
     <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
     <div class="col-sm-6">
-      <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select2" required>  
+      <select name="recibe" id="recibe" value=""  class="form-control select2" required>  
        @foreach($empleado as $emp)
 
        @if($emp->id == $entrada->recibe_alm)
@@ -154,38 +155,33 @@
   </div>
 </div>
 
-<div class="form-group"> 
-  <label class="col-sm-3 control-label">% IVA<strog class="theme_color">* </strog></label>
-  <div class="col-sm-3">
-    <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
-  </div>    
-  <label class="col-sm-1 control-label">% IEPS<strog class="theme_color">* </strog></label>
-  <div class="col-sm-3">
-    <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
-  </div> 
-</div>
 
-  <div class="form-group">
-   <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
-     <div class="col-sm-3">
-    <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
-      @if($entrada->moneda =="Peso MXM")
-      <option value='Peso MXN' selected>Peso MXN
-      </option>
-      <option value="Dolar USD">Dolar USD</option>
-      @else
-      <option value='Dolar USD' selected>Dolar USD
-      </option>
-      <option value="Peso MXN">Peso MXN</option>
-      @endif
-    </select>          
-  </div>
+<div class="form-group">
+ <label class="col-sm-3 control-label">Tipo de Moneda: <strog class="theme_color">*</strog></label>
+ <div class="col-sm-3">
+  <select name="moneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+    @if($entrada->moneda =="Peso MXM")
+    <option value='Peso MXN' selected>Peso MXN
+    </option>
+    <option value="Dolar USD">Dolar USD</option>
+    @else
+    <option value='Dolar USD' selected>Dolar USD
+    </option>
+    <option value="Peso MXN">Peso MXN</option>
+    @endif
+  </select>          
+</div>
 </div>
 
 <br> </br>
 
 
+<br> </br>
+
+
+
 <a class="btn btn-sm btn-success tooltips" href="{{ route('almacenes.agroquimicos.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" target="_blank" title="" data-original-title="Registrar nuevo Material"> <i class="fa fa-plus"></i> Registrar Nuevo Material </a>
+
 
 
 <div class="col-lg-4 col-lg-offset-4">
@@ -200,15 +196,16 @@
 <div class="container clear_both padding_fix">
   <div class="block-web">
    <div class="row">
-    <div class="panel panel-success" > 
+     <div class="panel panel-success" >  
 
       <div class="panel-body">
+
         <div class="col-sm-3">
           <div class="form-group"> 
             <label for="material">Material </label>
             <select name="id_materialk"   class="form-control select"  value="id_materialk" data-live-search="true"   id="id_materialk" >  
               @foreach($material as $mat)
-              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->medida}}">
+              <option value="{{$mat->cantidad}}_{{$mat->descripcion}}_{{$mat->codigo}}_{{$mat->id}}_{{$mat->nombre}}_{{$mat->idUnidadMedida}}_{{$mat->nombreUnidad}}_{{$mat->NombreUnidadP}}_{{$mat->cantidadMedida}}">
                {{$mat->nombre}}
              </option>
              @endforeach              
@@ -219,60 +216,75 @@
 
 
 
-          <div class="col-sm-3">
-         <div class="form-group"> 
-          <label for="pcantidad">Cantidad en Almacén </label>
-          <input name="pcantidad" id="pcantidad" value="" step="any" type="number" disabled class="form-control" />
-        </div>    
-      </div>  
 
-        <div class="col-sm-3">
-       <div class="form-group"> 
-        <label for="umedida">Medida </label>
-        <input name="umedida" id="umedida" value="" onchange="medida(this);"  type="text" disabled class="form-control" />
-      </div>    
-    </div> 
+       <div class="col-sm-3">
+        <div class="form-group"> 
+          <label for="descripcion">Descripción </label>
+          <input name="descripcion" id="descripcion" disabled class="form-control" />
+        </div>    
+      </div>   
+
+
+
+
+
+
 
       <div class="col-sm-3">
-     <div class="form-group"> 
-      <label for="descripcion">Descripción </label>
-      <input name="descripcion" id="descripcion" disabled class="form-control" />
-    </div>    
-  </div>  
+       <div class="form-group"> 
+        <label for="preciou">$ Precio Unitario </label>
+        <input name="preciou" id="preciou" value="0" type="number" class="form-control" />
+        <span id="errorprecio" style="color:#FF0000;"></span>
+      </div>    
+    </div>  
+    <div class="col-sm-1">
+       <div class="form-group"> 
+        <label for="preciou">% IVA </label>
+         <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+        <span id="errorprecio" style="color:#FF0000;"></span>
+      </div>    
+    </div>   
+              <div class="col-sm-1">
+       <div class="form-group"> 
+        <label for="preciou">% IEPS </label>
+       <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
+        <span id="errorprecio" style="color:#FF0000;"></span>
+      </div>    
+    </div>     
 
 
-   <div class="col-sm-3">
-   <div class="form-group"> 
-    <label for="scantidad">Cantidad de Entrada </label>
-    <input name="scantidad" id="scantidad" type="number" step="any"  max="999999" min="0.1" value="1" required="" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" maxlength="6"  />
-    <span id="errorCantidad" style="color:#FF0000;"></span>
-  </div>    
-</div>  
-
-   <div class="col-sm-3">
- <div class="form-group"> 
-  <label for="medida">Medida </label>
-  <select name="medida"   class="form-control select"  data-live-search="true"   id="medida" >  
-    @foreach($unidades as $unidad)
-    <option value="{{$unidad->unidad_medida}}_{{$unidad->nombre}}_{{$unidad->cantidad}}">
-     {{$unidad->nombre}}
-   </option>
-   @endforeach              
- </select>
- <span id="errorMedida" style="color:#FF0000;"></span>
- <div class="help-block with-errors"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+    <div class="col-sm-3">
+      <div class="input-group" >
+        <div class="input-group-addon" >Completas</div>
+        <input name="unidadesCompletas" id="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+        <span id="errorUnidad" style="color:#FF0000;"></span>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <input id="unidadAux" name="unidadAux"  value="Medida" class="form-control currency" readonly="" />
+    </div>
+  </div>
 </div>
-</div><!--/form-group-->
 
+<div class="form-group">    
+  <label class="col-sm-3 control-label">Unidades Incompletas: <strog class="theme_color">*</strog></label>
 
-
-   <div class="col-sm-3">
- <div class="form-group"> 
-  <label for="preciou">$ Precio Unitario </label>
-  <input name="preciou" id="preciou" value="0" type="number" class="form-control" />
-  <span id="errorprecio" style="color:#FF0000;"></span>
-</div>    
-</div>    
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadCentral">KILOGRAMOS</div>
+      <input id="Medida" name="unidadCentral"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+      <input  name="unidadDeMedida"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+    </div>
+  </div>
+</div>
 
 
 
@@ -282,45 +294,56 @@
   </div>
 </div>
 
-</div>
+
 
 @include('almacen.agroquimicos.entradas.modale')
 
-  <div class="form-group"  class="table-responsive"> 
-    <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
-      <thead style="background-color:#A9D0F5">
-        <th>Opciones</th>
-        <th>N°Articulo</th>
-        <th>Articulo</th>
-        <th>Cantidad </th>
-        <th>Unidad de Medida</th>
-        <th>Equivale</th>
-        <th>N° Factura</th>
-        <th>Precio Unitario</th>
-        <th>IVA</th>
-        <th>IEPS</th>
-        <th>Subtotal</th>
+<div class="form-group"  class="table-responsive"> 
+  <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
+    <thead style="background-color:#A9D0F5">
+      <th>Opciones</th>
+      <th>N°</th>
+      <th>Articulo</th>
+      <th>Cantidad </th>
+      <th>Total</th>
+      <th>Precio Unitario</th>
+      <th>IVA</th>
+      <th>IEPS</th>
+      <th>Subtotal</th>
 
-      </thead>
-      <tfoot>
-       @foreach($entradas  as $entradas2)
-       <tr class="gradeA">
-        <td><input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);"> </td>
-        <td>{{$entradas2->idagro}}</td>
-        <td>{{$entradas2->nombremat}}</td>
-        <td>{{$entradas2->cantidad}}</td>
-        <td>{{$entradas2->medida}}</td>
-        <td>{{$entradas2->medidaaux}}</td>
-        <td>{{$entradas2->factura}}</td>
-        <td>{{$entradas2->p_unitario}}</td>
-        <td>{{$entradas2->iva}}</td>
-        <td>{{$entradas2->ieps}}</td>
-        <td>{{$entradas2->importe}}</td>
-      </td>
-    </td>
-  </tr>    
+    </thead>
+    <tfoot>
+     @foreach($entradas  as $entradas2)
+     <tr class="gradeA">
+      <td><input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);"> </td>
+      <td>{{$entradas2->id_material}}</td>
+      <td>{{$entradas2->nombreMaterial}}</td>
+      <td><li>{{$metodo->Calcula_Cantidad($entradas2->cantidad , $entradas2->cantidadUnidad , $entradas2->nombreUnidadMedida , $entradas2->UnidadNombre)}}</li>
+       <li>{{$metodo->Calcula_Cantidad2($entradas2->cantidad , $entradas2->cantidadUnidad , $entradas2->nombreUnidadMedida , $entradas2->UnidadNombre)}}</li>
+       <li>{{$metodo->Calcula_Cantidad3($entradas2->cantidad , $entradas2->cantidadUnidad , $entradas2->nombreUnidadMedida , $entradas2->UnidadNombre)}}</li></td>
+       @if($entradas2->nombreUnidadMedida == "KILOGRAMOS")
+       <td>{{$entradas2->cantidad}} GRAMOS</td>
 
-  @endforeach
+       @elseif($entradas2->nombreUnidadMedida == "LITROS")
+       <td>{{$entradas2->cantidad}} MILILITROS</td>
+
+
+       @elseif($entradas2->nombreUnidadMedida == "METROS")
+       <td>{{$entradas2->cantidad}} CENTIMETROS</td>
+
+       @else
+       <td>{{$entradas2->cantidad}} UNIDADES</td>
+
+       @endif
+       <td>{{$entradas2->p_unitario}}</td>
+       <td>{{$entradas2->iva}}</td>
+       <td>{{$entradas2->ieps}}</td>
+       <td>{{$metodo->CALCULA_SUB($entradas2->cantidad , $entradas2->cantidadUnidad , $entradas2->p_unitario, $entradas2->iva, $entradas2->ieps,$entradas2->nombreUnidadMedida)}}</td>
+     </td>
+   </td>
+ </tr>    
+
+ @endforeach
 </tfoot>
 </table>
 
@@ -346,7 +369,6 @@
   </div>
 </div>
 
-</div>
 </div>
 </div>
 
@@ -396,30 +418,29 @@
       var value = e.options[e.selectedIndex=i].value;
       var text = e.options[e.selectedIndex=i].text;
       var cantidadtotal = value;
-      limite = "6",
+      limite = "8",
       separador = "_",
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
       descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
+            codigo=arregloDeSubCadenas[2];
+        nombre=arregloDeSubCadenas[4];
       medida=arregloDeSubCadenas[5];
+      nombreUnidad=arregloDeSubCadenas[6];
+      UnidadP=arregloDeSubCadenas[7];
       tecla=(document.all) ? event.keyCode : event.which;
       if (codigo == x){
         swal("Producto Encontrado:"+nombre +"!", "Stock de Entrada!", "success",{content: "input", inputType:"number",}).then((value) => {
           var aux =`${value}`;
 
-          document.getElementById("scantidad").value = aux;
+          document.getElementById("unidadesCompletas").value = aux;
   //swal(aux);
 });
 
         document.getElementById('id_materialk').selectedIndex = i;
-        document.getElementById("pcantidad").value=stock;
         document.getElementById("descripcion").value=descripcion;
-
-        document.getElementById("scantidad").max=stock;
-        document.getElementById("umedida").value=medida;
+        document.getElementById("unidadAux").value=nombreUnidad;
+        obtenerSelect(UnidadP);
         break;
       }
 
@@ -439,27 +460,31 @@ window.onload=function() {
   var select2 = document.getElementById('id_materialk');
   var selectedOption2 = select2.selectedIndex;
   var cantidadtotal = select2.value;
-  limite = "6",
+  limite = "8",
   separador = "_",
   arregloDeSubCadenas = cantidadtotal.split(separador, limite);
   stock=arregloDeSubCadenas[0];
   descripcion=arregloDeSubCadenas[1];
   medida=arregloDeSubCadenas[5];
-  document.getElementById("pcantidad").value=stock;
+  nombreUnidad=arregloDeSubCadenas[6];
+  UnidadP=arregloDeSubCadenas[7];
+
   document.getElementById("descripcion").value=descripcion;
-  document.getElementById("scantidad").value = "1";
-  document.getElementById("umedida").value=medida;
+  document.getElementById("unidadAux").value=nombreUnidad;
   document.getElementById("codigo").select();
+
   var menos =document.getElementById("detalles").rows;
   var r = menos.length;
   document.getElementById("total").value= r - 1;
 
   for (var i = 1 ; i <= r-1; i++) {
-   cantidadnueva=document.getElementById("detalles").rows[i].cells[10].innerHTML;
+   cantidadnueva=document.getElementById("detalles").rows[i].cells[8].innerHTML;
    var x=  parseFloat(document.getElementById('subtotal').value);
    document.getElementById('subtotal').value = parseFloat(cantidadnueva) + x;
 
  }
+
+ obtenerSelect(UnidadP);
 
 }
 
@@ -471,23 +496,24 @@ var select = document.getElementById('id_materialk');
      // alert(selectedOption.value);
    //   console.log(selectedOption.value + ': ' + selectedOption.text);
    var cantidadtotal = selectedOption.value;
-   limite = "6",
+   limite = "8",
    separador = "_",
    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
    stock=arregloDeSubCadenas[0];
    descripcion=arregloDeSubCadenas[1];
    medida=arregloDeSubCadenas[5];
+   nombreUnidad=arregloDeSubCadenas[6];
+   UnidadP=arregloDeSubCadenas[7];
+
+   document.getElementById("descripcion").value=descripcion;
+   document.getElementById("unidadAux").value=nombreUnidad;
+   obtenerSelect(UnidadP);
+
    // id_materiales=arregloDeSubCadenas[3];
 
-  // console.log(arregloDeSubCadenas); 
-  document.getElementById("pcantidad").value=stock;
-  document.getElementById("descripcion").value=descripcion;
-  document.getElementById("scantidad").value = "1";
-  document.getElementById("umedida").value=medida;
 
 
-
-});
+ });
 
   function cargar(){
    var select2 = document.getElementById('id_materialk');
@@ -502,10 +528,7 @@ var select = document.getElementById('id_materialk');
             stock=arregloDeSubCadenas[0];
             descripcion=arregloDeSubCadenas[1];
             medida=arregloDeSubCadenas[5];
-            document.getElementById("pcantidad").value=stock;
             document.getElementById("descripcion").value=descripcion;
-            document.getElementById("scantidad").value = "1";
-            document.getElementById("umedida").value=medida;
           }
 
         }
@@ -531,59 +554,52 @@ var select = document.getElementById('id_materialk');
 }
 
 function llenado(){
-  var select2 = document.getElementById('medida');
-  var selectedOption2 = select2.selectedIndex;
-  var cantidadtotal = select2.value;
-  limite = "3",
-  separador = "_",
-  arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-  unidadaux = arregloDeSubCadenas[0];
-  medida=arregloDeSubCadenas[1];
-  cantidadaux=arregloDeSubCadenas[2];
+  var x = document.getElementById('unidadesCompletas').value;
+  var y =document.getElementById('Medida').value;
+  var z =document.getElementById('unidadMinima').value;
 
-  if (document.getElementById('umedida').value != unidadaux){
-   document.getElementById("errorMedida").innerHTML = "La Unidad de Medida Seleccionada ,No Es Compatible con este Producto";
+  if(x == "" && y == ""    && z == ""){
+   document.getElementById("errorUnidad").innerHTML = "La Cantidad de Entrada debe ser Mayor de 0";
    return false;
- }
- document.getElementById("errorMedida").innerHTML = "";
 
+ }
+ document.getElementById("errorUnidad").innerHTML = "";
+ 
+
+ document.getElementById("errorUnidad").innerHTML = "";
  var provedorv =  document.getElementById('prov').value;
  var empresav =  document.getElementById('recibio').value;
- var entregadov = document.getElementById('entregado_a').value;
- var recibev = document.getElementById('recibe_alm').value;
+
  var notav = document.getElementById('factura').value;
- var entradav = document.getElementById('scantidad').value;
  var preciou = document.getElementById('preciou').value;
  var ivax = document.getElementById('iva').value * .010;
  var iepsx = document.getElementById('ieps').value  * .010;
- if( provedorv !== "" && empresav !=="" &&entregadov !=="" && recibev!=="" && notav!=="" &&entradav!=="" && preciou!=="" && ivax !== ""){
+
+ 
+ if( provedorv !== "" && empresav !=="" && notav!=="" && preciou!=="" && ivax !== ""){
    if (preciou > 0){
      document.getElementById("errorprecio").innerHTML = "";
-     if (entradav > 0){
-      document.getElementById("errorCantidad").innerHTML = "";
+     var select=document.getElementById('id_materialk');
+     var cantidadtotal = select.value;
+     limite = "9",
+     separador = "_",
+     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+     var id2= uno++;
+     cantidad=arregloDeSubCadenas[0];
+     descripcion=arregloDeSubCadenas[1];
+     codigo=arregloDeSubCadenas[2];
+     id=arregloDeSubCadenas[3];
+     nombre=arregloDeSubCadenas[4];
+     UnidadP=arregloDeSubCadenas[7];
+     CantidadP=arregloDeSubCadenas[8];
 
+     var comprueba = recorre2(id)
+     if (comprueba == 1){
+      swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
+      return false;
+    }
 
-
-      
-
-      var select=document.getElementById('id_materialk');
-      var cantidadtotal = select.value;
-      limite = "6",
-      separador = "_",
-      arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-      var id2= uno++;
-      cantidad=arregloDeSubCadenas[0];
-      descripcion=arregloDeSubCadenas[1];
-      codigo=arregloDeSubCadenas[2];
-      id=arregloDeSubCadenas[3];
-      nombre=arregloDeSubCadenas[4];
-             var comprueba = recorre2(id)
-       if (comprueba == 1){
-        swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
-        return false;
-      }
-      
-      var tabla = document.getElementById("detalles");
+    var tabla = document.getElementById("detalles");
     //tabla.setAttribute("id", id2);
 
     var row = tabla.insertRow(1);
@@ -597,47 +613,78 @@ function llenado(){
     var cell7 = row.insertCell(6);
     var cell8 = row.insertCell(7);
     var cell9 = row.insertCell(8);
-    var cell10 = row.insertCell(9);
-    var cell11 = row.insertCell(10);
 
 
 
     //alert(var3);
     var prove = document.getElementById("prov");
     var proved = prove.value;
-    var recibiox = document.getElementById("recibio");
-    var recibe = recibiox.value;
+
     //alert(recibe);
     var notax = document.getElementById("factura");
     var notas = notax.value;
 
-    var cantidades = document.getElementById("scantidad");
+    var cantidades = document.getElementById("unidadesCompletas");
     var cantidaden = cantidades.value;
-    var cantidadth = cantidadaux * cantidaden;
-    var u = "";
-    var medidaaux = u.concat(cantidadth," ",unidadaux);
 
 
 
 
-    var preciox = document.getElementById("preciou");
-    var precio = preciox.value;
+    if (UnidadP == "KILOGRAMOS" || UnidadP == "LITROS"  || UnidadP == "METROS"){
+      var x = document.getElementById('unidadesCompletas').value;
+      var y = document.getElementById('Medida').value;
+      var z = document.getElementById('unidadMinima').value;
+      x= (x * CantidadP)*1000;
+      y= y*1000;
+      if(x > 0 && y > 0 &&  z > 0){        
+        var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>"+"<br/>"+"<li>"+document.getElementById('Medida').value .concat(" "+document.getElementById('unidadCentral').innerHTML)+"</li>"+"<br/>" +"<li>"+document.getElementById('unidadMinima').value.concat(" "+document.getElementById('unidadDeMedida').innerHTML)+"</li>";
+        var cantidad_completa= parseInt(x) + parseInt(y) + parseInt(z);
 
-    var ivatotal = cantidaden * precio * ivax;
-    var iepstotal = cantidaden * precio * iepsx;
-    cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
-    cell2.innerHTML = id;
-    cell3.innerHTML = nombre;
-    cell4.innerHTML = cantidaden;
-    cell5.innerHTML = medida;
-    cell6.innerHTML = medidaaux;
-    cell7.innerHTML = notas;
-    cell8.innerHTML = precio;
-    cell9.innerHTML = ivatotal;
-    cell10.innerHTML = iepstotal;
-    cell11.innerHTML = precio * cantidaden + ivatotal + iepstotal;
+      }else if(x > 0 && y > 0 && z <= 0){
+        var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>"+"<br/>"+"<li>"+document.getElementById('Medida').value .concat(" "+document.getElementById('unidadCentral').innerHTML)+"</li>";
+        var cantidad_completa = parseInt(x) + parseInt(y);
+      }else if (x > 0 && y <= 0 && z <= 0){
+        var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>";
+        var cantidad_completa= x;
 
-    var x = document.getElementById("id_materialk");
+      }
+
+
+    }else {
+      var cantidad_Total="<li>"+document.getElementById('unidadesCompletas').value .concat(" "+document.getElementById('unidadAux').value)+"</li>";
+      var cantidad_completa= document.getElementById('unidadesCompletas').value;
+
+    }
+
+    if (UnidadP == "KILOGRAMOS"){
+      var numbreUnidadAux="GRAMOS"; 
+    }else if(UnidadP == "LITROS"){
+      var   numbreUnidadAux="MILILITROS"; 
+    }else if(UnidadP == "METROS"){
+     var numbreUnidadAux="CENTIMETROS"
+
+   }else{
+    var  numbreUnidadAux="UNIDADES"
+  }
+
+
+
+  var preciox = document.getElementById("preciou");
+  var precio = preciox.value;
+
+  var ivatotal = cantidaden * precio * ivax;
+  var iepstotal = cantidaden * precio * iepsx;
+  cell1.innerHTML =  '<input type="button" value="Eliminar"  onClick="eliminarFila(this.parentNode.parentNode.rowIndex);">';
+  cell2.innerHTML = id;
+  cell3.innerHTML = nombre;
+  cell4.innerHTML =  cantidad_Total;
+  cell5.innerHTML = cantidad_completa + " " +numbreUnidadAux;
+  cell6.innerHTML = precio;
+  cell7.innerHTML = ivatotal;
+  cell8.innerHTML = iepstotal;
+  cell9.innerHTML = precio * cantidaden + ivatotal + iepstotal;
+
+  var x = document.getElementById("id_materialk");
     //x.remove(x.selectedIndex);
     cargar();
     var menos =document.getElementById("detalles").rows
@@ -648,9 +695,6 @@ function llenado(){
     var sumatodo = parseFloat(sub) + parseFloat(auxsuma);
     document.getElementById("subtotal").value=sumatodo;
   }else{
-   // swal("Alerta!", "La Cantidad de Entrada debe ser Mayor de 0!", "error");
-   document.getElementById("errorCantidad").innerHTML = "La Cantidad de Entrada debe ser Mayor de 0";
- }}else{
     //alert('El precio Unitario no Puede Ser Menor de 0');
    // swal("Alerta!", "El precio Unitario no Puede Ser Menor de 0!", "error");
    document.getElementById("errorprecio").innerHTML = "El precio Unitario no Puede Ser Menor de 0";
@@ -662,7 +706,7 @@ function llenado(){
 
 function eliminarFila(value) {
 
-  var cantidadanueva=document.getElementById("detalles").rows[value].cells[10].innerHTML;
+  var cantidadanueva=document.getElementById("detalles").rows[value].cells[8].innerHTML;
   document.getElementById("detalles").deleteRow(value);
   var id2= uno--;
   var menos =document.getElementById("detalles").rows
@@ -672,7 +716,7 @@ function eliminarFila(value) {
   document.getElementById("subtotal").value= parseFloat(sub) - parseFloat(cantidadanueva);
   limpiar();
 }
- 
+
 
 function recorre2(valor) {
  var z = 1
@@ -681,41 +725,38 @@ function recorre2(valor) {
  for (var r = 1, n = table.rows.length; r < n; r++) {
   for (var c = 1, m = table.rows[r].cells.length; c < m; c++) {
    if (z == 1){
-      var j = table.rows[r].cells[c].innerHTML
-      if (valor == j ){
-        var r = 1;
-                z ++;
-        return(r);
-      }else{
-       z ++;
-      }
-    }
-    else if(z == 2){
-     z ++;
-   }else if(z == 3){
+    var j = table.rows[r].cells[c].innerHTML
+    if (valor == j ){
+      var r = 1;
       z ++;
-    }else if(z == 4){
+      return(r);
+    }else{
+     z ++;
+   }
+ }
+ else if(z == 2){
    z ++;
- } else if (z == 5){
-z ++;
+ }else if(z == 3){
+  z ++;
+}else if(z == 4){
+ z ++;
+} else if (z == 5){
+  z ++;
 }else if (z == 6){
  z ++;
 
 }else if(z == 7){
-   z ++;
+ z ++;
 
- }else if(z == 8){
-   z ++;
+}else if(z == 8){
+ z ++;
 
- }else if(z == 9){
-   z ++;
+}else{
+ z = 1;
 
- }else{
-     z = 1;
+}
 
-   }
-
- }
+}
 }
 }
 
@@ -763,14 +804,6 @@ function save() {
        arreglo.push(table.rows[r].cells[c].innerHTML);
        z ++;
 
-     }else if(z == 8){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
-     }else if(z == 9){
-       arreglo.push(table.rows[r].cells[c].innerHTML);
-       z ++;
-
      }else{
       arreglo.push(table.rows[r].cells[c].innerHTML);
       document.getElementById("codigo2").value=arreglo;
@@ -789,6 +822,75 @@ document.getElementById("total").value= r - 1;
   return false;
 
 }}
+
+function obtenerSelect(valor) {
+ //MILILITROS
+
+//myArr.includes( 'donna' ) 
+ if(valor == "MILILITROS"){  //MILILITROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  $("#Medida").show();
+
+
+} else if(valor =="GRAMOS"){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+} else if(valor == "CENTIMETROS" ) {  //CENTIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  $("#Medida").show();
+
+
+} else if(valor == "LITROS" ){  //LITROS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+
+ document.getElementById('unidadCentral').innerHTML='LITROS';  
+ document.getElementById('unidadDeMedida').innerHTML='MILILITROS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+} else if(valor == "METROS"){  //METROS
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+ document.getElementById('unidadCentral').innerHTML='METROS';  
+ document.getElementById('unidadDeMedida').innerHTML='CENTIMETROS';  
+
+
+ $("#Medida").show();
+
+}  else if(valor == "KILOGRAMOS") {  //KILOGRAMOS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+ document.getElementById('unidadCentral').innerHTML='KILOGRAMOS';  
+ document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+
+} else if (valor == "UNIDADES") {  //UNIDADES
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  $("#Medida").show();
+
+} 
+
+}
 
 </script>
 

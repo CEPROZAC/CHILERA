@@ -49,8 +49,8 @@
         </div>
 
         <div class="porlets-content">
-         <div class="table-responsive">
-           <table  class="display table table-bordered table-striped" id="dynamic-table">
+         <div class="table-responsive" style="overflow-x:auto;">
+           <table  class="display table table-bordered table-striped" id="dynamic-table" style="width: 100%;">
             <thead>
               <tr >
                <th>Nombre </th>

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Requests\AlmacenMaterialRequest;
-use CEPROZAC\Http\Requests\modalentradamat;
+use CEPROZAC\Http\Requests\ModalEntradaMat;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradaAlmacen;
 use CEPROZAC\Empleado;
@@ -13,7 +13,7 @@ use CEPROZAC\AlmacenMaterial;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\AlmacenGeneral;
 use CEPROZAC\DetalleEntradasMaterial;
-use CEPROZAC\unidadesmedida;
+use CEPROZAC\UnidadesMedida;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
@@ -24,7 +24,7 @@ use \Milon\Barcode\DNS2D;
 use CEPROZAC\empresas_ceprozac;
 
 
-class almacenmaterialController extends Controller
+class AlmacenMaterialController extends Controller
 {
     /** 
      * Display a listing of the resource.
@@ -150,6 +150,29 @@ class almacenmaterialController extends Controller
 
         }
 
+
+
+        public function detalleEditar(){ 
+          $material = DB::table('almacenmateriales')
+          ->join('unidades_medidas', 'almacenmateriales.idUnidadMedida', '=','unidades_medidas.id')
+          ->select('unidades_medidas.id')
+          ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+          ->join('almacengeneral as alma','almacenmateriales.ubicacion', '=', 'alma.id')
+          ->select('almacenmateriales.id as idMaterial','almacenmateriales.nombre',
+            'almacenmateriales.codigo','almacenmateriales.imagen','almacenmateriales.descripcion', 
+            'almacenmateriales.cantidad','alma.nombre as ubicacion', 'almacenmateriales.stock_minimo','almacenmateriales.idUnidadMedida', 
+            'unidades_medidas.nombre as nombreUnidadMedida', 
+            'unidades_medidas.cantidad as cantidadUnidadMedida','almacenmateriales.created_at',
+            'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+          ->where('almacenmateriales.estado','=','Activo')
+          ->orderby('almacenmateriales.updated_at','DESC')->take(1)->get();
+          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+          $almacen= DB::table('almacengeneral')->where('estado','Activo')->get();
+
+          return view('almacen.materiales.detalle',["material"=>$material,"provedor"=>$provedor,"almacen"=>$almacen]);
+
+        }
+
         public function invoice($id){ 
           $material= DB::table('almacenmateriales')->where('id',$id)->get();
 
@@ -257,7 +280,7 @@ class almacenmaterialController extends Controller
           $material->stock_minimo=$stockMinimo;
           $material->estado='Activo';
           $material->update();
-          return Redirect::to('detalle/materiales');
+          return Redirect::to('detalleEditar/materiales');
 
         }
         //
@@ -269,7 +292,7 @@ class almacenmaterialController extends Controller
      */
     public function destroy($id)
     {
-     $material=almacenmaterial::findOrFail($id);
+     $material=AlmacenMaterial::findOrFail($id);
      $material->estado='Inactivo';
      $material->save();
      return Redirect::to('almacen/materiales');
@@ -348,7 +371,7 @@ class almacenmaterialController extends Controller
     public function validarcodigo($codigo)
     {
 
-      $quimico= almacenmaterial::
+      $quimico= AlmacenMaterial::
       select('id','codigo','nombre', 'estado')
       ->where('codigo','=',$codigo)
       ->get();
@@ -381,7 +404,7 @@ class almacenmaterialController extends Controller
       ->select('almacenmateriales.id as idMaterial','almacenmateriales.nombre',
         'almacenmateriales.codigo','almacenmateriales.imagen','almacenmateriales.descripcion', 
         'almacenmateriales.cantidad','alma.nombre as ubicacion',
-         'almacenmateriales.stock_minimo','almacenmateriales.idUnidadMedida', 
+        'almacenmateriales.stock_minimo','almacenmateriales.idUnidadMedida', 
         'unidades_medidas.nombre as nombreUnidadMedida', 
         'unidades_medidas.cantidad as cantidadUnidadMedida','almacenmateriales.created_at',
         'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')

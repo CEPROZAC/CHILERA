@@ -194,6 +194,7 @@ class AlmacenGeneralController extends Controller
    {
        /*$almacen = espacios_almacen::where('id_almacen', '=', $id)->join( 'provedores as prov', 'espacios_almacen.id_provedor','=','prov.id')->join('productos as prod' ,'espacios_almacen.id_producto','=','prod.id')->firstOrFail();*/
   //$lote = lote::findOrFail($id);
+       
        $almacengeneral=DB::table('almacengeneral')->where('estado','=' ,'Activo')->orwhere('total_libre','>','0')->get();
        $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
 

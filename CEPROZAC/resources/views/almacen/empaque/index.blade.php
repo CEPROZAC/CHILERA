@@ -55,7 +55,7 @@
           </div>
 
           <div class="porlets-content">
-            <div class="table-responsive">
+            <div class="table-responsive" style="overflow-x:auto;">
               <table  class="display table table-bordered table-striped" id="dynamic-table">
                 <thead>
                   <tr>
@@ -93,7 +93,7 @@
                       {{$materiales->codigo}}
                     </div>
                     <center>
-                      <a href="{{URL::action('AlmacenAgroquimicosController@invoice',$materiales->idEmpaque)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
+                      <a href="{{URL::action('AlmacenEmpaqueController@invoice',$materiales->idEmpaque)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
                     </center>
                   </td>
                   @else

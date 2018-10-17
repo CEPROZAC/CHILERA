@@ -11,8 +11,8 @@ use CEPROZAC\AlmacenGeneral;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
-use CEPROZAC\lote;
-use CEPROZAC\entradas_almacengeneral;
+use CEPROZAC\Lote;
+use CEPROZAC\Entradas_AlmacenGeneral;
 
 
 use DB;

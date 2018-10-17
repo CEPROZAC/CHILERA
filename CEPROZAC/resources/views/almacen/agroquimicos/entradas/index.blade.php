@@ -1,3 +1,4 @@
+@inject('metodo','CEPROZAC\Http\Controllers\EntradasAgroquimicosController')
 @extends('layouts.principal')
 @section('contenido')
 <div class="pull-left breadcrumb_admin clear_both">
@@ -23,7 +24,7 @@
               <h2 class="content-header " style="margin-top: -5px;">&nbsp;&nbsp;<strong>Entradas de Almacén de Agroquímicos </strong></h2>
             </div>
             <div class="col-md-5">
-              <div class="btn-group pull-right">
+              <div class="btn-group pull-right"> 
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
@@ -66,16 +67,17 @@
                 <td>{{$entradas->moneda}} </td>
                 <td>{{$entradas->nombreEmpresa}}</td>
 
-                <td>10000</td>
+                <td>${{$metodo->CALCULA_TOTAL($entradas->idEntradaAgroquimicos)}}</td>
                 <td>  
-                  <center>
-                    <a href="" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
-                  </center>
+                    <center>
+                      <a href="{{URL::action('EntradasAgroquimicosController@verEntradaAgroquimicos',$entradas->factura)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
+
+                    </center>
                 </td>
 
                 <td> 
                   <center>
-                    <a href="{{URL::action('EntradasAgroquimicosController@edit',$entradas->idEntradaAgroquimicos)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                    <a href="{{URL::action('EntradasAgroquimicosController@edit',$entradas->factura)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                   </center>
                 </td>
                 <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->idEntradaAgroquimicos}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
@@ -85,8 +87,6 @@
 
           </tr>
           @include('almacen.agroquimicos.entradas.modal')
-
-
           @endforeach
         </tbody>
         <tfoot>

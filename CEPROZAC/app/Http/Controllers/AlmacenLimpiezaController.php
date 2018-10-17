@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
 use CEPROZAC\AlmacenLimpieza;
-use CEPROZAC\Http\Requests\almacenlimpiezaRequest;
-use CEPROZAC\Http\Requests\modalentradalimp;
+use CEPROZAC\Http\Requests\AlmacenLimpiezaRequest;
+use CEPROZAC\Http\Requests\ModalEntradaLimp;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
-use CEPROZAC\empresas_ceprozac;
-use CEPROZAC\cantidad_unidades_limp;
-use CEPROZAC\unidadesmedida;
+use CEPROZAC\Empresas_Ceprozac;
+use CEPROZAC\Cantidad_Unidades_Limp;
+use CEPROZAC\UnidadesMedida;
 use CEPROZAC\DetalleEntradasLimpieza;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -147,6 +147,27 @@ class AlmacenLimpiezaController extends Controller
 
         }
 
+
+        public function detalleEditar(){ 
+          $material = DB::table('almacenlimpieza')
+          ->join('unidades_medidas', 'almacenlimpieza.idUnidadMedida', '=','unidades_medidas.id')
+          ->select('unidades_medidas.id')
+          ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+          ->select('almacenlimpieza.id as idLimpieza','almacenlimpieza.nombre',
+            'almacenlimpieza.codigo','almacenlimpieza.imagen','almacenlimpieza.descripcion', 
+            'almacenlimpieza.cantidad', 'almacenlimpieza.stock_minimo','almacenlimpieza.idUnidadMedida', 
+            'unidades_medidas.nombre as nombreUnidadMedida', 
+            'unidades_medidas.cantidad as cantidadUnidadMedida','almacenlimpieza.created_at',
+            'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+          ->where('almacenlimpieza.estado','=','Activo')
+          ->orderby('almacenlimpieza.updated_at','DESC')->take(1)->get();
+          $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+
+          return view('almacen.limpieza.detalle',["material"=>$material,"provedor"=>$provedor]);
+
+        }
+
+
         public function invoice($id){ 
           $material= DB::table('almacenlimpieza')->where('id',$id)->get();
          //$material   = AlmacenMaterial:: findOrFail($id);
@@ -248,7 +269,7 @@ class AlmacenLimpiezaController extends Controller
           $material->stock_minimo=$stockMinimo;
           $material->estado='Activo';
           $material->update();
-          return Redirect::to('detalle/limpieza');
+          return Redirect::to('detalleEditar/limpieza');
         }
 
 

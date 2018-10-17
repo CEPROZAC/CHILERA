@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 use CEPROZAC\Http\Controllers\Controller;
-use CEPROZAC\salidasagroquimicos;
+use CEPROZAC\SalidasAgroquimicos;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenAgroquimicos;
-use CEPROZAC\cantidad_unidades_agro;
-use CEPROZAC\unidadesmedida;
+use CEPROZAC\Cantidad_Unidades_Agro;
+use CEPROZAC\UnidadesMedida;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,7 +22,7 @@ use \Milon\Barcode\DNS2D;
 use Illuminate\Support\Collection as Collection;  
 
 
-class salidasagroquimicosController extends Controller
+class SalidasAgroquimicosController extends Controller
 {
     /**
      * Display a listing of the resource.

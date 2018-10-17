@@ -12,10 +12,10 @@ use CEPROZAC\EntradaAlmacen;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenMaterial;
 use CEPROZAC\ProvedorMateriales;
-use CEPROZAC\empresas_ceprozac;
+use CEPROZAC\Empresas_Ceprozac;
 
-use CEPROZAC\cantidad_unidades_mate;
-use CEPROZAC\unidadesmedida;
+use CEPROZAC\Cantidad_Unidades_Mate;
+use CEPROZAC\UnidadesMedida;
 
 
 use DB;

@@ -41,7 +41,7 @@
         </div>
 
         <div class="porlets-content">
-          <div class="table-responsive">
+          <div class="table-responsive" style="overflow-x:auto;">
             <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
               <thead>
                 <tr>

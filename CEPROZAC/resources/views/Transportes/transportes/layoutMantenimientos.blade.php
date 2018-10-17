@@ -69,7 +69,7 @@
 			</div>
 
 			<div class="porlets-content">
-				<div class="table-responsive">
+				<div class="table-responsive" style="overflow-x:auto;">
 					@yield('tablaMantenimiento')
 				</div><!--/table-responsive-->
 			</div><!--/porlets-content-->

@@ -8,22 +8,21 @@ use Illuminate\Support\Facades\Input;
 use CEPROZAC\Http\Requests;
 
 use CEPROZAC\AlmacenAgroquimicos;
-use CEPROZAC\Http\Requests\almacenagroquimicosRequest;
+use CEPROZAC\Http\Requests\AlmacenAgroquimicosRequest;
 use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\EntradasAgroquimicos; 
 use CEPROZAC\ProvedorMateriales;
-use CEPROZAC\cantidad_unidades_agro;
-use CEPROZAC\Unidades_medida;
+use CEPROZAC\Cantidad_Unidades_Agro;
+use CEPROZAC\Unidades_Medida;
 use CEPROZAC\DetallesEntradasAgroquimicos;
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
-use PHPExcel_Worksheet_Drawing;
 use Validator; 
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
-use CEPROZAC\Http\Requests\modalentradaagro;
+use CEPROZAC\Http\Requests\ModalEntradaAgro;
 
-class almacenagroquimicosController extends Controller
+class AlmacenAgroquimicosController extends Controller
 {
 	public function __construct()
 	{
@@ -74,7 +73,7 @@ class almacenagroquimicosController extends Controller
 
     public function calcularCantidadAlmacen($id){
 
-    	$material=almacenagroquimicos::findOrFail($id);
+    	$material=AlmacenAgroquimicos::findOrFail($id);
     	$idUnidadMedida = $material->idUnidadMedida;
     	$unidad_medida  = $this->propiedadesUnidadMedida($idUnidadMedida);
     	$cantidadAlmacen=$material->cantidad;
@@ -121,7 +120,7 @@ class almacenagroquimicosController extends Controller
 
     public function calcularCantidadUnidadCentral($id){
 
-    	$material=almacenagroquimicos::findOrFail($id);
+    	$material=AlmacenAgroquimicos::findOrFail($id);
     	$idUnidadMedida = $material->idUnidadMedida;
     	$unidad_medida  =  $this->propiedadesUnidadMedida($idUnidadMedida);
     	$cantidadAlmacen=$material->cantidad;
@@ -163,7 +162,7 @@ class almacenagroquimicosController extends Controller
     public function calcularCantidadUnidadInferior($id){
 
 
-    	$material=almacenagroquimicos::findOrFail($id);
+    	$material=AlmacenAgroquimicos::findOrFail($id);
     	$idUnidadMedida = $material->idUnidadMedida;
     	$unidad_medida  = $this->propiedadesUnidadMedida($idUnidadMedida);
     	$cantidadAlmacen=$material->cantidad;
@@ -222,7 +221,7 @@ class almacenagroquimicosController extends Controller
 
     public function labelUnidadMedidaMinima($id){
 
-    	$material=almacenagroquimicos::findOrFail($id);
+    	$material=AlmacenAgroquimicos::findOrFail($id);
     	$idUnidadMedida = $material->idUnidadMedida;
     	$unidad_medida  = $this->propiedadesUnidadMedida($idUnidadMedida);
     	$cantidadAlmacen=$material->cantidad;
@@ -302,7 +301,7 @@ class almacenagroquimicosController extends Controller
     	$stockReal = $request->get('stock_min');
     	$stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
     	$cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
-    	$material= new almacenagroquimicos;
+    	$material= new AlmacenAgroquimicos;
     	$material->nombre=$request->get('nombre');
 
         if (Input::hasFile('imagen')){ //validar la imagen, si (llamanos clase input y la funcion hash_file(si tiene algun archivo))
@@ -356,6 +355,29 @@ class almacenagroquimicosController extends Controller
     }
 
 
+    public function detalleEditar(){ 
+
+        $provedor= DB::table('provedor_materiales')->where('estado','Activo')->get();
+        $material = DB::table('almacenagroquimicos')
+        ->select('almacenagroquimicos.*')
+        ->join('unidades_medidas', 'almacenagroquimicos.idUnidadMedida', '=','unidades_medidas.id')
+        ->select('unidades_medidas.id')
+        ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+        ->select('almacenagroquimicos.id as idAgroquimico',
+            'almacenagroquimicos.codigo','almacenagroquimicos.nombre','almacenagroquimicos.imagen','almacenagroquimicos.descripcion', 
+            'almacenagroquimicos.cantidad', 'almacenagroquimicos.stock_minimo','almacenagroquimicos.idUnidadMedida', 
+            'unidades_medidas.nombre as nombreUnidadMedida',
+            'unidades_medidas.cantidad as cantidadUnidadMedida',
+            'almacenagroquimicos.created_at' ,
+            'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+        ->where('almacenagroquimicos.estado','=','Activo')
+        ->orderby('almacenagroquimicos.updated_at','DESC')->take(1)->get();
+
+        return view('almacen.agroquimicos.detalle',["material"=>$material,"provedor"=>$provedor]);
+
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -370,7 +392,7 @@ class almacenagroquimicosController extends Controller
     	->select('unidades_medidas.id as idContenedorUnidadMedida','unidades_medidas.nombre','unidades_medidas.cantidad', 'unidades_medidas.idUnidadMedida', 'nombre_unidades_medidas.*')
     	->where('estado', '=', 'Activo')
     	->get();
-    	$material = almacenagroquimicos::findOrFail($id);
+    	$material = AlmacenAgroquimicos::findOrFail($id);
     	$cantidad = $material->cantidad;
     	$idUnidadMedida = $material->idUnidadMedida;
     	$idAgroquimico = $material->id;
@@ -408,7 +430,7 @@ class almacenagroquimicosController extends Controller
     {
 
 
-    	$material=almacenagroquimicos::findOrFail($id);
+    	$material=AlmacenAgroquimicos::findOrFail($id);
     	$unidades=$this->propiedadesUnidadMedida($request->get("idUnidadMedida"));
     	$unidadDeMedida=$unidades->nombreUnidadMedida;
     	$capacidadUnidadMedida= $unidades->cantidad;
@@ -433,13 +455,13 @@ class almacenagroquimicosController extends Controller
         $material->stock_minimo=$stockMinimo;
         $material->estado='Activo';
         $material->update();
-        return Redirect::to('detalle/agroquimicos');
+        return Redirect::to('detalleEditar/agroquimicos');
     }
 
 
     public function destroy($id)
     {
-    	$material=almacenagroquimicos::findOrFail($id);
+    	$material=AlmacenAgroquimicos::findOrFail($id);
     	$material->estado='Inactivo';
     	$material->save();
     	return Redirect::to('almacenes/agroquimicos');
@@ -448,25 +470,24 @@ class almacenagroquimicosController extends Controller
 
     public function excel()
     {        
-
     	Excel::create('almacenagroquimicos', function($excel) {
     		$excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-    			$material = almacenagroquimicos::join('provedor_materiales','provedor_materiales.id', '=', 'almacenagroquimicos.provedor')
-    			->select('almacenagroquimicos.id','almacenagroquimicos.nombre','provedor_materiales.nombre as nom','almacenagroquimicos.descripcion','almacenagroquimicos.cantidad','almacenagroquimicos.medida')
-    			->where('almacenagroquimicos.estado', 'Activo')
-    			->get();          
-    			$sheet->fromArray($material);
-    			$sheet->row(1,['ID','Nombre','Proveedor','Descripción' ,'Cantidad','Medida']);
-    			$sheet->setOrientation('landscape');
-    		});
+               $cars = array("Volvo", "BMW", "Toyota");
+               $material = AlmacenAgroquimicos::
+               select('almacenagroquimicos.*')
+               ->where('almacenagroquimicos.estado', 'Activo')
+               ->get();          
+               $sheet->fromArray($cars );
+               $sheet->row(1,['Nombre']);
+               $sheet->setOrientation('landscape');
+           });
     	})->export('xls');
     }
 
 
 
-
-    public function stock(modalentradaagro $formulario, $id) 
+    public function stock(ModalEntradaAgro $formulario, $id) 
     {
     	$validator = Validator::make(
     		$formulario->all(), 
@@ -478,7 +499,7 @@ class almacenagroquimicosController extends Controller
     			return response()->json(["valid" => true], 200);
     		}
     		else{
-    			$material=almacenagroquimicos::findOrFail($id);
+    			$material=AlmacenAgroquimicos::findOrFail($id);
     			$idUnidadMedida =$material->idUnidadMedida;
     			$unidades=$this->propiedadesUnidadMedida($idUnidadMedida);
     			$unidadDeMedida=$unidades->nombreUnidadMedida;
@@ -487,7 +508,7 @@ class almacenagroquimicosController extends Controller
     			$cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, 0,0);
 
     			DB::beginTransaction();
-    			$material2= new entradasagroquimicos;
+    			$material2= new EntradasAgroquimicos;
     			$material2->provedor=$formulario->get('provedor');
     			$material2->fecha=$formulario->get('fecha2'.$id);
     			$material2->factura=$formulario->get('factura'.$id);
@@ -588,7 +609,7 @@ class almacenagroquimicosController extends Controller
     public function validarcodigo($codigo)
     {
 
-    	$quimico= almacenagroquimicos::
+    	$quimico= AlmacenAgroquimicos::
     	select('id','codigo','nombre', 'estado')
     	->where('codigo','=',$codigo)
     	->get();

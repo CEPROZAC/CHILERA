@@ -10,8 +10,8 @@ use CEPROZAC\Http\Controllers\Controller;
 use CEPROZAC\salidaalmacenmaterial;
 use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenMaterial;
-use CEPROZAC\cantidad_unidades_mate;
-use CEPROZAC\unidadesmedida;
+use CEPROZAC\Cantidad_Unidades_Mate;
+use CEPROZAC\UnidadesMedida;
 
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,7 +26,7 @@ use CEPROZAC\AlmacenMaterial;
 
 */
 
-class salidaalmacenmaterialController extends Controller
+class SalidaAlmacenMaterialController extends Controller
 {
     /**
      * Display a listing of the resource.

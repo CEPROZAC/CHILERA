@@ -42,7 +42,7 @@
               <div class="block-web">
                 <div class="header">
 
-                  <h3>Producto: </h3>
+                  <h3>Producto: {{$mat->formaEmpaque}} </h3>
                 </div>
                 <div class="porlets-content" style="display: block;">
                  <p align="justify"><strong>Codigo de Barras:</strong> {{$mat->codigo}}</p>
