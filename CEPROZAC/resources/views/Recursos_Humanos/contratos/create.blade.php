@@ -228,13 +228,11 @@
                         <tr>
                           <td>
                             <div class="col-sm-8">
-                              <select   id="rol" class="form-control" required>  
+                            <select   id="rol" class="form-control" required>  
                                 @foreach($roles as $rol)
                                 <option  label="{{$rol->rol_Empleado}}" value="{{$rol->id}}">
-
                                  {{$rol->rol_Empleado}} 
                                </option>
-
                                @endforeach              
                              </select>
                            </div>

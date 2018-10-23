@@ -473,15 +473,15 @@ class AlmacenAgroquimicosController extends Controller
     	Excel::create('almacenagroquimicos', function($excel) {
     		$excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-               $cars = array("Volvo", "BMW", "Toyota");
-               $material = AlmacenAgroquimicos::
-               select('almacenagroquimicos.*')
-               ->where('almacenagroquimicos.estado', 'Activo')
-               ->get();          
-               $sheet->fromArray($cars );
-               $sheet->row(1,['Nombre']);
-               $sheet->setOrientation('landscape');
-           });
+             $cars = array("Volvo", "BMW", "Toyota");
+             $material = AlmacenAgroquimicos::
+             select('almacenagroquimicos.*')
+             ->where('almacenagroquimicos.estado', 'Activo')
+             ->get();          
+             $sheet->fromArray($cars );
+             $sheet->row(1,['Nombre']);
+             $sheet->setOrientation('landscape');
+         });
     	})->export('xls');
     }
 
@@ -619,6 +619,9 @@ class AlmacenAgroquimicosController extends Controller
 
     }
 
+    public function calcularSubTotal($iva,$ieps,$importe){
+        return $iva+$ieps+$importe;
+    }
 
 
     public function convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$stock){
@@ -697,6 +700,53 @@ class AlmacenAgroquimicosController extends Controller
     	$material->update();
     }
 
+
+    public function  propiedadesUnidadMedidaJson($id){
+        $unidadMedida = AlmacenAgroquimicos::join('unidades_medidas', 'almacenagroquimicos.idUnidadMedida', '=','unidades_medidas.id')
+        ->select('unidades_medidas.id')
+        ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+        ->select('unidades_medidas.nombre as nombreUnidadMedida', 
+            'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as UnidadMedida')
+        ->where('almacenagroquimicos.estado','=','Activo')
+        ->where('almacenagroquimicos.id','=', $id)
+        ->get();
+        return response()->json(
+            $unidadMedida->toArray());
+
+    }
+
+
+
+    public function obtenerStock($id){
+        $stock= AlmacenAgroquimicos::
+        select('id','stock_minimo','nombre', 'idUnidadMedida')
+        ->where('id','=',$id)
+        ->get();
+        return response()->json(
+            $stock->toArray());
+    }
+
+
+
+
+    public function obtenerPropiedadesProducto($id){
+        $material=AlmacenAgroquimicos::findOrFail($id);
+        return response()->json(
+            $material->toArray());
+    }
+
+
+
+    public function  propiedadesUnidadMedidaCantidadJson($id){
+        $unidades  = Unidades_Medida::
+        join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+        ->select('unidades_medidas.*', 'nombre_unidades_medidas.*')
+        ->where('estado', '=', 'Activo')
+        ->where('unidades_medidas.id','=', $id)
+        ->first();
+        return response()->json(
+            $unidades->toArray());
+    }
 
 }
 

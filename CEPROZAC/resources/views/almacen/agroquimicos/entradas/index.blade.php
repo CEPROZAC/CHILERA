@@ -45,7 +45,7 @@
           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
               <tr>
-                <th>N° Compra </th>
+               
                 <th>N°Factura </th>
                 <th>Fecha de Entrada</th>  
                 <th>Tipo de Moneda </th>
@@ -60,7 +60,7 @@
             <tbody>
               @foreach($entrada  as $entradas)
               <tr class="gradeA">
-                <td>{{$entradas->idEntradaAgroquimicos}} </td>
+        
                 <td>{{$entradas->factura}} </td>
                 <td>{{$entradas->fecha}} </td>        
                 
@@ -70,14 +70,14 @@
                 <td>${{$metodo->CALCULA_TOTAL($entradas->idEntradaAgroquimicos)}}</td>
                 <td>  
                     <center>
-                      <a href="{{URL::action('EntradasAgroquimicosController@verEntradaAgroquimicos',$entradas->factura)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
+                      <a href="{{URL::action('EntradasAgroquimicosController@verEntradaAgroquimicos',$entradas->idEntradaAgroquimicos)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
 
                     </center>
                 </td>
 
                 <td> 
                   <center>
-                    <a href="{{URL::action('EntradasAgroquimicosController@edit',$entradas->factura)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                    <a href="{{URL::action('EntradasAgroquimicosController@edit',$entradas->idEntradaAgroquimicos)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
                   </center>
                 </td>
                 <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->idEntradaAgroquimicos}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
@@ -91,7 +91,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th>N°<br>Compra </th>
+    
             <th>N°Factura </th>
             <th>Fecha de Entrada</th>  
             <th>Tipo de Moneda </th>

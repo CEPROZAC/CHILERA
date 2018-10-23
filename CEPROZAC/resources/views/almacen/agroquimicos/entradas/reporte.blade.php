@@ -44,66 +44,84 @@
 
             <div class="invoice_body">
               <div  class="pull-left">
-                <address>
-                  <strong>Numero de Factura:</strong> {{$entrada->factura}}<br>
-                  <strong>Fecha: </strong>{{$entrada->fecha}}<br>
-                  <strong>Moneda:</strong> {{$entrada->moneda}}<br>
-                  <abbr title="Phone">P:</abbr> (123) 456-7890
-                </address>
+
+                <strong>Numero de Factura:</strong> {{$entrada->factura}}<br>
+                <strong>Proveedor: </strong>{{$entrada->ProvedorNombre}}<br>
+                <strong>Fecha: </strong>{{$entrada->fecha}}<br>
+                <br>
+                <br>
               </div>
-              
-              <br/>
+              <div class="pull-right"> 
+               <strong>Entrega: </strong>{{$entrada->nombreEmpleadoEntrega}} {{$entrada->apellidosEmpleadoEntrega}}<br>
+               <strong>Recibe: </strong>{{$entrada->nombreEmpleadoRecibe}} {{$entrada->apellidosEmpleadoRecibe}}<br>
+               <strong>Observaciones: </strong>{{$entrada->observacionesc}}<br>
+             </div>
 
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="text-center">QTY</th>
-                    <th>ITEM</th>
-                    <th>DESCRIPTION</th>
-                    <th>PRICE</th>
-                    <th>SUBTOTAL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="tr_border">
-                    <td class="text-center"><strong>1</strong></td>
-                    <td><a href="javascript:void(0);">Invoice 1</a></td>
-                    <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    <td>$720.00</td>
-                    <td>$720.00</td>
-                  </tr>
-                  <tr class="border">
-                    <td class="text-center"><strong>1</strong></td>
-                    <td><a href="javascript:void(0);">Invoice 2</a></td>
-                    <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    <td>$549.00</td>
-                    <td>$549.00</td>
-                  </tr>
-                  <tr>
-                    <td class="text-center"><strong>1</strong></td>
-                    <td><a href="javascript:void(0);">Invoice 3</a></td>
-                    <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    <td>$327.00</td>
-                    <td>$327.00</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4">Total</td>
-                    <td><strong>$1,596.00</strong></td>
-                  </tr>
+             <br/>
 
-                </tbody>
-              </table>
+             <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="text-center">Material</th>
+                  <th>Precio U.</th>
+                  <th>Cantidad</th>
+                  <th>Importe</th>
+                  <th>IVA</th>
+                  <th>IEPS</th>
+                  <th>SUBTOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($data2 as $producto)
+                <tr class="tr_border">
+                  <td class="text-center">{{$producto->nombreMaterial}} {{$producto->idDetalleEntrada}}</td>
+                  <td class="text-right">${{$producto->p_unitario}}</td>
+                  <td> 
+                   @if($producto->nombreUnidadMedida== "KILOGRAMOS" || $producto->nombreUnidadMedida== "LITROS" || $producto->nombreUnidadMedida== "METROS" )
+                   <li>
 
-            </div>
+                    {{$metodo->calcularCantidadAlmacen($producto->idDetalleEntrada)}} 
+                    {{$producto->UnidadNombre}}  DE  {{$producto-> cantidadUnidad}} {{$producto->nombreUnidadMedida}} 
 
-          </div>
+                  </li>
+                  <li>
+
+                    {{$metodo->calcularCantidadUnidadCentral($producto->idDetalleEntrada)}}  {{$producto->nombreUnidadMedida}} 
+                  </li>
+                  <li>
+                    {{$metodo->calcularCantidadUnidadInferior($producto->idDetalleEntrada)}}     
+                    {{$metodo->labelUnidadMedidaMinima($producto->idDetalleEntrada)}}  
+                  </li>
+                  @else
+                  <li>
+                    {{$metodo->calcularCantidadAlmacen($producto->idDetalleEntrada)}}  {{$producto->UnidadNombre}}  DE  {{$producto->cantidadUnidad}} {{$producto->nombreUnidadMedida}} 
+                  </li>
+                  <li>
+                    {{$metodo->calcularCantidadUnidadInferior($producto->idDetalleEntrada)}}      {{$metodo->labelUnidadMedidaMinima($producto->idDetalleEntrada)}}  
+                  </li>
+                  @endif
+                </td>
+                <td>{{$importe=round($metodo->calcularImporte($producto->p_unitario,
+                $producto->cantidad,$producto->nombreUnidadMedida,$producto->cantidadUnidad,$producto->nombreUnidadMedida),2)}} </td>
+                <td>{{$iva =round($metodo->calculoIVA($importe,$producto->iva),2)}}</td>
+                <td>{{$ieps =round($metodo->calculoIEPS($importe,$producto->ieps),2)}}</td>
+                <td>{{round($metodo->calcularSubTotal($iva,$ieps,$importe),2)}}</td>
+              </tr>
+              @endforeach
+
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
 
 
 
-        </div><!--/porlets-content-->
-      </div><!--/block-web-->
-    </div><!--/col-md-12-->
-  </div><!--/row-->
+    </div><!--/porlets-content-->
+  </div><!--/block-web-->
+</div><!--/col-md-12-->
+</div><!--/row-->
 </div>
 
 

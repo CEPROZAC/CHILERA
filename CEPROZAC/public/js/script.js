@@ -349,13 +349,7 @@ function doSearch()
      apellidos = apellidos.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
 
 
-
-
-
      var route = "http://localhost:8000/validarProvedor/"+nombre + "/" +apellidos;
-
-
-
      $.get(route,function(res){
       if(res.length > 0  &&  res[0].estado =="Inactivo"){
        document.getElementById('submit').disabled=true;
@@ -1280,3 +1274,235 @@ function  validarprovmat(){
         }
       });
     }
+
+
+
+
+
+
+    function obtnerMedida(){
+      var select = document.getElementById("idMaterial");
+      var options=document.getElementsByTagName("option");
+      var idMaterial= select.value;
+      var route = "http://localhost:8000/propiedadesUnidadMedidaJson/"+idMaterial ;
+      $.get(route,function(res){
+        document.getElementById("contenedor").value=res[0].nombreUnidadMedida+" DE "+res[0].cantidadUnidadMedida+" "+
+        res[0].UnidadMedida;
+      });
+    }
+
+    function limpiarIEPS(){
+     document.getElementById("ieps").value="";
+   }
+
+   function limpiarPrecioUnitario(){
+    document.getElementById("precioUnitario").value="";
+  }
+
+
+
+
+
+
+  function obtenerUnidadMedida() {
+
+    var select = document.getElementById("idMaterial");
+    var options=document.getElementsByTagName("option");
+    var idMaterial= select.value;
+
+    var x = select.options[select.selectedIndex].text;
+    var unidadesDeMedida = x.split(" ");
+
+
+ if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+} else if( unidadesDeMedida.includes("CENTIMETROS")) {  //CENTIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("LITROS")){  //LITROS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+
+ document.getElementById('unidadCentral').innerHTML='Litros';  
+ document.getElementById('unidadDeMedida').innerHTML='Mililitros';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+} else if( unidadesDeMedida.includes("METROS")){  //METROS
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+ document.getElementById('unidadCentral').innerHTML='Metros';  
+ document.getElementById('unidadDeMedida').innerHTML='Centimetros';  
+
+
+ $("#Medida").show();
+
+}  else if( unidadesDeMedida.includes("KILOGRAMOS")) {  //KILOGRAMOS
+
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+ document.getElementById('unidadCentral').innerHTML='Kilogramos';  
+ document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+
+} else if ( unidadesDeMedida.includes("UNIDADES")) {  //UNIDADES
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  $("#Medida").show();
+
+} 
+
+}
+
+
+function  validarFactura(){
+  var numeroFactura =document.getElementById('numeroFactura').value;
+  var oculto =document.getElementById('numeroFacturaOculto').value;
+  var route = "http://localhost:8000/validarNumeroFactura/"+numeroFactura;
+  $.get(route,function(res){
+    if(res.length > 0  &&  res[0].estado =="Inactivo"){
+      var idProvedor = res[0].idFactura;
+      document.getElementById("factura").value= idFactura;
+      $("#modal-reactivar").modal();
+
+    } 
+    else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].nombre != oculto )  {
+      document.getElementById("errorNumeroFactura").innerHTML = "La Factura que intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+    }
+    else {
+      document.getElementById("errorNumeroFactura").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+    }
+  });
+
+}
+
+
+function validarProductosDuplicados(producto){
+
+
+       var filas = $("#detalles").find("tr"); //devulve las filas del body de tu tabla segun el ejemplo que brindaste
+       var resultado = false;
+       for(i=1; i<filas.length; i++)
+       { 
+       var celdas = $(filas[i]).find("td"); //devolverá las celdas de una fila
+       //valor = $($(celdas[1]).children("input")[0]).val();
+       producto_Agregar = $(celdas[1]).text();
+
+       if(producto_Agregar== producto){
+         swal("Alerta!", "Elemento ya agregado a la lista!", "error");
+         resultado =true;
+         break;
+       }else {
+
+        resultado =false;
+        
+      }
+    }
+    return resultado;
+  }
+
+  function limpiarErrorIEPS(){
+   var ieps= document.getElementById("ieps").value;
+   if(ieps!=""){
+     document.getElementById("errorIEPS").innerHTML= "";
+   }
+ }
+
+ function limpiarErrorPrecioUnitario(){
+   var precioUnitario=document.getElementById("precioUnitario").value;
+   if(precioUnitario != ""){
+    document.getElementById("errorprecio").innerHTML= "";
+  }
+
+}
+function limpiarErrorProducto(){
+ var precioUnitario=document.getElementById("idMaterial").value;
+ if(precioUnitario != ""){
+  document.getElementById("errorPrdducto").innerHTML= "";
+}
+
+}
+
+function validar(){
+ var select = document.getElementById("idMaterial");
+ var options=document.getElementsByTagName("option");
+ var idMaterial= select.value;
+ var x = select.options[select.selectedIndex].text;
+ var iva = document.getElementById("iva").value;
+ var ieps = document.getElementById("ieps").value;
+ var precioUnitario = document.getElementById("precioUnitario").value;
+
+ if(x=="SELECIONA UN PRODUCTO" || ieps=="" || precioUnitario ==""){
+  swal("Alerta!", "Por favor completa todos los campos, Para Poder Guardar!", "error");("campos vacios");
+
+  if(x=="SELECIONA UN PRODUCTO"){
+    document.getElementById("errorPrdducto").innerHTML= "Elige un producto para agregar a la lista.";
+  }
+  if(ieps==""){
+    document.getElementById("errorIEPS").innerHTML= "El IEPS debe ser mayor igual a cero.";
+    
+  }
+  if(precioUnitario =="")
+  {
+    document.getElementById("errorprecio").innerHTML= "El precio Unitario debe ser mayor igual a cero.";
+  } 
+
+  return false;
+} else {
+
+  return true;
+}
+
+
+}
+
+
+function limpiar(){
+  document.getElementById("iva").value="0";
+  document.getElementById("ieps").value="0";
+  document.getElementById("precioUnitario").value="0.00";
+
+}
+
+
+
+function obtenerStockActual(){
+
+  var select = document.getElementById("idMaterial");
+  var options=document.getElementsByTagName("option");
+  var idMaterial= select.value;
+  var route = "http://localhost:8000/obtenerStockAgroquimicos/"+idMaterial;
+  $.get(route,function(res){
+
+
+  });
+
+}

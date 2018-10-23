@@ -125,7 +125,7 @@
           <input id="Medida" name="unidadCentral"  
           data-number-to-fixed="2"  class="form-control currency" 
           required  placeholder="3" onkeypress="return soloNumeros(event);"
-            max="{{$unidad->cantidad}}"
+          max="{{$unidad->cantidad}}"
           />
         </div>
       </div>
@@ -135,7 +135,7 @@
           <input  name="unidadDeMedida"  max="1000"   class="form-control currency"   id="unidadMinima" placeholder="3"
 
 
-           onkeypress=" return soloNumeros(event);"/>
+          onkeypress=" return soloNumeros(event);"/>
         </div>
       </div>
     </div>
@@ -197,10 +197,6 @@ function obtenerSelect() {
   var x = select.options[select.selectedIndex].text;
   var unidadesDeMedida = x.split(" ");
 
- 
-//MILILITROS
-
-//myArr.includes( 'donna' ) 
  if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
 
   $("#unidadDeMedida").hide();

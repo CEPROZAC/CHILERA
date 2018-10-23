@@ -208,6 +208,17 @@ Route::get('pdfagroquimicos/{id}', array('as'=> '/pdfagroquimicos','uses'=>'Alma
 Route::get('descargar-agroquímicos', 'AlmacenAgroquimicosController@excel')->name('almacen.agroquimicos.excel');
 Route::get('verproducto/{id}', array('as'=> '/verproducto','uses'=>'AlmacenAgroquimicosController@verInformacion'));
 Route::get('pdfentradaAgroquimicos/{id}', array('as'=> '/pdfentradaAgroquimicos','uses'=>'EntradasAgroquimicosController@pdfentradaAgroquimicos'));
+Route::get('propiedadesUnidadMedidaJson/{id}', 'AlmacenAgroquimicosController@propiedadesUnidadMedidaJson');
+Route::get('validarNumeroFactura/{numeroFactura}', 'EntradasAgroquimicosController@validarNumeroFactura');
+
+Route::get('obtenerStockAgroquimicos/{id}', 'AlmacenAgroquimicosController@obtenerStock');
+Route::get('obtenerPropiedadesAgroquimicos/{id}', 'AlmacenAgroquimicosController@obtenerPropiedadesProducto');
+
+Route::get('propiedadesUnidadMedidaCantidadJson/{id}', 'AlmacenAgroquimicosController@propiedadesUnidadMedidaCantidadJson');
+
+
+
+
 
 /////////ALMACEN DE LIMPIEZA
 Route::resource('almacenes/limpieza','AlmacenLimpiezaController');	
