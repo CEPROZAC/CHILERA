@@ -247,11 +247,9 @@ function validarFechas(){
 
   }
 
- // alert(moment('2013-02-03', 'YYYY-MM-DD').diff(moment('2013-02-06', 'YYYY-MM-DD'), 'days'));
 
-
- var fechaF =   moment(fecha1).format('YYYY-DD-MM');
- var fechaF2 =   moment(fecha2).format('YYYY-DD-MM');
+  var fechaF =   moment(fecha1).format('YYYY-DD-MM');
+  var fechaF2 =   moment(fecha2).format('YYYY-DD-MM');
 
 
 
@@ -489,7 +487,6 @@ function  validarPlacas(){
 
 
   $.get(route,function(res){
-
     if(res.length > 0  &&  res[0].estado =="Inactivo"){
      document.getElementById('submit').disabled=true;
      var idVehiculo = res[0].id;
@@ -605,7 +602,6 @@ function  validarNumeroCuentaEmProvedor(){
 
 
   $.get(route,function(res){
-    console.log(res);
 
     if(res.length > 0  &&  res[0].estado =="Inactivo"){
      document.getElementById('submit').disabled=true;
@@ -1485,12 +1481,14 @@ function validar(){
 }
 
 
+
 function limpiar(){
   document.getElementById("iva").value="0";
   document.getElementById("ieps").value="0";
   document.getElementById("precioUnitario").value="0.00";
 
 }
+
 
 
 
@@ -1505,4 +1503,38 @@ function obtenerStockActual(){
 
   });
 
+}
+
+
+
+function validarUnidadesMedida(){
+  var select = document.getElementById("idUnidadMedida");
+  var options=document.getElementsByTagName("option");
+  var idMaterial= select.value;
+  var x = select.options[select.selectedIndex].text;
+
+  var nombreContenedor = document.getElementById("contenedor").value;
+  var cantidad = document.getElementById("cantidad").value;
+  var unidadMedidaGuardar=nombreContenedor+" "+cantidad+" "+x;
+  var route = "http://localhost:8000/listarUnidadesMedidaJson";
+  var oculto =document.getElementById("oculto").value;
+
+  if(unidadMedidaGuardar != oculto){
+
+    $.get(route,function(res){
+      $(res).each(function(key,value){
+        unidadesMedida= value.nombre+ " "+value.cantidad+ " "+value.nombreUnidadMedida;
+
+        if(unidadesMedida == unidadMedidaGuardar ){
+          document.getElementById('submit').disabled=true;
+          document.getElementById("alerta").innerHTML = "<div class=\"alert alert-danger\" id=\'result\'>La unidad de medida que intentas registrar ya existe en el sistema</div>";
+          return false;
+        } else {
+
+          document.getElementById("alerta").innerHTML = "";
+          document.getElementById('submit').disabled=false;
+        }
+      });
+    });
+  } 
 }

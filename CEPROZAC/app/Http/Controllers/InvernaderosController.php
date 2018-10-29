@@ -20,11 +20,11 @@ class InvernaderosController extends Controller
      */
     public function index()
     { 
-              $invernadero= DB::table('invernaderos')->where('estado','Activo')->get();
+      $invernadero= DB::table('invernaderos')->where('estado','Activo')->get();
 
       return view('invernaderos.index', ['invernadero' => $invernadero]);
         //
-    }
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -52,7 +52,7 @@ class InvernaderosController extends Controller
         $invernadero->num_modulos=$request->get('modulos');
         $invernadero->estado="Activo";
         $invernadero->save();
-         return Redirect::to('invernaderos');
+        return Redirect::to('invernaderos');
         //
     }
 
@@ -89,15 +89,15 @@ class InvernaderosController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $invernadero = invernaderos::findOrFail($id);
-                 $invernadero->nombre=$request->get('nombre');
-        $invernadero->ubicacion=$request->get('ubicacion');
-        $invernadero->num_modulos=$request->get('modulos');
-        $invernadero->update();
-         return Redirect::to('invernaderos');
+       $invernadero = invernaderos::findOrFail($id);
+       $invernadero->nombre=$request->get('nombre');
+       $invernadero->ubicacion=$request->get('ubicacion');
+       $invernadero->num_modulos=$request->get('modulos');
+       $invernadero->update();
+       return Redirect::to('invernaderos');
 
         //
-    }
+   }
 
     /**
      * Remove the specified resource from storage.
@@ -109,12 +109,12 @@ class InvernaderosController extends Controller
     {
         $invernadero = invernaderos::findOrFail($id);
         $invernadero->estado="Inactivo";
-                $invernadero->update();
-         return Redirect::to('invernaderos');
+        $invernadero->update();
+        return Redirect::to('invernaderos');
         //
     }
 
-        public function excel()
+    public function excel()
     {        
         /**
          * toma en cuenta que para ver los mismos 
@@ -128,7 +128,7 @@ class InvernaderosController extends Controller
             $sheet->fromArray($invernadero);
             $sheet->row(1,['Nombre del Invernadero','Ubicación','Número de Módulos']);
             $sheet->setOrientation('landscape');
-          });
-        })->export('xls');
-      }
+        });
+      })->export('xls');
+    }
 }

@@ -299,7 +299,7 @@ class AlmacenAgroquimicosController extends Controller
     	$unidadCentral = $request->get('unidadCentral');
     	$unidadesMedida =$request->get('unidadDeMedida');
     	$stockReal = $request->get('stock_min');
-    	$stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
+    	$stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal,$capacidadUnidadMedida);
     	$cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
     	$material= new AlmacenAgroquimicos;
     	$material->nombre=$request->get('nombre');
@@ -438,7 +438,7 @@ class AlmacenAgroquimicosController extends Controller
     	$unidadCentral = $request->get('unidadCentral');
     	$unidadesMedida =$request->get('unidadDeMedida');
     	$stockReal = $request->get('stock_min');
-    	$stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
+    	$stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal,$capacidadUnidadMedida);
     	$cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
 
     	$material->nombre=$request->get('nombre');
@@ -571,36 +571,36 @@ class AlmacenAgroquimicosController extends Controller
     }
 
 
-    public  function calcularStockMinimoReal($unidadDeMedida,$stock){
+    public  function calcularStockMinimoReal($unidadDeMedida,$stock,$capacidadUnidadMedida){
     	if($unidadDeMedida == "LITROS"){
-    		$total=$stock*1000 ;
+    		$total=$stock*1000 * $capacidadUnidadMedida;
     		return $total;
     	}
 
     	elseif ($unidadDeMedida =="KILOGRAMOS") {
 
-    		$total=$stock*1000;
+    		$total=$stock*1000 *$capacidadUnidadMedida;
     		return $total;
     	}
 
     	elseif ($unidadDeMedida=="METROS") {
-    		$total=$stock*100 ;
+    		$total=$stock*100 *$capacidadUnidadMedida;
     		return $total;
     	}
     	elseif($unidadDeMedida=="UNIDADES"){
-    		$total = $stock ;
+    		$total = $stock* $capacidadUnidadMedida ;
     		return $total;
     	} 
     	elseif($unidadDeMedida=="MILILITROS"){
-    		$total = $stock ;
+    		$total = $stock *$capacidadUnidadMedida;
     		return $total;
     	}
     	elseif($unidadDeMedida=="GRAMOS"){
-    		$total = $stock ;
+    		$total = $stock *$capacidadUnidadMedida;
     		return $total;
     	}
     	elseif($unidadDeMedida=="CENTIMETROS"){
-    		$total = $stock ;
+    		$total = $stock *$capacidadUnidadMedida;
     		return $total;
     	}
 
@@ -624,35 +624,35 @@ class AlmacenAgroquimicosController extends Controller
     }
 
 
-    public function convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$stock){
+    public function convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$stock, $capacidadUnidadMedida){
     	if($unidadDeMedida == "LITROS"){
-    		$total=$stock/1000 ;
+    		$total=$stock/1000/ $capacidadUnidadMedida ;
     		return $total;
     	}
     	elseif ($unidadDeMedida =="KILOGRAMOS") {
-    		$total=$stock/1000;
+    		$total=$stock/1000 /$capacidadUnidadMedida;
     		return $total;
     	}
     	elseif ($unidadDeMedida=="METROS") {
-    		$total=$stock/100 ;
+    		$total=$stock/100 /$capacidadUnidadMedida;
     		return $total;
     	}
     	elseif($unidadDeMedida=="UNIDADES"){
-    		$total = $stock;
+    		$total = $stock / $capacidadUnidadMedida;
     		return $total;
     	}   
 
     	elseif($unidadDeMedida=="MILILITROS"){
-    		$total = $stock;
+    		$total = $stock / $capacidadUnidadMedida;
     		return $total;
     	} 
 
     	elseif($unidadDeMedida=="CENTIMETROS"){
-    		$total = $stock;
+    		$total = $stock / $capacidadUnidadMedida;
     		return $total;
     	} 
     	elseif($unidadDeMedida=="GRAMOS"){
-    		$total = $stock;
+    		$total = $stock  / $capacidadUnidadMedida;
     		return $total;
     	} 
     }

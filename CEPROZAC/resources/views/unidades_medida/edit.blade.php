@@ -32,70 +32,73 @@
         </div>
 
         <div class="porlets-content">
-         <div class="text-success" id='result'>
-          @if(Session::has('message'))
-          {{Session::get('message')}}
-          @endif
-        </div>
-        <div class="porlets-content">
-          <form action="{{url('/unidades_medida', [$unidades->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
-            {{csrf_field()}}
+          <div id="alerta"> 
+          </div>
+
+          <div class="porlets-content">
+            <form action="{{url('unidades_medida',[$unidades->idUnidadMedida])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate>
+          {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
+     
+             <input type="hidden" name="_method" value="PUT">
+              <input name="oculto" id="oculto" value="{{$unidades->nombre}} {{$unidades->cantidad}} {{$unidades->nombreUnidadMedida}}" hidden    />
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
+                <div class="col-sm-6" >
 
-                <input name="nombre" type="text"  onchange="mayus(this);"  value="{{$unidades->nombre}}" class="form-control" required value="" placeholder="Ingrese nombre del Provedor" maxlength="80" parsley-rangelength="[1,70]"/>
-                <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
+                  <input name="nombre" type="text" id="contenedor"  onchange="mayus(this);validarUnidadesMedida();"  value="{{$unidades->nombre}}" class="form-control" required  placeholder="Ingrese nombre del Provedor" maxlength="80" parsley-rangelength="[1,70]"/>
+                  <div class="text-danger"  id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
 
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Cantidad Equivalente: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Cantidad Equivalente: <strog class="theme_color">*</strog></label>
+                <div class="col-sm-6">
 
-                <input name="cantidad" type="number"  step="any" onchange="mayus(this);"  max="999999" min="0.1" value="{{$unidades->cantidad}}" class="form-control" required  placeholder="Ingrese el Número de Equivalencia" maxlength="2" />
-                <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
+                  <input name="cantidad" id="cantidad" type="number"  step="any" onchange="mayus(this);validarUnidadesMedida();"  max="999999" min="0.1" value="{{$unidades->cantidad}}" class="form-control" required  placeholder="Ingrese el Número de Equivalencia" maxlength="2" />
+                  <div class="text-danger"  id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
 
+                </div>
               </div>
-            </div>
 
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Unidad De Medida: <strog class="theme_color">*</strog></label>
-              <div class="col-sm-6">
-               <select name="medida" class="form-control" required>
-                 @foreach($nombreUnidadesMedida as $nombre)
-                 @if($unidades->idUnidadMedida==$nombre->id)
-                 <option value="{{$nombre->id}}" selected>
-                   {{$nombre->nombreUnidadMedida}} 
-                 </option>
-                 @endif
-                 <option value="{{$nombre->id}}" >
-                   {{$nombre->nombreUnidadMedida}} 
-                 </option>
-                 @endforeach
-               </select>
-               <div class="help-block with-errors"></div>
-             </div>
-           </div><!--/form-group-->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Unidad De Medida: <strog class="theme_color">*</strog></label>
+                <div class="col-sm-6">
+                  <select name="medida" class="form-control" id="idUnidadMedida" onchange="validarUnidadesMedida();" required>
+                   @foreach($nombreUnidadesMedida as $nombre)
+                   @if($unidades->idNombreUnidadMedida == $nombre->id)
+                   <option value="{{$nombre->id}}" selected>
+                     {{$nombre->nombreUnidadMedida}} 
+                   </option>
+                   @endif
+                   <option value="{{$nombre->id}}" >
+                     {{$nombre->nombreUnidadMedida}} 
+                   </option>
+                   @endforeach
+                 </select>
+                 <div class="help-block with-errors"></div>
+               </div>
+             </div><!--/form-group-->
 
-
-
-           <div class="form-group">
-            <div class="col-sm-offset-7 col-sm-5">
-              <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-              <a href="{{url('/unidades_medida')}}" class="btn btn-default"> Cancelar</a>
-            </div>
-          </div><!--/form-group-->
-        </form>
-      </div><!--/porlets-content-->
-    </div><!--/block-web-->
-  </div><!--/col-md-12-->
-</div><!--/row-->
+             <div class="form-group">
+              <div class="col-sm-offset-7 col-sm-5">
+                <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{{url('/unidades_medida')}}" class="btn btn-default"> Cancelar</a>
+              </div>
+            </div><!--/form-group-->
+          </form>
+        </div><!--/porlets-content-->
+      </div><!--/block-web-->
+    </div><!--/col-md-12-->
+  </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 
-</html>
+
+
+
+
+
 @endsection

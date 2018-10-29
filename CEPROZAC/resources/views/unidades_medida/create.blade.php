@@ -32,62 +32,60 @@
         </div>
 
         <div class="porlets-content">
-         <div class="text-success" id='result'>
-          @if(Session::has('message'))
-          {{Session::get('message')}}
-          @endif
-        </div>
-        <form action="{{route('unidades_medida.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
-          {{csrf_field()}}
+          <div id="alerta"> 
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
+          </div>
 
-              <input name="nombre" type="text"  onchange="mayus(this);"  value="{{Input::old('nombre')}}" class="form-control" required value="" placeholder="Ingrese nombre del Provedor" maxlength="80" parsley-rangelength="[1,70]"/>
-              <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
+          <form action="{{route('unidades_medida.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+            {{csrf_field()}}
 
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+
+                <input name="nombre" type="text" id="contenedor" onchange="mayus(this);quitarEspacios(this);validarUnidadesMedida();"   class="form-control" required  placeholder="Ingrese nombre de contenedor de la unidad de Medida" maxlength="80" parsley-rangelength="[1,70]"/>
+                <div class="text-danger"  id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
+
+              </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Cantidad Equivalente: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Cantidad Equivalente: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <input name="cantidad" type="number" id="cantidad" step="any"  max="999999" min="0.0000001" class="form-control" required  placeholder="Ingrese cantidad" maxlength="6" onchange="validarUnidadesMedida();" />
+                <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
 
-              <input name="cantidad" type="number" step="any"  max="999999" min="0.0000001" value="{{Input::old('cantidad')}}" class="form-control" required  placeholder="Ingrese el Número de Equivalencia" maxlength="6" />
-              <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
-
+              </div>
             </div>
-          </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Unidad De Medida: <strog class="theme_color">*</strog></label>
+              <div class="col-sm-6">
+                <select name="medida" id="idUnidadMedida" class="form-control" required onchange="validarUnidadesMedida();">
+                 @foreach($nombreUnidadesMedida as $nombre)
+                 <option value="{{$nombre->id}}">
+                   {{$nombre->nombreUnidadMedida}} 
+                 </option>
+                 @endforeach
+               </select>
+               <div class="help-block with-errors"></div>
+             </div>
+           </div><!--/form-group-->
 
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Unidad De Medida: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
-             <select name="medida" class="form-control" required>
-               @foreach($nombreUnidadesMedida as $nombre)
-               <option value="{{$nombre->id}}">
-                 {{$nombre->nombreUnidadMedida}} 
-               </option>
-               @endforeach
-             </select>
-             <div class="help-block with-errors"></div>
-           </div>
-         </div><!--/form-group-->
-
-
-         <div class="form-group">
-          <div class="col-sm-offset-7 col-sm-5">
-            <button type="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-            <a href="{{url('/unidades_medida')}}" class="btn btn-default"> Cancelar</a>
-          </div>
-        </div><!--/form-group-->
-      </form>
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
-</div><!--/col-md-12-->
+           <div class="form-group">
+            <div class="col-sm-offset-7 col-sm-5">
+              <button type="submit" id="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
+              <a href="{{url('/unidades_medida')}}" class="btn btn-default"> Cancelar</a>
+            </div>
+          </div><!--/form-group-->
+        </form>
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
 
-</html>
+
 @endsection
+

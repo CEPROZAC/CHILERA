@@ -81,8 +81,8 @@
                 </ul>
               </p>
               <p align="justify"><strong>Stock Minimo:</strong>   
-                {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($mat->unidad_medida,$mat->stock_minimo)}} 
-                {{$mat->unidad_medida}}  
+                {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($mat->unidad_medida,$mat->stock_minimo,$mat->cantidadUnidadMedida)}} 
+                 {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
               </p>
               <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
              

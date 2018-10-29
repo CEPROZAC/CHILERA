@@ -264,7 +264,7 @@
       <label ><strong>Unidad de Medida:</strong></label>
       <div >
         <div class="input-group"> <span class="input-group-addon">Completas</span>
-          <input type="text" class="form-control" placeholder="2">
+          <input id="unidadesCompletas" type="text" class="form-control" placeholder="2">
         </div>
       </div>
     </div><!--/form-group-->
@@ -284,7 +284,7 @@
       <label ><strong>Unidad de Medida:</strong></label>
       <div >
         <div  class="input-group" > <span id="unidadCentral"  class="input-group-addon">Kilogramos</span>
-          <input  id="Medida"  type="text" class="form-control" placeholder="3">
+          <input  id="Medida"  type="text" class="form-control" placeholder="0">
         </div>
       </div>
     </div><!--/form-group-->
@@ -300,7 +300,7 @@
       <label ><strong>&nbsp;</strong></label>
       <div >
         <div class="input-group" > <span id="unidadDeMedida" class="input-group-addon">Gramos</span>
-          <input type="text" class="form-control"  id="unidadMinima" placeholder="234">
+          <input type="text" class="form-control"  id="unidadMinima" placeholder="0">
         </div>
       </div>
     </div><!--/form-group-->
@@ -415,43 +415,48 @@ function calcularCantidad(){
   var select = document.getElementById("idMaterial");
   var options=document.getElementsByTagName("option");
   var idMaterial= select.value;
+  var idUnidadMedida;
+
+  var unidadesCompletas =parseInt(document.getElementById('unidadesCompletas').value);
+  var unidadCentral = parseInt(document.getElementById('Medida').value);
+  var unidadesMedida = parseInt(document.getElementById('unidadMinima').value);
+  var nombreUnidadMedida;
+
+  var capacidad=0;;
+  var totalUnidadesCompletas;
+
+  var total;
   var route = "http://localhost:8000/obtenerPropiedadesAgroquimicos/"+idMaterial;
   $.get(route,function(res){
 
+   idUnidadMedida= res.idUnidadMedida;
 
-    /*
-    $unidadDeMedida=res[0].nombreUnidadMedida;
-    $capacidadUnidadMedida= $unidades->cantidad;
-    $totalUnidadesCompletas= $capacidadUnidadMedida* $unidadesCompletas = $request->get('unidadesCompletas');
-    $unidadCentral = $request->get('unidadCentral');
-    $unidadesMedida =$request->get('unidadDeMedida');
-    $stockReal = $request->get('stock_min');
-    $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
-    $cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
-    */
-    var route = "http://localhost:8000/propiedadesUnidadMedidaCantidadJson/"+idMaterial;
-    $.get(route,function(res){
+   var routePropiedadesUnidadMedida = "http://localhost:8000/propiedadesUnidadMedidaCantidadJson/"+idUnidadMedida;
+   $.get(routePropiedadesUnidadMedida,function(resPropiedadesUnindadMedida){
 
+    nombreUnidadMedida = resPropiedadesUnindadMedida.nombreUnidadMedida;
+    capacidad = resPropiedadesUnindadMedida.cantidad; 
+    totalUnidadesCompletas = unidadesCompletas * capacidad; 
 
-    });
-
+    total = calcularEquivalencia(nombreUnidadMedida,totalUnidadesCompletas,unidadCentral,unidadesMedida); 
   });
 
+ });
 
-
+  return total;
 }
 
 
 function calcularEquivalencia(unidadDeMedida,unidadesCompletas,unidadCentral,unidadesMedida){
 
-  if($unidadDeMedida == "LITROS"){
+  if(unidadDeMedida == "LITROS"){
     total=unidadesCompletas*1000+ unidadCentral * 1000 +unidadesMedida  ;
     return total;
   }
 
   else if (unidadDeMedida =="KILOGRAMOS") {
 
-    $total=unidadesCompletas*1000+ unidadCentral * 1000 +unidadesMedida  ;
+    total=unidadesCompletas*1000+ unidadCentral * 1000 +unidadesMedida  ;
     return total;
   }
 
@@ -459,13 +464,13 @@ function calcularEquivalencia(unidadDeMedida,unidadesCompletas,unidadCentral,uni
     total=unidadesCompletas*100+ unidadCentral * 100 +unidadesMedida  ;
     return total;
   }
-  else if($unidadDeMedida=="UNIDADES"){
+  else if(unidadDeMedida=="UNIDADES"){
     total = unidadesCompletas + unidadCentral;
-    return $total;
+    return total;
   } else if(unidadDeMedida=="GRAMOS"){
     total = unidadesCompletas + unidadCentral;
-    return $total;
-  } else if($unidadDeMedida=="MILILITROS"){
+    return total;
+  } else if(unidadDeMedida=="MILILITROS"){
     total = unidadesCompletas + unidadCentral;
     return total;
   } else if(unidadDeMedida=="CENTIMETROS"){

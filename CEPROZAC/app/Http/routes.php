@@ -64,7 +64,7 @@ Route::post("clientes/validarmiformulario", "ClienteController@validarMiFormular
 Route::resource('cuentasEmpresasCEPROZAC','CuentasEmpresasCEPROZACController');
 
 Route::resource('contratos','ContratosController');
-Route::get('pdf', 'PdfController@invoice');
+
 Route::get('descargarPDF/{id}', 'ContratosController@pdf');
 
 
@@ -172,7 +172,7 @@ Route::get('movimientos/{id}', array('as'=> '/movimientos','uses'=>'AlmacenGener
 //entradas
 Route::get('verentradas/{id}', array('as'=> '/verentradas','uses'=>'Entradas_AlmacenGeneralController@verEntradas'));
 Route::resource('almacen/general/entradas','Entradas_AlmacenGeneralController');
-Route::resource('almacen/general/salidas','salidas_almacengeneral'); 
+//Route::resource('almacen/general/salidas','salidas_almacengeneral'); 
 Route::get('descargar-almacen-general', 'AlmacenGeneralController@excel')->name('almacengeneral.excel');
 
 ////
@@ -260,9 +260,6 @@ Route::resource('invernaderos','InvernaderosController');
 Route::get('descargar-invernaderos', 'InvernaderosController@excel')->name('invernaderos.excel');
 
 
-//UNIDADES DE MEDIDA
-Route::resource('unidades_medida','UnidadesMedidaController');
-Route::get('descargar-unidades', 'UnidadesMedidaController@excel')->name('unidades_medida.excel');
 
 //////////
 
@@ -405,24 +402,18 @@ Route::get('descargar-compras', 'RecepcionCompraController@excel')->name('compra
 
 /////////////
 
-/*
-// Authentication routes...
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-// Registration routes...
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
-
-*/
-
 
 /*
 Tipo Proveedores
 */
-///////////////////
+//////////////////u
 
 Route::resource('tipoProvedores', 'TipoProvedoresController');
 
 Route::get('descargar_Tipo_Provedores', 'TipoProvedoresController@excel')->name('tipoProvedor.excel');
+
+//UNIDADES DE MEDIDA
+
+Route::get('listarUnidadesMedidaJson', 'UnidadesMedidaController@listarUnidadesMedida');
+Route::resource('unidades_medida','UnidadesMedidaController');
+Route::get('descargar-unidades', 'UnidadesMedidaController@excel')->name('unidades_medida.excel');

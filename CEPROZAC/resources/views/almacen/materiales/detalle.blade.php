@@ -55,34 +55,34 @@
                 @endif
                 <p align="justify"><strong>Descripcion:</strong> {{$mat->descripcion}}</p>
                 <p align="justify"><strong>Cantidad en Almacén:</strong> <ul>
-                @if($mat->unidad_medida== "KILOGRAMOS" || $mat->unidad_medida== "LITROS" || $mat->unidad_medida== "METROS" )
+                  @if($mat->unidad_medida== "KILOGRAMOS" || $mat->unidad_medida== "LITROS" || $mat->unidad_medida== "METROS" )
                   <li>
 
-                  {{$metodo->calcularCantidadAlmacen($mat->idMaterial)}} 
-                  {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
+                    {{$metodo->calcularCantidadAlmacen($mat->idMaterial)}} 
+                    {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
 
                   </li>
                   <li>
 
-                  {{$metodo->calcularCantidadUnidadCentral($mat->idMaterial)}}  {{$mat->unidad_medida}} 
+                    {{$metodo->calcularCantidadUnidadCentral($mat->idMaterial)}}  {{$mat->unidad_medida}} 
                   </li>
                   <li>
-                  {{$metodo->  calcularCantidadUnidadInferior($mat->idMaterial)}}      {{$metodo->labelUnidadMedidaMinima($mat->idMaterial)}}  
+                    {{$metodo->  calcularCantidadUnidadInferior($mat->idMaterial)}}      {{$metodo->labelUnidadMedidaMinima($mat->idMaterial)}}  
                   </li>
                   @else
                   <li>
-                  {{$metodo->calcularCantidadAlmacen($mat->idMaterial)}}  {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
+                    {{$metodo->calcularCantidadAlmacen($mat->idMaterial)}}  {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
                   </li>
                   <li>
-                  {{$metodo->  calcularCantidadUnidadInferior($mat->idMaterial)}}      {{$metodo->labelUnidadMedidaMinima($mat->idMaterial)}}  
+                    {{$metodo->  calcularCantidadUnidadInferior($mat->idMaterial)}}      {{$metodo->labelUnidadMedidaMinima($mat->idMaterial)}}  
 
                   </li>
                   @endif
                 </ul>
               </p>
               <p align="justify"><strong>Stock Minimo:</strong>   
-                {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($mat->unidad_medida,$mat->stock_minimo)}} 
-                {{$mat->unidad_medida}}  
+                {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($mat->unidad_medida,$mat->stock_minimo,$mat->cantidadUnidadMedida)}} 
+                {{$mat->nombreUnidadMedida}}  DE  {{$mat-> cantidadUnidadMedida}} {{$mat->unidad_medida}} 
               </p>
               <p align="justify"><strong>Creado el:</strong> {{$mat->created_at}}</p>
               <td>

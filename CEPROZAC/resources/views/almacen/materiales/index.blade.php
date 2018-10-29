@@ -74,8 +74,8 @@
            </thead>
            <tbody>
             @foreach($material  as $materiales)
-
-            @if( $materiales->cantidad < $materiales->stock_minimo )
+            <!--{{$completos=$metodo->calcularCantidadAlmacen($materiales->idMaterial)}} -->
+            @if( $completos <= $materiales->stock_minimo )
             <tr class="gradeA">
 
 
@@ -133,7 +133,7 @@
               <td style="background-color: #FFE4E1;">
                <center>
 
-                 {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
+                 {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
                </center>
 
 
@@ -214,12 +214,12 @@
       <td>
 
         <center>
-         {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
-       </center>
+          {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}} {{$materiales->nombreUnidadMedida}} 
+        </center>
 
-     </td>
+      </td>
 
-     <td >  
+      <td >  
        <center>
         <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idMaterial}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
       </center>

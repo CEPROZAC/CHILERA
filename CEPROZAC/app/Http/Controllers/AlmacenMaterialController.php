@@ -107,8 +107,7 @@ class AlmacenMaterialController extends Controller
       $unidadCentral = $request->get('unidadCentral');
       $unidadesMedida =$request->get('unidadDeMedida');
       $stockReal = $request->get('stock_min');
-
-      $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
+      $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal,$capacidadUnidadMedida);
       $cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
       $material= new AlmacenMaterial;
       $material->nombre=$request->get('nombre');
@@ -642,36 +641,37 @@ public function calcularEquivalencia($unidadDeMedida,$unidadesCompletas,$unidadC
 
 
 
-public  function calcularStockMinimoReal($unidadDeMedida,$stock){
+
+public  function calcularStockMinimoReal($unidadDeMedida,$stock,$capacidadUnidadMedida){
   if($unidadDeMedida == "LITROS"){
-    $total=$stock*1000 ;
+    $total=$stock*1000 * $capacidadUnidadMedida;
     return $total;
   }
 
   elseif ($unidadDeMedida =="KILOGRAMOS") {
 
-    $total=$stock*1000;
+    $total=$stock*1000 *$capacidadUnidadMedida;
     return $total;
   }
 
   elseif ($unidadDeMedida=="METROS") {
-    $total=$stock*100 ;
+    $total=$stock*100 *$capacidadUnidadMedida;
     return $total;
   }
   elseif($unidadDeMedida=="UNIDADES"){
-    $total = $stock ;
+    $total = $stock* $capacidadUnidadMedida ;
     return $total;
   } 
   elseif($unidadDeMedida=="MILILITROS"){
-    $total = $stock ;
+    $total = $stock *$capacidadUnidadMedida;
     return $total;
   }
   elseif($unidadDeMedida=="GRAMOS"){
-    $total = $stock ;
+    $total = $stock *$capacidadUnidadMedida;
     return $total;
   }
   elseif($unidadDeMedida=="CENTIMETROS"){
-    $total = $stock ;
+    $total = $stock *$capacidadUnidadMedida;
     return $total;
   }
 
@@ -680,38 +680,40 @@ public  function calcularStockMinimoReal($unidadDeMedida,$stock){
 
 
 
-public function convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$stock){
- if($unidadDeMedida == "LITROS"){
-  $total=$stock/1000 ;
-  return $total;
-}
-elseif ($unidadDeMedida =="KILOGRAMOS") {
-  $total=$stock/1000;
-  return $total;
-}
-elseif ($unidadDeMedida=="METROS") {
-  $total=$stock/100 ;
-  return $total;
-}
-elseif($unidadDeMedida=="UNIDADES"){
-  $total = $stock;
-  return $total;
-}   
+public function convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$stock, $capacidadUnidadMedida){
+  if($unidadDeMedida == "LITROS"){
+    $total=$stock/1000/ $capacidadUnidadMedida ;
+    return $total;
+  }
+  elseif ($unidadDeMedida =="KILOGRAMOS") {
+    $total=$stock/1000 /$capacidadUnidadMedida;
+    return $total;
+  }
+  elseif ($unidadDeMedida=="METROS") {
+    $total=$stock/100 /$capacidadUnidadMedida;
+    return $total;
+  }
+  elseif($unidadDeMedida=="UNIDADES"){
+    $total = $stock / $capacidadUnidadMedida;
+    return $total;
+  }   
 
-elseif($unidadDeMedida=="MILILITROS"){
-  $total = $stock;
-  return $total;
-} 
+  elseif($unidadDeMedida=="MILILITROS"){
+    $total = $stock / $capacidadUnidadMedida;
+    return $total;
+  } 
 
-elseif($unidadDeMedida=="CENTIMETROS"){
-  $total = $stock;
-  return $total;
-} 
-elseif($unidadDeMedida=="GRAMOS"){
-  $total = $stock;
-  return $total;
-} 
+  elseif($unidadDeMedida=="CENTIMETROS"){
+    $total = $stock / $capacidadUnidadMedida;
+    return $total;
+  } 
+  elseif($unidadDeMedida=="GRAMOS"){
+    $total = $stock  / $capacidadUnidadMedida;
+    return $total;
+  } 
 }
+
+
 
 public function  propiedadesUnidadMedida($id){
   $unidades  = DB::table('unidades_medidas')

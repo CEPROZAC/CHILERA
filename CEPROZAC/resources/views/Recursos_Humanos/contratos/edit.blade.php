@@ -80,7 +80,7 @@
                           <label class="col-sm-3 control-label">Apellidos: <strog class="theme_color">*</strog></label>
                           <div class="col-sm-6">
 
-                            <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->apellidos}}" placeholder="Ingrese nombre de el Cliente"/>
+                            <input name="apellidos" type="text"  maxlength="60" onchange="mayus(this);quitarEspacios(this);"  class="form-control" onkeypress=" return soloLetras(event);" required value="{{$empleado->apellidos}}" placeholder="Ingrese nombre de el Empleado"/>
                           </div>
                         </div>
                         <input  name="fecha_Nacimiento" type="hidden" id="fechaNacimiento"  value="{{$empleado->fecha_Nacimiento}}" />

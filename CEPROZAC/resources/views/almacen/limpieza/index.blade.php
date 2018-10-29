@@ -15,7 +15,7 @@
 <body>
   <div class="pull-left breadcrumb_admin clear_both">
     <div class="pull-left page_title theme_color">
-    <h1>Almacén de Limpieza</h1>
+      <h1>Almacén de Limpieza</h1>
       <h2 class="">Almacén de Limpieza</h2>
     </div>
     <div class="pull-right">
@@ -82,8 +82,10 @@
                </thead>
                <tbody>
                 @foreach($material  as $materiales)
+
+                <!--{{$completos=$metodo->calcularCantidadAlmacen($materiales->idLimpieza)}} -->
+                @if( $completos <= $materiales->stock_minimo )
                 
-                @if( $materiales->cantidad < $materiales->stock_minimo )
                 <tr class="gradeA">
 
 
@@ -146,13 +148,13 @@
                   <td style="background-color: #FFE4E1;">
                     <center>
 
-                     {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
-                   </center>
+                      {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+                    </center>
 
-                   
-                 </td>
 
-                 <td style="background-color: #FFE4E1;">   
+                  </td>
+
+                  <td style="background-color: #FFE4E1;">   
                    <center>
                     <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idLimpieza}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
                   </center>
@@ -226,7 +228,7 @@
             <td>
 
               <center>
-               {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
+               {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
              </center>
 
            </td>

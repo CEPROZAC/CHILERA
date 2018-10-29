@@ -41,6 +41,12 @@
        </div>
 
        <div class="porlets-content">
+
+        @if(session('info'))
+        <div class="alert alert-danger">
+          <strong>{{ session('info')}}</strong> 
+        </div>
+        @endif
         <div class="table-responsive">
           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>

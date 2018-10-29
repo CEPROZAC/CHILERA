@@ -87,7 +87,9 @@ class EntradasAgroquimicosController extends Controller
       
 
       if (empty($material)){
-        return redirect('/almacen/entradas/agroquimicos');
+
+
+        return redirect('/almacen/entradas/agroquimicos')->with('info', 'Para poder registrar una entrada de agroquimicos, verifica que el sistema ya cuante con datos de provedores agroquimos, Productos de Agroquimico y  empleados almacenistas');
 
          // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
       }else if (empty($empleado)) {
@@ -237,9 +239,7 @@ class EntradasAgroquimicosController extends Controller
         $decrementa->cantidad=$decrementa->cantidad- $elimina->cantidad;
         $decrementa->update();
         $elimina->delete();
-
-
-        # code...
+        
       }
       $num = 1;
       $y = 0;

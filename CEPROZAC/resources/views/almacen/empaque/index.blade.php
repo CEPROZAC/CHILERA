@@ -80,12 +80,15 @@
                </thead>
                <tbody>
                 @foreach($material  as $materiales)
+
+                <!--{{$completos=$metodo->calcularCantidadAlmacen($materiales->idEmpaque)}} -->
+                @if( $completos <= $materiales->stock_minimo )
                 
-                @if( $materiales->cantidad < $materiales->stock_minimo )
+
                 <tr class="gradeA">
 
 
-                  <td style="background-color: #FFE4E1;">{{$materiales->nombre}} </td>
+                  <td style="background-color: #FFE4E1;">{{$materiales->formaEmpaque}} </td>
 
                   @if (($materiales->codigo)!="")
                   <td style="background-color: #FFE4E1;"><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
@@ -104,7 +107,7 @@
                   <td style="background-color: #FFE4E1;">
                     @if (($materiales->imagen)!="")
 
-                    <img src="{{asset('imagenes/almacenempaque/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                    <img src="{{asset('imagenes/almacenempaque/'.$materiales->imagen)}}" alt="{{$materiales->formaEmpaque}}" height="100px" width="100px" class="img-thumbnail">
                     @else
                     No Hay Imagen Disponible
                     @endif
@@ -125,7 +128,7 @@
                         {{$metodo->calcularCantidadUnidadCentral($materiales->idEmpaque)}}  {{$materiales->unidad_medida}} 
                       </li>
                       <li>
-                        {{$metodo->  calcularCantidadUnidadInferior($materiales->idEmpaque)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idAgroquimico)}}  
+                        {{$metodo->  calcularCantidadUnidadInferior($materiales->idEmpaque)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idEmpaque)}}  
                       </li>
                       @else
                       <li>
@@ -143,11 +146,10 @@
                   </td>
                   <td style="background-color: #FFE4E1;">
                     <center>
-
-                     {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
+                     {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}} {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
                    </center>
 
-                   
+
                  </td>
 
                  <td style="background-color: #FFE4E1;">   
@@ -225,12 +227,12 @@
             <td>
 
               <center>
-               {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo)}} {{$materiales->unidad_medida}} 
-             </center>
+                {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+              </center>
 
-           </td>
+            </td>
 
-           <td >  
+            <td >  
              <center>
                <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idEmpaque}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
              </center>

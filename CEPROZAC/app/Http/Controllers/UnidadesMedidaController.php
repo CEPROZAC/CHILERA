@@ -80,9 +80,15 @@ class unidadesmedidacontroller extends Controller
     {
       $nombreUnidadesMedida =DB::table('nombre_unidades_medidas')->get();
 
-      $unidades = Unidades_Medida::findOrFail($id);
+    
 
-
+      $unidades  = Unidades_Medida::
+      join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+      ->select('unidades_medidas.id as idUnidadMedida','unidades_medidas.nombre', 'nombre_unidades_medidas.id as idNombreUnidadMedida',
+        'unidades_medidas.cantidad','nombre_unidades_medidas.nombreUnidadMedida as nombreUnidadMedida')
+      ->where('estado', '=', 'Activo')
+      ->where('unidades_medidas.id','=',$id)
+      ->first();
 
 
       return view('unidades_medida.edit', ['nombreUnidadesMedida'=>$nombreUnidadesMedida,'unidades' => $unidades]);
@@ -119,7 +125,7 @@ class unidadesmedidacontroller extends Controller
      $unidad->estado="Inactivo";
      $unidad->update();
      return Redirect::to('unidades_medida');
-        //
+
    }
 
    public function excel()
@@ -138,4 +144,20 @@ class unidadesmedidacontroller extends Controller
       });
     })->export('xls');
   }
+
+
+  public function listarUnidadesMedida()
+  {        
+   $unidades  = Unidades_Medida::
+   join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+   ->select('unidades_medidas.id as idUnidadMedida','unidades_medidas.nombre', 'nombre_unidades_medidas.id as idNombreUnidadMedida',
+    'unidades_medidas.cantidad','nombre_unidades_medidas.nombreUnidadMedida as nombreUnidadMedida')
+   ->where('estado', '=', 'Activo')
+   ->get();
+   return response()->json(
+    $unidades->toArray());
+
+ }
 }
+
+
