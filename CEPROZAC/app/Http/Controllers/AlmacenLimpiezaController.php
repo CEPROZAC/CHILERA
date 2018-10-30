@@ -231,7 +231,7 @@ class AlmacenLimpiezaController extends Controller
 
       return view("almacen.limpieza.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
         "unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
-        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida]);
+        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida, "capacidadUnidadMedida" =>$capacidadUnidadMedida]);
     }
 
     /**
@@ -252,7 +252,7 @@ class AlmacenLimpiezaController extends Controller
      $unidadCentral = $request->get('unidadCentral');
      $unidadesMedida =$request->get('unidadDeMedida');
      $stockReal = $request->get('stock_min');
-     $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
+     $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal,$capacidadUnidadMedida);
      $cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
 
      $material->nombre=$request->get('nombre');

@@ -1538,3 +1538,106 @@ function validarUnidadesMedida(){
     });
   } 
 }
+
+
+
+
+function obtenerSelect() {
+
+  var select = document.getElementById("medida");
+  var options=document.getElementsByTagName("option");
+  var idProvedor= select.value;
+
+  var x = select.options[select.selectedIndex].text;
+
+  var unidadesDeMedida = x.split(" ");
+  
+  document.getElementById("contenedor").value= x;
+
+ if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+} else if( unidadesDeMedida.includes("CENTIMETROS")) {  //CENTIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  $("#Medida").show();
+
+
+} else if( unidadesDeMedida.includes("LITROS")){  //LITROS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+
+ document.getElementById('unidadCentral').innerHTML='Litros';  
+ document.getElementById('unidadDeMedida').innerHTML='Mililitros';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+} else if( unidadesDeMedida.includes("METROS")){  //METROS
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+ document.getElementById('unidadCentral').innerHTML='Metros';  
+ document.getElementById('unidadDeMedida').innerHTML='Centimetros';  
+
+
+ $("#Medida").show();
+
+}  else if( unidadesDeMedida.includes("KILOGRAMOS")) {  //KILOGRAMOS
+
+ $("#unidadDeMedida").show();
+ $("#unidadMinima").show();
+
+ document.getElementById('unidadCentral').innerHTML='Kilogramos';  
+ document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+
+ $("#unidadCentral").show();
+ $("#Medida").show();
+
+} else if ( unidadesDeMedida.includes("UNIDADES")) {  //UNIDADES
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  $("#Medida").show();
+
+} 
+
+}
+
+function habilitar(value)
+{
+  if(value=="1")
+  {
+// habilitamos
+document.getElementById("segundo").disabled=false;
+document.getElementById("segundo").value = "";
+document.getElementById("segundo").focus(); 
+}else if(value=="2"){
+// deshabilitamos
+document.getElementById("segundo").disabled=false;
+document.getElementById("segundo").readonly="readonly";
+document.getElementById("segundo").readonly=true;
+var aleatorio = Math.floor(Math.random()*999999999999);
+document.getElementById("segundo").value=aleatorio;
+}else if (value=="3"){
+  document.getElementById("segundo").disabled=true;
+  document.getElementById("segundo").value = "";
+}
+}
+
+

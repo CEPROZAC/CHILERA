@@ -69,7 +69,10 @@
 
                    <th>Codigo de Barras </th>
 
-                   <th>Cantidad en Almacén &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <th>Cantidad en Almacén 
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                    </th>
@@ -85,7 +88,8 @@
 
 
                 <!--{{$completos=$metodo->calcularCantidadAlmacen($materiales->idAgroquimico)}} -->
-                @if( $completos <= $materiales->stock_minimo )
+                <!--{{$stockCompleto=$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}--> 
+                @if( $completos <= $stockCompleto )
                 <tr class="gradeA">
 
 
@@ -187,10 +191,8 @@
              <ul>
               @if($materiales->unidad_medida== "KILOGRAMOS" || $materiales->unidad_medida== "LITROS" || $materiales->unidad_medida== "METROS" )
               <li>
-
                 {{$metodo->calcularCantidadAlmacen($materiales->idAgroquimico)}} 
                 {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
-
               </li>
               <li>
 
@@ -205,13 +207,11 @@
               </li>
               <li>
                 {{$metodo->  calcularCantidadUnidadInferior($materiales->idAgroquimico)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idAgroquimico)}}  
-
               </li>
               @endif
             </ul>
 
             <td>
-
               <center>
                {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
              </center>
@@ -224,9 +224,6 @@
             </center>
 
           </td>
-
-
-
           <td>  <a href="{{URL::action('AlmacenAgroquimicosController@edit',$materiales->idAgroquimico)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
           </td>
           <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idAgroquimico}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>

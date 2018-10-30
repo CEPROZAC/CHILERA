@@ -231,31 +231,45 @@ class AlmacenEmpaqueController extends Controller
       ->where('estado', '=', 'Activo')
       ->get();
 
-      $material = AlmacenEmpaque::findOrFail($id);
+      $material = DB::table('almacenempaque')
+      ->join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
+      ->select('almacenempaque.*', 'forma_empaques.*')
+      ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
+      ->select('unidades_medidas.id')
+      ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+      ->select('almacenempaque.id as idEmpaque',
+        'almacenempaque.codigo','almacenempaque.imagen','almacenempaque.descripcion', 
+        'almacenempaque.cantidad', 'almacenempaque.stock_minimo','almacenempaque.idUnidadMedida', 
+        'unidades_medidas.nombre as nombreUnidadMedida','forma_empaques.formaEmpaque',
+        'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+      ->where('almacenempaque.estado','=','Activo')
+      ->where('almacenempaque.id','=' ,$id)
+      ->first();
       $cantidad = $material->cantidad;
       $idUnidadMedida = $material->idUnidadMedida;
-      $idAgroquimico = $material->id;
+      $idEmpaque = $material->idEmpaque;
 
       $unidades=$this->propiedadesUnidadMedida($idUnidadMedida);
       $unidadDeMedida=$unidades->nombreUnidadMedida;
       $capacidadUnidadMedida= $unidades->cantidad;
       $unidad_medida = $unidades->nombreUnidadMedida;
       if($unidad_medida == "KILOGRAMOS"  || $unidad_medida == "LITROS"  ||  $unidad_medida == "METROS"){
-        $unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
-        $unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
-        $unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
+        $unidadesCompletas= $this->calcularCantidadAlmacen($idEmpaque);
+        $unidadCentral= $this->calcularCantidadUnidadCentral($idEmpaque);
+        $unidadInferior=$this->calcularCantidadUnidadInferior($idEmpaque);
       }
       else {
 
-        $unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
-        $unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
-        $unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
+        $unidadesCompletas= $this->calcularCantidadAlmacen($idEmpaque);
+        $unidadCentral= $this->calcularCantidadUnidadCentral($idEmpaque);
+        $unidadInferior=$this->calcularCantidadUnidadInferior($idEmpaque);
       }
       $empaque= DB::table('forma_empaques')->where('estado','Activo')->get();
 
       return view("almacen.empaque.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
         "unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
-        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida,'empaque'=>$empaque]);
+        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida,'empaque'=>$empaque,
+        "capacidadUnidadMedida"=>$capacidadUnidadMedida]);
     }
 
     /**
@@ -276,7 +290,7 @@ class AlmacenEmpaqueController extends Controller
       $unidadCentral = $request->get('unidadCentral');
       $unidadesMedida =$request->get('unidadDeMedida');
       $stockReal = $request->get('stock_min');
-      $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
+      $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal,$capacidadUnidadMedida);
       $cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
 
       $material->idFormaEmpaque=$request->get('idEmpaque');
