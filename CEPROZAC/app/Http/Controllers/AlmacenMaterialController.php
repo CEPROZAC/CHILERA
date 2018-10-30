@@ -240,7 +240,8 @@ class AlmacenMaterialController extends Controller
 
       return view("almacen.materiales.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
         "unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
-        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida,'almacen'=>$almacen]);
+        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida,'almacen'=>$almacen,
+        "capacidadUnidadMedida"=>$capacidadUnidadMedida]);
 
     }
     /**
@@ -253,7 +254,6 @@ class AlmacenMaterialController extends Controller
     public function update(Request $request, $id)
     {
 
-
       $material=AlmacenMaterial::findOrFail($id);
       $unidades=$this->propiedadesUnidadMedida($request->get("idUnidadMedida"));
       $unidadDeMedida=$unidades->nombreUnidadMedida;
@@ -262,7 +262,7 @@ class AlmacenMaterialController extends Controller
       $unidadCentral = $request->get('unidadCentral');
       $unidadesMedida =$request->get('unidadDeMedida');
       $stockReal = $request->get('stock_min');
-      $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal);
+      $stockMinimo = $cantidadAlmacen= $this->calcularStockMinimoReal($unidadDeMedida,$stockReal,$capacidadUnidadMedida);
       $cantidadAlmacen= $this->calcularEquivalencia($unidadDeMedida,$totalUnidadesCompletas, $unidadCentral,$unidadesMedida);
 
       $material->nombre=$request->get('nombre');

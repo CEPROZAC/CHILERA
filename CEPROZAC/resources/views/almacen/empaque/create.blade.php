@@ -7,7 +7,7 @@
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
-    <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Inicio</a></li>
+      <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Inicio</a></li>
       <li><a style="color: #808080" href="{{url('almacenes/empaque')}}">Almacén de Empaques</a></li>
     </ol>
   </div>
@@ -144,13 +144,17 @@
     </div>
   </div>
 
+
   <div class="form-group">
     <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <input name="stock_min" maxlength="9" type="number" value="{{Input::old('stock_min')}}"  step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
-    </div>    
+    <div class="col-sm-3">
+      <input name="stock_min" maxlength="9" type="number" 
+      min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
+    </div> 
+    <input  class="col-sm-3" id="contenedor" value="COSTAL 5 KILOGRAMOS"   readonly />
   </div> 
 
+  
   <div class="form-group">
     <div class="col-sm-offset-7 col-sm-5">
       <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
@@ -166,110 +170,4 @@
 </div>
 @include('almacen.agroquimicos.modalreactivar')
 @endsection
-
-<script>
-  function habilitar(value)
-  {
-    if(value=="1")
-    {
-// habilitamos
-document.getElementById("segundo").disabled=false;
-document.getElementById("segundo").value = "";
-document.getElementById("segundo").focus(); 
-}else if(value=="2"){
-// deshabilitamos
-document.getElementById("segundo").disabled=false;
-document.getElementById("segundo").readonly="readonly";
-document.getElementById("segundo").readonly=true;
-var aleatorio = Math.floor(Math.random()*999999999999);
-document.getElementById("segundo").value=aleatorio;
-}else if (value=="3"){
-  document.getElementById("segundo").disabled=true;
-  document.getElementById("segundo").value = "";
-}
-}
-
-
-
-
-function obtenerSelect() {
-
-  var select = document.getElementById("medida");
-  var options=document.getElementsByTagName("option");
-  var idProvedor= select.value;
-
-  var x = select.options[select.selectedIndex].text;
-  var unidadesDeMedida = x.split(" ");
-
-
-//MILILITROS
-
-//myArr.includes( 'donna' ) 
- if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
-
-  $("#unidadDeMedida").hide();
-  $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
-  $("#Medida").show();
-
-
-} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
-
-  $("#unidadDeMedida").hide();
-  $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
-  $("#Medida").show();
-
-} else if( unidadesDeMedida.includes("CENTIMETROS")) {  //CENTIMETROS
-
-  $("#unidadDeMedida").hide();
-  $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
-  $("#Medida").show();
-
-
-} else if( unidadesDeMedida.includes("LITROS")){  //LITROS
-
- $("#unidadDeMedida").show();
- $("#unidadMinima").show();
-
-
- document.getElementById('unidadCentral').innerHTML='Litros';  
- document.getElementById('unidadDeMedida').innerHTML='Mililitros';  
-
- $("#unidadCentral").show();
- $("#Medida").show();
-} else if( unidadesDeMedida.includes("METROS")){  //METROS
- $("#unidadDeMedida").show();
- $("#unidadMinima").show();
- document.getElementById('unidadCentral').innerHTML='Metros';  
- document.getElementById('unidadDeMedida').innerHTML='Centimetros';  
-
-
- $("#Medida").show();
-
-}  else if( unidadesDeMedida.includes("KILOGRAMOS")) {  //KILOGRAMOS
-
- $("#unidadDeMedida").show();
- $("#unidadMinima").show();
-
- document.getElementById('unidadCentral').innerHTML='Kilogramos';  
- document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
-
- $("#unidadCentral").show();
- $("#Medida").show();
-
-} else if ( unidadesDeMedida.includes("UNIDADES")) {  //UNIDADES
-
-  $("#unidadDeMedida").hide();
-  $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
-  $("#Medida").show();
-
-} 
-
-}
-
-
-</script>
 

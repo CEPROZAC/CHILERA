@@ -84,7 +84,8 @@
                 @foreach($material  as $materiales)
 
                 <!--{{$completos=$metodo->calcularCantidadAlmacen($materiales->idLimpieza)}} -->
-                @if( $completos <= $materiales->stock_minimo )
+                <!--{{$stockCompleto=$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}--> 
+                @if( $completos <= $stockCompleto )
                 
                 <tr class="gradeA">
 

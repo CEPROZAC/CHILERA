@@ -21,7 +21,7 @@
           <div class="row" style="margin-top: 15px; margin-bottom: 12px;">
             <div class="col-sm-8">
               <div class="actions"><h3></h3> </div>
-              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Empaques: {{ $material->nombre}} </strong></h2> 
+              <h2 class="content-header" style="margin-top: -5px;"><strong>Editar Empaques: {{ $material->formaEmpaque}} </strong></h2> 
             </div>
             <div class="col-md-4">
               <div class="btn-group pull-right">
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="porlets-content">
-          <form action="{{url('almacenes/empaque', [$material->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
+          <form action="{{url('almacenes/empaque', [$material->idEmpaque])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
 
@@ -41,7 +41,7 @@
               <div class="col-sm-6">
                 <select name="idEmpaque" class="form-control" value="{{Input::old('nombre')}}" required>  
                   @foreach($empaque as $empaques)
-                  @if($empaques->id == $material->idFormaEmpaque)
+                  @if($empaques->id == $material->idEmpaque)
                   <option value="{{$empaques->id}}">
                    {{$empaques->formaEmpaque}}
                  </option>
@@ -95,7 +95,7 @@
       <label  class="col-sm-3 control-label">Codigo de Barras <strog class="theme_color">*</strog></label>
       <div class="col-sm-6" id="muestra_codigo">
 
-       <td> <?php echo DNS1D::getBarcodeHTML("$material->id", "C128",3,33);?></td>
+       <td> <?php echo DNS1D::getBarcodeHTML("$material->idEmpaque", "C128",3,33);?></td>
      </div>    
    </div>  
 
@@ -109,7 +109,9 @@
     <div class="col-sm-6">
      <input  type="file" hidden name="imagen"  value="{{$material->imagen}}" class="form-control"  accept=".jpg, .jpeg, .png">
      @if (($material->imagen)!="")
-     <img src="{{asset('imagenes/almacenagroquimicos/'.$material->imagen)}}" height="100px" width="100px">
+     <img  src="{{asset('imagenes/almacenempaque/'.$material->imagen)}}" height="100px" width="100px">
+
+    
      @endif
    </div>
  </div>
@@ -197,11 +199,11 @@
 
 <div class="form-group">
   <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
-  <div class="col-sm-6">
-    <input name="stock_min" maxlength="9" type="number"
-    value="{{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($unidad_medida,$material->stock_minimo)}}" 
-    min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
-  </div>    
+  <div class="col-sm-3">
+    <input name="stock_min" maxlength="9" type="number" 
+    min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén"  value="{{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($unidad_medida,$material->stock_minimo,$capacidadUnidadMedida)}}"  onkeypress=" return soloNumeros(event);" />
+  </div> 
+  <input  class="col-sm-3" id="contenedor" value="COSTAL 5 KILOGRAMOS"   readonly />
 </div> 
 
 
