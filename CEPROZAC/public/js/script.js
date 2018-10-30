@@ -1360,7 +1360,7 @@ function  validarprovmat(){
  $("#unidadMinima").show();
 
  document.getElementById('unidadCentral').innerHTML='Kilogramos';  
- document.getElementById('unidadDeMedida').innerHTML='GRAMOS';  
+ document.getElementById('unidadDeMedida').innerHTML='Gramos';  
 
  $("#unidadCentral").show();
  $("#Medida").show();
@@ -1369,7 +1369,7 @@ function  validarprovmat(){
 
   $("#unidadDeMedida").hide();
   $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='UNIDADES';  
+  document.getElementById('unidadCentral').innerHTML='Unidades';  
   $("#Medida").show();
 
 } 

@@ -30,7 +30,9 @@ class EntradasAlmacenLimpiezaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() 
+    
+
+    /*public function index() 
     {
      $entrada= DB::table('entradasalmacenlimpieza')->where('entradasalmacenlimpieza.estado','=','Activo')
      ->join('almacenlimpieza as a', 'entradasalmacenlimpieza.id_material', '=', 'a.id')
@@ -43,13 +45,90 @@ class EntradasAlmacenLimpiezaController extends Controller
 
         //
  }
+*/
+public function index()
+    {
+      $entrada= DB::table('entradasalmacenlimpieza')->where('entradasalmacenlimpieza.estado','=','Activo')
+      ->join('provedor_materiales','entradasalmacenlimpieza.provedor','=', 'provedor_materiales.id')
+      ->join('empresas_ceprozac', 'entradasalmacenlimpieza.comprador','=', 'empresas_ceprozac.id')
+      ->join('empleados as empEntrega', 'entradasalmacenlimpieza.entregado','=', 'empEntrega.id')
+      ->join('empleados as empRecibe', 'entradasalmacenlimpieza.recibe_alm','=', 'empRecibe.id')
+      ->select('entradasalmacenlimpieza.id as idEntradaLimpieza', 'entradasalmacenlimpieza.fecha',
+        'entradasalmacenlimpieza.factura', 'entradasalmacenlimpieza.moneda', 'entradasalmacenlimpieza.observacionesc',
+        'entradasalmacenlimpieza.estado as estadoEntrada','empEntrega.nombre as nombreEmpleadoEntrega',
+        'empEntrega.apellidos as apellidosEmpleadoEntrega', 'empRecibe.nombre as nombreEmpleadoRecibe', 
+        'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
+      ->get();
+
+      return view('almacen.limpieza.entradas.index', ['entrada' => $entrada]);
+
+
+
+        //
+    }
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+public function create() 
+    {
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $provedor = DB::table('provedores_tipo_provedor')
+      ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+      ->select('p.*','p.nombre as nombre')
+      ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
+      $unidades  = DB::table('unidades_medidas')
+      ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+      ->select('unidades_medidas.id as idContenedorUnidadMedida','unidades_medidas.nombre','unidades_medidas.cantidad', 'unidades_medidas.idUnidadMedida', 'nombre_unidades_medidas.*')
+      ->where('estado', '=', 'Activo')
+      ->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+      $material=DB::table('almacenlimpieza')->where('almacenlimpieza.estado','=' ,'Activo')
+      ->where('almacenlimpieza.cantidad','>=','0')
+      ->join('unidades_medidas as u', 'almacenlimpieza.idUnidadMedida', '=', 'u.id')
+      ->select('u.idUnidadMedida')
+      ->join('nombre_unidades_medidas as n', 'u.idUnidadMedida', '=', 'n.id')
+      ->select('almacenlimpieza.id as idLimpieza','almacenlimpieza.nombre as nombreLimpieza',
+        'almacenlimpieza.imagen','almacenlimpieza.descripcion',
+        'almacenlimpieza.stock_minimo','almacenlimpieza.idUnidadMedida',
+        'u.nombre as nombreUnidad','n.nombreUnidadMedida as NombreUnidadP','u.cantidad as cantidadMedida')->get();
+      
+
+      $cuenta = count($material);
+      
+
+      if (empty($material)){
+
+
+        return redirect('/almacen/entradas/limpieza')->with('info', 'Para poder registrar una entrada de limpieza, verifica que el sistema ya cuante con datos de proveedores de limpieza, productos de limpieza y empleados almacenistas');
+
+         // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
+      }else if (empty($empleado)) {
+        return redirect('/almacen/entradas/limpieza');
+
+
+      }else if (empty($provedor)){
+        return redirect('/almacen/entradas/limpieza');
+
+
+      }
+      else{
+        return view("almacen.limpieza.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,"unidades"=>$unidades]);
+
+      }
+        //
+    }
+
+
+
+/*    public function create()
     {
         $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
         $provedor = DB::table('provedores_tipo_provedor')
@@ -87,7 +166,7 @@ class EntradasAlmacenLimpiezaController extends Controller
      }
         //
  }
-
+*/
     /**
      * Store a newly created resource in storage.
      *
