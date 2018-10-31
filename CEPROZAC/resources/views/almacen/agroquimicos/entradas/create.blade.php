@@ -74,104 +74,84 @@
          </div>
 
          <div class="row">
-           <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-            <div class="form-group">
-             <label ><strong>Tipo de Moneda: <strog class="theme_color">*</strog></strong></label>
-             <div >
-              <select name="tipoMoneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
-                @if(Input::old('moneda')=="Peso MXM")
-                <option value='Peso MXN' selected>Peso MXN
-                </option>
-                <option value="Dolar USD">Dolar USD</option>
-                @else
-                <option value='Dolar USD' selected>Dolar USD
-                </option>
-                <option value="Peso MXN">Peso MXN</option>
-                @endif
-              </select>          
-            </div>
-          </div>
-        </div>
+          <!--            -->
 
-        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+          <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+           <div class="form-group">
+            <label ><strong>Proveedor de Material : <strog class="theme_color">*</strog></strong></label>
+
+            <select name="provedor" id="prov" value="prov"  class="form-control select2" required>  
+              @foreach($provedor as $emp)
+              <option value="{{$emp->id}}">
+               {{$emp->nombre}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+
+         </div>
+       </div>
+
+
+       <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
          <div class="form-group">
-          <label ><strong>Proveedor de Material : <strog class="theme_color">*</strog></strong></label>
+           <label ><strong>Empresa : <strog class="theme_color">*</strog></strong></label>
 
-          <select name="provedor" id="prov" value="prov"  class="form-control select2" required>  
-            @foreach($provedor as $emp)
+           <select name="empresaEncargadaCompra" id="empresaCompra"   class="form-control select2" required>  
+            @foreach($empresas as $emp)
             <option value="{{$emp->id}}">
              {{$emp->nombre}} 
            </option>
            @endforeach              
          </select>
          <div class="help-block with-errors"></div>
+       </div>
+     </div>
+   </div>
 
+   <div class="row">
+
+     <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+       <div class="form-group">
+         <label ><strong>Entregado a : <strog class="theme_color">*</strog></strong></label>
+         <div >
+
+          <select name="empleadoEntrega"   id="empleadoEntrega" class="form-control select2" required>  
+            @foreach($empleado as $emp1)
+            <option value="{{$emp1->id}}">
+             {{$emp1->nombre}} {{$emp1->apellidos}} 
+           </option>
+           @endforeach              
+         </select>
+         <div class="help-block with-errors"></div>
        </div>
      </div>
    </div>
 
 
-
-   <div class="row">
-
-    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+   <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
      <div class="form-group">
-       <label ><strong>Empresa : <strog class="theme_color">*</strog></strong></label>
-
-       <select name="empresaEncargadaCompra" id="empresaCompra"   class="form-control select2" required>  
-        @foreach($empresas as $emp)
-        <option value="{{$emp->id}}">
-         {{$emp->nombre}} 
-       </option>
-       @endforeach              
-     </select>
-     <div class="help-block with-errors"></div>
+      <label><strong>Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></strong></label>
+      
+      <div >
+        <select name="empleadoRecibe" class="form-control select2" required>  
+          @foreach($empleado as $emp2)
+          <option value="{{$emp2->id}}">
+           {{$emp2->nombre}} {{$emp2->apellidos}}
+         </option>
+         @endforeach              
+       </select>
+       <div class="help-block with-errors"></div>
+     </div>
    </div>
  </div>
 
 
- <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-   <div class="form-group">
-     <label ><strong>Entregado a : <strog class="theme_color">*</strog></strong></label>
-     <div >
-      <select name="empleadoEntrega"   class="form-control select2" required>  
-        @foreach($empleado as $emp1)
-        <option value="{{$emp1->id}}">
-         {{$emp1->nombre}} {{$emp1->apellidos}} 
-       </option>
-       @endforeach              
-     </select>
-     <div class="help-block with-errors"></div>
-   </div>
- </div>
-</div>
-</div>
-
-
-<div class="row">
-
-  <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-   <div class="form-group">
-    <label><strong>Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></strong></label>
-    <div >
-      <select name="empleadoRecibe" class="form-control select2" required>  
-        @foreach($empleado as $emp2)
-        <option value="{{$emp2->id}}">
-         {{$emp2->nombre}} {{$emp2->apellidos}}
-       </option>
-       @endforeach              
-     </select>
-     <div class="help-block with-errors"></div>
-   </div>
- </div>
-</div>
-
-
-<div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+ <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
   <div class="form-group">
-    <label><strong>Observaciónes: <strog class="theme_color"></strog></strong></label>
+    <label><strong>Observaciones: <strog class="theme_color"></strog></strong></label>
     <div >
-      <input name="observaciones" id="observacionesq" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciónes de la Compra"/>
+      <input name="observaciones" id="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciones de la Compra"/>
     </div>
   </div>
 </div>
@@ -181,14 +161,22 @@
 
 <div class="row">
  <div class="panel panel-success" >  
-
   <div class="panel-body">
 
 
-    <div class="row">
 
 
-      <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+
+    <div class="row">   
+
+     <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12">
+      <div class="form-group">
+        <label for="material"><strong>Buscar Código de Barras:</strong> </label>
+        <input  id="codigo" value="" name="codigo" type="text" onkeypress="return teclas(event);"  maxlength="35"  class="form-control"  placeholder="Ingrese el Código de Barras"/>
+      </div>
+    </div>  
+
+      <div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
         <div class="form-group"> 
           <label for="material"><strong>Material:</strong> </label>
           <select name="id_material"   class="form-control select"  onchange="obtnerMedida();obtenerUnidadMedida();
@@ -207,21 +195,19 @@
    </div>
 
 
-
-
    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
     <div class="form-group"> 
       <label for="preciou"><strong>Precio Unitario: </strong> </label>
       <div class="input-group"> <span class="input-group-addon">$</span>
         <input type="text" id="precioUnitario" class="form-control" onfocus ="limpiarPrecioUnitario();" onchange="limpiarErrorPrecioUnitario();"  
-        placeholder="19.54" value="0.00">
+        placeholder="0.00" value="0.00">
       </div>
       <span id="errorprecio" style="color:#FF0000;"></span>
     </div>    
   </div>
 
 
-  <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+  <div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
     <div class="form-group"> 
       <label for="material"><strong>IVA</strong> </label>
       <select name="iva" id="iva"  class="form-control select"  required  >  
@@ -238,17 +224,12 @@
    </div><!--/form-group--> 
  </div>
 
-
-
-
-
-
- <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
   <div class="form-group"> 
     <label for="preciou"><strong>% IEPS: </strong> </label>
     <input name="ieps" id="ieps"  type="text" class="form-control"
     onfocus="limpiarIEPS()" ; 
-    onkeypress=" return soloNumeros(event);" placeholder="5" onchange="limpiarErrorIEPS();" value="0" />
+    onkeypress=" return soloNumeros(event);" placeholder="0" onchange="limpiarErrorIEPS();" value="0" />
     <span id="errorIEPS" style="color:#FF0000;" ></span>
   </div>    
 </div>
@@ -256,83 +237,88 @@
 </div>
 
 
-
 <div class="row">
 
   <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+    <div class="form-group"> 
+      <label ><strong>Unidades de Medida</strong> </label>
+      <input id="contenedor" name="unidadAux"  value="Medida" class="form-control currency" readonly="" placeholder="0"/>
+    </div>    
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
     <div class="form-group">
-      <label ><strong>Unidad de Medida:</strong></label>
+      <label ><strong>Canitdades: </strong></label>
       <div >
         <div class="input-group"> <span class="input-group-addon">Completas</span>
-          <input id="unidadesCompletas" type="text" class="form-control" placeholder="2">
+          <input id="unidadesCompletas" type="text" class="form-control" placeholder="0">
         </div>
       </div>
     </div><!--/form-group-->
   </div>
 
-
-  <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-    <div class="form-group"> 
-      <label ><strong>Contenedor </strong> </label>
-      <input id="contenedor" name="unidadAux"  value="Medida" class="form-control currency" readonly="" />
-    </div>    
-  </div>
-
-
   <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
     <div class="form-group">
-      <label ><strong>Unidad de Medida:</strong></label>
+      <label ><strong>&nbsp;</strong></label>
       <div >
-        <div  class="input-group" > <span id="unidadCentral"  class="input-group-addon">Kilogramos</span>
+        <div  class="input-group" > <span id="unidadCentral"  class="input-group-addon"></span>
           <input  id="Medida"  type="text" class="form-control" placeholder="0">
         </div>
       </div>
     </div><!--/form-group-->
   </div>
 
-</div>
 
 
-<div class="row">
-
-  <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12">
+  <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
     <div class="form-group">
       <label ><strong>&nbsp;</strong></label>
       <div >
-        <div class="input-group" > <span id="unidadDeMedida" class="input-group-addon">Gramos</span>
+        <div class="input-group" > <span id="unidadDeMedida" class="input-group-addon"></span>
           <input type="text" class="form-control"  id="unidadMinima" placeholder="0">
         </div>
       </div>
     </div><!--/form-group-->
   </div>
 
-  <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-    <div class="form-group">
+</div>
+
+<div class="row">
+  <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+    <div class="form-group" >
       <label ><strong>&nbsp; </strong></label>
       <div >
-
-        <button type="button" id="btn_add" onclick="agregarProducto();validar();calcularCantidad();" class="btn btn-primary">Agregar</button>
       </div>
+      <button type="button" id="btn_add" onclick="agregarProducto();validar();calcularCantidad();" class="btn btn-primary">Agregar</button>
     </div>
   </div>
 
 </div>
 
 
+
+
+
+
+
+
 <div class="form-group"  class="table-responsive"> 
   <table id="detalles"  class="table table-responsive-xl table-bordered">
     <thead style="background-color:#A9D0F5">
       <th  width="10%">Opciones</th>
-      <th width="30%">Articulo</th>
-      <th width="30%">Cantidad </th>
-      <th width="7.5%">Precio Unitario</th>
-      <th width="7.5%">IVA</th>
-      <th width="7.5%">IEPS</th>
-      <th width="7.5%">Subtotal</th>
+      <th width="35%">Articulo</th>
+      <th width="10%">Cantidad </th>
+      <th width="12.5%">Precio Unitario</th>
+      <th width="10%">IVA</th>
+      <th width="10%">IEPS</th>
+      <th width="12.5%">Subtotal</th>
     </thead>
   </table>
 
-
+<!--<label ><strong>&nbsp; </strong></label>
   <div class="row">
     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-8">
       <div class="form-group"> 
@@ -348,21 +334,51 @@
     </div>    
   </div>  
 </div>
+-->
+<label ><strong>&nbsp; </strong></label>
+<div class="row" >
 
-</div>
-</div>
 
-
-
-<div class="form-group">
-  <div class="col-sm-offset-7 col-sm-5">
-    <button type="submit" id="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="{{url('/almacen/entradas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+  <div class="col-lg-10 col-sm-9 col-md-9 col-xs-12" >
   </div>
-</div><!--/form-group-->
+  <div class="col-lg-2 col-sm-3 col-md-3 col-xs-12" >
+    <div class="form-group">
+     <label ><strong>Tipo de Moneda: <strog class="theme_color">*</strog></strong></label>
+     <div >
+      <select name="tipoMoneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+        @if(Input::old('moneda')=="Peso MXM")
+        <option value='Peso MXN' selected>Peso MXN
+        </option>
+        <option value="Dolar USD">Dolar USD</option>
+        @else
+        <option value='Dolar USD' selected>Dolar USD
+        </option>
+        <option value="Peso MXN">Peso MXN</option>
+        @endif
+      </select>          
+    </div>
+  </div>
+=======
+</div>
 
 </div>
 
+<div class="row" >
+  <div class="form-group">
+    <div class="col-lg-10 col-sm-9 col-md-9 col-xs-12" >
+    </div>
+    <div class="col-lg-2 col-sm-3 col-md-3 col-xs-12" >
+
+      <button type="submit" id="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
+      <a href="{{url('/almacen/entradas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+    </div>
+  </div><!--/form-group-->
+
+</div>
+
+</div>
+</div>
+</div>
 </form>
 
 </div><!--/col-md-12-->

@@ -3,12 +3,12 @@
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
-    <h2 class="">LIMPIEZA</h2>
+    <h2 class="">Limpieza</h2>
   </div>
   <div class="pull-right">
     <ol class="breadcrumb">
       <li><a style="color: #808080" href="{{url('almacenes/limpieza')}}">Inicio</a></li>
-      <li><a style="color: #808080" href="{{url('almacenes/limpieza')}}">Almacén de LIMPIEZA</a></li>
+      <li><a style="color: #808080" href="{{url('almacenes/limpieza')}}">Almacén de Limpieza</a></li>
     </ol>
   </div>
 </div>
