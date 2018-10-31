@@ -111,7 +111,7 @@
      @if (($material->imagen)!="")
      <img  src="{{asset('imagenes/almacenempaque/'.$material->imagen)}}" height="100px" width="100px">
 
-    
+     
      @endif
    </div>
  </div>
@@ -127,12 +127,6 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
-    <div class="input-group" >
-      <div class="input-group-addon" >Completas</div>
-      <input name="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="{{$unidadesCompletas}}" placeholder="3" onkeypress=" return soloNumeros(event);"/>
-    </div>
-  </div>
-  <div class="col-sm-5">
     <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
       @foreach($unidadesMedidas  as $unidad)
       @if($material->idUnidadMedida == $unidad->idContenedorUnidadMedida)
@@ -149,6 +143,13 @@
      @endforeach
    </select>
  </div>
+ <div class="col-sm-3">
+  <div class="input-group" >
+    <div class="input-group-addon" >Completas</div>
+    <input name="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="{{$unidadesCompletas}}" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+  </div>
+</div>
+
 </div>
 
 
@@ -160,14 +161,14 @@
 
   <div class="col-sm-3">
     <div class="input-group" >
-      <div class="input-group-addon" id="unidadCentral">Kilogramos</div>
+      <div class="input-group-addon" id="unidadCentral"></div>
       <input id="Medida" name="unidadCentral"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
       required value="{{$unidadCentral}}" placeholder="3" onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>
   <div class="col-sm-3">
     <div class="input-group" >
-      <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+      <div class="input-group-addon" id="unidadDeMedida"></div>
       <input  name="unidadDeMedida" value="{{$unidadInferior}}" parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>
@@ -180,14 +181,14 @@
 
   <div class="col-sm-3">
     <div class="input-group" >
-      <div class="input-group-addon" id="unidadCentral">Kilogramos</div>
+      <div class="input-group-addon" id="unidadCentral"></div>
       <input id="Medida" name="unidadCentral"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
       required value="{{$unidadInferior}}"  placeholder="3" onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>
   <div class="col-sm-3">
     <div class="input-group" >
-      <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+      <div class="input-group-addon" id="unidadDeMedida"></div>
       <input  name="unidadDeMedida"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>

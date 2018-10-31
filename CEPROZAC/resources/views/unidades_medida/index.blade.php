@@ -70,7 +70,7 @@
                  </td>
                </td>
              </tr>
-             
+             @include('unidades_medida.modal')
              @endforeach
            </tbody>
            <tfoot>
@@ -89,5 +89,5 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
-@include('unidades_medida.modal')
+
 @stop

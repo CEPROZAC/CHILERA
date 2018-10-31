@@ -100,16 +100,14 @@
   </div>
 
 
+
   <div class="form-group">
     <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
     <div class="col-sm-3">
-      <div class="input-group" >
-        <div class="input-group-addon" >Completas</div>
-        <input name="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
-      </div>
-    </div>
-    <div class="col-sm-5">
       <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
+        <option>
+          SELECIONA UNIDAD DE MEDIDA
+        </option>
         @foreach($unidades  as $unidad)
         <option value='{{$unidad-> idContenedorUnidadMedida}}'>
           {{$unidad->nombre}} {{$unidad->cantidad}} {{$unidad->nombreUnidadMedida}}
@@ -117,7 +115,14 @@
         @endforeach
       </select>
     </div>
+    <div class="col-sm-3">
+      <div class="input-group" >
+        <div class="input-group-addon" >Completas</div>
+        <input name="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+      </div>
+    </div>
   </div>
+
 
 
   <div class="form-group">    
@@ -125,7 +130,7 @@
 
     <div class="col-sm-3">
       <div class="input-group" >
-        <div class="input-group-addon" id="unidadCentral">Kilogramos</div>
+        <div class="input-group-addon" id="unidadCentral"></div>
         <input id="Medida" name="unidadCentral"  
         data-number-to-fixed="2"  class="form-control currency" 
         required  placeholder="3" onkeypress="return soloNumeros(event);"
@@ -135,7 +140,7 @@
     </div>
     <div class="col-sm-3">
       <div class="input-group" >
-        <div class="input-group-addon" id="unidadDeMedida">Gramos</div>
+        <div class="input-group-addon" id="unidadDeMedida"></div>
         <input  name="unidadDeMedida"  max="1000"   class="form-control currency"   id="unidadMinima" placeholder="3"
 
 

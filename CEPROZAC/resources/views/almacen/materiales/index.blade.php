@@ -74,7 +74,7 @@
            </thead>
            <tbody>
             @foreach($material  as $materiales)
-            <!--{{$completos=$metodo->calcularCantidadAlmacen($materiales->idAgroquimico)}} -->
+            <!--{{$completos=$metodo->calcularCantidadAlmacen($materiales->idMaterial)}} -->
             <!--{{$stockCompleto=$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}--> 
             @if( $completos <= $stockCompleto )
             <tr class="gradeA">
