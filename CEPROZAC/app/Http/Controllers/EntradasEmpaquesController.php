@@ -15,8 +15,7 @@ use CEPROZAC\AlmacenAgroquimicos;
 use CEPROZAC\AlmacenEmpaque;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\Empresas_Ceprozac;
-use CEPROZAC\Cantidad_Unidades_Emp;
-use CEPROZAC\UnidadesMedida;
+use CEPROZAC\Unidades_Medida;
 
 
 use DB;
@@ -33,65 +32,127 @@ class EntradasEmpaquesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()  
-    { 
-     $entrada= DB::table('entradasempaques')->where('entradasempaques.estado','=','Activo')
-     ->join('almacenempaque as a', 'entradasempaques.id_material', '=', 'a.id')
-     ->join('empresas_ceprozac as e', 'entradasempaques.comprador', '=', 'e.id')
-     ->join('provedor_materiales as prov', 'entradasempaques.provedor', '=', 'prov.id')
+    public function index()
+    {
+      $entrada= DB::table('entradasempaques')->where('entradasempaques.estado','=','Activo')
+      ->join('provedor_materiales','entradasempaques.provedor','=', 'provedor_materiales.id')
+      ->join('empresas_ceprozac', 'entradasempaques.comprador','=', 'empresas_ceprozac.id')
+      ->join('empleados as empEntrega', 'entradasempaques.entregado','=', 'empEntrega.id')
+      ->join('empleados as empRecibe', 'entradasempaques.recibe_alm','=', 'empRecibe.id')
+      ->select('entradasempaques.id as idEntradaMateriales', 'entradasempaques.fecha',
+        'entradasempaques.factura', 'entradasempaques.moneda', 'entradasempaques.observacionesc',
+        'entradasempaques.estado as estadoEntrada','empEntrega.nombre as nombreEmpleadoEntrega',
+        'empEntrega.apellidos as apellidosEmpleadoEntrega', 'empRecibe.nombre as nombreEmpleadoRecibe', 
+        'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
+      ->get();
 
-     ->select('entradasempaques.*','a.nombre as nombremat','entradasempaques.*','a.medida','e.nombre as emp','prov.nombre as prov')->get();
-        // print_r($salida);
-     return view('almacen.empaque.entradas.index', ['entrada' => $entrada]);
+      return view('almacen.empaque.entradas.index', ['entrada' => $entrada]);
 
-        //
- }
+    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() 
     {
-       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-       $provedor = DB::table('provedores_tipo_provedor')
-        ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
-     ->select('p.*','p.nombre as nombre')
-     ->where('provedores_tipo_provedor.idTipoProvedor','=','4')->get();
-       $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
-       $material=DB::table('almacenempaque')->where('estado','=' ,'Activo')->where('cantidad','>=','0')->get();
-       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
 
-       $cuenta = count($material);
+      $entrada= DB::table('entradasempaques')->where('entradasempaques.estado','=','Activo')
+      ->join('provedor_materiales','entradasempaques.provedor','=', 'provedor_materiales.id')
+      ->join('empresas_ceprozac', 'entradasempaques.comprador','=', 'empresas_ceprozac.id')
+      ->join('empleados as empEntrega', 'entradasempaques.entregado','=', 'empEntrega.id')
+      ->join('empleados as empRecibe', 'entradasempaques.recibe_alm','=', 'empRecibe.id')
+      ->select('entradasempaques.id as idEntradaAgroquimicos', 'entradasempaques.fecha',
+        'entradasempaques.factura', 'entradasempaques.moneda', 'entradasempaques.observacionesc',
+        'entradasempaques.estado as estadoEntrada','empEntrega.nombre as nombreEmpleadoEntrega',
+        'empEntrega.apellidos as apellidosEmpleadoEntrega', 'empRecibe.nombre as nombreEmpleadoRecibe', 
+        'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
+      ->get();
+      $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
+      $provedor = DB::table('provedores_tipo_provedor')
+      ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
+      ->select('p.*','p.nombre as nombre')
+      ->where('provedores_tipo_provedor.idTipoProvedor','2')->get();
+      $unidades  = DB::table('unidades_medidas')
+      ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+      ->select('unidades_medidas.id as idContenedorUnidadMedida','unidades_medidas.nombre','unidades_medidas.cantidad', 'unidades_medidas.idUnidadMedida', 'nombre_unidades_medidas.*')
+      ->where('estado', '=', 'Activo')
+      ->get();
+      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+      $material = DB::table('almacenempaque')
+      ->join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
+      ->select('almacenempaque.', 'forma_empaques.')
+      ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
+      ->select('unidades_medidas.id')
+      ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+      ->select('almacenempaque.id as idEmpaque',
+        'almacenempaque.codigo','almacenempaque.imagen','almacenempaque.descripcion', 
+        'almacenempaque.cantidad', 'almacenempaque.stock_minimo','almacenempaque.idUnidadMedida', 
+        'unidades_medidas.nombre as nombreUnidadMedida','forma_empaques.formaEmpaque',
+        'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+      ->where('almacenempaque.estado','=','Activo')
+      ->get();
+      
+
+      if (empty($material) && empty($empleado) && empty($provedor)){
+
+        $errorProveedor="Registrar proveedores para poder continuar.";
+        $errorMaterial="Registrar empaque para poder continuar";
+        $errorEmpleado="Registrar empleados almacenista para poder continuar";
+
+        return view('/almacen/empaque/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+          "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
 
 
-       if (empty($material)){
-           $entrada= DB::table('entradasempaques')
-           ->join('almacenempaque as a', 'entradasempaques.id_material', '=', 'a.id')
-           ->select('entradasempaques.*','a.nombre as nombremat','entradasempaques.*','a.medida')->get();
-        // print_r($salida);
-           return view('almacen.empaque.entradas.index', ['entrada' => $entrada]);
 
-         // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
-       }else if (empty($empleado)) {
-           $entrada= DB::table('entradasempaques')
-           ->join('almacenempaque as a', 'entradasempaques.id_material', '=', 'a.id')
-           ->select('entradasempaques.*','a.nombre as nombremat','entradasempaques.*','a.medida')->get();
-           return view('almacen.empaque.entradas.index', ['entrada' => $entrada]);
+      }else if (empty($material)  && empty($provedor)) {
+
+        $errorProveedor="Registrar proveedores para poder continuar.";
+        $errorMaterial="Registrar empaque para poder continuar";
+        $errorEmpleado="";
+        return view('/almacen/empaque/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+          "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
 
 
-       }else if (empty($provedor)){
-           $entrada= DB::table('entradasempaques')
-           ->join('almacenempaque as a', 'entradasempaques.id_material', '=', 'a.id')
-           ->select('entradasempaques.*','a.nombre as nombremat','entradasempaques.*','a.medida')->get();
-           return view('almacen.empaque.entradas.index', ['entrada' => $entrada]);
+      }  else if (empty($material) && empty($empleado)) {
 
-       }
-       else{
-        return view("almacen.empaque.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
+        $errorProveedor="";
+        $errorMaterial="Registrar empaque para poder continuar";
+        $errorEmpleado="Registrar empleados almacenista para poder continuar";
+        return view('/almacen/empaque/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+          "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]); 
 
-    }
+      } else if (empty($material)) {
+
+       $errorProveedor="";
+       $errorMaterial="Registrar empaque para poder continuar";
+       $errorEmpleado="";
+
+       return view('/almacen/empaque/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+        "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
+
+     } else if (empty($empleado)) {
+
+      $errorProveedor="";
+      $errorMaterial="";
+      $errorEmpleado="Registrar empleados almacenista para poder continuar";
+
+      return view('/almacen/empaque/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+        "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
+
+    }else if (empty($provedor)){
+
+     $errorProveedor="Registrar proveedores para poder continuar.";
+     $errorMaterial="";
+     $errorEmpleado="";
+     return view('/almacen/empaque/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+      "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
+   }
+   else{
+    return view("almacen.empaque.entradas.create",["entrada"=>$entrada,"material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,"unidades"=>$unidades]);
+
+  }
         //
 }
 

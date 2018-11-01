@@ -56,8 +56,6 @@
                   <input name="numeroFactura" id="numeroFactura"  type="text"  maxlength="10" onchange="mayus(this);validarFactura();"  class="form-control"  placeholder="Ingrese el Número de Factura" required />
 
                   <span id="errorNumeroFactura" style="color:#FF0000;"></span>
-
-
                 </div>
               </div>
             </div>
@@ -78,7 +76,7 @@
          <div class="row">
           <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
            <div class="form-group">
-            <label> <strong></strong>>Proveedor de Material : <strog class="theme_color">*</strog></strong></label>
+            <label> <strong>Proveedor de Material : <strog class="theme_color">*</strog></strong></label>
             <div >
               <select name="provedor" id="prov"   class="form-control select" required>  
                 @foreach($provedor as $emp)
@@ -94,7 +92,7 @@
 
        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
          <div class="form-group">
-          <label><strong>Empresa : <strog class="theme_color">*</strog></strong></label>
+          <label><strong>Empresa: <strog class="theme_color">*</strog></strong></label>
           <div >
             <select name="empresaEncargadaCompra" id="empresaCompra"  class="form-control select" required>  
               @foreach($empresas as $emp)
@@ -112,10 +110,10 @@
    <div class="row">
      <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
        <div class="form-group">
-        <label><strong>Entregado a : <strog class="theme_color">*</strog></strong></label>
+        <label><strong>Entregado a: <strog class="theme_color">*</strog></strong></label>
         <div>
 
-          <select name="empleadoEntrega" id="empleadoEntrega" value=""  class="form-control select2" required>  
+          <select name="empleadoEntrega" id="empleadoEntrega" value=""  class="form-control select" required>  
             @foreach($empleado as $emp)
             <option value="{{$emp->id}}">
              {{$emp->nombre}} {{$emp->apellidos}} 
@@ -130,7 +128,7 @@
 
    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
      <div class="form-group">
-      <label><strong>Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></strong></label>
+      <label><strong>Recibe en Almacén CEPROZAC: <strog class="theme_color">*</strog></strong></label>
       <div >
         <select name="empleadoRecibe" value=""  class="form-control select" required>  
           @foreach($empleado as $emp)
@@ -148,7 +146,7 @@
 <div class="row">
  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
    <div class="form-group">
-    <label><strong>Observaciónes: <strog class="theme_color"></strog></strong></label>
+    <label><strong>Observaciones: <strog class="theme_color"></strog></strong></label>
     <div >
       <input name="observaciones" id="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" placeholder="Ingrese Observaciónes de la Compra"/>
     </div>
@@ -331,7 +329,7 @@
     </div>
 
     <button type="submit" id="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-    <a href="{{url('/almacen/entradas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+    <a href="{{url('/almacen/entradas/materiales')}}" class="btn btn-default"> Cancelar</a>
   </div>
 </div><!--/form-group-->
 

@@ -48,7 +48,7 @@ class EntradaAlmacenController extends Controller
         'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
       ->get();
 
-      return view('almacen.limpieza.entradas.index', ['entrada' => $entrada]);
+      return view('almacen.materiales.entradas.index', ['entrada' => $entrada]);
 
     }
 
