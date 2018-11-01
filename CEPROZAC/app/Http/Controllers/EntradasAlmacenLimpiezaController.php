@@ -82,9 +82,7 @@ class EntradasAlmacenLimpiezaController extends Controller
         'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
       ->get();
 
-
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
-
 
       $provedor = DB::table('provedores_tipo_provedor')
       ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
