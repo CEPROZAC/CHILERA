@@ -13,8 +13,8 @@ use CEPROZAC\Empleado;
 use CEPROZAC\AlmacenLimpieza;
 use CEPROZAC\ProvedorMateriales;
 use CEPROZAC\Empresas_Ceprozac;
-use CEPROZAC\Cantidad_unidades_limp;
-use CEPROZAC\Unidadesmedida;
+
+use CEPROZAC\Unidades_Medida;
 
 
 
@@ -111,6 +111,7 @@ class EntradaAlmacenController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+    /*
     public function store(EntradasMaterialesRequest $formulario)
     {
       $cantidad = $formulario->get('cantidad2');
@@ -276,6 +277,8 @@ return $pdf->stream('invoice');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /*
     public function show($id)
     {
       $unidades= DB::table('unidadesmedida')->where('estado','Activo')->get();
@@ -306,6 +309,8 @@ return $pdf->stream('invoice');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /*
     public function edit($id)
     {
      $entrada = entradaalmacen::findOrFail($id);
@@ -337,6 +342,8 @@ return $pdf->stream('invoice');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /*
     public function update(Request $request, $id)
     {
      $entrada = entradaalmacen::findOrFail($id);
@@ -424,7 +431,7 @@ return $pdf->stream('invoice');
     $material->medidaaux=$concat;
     $y = $y + 1;
         //print_r($first = $name[$y]);
-    
+
     $material->nota_venta=$first = $name[$y];
     $y = $y + 1;
 
@@ -449,6 +456,7 @@ return $pdf->stream('invoice');
     $material->estado="Activo";
     $material->save();
     $num = $num + 1;
+<<<<<<< HEAD
   
     $material->nota_venta=$first = $name[$y];
     $y = $y + 1;
@@ -470,6 +478,7 @@ return $pdf->stream('invoice');
     $material->moneda=$request->get('moneda');
     $material->save();
     $num = $num + 1;
+
         //
   }
   return redirect('/almacen/entradas/materiales');
@@ -486,6 +495,8 @@ return $pdf->stream('invoice');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+/*
 public function destroy($id)
 {
  $material=entradaalmacen::findOrFail($id);
@@ -530,6 +541,8 @@ public function excel()
          * toma en cuenta que para ver los mismos 
          * datos debemos hacer la misma consulta
         **/
+
+  /*
   Excel::create('entradaalmacenmateriales', function($excel) {
     $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
@@ -546,3 +559,5 @@ public function excel()
       })->export('xls');
     }
   }
+  */
+}

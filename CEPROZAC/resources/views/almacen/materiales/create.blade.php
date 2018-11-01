@@ -164,7 +164,7 @@
       <input name="stock_min" maxlength="9" type="number" 
       min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
     </div> 
-    <input  class="col-sm-3" id="contenedor" value="COSTAL 5 KILOGRAMOS"   readonly />
+    <input  class="col-sm-3" id="contenedor"    readonly />
   </div> 
 
   

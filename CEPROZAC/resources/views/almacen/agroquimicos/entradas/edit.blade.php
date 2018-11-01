@@ -49,10 +49,7 @@
         <form action="{{url('/almacen/entradas/agroquimicos', [$entrada->id])}}" method="post" class="form-horizontal row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
           {{csrf_field()}}
           <input type="hidden" name="_method" value="PUT">
-          {{csrf_field()}}
-
-
-
+          
           <div class="form-group">
             <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
@@ -105,41 +102,43 @@
         <select name="entrega" id="entrega" class="form-control select2" required>  
 
          @foreach($empleado as $emp)
-
-         @if($emp->id == $entrada->entregado)
-         <option value="{{$emp->id}}" selected>{{$emp->nombre}} {{$emp->apellidos}} </option>
-         @else
-         <option value="{{$emp->id}}">
-           {{$emp->nombre}} {{$emp->apellidos}} 
-         </option>
-         @endif             
-         @endforeach               
-       </select>
-       <div class="help-block with-errors"></div>
-     </div>
-   </div>
-
-
-   <div class="form-group">
-    <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <select name="recibe" id="recibe" value=""  class="form-control select2" required>  
-       @foreach($empleado as $emp)
-
-       @if($emp->id == $entrada->recibe_alm)
-       <option value="{{$emp->id}}" selected>{{$emp->nombre}} {{$emp->apellidos}} </option>
-       @else
-       <option value="{{$emp->id}}">
+         <option>
+          SELECIONA UN PRODUCTO
+        </option>
+        @if($emp->id == $entrada->entregado)
+        <option value="{{$emp->id}}" selected>{{$emp->nombre}} {{$emp->apellidos}} </option>
+        @else
+        <option value="{{$emp->id}}">
          {{$emp->nombre}} {{$emp->apellidos}} 
        </option>
        @endif             
-       @endforeach              
+       @endforeach               
      </select>
      <div class="help-block with-errors"></div>
    </div>
  </div>
 
+
  <div class="form-group">
+  <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
+  <div class="col-sm-6">
+    <select name="recibe" id="recibe" value=""  class="form-control select2" required>  
+     @foreach($empleado as $emp)
+
+     @if($emp->id == $entrada->recibe_alm)
+     <option value="{{$emp->id}}" selected>{{$emp->nombre}} {{$emp->apellidos}} </option>
+     @else
+     <option value="{{$emp->id}}">
+       {{$emp->nombre}} {{$emp->apellidos}} 
+     </option>
+     @endif             
+     @endforeach              
+   </select>
+   <div class="help-block with-errors"></div>
+ </div>
+</div>
+
+<div class="form-group">
   <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
   <div class="col-sm-6">
 
@@ -238,35 +237,35 @@
       </div>    
     </div>  
     <div class="col-sm-1">
-       <div class="form-group"> 
-        <label for="preciou">% IVA </label>
-         <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
-        <span id="errorprecio" style="color:#FF0000;"></span>
-      </div>    
-    </div>   
-              <div class="col-sm-1">
-       <div class="form-group"> 
-        <label for="preciou">% IEPS </label>
-       <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
-        <span id="errorprecio" style="color:#FF0000;"></span>
-      </div>    
-    </div>     
+     <div class="form-group"> 
+      <label for="preciou">% IVA </label>
+      <input name="iva" id="iva" value="0" type="text" class="form-control" min="0" max="100" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IVA del Producto" />
+      <span id="errorprecio" style="color:#FF0000;"></span>
+    </div>    
+  </div>   
+  <div class="col-sm-1">
+   <div class="form-group"> 
+    <label for="preciou">% IEPS </label>
+    <input name="ieps" id="ieps" value="0" type="text" class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el % IEPS del Producto" />
+    <span id="errorprecio" style="color:#FF0000;"></span>
+  </div>    
+</div>     
 
 
-  </div>
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
-    <div class="col-sm-3">
-      <div class="input-group" >
-        <div class="input-group-addon" >Completas</div>
-        <input name="unidadesCompletas" id="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
-        <span id="errorUnidad" style="color:#FF0000;"></span>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <input id="unidadAux" name="unidadAux"  value="Medida" class="form-control currency" readonly="" />
+</div>
+<div class="form-group">
+  <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
+  <div class="col-sm-3">
+    <div class="input-group" >
+      <div class="input-group-addon" >Completas</div>
+      <input name="unidadesCompletas" id="unidadesCompletas"  parsley-range="[0,500]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" value="" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+      <span id="errorUnidad" style="color:#FF0000;"></span>
     </div>
   </div>
+  <div class="col-sm-3">
+    <input id="unidadAux" name="unidadAux"  value="Medida" class="form-control currency" readonly="" />
+  </div>
+</div>
 </div>
 
 <div class="form-group">    
@@ -423,8 +422,8 @@
       arregloDeSubCadenas = cantidadtotal.split(separador, limite);
       stock=arregloDeSubCadenas[0];
       descripcion=arregloDeSubCadenas[1];
-            codigo=arregloDeSubCadenas[2];
-        nombre=arregloDeSubCadenas[4];
+      codigo=arregloDeSubCadenas[2];
+      nombre=arregloDeSubCadenas[4];
       medida=arregloDeSubCadenas[5];
       nombreUnidad=arregloDeSubCadenas[6];
       UnidadP=arregloDeSubCadenas[7];

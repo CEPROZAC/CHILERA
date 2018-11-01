@@ -27,10 +27,9 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                   <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.entradas.limpieza.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
+                   <a class="btn btn-sm btn-success tooltips" href="{{route('almacen.entradas.limpieza.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
 
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.limpieza.entradas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
-
 
 
                  </div>
@@ -42,73 +41,84 @@
        </div>
 
        <div class="porlets-content">
+        
+        @if($errorProveedor!="")
+        <div class="alert alert-danger">
+          <strong>{{$errorProveedor}}</strong> 
+        </div>
+        @endif
+
+        @if($errorMaterial!="")
+        <div class="alert alert-danger">
+          <strong>{{$errorMaterial}}</strong> 
+        </div>
+        @endif
+
+        @if($errorEmpleado!="")
+        <div class="alert alert-danger">
+          <strong>{{$errorEmpleado}}</strong> 
+        </div>
+        @endif
+
         <div class="table-responsive">
           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
               <tr>
-                <th>N°Compra </th>
+               
+                <th>N°Factura </th>
                 <th>Fecha de Entrada</th>  
-                <th>Proveedor de Material </th>
-                <th>N°Factura </th> 
-                <th>Nombre de Material</th>
-                <th>Cantidad</th>
-                <th>Total Cantidad</th>
-                <th>Precio Unitario </th>
-                <th>IVA </th>
-                <th>Subtotal </th>
-                <th>Total de Compra </th>
                 <th>Tipo de Moneda </th>
                 <th>Comprador</th>
-                <td><center><b>Editar</b></center></td>
-                <td><center><b>Borrar</b></center></td>                            
+                <th>Total de Compra </th>
+
+                <th>Ver</th>
+                <th><center><b>Editar</b></center></th>                    
+                <th><center><b>Borrar</b></center></th>                            
               </tr>
             </thead>
             <tbody>
               @foreach($entrada  as $entradas)
               <tr class="gradeA">
-                <td>{{$entradas->id}} </td>
-                <td>{{$entradas->fecha}} </td>
-                <td>{{$entradas->prov}} </td>
+                
                 <td>{{$entradas->factura}} </td>
-                <td>{{$entradas->nombremat}} </td>
-                <td>{{$entradas->medidaaux}}</td>
-                <td>{{$entradas->cantidad}} {{$entradas->medida}}</td>
-                <td>${{$entradas->p_unitario}} </td>
-                <td>${{$entradas->iva}} </td>
-                <td>${{$entradas->importe}} </td>
-                <td>${{$entradas->total}} </td>
-                <td>${{$entradas->moneda}} </td>
-                <td>{{$entradas->emp}} </td>
-                <td>  <a href="{{URL::action('EntradasAlmacenLimpiezaController@edit',$entradas->id)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                <td>{{$entradas->fecha}} </td>        
+                
+                <td>{{$entradas->moneda}} </td>
+                <td>{{$entradas->nombreEmpresa}}</td>
+
+                <td>${{$metodo->CALCULA_TOTAL($entradas->idEntradaAgroquimicos)}}</td>
+                <td>  
+                  <center>
+                    <a href="{{URL::action('EntradasAgroquimicosController@verEntradaAgroquimicos',$entradas->idEntradaAgroquimicos)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>
+
+                  </center>
                 </td>
-                <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->id}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+
+                <td> 
+                  <center>
+                    <a href="{{URL::action('EntradasAgroquimicosController@edit',$entradas->idEntradaAgroquimicos)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a>  
+                  </center>
+                </td>
+                <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$entradas->idEntradaAgroquimicos}}" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
                 </td>
               </td>
             </td>
 
           </tr>
-          @include('almacen.limpieza.entradas.modal')
-
-
+          @include('almacen.agroquimicos.entradas.modal')
           @endforeach
         </tbody>
         <tfoot>
           <tr>
-                <th>N°Compra </th>
-                <th>Fecha de Entrada</th>  
-                <th>Proveedor de Material </th>
-                <th>N°Factura </th> 
-                <th>Nombre de Material</th>
-                <th>Cantidad</th>
-                <th>Total Cantidad</th>
-                <th>Precio Unitario </th>
-                <th>IVA </th>
-                <th>Subtotal </th>
-                <th>Total de Compra </th>
-                <th>Tipo de Moneda </th>
-                <th>Comprador</th>
-                <td><center><b>Editar</b></center></td>
-                <td><center><b>Borrar</b></center></td>    
+            
+            <th>N°Factura </th>
+            <th>Fecha de Entrada</th>  
+            <th>Tipo de Moneda </th>
+            <th>Comprador</th>
+            <th>Total de Compra </th>      
+            <th>Ver</th>
+            <th><center><b>Editar</b></center></th>                    
+            <th><center><b>Borrar</b></center></th>     
           </tr>
         </tfoot>
       </table>

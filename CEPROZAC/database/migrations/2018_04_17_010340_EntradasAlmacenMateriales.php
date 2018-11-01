@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EntradaAlmacenMateriales extends Migration
+class EntradasAlmacenMateriales extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class EntradaAlmacenMateriales extends Migration
      */
     public function up()
     {
-       Schema::create('entradaalmacenmateriales', function (Blueprint $table) {
+       Schema::create('entradasalmacenmateriales', function (Blueprint $table) {
          $table->increments('id');
          $table->integer('provedor')->unsigned();
          $table->foreign('provedor')->references('id')->on('provedor_materiales');
@@ -48,6 +48,6 @@ class EntradaAlmacenMateriales extends Migration
      */
     public function down()
     {
-        Schema::drop('entradaalmacenmateriales');
+        Schema::drop('entradasalmacenmateriales');
     }
 }

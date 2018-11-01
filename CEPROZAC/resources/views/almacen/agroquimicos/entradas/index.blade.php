@@ -26,32 +26,40 @@
             <div class="col-md-5">
               <div class="btn-group pull-right"> 
                 <b>
-
                   <div class="btn-group" style="margin-right: 10px;">
                    <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.entradas.agroquimicos.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén </a>
-
                    <a class="btn btn-sm btn-warning tooltips" href="{{ route('almacen.agroquimicos.entradas.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
-
                  </div>
-
                </b>
              </div>
            </div>
          </div>
        </div>
-
-       <div class="porlets-content">
-
-        @if(session('info'))
+       <div class="porlets-content"> 
+       
+        @if($errorProveedor!="")
         <div class="alert alert-danger">
-          <strong>{{ session('info')}}</strong> 
+          <strong>{{ $errorProveedor }}</strong> 
         </div>
         @endif
+
+        @if( $errorMaterial!="" )
+        <div class="alert alert-danger">
+          <strong>{{$errorMaterial}}</strong> 
+        </div>
+        @endif
+
+        @if($errorEmpleado!="")
+        <div class="alert alert-danger">
+          <strong>{{$errorEmpleado}}</strong> 
+        </div>
+        @endif
+
+
         <div class="table-responsive">
           <table  class="display table table-bordered table-striped" id="dynamic-table">
             <thead>
-              <tr>
-               
+              <tr> 
                 <th>N°Factura </th>
                 <th>Fecha de Entrada</th>  
                 <th>Tipo de Moneda </th>

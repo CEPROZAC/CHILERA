@@ -111,6 +111,10 @@
     <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
     <div class="col-sm-3">
       <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
+
+        <option>
+          SELECIONA UN PRODUCTO
+        </option>
         @foreach($unidadesMedidas  as $unidad)
         @if($material->idUnidadMedida == $unidad->idContenedorUnidadMedida)
         <option value='{{$unidad-> idContenedorUnidadMedida}}' selected>
@@ -173,7 +177,7 @@
   <div class="col-sm-3">
     <div class="input-group" >
       <div class="input-group-addon" id="unidadDeMedida"></div>
-      <input  name="unidadDeMedida"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+      <input  name="unidadDeMedida"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"    id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>
 </div>
@@ -188,7 +192,7 @@
     <input name="stock_min" maxlength="9" type="number" 
     min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén"  value="{{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($unidad_medida,$material->stock_minimo,$capacidadUnidadMedida)}}"  onkeypress=" return soloNumeros(event);" />
   </div> 
-  <input  class="col-sm-3" id="contenedor" value="COSTAL 5 KILOGRAMOS"   readonly />
+  <input  class="col-sm-3" id="contenedor" value=""   readonly />
 </div> 
 
 <div class="form-group">
