@@ -48,21 +48,56 @@
 
           {{csrf_field()}}
 
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+              <div class="form-group">
+                <label><strong>Número de Factura: <strog class="theme_color">*</strog></strong></label>
+                <div >
+                  <input name="numeroFactura" id="numeroFactura"  type="text"  maxlength="10" onchange="mayus(this);validarFactura();"  class="form-control"  placeholder="Ingrese el Número de Factura" required />
+
+                  <span id="errorNumeroFactura" style="color:#FF0000;"></span>
 
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Fecha de Compra de Material: <strog class="theme_color">*</strog></label>
-            <div class="col-sm-6">
+                </div>
+              </div>
+            </div>
 
-             <input type="date" name="fecha" id="fecha" value="" class="form-control mask" >
+            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+              <div class="form-group">
+                <label ><strong>Fecha de Compra de Material: <strog class="theme_color">*</strog></strong></label>
+                <div >
+
+                 <input type="date" name="fechaCompra" id="fecha"  class="form-control mask" >
+               </div>
+             </div>
            </div>
          </div>
 
+
+
+         <div class="row">
+          <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+           <div class="form-group">
+            <label> <strong></strong>>Proveedor de Material : <strog class="theme_color">*</strog></strong></label>
+            <div >
+              <select name="provedor" id="prov"   class="form-control select" required>  
+                @foreach($provedor as $emp)
+                <option value="{{$emp->id}}">
+                 {{$emp->nombre}} 
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
+         </div>
+       </div>
+
+       <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
          <div class="form-group">
-          <label class="col-sm-3 control-label">Proveedor de Material : <strog class="theme_color">*</strog></label>
-          <div class="col-sm-6">
-            <select name="prov" id="prov"   class="form-control select2" required>  
-              @foreach($provedor as $emp)
+          <label><strong>Empresa : <strog class="theme_color">*</strog></strong></label>
+          <div >
+            <select name="empresaEncargadaCompra" id="empresaCompra"  class="form-control select" required>  
+              @foreach($empresas as $emp)
               <option value="{{$emp->id}}">
                {{$emp->nombre}} 
              </option>
@@ -71,25 +106,33 @@
            <div class="help-block with-errors"></div>
          </div>
        </div>
+     </div>
+   </div>
 
+   <div class="row">
+     <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
        <div class="form-group">
-        <label class="col-sm-3 control-label">Empresa : <strog class="theme_color">*</strog></label>
-        <div class="col-sm-6">
-          <select name="recibio" id="recibio"  class="form-control select2" required>  
-            @foreach($empresas as $emp)
+        <label><strong>Entregado a : <strog class="theme_color">*</strog></strong></label>
+        <div>
+
+          <select name="empleadoEntrega" id="empleadoEntrega" value=""  class="form-control select2" required>  
+            @foreach($empleado as $emp)
             <option value="{{$emp->id}}">
-             {{$emp->nombre}} 
+             {{$emp->nombre}} {{$emp->apellidos}} 
            </option>
            @endforeach              
          </select>
          <div class="help-block with-errors"></div>
        </div>
      </div>
+   </div>
 
+
+   <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
      <div class="form-group">
-      <label class="col-sm-3 control-label">Entregado a : <strog class="theme_color">*</strog></label>
-      <div class="col-sm-6">
-        <select name="entregado_a" id="entregado_a" value=""  class="form-control select2" required>  
+      <label><strong>Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></strong></label>
+      <div >
+        <select name="empleadoRecibe" value=""  class="form-control select" required>  
           @foreach($empleado as $emp)
           <option value="{{$emp->id}}">
            {{$emp->nombre}} {{$emp->apellidos}} 
@@ -99,29 +142,211 @@
        <div class="help-block with-errors"></div>
      </div>
    </div>
+ </div>
+</div>
 
-
+<div class="row">
+ <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
    <div class="form-group">
-    <label class="col-sm-3 control-label">Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></label>
-    <div class="col-sm-6">
-      <select name="recibe_alm" id="recibe_alm" value=""  class="form-control select2" required>  
-        @foreach($empleado as $emp)
-        <option value="{{$emp->id}}">
-         {{$emp->nombre}} {{$emp->apellidos}} 
+    <label><strong>Observaciónes: <strog class="theme_color"></strog></strong></label>
+    <div >
+      <input name="observaciones" id="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" placeholder="Ingrese Observaciónes de la Compra"/>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="row">
+ <div class="panel panel-success" >  
+  <div class="panel-body">
+
+    <div class="row">   
+
+     <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12">
+      <div class="form-group">
+        <label for="material"><strong>Buscar Código de Barras:</strong> </label>
+        <input  id="codigo" value="" name="codigo" type="text" onkeypress="return teclas(event);"  maxlength="35"  class="form-control"  placeholder="Ingrese el Código de Barras"/>
+      </div>
+    </div>  
+
+    <div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
+      <div class="form-group"> 
+        <label for="material"><strong>Material:</strong> </label>
+        <select name="id_material"   class="form-control select"  onchange="obtnerMedida();obtenerUnidadMedida();
+        limpiarErrorProducto();" data-live-search="true"   id="idMaterial" >  
+        <option>
+          SELECIONA UN PRODUCTO
+        </option>
+        @foreach($material as $mat)
+        <option value="">
        </option>
        @endforeach              
      </select>
-     <div class="help-block with-errors"></div>
-   </div>
+     <span id="errorProducto" style="color:#FF0000;"></span>
+   </div><!--/form-group--> 
  </div>
 
- <div class="form-group">
-  <label class="col-sm-3 control-label">Observaciónes: <strog class="theme_color"></strog></label>
-  <div class="col-sm-6">
 
-    <input name="observacionese" id="observacionese" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control" placeholder="Ingrese Observaciónes de la Compra"/>
+<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+  <div class="form-group"> 
+    <label for="preciou"><strong>Precio Unitario: </strong> </label>
+    <div class="input-group"> <span class="input-group-addon">$</span>
+      <input type="text" id="precioUnitario" class="form-control" onfocus ="limpiarPrecioUnitario();" onchange="limpiarErrorPrecioUnitario();"  
+      placeholder="0.00" value="0.00">
+    </div>
+    <span id="errorprecio" style="color:#FF0000;"></span>
+  </div>    
+</div>
+
+<div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
+  <div class="form-group"> 
+    <label for="material"><strong>% IVA</strong> </label>
+    <select name="iva" id="iva"  class="form-control select"  required  >  
+
+      <option value="0">
+       0%
+     </option>
+     <option value="16">
+       16%
+     </option>
+
+   </select>
+   <div class="help-block with-errors"></div>
+ </div><!--/form-group--> 
+</div>
+
+<div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
+  <div class="form-group"> 
+    <label for="preciou"><strong>% IEPS: </strong> </label>
+    <input name="ieps" id="ieps"  type="text" class="form-control"
+    onfocus="limpiarIEPS()" ; 
+    onkeypress=" return soloNumeros(event);" placeholder="0" onchange="limpiarErrorIEPS();" value="0" />
+    <span id="errorIEPS" style="color:#FF0000;" ></span>
+  </div>    
+</div>
+
+</div>
+
+<div class="row">
+
+  <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+    <div class="form-group"> 
+      <label ><strong>Unidades de Medida</strong> </label>
+      <input id="contenedor" name="unidadAux"  value="Medida" class="form-control currency" readonly="" placeholder="0"/>
+    </div>    
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+    <div class="form-group">
+      <label ><strong>Canitdades: </strong></label>
+      <div >
+        <div class="input-group"> <span class="input-group-addon">Completas</span>
+          <input id="unidadesCompletas" type="text" class="form-control" placeholder="0">
+        </div>
+      </div>
+    </div><!--/form-group-->
+  </div>
+
+<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+    <div class="form-group">
+      <label ><strong>&nbsp;</strong></label>
+      <div >
+        <div  class="input-group" > <span id="unidadCentral"  class="input-group-addon"></span>
+          <input  id="Medida"  type="text" class="form-control" placeholder="0">
+        </div>
+      </div>
+    </div><!--/form-group-->
+  </div>
+
+<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+    <div class="form-group">
+      <label ><strong>&nbsp;</strong></label>
+      <div >
+        <div class="input-group" > <span id="unidadDeMedida" class="input-group-addon"></span>
+          <input type="text" class="form-control"  id="unidadMinima" placeholder="0">
+        </div>
+      </div>
+    </div><!--/form-group-->
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+    <div class="form-group" >
+      <label ><strong>&nbsp; </strong></label>
+      <div >
+      </div>
+      <button type="button" id="btn_add" onclick="agregarProducto();validar();calcularCantidad();" class="btn btn-primary">Agregar</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="form-group"  class="table-responsive"> 
+  <table id="detalles"  class="table table-responsive-xl table-bordered">
+    <thead style="background-color:#A9D0F5">
+      <th  width="10%">Opciones</th>
+      <th width="35%">Artículo</th>
+      <th width="10%">Cantidad </th>
+      <th width="12.5%">Precio Unitario</th>
+      <th width="10%">IVA</th>
+      <th width="10%">IEPS</th>
+      <th width="12.5%">Subtotal</th>
+    </thead>
+  </table>
+
+<label ><strong>&nbsp; </strong></label>
+<div class="row" >
+
+
+  <div class="col-lg-10 col-sm-9 col-md-9 col-xs-12" >
+  </div>
+  <div class="col-lg-2 col-sm-3 col-md-3 col-xs-12" >
+    <div class="form-group">
+     <label ><strong>Tipo de Moneda: <strog class="theme_color">*</strog></strong></label>
+     <div >
+      <select name="tipoMoneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+        @if(Input::old('moneda')=="Peso MXM")
+        <option value='Peso MXN' selected>Peso MXN
+        </option>
+        <option value="Dolar USD">Dolar USD</option>
+        @else
+        <option value='Dolar USD' selected>Dolar USD
+        </option>
+        <option value="Peso MXN">Peso MXN</option>
+        @endif
+      </select>          
+    </div>
   </div>
 </div>
+</div>
+
+<div class="row" >
+  <div class="form-group">
+    <div class="col-lg-10  col-xs-12" >
+    </div>
+
+    <button type="submit" id="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
+    <a href="{{url('/almacen/entradas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+  </div>
+</div><!--/form-group-->
+
+</div>
+
+</div>
+</div>
+</div>
+</form>
+
+</div><!--/col-md-12-->
+</div><!--/row-->
+</div><!--/container clear_both padding_fix-->
+</html> 
+
 
 <div class="form-group">
   <label class="col-sm-3 control-label">Número de Nota ó Factura: <strog class="theme_color">*</strog></label>
@@ -183,7 +408,7 @@
 <div class="container clear_both padding_fix">
   <div class="block-web">
    <div class="row">
-   <div class="panel panel-success" >  
+     <div class="panel panel-success" >  
 
       <div class="panel-body">
         <div class="col-sm-2">
@@ -281,20 +506,20 @@
 
 <div class="form-group"  class="table-responsive"> 
   <table id="detalles" name="detalles[]" value="" class="table table-responsive-xl table-bordered">
-      <thead style="background-color:#A9D0F5">
-        <th>Opciones</th>
-        <th>N°Articulo</th>
-        <th>Articulo</th>
-        <th>Cantidad</th>
-        <th>Unidad de Medida</th>
-        <th>Equivale</th>
-        <th>N° Factura</th>
-        <th>Precio Unitario</th>
-        <th>IVA</th>
-        <th>Subtotal</th>
+    <thead style="background-color:#A9D0F5">
+      <th>Opciones</th>
+      <th>N°Articulo</th>
+      <th>Articulo</th>
+      <th>Cantidad</th>
+      <th>Unidad de Medida</th>
+      <th>Equivale</th>
+      <th>N° Factura</th>
+      <th>Precio Unitario</th>
+      <th>IVA</th>
+      <th>Subtotal</th>
 
-      </thead>
-      <tfoot>
+    </thead>
+    <tfoot>
      <td style="display:none;"></td>
      <td style="display:none;"></td>
      <td style="display:none;"></td>
@@ -305,34 +530,34 @@
      <td style="display:none;"></td>
      <td style="display:none;"></td>
      <td style="display:none;"></td>
-      </tfoot>
-      <tbody>
+   </tfoot>
+   <tbody>
 
-      </tbody>
+   </tbody>
 
-    </table>
+ </table>
 
-    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-      <div class="form-group"> 
-        <label  for="subtotal">Total </label>
-        <input name="subtotal" id="subtotal"  value="0" type="number"  class="form-control"  readonly/>
-      </div>    
-    </div>
+ <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+  <div class="form-group"> 
+    <label  for="subtotal">Total </label>
+    <input name="subtotal" id="subtotal"  value="0" type="number"  class="form-control"  readonly/>
+  </div>    
+</div>
 
-    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-     <div class="form-group"> 
-      <label for="total">Total de Elementos </label>
-      <input name="total" id="total" type="number"  class="form-control"  readonly/>
-    </div>    
-  </div>  
+<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+ <div class="form-group"> 
+  <label for="total">Total de Elementos </label>
+  <input name="total" id="total" type="number"  class="form-control"  readonly/>
+</div>    
+</div>  
 
 
 
-  <div class="form-group">
-    <div class="col-sm-6">
-      <input  id="codigo2" value="" name="codigo2[]" type="hidden"   class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
-    </div>
+<div class="form-group">
+  <div class="col-sm-6">
+    <input  id="codigo2" value="" name="codigo2[]" type="hidden"   class="form-control"  placeholder="Ingrese el Codigo de Barras"/>
   </div>
+</div>
 
 </div>
 
@@ -545,22 +770,22 @@ function llenado(){
     if (entradav > 0){
      document.getElementById("errorCantidad").innerHTML = "";
 
-  
 
-    var select=document.getElementById('id_materialk');
-    var cantidadtotal = select.value;
-    limite = "5",
-    separador = "_",
-    arregloDeSubCadenas = cantidadtotal.split(separador, limite);
-    var id2= uno++;
-    cantidad=arregloDeSubCadenas[0];
-    descripcion=arregloDeSubCadenas[1];
-    codigo=arregloDeSubCadenas[2];
-    id=arregloDeSubCadenas[3];
-    nombre=arregloDeSubCadenas[4];
 
-    var comprueba = recorre2(id)
-    if (comprueba == 1){
+     var select=document.getElementById('id_materialk');
+     var cantidadtotal = select.value;
+     limite = "5",
+     separador = "_",
+     arregloDeSubCadenas = cantidadtotal.split(separador, limite);
+     var id2= uno++;
+     cantidad=arregloDeSubCadenas[0];
+     descripcion=arregloDeSubCadenas[1];
+     codigo=arregloDeSubCadenas[2];
+     id=arregloDeSubCadenas[3];
+     nombre=arregloDeSubCadenas[4];
+
+     var comprueba = recorre2(id)
+     if (comprueba == 1){
       swal("Alerta!", "Este Material Ya se ha Insertado en la Tabla!", "error");
       return false;
     }

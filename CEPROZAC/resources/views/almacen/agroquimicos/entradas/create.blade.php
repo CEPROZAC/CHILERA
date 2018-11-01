@@ -48,6 +48,7 @@
           {{csrf_field()}}
 
           <input name="numeroFacturaOculto" id="numeroFacturaOculto"  hidden  />
+          
           <div class="row">
             <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
               <div class="form-group">
@@ -74,21 +75,19 @@
          </div>
 
          <div class="row">
-          <!--            -->
-
           <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
            <div class="form-group">
             <label ><strong>Proveedor de Material : <strog class="theme_color">*</strog></strong></label>
-
-            <select name="provedor" id="prov" value="prov"  class="form-control select2" required>  
-              @foreach($provedor as $emp)
-              <option value="{{$emp->id}}">
-               {{$emp->nombre}} 
-             </option>
-             @endforeach              
-           </select>
-           <div class="help-block with-errors"></div>
-
+            <div>
+              <select name="provedor" id="prov" value="prov"  class="form-control select" required>  
+                @foreach($provedor as $emp)
+                <option value="{{$emp->id}}">
+                 {{$emp->nombre}} 
+               </option>
+               @endforeach              
+             </select>
+             <div class="help-block with-errors"></div>
+           </div>
          </div>
        </div>
 
@@ -96,15 +95,16 @@
        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
          <div class="form-group">
            <label ><strong>Empresa : <strog class="theme_color">*</strog></strong></label>
-
-           <select name="empresaEncargadaCompra" id="empresaCompra"   class="form-control select2" required>  
-            @foreach($empresas as $emp)
-            <option value="{{$emp->id}}">
-             {{$emp->nombre}} 
-           </option>
-           @endforeach              
-         </select>
-         <div class="help-block with-errors"></div>
+           <div>
+             <select name="empresaEncargadaCompra" id="empresaCompra"   class="form-control select" required>  
+              @foreach($empresas as $emp)
+              <option value="{{$emp->id}}">
+               {{$emp->nombre}} 
+             </option>
+             @endforeach              
+           </select>
+           <div class="help-block with-errors"></div>
+         </div>
        </div>
      </div>
    </div>
@@ -116,7 +116,7 @@
          <label ><strong>Entregado a : <strog class="theme_color">*</strog></strong></label>
          <div >
 
-          <select name="empleadoEntrega"   id="empleadoEntrega" class="form-control select2" required>  
+          <select name="empleadoEntrega"   id="empleadoEntrega" class="form-control select" required>  
             @foreach($empleado as $emp1)
             <option value="{{$emp1->id}}">
              {{$emp1->nombre}} {{$emp1->apellidos}} 
@@ -132,9 +132,9 @@
    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
      <div class="form-group">
       <label><strong>Recibe en Almacén CEPROZAC : <strog class="theme_color">*</strog></strong></label>
-      
-      <div >
-        <select name="empleadoRecibe" class="form-control select2" required>  
+
+      <div>
+        <select name="empleadoRecibe" class="form-control select" required>  
           @foreach($empleado as $emp2)
           <option value="{{$emp2->id}}">
            {{$emp2->nombre}} {{$emp2->apellidos}}
@@ -145,27 +145,22 @@
      </div>
    </div>
  </div>
+</div>
 
-
+<div class="row">
  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
   <div class="form-group">
     <label><strong>Observaciones: <strog class="theme_color"></strog></strong></label>
-    <div >
+    <div>
       <input name="observaciones" id="observaciones" type="text"  maxlength="200" onchange="mayus(this);"  class="form-control"  placeholder="Ingrese Observaciones de la Compra"/>
     </div>
   </div>
 </div>
-
 </div>
-
 
 <div class="row">
  <div class="panel panel-success" >  
   <div class="panel-body">
-
-
-
-
 
     <div class="row">   
 
@@ -176,55 +171,55 @@
       </div>
     </div>  
 
-      <div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
-        <div class="form-group"> 
-          <label for="material"><strong>Material:</strong> </label>
-          <select name="id_material"   class="form-control select"  onchange="obtnerMedida();obtenerUnidadMedida();
-          limpiarErrorProducto();" data-live-search="true"   id="idMaterial" >  
-          <option>
-            SELECIONA UN PRODUCTO
-          </option>
-          @foreach($material as $mat)
-          <option value="{{$mat->idAgroquimico}}">
-           {{$mat->nombreAgroquimico}} {{$mat->nombreUnidad}} DE {{$mat->cantidadMedida}} {{$mat->NombreUnidadP}}
-         </option>
-         @endforeach              
-       </select>
-       <span id="errorPrdducto" style="color:#FF0000;"></span>
-     </div><!--/form-group--> 
-   </div>
-
-
-   <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-    <div class="form-group"> 
-      <label for="preciou"><strong>Precio Unitario: </strong> </label>
-      <div class="input-group"> <span class="input-group-addon">$</span>
-        <input type="text" id="precioUnitario" class="form-control" onfocus ="limpiarPrecioUnitario();" onchange="limpiarErrorPrecioUnitario();"  
-        placeholder="0.00" value="0.00">
-      </div>
-      <span id="errorprecio" style="color:#FF0000;"></span>
-    </div>    
-  </div>
-
-
-  <div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
-    <div class="form-group"> 
-      <label for="material"><strong>IVA</strong> </label>
-      <select name="iva" id="iva"  class="form-control select"  required  >  
-
-        <option value="0">
-         0%
+    <div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
+      <div class="form-group"> 
+        <label for="material"><strong>Material:</strong> </label>
+        <select name="id_material"   class="form-control select"  onchange="obtnerMedida();obtenerUnidadMedida();
+        limpiarErrorProducto();" data-live-search="true"   id="idMaterial" >  
+        <option>
+          SELECIONA UN PRODUCTO
+        </option>
+        @foreach($material as $mat)
+        <option value="{{$mat->idAgroquimico}}">
+         {{$mat->nombreAgroquimico}} {{$mat->nombreUnidad}} DE {{$mat->cantidadMedida}} {{$mat->NombreUnidadP}}
        </option>
-       <option value="16">
-         16%
-       </option>
-
+       @endforeach              
      </select>
-     <div class="help-block with-errors"></div>
+     <span id="errorProducto" style="color:#FF0000;"></span>
    </div><!--/form-group--> 
  </div>
 
- <div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
+
+ <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+  <div class="form-group"> 
+    <label for="preciou"><strong>Precio Unitario: </strong> </label>
+    <div class="input-group"> <span class="input-group-addon">$</span>
+      <input type="text" id="precioUnitario" class="form-control" onfocus ="limpiarPrecioUnitario();" onchange="limpiarErrorPrecioUnitario();"  
+      placeholder="0.00" value="0.00">
+    </div>
+    <span id="errorprecio" style="color:#FF0000;"></span>
+  </div>    
+</div>
+
+
+<div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
+  <div class="form-group"> 
+    <label for="material"><strong>% IVA</strong> </label>
+    <select name="iva" id="iva"  class="form-control select"  required  >  
+
+      <option value="0">
+       0%
+     </option>
+     <option value="16">
+       16%
+     </option>
+
+   </select>
+   <div class="help-block with-errors"></div>
+ </div><!--/form-group--> 
+</div>
+
+<div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
   <div class="form-group"> 
     <label for="preciou"><strong>% IEPS: </strong> </label>
     <input name="ieps" id="ieps"  type="text" class="form-control"
@@ -299,17 +294,11 @@
 </div>
 
 
-
-
-
-
-
-
 <div class="form-group"  class="table-responsive"> 
   <table id="detalles"  class="table table-responsive-xl table-bordered">
     <thead style="background-color:#A9D0F5">
       <th  width="10%">Opciones</th>
-      <th width="35%">Articulo</th>
+      <th width="35%">Artículo</th>
       <th width="10%">Cantidad </th>
       <th width="12.5%">Precio Unitario</th>
       <th width="10%">IVA</th>
@@ -358,21 +347,18 @@
       </select>          
     </div>
   </div>
-=======
 </div>
-
 </div>
 
 <div class="row" >
   <div class="form-group">
-    <div class="col-lg-10 col-sm-9 col-md-9 col-xs-12" >
+    <div class="col-lg-10  col-xs-12" >
     </div>
-    <div class="col-lg-2 col-sm-3 col-md-3 col-xs-12" >
 
-      <button type="submit" id="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
-      <a href="{{url('/almacen/entradas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
-    </div>
-  </div><!--/form-group-->
+    <button type="submit" id="submit" onclick="return save();" class="btn btn-primary">Guardar</button>
+    <a href="{{url('/almacen/entradas/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
+  </div>
+</div><!--/form-group-->
 
 </div>
 
