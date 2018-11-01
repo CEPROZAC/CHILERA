@@ -16,6 +16,8 @@ use CEPROZAC\Empresas_Ceprozac;
 use CEPROZAC\Cantidad_unidades_limp;
 use CEPROZAC\Unidadesmedida;
 
+use CEPROZAC\Cantidad_Unidades_Mate;
+
 use DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Worksheet_Drawing;
@@ -23,6 +25,7 @@ use Validator;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
 use Illuminate\Support\Collection as Collection; 
+
 class EntradasAlmacenLimpiezaController extends Controller
 {
     /**
@@ -62,14 +65,7 @@ public function index()
 
       return view('almacen.limpieza.entradas.index', ['entrada' => $entrada]);
 
-
-
-        //
     }
-
-
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -225,6 +221,7 @@ $material2->comprador=$formulario->get('recibio2');
 $material2->entregado=$formulario->get('entregado_a');
 $material2->recibe_alm=$formulario->get('recibe_alm');
 $material2->observacionesc=$formulario->get('observacionesl');
+
 $material2->factura=$formulario->get('factura2');
 $material2->fecha=$formulario->get('fecha2');
 $material2->p_unitario=$formulario->get('preciou2');
