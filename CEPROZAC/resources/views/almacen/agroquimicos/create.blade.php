@@ -45,13 +45,11 @@
           <form action="{{route('almacenes.agroquimicos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
 
-
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
                 <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
                 <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
-
               </div>
             </div>
 
@@ -86,7 +84,6 @@
            </div>
          </div>
 
-
          <div class="form-group ">
           <label class="col-sm-3 control-label">Imagen</label>
           <div class="col-sm-6">
@@ -94,14 +91,12 @@
          </div>
        </div>
 
-
        <div class="form-group">
         <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
           <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
         </div>
       </div>
-
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
@@ -143,8 +138,6 @@
           <div class="input-group" >
             <div class="input-group-addon" id="unidadDeMedida"></div>
             <input  name="unidadDeMedida"  max="1000"   class="form-control currency"   id="unidadMinima" placeholder="3"
-
-
             onkeypress=" return soloNumeros(event);"/>
           </div>
         </div>
@@ -156,7 +149,7 @@
           <input name="stock_min" maxlength="9" type="number" 
           min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén" onkeypress=" return soloNumeros(event);" />
         </div> 
-        <input  class="col-sm-3" id="contenedor" value="COSTAL 5 KILOGRAMOS"   readonly />
+        <input  class="col-sm-3" id="contenedor"    readonly />
       </div> 
 
       <div class="form-group">

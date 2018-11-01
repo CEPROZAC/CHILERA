@@ -155,7 +155,8 @@
   <div class="col-sm-3">
     <div class="input-group" >
       <div class="input-group-addon" id="unidadDeMedida"></div>
-      <input  name="unidadDeMedida" value="{{$unidadInferior}}" parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+      <input  name="unidadDeMedida" value="{{$unidadInferior}}" parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3"
+       onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>
 </div>
@@ -175,7 +176,7 @@
   <div class="col-sm-3">
     <div class="input-group" >
       <div class="input-group-addon" id="unidadDeMedida"></div>
-      <input  name="unidadDeMedida"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
+      <input  name="unidadDeMedida"  parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"    id="unidadMinima" placeholder="3" onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>
 </div>
@@ -187,9 +188,11 @@
   <label  class="col-sm-3 control-label">Stock Minimo <strog class="theme_color">*</strog></label>
   <div class="col-sm-3">
     <input name="stock_min" maxlength="9" type="number" 
-    min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  placeholder="Ingrese la Cantidad de Stock Minimo en Almacén"  value="{{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($unidad_medida,$material->stock_minimo,$capacidadUnidadMedida)}}"  onkeypress=" return soloNumeros(event);" />
+    min="1" max='9999999' step="1" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required  
+    placeholder="Ingrese la Cantidad de Stock Minimo en Almacén"  
+    value="{{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($unidadDeMedida,$material->stock_minimo,$capacidadUnidadMedida)}}"  onkeypress=" return soloNumeros(event);" />
   </div> 
-  <input  class="col-sm-3" id="contenedor" value="COSTAL 5 KILOGRAMOS"   readonly />
+  <input  class="col-sm-3" id="contenedor" value="{{$unidad_medida}} DE {{$capacidadUnidadMedida}} {{$unidadDeMedida}}"   readonly />
 </div> 
 
 

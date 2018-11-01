@@ -35,6 +35,40 @@ class EntradasAgroquimicosController extends Controller
      */
     public function index()
     {
+
+     $errorProveedor="";
+     $errorMaterial="";
+     $errorEmpleado="";
+
+     $entrada= DB::table('entradasagroquimicos')->where('entradasagroquimicos.estado','=','Activo')
+     ->join('provedor_materiales','entradasagroquimicos.provedor','=', 'provedor_materiales.id')
+     ->join('empresas_ceprozac', 'entradasagroquimicos.comprador','=', 'empresas_ceprozac.id')
+     ->join('empleados as empEntrega', 'entradasagroquimicos.entregado','=', 'empEntrega.id')
+     ->join('empleados as empRecibe', 'entradasagroquimicos.recibe_alm','=', 'empRecibe.id')
+     ->select('entradasagroquimicos.id as idEntradaAgroquimicos', 'entradasagroquimicos.fecha',
+      'entradasagroquimicos.factura', 'entradasagroquimicos.moneda', 'entradasagroquimicos.observacionesc',
+      'entradasagroquimicos.estado as estadoEntrada','empEntrega.nombre as nombreEmpleadoEntrega',
+      'empEntrega.apellidos as apellidosEmpleadoEntrega', 'empRecibe.nombre as nombreEmpleadoRecibe', 
+      'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
+     ->get();
+
+     return view('almacen.agroquimicos.entradas.index', ["entrada"=>$entrada,
+      "errorEmpleado"=>$errorEmpleado,
+      "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
+
+
+
+        //
+   }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create() 
+    {
+
       $entrada= DB::table('entradasagroquimicos')->where('entradasagroquimicos.estado','=','Activo')
       ->join('provedor_materiales','entradasagroquimicos.provedor','=', 'provedor_materiales.id')
       ->join('empresas_ceprozac', 'entradasagroquimicos.comprador','=', 'empresas_ceprozac.id')
@@ -46,21 +80,6 @@ class EntradasAgroquimicosController extends Controller
         'empEntrega.apellidos as apellidosEmpleadoEntrega', 'empRecibe.nombre as nombreEmpleadoRecibe', 
         'empRecibe.apellidos as apellidosEmpleadoRecibe' , 'empresas_ceprozac.nombre as nombreEmpresa')
       ->get();
-
-      return view('almacen.agroquimicos.entradas.index', ['entrada' => $entrada]);
-
-
-
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() 
-    {
       $empleado=DB::table('empleados')->where('estado','=' ,'Activo')->get();
       $provedor = DB::table('provedores_tipo_provedor')
       ->join('provedor_materiales as p', 'provedores_tipo_provedor.idProvedorMaterial', '=', 'p.id')
@@ -83,30 +102,66 @@ class EntradasAgroquimicosController extends Controller
         'u.nombre as nombreUnidad','n.nombreUnidadMedida as NombreUnidadP','u.cantidad as cantidadMedida')->get();
       
 
-      $cuenta = count($material);
-      
+      if (empty($material) && empty($empleado) && empty($provedor)){
 
-      if (empty($material)){
+        $errorProveedor="Registrar proveedores para poder continuar.";
+        $errorMaterial="Registrar agroquímicos para poder continuar";
+        $errorEmpleado="Registrar empleados almacenista para poder continuar";
 
-
-        return redirect('/almacen/entradas/agroquimicos')->with('info', 'Para poder registrar una entrada de agroquimicos, verifica que el sistema ya cuante con datos de provedores agroquimos, Productos de Agroquimico y  empleados almacenistas');
-
-         // return view("almacen.materiales.salidas.create")->with('message', 'No Hay Material Registrado, Favor de Dar de Alta Material Para Poder Acceder a Este Modulo');
-      }else if (empty($empleado)) {
-        return redirect('/almacen/entradas/agroquimicos');
+        return view('/almacen/agroquimicos/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+          "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
 
 
-      }else if (empty($provedor)){
-        return redirect('/almacen/entradas/agroquimicos');
+
+      }else if (empty($material)  && empty($provedor)) {
+
+        $errorProveedor="Registrar proveedores para poder continuar.";
+        $errorMaterial="Registrar agroquímicos para poder continuar";
+        $errorEmpleado="";
+        return view('/almacen/agroquimicos/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+          "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
 
 
-      }
-      else{
-        return view("almacen.agroquimicos.entradas.create",["material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,"unidades"=>$unidades]);
+      }  else if (empty($material) && empty($empleado)) {
 
-      }
+        $errorProveedor="";
+        $errorMaterial="Registrar agroquímicos para poder continuar";
+        $errorEmpleado="Registrar empleados almacenista para poder continuar";
+        return view('/almacen/agroquimicos/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+          "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]); 
+
+      } else if (empty($material)) {
+
+       $errorProveedor="";
+       $errorMaterial="Registrar agroquímicos para poder continuar";
+       $errorEmpleado="";
+
+       return view('/almacen/agroquimicos/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+        "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
+
+     } else if (empty($empleado)) {
+
+      $errorProveedor="";
+      $errorMaterial="";
+      $errorEmpleado="Registrar empleados almacenista para poder continuar";
+
+      return view('/almacen/agroquimicos/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+        "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
+
+    }else if (empty($provedor)){
+
+     $errorProveedor="Registrar proveedores para poder continuar.";
+     $errorMaterial="";
+     $errorEmpleado="";
+     return view('/almacen/agroquimicos/entradas/index',["entrada"=>$entrada,"errorEmpleado"=>$errorEmpleado,
+      "errorProveedor"=>$errorProveedor,"errorMaterial"=>$errorMaterial]);
+   }
+   else{
+    return view("almacen.agroquimicos.entradas.create",["entrada"=>$entrada,"material"=>$material,"provedor"=>$provedor],["empleado"=>$empleado,"empresas"=>$empresas,"unidades"=>$unidades]);
+
+  }
         //
-    }
+}
 
     /**
      * Store a newly created resource in storage.

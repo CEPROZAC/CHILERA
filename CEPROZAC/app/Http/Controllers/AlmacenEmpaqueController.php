@@ -250,6 +250,7 @@ class AlmacenEmpaqueController extends Controller
       $idEmpaque = $material->idEmpaque;
 
       $unidades=$this->propiedadesUnidadMedida($idUnidadMedida);
+     
       $unidadDeMedida=$unidades->nombreUnidadMedida;
       $capacidadUnidadMedida= $unidades->cantidad;
       $unidad_medida = $unidades->nombreUnidadMedida;
@@ -269,7 +270,7 @@ class AlmacenEmpaqueController extends Controller
       return view("almacen.empaque.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
         "unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
         "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida,'empaque'=>$empaque,
-        "capacidadUnidadMedida"=>$capacidadUnidadMedida]);
+        "capacidadUnidadMedida"=>$capacidadUnidadMedida,"unidadDeMedida"=>$unidadDeMedida]);
     }
 
     /**

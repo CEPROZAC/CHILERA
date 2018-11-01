@@ -415,7 +415,7 @@ elseif($diferenciadorUnidadMedida =="MILILITROS") {
     	$unidades=$this->propiedadesUnidadMedida($idUnidadMedida);
     	$unidadDeMedida=$unidades->nombreUnidadMedida;
     	$capacidadUnidadMedida= $unidades->cantidad;
-    	$unidad_medida = $unidades->nombreUnidadMedida;
+    	$unidad_medida = $unidades->nombre;
     	if($unidad_medida == "KILOGRAMOS"  || $unidad_medida == "LITROS"  ||  $unidad_medida == "METROS"){
     		$unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
     		$unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);

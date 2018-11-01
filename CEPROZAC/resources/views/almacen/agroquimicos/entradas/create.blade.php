@@ -38,8 +38,8 @@
         <div class="porlets-content">
 
          <div class="text-success" id='result'>
-          @if(Session::has('message'))
-          {{Session::get('message')}}
+          @if(Session::has('info'))
+          {{Session::get('info')}}
           @endif
         </div>
         <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
