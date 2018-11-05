@@ -172,37 +172,43 @@ class EntradasAgroquimicosController extends Controller
     public function store(EntradasAgroquimicosRequest $formulario)
     {
 
-      $validator = Validator::make(
-        $formulario->all(), 
-        $formulario->rules(),
-        $formulario->messages());
-      if ($validator->valid()){
+      DB::beginTransaction();
+      $datosGeneralesEntradaAgroquimico= new EntradasAgroquimicos;
+      $datosGeneralesEntradaAgroquimico->factura=$formulario->get('numeroFactura');
+      $datosGeneralesEntradaAgroquimico->fecha=$formulario->get('fechaCompra');
+      $datosGeneralesEntradaAgroquimico->provedor=$formulario->get('provedor');
+      $datosGeneralesEntradaAgroquimico->fecha=$formulario->get('fechaCompra');
+      $datosGeneralesEntradaAgroquimico->comprador=$formulario->get('empresaEncargadaCompra');
+      $datosGeneralesEntradaAgroquimico->moneda=$formulario->get('tipoMoneda');
+      $datosGeneralesEntradaAgroquimico->entregado=$formulario->get('empleadoEntrega');
+      $datosGeneralesEntradaAgroquimico->recibe_alm=$formulario->get('empleadoRecibe');
+      $datosGeneralesEntradaAgroquimico->observacionesc=$formulario->get('observaciones');
+      $datosGeneralesEntradaAgroquimico->estado="Activo";
+      $datosGeneralesEntradaAgroquimico->save();
 
-        if ($formulario->ajax()){
-          return response()->json(["valid" => true], 200);
-        }
-        else{
-
-
-          DB::beginTransaction();
-          $material= new EntradasAgroquimicos;
-          $material->factura=$formulario->get('numeroFactura');
-          $material->fecha=$formulario->get('fechaCompra');
-          $material->provedor=$formulario->get('provedor');
-          $material->fecha=$formulario->get('fechaCompra');
-          $material->comprador=$formulario->get('empresaEncargadaCompra');
-          $material->moneda=$formulario->get('tipoMoneda');
-          $material->entregado=$formulario->get('empleadoEntrega');
-          $material->recibe_alm=$formulario->get('empleadoRecibe');
-          $material->observacionesc=$formulario->get('observaciones');
-          $material->estado="Activo";
-          $material->save();
-
-
-          DB::commit();
-
-        }
+      $idEntradaAgroquimicos = $datosGeneralesEntradaAgroquimico->id;
+      $idMaterial= $formulario->get('idMaterial');
+      $cantidad = $formulario->get('cantidadTotal');
+      $p_unitario= $formulario->get('precioUnitario');
+      $iva=$formulario->get('iva');
+      $ieps=$formulario->get('ieps');
+      $cont = 0;
+      while($cont < count($idMaterial))
+      {
+        $agroquimicos= new DetallesEntradasAgroquimicos;
+        $agroquimicos->idEntradaAgroquimicos=$idEntradaAgroquimicos;
+        $agroquimicos->id_material=$idMaterial[$cont];
+        $agroquimicos->cantidad=$cantidad[$cont];
+        $agroquimicos->p_unitario=$p_unitario[$cont];
+        $agroquimicos->iva=$iva[$cont];
+        $agroquimicos->ieps=$ieps[$cont];
+        $cont = $cont+1;
+        $agroquimicos->save();
       }
+
+
+      DB::commit();
+
       return redirect('/almacen/entradas/agroquimicos');
     }
 

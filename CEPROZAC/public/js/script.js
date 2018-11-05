@@ -1276,60 +1276,72 @@ function  validarprovmat(){
 
 
 
-    function obtnerMedida(){
-      var select = document.getElementById("idMaterial");
-      var options=document.getElementsByTagName("option");
-      var idMaterial= select.value;
-      var route = "http://localhost:8000/propiedadesUnidadMedidaJson/"+idMaterial ;
-      $.get(route,function(res){
-        document.getElementById("contenedor").value=res[0].nombreUnidadMedida+" DE "+res[0].cantidadUnidadMedida+" "+
-        res[0].UnidadMedida;
-      });
-    }
 
-    function limpiarIEPS(){
-     document.getElementById("ieps").value="";
-   }
-
-   function limpiarPrecioUnitario(){
-    document.getElementById("precioUnitario").value="";
-  }
+///Entradas Almacen Agroquimicos
 
 
 
+function obtnerMedida(){
+  var select = document.getElementById("idMaterial");
+  var options=document.getElementsByTagName("option");
+  var idMaterial= select.value;
+  var route = "http://localhost:8000/propiedadesUnidadMedidaJson/"+idMaterial ;
+  $.get(route,function(res){
+    document.getElementById("contenedor").value=res[0].nombreUnidadMedida+" DE "+res[0].cantidadUnidadMedida+" "+
+    res[0].UnidadMedida;
+  });
+}
+
+function limpiarIEPS(){
+ document.getElementById("ieps").value="";
+}
+
+function limpiarPrecioUnitario(){
+  document.getElementById("precioUnitario").value="";
+}
 
 
 
-  function obtenerUnidadMedida() {
 
-    var select = document.getElementById("idMaterial");
-    var options=document.getElementsByTagName("option");
-    var idMaterial= select.value;
 
-    var x = select.options[select.selectedIndex].text;
-    var unidadesDeMedida = x.split(" ");
+
+function obtenerUnidadMedida() {
+
+  var select = document.getElementById("idMaterial");
+  var options=document.getElementsByTagName("option");
+  var idMaterial= select.value;
+
+  var x = select.options[select.selectedIndex].text;
+  var unidadesDeMedida = x.split(" ");
 
 
  if(  unidadesDeMedida.includes("MILILITROS")){  //MILILITROS
 
   $("#unidadDeMedida").hide();
   $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='MILILITROS';  
+  document.getElementById('unidadCentral').innerHTML='Mililitros';  
   $("#Medida").show();
 
 
-} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+}  else if( unidadesDeMedida.includes("MILIMETROS")){  //MILIMETROS
 
   $("#unidadDeMedida").hide();
   $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  document.getElementById('unidadCentral').innerHTML='Milimetros';  
+  $("#Medida").show();
+
+}  else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='Gramos';  
   $("#Medida").show();
 
 } else if( unidadesDeMedida.includes("CENTIMETROS")) {  //CENTIMETROS
 
   $("#unidadDeMedida").hide();
   $("#unidadMinima").hide();
-  document.getElementById('unidadCentral').innerHTML='CENTIMETROS';  
+  document.getElementById('unidadCentral').innerHTML='Centimetros';  
   $("#Medida").show();
 
 
@@ -1442,7 +1454,7 @@ function validarProductosDuplicados(producto){
 function limpiarErrorProducto(){
  var precioUnitario=document.getElementById("idMaterial").value;
  if(precioUnitario != ""){
-  document.getElementById("errorPrdducto").innerHTML= "";
+  document.getElementById("errorProducto").innerHTML= "";
 }
 
 }
@@ -1460,7 +1472,7 @@ function validar(){
   swal("Alerta!", "Por favor completa todos los campos, Para Poder Guardar!", "error");("campos vacios");
 
   if(x=="SELECIONA UN PRODUCTO"){
-    document.getElementById("errorPrdducto").innerHTML= "Elige un producto para agregar a la lista.";
+    document.getElementById("errorProducto").innerHTML= "Elige un producto para agregar a la lista.";
   }
   if(ieps==""){
     document.getElementById("errorIEPS").innerHTML= "El IEPS debe ser mayor igual a cero.";
@@ -1471,23 +1483,15 @@ function validar(){
     document.getElementById("errorprecio").innerHTML= "El precio Unitario debe ser mayor igual a cero.";
   } 
 
-  return false;
+  return 1;
 } else {
 
-  return true;
+  return 0;
 }
 
 
 }
 
-
-
-function limpiar(){
-  document.getElementById("iva").value="0";
-  document.getElementById("ieps").value="0";
-  document.getElementById("precioUnitario").value="0.00";
-
-}
 
 
 
@@ -1544,12 +1548,13 @@ function validarUnidadesMedida(){
 
 function obtenerSelect() {
 
+
   var select = document.getElementById("medida");
   var options=document.getElementsByTagName("option");
   var idProvedor= select.value;
 
   var x = select.options[select.selectedIndex].text;
-
+  
   var unidadesDeMedida = x.split(" ");
   
   document.getElementById("contenedor").value= x;
@@ -1561,6 +1566,13 @@ function obtenerSelect() {
   document.getElementById('unidadCentral').innerHTML='MILILITROS';  
   $("#Medida").show();
 
+
+} else if( unidadesDeMedida.includes("MILIMETROS")){  //MILIMETROS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILIMETROS';  
+  $("#Medida").show();
 
 } else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
 
@@ -1640,4 +1652,258 @@ document.getElementById("segundo").value=aleatorio;
 }
 }
 
+function agregarProducto() {
 
+  var select = document.getElementById("idMaterial");
+  var options=document.getElementsByTagName("option");
+  var idMaterial= select.value;
+  var x = select.options[select.selectedIndex].text;
+  var iva = document.getElementById("iva").value;
+  var ieps = document.getElementById("ieps").value;
+  var precioUnitario = document.getElementById("precioUnitario").value;
+  var cantidadTotal= document.getElementById("cantidadTotal").value;
+  var unidadMedida=document.getElementById('unidadCentral').innerHTML;
+  var cantidadContendedor =   document.getElementById("capacidadUnidadMedida").value;
+
+  calcularCantidad();
+
+  var precioMinimo= calcularPrecioMinimo(precioUnitario,cantidadContendedor,unidadMedida);
+  var precioRedondeado = (cantidadTotal*precioMinimo)*(1+(iva/100))*(1+(ieps/100));
+  precioRedondeado = precioRedondeado.toFixed(2);
+
+  if(!validarProductosDuplicados(x) && !validar()==1 ){
+    var fila="<tr>"+
+    "<td width=\"10%\">"+
+    "<button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\">"+
+    "Quitar<i class=\"fa fa-times\"></i> </button>"+
+      "</td>"+ //Coclumna 1
+      "<td width=\"30%\">"+
+      "<input type=\"hidden\" name=\"idMaterial[]\" value=\""+idMaterial+"\" />"+x+
+      "</td>"
+      +"<td  width=\"30%\">"+"<ul>"
+      +listadoDeCantidades()+
+      "</ul>"
+      +"<input type=\"hidden\" name=\"cantidadTotal[]\" value=\""+ cantidadTotal+"\" />"+"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"+
+      "<input type=\"hidden\" name= \"precioUnitario[]\" value=\""+precioUnitario+"\" >"+precioUnitario
+      +"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"+
+      "<input type=\"hidden\" name=\"iva[]\" value=\""+iva+"\" >"+iva+"%"+"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"
+      + "<input type=\"hidden\" name=\"ieps[]\" value=\""+ieps+"\" >"+ieps+"%"+"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"+"$"+precioRedondeado+"</td>";
+      var btn = document.createElement("TR");
+      btn.innerHTML=fila;
+      document.getElementById("detalles").appendChild(btn);
+    } 
+
+
+
+  }
+
+
+
+  function calcularCantidad(){
+
+    var select = document.getElementById("idMaterial");
+    var options=document.getElementsByTagName("option");
+    var idMaterial= select.value;
+
+
+    var idUnidadMedida;
+
+    var unidadesCompletas =parseInt(document.getElementById('unidadesCompletas').value);
+    var unidadCentral = parseInt(document.getElementById('Medida').value);
+    var unidadesMedida = parseInt(document.getElementById('unidadMinima').value);
+    var nombreUnidadMedida;
+
+    var capacidad=0;
+    var totalUnidadesCompletas;
+
+    var total= 0;
+
+    var route = "http://localhost:8000/obtenerPropiedadesAgroquimicos/"+idMaterial;
+    $.get(route,function(res){
+
+     idUnidadMedida= res.idUnidadMedida;
+
+
+
+     var routePropiedadesUnidadMedida = "http://localhost:8000/propiedadesUnidadMedidaCantidadJson/"+idUnidadMedida;
+     $.get(routePropiedadesUnidadMedida,function(resPropiedadesUnindadMedida){
+
+      nombreUnidadMedida = resPropiedadesUnindadMedida.nombreUnidadMedida;
+      capacidad = resPropiedadesUnindadMedida.cantidad; 
+
+      totalUnidadesCompletas = unidadesCompletas * capacidad; 
+
+      total = calcularEquivalencia(nombreUnidadMedida,totalUnidadesCompletas,unidadCentral,unidadesMedida); 
+
+
+      document.getElementById("cantidadTotal").value=total;
+
+      document.getElementById("capacidadUnidadMedida").value=resPropiedadesUnindadMedida.cantidad;
+
+
+    });
+
+   });
+
+
+  }
+
+
+  function calcularEquivalencia(unidadDeMedida,unidadesCompletas,unidadCentral,unidadesMedida){
+
+
+    if(unidadDeMedida == "LITROS"){
+      total=unidadesCompletas*1000+ unidadCentral * 1000 +unidadesMedida  ;
+      return total;
+    }
+
+    else if (unidadDeMedida =="KILOGRAMOS") {
+
+      total=unidadesCompletas*1000+ unidadCentral * 1000 +unidadesMedida  ;
+      return total;
+    }
+
+    else if (unidadDeMedida=="METROS") {
+      total=unidadesCompletas*100+ unidadCentral * 100 +unidadesMedida  ;
+      return total;
+    }
+    else if(unidadDeMedida=="UNIDADES"){
+      total = unidadesCompletas + unidadCentral;
+      return total;
+    } else if(unidadDeMedida=="GRAMOS"){
+      total = unidadesCompletas + unidadCentral;
+      return total;
+    } else if(unidadDeMedida=="MILILITROS"){
+      total = unidadesCompletas + unidadCentral;
+      return total;
+    }  else if(unidadDeMedida=="MILIMETROS"){
+      total = unidadesCompletas + unidadCentral;
+      return total;
+    }
+
+    else if(unidadDeMedida=="CENTIMETROS"){
+      total = unidadesCompletas + unidadCentral;
+      return total;
+    } 
+
+  }
+
+
+
+
+  function teclas(event) {
+   caracter =(document.all) ? event.keyCode : event.which;
+   
+   if (caracter == 13  ) {
+    var codigoBarras = document.getElementById('codigo').value;
+    var route = "http://localhost:8000/propiedadesArticulo_x_Codigo_Barras/"+codigoBarras ;
+    $.get(route,function(res){
+
+      if(res.length>0){
+       document.getElementById("idMaterial").selectedIndex=  res[0].idAgroquimico;
+       document.getElementById("contenedor").value= res[0].nombreUnidadMedida + " DE " + res[0].cantidadUnidadMedida + " "+
+       res[0].unidad_medida;
+       obtenerUnidadMedida();
+       calcularCantidad();
+     } else {
+       swal("Producto No Encontrado!", "Verifique el Codigo de Barras!", "error");
+     }
+
+   }); 
+    return false;
+  }
+}
+
+
+
+function listadoDeCantidades(){
+  var labelUnidadCentral=document.getElementById("unidadCentral").innerHTML;
+  var labelUnidadDeMedida= document.getElementById("unidadDeMedida").innerHTML;
+  var cantidadUnidadCentral = document.getElementById("Medida").value;
+  var cantidadUnidadMedida = document.getElementById("unidadMinima").value;
+  var unidadesCompletas = document.getElementById("unidadesCompletas").value;
+  var medida= document.getElementById("contenedor").value;
+
+
+  if(labelUnidadCentral == "Kilogramos"  || labelUnidadCentral == "Litros" || labelUnidadCentral == "Metros"){
+    var  listadoDeCantidades = "<li>"+unidadesCompletas +" "+medida+"</li>";
+    listadoDeCantidades+="<li>"+cantidadUnidadCentral+" "+labelUnidadCentral.toUpperCase();+"</li>";
+    listadoDeCantidades += "<li>"+cantidadUnidadMedida+" "+labelUnidadDeMedida.toUpperCase();+"</li>";
+    return listadoDeCantidades;
+
+  } else {
+    var  listadoDeCantidades = "<li>"+unidadesCompletas +" "+medida+"</li>";
+    listadoDeCantidades+="<li>"+cantidadUnidadCentral+" "+labelUnidadCentral.toUpperCase();+"</li>";
+    return listadoDeCantidades; 
+  }
+}
+
+
+
+
+
+function calcularPrecioMinimo(precioUnitario,cantidadContendedor,unidadDeMedida){
+
+  if(unidadDeMedida == "Litros"){
+    precio=precioUnitario/(cantidadContendedor*1000);
+    return precio;
+  }
+  else if (unidadDeMedida =="Kilogramos") {
+    precio=precioUnitario/(cantidadContendedor*1000);
+    return precio;
+  }
+  else if (unidadDeMedida=="Metros") {
+    precio=precioUnitario/(cantidadContendedor*100);
+    return precio;
+  }
+  else if(unidadDeMedida=="Unidades"){
+    precio=precioUnitario/(cantidadContendedor);
+    return precio;
+  } else if(unidadDeMedida=="Gramos"){
+    precio=precioUnitario/cantidadContendedor;
+    return precio;
+  } else if(unidadDeMedida=="Mililitros"){
+    precio=precioUnitario/cantidadContendedor;
+    return precio;
+  } else if(unidadDeMedida=="Milimetros"){
+    precio=precioUnitario/cantidadContendedor;
+    return precio;
+  }  else if(unidadDeMedida=="Centimetros"){
+    precio=precioUnitario/cantidadContendedor;
+    return precio;
+  } 
+
+
+
+}
+
+
+function limpiar(){
+  document.getElementById("iva").value="0";
+  document.getElementById("ieps").value="0";
+  document.getElementById("precioUnitario").value="0.00";
+
+  document.getElementById("unidadesCompletas").value="0";
+  document.getElementById("Medida").value="0";
+  document.getElementById("unidadMinima").value="0";
+  document.getElementById("idMaterial").selectedIndex="0";
+}
+
+
+function limpiarUnidadesCompletas(){
+  document.getElementById("unidadesCompletas").value="";
+}
+
+function limpiarUnidadMedida(){
+  document.getElementById("Medida").value="";
+}
+
+function limpiarUnidadMinima(){
+  document.getElementById("unidadMinima").value="";
+}
+
+///FIn entradas almacen Agroquimicos

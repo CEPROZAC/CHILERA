@@ -74,7 +74,7 @@
          <div class="form-group">
           <label class="col-sm-3 control-label"> <strog class="theme_color">*</strog></label>
           <div class="col-sm-6">
-           <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="12"   class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
+           <input type="text" name="codigo" id="segundo"  value="{{$material->codigo }}" maxlength="13"   class="form-control" onkeypress=" return soloNumeros(event);" placeholder="Ingrese el Codigo de Barras" required value="" value="segundo"/><br>
          </div>
        </div>
 
@@ -156,7 +156,7 @@
     <div class="input-group" >
       <div class="input-group-addon" id="unidadDeMedida"></div>
       <input  name="unidadDeMedida" value="{{$unidadInferior}}" parsley-range="[0,999]" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"   id="unidadMinima" placeholder="3"
-       onkeypress=" return soloNumeros(event);"/>
+      onkeypress=" return soloNumeros(event);"/>
     </div>
   </div>
 </div>
@@ -236,7 +236,16 @@
   $("#Medida").show();
 
 
-} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+}  else if( unidadesDeMedida.includes("MILIMETROS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='MILIMETROS';  
+  $("#Medida").show();
+
+}
+
+else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
 
   $("#unidadDeMedida").hide();
   $("#unidadMinima").hide();
@@ -333,7 +342,14 @@ function obtenerSelect() {
   $("#Medida").show();
 
 
-} else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
+} else if( unidadesDeMedida.includes("MILIMETROS")){  //GRAMOS
+
+  $("#unidadDeMedida").hide();
+  $("#unidadMinima").hide();
+  document.getElementById('unidadCentral').innerHTML='GRAMOS';  
+  $("#Medida").show();
+
+}  else if( unidadesDeMedida.includes("GRAMOS")){  //GRAMOS
 
   $("#unidadDeMedida").hide();
   $("#unidadMinima").hide();

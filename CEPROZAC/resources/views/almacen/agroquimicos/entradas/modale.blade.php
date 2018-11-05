@@ -16,7 +16,7 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
                 <div class="col-sm-6">
-                  <input name="nombre2" type="text"  value="{{Input::old('nombre2')}}" maxlength="30"  onchange="mayus(this);"  class="form-control"  value="" placeholder="Ingrese nombre del producto" />
+                  <input name="nombre2" type="text"   maxlength="30"  onchange="mayus(this);"  class="form-control"   placeholder="Ingrese nombre del producto" />
 
                 </div>
               </div>

@@ -216,6 +216,8 @@ Route::get('obtenerPropiedadesAgroquimicos/{id}', 'AlmacenAgroquimicosController
 
 Route::get('propiedadesUnidadMedidaCantidadJson/{id}', 'AlmacenAgroquimicosController@propiedadesUnidadMedidaCantidadJson');
 
+Route::get('propiedadesArticulo_x_Codigo_Barras/{codigo}', 'AlmacenAgroquimicosController@obtenerPropiedaddesProducto_x_Codigo_Barras');
+
 
 
 

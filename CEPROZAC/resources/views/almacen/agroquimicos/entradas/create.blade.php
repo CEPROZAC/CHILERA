@@ -1,6 +1,5 @@
 @extends('layouts.principal')
 @section('contenido')
-
 <div class="pull-left breadcrumb_admin clear_both">
   <div class="pull-left page_title theme_color">
     <h1>Inicio</h1>
@@ -24,9 +23,7 @@
               <div class="actions"> </div>
               <h2 class="content-header" style="margin-top: -5px;"><strong>Registrar Entrada de Agroquímico</strong></h2>
             </div>
-
             <div class="col-md-4">
-
               <div class="btn-group pull-right">
                 <div class="actions"> 
                 </div>
@@ -42,7 +39,7 @@
           {{Session::get('info')}}
           @endif
         </div>
-        <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
+
         <form action="{{route('almacen.entradas.agroquimicos.store')}}" method="post"  row-border" parsley-validate novalidate files="true" enctype="multipart/form-data" accept-charset="UTF-8">
 
           {{csrf_field()}}
@@ -68,7 +65,7 @@
                 <label ><strong>Fecha de Compra de Material: <strog class="theme_color">*</strog></strong></label>
                 <div >
 
-                 <input type="date" name="fechaCompra" id="fecha"  class="form-control mask" >
+                 <input type="date" required name="fechaCompra" id="fecha"  class="form-control mask" >
                </div>
              </div>
            </div>
@@ -167,15 +164,15 @@
      <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12">
       <div class="form-group">
         <label for="material"><strong>Buscar Código de Barras:</strong> </label>
-        <input  id="codigo" value="" name="codigo" type="text" onkeypress="return teclas(event);"  maxlength="35"  class="form-control"  placeholder="Ingrese el Código de Barras"/>
+        <input  id="codigo"  name="codigo" type="text" onkeypress="return teclas(event);"  maxlength="35"  class="form-control"  placeholder="Ingrese el Código de Barras"/>
       </div>
     </div>  
 
     <div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
       <div class="form-group"> 
         <label for="material"><strong>Material:</strong> </label>
-        <select name="id_material"   class="form-control select"  onchange="obtnerMedida();obtenerUnidadMedida();
-        limpiarErrorProducto();" data-live-search="true"   id="idMaterial" >  
+        <select name="id_material" id="idMaterial"   class="form-control select"  onchange="obtnerMedida();obtenerUnidadMedida();
+        limpiarErrorProducto();" data-live-search="true"  >  
         <option>
           SELECIONA UN PRODUCTO
         </option>
@@ -194,7 +191,7 @@
   <div class="form-group"> 
     <label for="preciou"><strong>Precio Unitario: </strong> </label>
     <div class="input-group"> <span class="input-group-addon">$</span>
-      <input type="text" id="precioUnitario" class="form-control" onfocus ="limpiarPrecioUnitario();" onchange="limpiarErrorPrecioUnitario();"  
+      <input type="text" onkeypress=" return soloNumeros(event);" id="precioUnitario" class="form-control" onfocus ="limpiarPrecioUnitario();" onchange="limpiarErrorPrecioUnitario();"  
       placeholder="0.00" value="0.00">
     </div>
     <span id="errorprecio" style="color:#FF0000;"></span>
@@ -249,7 +246,7 @@
       <label ><strong>Canitdades: </strong></label>
       <div >
         <div class="input-group"> <span class="input-group-addon">Completas</span>
-          <input id="unidadesCompletas" type="text" class="form-control" placeholder="0">
+          <input id="unidadesCompletas" onfocus="limpiarUnidadesCompletas();" type="text" class="form-control" placeholder="0" value="0" onkeypress=" return soloNumeros(event);">
         </div>
       </div>
     </div><!--/form-group-->
@@ -260,7 +257,7 @@
       <label ><strong>&nbsp;</strong></label>
       <div >
         <div  class="input-group" > <span id="unidadCentral"  class="input-group-addon"></span>
-          <input  id="Medida"  type="text" class="form-control" placeholder="0">
+          <input  id="Medida"  onkeypress=" return soloNumeros(event);" type="text" class="form-control" placeholder="0" onchange="calcularCantidad();" onfocus="limpiarUnidadMedida();" value="0">
         </div>
       </div>
     </div><!--/form-group-->
@@ -273,7 +270,7 @@
       <label ><strong>&nbsp;</strong></label>
       <div >
         <div class="input-group" > <span id="unidadDeMedida" class="input-group-addon"></span>
-          <input type="text" class="form-control"  id="unidadMinima" placeholder="0">
+          <input type="text" class="form-control" onkeypress=" return soloNumeros(event);"  id="unidadMinima" placeholder="0" onchange="calcularCantidad();"  onfocus="limpiarUnidadMinima();" value="0">
         </div>
       </div>
     </div><!--/form-group-->
@@ -287,11 +284,13 @@
       <label ><strong>&nbsp; </strong></label>
       <div >
       </div>
-      <button type="button" id="btn_add" onclick="agregarProducto();validar();calcularCantidad();" class="btn btn-primary">Agregar</button>
+      <button type="button" id="btn_add" onclick="agregarProducto();limpiar();" class="btn btn-primary">Agregar</button>
     </div>
   </div>
 
 </div>
+<input type="hidden" name="cantidadTotal" id="cantidadTotal"\>
+<input type="hidden"  name="capacidadUnidadMedida" id="capacidadUnidadMedida">
 
 
 <div class="form-group"  class="table-responsive"> 
@@ -307,47 +306,31 @@
     </thead>
   </table>
 
-<!--<label ><strong>&nbsp; </strong></label>
-  <div class="row">
-    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-8">
-      <div class="form-group"> 
-        <label  for="subtotal"><strong>Total</strong> </label>
-        <input name="subtotal" id="subtotal" type="number" value="0"  maxlength="5" class="form-control"  readonly/>
-      </div>    
+
+  <label ><strong>&nbsp; </strong></label>
+  <div class="row" >
+
+
+    <div class="col-lg-10 col-sm-9 col-md-9 col-xs-12" >
     </div>
-
-    <div class="col-lg-2 col-sm-2 col-md-2 col-xs-8">
-     <div class="form-group"> 
-      <label for="total"><strong>Total de Elementos</strong> </label>
-      <input name="total" id="total" type="number"  class="form-control"  readonly/>
-    </div>    
-  </div>  
-</div>
--->
-<label ><strong>&nbsp; </strong></label>
-<div class="row" >
-
-
-  <div class="col-lg-10 col-sm-9 col-md-9 col-xs-12" >
-  </div>
-  <div class="col-lg-2 col-sm-3 col-md-3 col-xs-12" >
-    <div class="form-group">
-     <label ><strong>Tipo de Moneda: <strog class="theme_color">*</strog></strong></label>
-     <div >
-      <select name="tipoMoneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
-        @if(Input::old('moneda')=="Peso MXM")
-        <option value='Peso MXN' selected>Peso MXN
-        </option>
-        <option value="Dolar USD">Dolar USD</option>
-        @else
-        <option value='Dolar USD' selected>Dolar USD
-        </option>
-        <option value="Peso MXN">Peso MXN</option>
-        @endif
-      </select>          
+    <div class="col-lg-2 col-sm-3 col-md-3 col-xs-12" >
+      <div class="form-group">
+       <label ><strong>Tipo de Moneda: <strog class="theme_color">*</strog></strong></label>
+       <div >
+        <select name="tipoMoneda"  id ="moneda" class="form-control select" data-live-search="true"  value="{{Input::old('moneda')}}">
+          @if(Input::old('moneda')=="Peso MXM")
+          <option value='Peso MXN' selected>Peso MXN
+          </option>
+          <option value="Dolar USD">Dolar USD</option>
+          @else
+          <option value='Dolar USD' selected>Dolar USD
+          </option>
+          <option value="Peso MXN">Peso MXN</option>
+          @endif
+        </select>          
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 <div class="row" >
@@ -370,114 +353,12 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div><!--/container clear_both padding_fix-->
-</html> 
+
 
 
 <script type="text/javascript">
 
-  function agregarProducto() {
 
-    var select = document.getElementById("idMaterial");
-    var options=document.getElementsByTagName("option");
-    var idMaterial= select.value;
-    var x = select.options[select.selectedIndex].text;
-    var iva = document.getElementById("iva").value;
-    var ieps = document.getElementById("ieps").value;
-
-    var precioUnitario = document.getElementById("precioUnitario").value;
-    var precioRedondeado=precioUnitario*(1+(iva/100))*(1+(ieps/100));
-    precioRedondeado = precioRedondeado.toFixed(2);
-    if(!validarProductosDuplicados(x) && !validar()==false ){
-      var fila="<tr>"+
-      "<td width=\"10%\">"+"<button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\">"+
-    "Quitar<i class=\"fa fa-times\"></i> </button>"+"</td>"+ //Coclumna 1
-    "<td width=\"30%\">"+x+"</td>"
-    +"<td  width=\"30%\">"+calcularCantidad()+"</td>"
-    +"<td  width=\"7.5%\" style=\"text-align:right\">"+precioUnitario+"</td>"
-    +"<td  width=\"7.5%\" style=\"text-align:right\">"+iva+"%"+"</td>"
-    +"<td  width=\"7.5%\" style=\"text-align:right\">"+ieps+"%"+"</td>"
-    +"<td  width=\"7.5%\" style=\"text-align:right\">"+"$"+precioRedondeado+"</td>";
-    var btn = document.createElement("TR");
-    btn.innerHTML=fila;
-    document.getElementById("detalles").appendChild(btn);
-    limpiar();
-  //  validarRolesCrear();
-} 
-
-}
-
-
-
-function calcularCantidad(){
-
-
-  var select = document.getElementById("idMaterial");
-  var options=document.getElementsByTagName("option");
-  var idMaterial= select.value;
-  var idUnidadMedida;
-
-  var unidadesCompletas =parseInt(document.getElementById('unidadesCompletas').value);
-  var unidadCentral = parseInt(document.getElementById('Medida').value);
-  var unidadesMedida = parseInt(document.getElementById('unidadMinima').value);
-  var nombreUnidadMedida;
-
-  var capacidad=0;;
-  var totalUnidadesCompletas;
-
-  var total;
-  var route = "http://localhost:8000/obtenerPropiedadesAgroquimicos/"+idMaterial;
-  $.get(route,function(res){
-
-   idUnidadMedida= res.idUnidadMedida;
-
-   var routePropiedadesUnidadMedida = "http://localhost:8000/propiedadesUnidadMedidaCantidadJson/"+idUnidadMedida;
-   $.get(routePropiedadesUnidadMedida,function(resPropiedadesUnindadMedida){
-
-    nombreUnidadMedida = resPropiedadesUnindadMedida.nombreUnidadMedida;
-    capacidad = resPropiedadesUnindadMedida.cantidad; 
-    totalUnidadesCompletas = unidadesCompletas * capacidad; 
-
-    total = calcularEquivalencia(nombreUnidadMedida,totalUnidadesCompletas,unidadCentral,unidadesMedida); 
-  });
-
- });
-
-  return total;
-}
-
-
-function calcularEquivalencia(unidadDeMedida,unidadesCompletas,unidadCentral,unidadesMedida){
-
-  if(unidadDeMedida == "LITROS"){
-    total=unidadesCompletas*1000+ unidadCentral * 1000 +unidadesMedida  ;
-    return total;
-  }
-
-  else if (unidadDeMedida =="KILOGRAMOS") {
-
-    total=unidadesCompletas*1000+ unidadCentral * 1000 +unidadesMedida  ;
-    return total;
-  }
-
-  else if (unidadDeMedida=="METROS") {
-    total=unidadesCompletas*100+ unidadCentral * 100 +unidadesMedida  ;
-    return total;
-  }
-  else if(unidadDeMedida=="UNIDADES"){
-    total = unidadesCompletas + unidadCentral;
-    return total;
-  } else if(unidadDeMedida=="GRAMOS"){
-    total = unidadesCompletas + unidadCentral;
-    return total;
-  } else if(unidadDeMedida=="MILILITROS"){
-    total = unidadesCompletas + unidadCentral;
-    return total;
-  } else if(unidadDeMedida=="CENTIMETROS"){
-    total = unidadesCompletas + unidadCentral;
-    return total;
-  } 
-
-}
 
 
 </script>

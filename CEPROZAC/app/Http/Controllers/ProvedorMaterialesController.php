@@ -98,6 +98,8 @@ class ProvedorMaterialesController extends Controller
         $provedor->save();
         $idProvedorPK=$provedor->id;
         $idTipoProvedor= $formulario->get('idProvedor');
+
+        
         $cont = 0;
         while($cont < count($idTipoProvedor))
         {

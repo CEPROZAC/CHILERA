@@ -33,21 +33,6 @@ class AlmacenEmpaqueController extends Controller
     public function index()
     {
 
-      $material = DB::table('almacenempaque')
-      ->join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
-      ->select('almacenempaque.*', 'forma_empaques.*')
-      ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
-      ->select('unidades_medidas.id')
-      ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
-      ->select('almacenempaque.id as idEmpaque',
-        'almacenempaque.codigo','almacenempaque.imagen','almacenempaque.descripcion', 
-        'almacenempaque.cantidad', 'almacenempaque.stock_minimo','almacenempaque.idUnidadMedida', 
-        'unidades_medidas.nombre as nombreUnidadMedida','forma_empaques.formaEmpaque',
-        'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
-      ->where('almacenempaque.estado','=','Activo')
-      ->get();
-
-
       $provedores= DB::table('provedores_tipo_provedor')
       ->join('provedor_materiales', 'provedores_tipo_provedor.idProvedorMaterial','=','provedor_materiales.id')
 
