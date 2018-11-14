@@ -217,7 +217,7 @@ class AlmacenLimpiezaController extends Controller
       $unidadDeMedida=$unidades->nombreUnidadMedida;
       $capacidadUnidadMedida= $unidades->cantidad;
       $unidad_medida = $unidades->nombreUnidadMedida;
-      if($unidad_medida == "KILOGRAMOS"  || $unidad_medida == "LITROS"  ||  $unidad_medida == "METROS"){
+      if($unidadDeMedida == "KILOGRAMOS"  || $unidadDeMedida= "LITROS"  ||  $unidadDeMedida == "METROS"){
         $unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
         $unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
         $unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
@@ -231,7 +231,7 @@ class AlmacenLimpiezaController extends Controller
 
       return view("almacen.limpieza.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
         "unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
-        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida, "capacidadUnidadMedida" =>$capacidadUnidadMedida]);
+        "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida, "capacidadUnidadMedida" =>$capacidadUnidadMedida,'unidadDeMedida'=> $unidadDeMedida]);
     }
 
     /**
@@ -360,18 +360,7 @@ class AlmacenLimpiezaController extends Controller
         }
       }
     }
-    public function validarcodigo($codigo)
-    {
 
-      $quimico= AlmacenLimpieza::
-      select('id','codigo','nombre', 'estado')
-      ->where('codigo','=',$codigo)
-      ->get();
-
-      return response()->json(
-        $quimico->toArray());
-
-    }
 
 
 
@@ -700,7 +689,36 @@ public function actualizarStock($id,$cantidadAlmacen){
 }
 
 
+public function validarMaterialLimpiezaUnico(){
+
+  $material = AlmacenLimpieza::
+  join('unidades_medidas', 'almacenlimpieza.idUnidadMedida', '=','unidades_medidas.id')
+  ->select('unidades_medidas.id')
+  ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+  ->select('almacenlimpieza.id as idLimpieza','almacenlimpieza.nombre',
+    'almacenlimpieza.codigo', 
+    'almacenlimpieza.cantidad', 
+    'unidades_medidas.nombre as nombreUnidadMedida', 
+    'unidades_medidas.cantidad as cantidadUnidadMedida', 
+    'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+  ->where('almacenlimpieza.estado','=','Activo')
+  ->get();
+  return response()->json($material->toArray());
+
+
+}
 
 
 
+public function validarcodigo($codigo)
+{
+
+  $quimico= AlmacenLimpieza::
+  select('id','codigo','nombre', 'estado')
+  ->where('codigo','=',$codigo)
+  ->get();
+  return response()->json(
+    $quimico->toArray());
+
+}
 }

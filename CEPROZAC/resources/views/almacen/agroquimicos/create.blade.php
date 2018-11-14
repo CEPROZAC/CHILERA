@@ -41,17 +41,22 @@
           </div>
           @endif
 
+          <div id="alerta"> 
+
+          </div>
 
           <form action="{{route('almacenes.agroquimicos.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
             {{csrf_field()}}
-
+            <input  name="oculto" id="oculto" hidden>
             <div class="form-group">
               <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
               <div class="col-sm-6">
-                <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
+                <input name="nombre" type="text" id="nombreAgroquimico"   maxlength="30"  onchange="mayus(this);validarAgroquimicoUnico();"  class="form-control" required placeholder="Ingrese nombre del producto" />
                 <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
               </div>
             </div>
+
+            <input name="ocultoCodigoBarras" id="ocultoCodigoBarras"  hidden  />
 
             <div class="form-group">
               <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
@@ -94,15 +99,15 @@
        <div class="form-group">
         <label class="col-sm-3 control-label">Descripción: <strog class="theme_color">*</strog></label>
         <div class="col-sm-6">
-          <input name="descripcion" type="text"  value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
+          <input name="descripcion" type="text"   value="{{Input::old('descripcion')}}"  maxlength="70"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese Descripción del Material" />
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
         <div class="col-sm-3">
-          <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
-            <option>
+          <select id="medida" name="idUnidadMedida"  onchange="obtenerSelect();validarAgroquimicoUnico();" required>
+            <option value="">
               SELECIONA UNIDAD DE MEDIDA
             </option>
             @foreach($unidades  as $unidad)
@@ -154,7 +159,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-7 col-sm-5">
-          <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit"  id="submit" class="btn btn-primary">Guardar</button>
           <a href="{{url('/almacenes/agroquimicos')}}" class="btn btn-default"> Cancelar</a>
         </div>
       </div><!--/form-group-->
@@ -166,4 +171,70 @@
 </div><!--/row-->
 </div>
 @include('almacen.agroquimicos.modalreactivar')
+
+<script type="text/javascript">
+
+  
+  function validarAgroquimicoUnico(){
+    var select = document.getElementById("medida");
+    var options=document.getElementsByTagName("option");
+    var idRol= select.value;
+    var x = select.options[select.selectedIndex].text;
+    var nombreAgroquimico = document.getElementById("nombreAgroquimico").value;
+    var nombreAgroquimico_UnidadMedida= nombreAgroquimico + " " +x;
+    var route = "http://localhost:8000/validarAgroquimicoUnico";
+    var oculto =document.getElementById("oculto").value;
+    if(nombreAgroquimico != oculto){
+      $.get(route,function(res){
+        $(res).each(function(key,value){
+          agroquimico= value.nombre+ " "+value.nombreUnidadMedida+" "+value.cantidadUnidadMedida+ " "+ value.unidad_medida;
+          if(nombreAgroquimico_UnidadMedida == agroquimico ){
+            document.getElementById('submit').disabled=true;
+            document.getElementById("alerta").innerHTML = "<div class=\"alert alert-danger\" id=\'result\'><strong>El agroquímico que intentas registrar ya existe en el sistema.</strong></div>";
+            return false;
+          } else {
+            document.getElementById("alerta").innerHTML = "";
+            document.getElementById('submit').disabled=false;
+          }
+        });
+      });
+    } 
+  }
+
+  /////////////////////////////// validar agroquimicos
+
+  function  validaragroquimicos(){
+
+    var codigo =document.getElementById('segundo').value;
+    var oculto =document.getElementById('ocultoCodigoBarras').value;
+    var route = "http://localhost:8000/validaragroquimicos/"+codigo;
+
+    $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idAgro = res[0].id;
+       document.getElementById("idAgro").value= idAgro;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
+
+      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorCodigo").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+  }
+
+
+
+
+
+</script>
 @endsection

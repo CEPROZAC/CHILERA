@@ -81,7 +81,7 @@
                 <td>{{$entradas->moneda}} </td>
                 <td>{{$entradas->nombreEmpresa}}</td>
 
-                <td>${{$metodo->CALCULA_TOTAL($entradas->idEntradaAgroquimicos)}}</td>
+                <td>$234.56</td>
                 <td>  
                     <center>
                       <a href="{{URL::action('EntradasAgroquimicosController@verEntradaAgroquimicos',$entradas->idEntradaAgroquimicos)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye"></i></a>

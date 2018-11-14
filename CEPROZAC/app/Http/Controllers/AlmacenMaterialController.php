@@ -218,18 +218,18 @@ class AlmacenMaterialController extends Controller
       $cantidad = $material->cantidad;
       $idUnidadMedida = $material->idUnidadMedida;
       $idAgroquimico = $material->id;
-
       $unidades=$this->propiedadesUnidadMedida($idUnidadMedida);
-      $almacen= DB::table('almacengeneral')->where('estado','Activo')->get();
-
-
       $unidadDeMedida=$unidades->nombreUnidadMedida;
       $capacidadUnidadMedida= $unidades->cantidad;
-      $unidad_medida = $unidades->nombreUnidadMedida;
-      if($unidad_medida == "KILOGRAMOS"  || $unidad_medida == "LITROS"  ||  $unidad_medida == "METROS"){
+      $unidad_medida = $unidades->nombre;
+      $almacen= DB::table('almacengeneral')->where('estado','Activo')->get();
+
+      if($unidadDeMedida == "KILOGRAMOS"  || $unidadDeMedida= "LITROS"  ||  $unidadDeMedida == "METROS"){
+
         $unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
         $unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
         $unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
+
       }
       else {
 
@@ -241,7 +241,7 @@ class AlmacenMaterialController extends Controller
       return view("almacen.materiales.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
         "unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
         "unidadInferior" =>$unidadInferior,"unidad_medida"=>$unidad_medida,'almacen'=>$almacen,
-        "capacidadUnidadMedida"=>$capacidadUnidadMedida]);
+        "capacidadUnidadMedida"=>$capacidadUnidadMedida, 'unidadDeMedida'=>$unidadDeMedida]);
 
     }
     /**
@@ -733,6 +733,28 @@ public function actualizarStock($id,$cantidadAlmacen){
   $material->cantidad=$cantidadTotal;
   $material->update();
 }
+
+
+public function validarMaterialFerreteriaUnico(){
+
+  $material = AlmacenMaterial::
+  join('unidades_medidas', 'almacenmateriales.idUnidadMedida', '=','unidades_medidas.id')
+  ->select('unidades_medidas.id')
+  ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+  ->select('almacenmateriales.id as idMaterial','almacenmateriales.nombre',
+    'almacenmateriales.codigo', 
+    'almacenmateriales.cantidad', 
+    'unidades_medidas.nombre as nombreUnidadMedida', 
+    'unidades_medidas.cantidad as cantidadUnidadMedida', 
+    'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+  ->where('almacenmateriales.estado','=','Activo')
+  ->get();
+
+  return response()->json($material->toArray());
+
+
+}
+
 
 
 }

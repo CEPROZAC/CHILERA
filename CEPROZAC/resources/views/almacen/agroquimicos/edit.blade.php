@@ -139,7 +139,7 @@
 
 
 
-@if($unidad_medida=="LITROS" ||  $unidad_medida=="KILOGRAMOS" || $unidad_medida=="METROS" )
+@if($unidadDeMedida=="LITROS" ||  $unidadDeMedida=="KILOGRAMOS" || $unidadDeMedida=="METROS" )
 
 
 <div class="form-group">    

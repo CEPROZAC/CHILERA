@@ -192,6 +192,13 @@ Route::get('descargar-materiales', 'AlmacenMaterialController@excel')->name('alm
 Route::resource('almacen/materiales/salidas','SalidaAlmacenMaterialController');
 
 
+
+Route::get('validarMaterialFerreteriaUnico', 'AlmacenMaterialController@validarMaterialFerreteriaUnico');
+
+
+
+
+
 /////
 
 /////ALMACEN DE AGROQUIMICOS
@@ -218,7 +225,7 @@ Route::get('propiedadesUnidadMedidaCantidadJson/{id}', 'AlmacenAgroquimicosContr
 
 Route::get('propiedadesArticulo_x_Codigo_Barras/{codigo}', 'AlmacenAgroquimicosController@obtenerPropiedaddesProducto_x_Codigo_Barras');
 
-
+Route::get('validarAgroquimicoUnico', 'AlmacenAgroquimicosController@validarAgroquimicoUnico');
 
 
 
@@ -234,6 +241,11 @@ Route::get('descargar-entradas-limpieza', 'EntradasAlmacenLimpiezaController@exc
 Route::get('pdflimpieza/{id}', array('as'=> '/pdflimpieza','uses'=>'AlmacenLimpiezaController@invoice'));
 Route::get('descargar-limpieza', 'AlmacenLimpiezaController@excel')->name('almacen.limpieza.excel');
 
+Route::get('validarMaterialLimpiezaUnico', 'AlmacenLimpiezaController@validarMaterialLimpiezaUnico');
+
+
+
+
 ////ALMACEN DE EMPAQUES
 Route::resource('almacenes/empaque','AlmacenEmpaqueController');	
 Route::resource('almacenes/empaque/stock', 'AlmacenEmpaqueController@stock');
@@ -245,6 +257,9 @@ Route::resource('almacen/entradas/empaque','EntradasEmpaquesController');
 Route::get('descargar-entradas-empaque', 'EntradasEmpaquesController@excel')->name('almacen.empaque.entradas.excel');
 Route::get('pdfempaque/{id}', array('as'=> '/pdflimpieza','uses'=>'AlmacenEmpaqueController@invoice'));
 Route::get('descargar-empaquesalm', 'AlmacenEmpaqueController@excel')->name('almacen.empaque.excel');
+Route::get('validarMaterialEmpaqueUnico', 'AlmacenEmpaqueController@validarMaterialEmpaqueUnico');
+
+
 
 /////////
 

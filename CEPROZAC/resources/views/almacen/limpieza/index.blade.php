@@ -74,7 +74,7 @@
 
                    </th>
                    <th>Stock Minimo</th> 
-                   <th>Agregar Stock</th>
+
 
                    <td><center><b>Editar</b></center></td>
                    <td><center><b>Borrar</b></center></td>                            
@@ -155,123 +155,109 @@
 
                   </td>
 
-                  <td style="background-color: #FFE4E1;">   
-                   <center>
-                    <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idLimpieza}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
-                  </center>
-                </td>
-
-                <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->idLimpieza)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-                </td>
-                <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idLimpieza}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                  <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->idLimpieza)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                  </td>
+                  <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idLimpieza}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                  </td>
                 </td>
               </td>
-            </td>
 
-          </tr>
-          @else
-          <tr class="gradeA">
-
-            <td>
-
-              {{$materiales->nombre}} 
-
-            </td>
-
-            @if (($materiales->codigo)!="")
-            <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
-              <div style="text-align:center;" >
-                {{$materiales->codigo}}
-              </div>
-              <a href="{{URL::action('AlmacenLimpiezaController@invoice',$materiales->idLimpieza)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
-            </td>
+            </tr>
             @else
-            <td>Codigo de Barras No Generado </td>
+            <tr class="gradeA">
 
-            @endif
+              <td>
 
-            <td>
-              @if (($materiales->imagen)!="")
-              <img src="{{asset('imagenes/AlmacenLimpieza/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                {{$materiales->nombre}} 
+
+              </td>
+
+              @if (($materiales->codigo)!="")
+              <td><?php echo DNS1D::getBarcodeHTML("$materiales->codigo", "C128");?>
+                <div style="text-align:center;" >
+                  {{$materiales->codigo}}
+                </div>
+                <a href="{{URL::action('AlmacenLimpiezaController@invoice',$materiales->idLimpieza)}}" class="btn btn-primary btn-sm" target="_blank" role="button"><i class="fa fa-print"></i></a> 
+              </td>
               @else
-              No Hay Imagen Disponible
+              <td>Codigo de Barras No Generado </td>
+
               @endif
-            </td>              
-            <td>{{$materiales->descripcion}} </td>
-            <td> 
 
-             <ul>
-              @if($materiales->unidad_medida== "KILOGRAMOS" || $materiales->unidad_medida== "LITROS" || $materiales->unidad_medida== "METROS" )
-              <li>
+              <td>
+                @if (($materiales->imagen)!="")
+                <img src="{{asset('imagenes/AlmacenLimpieza/'.$materiales->imagen)}}" alt="{{$materiales->nombre}}" height="100px" width="100px" class="img-thumbnail">
+                @else
+                No Hay Imagen Disponible
+                @endif
+              </td>              
+              <td>{{$materiales->descripcion}} </td>
+              <td> 
 
-                {{$metodo->calcularCantidadAlmacen($materiales->idLimpieza)}} 
-                {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+               <ul>
+                @if($materiales->unidad_medida== "KILOGRAMOS" || $materiales->unidad_medida== "LITROS" || $materiales->unidad_medida== "METROS" )
+                <li>
 
-              </li>
-              <li>
+                  {{$metodo->calcularCantidadAlmacen($materiales->idLimpieza)}} 
+                  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
 
-                {{$metodo->calcularCantidadUnidadCentral($materiales->idLimpieza)}}  {{$materiales->unidad_medida}} 
-              </li>
-              <li>
-                {{$metodo->  calcularCantidadUnidadInferior($materiales->idLimpieza)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idLimpieza)}}  
-              </li>
-              @else
-              <li>
-                {{$metodo->calcularCantidadAlmacen($materiales->idLimpieza)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
-              </li>
-              <li>
-                {{$metodo->  calcularCantidadUnidadInferior($materiales->idLimpieza)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idLimpieza)}}  
+                </li>
+                <li>
 
-              </li>
-              @endif
-            </ul>
+                  {{$metodo->calcularCantidadUnidadCentral($materiales->idLimpieza)}}  {{$materiales->unidad_medida}} 
+                </li>
+                <li>
+                  {{$metodo->  calcularCantidadUnidadInferior($materiales->idLimpieza)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idLimpieza)}}  
+                </li>
+                @else
+                <li>
+                  {{$metodo->calcularCantidadAlmacen($materiales->idLimpieza)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+                </li>
+                <li>
+                  {{$metodo->  calcularCantidadUnidadInferior($materiales->idLimpieza)}}      {{$metodo->labelUnidadMedidaMinima($materiales->idLimpieza)}}  
 
-            <td>
+                </li>
+                @endif
+              </ul>
 
-              <center>
-               {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
-             </center>
+              <td>
 
+                <center>
+                 {{$metodo->convertidorStockUnidadesMinimas_UnidadCentral($materiales->unidad_medida,$materiales->stock_minimo,$materiales->cantidadUnidadMedida)}}  {{$materiales->nombreUnidadMedida}}  DE  {{$materiales-> cantidadUnidadMedida}} {{$materiales->unidad_medida}} 
+               </center>
+
+             </td>
+
+             
+
+
+             <td>  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->idLimpieza)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+             </td>
+             <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idLimpieza}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+             </td>
            </td>
+         </td>
 
-           <td >  
-             <center>
-              <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idLimpieza}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
-            </center>
+       </tr>
+       @endif
+       @include('almacen.limpieza.modal')
 
-          </td>
+       @endforeach
+     </tbody>
+     <tfoot>
+      <tr>
 
-
-
-          <td>  <a href="{{URL::action('AlmacenLimpiezaController@edit',$materiales->idLimpieza)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-          </td>
-          <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idLimpieza}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-          </td>
-        </td>
-      </td>
-
-    </tr>
-    @endif
-    @include('almacen.limpieza.modal')
-    @include('almacen.limpieza.modale')
-    @endforeach
-  </tbody>
-  <tfoot>
-    <tr>
-
-      <th>Nombre </th>
-      <th>Codigo de Barras </th>
-      <th>Imagen </th>
-      <th>Descripción </th>
-      <th>Cantidad en Almacén</th>
-      <th>Stock Minimo</th>
-      <th>Agregar Stock</th>
-
-      <td><center><b>Editar</b></center></td>
-      <td><center><b>Borrar</b></center></td>      
-    </tr>
-  </tfoot>
-</table>
+        <th>Nombre </th>
+        <th>Codigo de Barras </th>
+        <th>Imagen </th>
+        <th>Descripción </th>
+        <th>Cantidad en Almacén</th>
+        <th>Stock Minimo</th>
+        <td><center><b>Editar</b></center></td>
+        <td><center><b>Borrar</b></center></td>      
+      </tr>
+    </tfoot>
+  </table>
 </div><!--/table-responsive-->
 </div><!--/porlets-content-->
 </div><!--/block-web-->

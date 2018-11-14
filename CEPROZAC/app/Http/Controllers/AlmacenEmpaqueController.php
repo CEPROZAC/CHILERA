@@ -33,26 +33,42 @@ class AlmacenEmpaqueController extends Controller
     public function index()
     {
 
-      $provedores= DB::table('provedores_tipo_provedor')
-      ->join('provedor_materiales', 'provedores_tipo_provedor.idProvedorMaterial','=','provedor_materiales.id')
 
-      ->join('tipo_provedor','provedores_tipo_provedor.idTipoProvedor','=' ,'tipo_provedor.id')
-      ->select('provedor_materiales.*', 'tipo_provedor.nombre as tipo')
-      ->where('provedores_tipo_provedor.idTipoProvedor','=','2')
-      ->where('provedor_materiales.estado','=','Activo')
-      ->get();
+     $material = AlmacenEmpaque::
+     join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
+     ->select('almacenempaque.*', 'forma_empaques.*')
+     ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
+     ->select('unidades_medidas.id')
+     ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+     ->select('almacenempaque.id as idEmpaque',
+      'almacenempaque.codigo','almacenempaque.imagen','almacenempaque.descripcion', 
+      'almacenempaque.cantidad', 'almacenempaque.stock_minimo','almacenempaque.idUnidadMedida', 
+      'unidades_medidas.nombre as nombreUnidadMedida','forma_empaques.formaEmpaque',
+      'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida'
+      ,'almacenempaque.created_at')
+     ->where('almacenempaque.estado','=','Activo')
+     ->get();
 
-      $empleado = DB::table('empleados')->where('estado','Activo')->get();
-      $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+     $provedores= DB::table('provedores_tipo_provedor')
+     ->join('provedor_materiales', 'provedores_tipo_provedor.idProvedorMaterial','=','provedor_materiales.id')
 
-      $unidades  = DB::table('unidades_medidas')
-      ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
-      ->select('unidades_medidas.*', 'nombre_unidades_medidas.*')
-      ->where('estado', '=', 'Activo')
-      ->get();
+     ->join('tipo_provedor','provedores_tipo_provedor.idTipoProvedor','=' ,'tipo_provedor.id')
+     ->select('provedor_materiales.*', 'tipo_provedor.nombre as tipo')
+     ->where('provedores_tipo_provedor.idTipoProvedor','=','2')
+     ->where('provedor_materiales.estado','=','Activo')
+     ->get();
 
-      return view('almacen.empaque.index', ['material' => $material,'provedores' => $provedores, 'empleado' => $empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
-    }
+     $empleado = DB::table('empleados')->where('estado','Activo')->get();
+     $empresas=DB::table('empresas_ceprozac')->where('estado','=' ,'Activo')->get();
+
+     $unidades  = DB::table('unidades_medidas')
+     ->join('nombre_unidades_medidas', 'unidades_medidas.idUnidadMedida', '=', 'nombre_unidades_medidas.id')
+     ->select('unidades_medidas.*', 'nombre_unidades_medidas.*')
+     ->where('estado', '=', 'Activo')
+     ->get();
+
+     return view('almacen.empaque.index', ['material' => $material,'provedores' => $provedores, 'empleado' => $empleado,"empresas"=>$empresas,'unidades'=>$unidades]);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -235,11 +251,11 @@ class AlmacenEmpaqueController extends Controller
       $idEmpaque = $material->idEmpaque;
 
       $unidades=$this->propiedadesUnidadMedida($idUnidadMedida);
-     
+      
       $unidadDeMedida=$unidades->nombreUnidadMedida;
       $capacidadUnidadMedida= $unidades->cantidad;
       $unidad_medida = $unidades->nombreUnidadMedida;
-      if($unidad_medida == "KILOGRAMOS"  || $unidad_medida == "LITROS"  ||  $unidad_medida == "METROS"){
+      if($unidadDeMedida == "KILOGRAMOS"  || $unidadDeMedida= "LITROS"  ||  $unidadDeMedida == "METROS"){
         $unidadesCompletas= $this->calcularCantidadAlmacen($idEmpaque);
         $unidadCentral= $this->calcularCantidadUnidadCentral($idEmpaque);
         $unidadInferior=$this->calcularCantidadUnidadInferior($idEmpaque);
@@ -386,13 +402,23 @@ class AlmacenEmpaqueController extends Controller
       public function validarcodigo($codigo)
       {
 
-        $quimico= almacenempaque::
-        select('id','codigo','nombre', 'estado')
-        ->where('codigo','=',$codigo)
+
+
+        $material = AlmacenEmpaque::
+        join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
+        ->select('almacenempaque.*', 'forma_empaques.*')
+        ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
+        ->select('unidades_medidas.id')
+        ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+        ->select('almacenempaque.id as idEmpaque',
+          'almacenempaque.codigo','forma_empaques.formaEmpaque', 'almacenempaque.estado'
+          )
+        ->where('almacenempaque.estado','=','Activo')
+        ->where('codigo','=', $codigo)
         ->get();
 
         return response()->json(
-          $quimico->toArray());
+          $material->toArray());
 
       }
 
@@ -724,6 +750,30 @@ public function actualizarStock($id,$cantidadAlmacen){
 }
 
 
+
+
+public function validarMaterialEmpaqueUnico(){
+
+
+
+  $material = AlmacenEmpaque::
+  join('forma_empaques', 'almacenempaque.idFormaEmpaque','=' ,'forma_empaques.id')
+  ->select('almacenempaque.*', 'forma_empaques.*')
+  ->join('unidades_medidas', 'almacenempaque.idUnidadMedida', '=','unidades_medidas.id')
+  ->select('unidades_medidas.id')
+  ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+  ->select('almacenempaque.id as idEmpaque',
+    'almacenempaque.codigo','almacenempaque.imagen','almacenempaque.descripcion', 
+    'almacenempaque.cantidad', 'almacenempaque.stock_minimo','almacenempaque.idUnidadMedida', 
+    'unidades_medidas.nombre as nombreUnidadMedida','forma_empaques.formaEmpaque',
+    'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida'
+    ,'almacenempaque.created_at')
+  ->where('almacenempaque.estado','=','Activo')
+  ->get();
+
+  return response()->json($material->toArray());
+
+}
 
 
 

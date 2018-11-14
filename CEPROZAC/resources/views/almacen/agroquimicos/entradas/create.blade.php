@@ -304,6 +304,15 @@
       <th width="10%">IEPS</th>
       <th width="12.5%">Subtotal</th>
     </thead>
+    <tfoot>
+      <th  width="10%">Total</th>
+      <th width="35%"></th>
+      <th width="10%"> </th>
+      <th width="12.5%"></th>
+      <th width="10%"></th>
+      <th width="10%"></th>
+      <th width="12.5%">$330.0</th>
+    </tfoot>
   </table>
 
 
@@ -359,8 +368,48 @@
 <script type="text/javascript">
 
 
+  function agregarProducto() {
+    var select = document.getElementById("idMaterial");
+    var options=document.getElementsByTagName("option");
+    var idMaterial= select.value;
+    var x = select.options[select.selectedIndex].text;
+    var iva = document.getElementById("iva").value;
+    var ieps = document.getElementById("ieps").value;
+    var precioUnitario = document.getElementById("precioUnitario").value;
+    var cantidadTotal= document.getElementById("cantidadTotal").value;
+    var unidadMedida=document.getElementById('unidadCentral').innerHTML;
+    var cantidadContendedor =   document.getElementById("capacidadUnidadMedida").value;
+    calcularCantidad();
+    var precioMinimo= calcularPrecioMinimo(precioUnitario,cantidadContendedor,unidadMedida);
+    var precioRedondeado = (cantidadTotal*precioMinimo)*(1+(iva/100))*(1+(ieps/100));
+    precioRedondeado = precioRedondeado.toFixed(2);
 
-
+    if(!validarProductosDuplicados(x) && !validar()==1 ){
+      var fila="<tr>"+
+      "<td width=\"10%\">"+
+      "<button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\">"+
+      "Quitar<i class=\"fa fa-times\"></i> </button>"+
+      "</td>"+ //Coclumna 1
+      "<td width=\"30%\">"+
+      "<input type=\"hidden\" name=\"idMaterial[]\" value=\""+idMaterial+"\" />"+x+
+      "</td>"
+      +"<td  width=\"30%\">"+"<ul>"
+      +listadoDeCantidades()+
+      "</ul>"
+      +"<input type=\"hidden\" name=\"cantidadTotal[]\" value=\""+ cantidadTotal+"\" />"+"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"+
+      "<input type=\"hidden\" name= \"precioUnitario[]\" value=\""+precioUnitario+"\" >"+precioUnitario
+      +"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"+
+      "<input type=\"hidden\" name=\"iva[]\" value=\""+iva+"\" >"+iva+"%"+"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"
+      + "<input type=\"hidden\" name=\"ieps[]\" value=\""+ieps+"\" >"+ieps+"%"+"</td>"
+      +"<td  width=\"7.5%\" style=\"text-align:right\">"+"<input type=\"hidden\" name=\"subTotal[]\" value=\""+ precioRedondeado+"\" >"+"$"+precioRedondeado+"</td>";
+      var btn = document.createElement("TR");
+      btn.innerHTML=fila;
+      document.getElementById("detalles").appendChild(btn);
+    } 
+  }
 </script>
 
 @endsection

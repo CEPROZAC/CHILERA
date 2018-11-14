@@ -27,7 +27,7 @@
                 <b>
 
                   <div class="btn-group" style="margin-right: 10px;">
-                  <a class="btn btn-sm btn-success tooltips" href="empaques/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Empaque"> <i class="fa fa-plus"></i> Registrar </a>
+                    <a class="btn btn-sm btn-success tooltips" href="empaques/create" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nuevo Empaque"> <i class="fa fa-plus"></i> Registrar </a>
 
                     <a class="btn btn-sm btn-warning tooltips" href="{{route('empaques.excel')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar"> <i class="fa fa-download"></i> Descargar </a>
                     
@@ -53,8 +53,8 @@
              </tr>
            </thead>
            <tbody>
-           @foreach($empaques  as $empaque)
-            <tr class="gradeA">
+             @foreach($empaques  as $empaque)
+             <tr class="gradeA">
               <td>{{$empaque->formaEmpaque}}</td>
               <td>{{$empaque->descripcion}}</td>
 

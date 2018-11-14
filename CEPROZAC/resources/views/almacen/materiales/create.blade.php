@@ -36,18 +36,25 @@
           {{Session::get('message')}}
           @endif
         </div>
+
+
+          <div id="alerta"> 
+
+          </div>
         <form action="{{route('almacen.materiales.store')}}" method="post" class="form-horizontal row-border" parsley-validate novalidate  files="true" enctype="multipart/form-data" accept-charset="UTF-8">
           {{csrf_field()}}
 
-
+           <input name="nombre_UnidadMedidaOculto" id="nombre_UnidadMedidaOculto" hidden />
           <div class="form-group">
             <label class="col-sm-3 control-label">Nombre: <strog class="theme_color">*</strog></label>
             <div class="col-sm-6">
-              <input name="nombre" type="text"  value="{{Input::old('nombre')}}" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
+            <input name="nombre" type="text"  id="nombreMaterial" maxlength="30"  onchange="mayus(this);"  class="form-control" required value="" placeholder="Ingrese nombre del producto" />
               <div class="text-danger" id='error_nombre'>{{$errors->formulario->first('nombre')}}</div>
 
             </div>
           </div>
+
+          <input name="ocultoCodigoBarras" id="ocultoCodigoBarras"  hidden  />
 
           <div class="form-group">
             <label class="col-sm-3 control-label">Codigo de Barras: <strog class="theme_color">*</strog></label>
@@ -70,15 +77,20 @@
          </div>
        </div>
 
+
+
+
        <input name="nombreOculto" id="oculto"  hidden  />
        <div class="form-group">
          <label class="col-sm-3 control-label"></label>
          <div class="col-sm-6">
-           <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validarmateriales();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
+           <input type="text" name="codigo" id="segundo"  maxlength="35"   class="form-control" onchange="validarmateriales();validarMaterialFerreteriaUnico();"  placeholder="Ingrese el Codigo de Barras"  required value="{{Input::old('codigo')}}"/><br>
            <div class="text-danger" id='error_rfc'>{{$errors->formulario->first('codigo')}}</div>
            <span id="errorCodigo" style="color:#FF0000;"></span>
          </div>
        </div>
+
+
 
        <div class="form-group ">
         <label class="col-sm-3 control-label">Imagen</label>
@@ -116,8 +128,8 @@
    <div class="form-group">
     <label class="col-sm-3 control-label">Unidad de Medida <strog class="theme_color">*</strog></label>
     <div class="col-sm-3">
-      <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();" >
-        <option>
+      <select id="medida" name="idUnidadMedida" onchange="obtenerSelect();validarMaterialFerreteriaUnico();" >
+        <option value="">
           SELECIONA UNIDAD DE MEDIDA
         </option>
         @foreach($unidades  as $unidad)
@@ -181,5 +193,71 @@
 </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
+
+<script type="text/javascript">
+  function validarMaterialFerreteriaUnico(){
+
+    var select = document.getElementById("medida");
+    var options=document.getElementsByTagName("option");
+    var idUnidadMedida= select.value;
+    var x = select.options[select.selectedIndex].text;
+    var nombreMaterial = document.getElementById("nombreMaterial").value;
+    var nombreMaterial_UnidadMedida= nombreMaterial + " " +x;
+
+    var route = "http://localhost:8000/validarMaterialFerreteriaUnico";
+    var oculto =document.getElementById("nombre_UnidadMedidaOculto").value;
+
+    if(nombreMaterial != oculto){
+      $.get(route,function(res){
+        $(res).each(function(key,value){
+
+          nombreMaterialBD = value.nombre+ " "+value.nombreUnidadMedida+" "+value.cantidadUnidadMedida+ " "+ value.unidad_medida;
+          if(nombreMaterial_UnidadMedida == nombreMaterialBD ){
+            document.getElementById('submit').disabled=true;
+            document.getElementById("alerta").innerHTML = "<div class=\"alert alert-danger\" id=\'result\'><strong>El producto de limpieza "
+            + "que intentas registrar ya "+ 
+            "existe en el sistema.</strong></div>";
+            return false;
+          } else {
+            document.getElementById("alerta").innerHTML = "";
+            document.getElementById('submit').disabled=false;
+          }
+        });
+      });
+    } 
+  }
+
+   /////////////////////////////// validar agroquimicos
+
+   function  validaragroquimicos(){
+
+    var codigo =document.getElementById('segundo').value;
+    var oculto =document.getElementById('ocultoCodigoBarras').value;
+    var route = "http://localhost:8000/validaragroquimicos/"+codigo;
+
+    $.get(route,function(res){
+      if(res.length > 0  &&  res[0].estado =="Inactivo"){
+       document.getElementById('submit').disabled=true;
+       var idAgro = res[0].id;
+       document.getElementById("idAgro").value= idAgro;
+       $("#modal-reactivar").modal();
+
+     } 
+     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
+
+      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
+      document.getElementById('submit').disabled=true;
+
+    }
+    else {
+      document.getElementById("errorCodigo").innerHTML = "";
+      document.getElementById('submit').disabled=false;
+
+    }
+  });
+
+  }
+
+</script>
 @include('almacen.materiales.modalreactivar')
 @endsection

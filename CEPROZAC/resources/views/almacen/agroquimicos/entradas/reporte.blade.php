@@ -29,9 +29,11 @@
                 <div class="btn-group" style="margin-right: 10px;">
                   <a class="btn btn-sm btn-success tooltips" href="{{ route('almacen.entradas.agroquimicos.create')}}" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Salida"> <i class="fa fa-plus"></i> Registrar Entrada de Almacén</a>
 
-                  <a class="btn btn-sm btn-danger tooltips" href="/almacen/entradas/agroquimicos" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
+                  
 
                   <a class="btn btn-sm btn btn-info" href="{{URL::action('EntradasAgroquimicosController@pdfentradaAgroquimicos',$entrada->factura)}}" target="_blank" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Registrar nueva Entrada"> <i class="fa fa-print"></i>Imprimir Reporte</a>
+
+                  <a class="btn btn-sm btn-danger tooltips" href="/almacen/entradas/agroquimicos" style="margin-right: 10px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancelar"> <i class="fa fa-times"></i> Salir</a>
 
                 </div>  
               </b>
@@ -102,25 +104,25 @@
                   @endif
                 </td>
                 <td>{{$importe=round($metodo->calcularImporte($producto->p_unitario,
-                $producto->cantidad,$producto->nombreUnidadMedida,$producto->cantidadUnidad,$producto->nombreUnidadMedida),2)}} </td>
-                <td>{{$iva =round($metodo->calculoIVA($importe,$producto->iva),2)}}</td>
-                <td>{{$ieps =round($metodo->calculoIEPS($importe,$producto->ieps),2)}}</td>
-                <td>{{round($metodo->calcularSubTotal($iva,$ieps,$importe),2)}}</td>
-              </tr>
-              @endforeach
+                  $producto->cantidad,$producto->nombreUnidadMedida,$producto->cantidadUnidad,$producto->nombreUnidadMedida),2)}} </td>
+                  <td>{{$iva =round($metodo->calculoIVA($importe,$producto->iva),2)}}</td>
+                  <td>{{$ieps =round($metodo->calculoIEPS($importe,$producto->ieps),2)}}</td>
+                  <td>{{$producto->subTotal}}</td>
+                </tr>
+                @endforeach
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+
+          </div>
 
         </div>
 
-      </div>
 
 
-
-    </div><!--/porlets-content-->
-  </div><!--/block-web-->
-</div><!--/col-md-12-->
+      </div><!--/porlets-content-->
+    </div><!--/block-web-->
+  </div><!--/col-md-12-->
 </div><!--/row-->
 </div>
 

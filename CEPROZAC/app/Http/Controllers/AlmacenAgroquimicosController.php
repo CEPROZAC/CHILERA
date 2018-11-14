@@ -427,21 +427,22 @@ elseif($diferenciadorUnidadMedida =="MILIMETROS") {
     	$unidadDeMedida=$unidades->nombreUnidadMedida;
     	$capacidadUnidadMedida= $unidades->cantidad;
     	$unidad_medida = $unidades->nombre;
-    	if($unidad_medida == "KILOGRAMOS"  || $unidad_medida == "LITROS"  ||  $unidad_medida == "METROS"){
-    		$unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
-    		$unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
-    		$unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
-    	}
-    	else {
 
-    		$unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
-    		$unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
-    		$unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
-    	}
+      if($unidadDeMedida == "KILOGRAMOS"  || $unidadDeMedida= "LITROS"  ||  $unidadDeMedida == "METROS"){
+        $unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
+        $unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
+        $unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
+      }
+      else {
 
-    	return view("almacen.agroquimicos.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
-    		"unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
-    		"unidadInferior" =>$unidadInferior,"unidadDeMedida"=>$unidadDeMedida ,"unidad_medida"=>$unidad_medida, "capacidadUnidadMedida"=>$capacidadUnidadMedida]);
+        $unidadesCompletas= $this->calcularCantidadAlmacen($idAgroquimico);
+        $unidadCentral= $this->calcularCantidadUnidadCentral($idAgroquimico);
+        $unidadInferior=$this->calcularCantidadUnidadInferior($idAgroquimico);
+      }
+
+      return view("almacen.agroquimicos.edit",["material"=>$material,"unidadesMedidas" => $unidadesMedidas, 
+        "unidadesCompletas"=>$unidadesCompletas, "unidadCentral" =>$unidadCentral, 
+        "unidadInferior" =>$unidadInferior,"unidadDeMedida"=>$unidadDeMedida ,"unidad_medida"=>$unidad_medida, "capacidadUnidadMedida"=>$capacidadUnidadMedida]);
         //
     }
 
@@ -630,7 +631,7 @@ elseif($diferenciadorUnidadMedida =="MILIMETROS") {
       $total = $stock *$capacidadUnidadMedida;
       return $total;
     }
-       elseif($unidadDeMedida=="MILIMETROS"){
+    elseif($unidadDeMedida=="MILIMETROS"){
       $total = $stock *$capacidadUnidadMedida;
       return $total;
     }
@@ -809,6 +810,20 @@ public function  obtenerPropiedaddesProducto_x_Codigo_Barras($codigo){
 }
 
 
+public function validarAgroquimicoUnico(){
+  $material = AlmacenAgroquimicos::
+  join('unidades_medidas', 'almacenagroquimicos.idUnidadMedida', '=','unidades_medidas.id')
+  ->select('unidades_medidas.id')
+  ->join('nombre_unidades_medidas','unidades_medidas.idUnidadMedida','=', 'nombre_unidades_medidas.id')
+  ->select('almacenagroquimicos.id as idAgroquimico','almacenagroquimicos.nombre',
+    'almacenagroquimicos.cantidad', 'almacenagroquimicos.stock_minimo','almacenagroquimicos.idUnidadMedida', 
+    'unidades_medidas.nombre as nombreUnidadMedida', 
+    'unidades_medidas.cantidad as cantidadUnidadMedida', 'nombre_unidades_medidas.nombreUnidadMedida as unidad_medida')
+  ->where('almacenagroquimicos.estado','=','Activo')
+  ->get();
+  return response()->json($material->toArray());
+
+}
 
 
 }

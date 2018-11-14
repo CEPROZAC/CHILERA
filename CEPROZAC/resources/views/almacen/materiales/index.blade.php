@@ -63,7 +63,7 @@
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                </th>
                <th>Stock Minimo</th> 
-               <th>Agregar Stock</th>
+              
 
 
                <th>Ver</th>
@@ -139,17 +139,9 @@
 
 
              </td>
-             <td style="background-color: #FFE4E1;">
-
-              <center>
-                <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idMaterial}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
-              </center>
-              
 
 
-            </td>
-
-            <td style="background-color: #FFE4E1;"> 
+             <td style="background-color: #FFE4E1;"> 
               <center>
                <a href="#" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" ></i></a>
              </center>
@@ -220,24 +212,18 @@
 
       </td>
 
-      <td >  
+      <td>
+
        <center>
-        <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idMaterial}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
-      </center>
-
-    </td>
-    <td>
-
-     <center>
-       <a href="{{URL::action('AlmacenMaterialController@verDetallesArticuloMaterial',$materiales->idMaterial)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" ></i></a>
-     </center>
-   </td>
-   <td>  <a href="{{URL::action('AlmacenMaterialController@edit',$materiales->idMaterial)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-   </td>
-   <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idMaterial}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+         <a href="{{URL::action('AlmacenMaterialController@verDetallesArticuloMaterial',$materiales->idMaterial)}}" class="btn btn-info btn-sm" role="button"><i class="fa fa-eye" ></i></a>
+       </center>
+     </td>
+     <td>  <a href="{{URL::action('AlmacenMaterialController@edit',$materiales->idMaterial)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+     </td>
+     <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idMaterial}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+     </td>
    </td>
  </td>
-</td>
 
 </tr>
 @endif
@@ -252,7 +238,7 @@
     <th>Ubicacion</th>
     <th>Cantidad en Almacén</th>
     <th>Stock Minimo</th>
-    <th>Agregar Stock</th>
+ 
     <th>Ver</th>
     <td><center><b>Editar</b></center></td>
     <td><center><b>Borrar</b></center></td>      

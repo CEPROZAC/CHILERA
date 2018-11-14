@@ -124,7 +124,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Asignación de Volumen de Venta por Año: <strog class="theme_color">*</strog></label>
             <div class="col-sm-2">
-              <input name="cantidad_venta" value="{{ $clientes->cantidad_venta}}" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required value="" placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
+              <input name="cantidad_venta" value="{{ $clientes->cantidad_venta}}" maxlength="9" type="number" value="1000" min="1" max='9999999' step="10" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" required placeholder="Ingrese el Volumen de Venta por Año" onkeypress=" return soloNumeros(event);" />
             </div>      
             
           </div>  

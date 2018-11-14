@@ -504,7 +504,6 @@ function  validarPlacas(){
   }
   else {
     console.log(res.length);
-    console.log("ERROR NULO");
     document.getElementById("errorPlaca").innerHTML = "";
     document.getElementById('submit').disabled=false;
 
@@ -680,7 +679,6 @@ function  validarNumeroCuentaEmCEPROZAC(){
   console.log(route);
 
   $.get(route,function(res){
-    console.log(res);
 
     if(res.length > 0  &&  res[0].estado =="Inactivo"){
      document.getElementById('submit').disabled=true;
@@ -907,36 +905,7 @@ function  validarprovmat(){
 
 }
 
-   /////////////////////////////// validar agroquimicos
-
-   function  validaragroquimicos(){
-
-    var codigo =document.getElementById('segundo').value;
-    var oculto =document.getElementById('oculto').value;
-    var route = "http://localhost:8000/validaragroquimicos/"+codigo;
-
-    $.get(route,function(res){
-      if(res.length > 0  &&  res[0].estado =="Inactivo"){
-       document.getElementById('submit').disabled=true;
-       var idAgro = res[0].id;
-       document.getElementById("idAgro").value= idAgro;
-       $("#modal-reactivar").modal();
-
-     } 
-     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
-
-      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
-      document.getElementById('submit').disabled=true;
-
-    }
-    else {
-      document.getElementById("errorCodigo").innerHTML = "";
-      document.getElementById('submit').disabled=false;
-
-    }
-  });
-
-  }
+ 
 
    /////////////////////////////// validar materiales/refacciones
 
@@ -969,67 +938,7 @@ function  validarprovmat(){
 
   }
 
-   /////////////////////////////// validar empaques
-
-   function  validarempaque(){
-
-    var codigo =document.getElementById('segundo').value;
-    var oculto =document.getElementById('oculto').value;
-    var route = "http://localhost:8000/validarempaque/"+codigo;
-
-    $.get(route,function(res){
-      if(res.length > 0  &&  res[0].estado =="Inactivo"){
-       document.getElementById('submit').disabled=true;
-       var idEmp = res[0].id;
-       document.getElementById("idEmp").value= idEmp;
-       $("#modal-reactivar").modal();
-
-     } 
-     else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
-
-      document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
-      document.getElementById('submit').disabled=true;
-
-    }
-    else {
-      document.getElementById("errorCodigo").innerHTML = "";
-      document.getElementById('submit').disabled=false;
-
-    }
-  });
-
-  }
-
-      /////////////////////////////// validar limpieza
-
-      function  validarlimpieza(){
-
-        var codigo =document.getElementById('segundo').value;
-        var oculto =document.getElementById('oculto').value;
-        var route = "http://localhost:8000/validarlimpieza/"+codigo;
-
-        $.get(route,function(res){
-          if(res.length > 0  &&  res[0].estado =="Inactivo"){
-           document.getElementById('submit').disabled=true;
-           var idLim = res[0].id;
-           document.getElementById("idLim").value= idLim;
-           $("#modal-reactivar").modal();
-
-         } 
-         else if (res.length > 0  &&  res[0].estado =="Activo"  && res[0].codigo != oculto )  {
-
-          document.getElementById("errorCodigo").innerHTML = "El Codigo de Barras que  intenta registrar ya existe en el sistema";
-          document.getElementById('submit').disabled=true;
-
-        }
-        else {
-          document.getElementById("errorCodigo").innerHTML = "";
-          document.getElementById('submit').disabled=false;
-
-        }
-      });
-
-      }
+  
 
 
 
@@ -1652,54 +1561,6 @@ document.getElementById("segundo").value=aleatorio;
 }
 }
 
-function agregarProducto() {
-
-  var select = document.getElementById("idMaterial");
-  var options=document.getElementsByTagName("option");
-  var idMaterial= select.value;
-  var x = select.options[select.selectedIndex].text;
-  var iva = document.getElementById("iva").value;
-  var ieps = document.getElementById("ieps").value;
-  var precioUnitario = document.getElementById("precioUnitario").value;
-  var cantidadTotal= document.getElementById("cantidadTotal").value;
-  var unidadMedida=document.getElementById('unidadCentral').innerHTML;
-  var cantidadContendedor =   document.getElementById("capacidadUnidadMedida").value;
-
-  calcularCantidad();
-
-  var precioMinimo= calcularPrecioMinimo(precioUnitario,cantidadContendedor,unidadMedida);
-  var precioRedondeado = (cantidadTotal*precioMinimo)*(1+(iva/100))*(1+(ieps/100));
-  precioRedondeado = precioRedondeado.toFixed(2);
-
-  if(!validarProductosDuplicados(x) && !validar()==1 ){
-    var fila="<tr>"+
-    "<td width=\"10%\">"+
-    "<button type=\"button\"  onclick=\"myDeleteFunction(this)\" class=\"btn btn-danger btn-icon\">"+
-    "Quitar<i class=\"fa fa-times\"></i> </button>"+
-      "</td>"+ //Coclumna 1
-      "<td width=\"30%\">"+
-      "<input type=\"hidden\" name=\"idMaterial[]\" value=\""+idMaterial+"\" />"+x+
-      "</td>"
-      +"<td  width=\"30%\">"+"<ul>"
-      +listadoDeCantidades()+
-      "</ul>"
-      +"<input type=\"hidden\" name=\"cantidadTotal[]\" value=\""+ cantidadTotal+"\" />"+"</td>"
-      +"<td  width=\"7.5%\" style=\"text-align:right\">"+
-      "<input type=\"hidden\" name= \"precioUnitario[]\" value=\""+precioUnitario+"\" >"+precioUnitario
-      +"</td>"
-      +"<td  width=\"7.5%\" style=\"text-align:right\">"+
-      "<input type=\"hidden\" name=\"iva[]\" value=\""+iva+"\" >"+iva+"%"+"</td>"
-      +"<td  width=\"7.5%\" style=\"text-align:right\">"
-      + "<input type=\"hidden\" name=\"ieps[]\" value=\""+ieps+"\" >"+ieps+"%"+"</td>"
-      +"<td  width=\"7.5%\" style=\"text-align:right\">"+"$"+precioRedondeado+"</td>";
-      var btn = document.createElement("TR");
-      btn.innerHTML=fila;
-      document.getElementById("detalles").appendChild(btn);
-    } 
-
-
-
-  }
 
 
 
@@ -1907,3 +1768,78 @@ function limpiarUnidadMinima(){
 }
 
 ///FIn entradas almacen Agroquimicos
+
+
+
+////Inventario Agroquimicos
+
+
+function validarAgroquimicoUnico(){
+  var select = document.getElementById("medida");
+  var options=document.getElementsByTagName("option");
+  var idRol= select.value;
+  var x = select.options[select.selectedIndex].text;
+  var nombreAgroquimico = document.getElementById("nombreAgroquimico").value;
+  var nombreAgroquimico_UnidadMedida= nombreAgroquimico + " " +x;
+  var route = "http://localhost:8000/validarAgroquimicoUnico";
+  var oculto =document.getElementById("oculto").value;
+  if(nombreAgroquimico != oculto){
+    $.get(route,function(res){
+      $(res).each(function(key,value){
+        agroquimico= value.nombre+ " "+value.nombreUnidadMedida+" "+value.cantidadUnidadMedida+ " "+ value.unidad_medida;
+        if(nombreAgroquimico_UnidadMedida == agroquimico ){
+          document.getElementById('submit').disabled=true;
+          document.getElementById("alerta").innerHTML = "<div class=\"alert alert-danger\" id=\'result\'><strong>El agroquímico" +
+          " que intentas registrar ya existe en el sistema.</strong></div>";
+          return false;
+        } else {
+          document.getElementById("alerta").innerHTML = "";
+          document.getElementById('submit').disabled=false;
+        }
+      });
+    });
+  } 
+}
+
+/////////////////////////////
+////// Inventarios Almacenes Limpieza
+//////////////////////
+
+//////////////////////
+/////Inventarios  Amacen  Empaque
+/////////////////////////////
+
+  function validarMaterialEmpaqueUnico(){
+    var select = document.getElementById("medida");
+    var options=document.getElementsByTagName("option");
+    var idRol= select.value;
+    var x = select.options[select.selectedIndex].text;
+    var select = document.getElementById("formaEmpaque");
+    var options=document.getElementsByTagName("option");
+    var  idEmpaque = select.value;
+    var nombreMaterialEmpaque = select.options[select.selectedIndex].text;
+    var nombreMaterialEmpaque_UnidadMedida =  nombreMaterialEmpaque +" " +x;
+    var route = "http://localhost:8000/validarMaterialEmpaqueUnico";
+    var oculto =document.getElementById("oculto").value;
+    if(nombreMaterialEmpaque != oculto){
+      $.get(route,function(res){
+        $(res).each(function(key,value){
+          nombreMaterialEmpaqueBD = value.formaEmpaque+ " "+value.nombreUnidadMedida+" "
+          +value.cantidadUnidadMedida+ " "+ value.unidad_medida;
+          if(nombreMaterialEmpaque_UnidadMedida == nombreMaterialEmpaqueBD){
+            document.getElementById('submit').disabled=true;
+            document.getElementById("alerta").innerHTML =
+            "<div class=\"alert alert-danger\" id=\'result\'><strong>El material de empaque "
+            + "que intentas registrar ya "+ 
+            "existe en el sistema.</strong></div>";
+            return false;
+          } else {
+            document.getElementById("alerta").innerHTML = "";
+            document.getElementById('submit').disabled=false;
+          }
+        });
+      });
+    } 
+  }
+
+//////////////////////////////////

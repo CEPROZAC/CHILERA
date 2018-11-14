@@ -72,7 +72,7 @@
 
                    </th>
                    <th>Stock Minimo</th> 
-                   <th>Agregar Stock</th>
+
 
                    <td><center><b>Editar</b></center></td>
                    <td><center><b>Borrar</b></center></td>                            
@@ -153,22 +153,17 @@
 
                  </td>
 
-                 <td style="background-color: #FFE4E1;">   
-                   <center>
-                    <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idEmpaque}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
-                  </center>
-                </td>
 
-                <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenEmpaqueController@edit',$materiales->idEmpaque)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-                </td>
-                <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idEmpaque}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-                </td>
-              </td>
-            </td>
+                 <td style="background-color: #FFE4E1;">  <a href="{{URL::action('AlmacenEmpaqueController@edit',$materiales->idEmpaque)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+                 </td>
+                 <td style="background-color: #FFE4E1;"> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idEmpaque}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+                 </td>
+               </td>
+             </td>
 
-          </tr>
-          @else
-          <tr class="gradeA">
+           </tr>
+           @else
+           <tr class="gradeA">
 
             <td>
 
@@ -233,44 +228,36 @@
 
             </td>
 
-            <td >  
-             <center>
-               <a class="btn btn-sm btn-success tooltips" data-target="#modal-delete2-{{$materiales->idEmpaque}}" data-toggle="modal" style="margin-right: 10px;"  role="button"> <i class="fa fa-plus"></i></a>
-             </center>
-
-           </td>
 
 
+            <td>  <a href="{{URL::action('AlmacenEmpaqueController@edit',$materiales->idEmpaque)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
+            </td>
+            <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idEmpaque}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
+            </td>
+          </td>
+        </td>
 
-           <td>  <a href="{{URL::action('AlmacenEmpaqueController@edit',$materiales->idEmpaque)}}" class="btn btn-primary btn-sm" role="button"><i class="fa fa-edit"></i></a> 
-           </td>
-           <td> <a class="btn btn-danger btn-sm" data-target="#modal-delete-{{$materiales->idEmpaque}}" data-original-title="Agregar Stock" data-toggle="modal" style="margin-right: 10px;"  role="button"><i class="fa fa-eraser"></i></a>
-           </td>
-         </td>
-       </td>
+      </tr>
+      @endif
+      @include('almacen.empaque.modal')
+      
+      @endforeach
+    </tbody>
+    <tfoot>
+      <tr>
 
-     </tr>
-     @endif
-     @include('almacen.empaque.modal')
-     @include('almacen.empaque.modale')
-     @endforeach
-   </tbody>
-   <tfoot>
-    <tr>
+        <th>Nombre </th>
+        <th>Codigo de Barras </th>
+        <th>Imagen </th>
+        <th>Descripción </th>
+        <th>Cantidad en Almacén</th>
+        <th>Stock Minimo</th>
 
-      <th>Nombre </th>
-      <th>Codigo de Barras </th>
-      <th>Imagen </th>
-      <th>Descripción </th>
-      <th>Cantidad en Almacén</th>
-      <th>Stock Minimo</th>
-      <th>Agregar Stock</th>
-
-      <td><center><b>Editar</b></center></td>
-      <td><center><b>Borrar</b></center></td>      
-    </tr>
-  </tfoot>
-</table>
+        <td><center><b>Editar</b></center></td>
+        <td><center><b>Borrar</b></center></td>      
+      </tr>
+    </tfoot>
+  </table>
 </div><!--/table-responsive-->
 </div><!--/porlets-content-->
 </div><!--/block-web-->

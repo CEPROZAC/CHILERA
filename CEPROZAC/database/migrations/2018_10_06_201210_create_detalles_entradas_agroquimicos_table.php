@@ -22,6 +22,7 @@ class CreateDetallesEntradasAgroquimicosTable extends Migration
             $table->double('p_unitario');
             $table->double('iva');
             $table->double('ieps');
+            $table->double("subTotal",8,2);
             $table->timestamps();
         });
     }
